@@ -1,0 +1,125 @@
+{
+  "title": "Choose Kotoba's visual world (round 3)",
+  "question": "A new hand with the stamp sheet leading. If none of these fit, type in Steer what's missing (for example: more Japanese, calmer, more playful, more professional).",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Tờ tem Bưu điện",
+      "kicker": "THE ROLL",
+      "lineage": "Vietnamese postage stamp sheets: perforated rows of engraved stamps, cancelled with a round postmark",
+      "thesis": "The kana chart as a sheet of 46 stamps. Each one you master gets a real postmark.",
+      "palette": ["#0f5b4a", "#f2efe6", "#c8322b", "#1d2b6b"],
+      "materials": ["perforated edges", "engraved line-fill", "round date-postmark ink"],
+      "viewport": "A full sheet of hiragana stamps on a deep green album page, each stamp with its romaji value in the corner. A red postmark reads KOTOBA · HÀ NỘI next to the headline and a 'Học thử ngay' button.",
+      "risk": "Philately can feel old-fashioned or fussy if the engraving detail crowds the characters.",
+      "raised": [
+        {"from": "memory-quilt-atlas", "raise": "Each postmark carries the actual date you mastered that kana."},
+        {"from": "particle-event-display", "raise": "Selecting a stamp lifts it off the sheet and dims the other 45."},
+        {"from": "algorave-source-floor", "raise": "The next quiz card is visible, tilted behind the current one, before it's dealt."},
+        {"from": "op-art-textile-repeat", "raise": "The perforation grid is one strict repeat that re-tiles cleanly at any width."},
+        {"from": "dark-first-developer-console", "raise": "'Reset progress' sits alone, well away from the other actions."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Màn hình Karaoke",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Vietnamese karaoke lyric screens: colour-wipe lyrics over a video background",
+      "thesis": "Karaoke is Japanese and Vietnamese at the same time. Read kana the way you sing: the color wipes across the syllables.",
+      "palette": ["#0a0a2e", "#ffffff", "#27e0ff", "#ff2f92"],
+      "materials": ["outlined lyric type", "colour-wipe fill", "CRT video glow"],
+      "viewport": "A lyric line こんにちは wiping from white to cyan syllable by syllable with the Vietnamese reading underneath, a song number menu, and a 'Hát thử' (try it) button.",
+      "risk": "Karaoke is a strong, familiar reference and can turn into kitsch."
+    },
+    {
+      "id": "challenger-quilt",
+      "label": "Memory Quilt Atlas",
+      "verdict": "declined",
+      "lineage": "pieced memory quilts",
+      "thesis": "Kana as fabric patches.",
+      "palette": ["#6d8fb3", "#1b1b1b", "#d2322d", "#6a4a2e"],
+      "materials": ["chambray", "stitching"],
+      "viewport": "Quilt of kana blocks.",
+      "case": "Loses both: textile provenance has nothing to do with learning a script.",
+      "kept": "Every block carries a date.",
+      "risk": "Sentimental."
+    },
+    {
+      "id": "challenger-multiplane",
+      "label": "Multiplane Cel Dawn",
+      "verdict": "declined",
+      "lineage": "hand-painted multiplane animation",
+      "thesis": "Lessons as painted depth planes.",
+      "palette": ["#2f5a3a", "#9fb2bf", "#3a2a1e", "#ffb347"],
+      "materials": ["gouache planes", "mist"],
+      "viewport": "Parallax forest with kana.",
+      "case": "Loses both: needs painted assets we don't have, and reads as Ghibli pastiche.",
+      "kept": "Interactive elements live on their own plane.",
+      "risk": "Pastiche."
+    },
+    {
+      "id": "challenger-console",
+      "label": "Dark Developer Console",
+      "verdict": "declined",
+      "lineage": "dark IDE panels",
+      "thesis": "Study as panels.",
+      "palette": ["#1c1d21", "#e6e6e6", "#7aa2f7", "#9ece6a"],
+      "materials": ["hairline seams"],
+      "viewport": "Panelled kana workspace.",
+      "case": "Loses both: a tool look for beginners.",
+      "kept": "Destructive actions are isolated.",
+      "risk": "Cold."
+    },
+    {
+      "id": "challenger-opart",
+      "label": "Op-art Textile Repeat",
+      "verdict": "declined",
+      "lineage": "op-art cloth prints",
+      "thesis": "A kana wave field.",
+      "palette": ["#000000", "#ffffff"],
+      "materials": ["optical waves"],
+      "viewport": "Distorted wave of kana.",
+      "case": "Loses both: distortion fights legibility.",
+      "kept": "One seamless repeat.",
+      "risk": "Hard to read."
+    },
+    {
+      "id": "challenger-algorave",
+      "label": "Algorave Floor",
+      "verdict": "declined",
+      "lineage": "live-coding raves",
+      "thesis": "Kana as code on stage.",
+      "palette": ["#000000", "#39ff14", "#ff00c8", "#ffb000"],
+      "materials": ["terminal type"],
+      "viewport": "Code buffer of kana.",
+      "case": "Loses both: no connection to the audience.",
+      "kept": "Upcoming change visible first.",
+      "risk": "Niche."
+    },
+    {
+      "id": "challenger-particle",
+      "label": "Particle Event Display",
+      "verdict": "declined",
+      "lineage": "collider event displays",
+      "thesis": "Kana as particle tracks.",
+      "palette": ["#07090d", "#5d7fa3", "#ffe14d", "#ff3b30"],
+      "materials": ["detector rings"],
+      "viewport": "Concentric kana rings.",
+      "case": "Loses both: too abstract.",
+      "kept": "Selection isolates and dims the rest.",
+      "risk": "Abstract."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": false},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A friendly language-learning app landing page: mascot, green buttons, streaks.",
+    "palette": ["#ffffff", "#58cc02", "#1f2937", "#ff9ecb"],
+    "materials": ["rounded cards", "cartoon illustration", "sakura accents"],
+    "viewport": "Centered headline, mascot illustration, and 'Bắt đầu' / 'Tôi đã có tài khoản' buttons.",
+    "risk": "Looks like every other language app."
+  },
+  "steer": true
+}

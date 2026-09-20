@@ -1,49 +1,268 @@
+/* Every colour in Kotoba lives here. Components reference these, never a raw hex,
+   so the night can be repainted in one place. See AGENTS.md before adding one. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Surfaces, darkest first. */
+  --night: #050608;
+  --asphalt: #0b0f16;
+  --wet: #141a25;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* Hero sky: blue hour falling to night. */
+  --sky-1: #0d1b4a;
+  --sky-2: #0a1437;
+  --sky-3: #070b1c;
 
-html {
-  height: 100%;
-}
+  /* Skyline: three depth planes. Far towers lift into the sky glow, near ones
+     fall to silhouette, so the city reads as blocks instead of one flat mass. */
+  --tower-far: color-mix(in srgb, var(--sky-1) 72%, var(--rule-strong));
+  --tower-mid: color-mix(in srgb, var(--sky-1) 85%, var(--night));
+  --tower-near: color-mix(in srgb, var(--sky-3) 35%, var(--night));
+  --tower-rim: color-mix(in srgb, var(--rule-strong) 70%, var(--cool));
+  --window-warm: color-mix(in srgb, var(--amber) 55%, var(--amber-core));
+  --window-cool: color-mix(in srgb, var(--cool) 55%, var(--silver-mute));
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+  /* Ánh sáng mà biển hiệu trả lại cho thế giới: hắt lên tòa nhà phía sau và
+     đọng xuống vũng nước dưới chân. Alpha thấp — cộng thêm sáng, không phủ màu. */
+  --spill-neon: color-mix(in srgb, var(--neon) 14%, transparent);
+  --spill-cool: color-mix(in srgb, var(--cool) 10%, transparent);
+  --spill-amber: color-mix(in srgb, var(--amber) 8%, transparent);
+  --halo-horizon: color-mix(in srgb, var(--cool) 12%, transparent);
 
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Rules: three steps, faint to strong. */
+  --rule-dim: #1a2133;
+  --rule: #26304a;
+  --rule-strong: #3a4768;
+
+  /* Text: four steps, brightest to faintest. */
+  --chalk: #eef3f8;
+  --silver: #c9d4e0;
+  --silver-dim: #93a0b4;
+  --silver-mute: #5f6b80;
+
+  /* Tubes. Each tone is a tube colour plus the hot core at its centre. */
+  --amber: #ffb13b;
+  --amber-core: #fff1d6;
+  --neon: #ff3d6e;
+  --neon-soft: #ff8aa8;
+  --neon-core: #ffe3ea;
+  --cool: #5cb8ff;
+  --cool-core: #eaf7ff;
+
+  --glow-amber: 0 0 1px var(--amber-core), 0 0 8px rgba(255, 177, 59, 0.8), 0 0 28px rgba(255, 177, 59, 0.45);
+  --glow-neon: 0 0 1px var(--neon-core), 0 0 8px rgba(255, 61, 110, 0.85), 0 0 30px rgba(255, 61, 110, 0.45);
+  --glow-cool: 0 0 1px var(--cool-core), 0 0 8px rgba(159, 216, 255, 0.7), 0 0 28px rgba(120, 180, 255, 0.35);
+
+  /* Atmosphere: the night haze behind the skyline and the drizzle on the street. */
+  --sky-glow: rgba(46, 78, 170, 0.35);
+  --drizzle: rgba(120, 150, 220, 0.035);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --gutter: clamp(16px, 4vw, 56px);
+  /* One content edge for the whole site. Full-bleed blocks use this instead of
+     `max-width: 88rem; margin: 0 auto`, so a banner and a text column line up. */
+  --pad-x: calc(var(--gutter) + max(0px, (100% - 88rem) / 2));
+
+  color-scheme: dark;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--night);
+  scrollbar-color: var(--rule) var(--night);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--night);
+  color: var(--silver);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  caret-color: var(--amber);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--neon);
+  color: var(--night);
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--night); }
+::-webkit-scrollbar-thumb { background: var(--rule); border: 2px solid var(--night); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--rule-strong); }
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+[lang="ja"] {
+  font-family: var(--font-kana), "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-kerning: none;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-title), sans-serif;
+  font-weight: 700;
+  line-height: 1.02;
+  text-wrap: balance;
+  color: var(--chalk);
+}
+
+p { text-wrap: pretty; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The one action colour: outlined amber that fills when engaged. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 48px;
+  padding: 0 1.4em;
+  border: 1.5px solid var(--amber);
+  border-radius: 2px;
+  color: var(--amber);
+  font-family: var(--font-title), sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-shadow: 0 0 12px rgba(255, 177, 59, 0.45);
+  box-shadow: inset 0 0 18px rgba(255, 177, 59, 0.12), 0 8px 30px -12px rgba(255, 177, 59, 0.5);
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+.btn:hover,
+.btn:active,
+.btn[aria-pressed="true"] {
+  background: var(--amber);
+  color: var(--night);
+  text-shadow: none;
+  box-shadow: 0 0 0 1px var(--amber), 0 10px 40px -8px rgba(255, 177, 59, 0.65);
+}
+.btn:disabled {
+  border-color: var(--rule);
+  color: var(--silver-dim);
+  background: none;
+  box-shadow: none;
+  text-shadow: none;
+  cursor: not-allowed;
+}
+.btnGhost {
+  border-color: var(--rule);
+  color: var(--silver);
+  text-shadow: none;
+  box-shadow: none;
+}
+.btnGhost:hover,
+.btnGhost:active {
+  background: var(--wet);
+  color: var(--chalk);
+  box-shadow: 0 0 0 1px var(--rule-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
+}
+
+/* Site bar */
+.bar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px var(--pad-x);
+}
+.brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  text-decoration: none;
+}
+.brandMark {
+  font-family: var(--font-sign), sans-serif;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--neon-core);
+  text-shadow: var(--glow-neon);
+}
+.brandWord {
+  font-family: var(--font-title), sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  color: var(--chalk);
+}
+.bar nav {
+  display: flex;
+  gap: clamp(14px, 3vw, 32px);
+}
+.bar nav a {
+  font-family: var(--font-title), sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--silver);
+  padding: 8px 0;
+  border-bottom: 1.5px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.bar nav a:hover { color: var(--chalk); border-color: var(--rule); }
+.bar nav a[aria-current="page"] { color: var(--amber); border-color: var(--amber); }
+
+.langSwitch {
+  display: inline-flex;
+  align-self: center;
+  border: 1.5px solid var(--rule);
+}
+.langSwitch button {
+  font-family: var(--font-title), sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--silver);
+  background: none;
+  border: 0;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+.langSwitch button:hover { color: var(--chalk); }
+.langSwitch button[aria-pressed="true"] {
+  color: var(--night);
+  background: var(--amber);
 }

@@ -1,0 +1,99 @@
+{
+  "title": "Choose Kotoba's visual world (more Japanese)",
+  "question": "A bolder hand weighted toward a Japanese feel, as you asked. Riso leads the deal; Ukiyo-e beat it on both axes.",
+  "options": [
+    {
+      "id": "challenger-riso",
+      "label": "Tokyo Riso Zine",
+      "kicker": "THE ROLL",
+      "lineage": "Risograph zines from Tokyo print shops (Riso Kagaku is a Japanese machine)",
+      "thesis": "Kotoba as a hand-printed Tokyo study zine: fluorescent inks, misregistered kana, grain you can feel.",
+      "palette": ["#ff48b0", "#0078bf", "#ffe800", "#e9e4d8"],
+      "materials": ["fluoro spot inks multiplying", "halftone grain", "cut-paper shapes"],
+      "viewport": "A giant あ printed in fluoro pink over federal blue, slightly out of register, with a bold Vietnamese headline, a cut-paper 'Học thử ngay' button, and a spot-colour index rail (Hiragana · Katakana · Quiz).",
+      "risk": "The paper-tone ground is close to the overused cream look; the inks have to own the page.",
+      "case": "It's Japanese through print culture rather than clichés, but a zine says less about learning than a woodblock that builds up in layers.",
+      "raised": [
+        {"from": "oscilloscope-signal-bench", "raise": "Every quiz answer locks into place like a triggered trace: unanswered cards wobble out of register, answered ones snap into alignment."},
+        {"from": "deco-cinema-lobby", "raise": "The primary action gets its own framed moment on every screen; secondary actions recede."}
+      ],
+      "hero": "https://impeccable.style/worlds/cards/risograph-web-system-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/risograph-web-system.webp"
+    },
+    {
+      "id": "challenger-ukiyoe",
+      "label": "Mokuhanga — Ukiyo-e Block Print",
+      "verdict": "wins",
+      "lineage": "Edo woodblock prints, built one registered colour block at a time",
+      "thesis": "Every kana starts as a black keyblock outline. Each time you get it right, another color block prints in, until the character is finished.",
+      "palette": ["#1f3a6b", "#d8412f", "#6b4a2b", "#111111", "#dcd3c0"],
+      "materials": ["black keyblock line", "flat mineral pigments", "bokashi gradient wipe", "red seal stamps"],
+      "viewport": "A deep indigo field with a large あ as a keyblock outline, filling with safflower red as a demo quiz is answered. A vertical title cartouche reads ことば, with red seals and a carved 'Học thử ngay' button.",
+      "risk": "Ukiyo-e is the obvious Japan reference. It only works if the registration mechanic drives the product, not as wallpaper; indigo must own the page, not cream paper.",
+      "case": "Wins both axes: unmistakably Japanese, and printing layers in is exactly what honest mastery progress looks like."
+    },
+    {
+      "id": "challenger-tokyo-night",
+      "label": "Tokyo Rain at Night",
+      "verdict": "competitive",
+      "lineage": "blue-hour to rainy-night city: neon kana signs doubled in wet streets",
+      "thesis": "Learn to read the city: katakana and hiragana glowing on shop signs in the rain.",
+      "palette": ["#0d1b4a", "#050608", "#ffb13b", "#ff3d6e", "#c9d4e0"],
+      "materials": ["neon sign lettering", "wet reflections", "train-line light"],
+      "viewport": "A rainy street of neon signs, each a real word (ラーメン, カラオケ), reflected below. Tapping a sign reads it out in Vietnamese.",
+      "case": "Strong Japanese feel and aspirational for learners heading to Japan; the chart and quiz are harder to fit into a street scene.",
+      "risk": "Cyberpunk-neon cliché, and it needs strong illustration assets."
+    },
+    {
+      "id": "challenger-scope",
+      "label": "Oscilloscope Bench",
+      "verdict": "declined",
+      "lineage": "CRT oscilloscopes",
+      "thesis": "Pitch accent as a phosphor trace.",
+      "palette": ["#050805", "#39ff6a", "#5a5f5a", "#ffb000"],
+      "materials": ["phosphor", "graticule"],
+      "viewport": "Waveform of a spoken word.",
+      "case": "Loses both: not Japanese, too technical.",
+      "kept": "Answered cards lock into place like a triggered trace.",
+      "risk": "Lab-cold."
+    },
+    {
+      "id": "challenger-deco",
+      "label": "Deco Cinema Lobby",
+      "verdict": "declined",
+      "lineage": "Art Deco cinemas",
+      "thesis": "Lessons as a premiere.",
+      "palette": ["#0c0a08", "#c9a45a", "#8e1b24"],
+      "materials": ["brass", "lacquer"],
+      "viewport": "Marquee with Kotoba.",
+      "case": "Loses both: Western glamour, not Japan.",
+      "kept": "One framed primary action.",
+      "risk": "Off-culture."
+    },
+    {
+      "id": "challenger-bazaar",
+      "label": "Moon-shadow Bazaar",
+      "verdict": "declined",
+      "lineage": "surreal night market",
+      "thesis": "Trading words like shadows.",
+      "palette": ["#0b1024", "#1a1a1a", "#b8913a", "#eef2ff"],
+      "materials": ["shadows", "stall canvas"],
+      "viewport": "Moonlit stalls of words.",
+      "case": "Loses both: dreamlike and unclear.",
+      "kept": "Each item keeps an origin ticket.",
+      "risk": "Confusing."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": false},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A friendly language-learning app landing page: mascot, green buttons, streaks.",
+    "palette": ["#ffffff", "#58cc02", "#1f2937", "#ff9ecb"],
+    "materials": ["rounded cards", "cartoon illustration", "sakura accents"],
+    "viewport": "Centered headline, mascot illustration, and 'Bắt đầu' / 'Tôi đã có tài khoản' buttons.",
+    "risk": "Looks like every other language app."
+  },
+  "steer": true
+}

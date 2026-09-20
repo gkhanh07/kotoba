@@ -1,0 +1,123 @@
+{
+  "title": "Choose Kotoba's visual world",
+  "question": "The roll picked the classroom alphabet chart. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Bảng chữ cái lớp 1",
+      "kicker": "THE ROLL",
+      "lineage": "The laminated alphabet chart on the wall of every Vietnamese first-grade classroom",
+      "thesis": "You learned 29 letters from a wall chart once. Now learn 46 kana the same way.",
+      "palette": ["#1c47b8", "#e8342b", "#ffcb1f", "#ffffff"],
+      "materials": ["glossy laminate", "flat primary tiles", "thick rounded letter strokes"],
+      "viewport": "The full hiragana chart fills the screen as a wall poster of colored tiles, with a headline in Vietnamese and a 'Học thử ngay' button next to the first row.",
+      "risk": "It can feel childish if the type and grid aren't disciplined enough for adult learners.",
+      "raised": [
+        {"from": "ikeda-datamatics", "raise": "All 46 characters show at once in the hero, never cropped into a teaser."},
+        {"from": "sapeur-portrait-plate", "raise": "Exactly three inks on one ground, and every tile has a ruled caption (romaji + Vietnamese sound hint)."},
+        {"from": "hand-processed-film-bloom", "raise": "Marks on the chart only come from real quiz results, never decoration."},
+        {"from": "akari-light-sculpture", "raise": "Each tile has one state: learned tiles are filled with color, unlearned ones are outlines."}
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Vở ô ly & mực tím",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "The Vietnamese squared handwriting notebook written in purple ink, with the teacher's red corrections",
+      "thesis": "Relearn how to write, square by square, in the purple ink of first grade.",
+      "palette": ["#eef2fb", "#8a9ad6", "#5b2d91", "#d7262e"],
+      "materials": ["ruled grid paper", "fountain-pen purple ink", "red-pen marks"],
+      "viewport": "A notebook page in ô ly squares, with あ written stroke by stroke in purple and a red check mark on the answer.",
+      "risk": "The notebook is the most obvious Vietnamese school reference; it's familiar and could feel nostalgic."
+    },
+    {
+      "id": "challenger-lineup",
+      "label": "Festival Lineup Sheet",
+      "verdict": "competitive",
+      "lineage": "Type-only music festival lineup posters",
+      "thesis": "The kana get top billing: headline characters at full width, the rest packed into a justified block.",
+      "palette": ["#ff5a1f", "#16110d"],
+      "materials": ["one saturated ground", "one condensed face at eight sizes"],
+      "viewport": "あ い う え お fill the width like headliners, and the rest of the gojūon is set as the justified fine print.",
+      "case": "Holds on clarity because the script itself is the hero; Vietnamese learners don't see themselves in a festival poster.",
+      "risk": "Condensed Latin faces don't carry kana well, and the page can look like an event ad."
+    },
+    {
+      "id": "challenger-film",
+      "label": "Hand-processed 16mm",
+      "verdict": "declined",
+      "lineage": "hand-processed film strips",
+      "thesis": "Lessons as frames on a scratched film strip.",
+      "palette": ["#1a1a1a", "#b8b8b0", "#ff7a1a"],
+      "materials": ["emulsion grain", "light leaks"],
+      "viewport": "A film strip of kana frames.",
+      "case": "Loses both: no link to learners and it hides the chart.",
+      "kept": "Marks only come from real events.",
+      "risk": "Noise over legibility."
+    },
+    {
+      "id": "challenger-akari",
+      "label": "Akari Lamp Workshop",
+      "verdict": "declined",
+      "lineage": "washi akari lamps",
+      "thesis": "Glowing paper volumes.",
+      "palette": ["#f1e6cf", "#c9a46a", "#2b2724", "#d23a2a"],
+      "materials": ["washi", "bamboo ribs"],
+      "viewport": "Lit paper lanterns holding lessons.",
+      "case": "Loses both: this is the usual Japan-themed washi-and-vermilion look.",
+      "kept": "One binary state per element.",
+      "risk": "Category cliché."
+    },
+    {
+      "id": "challenger-sixpack",
+      "label": "Night Flight Six-pack",
+      "verdict": "declined",
+      "lineage": "aircraft instrument panels",
+      "thesis": "Progress as six gauges.",
+      "palette": ["#0b0b0b", "#f2f2f2", "#5cff9a", "#ffb020"],
+      "materials": ["matte panel", "luminous dials"],
+      "viewport": "Six gauges of kana mastery.",
+      "case": "Loses both: a cockpit is foreign to a beginner learning a script.",
+      "kept": "Progress readings stay honest.",
+      "risk": "Cold and technical."
+    },
+    {
+      "id": "challenger-datamatics",
+      "label": "Datamatics Field",
+      "verdict": "declined",
+      "lineage": "Ryoji Ikeda data installations",
+      "thesis": "Kana as a strobing data field.",
+      "palette": ["#000000", "#ffffff"],
+      "materials": ["barcode bars", "monospace numerics"],
+      "viewport": "Barcode lattice of characters.",
+      "case": "Loses both: alienating to beginners.",
+      "kept": "Show the whole data set at once.",
+      "risk": "Unfriendly to beginners."
+    },
+    {
+      "id": "challenger-sapeur",
+      "label": "Sapeur Portrait Plate",
+      "verdict": "declined",
+      "lineage": "Congolese sapeur portraits",
+      "thesis": "Characters posed like portrait plates.",
+      "palette": ["#3f7fbf", "#e0b020", "#b0302a", "#f0e8dc"],
+      "materials": ["flat painted backdrop", "ruled captions"],
+      "viewport": "One kana per plate with a caption.",
+      "case": "Loses both: the metaphor has no link to the product.",
+      "kept": "Strict three-color limit and ruled captions.",
+      "risk": "Unrelated metaphor."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": false},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A friendly language-learning app landing page: mascot, green buttons, streaks.",
+    "palette": ["#ffffff", "#58cc02", "#1f2937", "#ff9ecb"],
+    "materials": ["rounded cards", "cartoon illustration", "sakura accents"],
+    "viewport": "Centered headline, mascot illustration, and 'Bắt đầu' / 'Tôi đã có tài khoản' buttons.",
+    "risk": "Looks like every other language app."
+  },
+  "steer": true
+}

@@ -1,0 +1,102 @@
+{
+  "title": "Choose Kotoba's visual world (bolder)",
+  "question": "A bolder hand, with Teletext leading. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "challenger-teletext",
+      "label": "Kotoba Teletext",
+      "kicker": "THE ROLL",
+      "lineage": "Broadcast teletext magazines: three-digit pages on a 40×24 black grid",
+      "thesis": "Japanese as a broadcast service: type a page number, study the chart, press REVEAL to check the answer.",
+      "palette": ["#000000", "#ffffff", "#ffff00", "#00ffff", "#ff0000"],
+      "materials": ["bitmap cell grid", "block-mosaic graphics", "double-height headers"],
+      "viewport": "P100 KOTOBA in a double-height yellow masthead, a big mosaic あ built from blocks, a page index (101 Hiragana · 102 Katakana · 200 Quiz) and a blinking 'Nhập 101 để bắt đầu'.",
+      "risk": "Kana are double-width in a 40-cell grid, and the pixel face has to support Vietnamese diacritics. If the grid is loose, it becomes retro gimmickry.",
+      "case": "The REVEAL mechanic is a flashcard quiz, so the form and the product are the same thing.",
+      "raised": [
+        {"from": "coiled-earth-tower", "raise": "Progress page 300 stacks one row for each real quiz session, so the record grows honestly."},
+        {"from": "console-dashboard-atmosphere", "raise": "The selected kana cell rises to double size, and its details orbit it on the same grid."},
+        {"from": "movida-scene-magazine", "raise": "Full ink commitment: the broadcast colors own entire rows, not small accents."}
+      ],
+      "hero": "https://impeccable.style/worlds/cards/broadcast-programming-teletext-service-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/broadcast-programming-teletext-service.webp"
+    },
+    {
+      "id": "challenger-hypercard",
+      "label": "HyperCard Kana Stack",
+      "verdict": "competitive",
+      "lineage": "1-bit HyperCard stacks",
+      "thesis": "Each kana is a card in a shoebox stack; flip it to see the reading, and add your own mnemonic card.",
+      "palette": ["#ffffff", "#000000"],
+      "materials": ["1-bit dither", "painted buttons", "Chicago-style menus"],
+      "viewport": "One big black-and-white card with あ, painted 'Lật thẻ' and 'Tiếp' buttons, and a menu bar reading Kotoba · Hiragana · Katakana · Quiz.",
+      "case": "Strong on clarity, since a stack of flashcards is the product itself; less audience recognition than Teletext.",
+      "risk": "Pure 1-bit can feel austere, and dithered grays have to hold contrast.",
+      "hero": "https://impeccable.style/worlds/cards/medium-native-hypercard-stack-shoebox-hero.webp"
+    },
+    {
+      "id": "challenger-console",
+      "label": "Console Memory Void",
+      "verdict": "declined",
+      "lineage": "PS2 system menu",
+      "thesis": "Kana float as glowing towers in fog.",
+      "palette": ["#05070f", "#cfe0ff", "#ffb347"],
+      "materials": ["fog", "particles"],
+      "viewport": "Kana towers drifting in a void.",
+      "case": "Loses both: the atmosphere hides the chart.",
+      "kept": "The selected element rises.",
+      "risk": "Heavy WebGL, low legibility."
+    },
+    {
+      "id": "challenger-movida",
+      "label": "Movida Magazine Cover",
+      "verdict": "declined",
+      "lineage": "1980s Madrid scene magazines",
+      "thesis": "Kana thrown across a fluorescent cover.",
+      "palette": ["#ff2e93", "#b6ff00", "#000000", "#ffffff"],
+      "materials": ["misregistered ink", "angled cover lines"],
+      "viewport": "Scattered kana cover lines.",
+      "case": "Loses both: no reading order for a learner.",
+      "kept": "Total ink commitment.",
+      "risk": "Chaos."
+    },
+    {
+      "id": "challenger-coil",
+      "label": "Coiled Earth Tower",
+      "verdict": "declined",
+      "lineage": "coil-built clay towers",
+      "thesis": "Progress as courses of clay.",
+      "palette": ["#b5552f", "#6b3a22", "#efe6da"],
+      "materials": ["coil bands", "slip seams"],
+      "viewport": "Tower of study sessions.",
+      "case": "Loses both: the metaphor is far from language learning.",
+      "kept": "An ascending record of real work.",
+      "risk": "Earthy cliché."
+    },
+    {
+      "id": "challenger-crease",
+      "label": "Curved-Crease Shell",
+      "verdict": "declined",
+      "lineage": "curved-crease origami",
+      "thesis": "One stroke folds into form.",
+      "palette": ["#f3ecdf", "#2a2a2a", "#8a8a8a"],
+      "materials": ["cotton paper", "compass arcs"],
+      "viewport": "A single arc shaping a kana.",
+      "case": "Loses both: cream paper and an italic serif are the default look.",
+      "kept": "One line drives the whole form.",
+      "risk": "Default look."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": false},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A friendly language-learning app landing page: mascot, green buttons, streaks.",
+    "palette": ["#ffffff", "#58cc02", "#1f2937", "#ff9ecb"],
+    "materials": ["rounded cards", "cartoon illustration", "sakura accents"],
+    "viewport": "Centered headline, mascot illustration, and 'Bắt đầu' / 'Tôi đã có tài khoản' buttons.",
+    "risk": "Looks like every other language app."
+  },
+  "steer": true
+}
