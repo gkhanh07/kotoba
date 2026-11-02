@@ -94,12 +94,12 @@ export function FlashcardApp({ cards, lang }: { cards: Vocab[]; lang: Lang }) {
           </button>
           <fieldset className={s.status}>
             <legend>{flipped ? t.grade : t.gradeHint}</legend>
-            <button type="button" disabled={!flipped} onClick={() => grade(false)}>{t.missed}</button>
-            <button type="button" disabled={!flipped} onClick={() => grade(true)}>{t.knew}</button>
+            <button type="button" className="btn btnGhost" disabled={!flipped} onClick={() => grade(false)}>{t.missed}</button>
+            <button type="button" className="btn" disabled={!flipped} onClick={() => grade(true)}>{t.knew}</button>
           </fieldset>
           <nav className={s.navigation} aria-label={t.title}>
             <button type="button" className="btn btnGhost" disabled={index === 0} onClick={() => move(index - 1)}>{t.previous}</button>
-            <button type="button" className="btn" disabled={index === order.length - 1} onClick={() => move(index + 1)}>{t.next}</button>
+            <button type="button" className="btn btnGhost" disabled={index === order.length - 1} onClick={() => move(index + 1)}>{t.next}</button>
           </nav>
           <p className={s.notice} role="status">{notice || (index === order.length - 1 ? t.end : "")}</p>
           <p className={s.footnote}>{t.saved}</p>

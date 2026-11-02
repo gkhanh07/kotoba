@@ -14,17 +14,6 @@ const body = Be_Vietnam_Pro({ weight: ["400", "500", "600"], subsets: ["latin", 
 // Study-legible kana; Japanese slices load by unicode-range, so no preload.
 const kana = Zen_Kaku_Gothic_New({ weight: ["500", "700"], subsets: ["latin"], preload: false, variable: "--font-kana" });
 
-// Direction contract, emitted as an HTML comment so it survives into the build.
-const CONTRACT = `<!--
-seed 6ba472bc · form: light-shadow-caustics-rain-night-cityscape
-THESIS: Learn to read the city — kana glowing on Tokyo shop signs in the rain, read in Vietnamese.
-OWN-WORLD: blue-hour street, neon sign lettering, wet-asphalt reflections, train-line light; amber is the one action colour.
-STORY: see a sign, tap it, read it; then learn the kana behind every sign and drill until they are truly remembered.
-FIRST VIEWPORT: rain over a skyline; real signs (ラーメン, カラオケ…) mirrored in the street; tapping one breaks it into kana with Vietnamese meaning; one framed amber action.
-FORM: phones unroll skyline, street and reflection into bands; answered quiz cards lock like a triggered trace; each reading keeps its ticket.
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
--->`;
-
 export async function generateMetadata(): Promise<Metadata> {
   const t = dict(await getLang()).meta;
   return { title: t.rootTitle, description: t.rootDesc };
@@ -37,7 +26,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang={await getLang()} className={`${sign.variable} ${title.variable} ${body.variable} ${kana.variable}`}>
       <body>
-        <template dangerouslySetInnerHTML={{ __html: CONTRACT }} />
         {children}
         <Sync uid={user?.email ?? null} />
       </body>

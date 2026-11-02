@@ -181,8 +181,8 @@ p { text-wrap: pretty; }
   text-shadow: none;
   box-shadow: none;
 }
-.btnGhost:hover,
-.btnGhost:active {
+.btnGhost:hover:not(:disabled),
+.btnGhost:active:not(:disabled) {
   background: var(--wet);
   color: var(--chalk);
   box-shadow: 0 0 0 1px var(--rule-strong);
