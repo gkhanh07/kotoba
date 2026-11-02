@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Arrow, SiteBar } from "./SiteBar";
+import { Arrow, SiteBar, SiteFooter } from "./SiteBar";
 import { Street } from "./Street";
 import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
@@ -111,6 +111,7 @@ export default async function Home() {
           kanaTotal={kana.length}
           vocabTotal={vocab.length}
         />
+        <SiteFooter />
       </>
     );
   }

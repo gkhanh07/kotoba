@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { isGroup, isScript } from "@/lib/kana";
 import { getKanaSet } from "@/lib/content";
-import { SiteBar } from "../SiteBar";
+import { SiteBar, SiteFooter } from "../SiteBar";
 import { KanaApp } from "./KanaApp";
 import { getLang } from "../LangSwitch";
 import { dict } from "@/lib/i18n";
@@ -21,8 +21,9 @@ export default async function KanaPage(props: PageProps<"/kana">) {
 
   return (
     <>
-      <SiteBar current={mode} />
+      <SiteBar current="kana" />
       <KanaApp key={`${script}-${group}-${mode}`} set={set} mode={mode} lang={lang} />
+      <SiteFooter />
     </>
   );
 }

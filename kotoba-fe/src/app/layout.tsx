@@ -22,12 +22,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export const viewport: Viewport = { themeColor: "#050608", colorScheme: "dark" };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const user = await currentUser();
+  // BE down: render the shell without Sync; the page's own call throws to app/error.tsx.
+  const user = await currentUser().catch(() => undefined);
   return (
     <html lang={await getLang()} className={`${sign.variable} ${title.variable} ${body.variable} ${kana.variable}`}>
       <body>
         {children}
-        <Sync uid={user?.email ?? null} />
+        {user !== undefined && <Sync uid={user?.email ?? null} />}
       </body>
     </html>
   );

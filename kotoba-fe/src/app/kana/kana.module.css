@@ -529,7 +529,7 @@
 }
 
 .choice:disabled {
-  color: var(--silver-mute);
+  color: var(--silver-dim);
   cursor: default;
 }
 
@@ -652,9 +652,9 @@
 }
 
 .resetBtn:disabled {
-  color: var(--silver-mute);
+  color: var(--silver-dim);
   text-decoration: none;
-  cursor: default;
+  cursor: not-allowed;
 }
 
 /* ── small screens ───────────────────────────── */

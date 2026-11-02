@@ -98,6 +98,20 @@ export async function resetPassword(resetToken: string, password: string): Promi
   return r ?? {};
 }
 
+// The BE keeps this session and ends the others.
+export async function changePassword(current: string, password: string): Promise<{ error?: AuthError }> {
+  const r = await attempt(async () => api("/me/password", { method: "POST", body: { current, password }, token: await token() }), ["credentials"]);
+  return r ?? {};
+}
+
+// The BE deletes the user, its sessions and its synced cards.
+export async function deleteAccount(password: string): Promise<{ error?: AuthError }> {
+  const r = await attempt(async () => api("/me", { method: "DELETE", body: { password }, token: await token() }), ["credentials"]);
+  if (r) return r;
+  (await cookies()).delete(SESSION);
+  return {};
+}
+
 // Sends the browser's changes, gets the whole account state back. null: no session (signed out meanwhile).
 export async function pushProgress(push: { cards: Progress["cards"]; activity: Progress["activity"] | null; forget: SyncState["forget"] }) {
   const t = await token();

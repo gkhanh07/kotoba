@@ -21,7 +21,10 @@ type Split3 = { a: string; b: string; c: string };
 type Split4 = { a: string; b: string; c: string; d: string };
 
 type Dict = {
-  nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string };
+  nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string; menu: string; library: string; kana: string; flashcards: string; settings: string };
+  footer: { kanji: string; dict: string; legal: string };
+  notFound: { title: string; body: string; home: string };
+  down: { title: string; body: string; retry: string };
   meta: { rootTitle: string; rootDesc: string; kanaTitle: string; kanaDesc: string };
   home: {
     h1a: string;
@@ -101,13 +104,29 @@ type Dict = {
 const DICT: Record<Lang, Dict> = {
   vi: {
     nav: {
-      home: "Kotoba, trang chủ",
+      home: ", trang chủ",
       main: "Chính",
       chart: "Bảng chữ",
       quiz: "Luyện tập",
       lang: "Ngôn ngữ",
       login: "Đăng nhập",
       logout: "Đăng xuất",
+      menu: "Menu",
+      library: "Thư viện",
+      kana: "Bảng chữ cái",
+      flashcards: "Thẻ từ vựng",
+      settings: "Cài đặt tài khoản",
+    },
+    footer: { kanji: "Dữ liệu kanji", dict: "Từ điển", legal: "Điều khoản và quyền riêng tư" },
+    notFound: {
+      title: "Không tìm thấy trang · Kotoba",
+      body: "Biển này chưa thắp đèn. Trang bạn tìm không có ở đây.",
+      home: "Về trang chủ",
+    },
+    down: {
+      title: "Mất điện một lúc",
+      body: "Không kết nối được máy chủ. Tiến độ của bạn vẫn lưu trên máy này.",
+      retry: "Thử lại",
     },
     meta: {
       rootTitle: "Kotoba · Học tiếng Nhật cho người Việt",
@@ -213,13 +232,29 @@ const DICT: Record<Lang, Dict> = {
 
   en: {
     nav: {
-      home: "Kotoba, home",
+      home: ", home",
       main: "Main",
       chart: "Chart",
       quiz: "Practice",
       lang: "Language",
       login: "Log in",
       logout: "Log out",
+      menu: "Menu",
+      library: "Library",
+      kana: "Kana chart",
+      flashcards: "Flashcards",
+      settings: "Account settings",
+    },
+    footer: { kanji: "Kanji data", dict: "Dictionary", legal: "Terms and privacy" },
+    notFound: {
+      title: "Page not found · Kotoba",
+      body: "This sign isn't lit yet. The page you're looking for isn't here.",
+      home: "Back home",
+    },
+    down: {
+      title: "The power's out for a moment",
+      body: "Can't reach the server. Your progress is still saved on this device.",
+      retry: "Try again",
     },
     meta: {
       rootTitle: "Kotoba · Learn to read Japanese",

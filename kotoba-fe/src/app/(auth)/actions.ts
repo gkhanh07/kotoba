@@ -1,7 +1,10 @@
 "use server";
+import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { currentUser, pushProgress, requestReset, resetPassword, saveProfile, signIn, signOut, signUp } from "@/lib/auth";
-import { isEmail, isExam, isGoal, isMinutes, isName, PASSWORD_MIN, type FormState } from "@/lib/account";
+import { changePassword, currentUser, deleteAccount, pushProgress, requestReset, resetPassword, saveProfile, signIn, signOut, signUp } from "@/lib/auth";
+import { isLang, LANG_COOKIE } from "@/lib/i18n";
+import { isEmail, isExam, isGoal, isMinutes, isName, PASSWORD_MIN, safePath, type FormState } from "@/lib/account";
 
 const text = (form: FormData, key: string) => {
   const v = form.get(key);
@@ -18,7 +21,7 @@ export async function login(_prev: FormState, form: FormData): Promise<FormState
   if (password.length < PASSWORD_MIN) return { error: "password", values };
   const r = await signIn(email, password, remember);
   if ("error" in r) return { error: r.error, values };
-  redirect(r.onboarded ? "/" : "/onboarding");
+  redirect(r.onboarded ? safePath(text(form, "next")) : "/onboarding");
 }
 
 export async function register(_prev: FormState, form: FormData): Promise<FormState> {
@@ -51,9 +54,8 @@ export async function reset(_prev: FormState, form: FormData): Promise<FormState
   return { sent: true, values: {} };
 }
 
-export async function saveOnboarding(_prev: FormState, form: FormData): Promise<FormState> {
-  const user = await currentUser();
-  if (!user) redirect("/login");
+// Validates and saves the profile fields; null when saved.
+async function profileFrom(form: FormData): Promise<FormState | null> {
   const name = text(form, "name").trim();
   const goal = text(form, "goal");
   const exam = text(form, "exam");
@@ -64,7 +66,50 @@ export async function saveOnboarding(_prev: FormState, form: FormData): Promise<
   if (!isExam(exam)) return { error: "exam", values };
   if (!isMinutes(minutes)) return { error: "minutes", values };
   await saveProfile({ name: name || null, goal, exam, minutes });
+  return null;
+}
+
+export async function saveOnboarding(_prev: FormState, form: FormData): Promise<FormState> {
+  if (!(await currentUser())) redirect("/login");
+  const r = await profileFrom(form);
+  if (r) return r;
   redirect("/");
+}
+
+export async function saveSettings(_prev: FormState, form: FormData): Promise<FormState> {
+  if (!(await currentUser())) redirect("/login?next=/settings");
+  const r = await profileFrom(form);
+  if (r) return r;
+  revalidatePath("/", "layout");
+  const values = { name: text(form, "name").trim(), goal: text(form, "goal"), exam: text(form, "exam"), minutes: text(form, "minutes") };
+  return { sent: true, at: Date.now(), values };
+}
+
+export async function newPassword(_prev: FormState, form: FormData): Promise<FormState> {
+  if (!(await currentUser())) redirect("/login?next=/settings");
+  const current = text(form, "current");
+  const password = text(form, "password");
+  if (!current || current.length > 200) return { error: "current", values: {} };
+  if (password.length < PASSWORD_MIN || password.length > 200) return { error: "password", values: {} };
+  const { error } = await changePassword(current, password);
+  if (error) return { error: "current", values: {} };
+  return { sent: true, at: Date.now(), values: {} };
+}
+
+// No redirect: the client wipes local progress first, then leaves (SettingsForms Remove).
+export async function removeAccount(_prev: FormState, form: FormData): Promise<FormState> {
+  if (!(await currentUser())) redirect("/login?next=/settings");
+  const password = text(form, "password");
+  if (!password || password.length > 200) return { error: "current", values: {} };
+  const { error } = await deleteAccount(password);
+  if (error) return { error: "current", values: {} };
+  return { sent: true, values: {} };
+}
+
+export async function setLang(form: FormData) {
+  const v = form.get("lang");
+  (await cookies()).set(LANG_COOKIE, isLang(v) ? v : "vi", { path: "/", maxAge: 31536000, sameSite: "lax" });
+  revalidatePath("/", "layout");
 }
 
 export async function logout() {

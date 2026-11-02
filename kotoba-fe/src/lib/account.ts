@@ -11,13 +11,17 @@ export type Minutes = (typeof MINUTES)[number];
 export type Profile = { email: string; name?: string; goal?: Goal; exam?: string; minutes?: Minutes };
 
 // Field problems caught here, plus refusals only the BE can give.
-export type ErrorCode = "email" | "password" | "name" | "goal" | "exam" | "minutes" | "credentials" | "rate" | "taken" | "token";
+export type ErrorCode = "email" | "password" | "name" | "goal" | "exam" | "minutes" | "current" | "credentials" | "rate" | "taken" | "token";
 // What an action hands back to its form. Never carries the password.
 export type FormState = {
   error?: ErrorCode;
   sent?: boolean;
+  at?: number; // when it saved: keys the fading "Saved" line
   values: { email?: string; remember?: boolean; token?: string; name?: string; goal?: string; exam?: string; minutes?: string };
 };
+
+// Only same-site paths: "//evil.com" and "/\evil.com" would leave the site.
+export const safePath = (v: unknown) => (typeof v === "string" && /^\/(?![/\\])/.test(v) ? v : "/");
 
 export const isEmail = (v: unknown): v is string =>
   typeof v === "string" && v.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -68,6 +72,7 @@ const vi = {
     goal: "Hãy chọn một mục tiêu.",
     exam: "Kỳ thi chưa hợp lệ.",
     minutes: "Hãy chọn số phút mỗi ngày.",
+    current: "Mật khẩu hiện tại chưa đúng.",
     credentials: "Email hoặc mật khẩu chưa đúng.",
     rate: "Thử quá nhiều lần. Hãy đợi một lúc rồi thử lại.",
     taken: "Email này đã có tài khoản. Hãy đăng nhập.",
@@ -117,6 +122,28 @@ const vi = {
     submit: "Lưu",
     skip: "Để sau",
   },
+  settings: {
+    title: "Cài đặt",
+    lede: (email: string) => `Tài khoản ${email}. Mỗi mục lưu riêng.`,
+    profile: "Hồ sơ",
+    name: "Tên hiển thị",
+    save: "Lưu thay đổi",
+    saved: "Đã lưu.",
+    lang: "Ngôn ngữ",
+    langNote: "Đổi ngay khi chọn.",
+    password: "Mật khẩu",
+    current: "Mật khẩu hiện tại",
+    next: "Mật khẩu mới",
+    change: "Đổi mật khẩu",
+    changed: "Đã đổi mật khẩu. Các thiết bị khác đã bị đăng xuất.",
+    remove: "Xóa tài khoản",
+    removeBody: "Xóa vĩnh viễn tài khoản và tiến độ đã đồng bộ. Không hoàn tác được.",
+    removeOpen: "Xóa tài khoản…",
+    removeTitle: "Xóa tài khoản này?",
+    removeAsk: "Nhập mật khẩu để xác nhận. Tiến độ trên máy này cũng bị xóa.",
+    removeConfirm: "Xóa vĩnh viễn",
+    cancel: "Hủy",
+  },
 };
 
 const en: typeof vi = {
@@ -131,6 +158,7 @@ const en: typeof vi = {
     goal: "Pick a goal.",
     exam: "That exam date isn't valid.",
     minutes: "Pick how many minutes a day.",
+    current: "Your current password is wrong.",
     credentials: "Wrong email or password.",
     rate: "Too many attempts. Wait a while and try again.",
     taken: "This email already has an account. Log in instead.",
@@ -179,6 +207,28 @@ const en: typeof vi = {
     minutesUnit: (n: number) => `${n} min`,
     submit: "Save",
     skip: "Later",
+  },
+  settings: {
+    title: "Settings",
+    lede: (email: string) => `Account ${email}. Each section saves on its own.`,
+    profile: "Profile",
+    name: "Display name",
+    save: "Save changes",
+    saved: "Saved.",
+    lang: "Language",
+    langNote: "Switches as soon as you pick.",
+    password: "Password",
+    current: "Current password",
+    next: "New password",
+    change: "Change password",
+    changed: "Password changed. Other devices were logged out.",
+    remove: "Delete account",
+    removeBody: "Permanently deletes your account and synced progress. This can't be undone.",
+    removeOpen: "Delete account…",
+    removeTitle: "Delete this account?",
+    removeAsk: "Enter your password to confirm. Progress on this device is deleted too.",
+    removeConfirm: "Delete permanently",
+    cancel: "Cancel",
   },
 };
 
