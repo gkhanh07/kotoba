@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { accountText, GOALS, MINUTES, type FormState } from "@/lib/account";
 import type { Lang } from "@/lib/i18n";
-import { forgot, login, register, saveOnboarding } from "./actions";
+import { forgot, login, register, reset, saveOnboarding } from "./actions";
 import s from "./auth.module.css";
 
 const empty: FormState = { values: {} };
@@ -73,7 +73,6 @@ export function LoginForm({ lang }: { lang: Lang }) {
         <button type="submit" className="btn" disabled={pending}>{pending ? t.pending : t.login.submit}</button>
         <button type="button" className="btn btnGhost" disabled>{t.google}</button>
       </form>
-      <p className={s.note}>{t.demo}</p>
       <p className={s.links}>
         <Link href="/forgot">{t.login.forgot}</Link>
         <Link href="/register">{t.login.register}</Link>
@@ -96,7 +95,6 @@ export function RegisterForm({ lang }: { lang: Lang }) {
         <button type="submit" className="btn" disabled={pending}>{pending ? t.pending : t.register.submit}</button>
         <button type="button" className="btn btnGhost" disabled>{t.google}</button>
       </form>
-      <p className={s.note}>{t.demo}</p>
       <p className={s.links}>
         <Link href="/login">{t.register.login}</Link>
       </p>
@@ -125,6 +123,34 @@ export function ForgotForm({ lang }: { lang: Lang }) {
       <p className={s.links}>
         <Link href="/login">{t.forgot.back}</Link>
       </p>
+    </>
+  );
+}
+
+export function ResetForm({ lang, token }: { lang: Lang; token: string }) {
+  const t = accountText[lang];
+  const [state, action, pending] = useActionState(reset, { values: { token } });
+  return (
+    <>
+      <Heading title={t.reset.title} lede={t.reset.lede} />
+      {state.sent ? (
+        <div role="status" className={s.form}>
+          <p>{t.reset.done}</p>
+          <Link href="/login" className="btn">{t.reset.login}</Link>
+        </div>
+      ) : (
+        <form action={action} className={s.form}>
+          <input type="hidden" name="token" value={token} />
+          <Password label={t.reset.password} />
+          <Problem message={state.error && t.errors[state.error]} />
+          <button type="submit" className="btn" disabled={pending}>{pending ? t.pending : t.reset.submit}</button>
+        </form>
+      )}
+      {!state.sent && (
+        <p className={s.links}>
+          {state.error === "token" ? <Link href="/forgot">{t.reset.again}</Link> : <Link href="/login">{t.forgot.back}</Link>}
+        </p>
+      )}
     </>
   );
 }

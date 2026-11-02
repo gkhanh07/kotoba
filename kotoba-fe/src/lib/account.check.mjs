@@ -1,6 +1,6 @@
 // Run: node --experimental-strip-types src/lib/account.check.mjs
 import assert from "node:assert/strict";
-import { examDate, isEmail, isExam, isGoal, isMinutes, isName, jlptSessions, parseProfile } from "./account.ts";
+import { examDate, isEmail, isExam, isGoal, isMinutes, isName, jlptSessions } from "./account.ts";
 
 const values = (now, n = 4) => jlptSessions(now, n).map(s => s.value);
 assert.deepEqual(values(new Date(2026, 9, 15)), ["2026-12", "2027-07", "2027-12", "2028-07"]);
@@ -22,12 +22,4 @@ assert.equal(examDate("2027-07").getDate(), 4);
 assert.equal(examDate("unknown"), null);
 assert.equal(examDate("2027-08"), null);
 
-const ok = parseProfile(JSON.stringify({ email: "a@b.co", name: "Khanh", goal: "N3", exam: "2027-07", minutes: 30 }));
-assert.deepEqual(ok, { email: "a@b.co", name: "Khanh", goal: "N3", exam: "2027-07", minutes: 30 });
-assert.equal(parseProfile(JSON.stringify({ email: "a@b.co" })).minutes, undefined);
-assert.equal(parseProfile(JSON.stringify({ email: "a@b.co" })).name, undefined);
-for (const bad of [undefined, null, "", "broken", "[]", "5", JSON.stringify({ goal: "N3" }),
-  JSON.stringify({ email: "a@b.co", name: "" }), JSON.stringify({ email: "a@b.co", name: 5 }),
-  JSON.stringify({ email: "a@b.co", goal: "N9" }), JSON.stringify({ email: "a@b.co", minutes: 45 }),
-  JSON.stringify({ email: "a@b.co", exam: "soon" })]) assert.equal(parseProfile(bad), null, String(bad));
 console.log("account ok");

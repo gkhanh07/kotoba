@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { currentUser, saveProfile, signIn, signOut, signUp } from "@/lib/auth";
+import { currentUser, requestReset, resetPassword, saveProfile, signIn, signOut, signUp } from "@/lib/auth";
 import { isEmail, isExam, isGoal, isMinutes, isName, PASSWORD_MIN, type FormState } from "@/lib/account";
 
 const text = (form: FormData, key: string) => {
@@ -8,7 +8,7 @@ const text = (form: FormData, key: string) => {
   return typeof v === "string" ? v : "";
 };
 
-// Native input attributes catch most mistakes first; these re-check on the server.
+// Native input attributes catch most mistakes first; these re-check on the server, and the BE checks again.
 export async function login(_prev: FormState, form: FormData): Promise<FormState> {
   const email = text(form, "email").trim();
   const password = text(form, "password");
@@ -16,8 +16,9 @@ export async function login(_prev: FormState, form: FormData): Promise<FormState
   const values = { email, remember };
   if (!isEmail(email)) return { error: "email", values };
   if (password.length < PASSWORD_MIN) return { error: "password", values };
-  const { onboarded } = await signIn(email, password, remember);
-  redirect(onboarded ? "/" : "/onboarding");
+  const r = await signIn(email, password, remember);
+  if ("error" in r) return { error: r.error, values };
+  redirect(r.onboarded ? "/" : "/onboarding");
 }
 
 export async function register(_prev: FormState, form: FormData): Promise<FormState> {
@@ -28,15 +29,26 @@ export async function register(_prev: FormState, form: FormData): Promise<FormSt
   if (!isEmail(email)) return { error: "email", values };
   if (password.length < PASSWORD_MIN) return { error: "password", values };
   if (!isGoal(goal)) return { error: "goal", values };
-  await signUp(email, password, goal);
+  const { error } = await signUp(email, password, goal);
+  if (error) return { error, values };
   redirect("/onboarding");
 }
 
 export async function forgot(_prev: FormState, form: FormData): Promise<FormState> {
   const email = text(form, "email").trim();
   if (!isEmail(email)) return { error: "email", values: { email } };
-  // ponytail: no mail is sent; the same reply for any email, so it never reveals which have accounts. Call the BE here later.
+  await requestReset(email);
   return { sent: true, values: { email } };
+}
+
+export async function reset(_prev: FormState, form: FormData): Promise<FormState> {
+  const token = text(form, "token");
+  const password = text(form, "password");
+  const values = { token };
+  if (password.length < PASSWORD_MIN) return { error: "password", values };
+  const { error } = await resetPassword(token, password);
+  if (error) return { error, values };
+  return { sent: true, values: {} };
 }
 
 export async function saveOnboarding(_prev: FormState, form: FormData): Promise<FormState> {
@@ -51,7 +63,7 @@ export async function saveOnboarding(_prev: FormState, form: FormData): Promise<
   if (!isGoal(goal)) return { error: "goal", values };
   if (!isExam(exam)) return { error: "exam", values };
   if (!isMinutes(minutes)) return { error: "minutes", values };
-  await saveProfile({ email: user.email, name: name || undefined, goal, exam, minutes });
+  await saveProfile({ name: name || null, goal, exam, minutes });
   redirect("/");
 }
 
