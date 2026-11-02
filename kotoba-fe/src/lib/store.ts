@@ -1,6 +1,6 @@
-// The guest's SRS deck in localStorage, shared by every page through one external store.
+// The SRS deck in localStorage, shared by every page through one external store.
 import { useSyncExternalStore } from "react";
-import { dayKey } from "./activity";
+import { ACTIVITY_KEY, dayKey, type Activity } from "./activity";
 import { OLD_FLASHCARDS_KEY, OLD_PROGRESS_KEY, SRS_KEY, apply, forget, migrate, parseSrs, type Srs } from "./srs";
 
 export type Deck = { srs: Srs; ok: boolean }; // ok = false: storage blocked or unreadable, changes live in memory only
@@ -15,7 +15,7 @@ function read(): Deck {
   try {
     let r = localStorage.getItem(SRS_KEY);
     if (r === null) {
-      // ponytail: old keys stay as a fallback; clearing local data must remove them too or this re-imports them.
+      // ponytail: old keys stay as a fallback; clearLocal removes them too or this would re-import them.
       r = JSON.stringify(migrate(localStorage.getItem(OLD_PROGRESS_KEY), localStorage.getItem(OLD_FLASHCARDS_KEY), today(), Date.now()));
       localStorage.setItem(SRS_KEY, r);
     }
@@ -63,4 +63,57 @@ export function review(id: string, correct: boolean): Srs {
   return after;
 }
 
-export const resetDeck = (prefix: string) => write(forget(read().srs, prefix));
+// Signed-in sync bookkeeping. owner: the account this browser's data belongs to (its email).
+// lastSync: when the last applied push started; cards changed after it are what the next push sends.
+// forget: resets not yet sent, so the account drops those cards too.
+const SYNC_KEY = "kotoba.sync.v1";
+export type SyncState = { owner?: string; lastSync: number; forget: { prefix: string; at: number }[] };
+export type Progress = { cards: Srs; activity: Activity };
+
+export function syncState(): SyncState {
+  try {
+    const o = JSON.parse(localStorage.getItem(SYNC_KEY) ?? "null") as SyncState | null;
+    if (o && typeof o.lastSync === "number" && Array.isArray(o.forget)) return o;
+  } catch {}
+  return { lastSync: 0, forget: [] };
+}
+
+// What a push compares against to tell whether the user studied while it was in flight.
+export function snapshot() {
+  try {
+    return `${localStorage.getItem(SRS_KEY)}\n${localStorage.getItem(ACTIVITY_KEY)}`;
+  } catch {
+    return "";
+  }
+}
+
+// Tells every useDeck / useSyncExternalStore reader in this tab to re-read storage.
+const announce = () => window.dispatchEvent(new StorageEvent("storage"));
+
+export function resetDeck(prefix: string) {
+  const st = syncState();
+  // Guest data that never synced has nothing on an account to forget.
+  if (st.owner) {
+    try {
+      localStorage.setItem(SYNC_KEY, JSON.stringify({ ...st, forget: [...st.forget, { prefix, at: Date.now() }] }));
+    } catch {}
+  }
+  write(forget(read().srs, prefix));
+}
+
+export function applyRemote(p: Progress, owner: string, lastSync: number) {
+  try {
+    localStorage.setItem(SRS_KEY, JSON.stringify(p.cards));
+    localStorage.setItem(ACTIVITY_KEY, JSON.stringify(p.activity));
+    localStorage.setItem(SYNC_KEY, JSON.stringify({ owner, lastSync, forget: [] }));
+  } catch {}
+  announce();
+}
+
+// Sign-out: nothing of this account stays in the browser. The pre-SRS keys go too, or read() re-imports them.
+export function clearLocal() {
+  try {
+    for (const k of [SRS_KEY, ACTIVITY_KEY, SYNC_KEY, OLD_PROGRESS_KEY, OLD_FLASHCARDS_KEY]) localStorage.removeItem(k);
+  } catch {}
+  announce();
+}

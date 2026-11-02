@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { currentUser, requestReset, resetPassword, saveProfile, signIn, signOut, signUp } from "@/lib/auth";
+import { currentUser, pushProgress, requestReset, resetPassword, saveProfile, signIn, signOut, signUp } from "@/lib/auth";
 import { isEmail, isExam, isGoal, isMinutes, isName, PASSWORD_MIN, type FormState } from "@/lib/account";
 
 const text = (form: FormData, key: string) => {
@@ -70,4 +70,9 @@ export async function saveOnboarding(_prev: FormState, form: FormData): Promise<
 export async function logout() {
   await signOut();
   redirect("/");
+}
+
+// Called by Sync.tsx; the BE validates the push.
+export async function syncProgress(push: Parameters<typeof pushProgress>[0]) {
+  return pushProgress(push);
 }

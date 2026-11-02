@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
+import { currentUser } from "@/lib/auth";
+import { Sync } from "./Sync";
 import { Be_Vietnam_Pro, Dela_Gothic_One, Saira_Condensed, Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 
@@ -31,11 +33,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export const viewport: Viewport = { themeColor: "#050608", colorScheme: "dark" };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const user = await currentUser();
   return (
     <html lang={await getLang()} className={`${sign.variable} ${title.variable} ${body.variable} ${kana.variable}`}>
       <body>
         <template dangerouslySetInnerHTML={{ __html: CONTRACT }} />
         {children}
+        <Sync uid={user?.email ?? null} />
       </body>
     </html>
   );

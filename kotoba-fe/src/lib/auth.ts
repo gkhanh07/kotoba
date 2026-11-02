@@ -4,6 +4,7 @@ import { cache } from "react";
 import { cookies, headers } from "next/headers";
 import { api, ApiError } from "./api";
 import type { Goal, Profile } from "./account";
+import type { Progress, SyncState } from "./store";
 
 const SESSION = "kotoba.session";
 
@@ -95,4 +96,16 @@ export async function requestReset(email: string) {
 export async function resetPassword(resetToken: string, password: string): Promise<{ error?: AuthError }> {
   const r = await attempt(() => api("/auth/reset", { method: "POST", body: { token: resetToken, password } }), ["token"]);
   return r ?? {};
+}
+
+// Sends the browser's changes, gets the whole account state back. null: no session (signed out meanwhile).
+export async function pushProgress(push: { cards: Progress["cards"]; activity: Progress["activity"] | null; forget: SyncState["forget"] }) {
+  const t = await token();
+  if (!t) return null;
+  try {
+    return await api<Progress>("/progress", { method: "PUT", body: push, token: t });
+  } catch (e) {
+    if (e instanceof ApiError && e.status === 401) return null;
+    throw e;
+  }
 }

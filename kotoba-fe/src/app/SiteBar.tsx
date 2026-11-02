@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getLang, LangSwitch } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
-import { logout } from "./(auth)/actions";
+import { LogoutButton } from "./Sync";
 
 export function Arrow() {
   return (
@@ -29,9 +29,7 @@ export async function SiteBar({ current }: { current?: "chart" | "quiz" | "flash
         {user ? (
           <>
             <span className="who" title={user.email}>{user.email}</span>
-            <form action={logout}>
-              <button type="submit" className="logout">{t.logout}</button>
-            </form>
+            <LogoutButton label={t.logout} />
           </>
         ) : (
           <Link href="/login">{t.login}</Link>
