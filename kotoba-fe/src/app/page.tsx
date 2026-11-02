@@ -3,6 +3,10 @@ import { Arrow, SiteBar } from "./SiteBar";
 import { Street } from "./Street";
 import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
+import { currentUser } from "@/lib/auth";
+import { getKanaSet } from "@/lib/kana";
+import { flashcards } from "@/lib/flashcards";
+import { Dashboard } from "./Dashboard";
 import s from "./page.module.css";
 
 // Three depth planes, far to near. Rim is the lit top edge, win scales the windows
@@ -95,6 +99,22 @@ const LAMPS = [
 
 export default async function Home() {
   const lang = await getLang();
+  const user = await currentUser();
+  if (user) {
+    const sets = await Promise.all([getKanaSet("hiragana"), getKanaSet("katakana")]);
+    return (
+      <>
+        <SiteBar />
+        <Dashboard
+          lang={lang}
+          name={user.profile?.name ?? user.email.split("@")[0]}
+          profile={user.profile}
+          kanaTotal={sets.reduce((n, set) => n + set.items.length, 0)}
+          vocabTotal={flashcards.length}
+        />
+      </>
+    );
+  }
   const t = dict(lang).home;
   const lampLabels = [t.lampMastered, t.lampLearning, t.lampUnseen];
 

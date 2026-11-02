@@ -1,0 +1,23 @@
+.auth { padding: clamp(1.5rem, 4vw, 3.5rem) var(--pad-x) 4rem; }
+.panel { max-width: 26rem; margin: 0 auto; }
+.panel h1 { font-size: clamp(2.2rem, 5vw, 3.25rem); color: var(--silver); text-shadow: var(--glow-cool); }
+.lede { margin-top: .75rem; color: var(--silver-dim); }
+.form { display: grid; gap: 1.25rem; margin-top: 2rem; }
+.form button { justify-content: center; }
+.field { display: grid; gap: .4rem; color: var(--silver); font-size: .9rem; }
+.field input, .field select { min-height: 48px; padding: 0 .9rem; background: var(--asphalt); border: 1px solid var(--rule); border-radius: 2px; color: var(--chalk); font: inherit; font-size: 1rem; }
+.field input:hover, .field select:hover { border-color: var(--rule-strong); }
+.check { display: flex; align-items: center; gap: .65rem; min-height: 44px; color: var(--silver); }
+.check input { width: 1.15rem; height: 1.15rem; accent-color: var(--amber); }
+.choice { display: flex; flex-wrap: wrap; gap: .5rem; border: 0; padding: 0; margin: 0; min-width: 0; }
+.choice legend { width: 100%; margin-bottom: .6rem; color: var(--silver); font-size: .9rem; }
+.choice label { position: relative; }
+.choice span { display: inline-flex; align-items: center; justify-content: center; min-width: 3.25rem; min-height: 44px; padding: .55rem 1rem; border: 1px solid var(--rule); border-radius: 2px; cursor: pointer; }
+.choice span:hover { background: var(--wet); }
+.choice input:checked + span { color: var(--amber); border-color: var(--amber); background: var(--spill-amber); }
+.choice input:focus-visible + span { outline: 2px solid var(--amber); outline-offset: 3px; }
+.error { color: var(--neon-soft); }
+.note { margin-top: 1.25rem; color: var(--silver-dim); font-size: .85rem; }
+.links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; margin-top: .75rem; font-size: .9rem; }
+.links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--silver); }
+.links a:hover { color: var(--chalk); }

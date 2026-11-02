@@ -19,7 +19,7 @@ type Split3 = { a: string; b: string; c: string };
 type Split4 = { a: string; b: string; c: string; d: string };
 
 type Dict = {
-  nav: { home: string; main: string; chart: string; quiz: string; lang: string };
+  nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string };
   meta: { rootTitle: string; rootDesc: string; kanaTitle: string; kanaDesc: string };
   home: {
     h1a: string;
@@ -100,6 +100,8 @@ const DICT: Record<Lang, Dict> = {
       chart: "Bảng chữ",
       quiz: "Luyện tập",
       lang: "Ngôn ngữ",
+      login: "Đăng nhập",
+      logout: "Đăng xuất",
     },
     meta: {
       rootTitle: "Kotoba · Học tiếng Nhật cho người Việt",
@@ -132,7 +134,7 @@ const DICT: Record<Lang, Dict> = {
       lampAria: (lit) => `${lit} trên 3 lần đúng liên tiếp`,
       lampCaption: "Ví dụ: ba đèn sáng là một chữ đã nhớ.",
       footerA: "Kotoba: học tiếng Nhật bằng tiếng Việt.",
-      footerB: "Chưa có tài khoản, và bạn chưa cần. Tiến độ nằm trong trình duyệt của bạn.",
+      footerB: "Không cần tài khoản để luyện tập. Tiến độ nằm trong trình duyệt của bạn.",
     },
     street: {
       signsAria: "Biển hiệu, chạm để đọc",
@@ -201,6 +203,8 @@ const DICT: Record<Lang, Dict> = {
       chart: "Chart",
       quiz: "Practice",
       lang: "Language",
+      login: "Log in",
+      logout: "Log out",
     },
     meta: {
       rootTitle: "Kotoba · Learn to read Japanese",
@@ -233,7 +237,7 @@ const DICT: Record<Lang, Dict> = {
       lampAria: (lit) => `${lit} of 3 correct in a row`,
       lampCaption: "Three lamps lit means the letter is learnt.",
       footerA: "Kotoba: learn to read Japanese, one sign at a time.",
-      footerB: "No account, and you don't need one yet. Your progress stays in your browser.",
+      footerB: "You don't need an account to practise. Your progress stays in your browser.",
     },
     street: {
       signsAria: "Shop signs, tap one to read it",

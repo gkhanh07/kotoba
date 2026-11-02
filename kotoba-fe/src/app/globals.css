@@ -230,7 +230,8 @@ p { text-wrap: pretty; }
   display: flex;
   gap: clamp(14px, 3vw, 32px);
 }
-.bar nav a {
+.bar nav a,
+.bar nav .logout {
   font-family: var(--font-title), sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
@@ -241,8 +242,11 @@ p { text-wrap: pretty; }
   border-bottom: 1.5px solid transparent;
   transition: color 0.2s, border-color 0.2s;
 }
-.bar nav a:hover { color: var(--chalk); border-color: var(--rule); }
+.bar nav a:hover,
+.bar nav .logout:hover { color: var(--chalk); border-color: var(--rule); }
 .bar nav a[aria-current="page"] { color: var(--amber); border-color: var(--amber); }
+.bar nav .logout { background: none; border-width: 0 0 1.5px; cursor: pointer; }
+.bar nav .who { align-self: center; max-width: 16ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.9rem; color: var(--silver-dim); }
 
 .langSwitch {
   display: inline-flex;
@@ -265,4 +269,12 @@ p { text-wrap: pretty; }
 .langSwitch button[aria-pressed="true"] {
   color: var(--night);
   background: var(--amber);
+}
+
+@media (max-width: 640px) {
+  .bar { flex-wrap: wrap; }
+  .bar nav { width: 100%; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+  .bar nav a,
+  .bar nav .logout { min-height: 44px; }
+  .bar nav .who { display: none; }
 }

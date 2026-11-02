@@ -1,0 +1,50 @@
+.app { padding: clamp(1.5rem, 4vw, 3.5rem) var(--pad-x) 4rem; }
+.heading h1 { font-size: clamp(2.6rem, 5vw, 4.25rem); color: var(--silver); text-shadow: var(--glow-cool); }
+.heading p { margin-top: 1rem; color: var(--silver-dim); max-width: 65ch; }
+.study { max-width: 48rem; margin: 2.5rem auto 0; }
+.toolbar, .tools, .progress, .navigation { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.toolbar { flex-wrap: wrap; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+.toolbar p { color: var(--silver-dim); font-size: .9rem; }
+.tools { gap: 1.25rem; flex-wrap: wrap; }
+.tools button { min-height: 44px; color: var(--amber); text-decoration: underline; text-underline-offset: .25em; font-size: .9rem; }
+.tools button:hover { color: var(--amber-core); }
+.tools button:disabled { color: var(--silver-dim); cursor: not-allowed; }
+.progress { padding: 1.25rem 0; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.progress span { flex-shrink: 0; }
+.progress progress { flex: 1; width: 100%; min-width: 0; height: 3px; border: 0; background: var(--rule); accent-color: var(--amber); }
+.progress progress::-webkit-progress-bar { background: var(--rule); }
+.progress progress::-webkit-progress-value { background: var(--amber); }
+.progress progress::-moz-progress-bar { background: var(--amber); }
+.card { display: block; width: 100%; perspective: 1200px; text-align: center; border-radius: 2px; }
+.inner { display: grid; transform-style: preserve-3d; transition: transform 420ms var(--ease-out); }
+.card[data-flipped="true"] .inner { transform: rotateY(180deg); }
+.face, .back { grid-area: 1 / 1; min-width: 0; min-height: 27rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(1.5rem, 5vw, 3rem); border: 1px solid var(--rule-strong); border-radius: 2px; background: var(--asphalt); backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow-wrap: anywhere; }
+.card:hover .face, .card:hover .back { border-color: var(--amber); }
+.back { transform: rotateY(180deg); }
+.word { font-size: clamp(2.8rem, 10vw, 5.5rem); line-height: 1.5; color: var(--cool-core); text-shadow: var(--glow-cool); }
+.hint { display: block; font-size: .8rem; color: var(--silver-dim); margin-top: 2rem; }
+.backWord { font-size: 1.7rem; color: var(--chalk); }
+.label { font-size: .75rem; color: var(--silver-dim); margin-top: 1rem; }
+.romaji, .translation { color: var(--silver-dim); }
+.meaning { font-size: 1.5rem; color: var(--chalk); }
+.notes { border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: 1rem; font-size: .85rem; max-width: 55ch; }
+.status { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; border: 0; margin: 1.5rem 0; }
+.status legend { width: 100%; text-align: center; margin-bottom: .65rem; color: var(--silver-dim); font-size: .85rem; }
+.status button { padding: .55rem 1rem; min-height: 44px; border: 1px solid var(--rule); border-radius: 2px; }
+.status button:hover { background: var(--wet); }
+.status button[aria-pressed="true"] { color: var(--amber); border-color: var(--amber); background: var(--spill-amber); }
+.navigation { margin-top: 1.5rem; }
+.notice { min-height: 1.8rem; margin-top: 1rem; text-align: center; color: var(--silver); font-size: .85rem; }
+.footnote { text-align: center; color: var(--silver-dim); font-size: .8rem; margin-top: .5rem; }
+.warning { margin-top: 1rem; color: var(--amber); }
+.empty { margin-top: 3rem; }
+@media (max-width: 480px) {
+  .study { margin-top: 1.5rem; }
+  .toolbar { gap: .25rem; }
+  .face, .back { min-height: 25rem; padding: 1.25rem; }
+  .navigation button { padding-inline: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inner { transition: none; }
+}
+

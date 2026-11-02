@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getLang, LangSwitch } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
+import { currentUser } from "@/lib/auth";
+import { logout } from "./(auth)/actions";
 
 export function Arrow() {
   return (
@@ -10,9 +12,10 @@ export function Arrow() {
   );
 }
 
-export async function SiteBar({ current }: { current?: "chart" | "quiz" }) {
+export async function SiteBar({ current }: { current?: "chart" | "quiz" | "flashcards" }) {
   const lang = await getLang();
   const t = dict(lang).nav;
+  const user = await currentUser();
   return (
     <header className="bar">
       <Link href="/" className="brand" aria-label={t.home}>
@@ -22,6 +25,17 @@ export async function SiteBar({ current }: { current?: "chart" | "quiz" }) {
       <nav aria-label={t.main}>
         <Link href="/kana" aria-current={current === "chart" ? "page" : undefined}>{t.chart}</Link>
         <Link href="/kana?mode=quiz" aria-current={current === "quiz" ? "page" : undefined}>{t.quiz}</Link>
+        <Link href="/flashcards" aria-current={current === "flashcards" ? "page" : undefined}>{lang === "vi" ? "Thẻ từ vựng" : "Flashcards"}</Link>
+        {user ? (
+          <>
+            <span className="who" title={user.email}>{user.email}</span>
+            <form action={logout}>
+              <button type="submit" className="logout">{t.logout}</button>
+            </form>
+          </>
+        ) : (
+          <Link href="/login">{t.login}</Link>
+        )}
         <LangSwitch lang={lang} />
       </nav>
     </header>

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "
 import { ROWS, type Kana, type KanaSet } from "@/lib/kana";
 import { dict, type Lang } from "@/lib/i18n";
 import { MASTERED_AT, applyAnswer, choicesFor, isMastered, load, pickNext, resetScript, save, streakOf, type Progress } from "@/lib/progress";
+import { logActivity } from "@/lib/activity";
 import s from "./kana.module.css";
 
 type Mode = "chart" | "quiz";
@@ -195,6 +196,7 @@ function Quiz({ set, progress, onProgress, otherHref, chartHref, t }: { set: Kan
       setAnswer({ id: k.id, correct });
       setSession((v) => ({ right: v.right + Number(correct), total: v.total + 1 }));
       onProgress(applyAnswer(progress, q.id, correct));
+      logActivity("kana", q.id);
       requestAnimationFrame(() => nextRef.current?.focus({ preventScroll: true }));
     },
     [q, answer, progress, onProgress],

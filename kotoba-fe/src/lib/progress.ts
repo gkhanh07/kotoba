@@ -1,7 +1,7 @@
 // Browser-side progress until kotoba-be has accounts. Pure functions + a tiny storage wrapper.
 
 export const MASTERED_AT = 3;
-const KEY = "kotoba.progress.v1";
+export const PROGRESS_KEY = "kotoba.progress.v1";
 
 export type Progress = Record<string, { streak: number; seen: number }>;
 
@@ -40,7 +40,7 @@ export function choicesFor<T extends { id: string }>(answer: T, items: T[], rand
 
 export function load(): Progress | null {
   try {
-    return JSON.parse(localStorage.getItem(KEY) ?? "{}") as Progress;
+    return JSON.parse(localStorage.getItem(PROGRESS_KEY) ?? "{}") as Progress;
   } catch {
     return null; // storage blocked or corrupt
   }
@@ -48,7 +48,7 @@ export function load(): Progress | null {
 
 export function save(p: Progress): boolean {
   try {
-    localStorage.setItem(KEY, JSON.stringify(p));
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
     return true;
   } catch {
     return false;
