@@ -1,0 +1,60 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  goal         String?
+  exam         String?
+  minutes      Int?
+  activity     String   @default("{}")
+  createdAt    DateTime @default(now())
+  tokens       Token[]
+  cards        Card[]
+}
+
+// Only sha256(token) is stored; the raw token lives in the user's cookie or reset link.
+model Token {
+  hash      String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind      String
+  expiresAt DateTime
+
+  @@index([userId])
+}
+
+// Content is reseeded from content/*.json on boot; data holds the JSON for the item.
+model Item {
+  id     String  @id
+  kind   String
+  lesson Int?
+  sort   Int
+  search String
+  data   String
+  cards  Card[]
+
+  @@index([kind, sort])
+}
+
+model Card {
+  userId String
+  itemId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Restrict)
+  box    Int
+  due    String?
+  at     Float
+
+  @@id([userId, itemId])
+}
