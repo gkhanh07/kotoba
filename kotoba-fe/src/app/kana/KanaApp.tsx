@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ROWS, type Kana, type KanaSet } from "@/lib/kana";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
+import { GROUPS, LAYOUT, type Group, type Kana, type KanaSet } from "@/lib/kana";
 import { dict, type Lang } from "@/lib/i18n";
 import { MASTERED_AT, applyAnswer, choicesFor, isMastered, load, pickNext, resetScript, save, streakOf, type Progress } from "@/lib/progress";
 import { logActivity } from "@/lib/activity";
@@ -10,6 +10,9 @@ import s from "./kana.module.css";
 
 type Mode = "chart" | "quiz";
 type T = ReturnType<typeof dict>["kana"];
+
+// Letter count, so CSS can shrink whole words (がっこう) to fit the same box as one kana.
+const fit = (char: string) => ({ "--len": [...char].length }) as CSSProperties;
 
 function Lamps({ streak, size, t }: { streak: number; size?: "lg"; t: T }) {
   return (
@@ -41,14 +44,15 @@ export function KanaApp({ set, mode, lang }: { set: KanaSet; mode: Mode; lang: L
 
   const mastered = progress ? set.items.filter((k) => isMastered(progress, k.id)).length : null;
   const other = set.script === "hiragana" ? "katakana" : "hiragana";
-  const href = (script: string, m: Mode) => `/kana?script=${script}${m === "quiz" ? "&mode=quiz" : ""}`;
+  const href = (script: string, m: Mode, group: Group = set.group) =>
+    `/kana?script=${script}${group === "basic" ? "" : `&group=${group}`}${m === "quiz" ? "&mode=quiz" : ""}`;
 
   return (
     <main className={s.app}>
       <div className={s.head}>
         <div>
           <h1>{mode === "quiz" ? t.titleQuiz(set.name) : t.titleChart(set.name)}</h1>
-          <p className={s.lede}>{mode === "quiz" ? t.ledeQuiz : t.ledeChart}</p>
+          <p className={s.lede}>{mode === "quiz" ? t.ledeQuiz : t.ledeChart[set.group]}</p>
         </div>
 
         <div className={s.switches}>
@@ -59,6 +63,11 @@ export function KanaApp({ set, mode, lang }: { set: KanaSet; mode: Mode; lang: L
             <Link href={href("katakana", mode)} aria-current={set.script === "katakana" ? "page" : undefined}>
               <span lang="ja">カタカナ</span> Katakana
             </Link>
+          </nav>
+          <nav className={s.segment} aria-label={t.groupNav}>
+            {GROUPS.map((g) => (
+              <Link key={g} href={href(set.script, mode, g)} aria-current={set.group === g ? "page" : undefined}>{t.groups[g]}</Link>
+            ))}
           </nav>
           <nav className={s.segment} aria-label={t.modeNav}>
             <Link href={href(set.script, "chart")} aria-current={mode === "chart" ? "page" : undefined}>{nav.chart}</Link>
@@ -99,7 +108,7 @@ export function KanaApp({ set, mode, lang }: { set: KanaSet; mode: Mode; lang: L
           type="button"
           className={s.resetBtn}
           data-armed={confirmReset}
-          disabled={!mastered && !(progress && set.items.some((k) => progress[k.id]))}
+          disabled={!progress || !Object.keys(progress).some((id) => id.startsWith(set.script + ":"))}
           onClick={() => {
             if (!confirmReset) return setConfirmReset(true);
             update(resetScript(progress ?? {}, set.script));
@@ -116,53 +125,63 @@ export function KanaApp({ set, mode, lang }: { set: KanaSet; mode: Mode; lang: L
 
 function Chart({ set, progress, quizHref, lang, t }: { set: KanaSet; progress: Progress | null; quizHref: string; lang: Lang; t: T }) {
   const [selected, setSelected] = useState(set.items[0]);
+  const { rows, cols } = LAYOUT[set.group];
   const at = (row: number, col: number) => set.items.find((k) => k.row === row && k.col === col);
   const streak = progress ? streakOf(progress, selected.id) : 0;
 
+  const cell = (k: Kana) => {
+    const st = progress ? streakOf(progress, k.id) : 0;
+    return (
+      <button
+        key={k.id}
+        type="button"
+        className={s.cell}
+        data-done={st >= MASTERED_AT}
+        aria-pressed={selected.id === k.id}
+        aria-label={t.cellAria(k.char, k.romaji)}
+        onClick={() => setSelected(k)}
+      >
+        <span lang="ja" className={s.cellChar} style={fit(k.char)}>{k.char}</span>
+        <span className={s.cellRomaji}>{k.romaji}</span>
+        <span className={s.cellLamps}>{Array.from({ length: MASTERED_AT }, (_, i) => <i key={i} data-on={i < st} />)}</span>
+      </button>
+    );
+  };
+
   return (
     <div className={s.chartWrap}>
-      <div className={s.chart} role="group" aria-label={t.chartAria(set.name)}>
-        <span />
-        {["a", "i", "u", "e", "o"].map((v) => <span key={v} className={s.colHead}>{v}</span>)}
-        {ROWS.map((r, row) => (
-          <div key={row} className={s.row}>
-            <span className={s.rowHead}>{row === 10 ? "" : r}</span>
-            {[0, 1, 2, 3, 4].map((col) => {
-              const k = at(row, col);
-              if (!k) return <span key={col} className={s.gap} />;
-              const st = progress ? streakOf(progress, k.id) : 0;
-              return (
-                <button
-                  key={col}
-                  type="button"
-                  className={s.cell}
-                  data-done={st >= MASTERED_AT}
-                  aria-pressed={selected.id === k.id}
-                  aria-label={t.cellAria(k.char, k.romaji)}
-                  onClick={() => setSelected(k)}
-                >
-                  <span lang="ja" className={s.cellChar}>{k.char}</span>
-                  <span className={s.cellRomaji}>{k.romaji}</span>
-                  <span className={s.cellLamps}>{Array.from({ length: MASTERED_AT }, (_, i) => <i key={i} data-on={i < st} />)}</span>
-                </button>
-              );
-            })}
-          </div>
-        ))}
-      </div>
+      {rows.length ? (
+        <div className={s.chart} style={{ "--cols": cols.length } as CSSProperties} role="group" aria-label={t.chartAria(set.name)}>
+          <span />
+          {cols.map((v) => <span key={v} className={s.colHead}>{v}</span>)}
+          {rows.map((r, row) => (
+            <div key={row} className={s.row}>
+              <span className={s.rowHead}>{r}</span>
+              {cols.map((_, col) => {
+                const k = at(row, col);
+                return k ? cell(k) : <span key={col} className={s.gap} />;
+              })}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className={s.words} role="group" aria-label={t.chartAria(set.name)}>
+          {set.items.map(cell)}
+        </div>
+      )}
 
       <aside className={s.detail} aria-live="polite">
         <div className={s.detailSign}>
-          <span key={selected.char} lang="ja">
+          <span key={selected.char} lang="ja" style={fit(selected.char)}>
             {selected.char}
           </span>
         </div>
         <p className={s.detailRomaji}>{selected.romaji}</p>
         <dl className={s.detailList}>
-          {/* the 46 hints are Vietnamese phonetics by construction, so they only ship in vi */}
+          {/* hints are Vietnamese by construction, so they only ship in vi */}
           {lang === "vi" && (
             <div>
-              <dt>{t.hintLabel}</dt>
+              <dt>{set.group === "special" ? t.noteLabel : t.hintLabel}</dt>
               <dd>{selected.hint}</dd>
             </div>
           )}
@@ -242,7 +261,7 @@ function Quiz({ set, progress, onProgress, otherHref, chartHref, t }: { set: Kan
   return (
     <div className={s.quiz}>
       <div className={s.card} data-state={state} key={q.id}>
-        <span lang="ja" className={s.cardChar}>{q.char}</span>
+        <span lang="ja" className={s.cardChar} style={fit(q.char)}>{q.char}</span>
         <span className={s.cardReveal} aria-hidden={!answer}>{answer ? q.romaji : " "}</span>
         <Lamps streak={streak} size="lg" t={t} />
       </div>
@@ -268,7 +287,7 @@ function Quiz({ set, progress, onProgress, otherHref, chartHref, t }: { set: Kan
               ? streak >= MASTERED_AT
                 ? t.rightMastered(q.char)
                 : t.right(q.romaji, streak, MASTERED_AT)
-              : t.wrong(q.char, q.romaji, q.hint)}
+              : t.wrong(q.char, q.romaji, set.group === "special" ? undefined : q.hint)}
         </p>
 
         <div className={s.quizFoot}>

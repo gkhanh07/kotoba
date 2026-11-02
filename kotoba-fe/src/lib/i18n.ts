@@ -2,6 +2,8 @@
 // server components and client components both import it directly, like kana.ts.
 // Cookie reading lives in app/LangSwitch.tsx (server) and clientLang() below.
 
+import type { Group } from "./kana";
+
 export type Lang = "vi" | "en";
 
 export function isLang(v: unknown): v is Lang {
@@ -58,9 +60,11 @@ type Dict = {
   kana: {
     titleChart: (name: string) => string;
     titleQuiz: (name: string) => string;
-    ledeChart: string;
+    ledeChart: Record<Group, string>;
     ledeQuiz: string;
     scriptNav: string;
+    groupNav: string;
+    groups: Record<Group, string>;
     modeNav: string;
     progressAria: string;
     masteredA: string;
@@ -72,6 +76,7 @@ type Dict = {
     chartAria: (name: string) => string;
     cellAria: (char: string, romaji: string) => string;
     hintLabel: string;
+    noteLabel: string;
     levelLabel: string;
     levelDone: string;
     levelLearning: string;
@@ -85,7 +90,7 @@ type Dict = {
     ask: string;
     rightMastered: (char: string) => string;
     right: (romaji: string, streak: number, max: number) => string;
-    wrong: (char: string, romaji: string, hint: string) => string;
+    wrong: (char: string, romaji: string, hint?: string) => string;
     nextChar: string;
     session: (right: number, total: number) => string;
   };
@@ -114,15 +119,15 @@ const DICT: Record<Lang, Dict> = {
     home: {
       h1a: "Đọc được Tokyo,",
       h1b: "từng chữ một.",
-      lede: "Kotoba dạy tiếng Nhật cho người Việt, bằng tiếng Việt. Bắt đầu từ 92 chữ kana trên mọi biển hiệu, luyện ngay trên trang, không cần đăng ký.",
+      lede: "Kotoba dạy tiếng Nhật cho người Việt, bằng tiếng Việt. Bắt đầu từ bảng kana trên mọi biển hiệu, luyện ngay trên trang, không cần đăng ký.",
       ctaQuiz: "Luyện đọc ngay",
       ctaChart: "Xem bảng chữ",
       routeH: "Hai tuyến đầu tiên đã chạy.",
-      routeP: "Tiếng Nhật viết bằng ba loại chữ. Người mới bắt đầu từ hai bảng kana: mỗi bảng 46 chữ, cùng một bộ âm, hai dáng chữ khác nhau.",
+      routeP: "Tiếng Nhật viết bằng ba loại chữ. Người mới bắt đầu từ hai bảng kana: cùng một bộ âm, hai dáng chữ khác nhau. Mỗi bảng có 46 chữ cơ bản, rồi đến âm đục, âm ghép, âm ngắt và trường âm.",
       hiraganaText: { a: "Nét mềm, dùng cho từ thuần Nhật và đuôi ngữ pháp, như ", b: " hay ", c: "." },
       katakanaText: { a: "Nét thẳng, góc cạnh, dùng cho từ mượn và tên nước ngoài, như ", b: " hay ", c: "." },
       kanjiText: "Chữ Hán, phần lớn nghĩa của từ nằm ở đây. Tuyến này đang được xây.",
-      openMeta: "46 chữ · đang mở",
+      openMeta: "Đủ 4 nhóm · đang mở",
       soonMeta: "Sắp có",
       honestH: "Chỉ tính là nhớ khi bạn nhớ thật.",
       honestP1: "Mỗi chữ cần trả lời đúng ba lần liên tiếp. Sai một lần, chuỗi đếm lại từ đầu. Không điểm thưởng, không huy hiệu: chỉ những chữ bạn thật sự đọc được.",
@@ -157,9 +162,16 @@ const DICT: Record<Lang, Dict> = {
     kana: {
       titleChart: (name) => `Bảng ${name}`,
       titleQuiz: (name) => `Luyện ${name}`,
-      ledeChart: "46 chữ cơ bản, xếp theo hàng âm. Chọn một chữ để xem cách đọc gần giống tiếng Việt.",
+      ledeChart: {
+        basic: "Các chữ cơ bản, xếp theo hàng âm. Chọn một chữ để xem cách đọc gần giống tiếng Việt.",
+        dakuten: "Thêm dấu ゛ hoặc ゜ vào chữ cơ bản thì âm đổi: k thành g, s thành z, t thành d, h thành b hoặc p.",
+        yoon: "Chữ cột i ghép với ya, yu, yo viết nhỏ, đọc liền thành một nhịp.",
+        special: "っ viết nhỏ ngắt một nhịp trước phụ âm sau nó, nguyên âm kéo dài thì giữ hai nhịp. Học qua từ thật.",
+      },
       ledeQuiz: "Nhìn chữ, chọn cách đọc. Phím 1–4 để chọn, Enter để sang chữ tiếp theo.",
       scriptNav: "Bảng chữ",
+      groupNav: "Nhóm chữ",
+      groups: { basic: "Cơ bản", dakuten: "Âm đục", yoon: "Âm ghép", special: "Âm ngắt, trường âm" },
       modeNav: "Chế độ",
       progressAria: "Tiến độ",
       masteredA: "Đã nhớ ",
@@ -171,6 +183,7 @@ const DICT: Record<Lang, Dict> = {
       chartAria: (name) => `Bảng ${name}`,
       cellAria: (char, romaji) => `${char}, đọc là ${romaji}`,
       hintLabel: "Đọc gần giống",
+      noteLabel: "Nghĩa và cách đọc",
       levelLabel: "Mức nhớ",
       levelDone: "Đã nhớ",
       levelLearning: "Đang học",
@@ -184,7 +197,7 @@ const DICT: Record<Lang, Dict> = {
       ask: "Chữ này đọc là gì?",
       rightMastered: (char) => `Đúng rồi. Bạn đã nhớ chữ ${char}.`,
       right: (romaji, streak, max) => `Đúng rồi, “${romaji}”. Đúng ${streak}/${max} lần liên tiếp.`,
-      wrong: (char, romaji, hint) => `Chưa đúng. ${char} đọc là “${romaji}”, gần giống “${hint}”. Chuỗi đếm lại từ đầu.`,
+      wrong: (char, romaji, hint) => `Chưa đúng. ${char} đọc là “${romaji}”${hint ? `, gần giống “${hint}”` : ""}. Chuỗi đếm lại từ đầu.`,
       nextChar: "Chữ tiếp theo",
       session: (right, total) => `Phiên này: ${right}/${total} đúng`,
     },
@@ -217,15 +230,15 @@ const DICT: Record<Lang, Dict> = {
     home: {
       h1a: "Read Tokyo,",
       h1b: "one letter at a time.",
-      lede: "Kotoba starts you on the 92 kana behind every shop sign in Japan. Practise right here on the page, no sign-up.",
+      lede: "Kotoba starts you on the kana behind every shop sign in Japan. Practise right here on the page, no sign-up.",
       ctaQuiz: "Start practising",
       ctaChart: "See the chart",
       routeH: "The first two lines are running.",
-      routeP: "Japanese is written in three scripts. Beginners start with the two kana sets: 46 letters each, one set of sounds, two different shapes.",
+      routeP: "Japanese is written in three scripts. Beginners start with the two kana sets: one set of sounds, two different shapes. Each has 46 basic letters, then voiced, combined, small-tsu and long-vowel sounds.",
       hiraganaText: { a: "Soft strokes, used for native Japanese words and grammar endings, as in ", b: " or ", c: "." },
       katakanaText: { a: "Straight, angular strokes, used for loanwords and foreign names, as in ", b: " or ", c: "." },
       kanjiText: "Chinese characters, where most of a word's meaning lives. This line is still under construction.",
-      openMeta: "46 letters · open",
+      openMeta: "All 4 groups · open",
       soonMeta: "Coming soon",
       honestH: "It only counts as learnt when you really know it.",
       honestP1: "Each letter needs three correct answers in a row. One miss and the streak starts over. No points, no badges: just the letters you can actually read.",
@@ -260,9 +273,16 @@ const DICT: Record<Lang, Dict> = {
     kana: {
       titleChart: (name) => `${name} chart`,
       titleQuiz: (name) => `${name} practice`,
-      ledeChart: "46 basic letters, laid out by sound row. Pick one to see its romaji.",
+      ledeChart: {
+        basic: "The basic letters, laid out by sound row. Pick one to see its romaji.",
+        dakuten: "Add ゛ or ゜ to a basic letter and the sound shifts: k to g, s to z, t to d, h to b or p.",
+        yoon: "An i-column letter joined with a small ya, yu or yo, read as one beat.",
+        special: "A small っ holds a beat before the next consonant, and a long vowel lasts two beats. Learnt through real words.",
+      },
       ledeQuiz: "Look at the letter, pick its reading. Keys 1–4 to answer, Enter for the next one.",
       scriptNav: "Script",
+      groupNav: "Letter group",
+      groups: { basic: "Basic", dakuten: "Voiced", yoon: "Combined", special: "Small tsu, long vowels" },
       modeNav: "Mode",
       progressAria: "Progress",
       masteredA: "You know ",
@@ -274,6 +294,7 @@ const DICT: Record<Lang, Dict> = {
       chartAria: (name) => `${name} chart`,
       cellAria: (char, romaji) => `${char}, read as ${romaji}`,
       hintLabel: "Sounds like",
+      noteLabel: "Meaning and reading",
       levelLabel: "Recall",
       levelDone: "Learnt",
       levelLearning: "Learning",
@@ -287,7 +308,7 @@ const DICT: Record<Lang, Dict> = {
       ask: "How is this letter read?",
       rightMastered: (char) => `Correct. You have learnt ${char}.`,
       right: (romaji, streak, max) => `Correct, “${romaji}”. That is ${streak}/${max} in a row.`,
-      // ponytail: the 46 hints in kana.ts are Vietnamese phonetics by construction,
+      // ponytail: kana hints in content/kana.json are Vietnamese by construction,
       // so the English sentence drops the hint clause instead of showing them.
       wrong: (char, romaji) => `Not quite. ${char} is read “${romaji}”. The streak starts over.`,
       nextChar: "Next letter",

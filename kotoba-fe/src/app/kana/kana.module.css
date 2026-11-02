@@ -47,6 +47,7 @@
 
 .segment {
   display: flex;
+  flex-wrap: wrap;
   border: 1px solid var(--rule);
   background: var(--asphalt);
 }
@@ -56,6 +57,7 @@
   align-items: center;
   gap: 0.5rem;
   min-height: 44px;
+  white-space: nowrap;
   padding: 0 1rem;
   font-family: var(--font-title);
   font-weight: 600;
@@ -188,7 +190,14 @@
 
 .chart {
   display: grid;
-  grid-template-columns: 2.25rem repeat(5, minmax(0, 1fr));
+  grid-template-columns: 2.25rem repeat(var(--cols), minmax(0, 1fr));
+  gap: 6px;
+}
+
+/* special words have no sound grid, just a wrap of wider cells */
+.words {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
   gap: 6px;
 }
 
@@ -240,7 +249,8 @@
 }
 
 .cellChar {
-  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-size: min(clamp(1.5rem, 2.6vw, 2.2rem), calc(7.2rem / var(--len, 1)));
+  white-space: nowrap;
   font-weight: 700;
   line-height: 1.15;
 }
@@ -297,7 +307,8 @@
 .detailSign span {
   font-family: var(--font-kana) !important;
   font-weight: 700;
-  font-size: clamp(6rem, 11vw, 9rem);
+  font-size: min(clamp(6rem, 11vw, 9rem), calc(16.5rem / var(--len, 1)));
+  white-space: nowrap;
   line-height: 1;
   color: var(--neon-core);
   text-shadow: 0 0 6px var(--neon), 0 0 22px var(--neon), var(--glow-neon);
@@ -359,7 +370,8 @@
 .cardChar {
   font-family: var(--font-kana) !important;
   font-weight: 700;
-  font-size: clamp(7rem, 17vw, 13rem);
+  font-size: min(clamp(7rem, 17vw, 13rem), calc(min(70vw, 30rem) / var(--len, 1)));
+  white-space: nowrap;
   line-height: 1;
   color: var(--neon-core);
   text-shadow: 0 0 6px var(--neon), 0 0 24px var(--neon), var(--glow-neon);
@@ -644,6 +656,26 @@
 }
 
 /* ── small screens ───────────────────────────── */
+/* Phones: every segment becomes full-width two-up, so the 4 groups sit 2×2 instead of a ragged wrap. */
+@media (max-width: 560px) {
+  .segment {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    width: 100%;
+    background: var(--rule);
+  }
+
+  .segment a {
+    justify-content: center;
+    background: var(--asphalt);
+  }
+
+  .segment a + a {
+    border-left: 0;
+  }
+}
+
 @media (max-width: 900px) {
   .chartWrap,
   .quiz {
@@ -651,7 +683,7 @@
   }
 
   .chart {
-    grid-template-columns: 1.5rem repeat(5, minmax(0, 1fr));
+    grid-template-columns: 1.5rem repeat(var(--cols), minmax(0, 1fr));
     gap: 4px;
   }
 
@@ -672,7 +704,7 @@
   }
 
   .detailSign span {
-    font-size: 3.6rem;
+    font-size: min(3.6rem, calc(4.6rem / var(--len, 1)));
   }
 
   .detailRomaji {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getKanaSet, isScript } from "@/lib/kana";
+import { isGroup, isScript } from "@/lib/kana";
+import { getKanaSet } from "@/lib/content";
 import { SiteBar } from "../SiteBar";
 import { KanaApp } from "./KanaApp";
 import { getLang } from "../LangSwitch";
@@ -14,13 +15,14 @@ export default async function KanaPage(props: PageProps<"/kana">) {
   const q = await props.searchParams;
   const script = isScript(q.script) ? q.script : "hiragana";
   const mode = q.mode === "quiz" ? "quiz" : "chart";
-  const set = await getKanaSet(script);
+  const group = isGroup(q.group) ? q.group : "basic";
+  const set = await getKanaSet(script, group);
   const lang = await getLang();
 
   return (
     <>
       <SiteBar current={mode} />
-      <KanaApp key={`${script}-${mode}`} set={set} mode={mode} lang={lang} />
+      <KanaApp key={`${script}-${group}-${mode}`} set={set} mode={mode} lang={lang} />
     </>
   );
 }

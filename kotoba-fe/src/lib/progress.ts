@@ -25,11 +25,16 @@ export function pickNext<T extends { id: string }>(items: T[], p: Progress, last
   return fresh[Math.floor(rand() * fresh.length)];
 }
 
-// Four choices: the answer plus three distinct distractors, shuffled.
-export function choicesFor<T extends { id: string }>(answer: T, items: T[], rand = Math.random): T[] {
-  const others = items.filter((k) => k.id !== answer.id);
+// Four choices: the answer plus three distractors, shuffled. Readings must differ too:
+// じ and ぢ are both "ji", so offering both would make two buttons correct.
+export function choicesFor<T extends { id: string; romaji?: string }>(answer: T, items: T[], rand = Math.random): T[] {
+  const key = (k: T) => k.romaji ?? k.id;
+  const others = items.filter((k) => key(k) !== key(answer));
   const picked: T[] = [];
-  while (picked.length < 3 && others.length) picked.push(others.splice(Math.floor(rand() * others.length), 1)[0]);
+  while (picked.length < 3 && others.length) {
+    const k = others.splice(Math.floor(rand() * others.length), 1)[0];
+    if (!picked.some((p) => key(p) === key(k))) picked.push(k);
+  }
   const all = [...picked, answer];
   for (let i = all.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));

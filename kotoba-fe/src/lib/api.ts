@@ -10,9 +10,10 @@ export class ApiError extends Error {
   }
 }
 
-type Opts = { method?: string; body?: unknown; token?: string; ip?: string };
+// revalidate: seconds the Next fetch cache may serve this GET; omitted means never cached.
+type Opts = { method?: string; body?: unknown; token?: string; ip?: string; revalidate?: number };
 
-export async function api<T = void>(path: string, { method = "GET", body, token, ip }: Opts = {}): Promise<T> {
+export async function api<T = void>(path: string, { method = "GET", body, token, ip, revalidate }: Opts = {}): Promise<T> {
   const headers: Record<string, string> = {};
   if (body !== undefined) headers["content-type"] = "application/json";
   if (token) headers.authorization = `Bearer ${token}`;
@@ -21,7 +22,7 @@ export async function api<T = void>(path: string, { method = "GET", body, token,
     method,
     headers,
     body: body === undefined ? undefined : JSON.stringify(body),
-    cache: "no-store",
+    ...(revalidate ? { cache: "force-cache" as const, next: { revalidate } } : { cache: "no-store" as const }),
   });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));

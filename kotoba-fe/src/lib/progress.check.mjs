@@ -22,6 +22,14 @@ for (let n = 0; n < 50; n++) {
   assert.ok(c.includes(q));
 }
 
+// Same reading, different letter: never two right answers on screen.
+const voiced = [["ji", "じ"], ["ji", "ぢ"], ["zu", "ず"], ["zu", "づ"], ["za", "ざ"], ["ze", "ぜ"]].map(([romaji, c]) => ({ id: `hiragana:${c}`, romaji }));
+for (let n = 0; n < 50; n++) {
+  const c = choicesFor(voiced[0], voiced);
+  assert.equal(new Set(c.map((k) => k.romaji)).size, c.length);
+  assert.ok(!c.some((k) => k.id === "hiragana:ぢ"));
+}
+
 for (const k of items) for (let i = 0; i < 3; i++) p = applyAnswer(p, k.id, true);
 assert.equal(pickNext(items, p, null), null); // all mastered -> empty state
 assert.deepEqual(resetScript({ ...p, "katakana:a": { streak: 1, seen: 1 } }, "hiragana"), { "katakana:a": { streak: 1, seen: 1 } });

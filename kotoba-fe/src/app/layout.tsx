@@ -17,7 +17,7 @@ const CONTRACT = `<!--
 seed 6ba472bc · form: light-shadow-caustics-rain-night-cityscape
 THESIS: Learn to read the city — kana glowing on Tokyo shop signs in the rain, read in Vietnamese.
 OWN-WORLD: blue-hour street, neon sign lettering, wet-asphalt reflections, train-line light; amber is the one action colour.
-STORY: see a sign, tap it, read it; then learn the 92 letters behind every sign and drill until they are truly remembered.
+STORY: see a sign, tap it, read it; then learn the kana behind every sign and drill until they are truly remembered.
 FIRST VIEWPORT: rain over a skyline; real signs (ラーメン, カラオケ…) mirrored in the street; tapping one breaks it into kana with Vietnamese meaning; one framed amber action.
 FORM: phones unroll skyline, street and reflection into bands; answered quiz cards lock like a triggered trace; each reading keeps its ticket.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
