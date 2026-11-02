@@ -149,6 +149,30 @@
   color: var(--silver);
 }
 
+/* Nothing due or new: say so once above the card, the drill keeps going. */
+.note {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--amber);
+  background: var(--asphalt);
+  color: var(--silver);
+}
+
+.noteLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+}
+
+.noteLinks a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--amber);
+}
+
 /* ── lamps ───────────────────────────────────── */
 .lamps {
   display: inline-flex;
@@ -559,49 +583,27 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ── empty / status ──────────────────────────── */
-.empty,
+/* ── status ──────────────────────────────────── */
 .status {
   display: grid;
   justify-items: start;
   gap: 1.1rem;
   max-width: 44rem;
+  min-height: 50svh;
+  align-content: center;
   margin: 3rem auto 0;
   padding: 0 var(--gutter);
 }
 
-.empty {
-  padding: 0;
-  margin-left: 0;
-}
-
-.empty p,
 .status p {
   max-width: 62ch;
   color: var(--silver-dim);
 }
 
-.status {
-  min-height: 50svh;
-  align-content: center;
-}
-
-.emptySign,
 .statusSign {
   font-family: var(--font-sign) !important;
   font-size: clamp(3.5rem, 8vw, 5.5rem);
   line-height: 1;
-  color: var(--amber-core);
-  text-shadow: 0 0 6px var(--amber), 0 0 24px var(--amber), var(--glow-amber);
-}
-
-/* Lights once and holds. The sign is dark for the first steps, so the finished
-   screen arrives as a room with a sign in it that then switches on. */
-.emptySign {
-  animation: ignite 900ms steps(1, end) both;
-}
-
-.statusSign {
   color: var(--neon-core);
   text-shadow: 0 0 6px var(--neon), 0 0 24px var(--neon), var(--glow-neon);
   animation: ignite 1.4s steps(1, end) infinite;

@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useMemo, useSyncExternalStore } from "react";
 import { examDate, type Profile } from "@/lib/account";
 import { ACTIVITY_KEY, continueHref, daysBetween, parseActivity, summarize, type Activity } from "@/lib/activity";
-import { FLASHCARDS_KEY, parseStatuses } from "@/lib/flashcards";
 import type { Lang } from "@/lib/i18n";
-import { MASTERED_AT, PROGRESS_KEY, isMastered, type Progress } from "@/lib/progress";
+import { INTERVALS, isDue, isLearned, type Srs } from "@/lib/srs";
+import { today, useDeck } from "@/lib/store";
 import s from "./dashboard.module.css";
 
 // Copied from SiteBar: that file pulls server-only code, so a client component can't import it.
@@ -31,38 +31,42 @@ function useStored(key: string) {
   );
 }
 
-const count = <T,>(values: T[], ok: (v: T) => boolean) => values.filter(ok).length;
+const isKana = (id: string) => id.startsWith("hiragana:") || id.startsWith("katakana:");
+const isVocab = (id: string) => id.startsWith("vocab:");
+const count = (s: Srs, area: (id: string) => boolean, ok: (id: string) => boolean) =>
+  Object.keys(s).filter((id) => area(id) && ok(id)).length;
 const fromKey = (day: string) => { const [y, m, d] = day.split("-").map(Number); return new Date(y, m - 1, d); };
 
 export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
   lang: Lang; name: string; profile: Profile | null; kanaTotal: number; vocabTotal: number;
 }) {
   const t = text[lang];
-  const kanaRaw = useStored(PROGRESS_KEY);
-  const vocabRaw = useStored(FLASHCARDS_KEY);
+  const deck = useDeck();
   const activityRaw = useStored(ACTIVITY_KEY);
-  const ready = kanaRaw !== undefined && vocabRaw !== undefined && activityRaw !== undefined;
 
   const data = useMemo(() => {
-    if (!ready) return null;
-    let bad = false;
-    let kana: Progress = {};
-    try { kana = JSON.parse(kanaRaw ?? "{}") as Progress; } catch { bad = true; }
-    let vocab: Record<string, string> = {};
-    try { vocab = parseStatuses(vocabRaw); } catch { bad = true; }
+    if (!deck || activityRaw === undefined) return null;
     let activity: Activity | null = parseActivity(activityRaw);
-    if (!activity) { bad = true; activity = { days: {} }; }
+    const bad = !deck.ok || !activity;
+    activity ??= { days: {} };
     const now = new Date();
+    const day = today();
+    const { srs } = deck;
+    const due = (id: string) => isDue(srs[id], day);
+    const learned = (id: string) => isLearned(srs, id);
+    // ponytail: links into the quiz by script only, so a due yōon card needs its group opened by hand; /review replaces this.
+    const firstKanaDue = Object.keys(srs).find((id) => isKana(id) && due(id));
     return {
       bad,
       now,
-      mastered: count(Object.keys(kana), (id) => isMastered(kana, id)),
-      kanaReview: count(Object.values(kana), (v) => v.seen > 0 && v.streak < MASTERED_AT),
-      learned: count(Object.values(vocab), (v) => v === "learned"),
-      vocabReview: count(Object.values(vocab), (v) => v === "learning"),
+      kanaLearned: count(srs, isKana, learned),
+      kanaDue: count(srs, isKana, due),
+      kanaDueHref: `/kana?script=${firstKanaDue?.split(":")[0] ?? "hiragana"}&mode=quiz`,
+      vocabLearned: count(srs, isVocab, learned),
+      vocabDue: count(srs, isVocab, due),
       summary: summarize(activity, now),
     };
-  }, [ready, kanaRaw, vocabRaw, activityRaw]);
+  }, [deck, activityRaw]);
 
   const goal = profile?.goal;
   const exam = profile?.exam ? examDate(profile.exam) : null;
@@ -84,8 +88,8 @@ export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
         <>
           <div className={s.stage}>
             <span>{t.stage}</span>
-            <progress aria-label={t.stage} value={data.mastered} max={kanaTotal} />
-            <span>{data.mastered} / {kanaTotal}</span>
+            <progress aria-label={t.stage} value={data.kanaLearned} max={kanaTotal} />
+            <span>{data.kanaLearned} / {kanaTotal}</span>
           </div>
 
           <dl className={s.stats}>
@@ -95,7 +99,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
               <dd>{t.minutes(data.summary.minutesToday, profile?.minutes)}</dd>
               {profile?.minutes && <progress aria-label={t.minutesLabel} value={Math.min(data.summary.minutesToday, profile.minutes)} max={profile.minutes} />}
             </div>
-            <div><dt>{t.review}</dt><dd>{data.kanaReview + data.vocabReview}</dd></div>
+            <div><dt>{t.review}</dt><dd>{data.kanaDue + data.vocabDue}</dd></div>
           </dl>
 
           <div className={s.continue}>
@@ -109,8 +113,8 @@ export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
               <caption className="sr-only">{t.progress}</caption>
               <thead><tr><th scope="col">{t.area}</th><th scope="col">{t.today}</th><th scope="col">{t.memorized}</th></tr></thead>
               <tbody>
-                <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.mastered} / {kanaTotal}</td></tr>
-                <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.learned} / {vocabTotal}</td></tr>
+                <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.kanaLearned} / {kanaTotal}</td></tr>
+                <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.vocabLearned} / {vocabTotal}</td></tr>
                 {t.soonAreas.map((area) => (
                   <tr key={area}><th scope="row">{area}</th><td colSpan={2} className={s.soon}>{t.soon}</td></tr>
                 ))}
@@ -120,13 +124,13 @@ export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
 
           <section className={s.section} aria-labelledby="dash-review">
             <h2 id="dash-review">{t.review}</h2>
-            {data.kanaReview + data.vocabReview === 0 ? <p>{t.reviewNone}</p> : (
+            {data.kanaDue + data.vocabDue === 0 ? <p>{t.reviewNone}</p> : (
               <ul className={s.list}>
-                {data.kanaReview > 0 && <li><span>{t.reviewKana(data.kanaReview)}</span><Link href="/kana?mode=quiz">{t.practise}</Link></li>}
-                {data.vocabReview > 0 && <li><span>{t.reviewVocab(data.vocabReview)}</span><Link href="/flashcards">{t.practise}</Link></li>}
+                {data.kanaDue > 0 && <li><span>{t.reviewKana(data.kanaDue)}</span><Link href={data.kanaDueHref}>{t.practise}</Link></li>}
+                {data.vocabDue > 0 && <li><span>{t.reviewVocab(data.vocabDue)}</span><Link href="/flashcards">{t.practise}</Link></li>}
               </ul>
             )}
-            <p className={s.note}>{t.reviewNote}</p>
+            <p className={s.note}>{t.reviewNote(INTERVALS)}</p>
           </section>
 
           <section className={s.section} aria-labelledby="dash-upcoming">
@@ -178,13 +182,13 @@ const vi = {
   vocab: "Từ vựng",
   soonAreas: ["Kanji", "Ngữ pháp", "Đọc hiểu"],
   today: "Hôm nay",
-  memorized: "Đã thuộc",
+  memorized: "Đã học",
   soon: "Sắp có",
-  review: "Cần ôn",
-  reviewKana: (n: number) => `${n} chữ kana chưa thuộc chắc`,
-  reviewVocab: (n: number) => `${n} từ đang học`,
-  reviewNone: "Chưa có gì cần ôn.",
-  reviewNote: "Kotoba chưa có lịch ôn ngắt quãng; đây là những mục bạn đã gặp nhưng chưa thuộc.",
+  review: "Đến hạn ôn",
+  reviewKana: (n: number) => `${n} chữ kana đến hạn ôn`,
+  reviewVocab: (n: number) => `${n} từ đến hạn ôn`,
+  reviewNone: "Hôm nay không có gì đến hạn ôn.",
+  reviewNote: (gaps: number[]) => `Mỗi lần nhớ đúng, lần ôn sau giãn ra ${gaps.join(", ")} ngày. Sai thì mục đó quay lại ngay trong ngày.`,
   practise: "Luyện",
   upcoming: "Sắp tới",
   exam: (g?: string) => (g ? `Kỳ thi JLPT ${g}` : "Kỳ thi JLPT"),
@@ -218,13 +222,13 @@ const en: typeof vi = {
   vocab: "Vocabulary",
   soonAreas: ["Kanji", "Grammar", "Reading"],
   today: "Today",
-  memorized: "Memorized",
+  memorized: "Learnt",
   soon: "Coming soon",
-  review: "To review",
-  reviewKana: (n) => `${n} kana not solid yet`,
-  reviewVocab: (n) => `${n} ${n === 1 ? "word" : "words"} in progress`,
-  reviewNone: "Nothing to review.",
-  reviewNote: "No spaced-repetition schedule yet; these are items you've met but not memorized.",
+  review: "Due for review",
+  reviewKana: (n) => `${n} kana due`,
+  reviewVocab: (n) => `${n} ${n === 1 ? "word" : "words"} due`,
+  reviewNone: "Nothing is due today.",
+  reviewNote: (gaps) => `Each right answer pushes the next review out: ${gaps.join(", ")} days. A miss brings the item back the same day.`,
   practise: "Practise",
   upcoming: "Upcoming",
   exam: (g) => (g ? `JLPT ${g} exam` : "JLPT exam"),

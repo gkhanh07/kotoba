@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { SiteBar } from "../SiteBar";
 import { getLang } from "../LangSwitch";
-import { flashcards, flashcardText } from "@/lib/flashcards";
+import { flashcardText } from "@/lib/flashcards";
+import { getVocab } from "@/lib/content";
 import { FlashcardApp } from "./FlashcardApp";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -10,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FlashcardPage() {
-  const lang = await getLang();
-  return <><SiteBar current="flashcards" /><FlashcardApp cards={flashcards} lang={lang} /></>;
+  const [lang, cards] = await Promise.all([getLang(), getVocab()]);
+  return <><SiteBar current="flashcards" /><FlashcardApp cards={cards} lang={lang} /></>;
 }
 

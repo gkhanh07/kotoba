@@ -4,8 +4,7 @@ import { Street } from "./Street";
 import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
-import { getKana } from "@/lib/content";
-import { flashcards } from "@/lib/flashcards";
+import { getKana, getVocab } from "@/lib/content";
 import { Dashboard } from "./Dashboard";
 import s from "./page.module.css";
 
@@ -101,7 +100,7 @@ export default async function Home() {
   const lang = await getLang();
   const user = await currentUser();
   if (user) {
-    const kana = await getKana();
+    const [kana, vocab] = await Promise.all([getKana(), getVocab()]);
     return (
       <>
         <SiteBar />
@@ -110,7 +109,7 @@ export default async function Home() {
           name={user.profile?.name ?? user.email.split("@")[0]}
           profile={user.profile}
           kanaTotal={kana.length}
-          vocabTotal={flashcards.length}
+          vocabTotal={vocab.length}
         />
       </>
     );

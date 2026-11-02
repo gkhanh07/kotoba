@@ -27,12 +27,13 @@
 .label { font-size: .75rem; color: var(--silver-dim); margin-top: 1rem; }
 .romaji, .translation { color: var(--silver-dim); }
 .meaning { font-size: 1.5rem; color: var(--chalk); }
+.meaning::first-letter { text-transform: uppercase; } /* vocab.json keeps meanings lowercase for search and inline use */
 .notes { border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: 1rem; font-size: .85rem; max-width: 55ch; }
 .status { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; border: 0; margin: 1.5rem 0; }
 .status legend { width: 100%; text-align: center; margin-bottom: .65rem; color: var(--silver-dim); font-size: .85rem; }
 .status button { padding: .55rem 1rem; min-height: 44px; border: 1px solid var(--rule); border-radius: 2px; }
-.status button:hover { background: var(--wet); }
-.status button[aria-pressed="true"] { color: var(--amber); border-color: var(--amber); background: var(--spill-amber); }
+.status button:hover:enabled { background: var(--wet); }
+.status button:disabled { color: var(--silver-dim); border-color: var(--rule); cursor: not-allowed; }
 .navigation { margin-top: 1.5rem; }
 .notice { min-height: 1.8rem; margin-top: 1rem; text-align: center; color: var(--silver); font-size: .85rem; }
 .footnote { text-align: center; color: var(--silver-dim); font-size: .8rem; margin-top: .5rem; }

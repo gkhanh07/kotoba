@@ -79,17 +79,18 @@ type Dict = {
     noteLabel: string;
     levelLabel: string;
     levelDone: string;
-    levelLearning: string;
+    levelDue: string;
+    levelLearning: (days: number) => string;
     levelNone: string;
     practiceThis: string;
     lampsAria: (lit: number, max: number) => string;
-    emptyH: (total: number, name: string) => string;
-    emptyP: (max: number) => string;
+    extraNote: string;
     practiceOther: (name: string) => string;
     backToChart: string;
     ask: string;
     rightMastered: (char: string) => string;
-    right: (romaji: string, streak: number, max: number) => string;
+    right: (romaji: string, days: number) => string;
+    rightExtra: (romaji: string) => string;
     wrong: (char: string, romaji: string, hint?: string) => string;
     nextChar: string;
     session: (right: number, total: number) => string;
@@ -174,7 +175,7 @@ const DICT: Record<Lang, Dict> = {
       groups: { basic: "Cơ bản", dakuten: "Âm đục", yoon: "Âm ghép", special: "Âm ngắt, trường âm" },
       modeNav: "Chế độ",
       progressAria: "Tiến độ",
-      masteredA: "Đã nhớ ",
+      masteredA: "Đã học ",
       masteredB: (total, name) => ` / ${total} chữ ${name}`,
       storageWarn: "Trình duyệt đang chặn bộ nhớ trang, nên tiến độ sẽ mất khi bạn tải lại. Bạn vẫn luyện được bình thường.",
       loadingProgress: "Đang mở tiến độ của bạn…",
@@ -185,19 +186,20 @@ const DICT: Record<Lang, Dict> = {
       hintLabel: "Đọc gần giống",
       noteLabel: "Nghĩa và cách đọc",
       levelLabel: "Mức nhớ",
-      levelDone: "Đã nhớ",
-      levelLearning: "Đang học",
+      levelDone: "Đã thuộc",
+      levelDue: "Đến hạn ôn",
+      levelLearning: (days) => `Đang học, ôn lại ${days === 1 ? "ngày mai" : `sau ${days} ngày`}`,
       levelNone: "Chưa luyện",
       practiceThis: "Luyện bảng này",
-      lampsAria: (lit, max) => `${lit} trên ${max} lần đúng liên tiếp`,
-      emptyH: (total, name) => `Bạn đã nhớ cả ${total} chữ ${name}.`,
-      emptyP: (max) => `Mỗi chữ đều đã đúng ${max} lần liên tiếp. Chuyển sang bảng còn lại, hoặc xoá tiến độ bên dưới để ôn lại từ đầu.`,
+      lampsAria: (lit, max) => `${lit} trên ${max} lần ôn đúng liên tiếp`,
+      extraNote: "Nhóm này không còn chữ nào đến hạn hay chưa học. Bạn đang luyện thêm: trả lời đúng không đổi lịch ôn, sai thì chữ đó quay lại ngay hôm nay.",
       practiceOther: (name) => `Luyện ${name}`,
       backToChart: "Xem lại bảng chữ",
       ask: "Chữ này đọc là gì?",
-      rightMastered: (char) => `Đúng rồi. Bạn đã nhớ chữ ${char}.`,
-      right: (romaji, streak, max) => `Đúng rồi, “${romaji}”. Đúng ${streak}/${max} lần liên tiếp.`,
-      wrong: (char, romaji, hint) => `Chưa đúng. ${char} đọc là “${romaji}”${hint ? `, gần giống “${hint}”` : ""}. Chuỗi đếm lại từ đầu.`,
+      rightMastered: (char) => `Đúng rồi. Bạn đã thuộc chữ ${char}.`,
+      right: (romaji, days) => `Đúng rồi, “${romaji}”. Ôn lại ${days === 1 ? "ngày mai" : `sau ${days} ngày`}.`,
+      rightExtra: (romaji) => `Đúng rồi, “${romaji}”. Chữ này chưa đến hạn nên lịch ôn giữ nguyên.`,
+      wrong: (char, romaji, hint) => `Chưa đúng. ${char} đọc là “${romaji}”${hint ? `, gần giống “${hint}”` : ""}. Chữ này sẽ quay lại trong hôm nay.`,
       nextChar: "Chữ tiếp theo",
       session: (right, total) => `Phiên này: ${right}/${total} đúng`,
     },
@@ -285,7 +287,7 @@ const DICT: Record<Lang, Dict> = {
       groups: { basic: "Basic", dakuten: "Voiced", yoon: "Combined", special: "Small tsu, long vowels" },
       modeNav: "Mode",
       progressAria: "Progress",
-      masteredA: "You know ",
+      masteredA: "You have learnt ",
       masteredB: (total, name) => ` of ${total} ${name} letters`,
       storageWarn: "This browser is blocking site storage, so progress will be lost when you reload. You can still practise normally.",
       loadingProgress: "Opening your progress…",
@@ -296,21 +298,22 @@ const DICT: Record<Lang, Dict> = {
       hintLabel: "Sounds like",
       noteLabel: "Meaning and reading",
       levelLabel: "Recall",
-      levelDone: "Learnt",
-      levelLearning: "Learning",
+      levelDone: "Known",
+      levelDue: "Due for review",
+      levelLearning: (days) => `Learning, review ${days === 1 ? "tomorrow" : `in ${days} days`}`,
       levelNone: "Not practised",
       practiceThis: "Practise this set",
-      lampsAria: (lit, max) => `${lit} of ${max} correct in a row`,
-      emptyH: (total, name) => `You know all ${total} ${name} letters.`,
-      emptyP: (max) => `Every letter has been right ${max} times in a row. Switch to the other set, or clear your progress below to start again.`,
+      lampsAria: (lit, max) => `${lit} of ${max} reviews correct in a row`,
+      extraNote: "Nothing in this set is due or new. This is extra practice: right answers leave the schedule alone, a miss brings the letter back today.",
       practiceOther: (name) => `Practise ${name}`,
       backToChart: "Back to the chart",
       ask: "How is this letter read?",
-      rightMastered: (char) => `Correct. You have learnt ${char}.`,
-      right: (romaji, streak, max) => `Correct, “${romaji}”. That is ${streak}/${max} in a row.`,
+      rightMastered: (char) => `Correct. You know ${char} now.`,
+      right: (romaji, days) => `Correct, “${romaji}”. Next review ${days === 1 ? "tomorrow" : `in ${days} days`}.`,
+      rightExtra: (romaji) => `Correct, “${romaji}”. It was not due yet, so the schedule stays.`,
       // ponytail: kana hints in content/kana.json are Vietnamese by construction,
       // so the English sentence drops the hint clause instead of showing them.
-      wrong: (char, romaji) => `Not quite. ${char} is read “${romaji}”. The streak starts over.`,
+      wrong: (char, romaji) => `Not quite. ${char} is read “${romaji}”. It will come back today.`,
       nextChar: "Next letter",
       session: (right, total) => `This session: ${right}/${total} correct`,
     },

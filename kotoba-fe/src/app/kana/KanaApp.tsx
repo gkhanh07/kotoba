@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { GROUPS, LAYOUT, type Group, type Kana, type KanaSet } from "@/lib/kana";
 import { dict, type Lang } from "@/lib/i18n";
-import { MASTERED_AT, applyAnswer, choicesFor, isMastered, load, pickNext, resetScript, save, streakOf, type Progress } from "@/lib/progress";
+import { KNOWN_AT, boxOf, choicesFor, daysUntil, isDue, isKnown, isLearned, pickNext, queue, type Srs } from "@/lib/srs";
+import { resetDeck, review, today, useDeck } from "@/lib/store";
 import { logActivity } from "@/lib/activity";
 import s from "./kana.module.css";
 
@@ -14,35 +15,24 @@ type T = ReturnType<typeof dict>["kana"];
 // Letter count, so CSS can shrink whole words (がっこう) to fit the same box as one kana.
 const fit = (char: string) => ({ "--len": [...char].length }) as CSSProperties;
 
-function Lamps({ streak, size, t }: { streak: number; size?: "lg"; t: T }) {
+// One lamp per correct review in a row; all lit = known (passed the 30-day review).
+function Lamps({ box, size, t }: { box: number; size?: "lg"; t: T }) {
   return (
-    <span className={s.lamps} data-size={size} role="img" aria-label={t.lampsAria(Math.min(streak, MASTERED_AT), MASTERED_AT)}>
-      {Array.from({ length: MASTERED_AT }, (_, i) => <i key={i} data-on={i < streak} />)}
+    <span className={s.lamps} data-size={size} role="img" aria-label={t.lampsAria(Math.min(box, KNOWN_AT), KNOWN_AT)}>
+      {Array.from({ length: KNOWN_AT }, (_, i) => <i key={i} data-on={i < box} />)}
     </span>
   );
 }
 
-// Stored progress, read once per page load; kept in sync by update() so remounts on script/mode switch see fresh data.
-let stored: { p: Progress; ok: boolean } | undefined;
-const readStored = () => (stored ??= ((p) => ({ p: p ?? {}, ok: p !== null }))(load()));
-const noSubscribe = () => () => {};
-
 export function KanaApp({ set, mode, lang }: { set: KanaSet; mode: Mode; lang: Lang }) {
   const t = dict(lang).kana;
   const nav = dict(lang).nav;
-  const initial = useSyncExternalStore(noSubscribe, readStored, () => null);
-  const [local, setLocal] = useState<{ p: Progress; ok: boolean } | null>(null);
+  const deck = useDeck();
   const [confirmReset, setConfirmReset] = useState(false);
-  const current = local ?? initial;
-  const progress = current?.p ?? null;
-  const storageOk = current?.ok ?? true;
+  const progress = deck?.srs ?? null;
+  const storageOk = deck?.ok ?? true;
 
-  const update = useCallback((next: Progress) => {
-    stored = { p: next, ok: save(next) && (stored?.ok ?? true) };
-    setLocal(stored);
-  }, []);
-
-  const mastered = progress ? set.items.filter((k) => isMastered(progress, k.id)).length : null;
+  const learned = progress ? set.items.filter((k) => isLearned(progress, k.id)).length : null;
   const other = set.script === "hiragana" ? "katakana" : "hiragana";
   const href = (script: string, m: Mode, group: Group = set.group) =>
     `/kana?script=${script}${group === "basic" ? "" : `&group=${group}`}${m === "quiz" ? "&mode=quiz" : ""}`;
@@ -79,12 +69,12 @@ export function KanaApp({ set, mode, lang }: { set: KanaSet; mode: Mode; lang: L
       <section className={s.meter} aria-label={t.progressAria}>
         <p>
           {/* key remounts the number so its strike animation replays on each change */}
-          {t.masteredA}<strong key={mastered ?? "…"}>{mastered ?? "…"}</strong>{t.masteredB(set.items.length, set.name)}
+          {t.masteredA}<strong key={learned ?? "…"}>{learned ?? "…"}</strong>{t.masteredB(set.items.length, set.name)}
         </p>
         <div className={s.ticks} aria-hidden="true">
           {set.items.map((k) => {
-            const st = progress ? streakOf(progress, k.id) : 0;
-            return <i key={k.id} data-state={st >= MASTERED_AT ? "done" : st > 0 ? "some" : "none"} />;
+            const c = progress?.[k.id];
+            return <i key={k.id} data-state={!c ? "none" : c.box > 0 ? "done" : "some"} />;
           })}
         </div>
       </section>
@@ -100,7 +90,7 @@ export function KanaApp({ set, mode, lang }: { set: KanaSet; mode: Mode; lang: L
       ) : progress === null ? (
         <div className={s.status} role="status"><p>{t.loadingProgress}</p></div>
       ) : (
-        <Quiz set={set} progress={progress} onProgress={update} otherHref={href(other, "quiz")} chartHref={href(set.script, "chart")} t={t} />
+        <Quiz set={set} progress={progress} otherHref={href(other, "quiz")} chartHref={href(set.script, "chart")} t={t} />
       )}
 
       <div className={s.reset}>
@@ -111,7 +101,7 @@ export function KanaApp({ set, mode, lang }: { set: KanaSet; mode: Mode; lang: L
           disabled={!progress || !Object.keys(progress).some((id) => id.startsWith(set.script + ":"))}
           onClick={() => {
             if (!confirmReset) return setConfirmReset(true);
-            update(resetScript(progress ?? {}, set.script));
+            resetDeck(set.script + ":");
             setConfirmReset(false);
           }}
           onBlur={() => setConfirmReset(false)}
@@ -123,27 +113,27 @@ export function KanaApp({ set, mode, lang }: { set: KanaSet; mode: Mode; lang: L
   );
 }
 
-function Chart({ set, progress, quizHref, lang, t }: { set: KanaSet; progress: Progress | null; quizHref: string; lang: Lang; t: T }) {
+function Chart({ set, progress, quizHref, lang, t }: { set: KanaSet; progress: Srs | null; quizHref: string; lang: Lang; t: T }) {
   const [selected, setSelected] = useState(set.items[0]);
   const { rows, cols } = LAYOUT[set.group];
   const at = (row: number, col: number) => set.items.find((k) => k.row === row && k.col === col);
-  const streak = progress ? streakOf(progress, selected.id) : 0;
+  const card = progress?.[selected.id];
 
   const cell = (k: Kana) => {
-    const st = progress ? streakOf(progress, k.id) : 0;
+    const box = progress ? boxOf(progress, k.id) : 0;
     return (
       <button
         key={k.id}
         type="button"
         className={s.cell}
-        data-done={st >= MASTERED_AT}
+        data-done={box > 0}
         aria-pressed={selected.id === k.id}
         aria-label={t.cellAria(k.char, k.romaji)}
         onClick={() => setSelected(k)}
       >
         <span lang="ja" className={s.cellChar} style={fit(k.char)}>{k.char}</span>
         <span className={s.cellRomaji}>{k.romaji}</span>
-        <span className={s.cellLamps}>{Array.from({ length: MASTERED_AT }, (_, i) => <i key={i} data-on={i < st} />)}</span>
+        <span className={s.cellLamps}>{Array.from({ length: KNOWN_AT }, (_, i) => <i key={i} data-on={i < box} />)}</span>
       </button>
     );
   };
@@ -188,8 +178,16 @@ function Chart({ set, progress, quizHref, lang, t }: { set: KanaSet; progress: P
           <div>
             <dt>{t.levelLabel}</dt>
             <dd>
-              <Lamps streak={streak} t={t} />{" "}
-              {progress === null ? "…" : streak >= MASTERED_AT ? t.levelDone : streak > 0 ? t.levelLearning : t.levelNone}
+              <Lamps box={card?.box ?? 0} t={t} />{" "}
+              {progress === null
+                ? "…"
+                : !card
+                  ? t.levelNone
+                  : isDue(card, today())
+                    ? t.levelDue
+                    : isKnown(progress, selected.id)
+                      ? t.levelDone
+                      : t.levelLearning(daysUntil(card.due, today()))}
             </dd>
           </div>
         </dl>
@@ -199,10 +197,11 @@ function Chart({ set, progress, quizHref, lang, t }: { set: KanaSet; progress: P
   );
 }
 
-type Answer = { id: string; correct: boolean } | null;
+// moved = false: a right answer before the card was due, which leaves the schedule alone.
+type Answer = { id: string; correct: boolean; moved: boolean } | null;
 
-function Quiz({ set, progress, onProgress, otherHref, chartHref, t }: { set: KanaSet; progress: Progress; onProgress: (p: Progress) => void; otherHref: string; chartHref: string; t: T }) {
-  const [q, setQ] = useState<Kana | null>(() => pickNext(set.items, progress, null));
+function Quiz({ set, progress, otherHref, chartHref, t }: { set: KanaSet; progress: Srs; otherHref: string; chartHref: string; t: T }) {
+  const [q, setQ] = useState<Kana | null>(() => pickNext(set.items, progress, null, today()));
   const [choices, setChoices] = useState<Kana[]>(() => (q ? choicesFor(q, set.items) : []));
   const [answer, setAnswer] = useState<Answer>(null);
   const [session, setSession] = useState({ right: 0, total: 0 });
@@ -212,17 +211,16 @@ function Quiz({ set, progress, onProgress, otherHref, chartHref, t }: { set: Kan
     (k: Kana | undefined) => {
       if (!q || !k || answer) return;
       const correct = k.id === q.id;
-      setAnswer({ id: k.id, correct });
+      setAnswer({ id: k.id, correct, moved: review(q.id, correct) !== progress });
       setSession((v) => ({ right: v.right + Number(correct), total: v.total + 1 }));
-      onProgress(applyAnswer(progress, q.id, correct));
       logActivity("kana", q.id);
       requestAnimationFrame(() => nextRef.current?.focus({ preventScroll: true }));
     },
-    [q, answer, progress, onProgress],
+    [q, answer, progress],
   );
 
   const next = useCallback(() => {
-    const n = pickNext(set.items, progress, q?.id ?? null);
+    const n = pickNext(set.items, progress, q?.id ?? null, today());
     setQ(n);
     setChoices(n ? choicesFor(n, set.items) : []);
     setAnswer(null);
@@ -241,29 +239,29 @@ function Quiz({ set, progress, onProgress, otherHref, chartHref, t }: { set: Kan
     return () => window.removeEventListener("keydown", onKey);
   }, [choices, answer, choose, next]);
 
-  if (!q) {
-    return (
-      <div className={s.empty}>
-        <div className={s.emptySign} lang="ja">{set.script === "hiragana" ? "ぜんぶ" : "ゼンブ"}</div>
-        <h2>{t.emptyH(set.items.length, set.name)}</h2>
-        <p>{t.emptyP(MASTERED_AT)}</p>
-        <div className={s.statusActions}>
-          <Link href={otherHref} className="btn">{t.practiceOther(set.script === "hiragana" ? "Katakana" : "Hiragana")}</Link>
-          <Link href={chartHref} className="btn btnGhost">{t.backToChart}</Link>
-        </div>
-      </div>
-    );
-  }
+  if (!q) return null; // only when the set itself is empty
 
-  const streak = streakOf(progress, q.id);
+  const card = progress[q.id];
   const state = answer ? (answer.correct ? "right" : "wrong") : "idle";
+  // Judged before this answer lands, so the note does not flash in mid-card.
+  const extra = !answer && queue(set.items, progress, today()).mode === "extra";
 
   return (
     <div className={s.quiz}>
+      {extra && (
+        <div className={s.note} role="status">
+          <p>{t.extraNote}</p>
+          <p className={s.noteLinks}>
+            <Link href={otherHref}>{t.practiceOther(set.script === "hiragana" ? "Katakana" : "Hiragana")}</Link>
+            <Link href={chartHref}>{t.backToChart}</Link>
+          </p>
+        </div>
+      )}
+
       <div className={s.card} data-state={state} key={q.id}>
         <span lang="ja" className={s.cardChar} style={fit(q.char)}>{q.char}</span>
         <span className={s.cardReveal} aria-hidden={!answer}>{answer ? q.romaji : " "}</span>
-        <Lamps streak={streak} size="lg" t={t} />
+        <Lamps box={card?.box ?? 0} size="lg" t={t} />
       </div>
 
       <div className={s.panel}>
@@ -283,11 +281,13 @@ function Quiz({ set, progress, onProgress, otherHref, chartHref, t }: { set: Kan
         <p className={s.feedback} aria-live="polite" data-state={state}>
           {!answer
             ? " "
-            : answer.correct
-              ? streak >= MASTERED_AT
-                ? t.rightMastered(q.char)
-                : t.right(q.romaji, streak, MASTERED_AT)
-              : t.wrong(q.char, q.romaji, set.group === "special" ? undefined : q.hint)}
+            : !answer.correct
+              ? t.wrong(q.char, q.romaji, set.group === "special" ? undefined : q.hint)
+              : !answer.moved
+                ? t.rightExtra(q.romaji)
+                : isKnown(progress, q.id)
+                  ? t.rightMastered(q.char)
+                  : t.right(q.romaji, daysUntil(card.due, today()))}
         </p>
 
         <div className={s.quizFoot}>
