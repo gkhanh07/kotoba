@@ -21,7 +21,7 @@ type Split3 = { a: string; b: string; c: string };
 type Split4 = { a: string; b: string; c: string; d: string };
 
 type Dict = {
-  nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string; menu: string; library: string; kana: string; flashcards: string; settings: string };
+  nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string; menu: string; library: string; kana: string; kanji: string; vocab: string; settings: string };
   footer: { kanji: string; dict: string; legal: string };
   notFound: { title: string; body: string; home: string };
   down: { title: string; body: string; retry: string };
@@ -114,7 +114,8 @@ const DICT: Record<Lang, Dict> = {
       menu: "Menu",
       library: "Thư viện",
       kana: "Bảng chữ cái",
-      flashcards: "Thẻ từ vựng",
+      kanji: "Kanji",
+      vocab: "Từ vựng",
       settings: "Cài đặt tài khoản",
     },
     footer: { kanji: "Dữ liệu kanji", dict: "Từ điển", legal: "Điều khoản và quyền riêng tư" },
@@ -242,7 +243,8 @@ const DICT: Record<Lang, Dict> = {
       menu: "Menu",
       library: "Library",
       kana: "Kana chart",
-      flashcards: "Flashcards",
+      kanji: "Kanji",
+      vocab: "Vocabulary",
       settings: "Account settings",
     },
     footer: { kanji: "Kanji data", dict: "Dictionary", legal: "Terms and privacy" },

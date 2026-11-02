@@ -48,3 +48,5 @@
   .inner { transition: none; }
 }
 
+.tools .speak { display: inline-flex; align-items: center; gap: .4rem; color: var(--silver); text-decoration: none; }
+.tools .speak:hover { color: var(--amber-core); }

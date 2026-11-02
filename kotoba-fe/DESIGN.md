@@ -133,7 +133,7 @@ components:
 
 # Design System: Kotoba
 
-<!-- Scan of the shipped build, 2026-11-02. Sources: src/app/globals.css (every colour token), src/app/layout.tsx (fonts), page.tsx + Dashboard, kana/*, flashcards/*, (auth)/*. Descriptive names and the North Star below are drafted by the documenter from the direction contract and are not yet confirmed by the user. -->
+<!-- Scan of the shipped build, 2026-11-02. Sources: src/app/globals.css (every colour token), src/app/layout.tsx (fonts), page.tsx + Dashboard, kana/*, flashcards/*, (auth)/*; Phase 10 added kanji/*, vocab/*, Speak.tsx. Descriptive names and the North Star below are drafted by the documenter from the direction contract and are not yet confirmed by the user. -->
 
 ## Overview
 
@@ -233,7 +233,7 @@ Study surfaces are flat. Depth comes from tonal steps (Night to Asphalt to Wet) 
 ### Shadow Vocabulary
 - **Amber glow** (`--glow-amber`): mastered kana, the selected chart cell and lit progress ticks.
 - **Pink glow** (`--glow-neon`): the brand mark and the kana specimen being read.
-- **Blue glow** (`--glow-cool`): page `h1`s and the flashcard word.
+- **Blue glow** (`--glow-cool`): page `h1`s, the flashcard word and the kanji detail specimen.
 - **Button halo** (`.btn`: inset 0 0 18px amber 12% plus 0 8px 30px -12px amber 50%): the resting amber action. On hover it becomes a 1px amber ring plus 0 10px 40px -8px amber 65%.
 - **Sheet lift** (0 -12px 30px night 80%): only the sticky kana detail panel on phones.
 
@@ -242,7 +242,7 @@ Study surfaces are flat. Depth comes from tonal steps (Night to Asphalt to Wet) 
 
 ## Shapes
 
-Shapes are hairline and squared. Buttons, cards, inputs and choice chips use a 2px radius (`hairline`). Borders are 1px for structure and 1.5px for controls (`.btn`, `.langSwitch`, nav underline). Circles appear only as small lamps and dots (kana progress lamps, hero lamps). Hanging hero signs use the 7px `sign` radius, and hero ticket panels use 4px. Those softer corners belong to street objects and do not carry over to study UI. The single icon is the Arrow: an 18px SVG with a 1.75 stroke and square caps.
+Shapes are hairline and squared. Buttons, cards, inputs and choice chips use a 2px radius (`hairline`). Borders are 1px for structure and 1.5px for controls (`.btn`, `.langSwitch`, nav underline). Circles appear only as small lamps and dots (kana progress lamps, hero lamps). Hanging hero signs use the 7px `sign` radius, and hero ticket panels use 4px. Those softer corners belong to street objects and do not carry over to study UI. Icons are 18px SVGs with a 1.75 currentColor stroke: the Arrow (square caps; mirrored to point left on back links) and Play (an outlined triangle with miter joins, used by Speak).
 
 ## Components
 
@@ -253,6 +253,7 @@ Buttons are framed tubes that light up when touched.
 - **Hover / Active / Pressed:** fills solid amber with Night text and a stronger halo, over 0.25s `--ease-out`. Focus is the global 2px amber outline at a 3px offset.
 - **Ghost (`.btn btnGhost`):** a Rule border and Silver text with no glow. On hover it gets a Wet fill, Chalk text and a Strong Rule ring.
 - **Disabled:** Rule border and Dim Silver text, with no fill, no glow and `cursor: not-allowed`.
+- **Speak (`Speak.tsx`):** a ghost `.btn btnGhost` with the Play icon before a label (Đọc). It speaks the text through `speechSynthesis` with a `ja` voice and is not rendered at all when the browser has no `ja` voice.
 - **Text action:** an amber underlined link with a 0.25em offset that goes to Amber Hot Core on hover. Examples are the flashcard tools and Dashboard links. Disabled text actions use Dim Silver.
 
 ### Segmented controls
@@ -262,6 +263,7 @@ Buttons are framed tubes that light up when touched.
 ### Cards / Containers
 - **Study card (flashcard):** Asphalt with a 1px Strong Rule border and a 2px radius, at least 27rem tall. It flips 420ms on Y, and reduced motion removes the rotation. Hover turns the border amber. The front word is Blue Hot Core with blue glow.
 - **Kana cell:** Asphalt with a 1px Rule border. Hover gives Wet and a Dim Silver border. Selected gets an amber border plus an inset amber ring and glow. When mastered, the character turns amber with glow.
+- **Kanji tile:** a link in a `repeat(auto-fill, minmax(4.5rem, 1fr))` grid with a 6px gap. It has a 1px Faint Rule border, no fill and at least 5.5rem height, and holds the character in the kana face at 2rem over its Hán Việt in Dim Silver 0.75rem uppercase tracked 0.06em. Hover gives Wet, a Rule border and Amber Hot Core text. A learned tile (`[data-learned]`) gets a 1px amber underline under the Hán Việt plus sr-only text; there is no badge.
 - There are no nested cards. Study routes use rows, tables and specimens.
 
 ### Inputs / Fields
@@ -291,11 +293,20 @@ Each is an unlit sign, one line and one way out. The layout is a left-aligned gr
 ### Legal (/legal)
 A 68ch reading column of Silver text at line-height 1.7. It has a Chalk `h1`, a Dim Silver "updated" line, then an in-page contents list of 44px links. Each section has a Faint Rule top border and a Chalk 1.35rem `h2`. Links on the page are Silver with a Strong Rule underline, and on hover they go to Chalk with a currentColor underline. There is no amber action.
 
+### Kanji list (/kanji)
+The standard heading and lede, then a `<nav>` of filter text links (Lọc: Tất cả / Đã học / Chưa học) at 44px. They are Silver with a transparent 1.5px underline; hover goes to Chalk on a Rule underline, and the `aria-current` link is amber with an amber underline. Kanji follow in lesson groups, each under a Faint Rule top border with a Chalk 1.1rem `h2`, as a grid of kanji tiles. Learned state is local, so a filtered view shows "—" until the schedule loads. There is no amber action.
+
+### Kanji detail (/kanji/[char])
+A 44px bar holds the back link (left Arrow, Silver, Amber Hot Core on hover) and Speak on the right. The `h1` is the specimen: a 12rem square (9rem below 600px) on Asphalt with a 1px Strong Rule border, the character at 8rem in the kana face in Blue Hot Core with `--glow-cool`. It is the page's one lit sign. Beside it are the Hán Việt line (Title 1.6rem, Chalk, uppercase, tracked 0.08em) and a facts `dl` (7rem Dim Silver `dt`s, tabular Silver `dd`s). Below 600px they stack. "Từ chứa 食" is a ruled word list in a 48rem column (Faint Rule rows; word in Chalk, reading and meaning in Dim Silver), with the char in the heading set in the kana face. The one amber `.btn` is "Học bài n" with the Arrow.
+
+### Vocab decks (/vocab)
+The standard heading and lede, then the one amber `.btn` in a 48px slot that holds its height until the local schedule loads: "Ôn n từ đến hạn" (to `/review?kind=vocab`) when words are due, otherwise "Học bài tiếp" (to the next unfinished deck). Decks are ruled rows in a 60rem column (Faint Rule top and row borders, at least 56px tall): Bài n, title, n từ, learned/due stats, Arrow. Counts are tabular and read "—" until the schedule hydrates. Hover gives Wet and Amber Hot Core text. Each row links `/flashcards?deck=n`, where the toolbar names the deck and an unknown deck is a 404. Below 700px the row folds to two lines.
+
 ### Navigation
 - **Site bar (`.bar`):** the brand link sits on the left: 言葉 in the sign face with pink glow, then "Kotoba" in Chalk Title tracked 0.08em, plus an sr-only "trang chủ". One `<nav>` follows. Nav items are Title 600 at 1.1rem in Silver. Hover goes to Chalk with a Rule underline, and the current item is amber text with a 1.5px amber underline.
   - **From 900px up** the nav is a plain row: the Thư viện button, then the account group pushed to the right.
   - **Below 900px** the nav is a `popover="auto"` sheet opened by the `.menuBtn` ghost button (44px). The sheet is full width under the bar, Asphalt with Strong Rule top and bottom borders, and its items are 44px rows. Clicking any link inside closes the sheet and the library popover.
-  - **Thư viện (`.libraryBtn`):** a button with a small chevron that opens the `#site-library` popover (Bảng chữ cái, Thẻ từ vựng). It turns amber through `data-current` when the current page is in the library. The popover is Asphalt with a 1px Strong Rule border, anchored under the button. Its rows are 44px and hover to a Wet fill with Amber Hot Core text. In the phone sheet the button is hidden and the library links are listed inline.
+  - **Thư viện (`.libraryBtn`):** a button with a small chevron that opens the `#site-library` popover (Bảng chữ cái, Kanji, Từ vựng; /flashcards counts as Từ vựng). It turns amber through `data-current` when the current page is in the library. The popover is Asphalt with a 1px Strong Rule border, anchored under the button. Its rows are 44px and hover to a Wet fill with Amber Hot Core text. In the phone sheet the button is hidden and the library links are listed inline.
   - **Account group (`.account`):** when signed in, it shows the email (Dim Silver, 0.9rem, truncated) as a link to /settings, then Đăng xuất, then VI|EN. When signed out, Đăng nhập replaces the email and Đăng xuất. In the phone sheet the group sits below a Rule top border.
 - **Site footer (`.siteFooter`):** one Dim Silver 0.85rem line above a Faint Rule top border. It holds the KANJIDIC2 / JMdict / CC BY-SA 4.0 credits and a link to /legal that turns Amber Hot Core on hover.
 
@@ -309,8 +320,8 @@ Rain over a skyline SVG drawn in three depth planes, a train on the elevated lin
 ### Planned (not yet built)
 These exist only in `.impeccable/mocks/n5-ia.md` and are not shipped components. Do not treat them as established:
 - The primary nav items Bài học, Ôn tập (with a due count), Tra cứu and Thi thử. Each joins the shipped nav when its route ships.
-- The /lessons train-line path with station marks, /lessons/[n], the /review queue that reuses the flashcard frame, /search, /test sitting, result and review, the /kanji grid and detail, /vocab decks and /grammar.
-- Play, chevron and clock icons drawn to match the Arrow.
+- The /lessons train-line path with station marks, /lessons/[n], the /review queue that reuses the flashcard frame, /search, /test sitting, result and review, and /grammar.
+- Chevron and clock icons drawn to match the Arrow.
 
 ### Builder amendments (unratified)
 The N5 build relies on these interpretations, but **the user has not confirmed them**, so they are provisional:

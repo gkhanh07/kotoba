@@ -4,16 +4,9 @@ import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
 import { LogoutButton } from "./Sync";
 import { MenuNav } from "./MenuNav";
+export { Arrow } from "./Arrow";
 
-export function Arrow() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-      <path d="M3 9h11M9.5 4.5 14 9l-4.5 4.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" />
-    </svg>
-  );
-}
-
-const LIBRARY = ["kana", "flashcards"] as const;
+const LIBRARY = ["kana", "kanji", "vocab"] as const; // /flashcards is a vocab deck, so it passes "vocab"
 // Primary items (lessons, review, search, test) join as their routes ship.
 type Current = (typeof LIBRARY)[number];
 
@@ -38,7 +31,8 @@ export async function SiteBar({ current }: { current?: Current }) {
         </button>
         <div id="site-library" popover="auto" className="library">
           <Link href="/kana" aria-current={here("kana")}>{t.kana}</Link>
-          <Link href="/flashcards" aria-current={here("flashcards")}>{t.flashcards}</Link>
+          <Link href="/kanji" aria-current={here("kanji")}>{t.kanji}</Link>
+          <Link href="/vocab" aria-current={here("vocab")}>{t.vocab}</Link>
         </div>
         <div className="account">
           {user ? (

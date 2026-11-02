@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '../src/app.module.js';
 import { Db } from '../src/db.js';
+import vocab from '../content/vocab.json' with { type: 'json' };
 
 describe('content (e2e)', () => {
   let app: INestApplication;
@@ -17,7 +18,7 @@ describe('content (e2e)', () => {
   afterAll(() => app.close());
 
   it('serves every kind from the seeded files', async () => {
-    for (const [kind, n] of [['kana', 224], ['kanji', 103], ['vocab', 12], ['lesson', 25]] as const) {
+    for (const [kind, n] of [['kana', 224], ['kanji', 103], ['vocab', vocab.length], ['lesson', 25]] as const) {
       const res = await get(`/content/${kind}`).expect(200);
       expect(res.body, kind).toHaveLength(n);
     }
@@ -28,14 +29,14 @@ describe('content (e2e)', () => {
     const yoon = await get('/content/kana?script=hiragana&group=yoon').expect(200);
     expect(yoon.body).toHaveLength(33);
     const l13 = await get('/content/vocab?lesson=13').expect(200);
-    expect(l13.body.map((v: { id: string }) => v.id)).toEqual(['vocab:水', 'vocab:食べる', 'vocab:コーヒー']);
+    expect(l13.body.map((v: { id: string }) => v.id)).toEqual(vocab.filter((v) => v.lesson === 13).map((v) => v.id));
     await get('/content/vocab?lesson=x').expect(400);
   });
 
   it('returns a kanji with the words written with it', async () => {
     const res = await get(`/content/item/${encodeURIComponent('kanji:水')}`).expect(200);
     expect(res.body.hv).toBeDefined();
-    expect(res.body.words.map((w: { id: string }) => w.id)).toEqual(['vocab:水']);
+    expect(res.body.words.map((w: { id: string }) => w.id)).toEqual(['vocab:水', 'vocab:すいようび']); // すいようび counts through its kanji form 水曜日
     await get('/content/item/kanji:nope').expect(404);
   });
 

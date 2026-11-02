@@ -6,9 +6,10 @@ import { logActivity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
 import { daysUntil, isDue, isKnown } from "@/lib/srs";
 import { review, today, useDeck } from "@/lib/store";
+import { Speak } from "../Speak";
 import s from "./flashcards.module.css";
 
-export function FlashcardApp({ cards, lang }: { cards: Vocab[]; lang: Lang }) {
+export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang: Lang; deck: string }) {
   const t = flashcardText[lang];
   const [order, setOrder] = useState(cards);
   const [index, setIndex] = useState(0);
@@ -46,10 +47,11 @@ export function FlashcardApp({ cards, lang }: { cards: Vocab[]; lang: Lang }) {
     <main className={s.app}>
       <header className={s.heading}><h1>{t.title}</h1><p>{t.lede}</p></header>
       {!card ? <p className={s.empty}>{t.empty}</p> : (
-        <section className={s.study} aria-label={t.deck}>
+        <section className={s.study} aria-label={name}>
           <div className={s.toolbar}>
-            <p>{t.deck}</p>
+            <p>{name}</p>
             <div className={s.tools}>
+              <Speak text={card.word} label={t.speak} className={s.speak} />
               <button type="button" onClick={() => restart(true)} disabled={cards.length < 2}>{t.shuffle}</button>
               <button type="button" onClick={() => restart(false)}>{t.restart}</button>
             </div>
