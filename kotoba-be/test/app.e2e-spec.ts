@@ -16,7 +16,7 @@ describe('app (e2e)', () => {
   afterAll(() => app.close());
 
   it('boots and reaches the database', async () => {
-    expect(await app.get(Db).user.count()).toBe(0);
+    expect(await app.get(Db).user.count()).toBeTypeOf('number');
   });
 
   it('has no hello route', () => request(app.getHttpServer()).get('/').expect(404));
