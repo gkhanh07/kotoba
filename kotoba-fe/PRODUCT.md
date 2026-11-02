@@ -19,7 +19,7 @@ A Japanese course built for Vietnamese speakers from the start, not translated f
 Short self-study sessions on phone or laptop. Learners go back and forth between a reference (the kana chart) and active recall (quiz).
 
 ## Capabilities and Constraints
-- Stack: Next.js 16 (App Router), React 19, CSS Modules, TypeScript, pnpm. No UI library.
+- Stack: Next.js 16 (App Router), React 19, CSS Modules, TypeScript, npm. No UI library.
 - A backend (`kotoba-be`) exists or is planned. The frontend reads lesson data through a thin data module shaped like the future API; for now it uses bundled mock data. Progress is kept in the browser until the API exists.
 - First-release capabilities: landing page, hiragana/katakana chart, recognition quiz.
 - Interface language: Vietnamese or English, switched from the header and remembered in the `kotoba.lang` cookie. The pronunciation hints are Vietnamese phonetics by construction, so they ship only in the Vietnamese interface.
