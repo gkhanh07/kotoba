@@ -37,15 +37,18 @@ describe('content', () => {
   });
 
   // {…} marks the underlined word; ★ marks the blank asked about in sentence order.
+  // Every question explains its answer in Vietnamese (AGENTS.md §12).
   it('has well-formed mock test papers', () => {
-    type Q = { q: string; choices: string[]; answer: number };
+    type Q = { q: string; choices: string[]; answer: number; explain?: unknown };
     const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as { id: string; parts: { part: string; questions: Q[] }[] }[];
     expect(new Set(papers.map((p) => p.id)).size).toBe(papers.length);
     const bad = papers.flatMap((p) =>
       p.parts.flatMap(({ part, questions }) =>
         questions
           .filter(
-            ({ q, choices, answer }) =>
+            ({ q, choices, answer, explain }) =>
+              typeof explain !== 'string' ||
+              explain.trim() === '' ||
               new Set(choices).size !== 4 ||
               choices.length !== 4 ||
               !Number.isInteger(answer) ||

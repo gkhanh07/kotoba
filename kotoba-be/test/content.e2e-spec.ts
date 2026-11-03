@@ -56,7 +56,7 @@ describe('content (e2e)', () => {
 
   it('serves mock test papers', async () => {
     const list = await get('/tests').expect(200);
-    expect(list.body).toEqual([{ id: 'n5-1', title: { vi: 'Đề 1', en: 'Paper 1' }, minutes: 50, questions: 45 }]);
+    expect(list.body).toEqual([{ id: 'n5-1', title: { vi: 'Đề 1', en: 'Paper 1' }, minutes: 60, questions: 45 }]);
     const paper = await get('/tests/n5-1').expect(200);
     expect(paper.body.parts[0].questions[0].choices).toHaveLength(4);
     await get('/tests/nope').expect(404);
