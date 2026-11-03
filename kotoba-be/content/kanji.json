@@ -188,7 +188,9 @@
   "level": 5,
   "reviewed": false,
   "similar": [
-   "天"
+   "天",
+   "犬",
+   "太"
   ]
  },
  {
@@ -396,6 +398,30 @@
   "reviewed": false
  },
  {
+  "id": "kanji:同",
+  "char": "同",
+  "hv": [
+   "Đồng"
+  ],
+  "on": [
+   "ドウ"
+  ],
+  "kun": [
+   "おな.じ"
+  ],
+  "en": [
+   "same",
+   "agree",
+   "equal"
+  ],
+  "strokes": 6,
+  "freq": 15,
+  "vi": "giống, cùng",
+  "lesson": 44,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:時",
   "char": "時",
   "hv": [
@@ -419,6 +445,65 @@
   "lesson": 7,
   "level": 5,
   "reviewed": false
+ },
+ {
+  "id": "kanji:事",
+  "char": "事",
+  "hv": [
+   "Sự"
+  ],
+  "on": [
+   "ジ",
+   "ズ"
+  ],
+  "kun": [
+   "こと",
+   "つか.う",
+   "つか.える"
+  ],
+  "en": [
+   "matter",
+   "thing",
+   "fact",
+   "business",
+   "reason",
+   "possibly"
+  ],
+  "strokes": 8,
+  "freq": 18,
+  "vi": "việc, sự việc",
+  "lesson": 37,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:自",
+  "char": "自",
+  "hv": [
+   "Tự"
+  ],
+  "on": [
+   "ジ",
+   "シ"
+  ],
+  "kun": [
+   "みずか.ら",
+   "おの.ずから",
+   "おの.ずと"
+  ],
+  "en": [
+   "oneself"
+  ],
+  "strokes": 6,
+  "freq": 19,
+  "vi": "tự mình, bản thân",
+  "lesson": 26,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "目",
+   "白"
+  ]
  },
  {
   "id": "kanji:行",
@@ -638,6 +723,30 @@
   "reviewed": false
  },
  {
+  "id": "kanji:民",
+  "char": "民",
+  "hv": [
+   "Dân"
+  ],
+  "on": [
+   "ミン"
+  ],
+  "kun": [
+   "たみ"
+  ],
+  "en": [
+   "people",
+   "nation",
+   "subjects"
+  ],
+  "strokes": 5,
+  "freq": 28,
+  "vi": "người dân",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:生",
   "char": "生",
   "hv": [
@@ -704,6 +813,40 @@
   "reviewed": false
  },
  {
+  "id": "kanji:発",
+  "char": "発",
+  "hv": [
+   "Bát",
+   "Phát"
+  ],
+  "on": [
+   "ハツ",
+   "ホツ"
+  ],
+  "kun": [
+   "た.つ",
+   "あば.く",
+   "おこ.る",
+   "つか.わす",
+   "はな.つ"
+  ],
+  "en": [
+   "departure",
+   "discharge",
+   "publish",
+   "emit",
+   "start from",
+   "disclose",
+   "counter for gunshots"
+  ],
+  "strokes": 9,
+  "freq": 32,
+  "vi": "xuất phát; phát ra",
+  "lesson": 43,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:間",
   "char": "間",
   "hv": [
@@ -729,7 +872,8 @@
   "level": 5,
   "reviewed": false,
   "similar": [
-   "聞"
+   "聞",
+   "問"
   ]
  },
  {
@@ -795,6 +939,166 @@
   "reviewed": false
  },
  {
+  "id": "kanji:者",
+  "char": "者",
+  "hv": [
+   "Giả"
+  ],
+  "on": [
+   "シャ"
+  ],
+  "kun": [
+   "もの"
+  ],
+  "en": [
+   "someone",
+   "person"
+  ],
+  "strokes": 8,
+  "freq": 38,
+  "vi": "người (làm việc gì)",
+  "lesson": 37,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:地",
+  "char": "地",
+  "hv": [
+   "Địa"
+  ],
+  "on": [
+   "チ",
+   "ジ"
+  ],
+  "kun": [],
+  "en": [
+   "ground",
+   "earth"
+  ],
+  "strokes": 6,
+  "freq": 40,
+  "vi": "đất, mặt đất; vùng",
+  "lesson": 43,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:合",
+  "char": "合",
+  "hv": [
+   "Hợp",
+   "Cáp"
+  ],
+  "on": [
+   "ゴウ",
+   "ガッ",
+   "カッ"
+  ],
+  "kun": [
+   "あ.う",
+   "-あ.う",
+   "あ.い",
+   "あい-",
+   "-あ.い",
+   "-あい",
+   "あ.わす",
+   "あ.わせる",
+   "-あ.わせる"
+  ],
+  "en": [
+   "fit",
+   "suit",
+   "join",
+   "0.1"
+  ],
+  "strokes": 6,
+  "freq": 41,
+  "vi": "hợp, vừa; gộp lại",
+  "lesson": 44,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:市",
+  "char": "市",
+  "hv": [
+   "Thị"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "いち"
+  ],
+  "en": [
+   "market",
+   "city",
+   "town"
+  ],
+  "strokes": 5,
+  "freq": 42,
+  "vi": "thành phố; chợ",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:業",
+  "char": "業",
+  "hv": [
+   "Nghiệp"
+  ],
+  "on": [
+   "ギョウ",
+   "ゴウ"
+  ],
+  "kun": [
+   "わざ"
+  ],
+  "en": [
+   "business",
+   "vocation",
+   "arts",
+   "performance"
+  ],
+  "strokes": 13,
+  "freq": 43,
+  "vi": "nghề nghiệp; ngành",
+  "lesson": 37,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:方",
+  "char": "方",
+  "hv": [
+   "Phương"
+  ],
+  "on": [
+   "ホウ"
+  ],
+  "kun": [
+   "かた",
+   "-かた",
+   "-がた"
+  ],
+  "en": [
+   "direction",
+   "person",
+   "alternative"
+  ],
+  "strokes": 4,
+  "freq": 46,
+  "vi": "phương hướng; cách làm; vị (lịch sự)",
+  "lesson": 43,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "万"
+  ]
+ },
+ {
   "id": "kanji:四",
   "char": "四",
   "hv": [
@@ -843,6 +1147,42 @@
   "reviewed": false
  },
  {
+  "id": "kanji:回",
+  "char": "回",
+  "hv": [
+   "Hồi",
+   "Hối"
+  ],
+  "on": [
+   "カイ",
+   "エ"
+  ],
+  "kun": [
+   "まわ.る",
+   "-まわ.る",
+   "-まわ.り",
+   "まわ.す",
+   "-まわ.す",
+   "まわ.し-",
+   "-まわ.し",
+   "もとお.る",
+   "か.える"
+  ],
+  "en": [
+   "-times",
+   "round",
+   "game",
+   "revolve",
+   "counter for occurrences"
+  ],
+  "strokes": 6,
+  "freq": 50,
+  "vi": "lần; quay vòng",
+  "lesson": 43,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:新",
   "char": "新",
   "hv": [
@@ -865,6 +1205,31 @@
   "vi": "mới",
   "lesson": 18,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:場",
+  "char": "場",
+  "hv": [
+   "Tràng",
+   "Trường"
+  ],
+  "on": [
+   "ジョウ",
+   "チョウ"
+  ],
+  "kun": [
+   "ば"
+  ],
+  "en": [
+   "location",
+   "place"
+  ],
+  "strokes": 12,
+  "freq": 52,
+  "vi": "nơi, chỗ",
+  "lesson": 43,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -891,6 +1256,30 @@
   "vi": "vàng; tiền",
   "lesson": 8,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:員",
+  "char": "員",
+  "hv": [
+   "Viên",
+   "Vân"
+  ],
+  "on": [
+   "イン"
+  ],
+  "kun": [],
+  "en": [
+   "employee",
+   "member",
+   "number",
+   "the one in charge"
+  ],
+  "strokes": 10,
+  "freq": 54,
+  "vi": "nhân viên, thành viên",
+  "lesson": 37,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -988,6 +1377,35 @@
   "reviewed": false
  },
  {
+  "id": "kanji:開",
+  "char": "開",
+  "hv": [
+   "Khai"
+  ],
+  "on": [
+   "カイ"
+  ],
+  "kun": [
+   "ひら.く",
+   "ひら.き",
+   "-びら.き",
+   "ひら.ける",
+   "あ.く",
+   "あ.ける"
+  ],
+  "en": [
+   "open",
+   "unfold",
+   "unseal"
+  ],
+  "strokes": 12,
+  "freq": 59,
+  "vi": "mở",
+  "lesson": 39,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:手",
   "char": "手",
   "hv": [
@@ -1014,6 +1432,35 @@
   "reviewed": false
  },
  {
+  "id": "kanji:力",
+  "char": "力",
+  "hv": [
+   "Lực"
+  ],
+  "on": [
+   "リョク",
+   "リキ",
+   "リイ"
+  ],
+  "kun": [
+   "ちから"
+  ],
+  "en": [
+   "power",
+   "strength",
+   "strong",
+   "strain",
+   "bear up",
+   "exert"
+  ],
+  "strokes": 2,
+  "freq": 62,
+  "vi": "sức, sức lực",
+  "lesson": 44,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:学",
   "char": "学",
   "hv": [
@@ -1035,7 +1482,40 @@
   "vi": "học",
   "lesson": 12,
   "level": 5,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "字"
+  ]
+ },
+ {
+  "id": "kanji:問",
+  "char": "問",
+  "hv": [
+   "Vấn"
+  ],
+  "on": [
+   "モン"
+  ],
+  "kun": [
+   "と.う",
+   "と.い",
+   "とん"
+  ],
+  "en": [
+   "question",
+   "ask",
+   "problem"
+  ],
+  "strokes": 11,
+  "freq": 64,
+  "vi": "hỏi; vấn đề",
+  "lesson": 35,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "間",
+   "聞"
+  ]
  },
  {
   "id": "kanji:高",
@@ -1063,6 +1543,81 @@
   "vi": "cao; đắt",
   "lesson": 15,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:代",
+  "char": "代",
+  "hv": [
+   "Đại"
+  ],
+  "on": [
+   "ダイ",
+   "タイ"
+  ],
+  "kun": [
+   "か.わる",
+   "かわ.る",
+   "かわ.り",
+   "か.わり",
+   "-がわ.り",
+   "-が.わり",
+   "か.える",
+   "よ",
+   "しろ"
+  ],
+  "en": [
+   "substitute",
+   "change",
+   "convert",
+   "replace",
+   "period",
+   "age",
+   "counter for decades of ages, eras, etc.",
+   "generation",
+   "charge",
+   "rate",
+   "fee"
+  ],
+  "strokes": 5,
+  "freq": 66,
+  "vi": "thay thế; thời đại; tiền phí",
+  "lesson": 28,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:明",
+  "char": "明",
+  "hv": [
+   "Minh"
+  ],
+  "on": [
+   "メイ",
+   "ミョウ",
+   "ミン"
+  ],
+  "kun": [
+   "あ.かり",
+   "あか.るい",
+   "あか.るむ",
+   "あか.らむ",
+   "あき.らか",
+   "あ.ける",
+   "-あ.け",
+   "あ.く",
+   "あ.くる",
+   "あ.かす"
+  ],
+  "en": [
+   "bright",
+   "light"
+  ],
+  "strokes": 8,
+  "freq": 67,
+  "vi": "sáng, rõ",
+  "lesson": 28,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -1124,6 +1679,59 @@
   "reviewed": false
  },
  {
+  "id": "kanji:動",
+  "char": "動",
+  "hv": [
+   "Động"
+  ],
+  "on": [
+   "ドウ"
+  ],
+  "kun": [
+   "うご.く",
+   "うご.かす"
+  ],
+  "en": [
+   "move",
+   "motion",
+   "change",
+   "confusion",
+   "shift",
+   "shake"
+  ],
+  "strokes": 11,
+  "freq": 73,
+  "vi": "chuyển động",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:京",
+  "char": "京",
+  "hv": [
+   "Kinh"
+  ],
+  "on": [
+   "キョウ",
+   "ケイ",
+   "キン"
+  ],
+  "kun": [
+   "みやこ"
+  ],
+  "en": [
+   "capital",
+   "10**16"
+  ],
+  "strokes": 8,
+  "freq": 74,
+  "vi": "kinh đô",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:目",
   "char": "目",
   "hv": [
@@ -1154,8 +1762,43 @@
   "level": 5,
   "reviewed": false,
   "similar": [
-   "日"
+   "日",
+   "自"
   ]
+ },
+ {
+  "id": "kanji:通",
+  "char": "通",
+  "hv": [
+   "Thông"
+  ],
+  "on": [
+   "ツウ",
+   "ツ"
+  ],
+  "kun": [
+   "とお.る",
+   "とお.り",
+   "-とお.り",
+   "-どお.り",
+   "とお.す",
+   "とお.し",
+   "-どお.し",
+   "かよ.う"
+  ],
+  "en": [
+   "traffic",
+   "pass through",
+   "avenue",
+   "commute",
+   "counter for letters, notes, documents, etc."
+  ],
+  "strokes": 10,
+  "freq": 80,
+  "vi": "đi qua, thông qua; đi lại",
+  "lesson": 34,
+  "level": 4,
+  "reviewed": false
  },
  {
   "id": "kanji:外",
@@ -1208,6 +1851,86 @@
   "vi": "nói",
   "lesson": 12,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:理",
+  "char": "理",
+  "hv": [
+   "Lý"
+  ],
+  "on": [
+   "リ"
+  ],
+  "kun": [
+   "ことわり"
+  ],
+  "en": [
+   "logic",
+   "arrangement",
+   "reason",
+   "justice",
+   "truth"
+  ],
+  "strokes": 11,
+  "freq": 86,
+  "vi": "lý lẽ, lý do",
+  "lesson": 41,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:体",
+  "char": "体",
+  "hv": [
+   "Thể"
+  ],
+  "on": [
+   "タイ",
+   "テイ"
+  ],
+  "kun": [
+   "からだ",
+   "かたち"
+  ],
+  "en": [
+   "body",
+   "substance",
+   "object",
+   "reality",
+   "counter for images"
+  ],
+  "strokes": 7,
+  "freq": 88,
+  "vi": "cơ thể",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "休"
+  ]
+ },
+ {
+  "id": "kanji:田",
+  "char": "田",
+  "hv": [
+   "Điền"
+  ],
+  "on": [
+   "デン"
+  ],
+  "kun": [
+   "た"
+  ],
+  "en": [
+   "rice field",
+   "rice paddy"
+  ],
+  "strokes": 5,
+  "freq": 90,
+  "vi": "ruộng lúa",
+  "lesson": 29,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -1267,6 +1990,57 @@
   "reviewed": false
  },
  {
+  "id": "kanji:主",
+  "char": "主",
+  "hv": [
+   "Chủ"
+  ],
+  "on": [
+   "シュ",
+   "ス",
+   "シュウ"
+  ],
+  "kun": [
+   "ぬし",
+   "おも",
+   "あるじ"
+  ],
+  "en": [
+   "lord",
+   "chief",
+   "master",
+   "main thing",
+   "principal"
+  ],
+  "strokes": 5,
+  "freq": 95,
+  "vi": "chủ; chính, chủ yếu",
+  "lesson": 26,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:題",
+  "char": "題",
+  "hv": [
+   "Đề"
+  ],
+  "on": [
+   "ダイ"
+  ],
+  "kun": [],
+  "en": [
+   "topic",
+   "subject"
+  ],
+  "strokes": 18,
+  "freq": 96,
+  "vi": "đề, chủ đề",
+  "lesson": 35,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:下",
   "char": "下",
   "hv": [
@@ -1307,6 +2081,85 @@
   "reviewed": false
  },
  {
+  "id": "kanji:首",
+  "char": "首",
+  "hv": [
+   "Thủ",
+   "Thú"
+  ],
+  "on": [
+   "シュ"
+  ],
+  "kun": [
+   "くび"
+  ],
+  "en": [
+   "neck",
+   "counter for songs and poems"
+  ],
+  "strokes": 9,
+  "freq": 98,
+  "vi": "cổ; đứng đầu",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:意",
+  "char": "意",
+  "hv": [
+   "Ý"
+  ],
+  "on": [
+   "イ"
+  ],
+  "kun": [],
+  "en": [
+   "idea",
+   "mind",
+   "heart",
+   "taste",
+   "thought",
+   "desire",
+   "care",
+   "liking"
+  ],
+  "strokes": 13,
+  "freq": 99,
+  "vi": "ý, ý nghĩa",
+  "lesson": 41,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:不",
+  "char": "不",
+  "hv": [
+   "Bất",
+   "Phầu",
+   "Phủ",
+   "Phi"
+  ],
+  "on": [
+   "フ",
+   "ブ"
+  ],
+  "kun": [],
+  "en": [
+   "negative",
+   "non-",
+   "bad",
+   "ugly",
+   "clumsy"
+  ],
+  "strokes": 4,
+  "freq": 101,
+  "vi": "không, bất (phủ định)",
+  "lesson": 44,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:来",
   "char": "来",
   "hv": [
@@ -1342,6 +2195,128 @@
   "vi": "đến",
   "lesson": 14,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:作",
+  "char": "作",
+  "hv": [
+   "Tác"
+  ],
+  "on": [
+   "サク",
+   "サ"
+  ],
+  "kun": [
+   "つく.る",
+   "つく.り",
+   "-づく.り"
+  ],
+  "en": [
+   "make",
+   "production",
+   "prepare",
+   "build"
+  ],
+  "strokes": 7,
+  "freq": 103,
+  "vi": "làm, chế tạo",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:用",
+  "char": "用",
+  "hv": [
+   "Dụng"
+  ],
+  "on": [
+   "ヨウ"
+  ],
+  "kun": [
+   "もち.いる"
+  ],
+  "en": [
+   "utilize",
+   "business",
+   "service",
+   "use",
+   "employ"
+  ],
+  "strokes": 5,
+  "freq": 107,
+  "vi": "dùng; việc cần làm",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:度",
+  "char": "度",
+  "hv": [
+   "Độ",
+   "Đạc"
+  ],
+  "on": [
+   "ド",
+   "ト",
+   "タク"
+  ],
+  "kun": [
+   "たび",
+   "-た.い"
+  ],
+  "en": [
+   "degrees",
+   "occurrence",
+   "time",
+   "counter for occurrences",
+   "consider",
+   "attitude"
+  ],
+  "strokes": 9,
+  "freq": 110,
+  "vi": "độ; lần",
+  "lesson": 44,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:強",
+  "char": "強",
+  "hv": [
+   "Cường",
+   "Cưỡng",
+   "Càng",
+   "Cướng",
+   "Cượng",
+   "Gàn",
+   "Gàng",
+   "Gắng",
+   "Gương",
+   "Gượng",
+   "Ngượng"
+  ],
+  "on": [
+   "キョウ",
+   "ゴウ"
+  ],
+  "kun": [
+   "つよ.い",
+   "つよ.まる",
+   "つよ.める",
+   "し.いる",
+   "こわ.い"
+  ],
+  "en": [
+   "strong"
+  ],
+  "strokes": 11,
+  "freq": 112,
+  "vi": "mạnh",
+  "lesson": 42,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -1426,6 +2401,113 @@
   "reviewed": false
  },
  {
+  "id": "kanji:持",
+  "char": "持",
+  "hv": [
+   "Trì"
+  ],
+  "on": [
+   "ジ"
+  ],
+  "kun": [
+   "も.つ",
+   "-も.ち",
+   "も.てる"
+  ],
+  "en": [
+   "hold",
+   "have"
+  ],
+  "strokes": 9,
+  "freq": 119,
+  "vi": "cầm, mang; có",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "待",
+   "特"
+  ]
+ },
+ {
+  "id": "kanji:野",
+  "char": "野",
+  "hv": [
+   "Dã"
+  ],
+  "on": [
+   "ヤ",
+   "ショ"
+  ],
+  "kun": [
+   "の",
+   "の-"
+  ],
+  "en": [
+   "plains",
+   "field",
+   "rustic",
+   "civilian life"
+  ],
+  "strokes": 11,
+  "freq": 120,
+  "vi": "cánh đồng; hoang dã",
+  "lesson": 29,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:都",
+  "char": "都",
+  "hv": [
+   "Đô"
+  ],
+  "on": [
+   "ト",
+   "ツ"
+  ],
+  "kun": [
+   "みやこ"
+  ],
+  "en": [
+   "metropolis",
+   "capital",
+   "all",
+   "everything"
+  ],
+  "strokes": 11,
+  "freq": 123,
+  "vi": "thủ đô, đô thị",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:以",
+  "char": "以",
+  "hv": [
+   "Dĩ"
+  ],
+  "on": [
+   "イ"
+  ],
+  "kun": [
+   "もっ.て"
+  ],
+  "en": [
+   "by means of",
+   "because",
+   "in view of",
+   "compared with"
+  ],
+  "strokes": 5,
+  "freq": 126,
+  "vi": "từ (mốc), trở lên/xuống",
+  "lesson": 44,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:山",
   "char": "山",
   "hv": [
@@ -1447,6 +2529,63 @@
   "vi": "núi",
   "lesson": 16,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:思",
+  "char": "思",
+  "hv": [
+   "Tư",
+   "Tứ",
+   "Tai"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "おも.う",
+   "おもえら.く",
+   "おぼ.す"
+  ],
+  "en": [
+   "think"
+  ],
+  "strokes": 9,
+  "freq": 132,
+  "vi": "nghĩ",
+  "lesson": 41,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:家",
+  "char": "家",
+  "hv": [
+   "Gia",
+   "Cô"
+  ],
+  "on": [
+   "カ",
+   "ケ"
+  ],
+  "kun": [
+   "いえ",
+   "や",
+   "うち"
+  ],
+  "en": [
+   "house",
+   "home",
+   "family",
+   "professional",
+   "expert",
+   "performer"
+  ],
+  "strokes": 10,
+  "freq": 133,
+  "vi": "nhà; gia đình",
+  "lesson": 26,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -1474,6 +2613,57 @@
   "reviewed": false
  },
  {
+  "id": "kanji:世",
+  "char": "世",
+  "hv": [
+   "Thế"
+  ],
+  "on": [
+   "セイ",
+   "セ",
+   "ソウ"
+  ],
+  "kun": [
+   "よ"
+  ],
+  "en": [
+   "generation",
+   "world",
+   "society",
+   "public"
+  ],
+  "strokes": 5,
+  "freq": 135,
+  "vi": "đời; thế gian",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:区",
+  "char": "区",
+  "hv": [
+   "Âu",
+   "Khu"
+  ],
+  "on": [
+   "ク",
+   "オウ",
+   "コウ"
+  ],
+  "kun": [],
+  "en": [
+   "ward",
+   "district"
+  ],
+  "strokes": 4,
+  "freq": 137,
+  "vi": "quận, khu",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:多",
   "char": "多",
   "hv": [
@@ -1498,6 +2688,87 @@
   "lesson": 18,
   "level": 5,
   "reviewed": false
+ },
+ {
+  "id": "kanji:県",
+  "char": "県",
+  "hv": [
+   "Huyền"
+  ],
+  "on": [
+   "ケン"
+  ],
+  "kun": [
+   "か.ける"
+  ],
+  "en": [
+   "prefecture"
+  ],
+  "strokes": 9,
+  "freq": 140,
+  "vi": "tỉnh",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:進",
+  "char": "進",
+  "hv": [
+   "Tiến"
+  ],
+  "on": [
+   "シン"
+  ],
+  "kun": [
+   "すす.む",
+   "すす.める"
+  ],
+  "en": [
+   "advance",
+   "proceed",
+   "progress",
+   "promote"
+  ],
+  "strokes": 11,
+  "freq": 142,
+  "vi": "tiến lên",
+  "lesson": 43,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:正",
+  "char": "正",
+  "hv": [
+   "Chánh",
+   "Chính"
+  ],
+  "on": [
+   "セイ",
+   "ショウ"
+  ],
+  "kun": [
+   "ただ.しい",
+   "ただ.す",
+   "まさ",
+   "まさ.に"
+  ],
+  "en": [
+   "correct",
+   "justice",
+   "righteous",
+   "10**40"
+  ],
+  "strokes": 5,
+  "freq": 143,
+  "vi": "đúng; chính",
+  "lesson": 41,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "止"
+  ]
  },
  {
   "id": "kanji:安",
@@ -1528,6 +2799,30 @@
   "vi": "rẻ; yên ổn",
   "lesson": 15,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:院",
+  "char": "院",
+  "hv": [
+   "Viện"
+  ],
+  "on": [
+   "イン"
+  ],
+  "kun": [],
+  "en": [
+   "Inst.",
+   "institution",
+   "temple",
+   "mansion",
+   "school"
+  ],
+  "strokes": 10,
+  "freq": 150,
+  "vi": "viện (bệnh viện, học viện)",
+  "lesson": 32,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -1603,6 +2898,89 @@
   "vi": "giữa trưa",
   "lesson": 7,
   "level": 5,
+  "reviewed": false,
+  "similar": [
+   "牛"
+  ]
+ },
+ {
+  "id": "kanji:心",
+  "char": "心",
+  "hv": [
+   "Tâm"
+  ],
+  "on": [
+   "シン"
+  ],
+  "kun": [
+   "こころ",
+   "-ごころ"
+  ],
+  "en": [
+   "heart",
+   "mind",
+   "spirit",
+   "heart radical (no. 61)"
+  ],
+  "strokes": 4,
+  "freq": 157,
+  "vi": "tim; tấm lòng",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:界",
+  "char": "界",
+  "hv": [
+   "Giới"
+  ],
+  "on": [
+   "カイ"
+  ],
+  "kun": [],
+  "en": [
+   "world",
+   "boundary"
+  ],
+  "strokes": 9,
+  "freq": 158,
+  "vi": "giới, thế giới",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:産",
+  "char": "産",
+  "hv": [
+   "Sản",
+   "Sẵn",
+   "Sởn"
+  ],
+  "on": [
+   "サン"
+  ],
+  "kun": [
+   "う.む",
+   "う.まれる",
+   "うぶ-",
+   "む.す"
+  ],
+  "en": [
+   "products",
+   "bear",
+   "give birth",
+   "yield",
+   "childbirth",
+   "native",
+   "property"
+  ],
+  "strokes": 11,
+  "freq": 161,
+  "vi": "sản xuất; sinh ra",
+  "lesson": 37,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -1632,6 +3010,31 @@
   "similar": [
    "白"
   ]
+ },
+ {
+  "id": "kanji:教",
+  "char": "教",
+  "hv": [
+   "Giáo"
+  ],
+  "on": [
+   "キョウ"
+  ],
+  "kun": [
+   "おし.える",
+   "おそ.わる"
+  ],
+  "en": [
+   "teach",
+   "faith",
+   "doctrine"
+  ],
+  "strokes": 11,
+  "freq": 166,
+  "vi": "dạy",
+  "lesson": 35,
+  "level": 4,
+  "reviewed": false
  },
  {
   "id": "kanji:書",
@@ -1737,6 +3140,128 @@
   "reviewed": false
  },
  {
+  "id": "kanji:文",
+  "char": "文",
+  "hv": [
+   "Văn",
+   "Vấn"
+  ],
+  "on": [
+   "ブン",
+   "モン"
+  ],
+  "kun": [
+   "ふみ",
+   "あや"
+  ],
+  "en": [
+   "sentence",
+   "literature",
+   "style",
+   "art",
+   "decoration",
+   "figures",
+   "plan",
+   "literary radical (no. 67)"
+  ],
+  "strokes": 4,
+  "freq": 190,
+  "vi": "câu văn; văn chương",
+  "lesson": 36,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:元",
+  "char": "元",
+  "hv": [
+   "Nguyên"
+  ],
+  "on": [
+   "ゲン",
+   "ガン"
+  ],
+  "kun": [
+   "もと"
+  ],
+  "en": [
+   "beginning",
+   "former time",
+   "origin"
+  ],
+  "strokes": 4,
+  "freq": 192,
+  "vi": "gốc, nguồn; trước đây",
+  "lesson": 44,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:重",
+  "char": "重",
+  "hv": [
+   "Trọng",
+   "Trùng"
+  ],
+  "on": [
+   "ジュウ",
+   "チョウ"
+  ],
+  "kun": [
+   "え",
+   "おも.い",
+   "おも.り",
+   "おも.なう",
+   "かさ.ねる",
+   "かさ.なる",
+   "おも"
+  ],
+  "en": [
+   "heavy",
+   "important",
+   "esteem",
+   "respect",
+   "heap up",
+   "pile up",
+   "nest of boxes",
+   "-fold"
+  ],
+  "strokes": 9,
+  "freq": 193,
+  "vi": "nặng; quan trọng",
+  "lesson": 42,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:近",
+  "char": "近",
+  "hv": [
+   "Cận",
+   "Cấn",
+   "Ký"
+  ],
+  "on": [
+   "キン",
+   "コン"
+  ],
+  "kun": [
+   "ちか.い"
+  ],
+  "en": [
+   "near",
+   "early",
+   "akin",
+   "tantamount"
+  ],
+  "strokes": 7,
+  "freq": 194,
+  "vi": "gần",
+  "lesson": 34,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:千",
   "char": "千",
   "hv": [
@@ -1760,6 +3285,132 @@
   "similar": [
    "十"
   ]
+ },
+ {
+  "id": "kanji:考",
+  "char": "考",
+  "hv": [
+   "Khảo"
+  ],
+  "on": [
+   "コウ"
+  ],
+  "kun": [
+   "かんが.える",
+   "かんが.え"
+  ],
+  "en": [
+   "consider",
+   "think over"
+  ],
+  "strokes": 6,
+  "freq": 196,
+  "vi": "suy nghĩ, cân nhắc",
+  "lesson": 41,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:画",
+  "char": "画",
+  "hv": [
+   "Hoạch"
+  ],
+  "on": [
+   "ガ",
+   "カク",
+   "エ",
+   "カイ"
+  ],
+  "kun": [
+   "えが.く",
+   "かく.する",
+   "かぎ.る",
+   "はかりごと",
+   "はか.る"
+  ],
+  "en": [
+   "brush-stroke",
+   "picture"
+  ],
+  "strokes": 8,
+  "freq": 199,
+  "vi": "tranh, hình vẽ; nét chữ",
+  "lesson": 36,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:海",
+  "char": "海",
+  "hv": [
+   "Hải"
+  ],
+  "on": [
+   "カイ"
+  ],
+  "kun": [
+   "うみ"
+  ],
+  "en": [
+   "sea",
+   "ocean"
+  ],
+  "strokes": 9,
+  "freq": 200,
+  "vi": "biển",
+  "lesson": 29,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:売",
+  "char": "売",
+  "hv": [
+   "Mại",
+   "Xác",
+   "Xạc"
+  ],
+  "on": [
+   "バイ"
+  ],
+  "kun": [
+   "う.る",
+   "う.れる"
+  ],
+  "en": [
+   "sell"
+  ],
+  "strokes": 7,
+  "freq": 202,
+  "vi": "bán",
+  "lesson": 38,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:知",
+  "char": "知",
+  "hv": [
+   "Tri"
+  ],
+  "on": [
+   "チ"
+  ],
+  "kun": [
+   "し.る",
+   "し.らせる"
+  ],
+  "en": [
+   "know",
+   "wisdom"
+  ],
+  "strokes": 8,
+  "freq": 205,
+  "vi": "biết",
+  "lesson": 41,
+  "level": 4,
+  "reviewed": false
  },
  {
   "id": "kanji:道",
@@ -1790,6 +3441,180 @@
   "vi": "con đường",
   "lesson": 14,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:集",
+  "char": "集",
+  "hv": [
+   "Tập"
+  ],
+  "on": [
+   "シュウ"
+  ],
+  "kun": [
+   "あつ.まる",
+   "あつ.める",
+   "つど.う"
+  ],
+  "en": [
+   "gather",
+   "meet",
+   "congregate",
+   "swarm",
+   "flock"
+  ],
+  "strokes": 12,
+  "freq": 210,
+  "vi": "tập hợp, thu thập",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:別",
+  "char": "別",
+  "hv": [
+   "Biệt"
+  ],
+  "on": [
+   "ベツ"
+  ],
+  "kun": [
+   "わか.れる",
+   "わ.ける"
+  ],
+  "en": [
+   "separate",
+   "branch off",
+   "diverge",
+   "fork",
+   "another",
+   "extra",
+   "specially"
+  ],
+  "strokes": 7,
+  "freq": 214,
+  "vi": "riêng, khác; chia tay",
+  "lesson": 44,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:物",
+  "char": "物",
+  "hv": [
+   "Vật"
+  ],
+  "on": [
+   "ブツ",
+   "モツ"
+  ],
+  "kun": [
+   "もの",
+   "もの-"
+  ],
+  "en": [
+   "thing",
+   "object",
+   "matter"
+  ],
+  "strokes": 8,
+  "freq": 215,
+  "vi": "đồ vật",
+  "lesson": 38,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:引",
+  "char": "引",
+  "hv": [
+   "Dẫn",
+   "Dấn"
+  ],
+  "on": [
+   "イン"
+  ],
+  "kun": [
+   "ひ.く",
+   "ひ.ける"
+  ],
+  "en": [
+   "pull",
+   "tug",
+   "jerk",
+   "admit",
+   "install",
+   "quote",
+   "refer to"
+  ],
+  "strokes": 4,
+  "freq": 218,
+  "vi": "kéo",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:使",
+  "char": "使",
+  "hv": [
+   "Sử",
+   "Sứ"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "つか.う",
+   "つか.い",
+   "-つか.い",
+   "-づか.い"
+  ],
+  "en": [
+   "use",
+   "send on a mission",
+   "order",
+   "messenger",
+   "envoy",
+   "ambassador",
+   "cause"
+  ],
+  "strokes": 8,
+  "freq": 219,
+  "vi": "dùng, sử dụng",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "便"
+  ]
+ },
+ {
+  "id": "kanji:所",
+  "char": "所",
+  "hv": [
+   "Sở"
+  ],
+  "on": [
+   "ショ"
+  ],
+  "kun": [
+   "ところ",
+   "-ところ",
+   "どころ",
+   "とこ"
+  ],
+  "en": [
+   "place",
+   "extent"
+  ],
+  "strokes": 8,
+  "freq": 221,
+  "vi": "nơi, chỗ",
+  "lesson": 43,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -1842,6 +3667,108 @@
   "reviewed": false
  },
  {
+  "id": "kanji:品",
+  "char": "品",
+  "hv": [
+   "Phẩm"
+  ],
+  "on": [
+   "ヒン",
+   "ホン"
+  ],
+  "kun": [
+   "しな"
+  ],
+  "en": [
+   "goods",
+   "refinement",
+   "dignity",
+   "article",
+   "counter for meal courses"
+  ],
+  "strokes": 9,
+  "freq": 225,
+  "vi": "hàng hóa; phẩm chất",
+  "lesson": 37,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:計",
+  "char": "計",
+  "hv": [
+   "Kế",
+   "Kê"
+  ],
+  "on": [
+   "ケイ"
+  ],
+  "kun": [
+   "はか.る",
+   "はか.らう"
+  ],
+  "en": [
+   "plot",
+   "plan",
+   "scheme",
+   "measure"
+  ],
+  "strokes": 9,
+  "freq": 228,
+  "vi": "đo, tính; kế hoạch",
+  "lesson": 37,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:死",
+  "char": "死",
+  "hv": [
+   "Tử"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "し.ぬ",
+   "し.に-"
+  ],
+  "en": [
+   "death",
+   "die"
+  ],
+  "strokes": 6,
+  "freq": 229,
+  "vi": "chết",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:特",
+  "char": "特",
+  "hv": [
+   "Đặc"
+  ],
+  "on": [
+   "トク"
+  ],
+  "kun": [],
+  "en": [
+   "special"
+  ],
+  "strokes": 10,
+  "freq": 234,
+  "vi": "đặc biệt",
+  "lesson": 44,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "待",
+   "持"
+  ]
+ },
+ {
   "id": "kanji:男",
   "char": "男",
   "hv": [
@@ -1863,6 +3790,165 @@
   "vi": "đàn ông, con trai",
   "lesson": 9,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:私",
+  "char": "私",
+  "hv": [
+   "Tư"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "わたくし",
+   "わたし"
+  ],
+  "en": [
+   "private",
+   "I",
+   "me"
+  ],
+  "strokes": 7,
+  "freq": 242,
+  "vi": "tôi; riêng tư",
+  "lesson": 26,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:始",
+  "char": "始",
+  "hv": [
+   "Thủy",
+   "Thí"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "はじ.める",
+   "-はじ.める",
+   "はじ.まる"
+  ],
+  "en": [
+   "commence",
+   "begin"
+  ],
+  "strokes": 8,
+  "freq": 244,
+  "vi": "bắt đầu",
+  "lesson": 39,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:朝",
+  "char": "朝",
+  "hv": [
+   "Triêu",
+   "Triều"
+  ],
+  "on": [
+   "チョウ"
+  ],
+  "kun": [
+   "あさ"
+  ],
+  "en": [
+   "morning",
+   "dynasty",
+   "regime",
+   "epoch",
+   "period",
+   "(North) Korea"
+  ],
+  "strokes": 12,
+  "freq": 248,
+  "vi": "buổi sáng; triều đại",
+  "lesson": 28,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:村",
+  "char": "村",
+  "hv": [
+   "Thôn"
+  ],
+  "on": [
+   "ソン"
+  ],
+  "kun": [
+   "むら"
+  ],
+  "en": [
+   "village",
+   "town"
+  ],
+  "strokes": 7,
+  "freq": 253,
+  "vi": "làng",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:運",
+  "char": "運",
+  "hv": [
+   "Vận"
+  ],
+  "on": [
+   "ウン"
+  ],
+  "kun": [
+   "はこ.ぶ"
+  ],
+  "en": [
+   "carry",
+   "luck",
+   "destiny",
+   "fate",
+   "lot",
+   "transport",
+   "progress",
+   "advance"
+  ],
+  "strokes": 12,
+  "freq": 255,
+  "vi": "vận chuyển; vận may",
+  "lesson": 34,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:終",
+  "char": "終",
+  "hv": [
+   "Chung"
+  ],
+  "on": [
+   "シュウ"
+  ],
+  "kun": [
+   "お.わる",
+   "-お.わる",
+   "おわ.る",
+   "お.える",
+   "つい",
+   "つい.に"
+  ],
+  "en": [
+   "end",
+   "finish"
+  ],
+  "strokes": 11,
+  "freq": 256,
+  "vi": "kết thúc",
+  "lesson": 39,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -1892,6 +3978,63 @@
   "reviewed": false
  },
  {
+  "id": "kanji:台",
+  "char": "台",
+  "hv": [
+   "Thai",
+   "Đài",
+   "Di"
+  ],
+  "on": [
+   "ダイ",
+   "タイ"
+  ],
+  "kun": [
+   "うてな",
+   "われ",
+   "つかさ"
+  ],
+  "en": [
+   "pedestal",
+   "a stand",
+   "counter for machines and vehicles"
+  ],
+  "strokes": 5,
+  "freq": 262,
+  "vi": "bệ, đài; (đếm máy, xe)",
+  "lesson": 32,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:広",
+  "char": "広",
+  "hv": [
+   "Quảng"
+  ],
+  "on": [
+   "コウ"
+  ],
+  "kun": [
+   "ひろ.い",
+   "ひろ.まる",
+   "ひろ.める",
+   "ひろ.がる",
+   "ひろ.げる"
+  ],
+  "en": [
+   "wide",
+   "broad",
+   "spacious"
+  ],
+  "strokes": 5,
+  "freq": 263,
+  "vi": "rộng",
+  "lesson": 42,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:電",
   "char": "電",
   "hv": [
@@ -1909,6 +4052,93 @@
   "vi": "điện",
   "lesson": 14,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:住",
+  "char": "住",
+  "hv": [
+   "Trụ"
+  ],
+  "on": [
+   "ジュウ",
+   "ヂュウ",
+   "チュウ"
+  ],
+  "kun": [
+   "す.む",
+   "す.まう",
+   "-ず.まい"
+  ],
+  "en": [
+   "dwell",
+   "reside",
+   "live",
+   "inhabit"
+  ],
+  "strokes": 7,
+  "freq": 270,
+  "vi": "sống, cư trú",
+  "lesson": 32,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "注"
+  ]
+ },
+ {
+  "id": "kanji:真",
+  "char": "真",
+  "hv": [
+   "Chân"
+  ],
+  "on": [
+   "シン"
+  ],
+  "kun": [
+   "ま",
+   "ま-",
+   "まこと"
+  ],
+  "en": [
+   "true",
+   "reality",
+   "Buddhist sect"
+  ],
+  "strokes": 10,
+  "freq": 279,
+  "vi": "thật, chân thật",
+  "lesson": 41,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:有",
+  "char": "有",
+  "hv": [
+   "Hữu",
+   "Dựu"
+  ],
+  "on": [
+   "ユウ",
+   "ウ"
+  ],
+  "kun": [
+   "あ.る"
+  ],
+  "en": [
+   "possess",
+   "have",
+   "exist",
+   "happen",
+   "occur",
+   "approx"
+  ],
+  "strokes": 6,
+  "freq": 282,
+  "vi": "có",
+  "lesson": 44,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -1963,6 +4193,31 @@
   ]
  },
  {
+  "id": "kanji:町",
+  "char": "町",
+  "hv": [
+   "Đinh"
+  ],
+  "on": [
+   "チョウ"
+  ],
+  "kun": [
+   "まち"
+  ],
+  "en": [
+   "town",
+   "village",
+   "block",
+   "street"
+  ],
+  "strokes": 7,
+  "freq": 292,
+  "vi": "thị trấn; khu phố",
+  "lesson": 33,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:校",
   "char": "校",
   "hv": [
@@ -1987,6 +4242,79 @@
   "vi": "trường",
   "lesson": 12,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:料",
+  "char": "料",
+  "hv": [
+   "Liêu",
+   "Liệu"
+  ],
+  "on": [
+   "リョウ"
+  ],
+  "kun": [],
+  "en": [
+   "fee",
+   "materials"
+  ],
+  "strokes": 10,
+  "freq": 295,
+  "vi": "phí; nguyên liệu",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:工",
+  "char": "工",
+  "hv": [
+   "Công"
+  ],
+  "on": [
+   "コウ",
+   "ク",
+   "グ"
+  ],
+  "kun": [],
+  "en": [
+   "craft",
+   "construction",
+   "katakana e radical (no. 48)"
+  ],
+  "strokes": 3,
+  "freq": 299,
+  "vi": "thủ công; công nghiệp",
+  "lesson": 37,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:建",
+  "char": "建",
+  "hv": [
+   "Kiến",
+   "Kiển"
+  ],
+  "on": [
+   "ケン",
+   "コン"
+  ],
+  "kun": [
+   "た.てる",
+   "た.て",
+   "-だ.て",
+   "た.つ"
+  ],
+  "en": [
+   "build"
+  ],
+  "strokes": 9,
+  "freq": 300,
+  "vi": "xây dựng",
+  "lesson": 32,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -2079,6 +4407,95 @@
   "reviewed": false
  },
  {
+  "id": "kanji:急",
+  "char": "急",
+  "hv": [
+   "Cấp"
+  ],
+  "on": [
+   "キュウ"
+  ],
+  "kun": [
+   "いそ.ぐ",
+   "いそ.ぎ",
+   "せ.く"
+  ],
+  "en": [
+   "hurry",
+   "emergency",
+   "sudden",
+   "steep"
+  ],
+  "strokes": 9,
+  "freq": 309,
+  "vi": "gấp, vội",
+  "lesson": 39,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:止",
+  "char": "止",
+  "hv": [
+   "Chỉ"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "と.まる",
+   "-ど.まり",
+   "と.める",
+   "-と.める",
+   "-ど.め",
+   "とど.める",
+   "とど.め",
+   "とど.まる",
+   "や.める",
+   "や.む",
+   "-や.む",
+   "よ.す",
+   "-さ.す",
+   "-さ.し"
+  ],
+  "en": [
+   "stop",
+   "halt"
+  ],
+  "strokes": 4,
+  "freq": 310,
+  "vi": "dừng",
+  "lesson": 39,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "正"
+  ]
+ },
+ {
+  "id": "kanji:送",
+  "char": "送",
+  "hv": [
+   "Tống"
+  ],
+  "on": [
+   "ソウ"
+  ],
+  "kun": [
+   "おく.る"
+  ],
+  "en": [
+   "escort",
+   "send"
+  ],
+  "strokes": 9,
+  "freq": 311,
+  "vi": "gửi; tiễn",
+  "lesson": 34,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:木",
   "char": "木",
   "hv": [
@@ -2134,8 +4551,106 @@
   "level": 5,
   "reviewed": false,
   "similar": [
-   "間"
+   "間",
+   "問"
   ]
+ },
+ {
+  "id": "kanji:切",
+  "char": "切",
+  "hv": [
+   "Thiết",
+   "Thế"
+  ],
+  "on": [
+   "セツ",
+   "サイ"
+  ],
+  "kun": [
+   "き.る",
+   "-き.る",
+   "き.り",
+   "-き.り",
+   "-ぎ.り",
+   "き.れる",
+   "-き.れる",
+   "き.れ",
+   "-き.れ",
+   "-ぎ.れ"
+  ],
+  "en": [
+   "cut",
+   "cutoff",
+   "be sharp"
+  ],
+  "strokes": 4,
+  "freq": 324,
+  "vi": "cắt",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:説",
+  "char": "説",
+  "hv": [
+   "Duyệt",
+   "Thoát",
+   "Thuế",
+   "Thuyết",
+   "Thót",
+   "Thốt"
+  ],
+  "on": [
+   "セツ",
+   "ゼイ"
+  ],
+  "kun": [
+   "と.く"
+  ],
+  "en": [
+   "opinion",
+   "theory",
+   "explanation",
+   "rumor"
+  ],
+  "strokes": 14,
+  "freq": 326,
+  "vi": "giải thích; học thuyết",
+  "lesson": 41,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:転",
+  "char": "転",
+  "hv": [
+   "Chuyển"
+  ],
+  "on": [
+   "テン"
+  ],
+  "kun": [
+   "ころ.がる",
+   "ころ.げる",
+   "ころ.がす",
+   "ころ.ぶ",
+   "まろ.ぶ",
+   "うたた",
+   "うつ.る",
+   "くる.めく"
+  ],
+  "en": [
+   "revolve",
+   "turn around",
+   "change"
+  ],
+  "strokes": 11,
+  "freq": 327,
+  "vi": "lăn, quay; chuyển",
+  "lesson": 34,
+  "level": 4,
+  "reviewed": false
  },
  {
   "id": "kanji:食",
@@ -2185,6 +4700,34 @@
   "vi": "xe",
   "lesson": 14,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:研",
+  "char": "研",
+  "hv": [
+   "Nghiên",
+   "Nghiễn",
+   "Nghiến",
+   "Nghiền",
+   "Nghiện"
+  ],
+  "on": [
+   "ケン"
+  ],
+  "kun": [
+   "と.ぐ"
+  ],
+  "en": [
+   "polish",
+   "study of",
+   "sharpen"
+  ],
+  "strokes": 9,
+  "freq": 336,
+  "vi": "mài; nghiên cứu",
+  "lesson": 35,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -2264,6 +4807,90 @@
   "reviewed": false
  },
  {
+  "id": "kanji:究",
+  "char": "究",
+  "hv": [
+   "Cứu"
+  ],
+  "on": [
+   "キュウ",
+   "ク"
+  ],
+  "kun": [
+   "きわ.める"
+  ],
+  "en": [
+   "research",
+   "study"
+  ],
+  "strokes": 7,
+  "freq": 368,
+  "vi": "nghiên cứu, tìm tòi",
+  "lesson": 35,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:楽",
+  "char": "楽",
+  "hv": [
+   "Lạc",
+   "Nhạc"
+  ],
+  "on": [
+   "ガク",
+   "ラク",
+   "ゴウ"
+  ],
+  "kun": [
+   "たの.しい",
+   "たの.しむ",
+   "この.む"
+  ],
+  "en": [
+   "music",
+   "comfort",
+   "ease"
+  ],
+  "strokes": 13,
+  "freq": 373,
+  "vi": "vui, thoải mái; âm nhạc",
+  "lesson": 36,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "薬"
+  ]
+ },
+ {
+  "id": "kanji:起",
+  "char": "起",
+  "hv": [
+   "Khởi"
+  ],
+  "on": [
+   "キ"
+  ],
+  "kun": [
+   "お.きる",
+   "お.こる",
+   "お.こす",
+   "おこ.す",
+   "た.つ"
+  ],
+  "en": [
+   "rouse",
+   "wake up",
+   "get up"
+  ],
+  "strokes": 10,
+  "freq": 374,
+  "vi": "thức dậy; xảy ra",
+  "lesson": 39,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:万",
   "char": "万",
   "hv": [
@@ -2286,6 +4913,71 @@
   "vi": "vạn, mười nghìn",
   "lesson": 6,
   "level": 5,
+  "reviewed": false,
+  "similar": [
+   "方"
+  ]
+ },
+ {
+  "id": "kanji:着",
+  "char": "着",
+  "hv": [
+   "Khán"
+  ],
+  "on": [
+   "チャク",
+   "ジャク"
+  ],
+  "kun": [
+   "き.る",
+   "き.せる",
+   "つ.く",
+   "つ.ける"
+  ],
+  "en": [
+   "don",
+   "arrive",
+   "wear",
+   "counter for suits of clothing"
+  ],
+  "strokes": 12,
+  "freq": 376,
+  "vi": "mặc; đến nơi",
+  "lesson": 38,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:乗",
+  "char": "乗",
+  "hv": [
+   "Thặng",
+   "Thừa"
+  ],
+  "on": [
+   "ジョウ",
+   "ショウ"
+  ],
+  "kun": [
+   "の.る",
+   "-の.り",
+   "の.せる"
+  ],
+  "en": [
+   "ride",
+   "power",
+   "multiplication",
+   "record",
+   "counter for vehicles",
+   "board",
+   "mount",
+   "join"
+  ],
+  "strokes": 9,
+  "freq": 377,
+  "vi": "lên (xe), đi (tàu xe)",
+  "lesson": 34,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -2310,6 +5002,439 @@
   "vi": "cửa hàng",
   "lesson": 15,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:病",
+  "char": "病",
+  "hv": [
+   "Bệnh"
+  ],
+  "on": [
+   "ビョウ",
+   "ヘイ"
+  ],
+  "kun": [
+   "や.む",
+   "-や.み",
+   "やまい"
+  ],
+  "en": [
+   "ill",
+   "sick"
+  ],
+  "strokes": 10,
+  "freq": 384,
+  "vi": "bệnh",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:声",
+  "char": "声",
+  "hv": [
+   "Thanh"
+  ],
+  "on": [
+   "セイ",
+   "ショウ"
+  ],
+  "kun": [
+   "こえ",
+   "こわ-"
+  ],
+  "en": [
+   "voice"
+  ],
+  "strokes": 7,
+  "freq": 388,
+  "vi": "giọng, tiếng",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:質",
+  "char": "質",
+  "hv": [
+   "Chất",
+   "Chí"
+  ],
+  "on": [
+   "シツ",
+   "シチ",
+   "チ"
+  ],
+  "kun": [
+   "たち",
+   "ただ.す",
+   "もと",
+   "わりふ"
+  ],
+  "en": [
+   "substance",
+   "quality",
+   "matter",
+   "temperament"
+  ],
+  "strokes": 15,
+  "freq": 389,
+  "vi": "chất, chất lượng; hỏi",
+  "lesson": 35,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:待",
+  "char": "待",
+  "hv": [
+   "Đãi"
+  ],
+  "on": [
+   "タイ"
+  ],
+  "kun": [
+   "ま.つ",
+   "-ま.ち"
+  ],
+  "en": [
+   "wait",
+   "depend on"
+  ],
+  "strokes": 9,
+  "freq": 391,
+  "vi": "chờ, đợi",
+  "lesson": 39,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "持",
+   "特"
+  ]
+ },
+ {
+  "id": "kanji:試",
+  "char": "試",
+  "hv": [
+   "Thí"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "こころ.みる",
+   "ため.す"
+  ],
+  "en": [
+   "test",
+   "try",
+   "attempt",
+   "experiment",
+   "ordeal"
+  ],
+  "strokes": 13,
+  "freq": 392,
+  "vi": "thử",
+  "lesson": 35,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:族",
+  "char": "族",
+  "hv": [
+   "Tộc"
+  ],
+  "on": [
+   "ゾク"
+  ],
+  "kun": [],
+  "en": [
+   "tribe",
+   "family"
+  ],
+  "strokes": 11,
+  "freq": 393,
+  "vi": "dòng tộc, gia tộc",
+  "lesson": 26,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:銀",
+  "char": "銀",
+  "hv": [
+   "Ngân"
+  ],
+  "on": [
+   "ギン"
+  ],
+  "kun": [
+   "しろがね"
+  ],
+  "en": [
+   "silver"
+  ],
+  "strokes": 14,
+  "freq": 395,
+  "vi": "bạc",
+  "lesson": 38,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:早",
+  "char": "早",
+  "hv": [
+   "Tảo"
+  ],
+  "on": [
+   "ソウ",
+   "サッ"
+  ],
+  "kun": [
+   "はや.い",
+   "はや",
+   "はや-",
+   "はや.まる",
+   "はや.める",
+   "さ-"
+  ],
+  "en": [
+   "early",
+   "fast"
+  ],
+  "strokes": 6,
+  "freq": 402,
+  "vi": "sớm, nhanh",
+  "lesson": 28,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:映",
+  "char": "映",
+  "hv": [
+   "Ánh"
+  ],
+  "on": [
+   "エイ"
+  ],
+  "kun": [
+   "うつ.る",
+   "うつ.す",
+   "は.える",
+   "-ば.え"
+  ],
+  "en": [
+   "reflect",
+   "reflection",
+   "projection"
+  ],
+  "strokes": 9,
+  "freq": 404,
+  "vi": "phản chiếu; chiếu (phim)",
+  "lesson": 36,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "英"
+  ]
+ },
+ {
+  "id": "kanji:親",
+  "char": "親",
+  "hv": [
+   "Thân",
+   "Thấn"
+  ],
+  "on": [
+   "シン"
+  ],
+  "kun": [
+   "おや",
+   "おや-",
+   "した.しい",
+   "した.しむ"
+  ],
+  "en": [
+   "parent",
+   "intimacy",
+   "relative",
+   "familiarity",
+   "dealer (cards)"
+  ],
+  "strokes": 16,
+  "freq": 406,
+  "vi": "cha mẹ; thân thiết",
+  "lesson": 26,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:験",
+  "char": "験",
+  "hv": [
+   "Nghiệm"
+  ],
+  "on": [
+   "ケン",
+   "ゲン"
+  ],
+  "kun": [
+   "あかし",
+   "しるし",
+   "ため.す",
+   "ためし"
+  ],
+  "en": [
+   "verification",
+   "effect",
+   "testing"
+  ],
+  "strokes": 18,
+  "freq": 410,
+  "vi": "kiểm tra, thử nghiệm",
+  "lesson": 35,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "駅"
+  ]
+ },
+ {
+  "id": "kanji:働",
+  "char": "働",
+  "hv": [
+   "Động"
+  ],
+  "on": [
+   "ドウ"
+  ],
+  "kun": [
+   "はたら.く"
+  ],
+  "en": [
+   "work",
+   "(kokuji)"
+  ],
+  "strokes": 13,
+  "freq": 417,
+  "vi": "làm việc",
+  "lesson": 37,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:好",
+  "char": "好",
+  "hv": [
+   "Hảo",
+   "Hiếu"
+  ],
+  "on": [
+   "コウ"
+  ],
+  "kun": [
+   "この.む",
+   "す.く",
+   "よ.い",
+   "い.い"
+  ],
+  "en": [
+   "fond",
+   "pleasing",
+   "like something"
+  ],
+  "strokes": 6,
+  "freq": 423,
+  "vi": "thích",
+  "lesson": 42,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:英",
+  "char": "英",
+  "hv": [
+   "Anh"
+  ],
+  "on": [
+   "エイ"
+  ],
+  "kun": [
+   "はなぶさ"
+  ],
+  "en": [
+   "England",
+   "English",
+   "hero",
+   "outstanding",
+   "calyx"
+  ],
+  "strokes": 8,
+  "freq": 430,
+  "vi": "nước Anh, tiếng Anh; anh tài",
+  "lesson": 36,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "映"
+  ]
+ },
+ {
+  "id": "kanji:頭",
+  "char": "頭",
+  "hv": [
+   "Đầu"
+  ],
+  "on": [
+   "トウ",
+   "ズ",
+   "ト"
+  ],
+  "kun": [
+   "あたま",
+   "かしら",
+   "-がしら",
+   "かぶり"
+  ],
+  "en": [
+   "head",
+   "counter for large animals"
+  ],
+  "strokes": 16,
+  "freq": 433,
+  "vi": "đầu",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:低",
+  "char": "低",
+  "hv": [
+   "Đê"
+  ],
+  "on": [
+   "テイ"
+  ],
+  "kun": [
+   "ひく.い",
+   "ひく.める",
+   "ひく.まる"
+  ],
+  "en": [
+   "lower",
+   "short",
+   "humble"
+  ],
+  "strokes": 7,
+  "freq": 435,
+  "vi": "thấp",
+  "lesson": 42,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -2339,6 +5464,168 @@
   ]
  },
  {
+  "id": "kanji:医",
+  "char": "医",
+  "hv": [
+   "Ế",
+   "Y",
+   "Ỷ",
+   "I",
+   "Ỉ"
+  ],
+  "on": [
+   "イ"
+  ],
+  "kun": [
+   "い.やす",
+   "い.する",
+   "くすし"
+  ],
+  "en": [
+   "doctor",
+   "medicine"
+  ],
+  "strokes": 7,
+  "freq": 437,
+  "vi": "y, chữa bệnh",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:仕",
+  "char": "仕",
+  "hv": [
+   "Sĩ"
+  ],
+  "on": [
+   "シ",
+   "ジ"
+  ],
+  "kun": [
+   "つか.える"
+  ],
+  "en": [
+   "attend",
+   "doing",
+   "official",
+   "serve"
+  ],
+  "strokes": 5,
+  "freq": 439,
+  "vi": "phục vụ, làm việc",
+  "lesson": 37,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:去",
+  "char": "去",
+  "hv": [
+   "Khứ",
+   "Khu"
+  ],
+  "on": [
+   "キョ",
+   "コ"
+  ],
+  "kun": [
+   "さ.る",
+   "-さ.る"
+  ],
+  "en": [
+   "gone",
+   "past",
+   "quit",
+   "leave",
+   "elapse",
+   "eliminate",
+   "divorce"
+  ],
+  "strokes": 5,
+  "freq": 440,
+  "vi": "rời đi; đã qua",
+  "lesson": 39,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:味",
+  "char": "味",
+  "hv": [
+   "Vị"
+  ],
+  "on": [
+   "ミ"
+  ],
+  "kun": [
+   "あじ",
+   "あじ.わう"
+  ],
+  "en": [
+   "flavor",
+   "taste"
+  ],
+  "strokes": 8,
+  "freq": 442,
+  "vi": "vị",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:門",
+  "char": "門",
+  "hv": [
+   "Môn"
+  ],
+  "on": [
+   "モン"
+  ],
+  "kun": [
+   "かど",
+   "と"
+  ],
+  "en": [
+   "gate",
+   "counter for cannons"
+  ],
+  "strokes": 8,
+  "freq": 452,
+  "vi": "cổng",
+  "lesson": 32,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:写",
+  "char": "写",
+  "hv": [
+   "Tả"
+  ],
+  "on": [
+   "シャ",
+   "ジャ"
+  ],
+  "kun": [
+   "うつ.す",
+   "うつ.る",
+   "うつ-",
+   "うつ.し"
+  ],
+  "en": [
+   "copy",
+   "be photographed",
+   "describe"
+  ],
+  "strokes": 5,
+  "freq": 453,
+  "vi": "chép; chụp (ảnh)",
+  "lesson": 36,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:白",
   "char": "白",
   "hv": [
@@ -2363,8 +5650,175 @@
   "level": 5,
   "reviewed": false,
   "similar": [
-   "百"
+   "百",
+   "自"
   ]
+ },
+ {
+  "id": "kanji:字",
+  "char": "字",
+  "hv": [
+   "Tự"
+  ],
+  "on": [
+   "ジ"
+  ],
+  "kun": [
+   "あざ",
+   "あざな",
+   "-な"
+  ],
+  "en": [
+   "character",
+   "letter",
+   "word",
+   "section of village"
+  ],
+  "strokes": 6,
+  "freq": 485,
+  "vi": "chữ",
+  "lesson": 36,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "学"
+  ]
+ },
+ {
+  "id": "kanji:答",
+  "char": "答",
+  "hv": [
+   "Đáp"
+  ],
+  "on": [
+   "トウ"
+  ],
+  "kun": [
+   "こた.える",
+   "こた.え"
+  ],
+  "en": [
+   "solution",
+   "answer"
+  ],
+  "strokes": 12,
+  "freq": 486,
+  "vi": "trả lời; đáp án",
+  "lesson": 41,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:夜",
+  "char": "夜",
+  "hv": [
+   "Dạ"
+  ],
+  "on": [
+   "ヤ"
+  ],
+  "kun": [
+   "よ",
+   "よる"
+  ],
+  "en": [
+   "night",
+   "evening"
+  ],
+  "strokes": 8,
+  "freq": 487,
+  "vi": "đêm",
+  "lesson": 28,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:音",
+  "char": "音",
+  "hv": [
+   "Âm"
+  ],
+  "on": [
+   "オン",
+   "イン",
+   "-ノン"
+  ],
+  "kun": [
+   "おと",
+   "ね"
+  ],
+  "en": [
+   "sound",
+   "noise"
+  ],
+  "strokes": 9,
+  "freq": 491,
+  "vi": "âm thanh",
+  "lesson": 36,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:注",
+  "char": "注",
+  "hv": [
+   "Chú"
+  ],
+  "on": [
+   "チュウ"
+  ],
+  "kun": [
+   "そそ.ぐ",
+   "さ.す",
+   "つ.ぐ"
+  ],
+  "en": [
+   "pour",
+   "irrigate",
+   "shed (tears)",
+   "flow into",
+   "concentrate on",
+   "notes",
+   "comment",
+   "annotate"
+  ],
+  "strokes": 8,
+  "freq": 497,
+  "vi": "rót; chú ý; ghi chú",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "住"
+  ]
+ },
+ {
+  "id": "kanji:帰",
+  "char": "帰",
+  "hv": [
+   "Quy"
+  ],
+  "on": [
+   "キ"
+  ],
+  "kun": [
+   "かえ.る",
+   "かえ.す",
+   "おく.る",
+   "とつ.ぐ"
+  ],
+  "en": [
+   "homecoming",
+   "arrive at",
+   "lead to",
+   "result in"
+  ],
+  "strokes": 10,
+  "freq": 504,
+  "vi": "về",
+  "lesson": 39,
+  "level": 4,
+  "reviewed": false
  },
  {
   "id": "kanji:古",
@@ -2420,6 +5874,30 @@
   ]
  },
  {
+  "id": "kanji:歌",
+  "char": "歌",
+  "hv": [
+   "Ca"
+  ],
+  "on": [
+   "カ"
+  ],
+  "kun": [
+   "うた",
+   "うた.う"
+  ],
+  "en": [
+   "song",
+   "sing"
+  ],
+  "strokes": 14,
+  "freq": 519,
+  "vi": "bài hát; hát",
+  "lesson": 36,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:買",
   "char": "買",
   "hv": [
@@ -2442,6 +5920,97 @@
   "reviewed": false
  },
  {
+  "id": "kanji:光",
+  "char": "光",
+  "hv": [
+   "Quang"
+  ],
+  "on": [
+   "コウ"
+  ],
+  "kun": [
+   "ひか.る",
+   "ひかり"
+  ],
+  "en": [
+   "ray",
+   "light"
+  ],
+  "strokes": 6,
+  "freq": 527,
+  "vi": "ánh sáng",
+  "lesson": 27,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:悪",
+  "char": "悪",
+  "hv": [
+   "Ác",
+   "Ố",
+   "Óc"
+  ],
+  "on": [
+   "アク",
+   "オ"
+  ],
+  "kun": [
+   "わる.い",
+   "わる-",
+   "あ.し",
+   "にく.い",
+   "-にく.い",
+   "ああ",
+   "いずくに",
+   "いずくんぞ",
+   "にく.む"
+  ],
+  "en": [
+   "bad",
+   "vice",
+   "rascal",
+   "false",
+   "evil",
+   "wrong"
+  ],
+  "strokes": 11,
+  "freq": 530,
+  "vi": "xấu, tồi",
+  "lesson": 42,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:図",
+  "char": "図",
+  "hv": [
+   "Đồ",
+   "Vi"
+  ],
+  "on": [
+   "ズ",
+   "ト"
+  ],
+  "kun": [
+   "え",
+   "はか.る"
+  ],
+  "en": [
+   "map",
+   "drawing",
+   "plan",
+   "extraordinary",
+   "audacious"
+  ],
+  "strokes": 7,
+  "freq": 539,
+  "vi": "bản đồ, hình vẽ",
+  "lesson": 43,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:週",
   "char": "週",
   "hv": [
@@ -2459,6 +6028,140 @@
   "vi": "tuần",
   "lesson": 7,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:室",
+  "char": "室",
+  "hv": [
+   "Thất"
+  ],
+  "on": [
+   "シツ"
+  ],
+  "kun": [
+   "むろ"
+  ],
+  "en": [
+   "room",
+   "apartment",
+   "chamber",
+   "greenhouse",
+   "cellar"
+  ],
+  "strokes": 9,
+  "freq": 550,
+  "vi": "phòng",
+  "lesson": 32,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "屋"
+  ]
+ },
+ {
+  "id": "kanji:太",
+  "char": "太",
+  "hv": [
+   "Thái"
+  ],
+  "on": [
+   "タイ",
+   "タ"
+  ],
+  "kun": [
+   "ふと.い",
+   "ふと.る"
+  ],
+  "en": [
+   "plump",
+   "thick",
+   "big around"
+  ],
+  "strokes": 4,
+  "freq": 552,
+  "vi": "to, dày; béo",
+  "lesson": 42,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "犬",
+   "大"
+  ]
+ },
+ {
+  "id": "kanji:歩",
+  "char": "歩",
+  "hv": [
+   "Bộ"
+  ],
+  "on": [
+   "ホ",
+   "ブ",
+   "フ"
+  ],
+  "kun": [
+   "ある.く",
+   "あゆ.む"
+  ],
+  "en": [
+   "walk",
+   "counter for steps"
+  ],
+  "strokes": 8,
+  "freq": 554,
+  "vi": "đi bộ",
+  "lesson": 34,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:風",
+  "char": "風",
+  "hv": [
+   "Phong"
+  ],
+  "on": [
+   "フウ",
+   "フ"
+  ],
+  "kun": [
+   "かぜ",
+   "かざ-"
+  ],
+  "en": [
+   "wind",
+   "air",
+   "style",
+   "manner"
+  ],
+  "strokes": 9,
+  "freq": 558,
+  "vi": "gió; kiểu, phong cách",
+  "lesson": 27,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:紙",
+  "char": "紙",
+  "hv": [
+   "Chỉ"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "かみ"
+  ],
+  "en": [
+   "paper"
+  ],
+  "strokes": 10,
+  "freq": 559,
+  "vi": "giấy",
+  "lesson": 38,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -2486,6 +6189,30 @@
   "similar": [
    "毎"
   ]
+ },
+ {
+  "id": "kanji:黒",
+  "char": "黒",
+  "hv": [
+   "Hắc"
+  ],
+  "on": [
+   "コク"
+  ],
+  "kun": [
+   "くろ",
+   "くろ.ずむ",
+   "くろ.い"
+  ],
+  "en": [
+   "black"
+  ],
+  "strokes": 11,
+  "freq": 573,
+  "vi": "đen",
+  "lesson": 29,
+  "level": 4,
+  "reviewed": false
  },
  {
   "id": "kanji:火",
@@ -2535,6 +6262,83 @@
   "reviewed": false
  },
  {
+  "id": "kanji:春",
+  "char": "春",
+  "hv": [
+   "Xuân"
+  ],
+  "on": [
+   "シュン"
+  ],
+  "kun": [
+   "はる"
+  ],
+  "en": [
+   "springtime",
+   "spring (season)"
+  ],
+  "strokes": 9,
+  "freq": 579,
+  "vi": "mùa xuân",
+  "lesson": 27,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:赤",
+  "char": "赤",
+  "hv": [
+   "Xích",
+   "Thích"
+  ],
+  "on": [
+   "セキ",
+   "シャク"
+  ],
+  "kun": [
+   "あか",
+   "あか-",
+   "あか.い",
+   "あか.らむ",
+   "あか.らめる"
+  ],
+  "en": [
+   "red"
+  ],
+  "strokes": 7,
+  "freq": 584,
+  "vi": "đỏ",
+  "lesson": 29,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:青",
+  "char": "青",
+  "hv": [
+   "Thanh"
+  ],
+  "on": [
+   "セイ",
+   "ショウ"
+  ],
+  "kun": [
+   "あお",
+   "あお-",
+   "あお.い"
+  ],
+  "en": [
+   "blue",
+   "green"
+  ],
+  "strokes": 8,
+  "freq": 589,
+  "vi": "xanh (lam, lục)",
+  "lesson": 29,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:右",
   "char": "右",
   "hv": [
@@ -2558,6 +6362,87 @@
   "reviewed": false,
   "similar": [
    "左"
+  ]
+ },
+ {
+  "id": "kanji:森",
+  "char": "森",
+  "hv": [
+   "Sâm"
+  ],
+  "on": [
+   "シン"
+  ],
+  "kun": [
+   "もり"
+  ],
+  "en": [
+   "forest",
+   "woods"
+  ],
+  "strokes": 12,
+  "freq": 609,
+  "vi": "rừng rậm",
+  "lesson": 29,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "林"
+  ]
+ },
+ {
+  "id": "kanji:館",
+  "char": "館",
+  "hv": [
+   "Quán"
+  ],
+  "on": [
+   "カン"
+  ],
+  "kun": [
+   "やかた",
+   "たて"
+  ],
+  "en": [
+   "building",
+   "mansion",
+   "large building",
+   "palace"
+  ],
+  "strokes": 16,
+  "freq": 613,
+  "vi": "tòa nhà lớn, quán",
+  "lesson": 32,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:屋",
+  "char": "屋",
+  "hv": [
+   "Ốc"
+  ],
+  "on": [
+   "オク"
+  ],
+  "kun": [
+   "や"
+  ],
+  "en": [
+   "roof",
+   "house",
+   "shop",
+   "dealer",
+   "seller"
+  ],
+  "strokes": 9,
+  "freq": 616,
+  "vi": "nhà; cửa hàng",
+  "lesson": 32,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "室"
   ]
  },
  {
@@ -2587,6 +6472,29 @@
   "reviewed": false
  },
  {
+  "id": "kanji:色",
+  "char": "色",
+  "hv": [
+   "Sắc"
+  ],
+  "on": [
+   "ショク",
+   "シキ"
+  ],
+  "kun": [
+   "いろ"
+  ],
+  "en": [
+   "color"
+  ],
+  "strokes": 6,
+  "freq": 621,
+  "vi": "màu sắc",
+  "lesson": 29,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:友",
   "char": "友",
   "hv": [
@@ -2606,6 +6514,28 @@
   "vi": "bạn",
   "lesson": 9,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:走",
+  "char": "走",
+  "hv": [
+   "Tẩu"
+  ],
+  "on": [
+   "ソウ"
+  ],
+  "kun": [
+   "はし.る"
+  ],
+  "en": [
+   "run"
+  ],
+  "strokes": 7,
+  "freq": 626,
+  "vi": "chạy",
+  "lesson": 34,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -2636,6 +6566,29 @@
   ]
  },
  {
+  "id": "kanji:秋",
+  "char": "秋",
+  "hv": [
+   "Thu"
+  ],
+  "on": [
+   "シュウ"
+  ],
+  "kun": [
+   "あき",
+   "とき"
+  ],
+  "en": [
+   "autumn"
+  ],
+  "strokes": 9,
+  "freq": 635,
+  "vi": "mùa thu",
+  "lesson": 27,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:休",
   "char": "休",
   "hv": [
@@ -2660,7 +6613,10 @@
   "vi": "nghỉ",
   "lesson": 14,
   "level": 5,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "体"
+  ]
  },
  {
   "id": "kanji:父",
@@ -2686,6 +6642,162 @@
   "reviewed": false
  },
  {
+  "id": "kanji:林",
+  "char": "林",
+  "hv": [
+   "Lâm"
+  ],
+  "on": [
+   "リン"
+  ],
+  "kun": [
+   "はやし"
+  ],
+  "en": [
+   "grove",
+   "forest"
+  ],
+  "strokes": 8,
+  "freq": 656,
+  "vi": "rừng thưa, lùm cây",
+  "lesson": 29,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "森"
+  ]
+ },
+ {
+  "id": "kanji:夏",
+  "char": "夏",
+  "hv": [
+   "Hạ",
+   "Giạ",
+   "Giá"
+  ],
+  "on": [
+   "カ",
+   "ガ",
+   "ゲ"
+  ],
+  "kun": [
+   "なつ"
+  ],
+  "en": [
+   "summer"
+  ],
+  "strokes": 10,
+  "freq": 659,
+  "vi": "mùa hè",
+  "lesson": 27,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:顔",
+  "char": "顔",
+  "hv": [
+   "Nhan",
+   "Nhăn"
+  ],
+  "on": [
+   "ガン"
+  ],
+  "kun": [
+   "かお"
+  ],
+  "en": [
+   "face",
+   "expression"
+  ],
+  "strokes": 18,
+  "freq": 676,
+  "vi": "mặt, khuôn mặt",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:短",
+  "char": "短",
+  "hv": [
+   "Đoản"
+  ],
+  "on": [
+   "タン"
+  ],
+  "kun": [
+   "みじか.い"
+  ],
+  "en": [
+   "short",
+   "brevity",
+   "fault",
+   "defect",
+   "weak point"
+  ],
+  "strokes": 12,
+  "freq": 689,
+  "vi": "ngắn",
+  "lesson": 42,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:薬",
+  "char": "薬",
+  "hv": [
+   "Dược",
+   "Ước"
+  ],
+  "on": [
+   "ヤク"
+  ],
+  "kun": [
+   "くすり"
+  ],
+  "en": [
+   "medicine",
+   "chemical",
+   "enamel",
+   "gunpowder",
+   "benefit"
+  ],
+  "strokes": 16,
+  "freq": 702,
+  "vi": "thuốc",
+  "lesson": 31,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "楽"
+  ]
+ },
+ {
+  "id": "kanji:習",
+  "char": "習",
+  "hv": [
+   "Tập"
+  ],
+  "on": [
+   "シュウ",
+   "ジュ"
+  ],
+  "kun": [
+   "なら.う",
+   "なら.い"
+  ],
+  "en": [
+   "learn"
+  ],
+  "strokes": 11,
+  "freq": 706,
+  "vi": "học, luyện tập",
+  "lesson": 35,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:駅",
   "char": "駅",
   "hv": [
@@ -2703,6 +6815,252 @@
   "vi": "nhà ga",
   "lesson": 14,
   "level": 5,
+  "reviewed": false,
+  "similar": [
+   "験"
+  ]
+ },
+ {
+  "id": "kanji:便",
+  "char": "便",
+  "hv": [
+   "Tiện"
+  ],
+  "on": [
+   "ベン",
+   "ビン"
+  ],
+  "kun": [
+   "たよ.り"
+  ],
+  "en": [
+   "convenience",
+   "facility",
+   "excrement",
+   "feces",
+   "letter",
+   "chance"
+  ],
+  "strokes": 9,
+  "freq": 729,
+  "vi": "tiện lợi; thư, bưu phẩm",
+  "lesson": 38,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "使"
+  ]
+ },
+ {
+  "id": "kanji:洋",
+  "char": "洋",
+  "hv": [
+   "Dương"
+  ],
+  "on": [
+   "ヨウ"
+  ],
+  "kun": [],
+  "en": [
+   "ocean",
+   "sea",
+   "foreign",
+   "Western style"
+  ],
+  "strokes": 9,
+  "freq": 763,
+  "vi": "đại dương; phương Tây",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:旅",
+  "char": "旅",
+  "hv": [
+   "Lữ"
+  ],
+  "on": [
+   "リョ"
+  ],
+  "kun": [
+   "たび"
+  ],
+  "en": [
+   "trip",
+   "travel"
+  ],
+  "strokes": 10,
+  "freq": 783,
+  "vi": "chuyến đi, du lịch",
+  "lesson": 34,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:軽",
+  "char": "軽",
+  "hv": [
+   "Khinh"
+  ],
+  "on": [
+   "ケイ",
+   "キョウ",
+   "キン"
+  ],
+  "kun": [
+   "かる.い",
+   "かろ.やか",
+   "かろ.んじる"
+  ],
+  "en": [
+   "lightly",
+   "trifling",
+   "unimportant"
+  ],
+  "strokes": 12,
+  "freq": 790,
+  "vi": "nhẹ",
+  "lesson": 42,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:池",
+  "char": "池",
+  "hv": [
+   "Trì"
+  ],
+  "on": [
+   "チ"
+  ],
+  "kun": [
+   "いけ"
+  ],
+  "en": [
+   "pond",
+   "cistern",
+   "pool",
+   "reservoir"
+  ],
+  "strokes": 6,
+  "freq": 827,
+  "vi": "ao",
+  "lesson": 29,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:服",
+  "char": "服",
+  "hv": [
+   "Phục"
+  ],
+  "on": [
+   "フク"
+  ],
+  "kun": [],
+  "en": [
+   "clothing",
+   "admit",
+   "obey",
+   "discharge"
+  ],
+  "strokes": 8,
+  "freq": 873,
+  "vi": "quần áo",
+  "lesson": 38,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:遠",
+  "char": "遠",
+  "hv": [
+   "Viễn",
+   "Viển"
+  ],
+  "on": [
+   "エン",
+   "オン"
+  ],
+  "kun": [
+   "とお.い"
+  ],
+  "en": [
+   "distant",
+   "far"
+  ],
+  "strokes": 13,
+  "freq": 887,
+  "vi": "xa",
+  "lesson": 34,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:夕",
+  "char": "夕",
+  "hv": [
+   "Tịch"
+  ],
+  "on": [
+   "セキ"
+  ],
+  "kun": [
+   "ゆう"
+  ],
+  "en": [
+   "evening"
+  ],
+  "strokes": 3,
+  "freq": 924,
+  "vi": "chiều tối",
+  "lesson": 28,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:借",
+  "char": "借",
+  "hv": [
+   "Tá"
+  ],
+  "on": [
+   "シャク"
+  ],
+  "kun": [
+   "か.りる"
+  ],
+  "en": [
+   "borrow",
+   "rent"
+  ],
+  "strokes": 10,
+  "freq": 932,
+  "vi": "mượn",
+  "lesson": 38,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:曜",
+  "char": "曜",
+  "hv": [
+   "Diệu"
+  ],
+  "on": [
+   "ヨウ"
+  ],
+  "kun": [],
+  "en": [
+   "weekday"
+  ],
+  "strokes": 18,
+  "freq": 940,
+  "vi": "ngày trong tuần",
+  "lesson": 28,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -2728,6 +7086,32 @@
   "vi": "mưa",
   "lesson": 16,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:弱",
+  "char": "弱",
+  "hv": [
+   "Nhược"
+  ],
+  "on": [
+   "ジャク"
+  ],
+  "kun": [
+   "よわ.い",
+   "よわ.る",
+   "よわ.まる",
+   "よわ.める"
+  ],
+  "en": [
+   "weak",
+   "frail"
+  ],
+  "strokes": 10,
+  "freq": 958,
+  "vi": "yếu",
+  "lesson": 42,
+  "level": 4,
   "reviewed": false
  },
  {
@@ -2760,6 +7144,321 @@
   "reviewed": false
  },
  {
+  "id": "kanji:肉",
+  "char": "肉",
+  "hv": [
+   "Nhục",
+   "Nhụ",
+   "Nậu"
+  ],
+  "on": [
+   "ニク"
+  ],
+  "kun": [
+   "しし"
+  ],
+  "en": [
+   "meat"
+  ],
+  "strokes": 6,
+  "freq": 986,
+  "vi": "thịt",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:貸",
+  "char": "貸",
+  "hv": [
+   "Thải",
+   "Thắc"
+  ],
+  "on": [
+   "タイ"
+  ],
+  "kun": [
+   "か.す",
+   "か.し-",
+   "かし-"
+  ],
+  "en": [
+   "lend"
+  ],
+  "strokes": 12,
+  "freq": 995,
+  "vi": "cho mượn",
+  "lesson": 38,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:堂",
+  "char": "堂",
+  "hv": [
+   "Đường"
+  ],
+  "on": [
+   "ドウ"
+  ],
+  "kun": [],
+  "en": [
+   "public chamber",
+   "hall"
+  ],
+  "strokes": 11,
+  "freq": 1010,
+  "vi": "gian phòng lớn, hội trường",
+  "lesson": 32,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:暗",
+  "char": "暗",
+  "hv": [
+   "Ám"
+  ],
+  "on": [
+   "アン"
+  ],
+  "kun": [
+   "くら.い",
+   "くら.む",
+   "くれ.る"
+  ],
+  "en": [
+   "darkness",
+   "disappear",
+   "shade",
+   "informal",
+   "grow dark",
+   "be blinded"
+  ],
+  "strokes": 13,
+  "freq": 1040,
+  "vi": "tối",
+  "lesson": 28,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:鳥",
+  "char": "鳥",
+  "hv": [
+   "Điểu"
+  ],
+  "on": [
+   "チョウ"
+  ],
+  "kun": [
+   "とり"
+  ],
+  "en": [
+   "bird",
+   "chicken"
+  ],
+  "strokes": 11,
+  "freq": 1043,
+  "vi": "chim",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:飯",
+  "char": "飯",
+  "hv": [
+   "Phạn",
+   "Phãn"
+  ],
+  "on": [
+   "ハン"
+  ],
+  "kun": [
+   "めし"
+  ],
+  "en": [
+   "meal",
+   "boiled rice"
+  ],
+  "strokes": 12,
+  "freq": 1046,
+  "vi": "cơm, bữa ăn",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:勉",
+  "char": "勉",
+  "hv": [
+   "Miễn"
+  ],
+  "on": [
+   "ベン"
+  ],
+  "kun": [
+   "つと.める"
+  ],
+  "en": [
+   "exertion",
+   "endeavour",
+   "encourage",
+   "strive",
+   "make effort",
+   "diligent"
+  ],
+  "strokes": 10,
+  "freq": 1066,
+  "vi": "cố gắng, chăm chỉ",
+  "lesson": 35,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:冬",
+  "char": "冬",
+  "hv": [
+   "Đông"
+  ],
+  "on": [
+   "トウ"
+  ],
+  "kun": [
+   "ふゆ"
+  ],
+  "en": [
+   "winter"
+  ],
+  "strokes": 5,
+  "freq": 1090,
+  "vi": "mùa đông",
+  "lesson": 27,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:昼",
+  "char": "昼",
+  "hv": [
+   "Trú"
+  ],
+  "on": [
+   "チュウ"
+  ],
+  "kun": [
+   "ひる"
+  ],
+  "en": [
+   "daytime",
+   "noon"
+  ],
+  "strokes": 9,
+  "freq": 1115,
+  "vi": "ban ngày; buổi trưa",
+  "lesson": 28,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:茶",
+  "char": "茶",
+  "hv": [
+   "Trà"
+  ],
+  "on": [
+   "チャ",
+   "サ"
+  ],
+  "kun": [],
+  "en": [
+   "tea"
+  ],
+  "strokes": 9,
+  "freq": 1116,
+  "vi": "trà",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:弟",
+  "char": "弟",
+  "hv": [
+   "Đệ",
+   "Đễ"
+  ],
+  "on": [
+   "テイ",
+   "ダイ",
+   "デ"
+  ],
+  "kun": [
+   "おとうと"
+  ],
+  "en": [
+   "younger brother",
+   "faithful service to elders"
+  ],
+  "strokes": 7,
+  "freq": 1161,
+  "vi": "em trai",
+  "lesson": 26,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:洗",
+  "char": "洗",
+  "hv": [
+   "Tẩy",
+   "Tiển"
+  ],
+  "on": [
+   "セン"
+  ],
+  "kun": [
+   "あら.う"
+  ],
+  "en": [
+   "wash",
+   "inquire into",
+   "probe"
+  ],
+  "strokes": 9,
+  "freq": 1168,
+  "vi": "rửa, giặt",
+  "lesson": 40,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:牛",
+  "char": "牛",
+  "hv": [
+   "Ngưu"
+  ],
+  "on": [
+   "ギュウ"
+  ],
+  "kun": [
+   "うし"
+  ],
+  "en": [
+   "cow"
+  ],
+  "strokes": 4,
+  "freq": 1202,
+  "vi": "bò",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "午"
+  ]
+ },
+ {
   "id": "kanji:魚",
   "char": "魚",
   "hv": [
@@ -2784,6 +7483,81 @@
   "reviewed": false
  },
  {
+  "id": "kanji:兄",
+  "char": "兄",
+  "hv": [
+   "Huynh"
+  ],
+  "on": [
+   "ケイ",
+   "キョウ"
+  ],
+  "kun": [
+   "あに"
+  ],
+  "en": [
+   "elder brother",
+   "big brother"
+  ],
+  "strokes": 5,
+  "freq": 1219,
+  "vi": "anh trai",
+  "lesson": 26,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:犬",
+  "char": "犬",
+  "hv": [
+   "Khuyển"
+  ],
+  "on": [
+   "ケン"
+  ],
+  "kun": [
+   "いぬ",
+   "いぬ-"
+  ],
+  "en": [
+   "dog"
+  ],
+  "strokes": 4,
+  "freq": 1326,
+  "vi": "chó",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "大",
+   "太"
+  ]
+ },
+ {
+  "id": "kanji:菜",
+  "char": "菜",
+  "hv": [
+   "Thái"
+  ],
+  "on": [
+   "サイ"
+  ],
+  "kun": [
+   "な"
+  ],
+  "en": [
+   "vegetable",
+   "side dish",
+   "greens"
+  ],
+  "strokes": 11,
+  "freq": 1327,
+  "vi": "rau",
+  "lesson": 30,
+  "level": 4,
+  "reviewed": false
+ },
+ {
   "id": "kanji:耳",
   "char": "耳",
   "hv": [
@@ -2803,6 +7577,126 @@
   "vi": "tai",
   "lesson": 17,
   "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:暑",
+  "char": "暑",
+  "hv": [
+   "Thử"
+  ],
+  "on": [
+   "ショ"
+  ],
+  "kun": [
+   "あつ.い"
+  ],
+  "en": [
+   "sultry",
+   "hot",
+   "summer heat"
+  ],
+  "strokes": 12,
+  "freq": 1442,
+  "vi": "nóng (thời tiết)",
+  "lesson": 27,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:妹",
+  "char": "妹",
+  "hv": [
+   "Muội"
+  ],
+  "on": [
+   "マイ"
+  ],
+  "kun": [
+   "いもうと"
+  ],
+  "en": [
+   "younger sister"
+  ],
+  "strokes": 8,
+  "freq": 1446,
+  "vi": "em gái",
+  "lesson": 26,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "姉"
+  ]
+ },
+ {
+  "id": "kanji:寒",
+  "char": "寒",
+  "hv": [
+   "Hàn"
+  ],
+  "on": [
+   "カン"
+  ],
+  "kun": [
+   "さむ.い"
+  ],
+  "en": [
+   "cold"
+  ],
+  "strokes": 12,
+  "freq": 1456,
+  "vi": "lạnh (thời tiết)",
+  "lesson": 27,
+  "level": 4,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:姉",
+  "char": "姉",
+  "hv": [
+   "Tỉ",
+   "Tỷ",
+   "Chị"
+  ],
+  "on": [
+   "シ"
+  ],
+  "kun": [
+   "あね",
+   "はは"
+  ],
+  "en": [
+   "elder sister"
+  ],
+  "strokes": 8,
+  "freq": 1473,
+  "vi": "chị gái",
+  "lesson": 26,
+  "level": 4,
+  "reviewed": false,
+  "similar": [
+   "妹"
+  ]
+ },
+ {
+  "id": "kanji:漢",
+  "char": "漢",
+  "hv": [
+   "Hán"
+  ],
+  "on": [
+   "カン"
+  ],
+  "kun": [],
+  "en": [
+   "Sino-",
+   "China"
+  ],
+  "strokes": 13,
+  "freq": 1487,
+  "vi": "Hán, Trung Quốc",
+  "lesson": 36,
+  "level": 4,
   "reviewed": false
  }
 ]

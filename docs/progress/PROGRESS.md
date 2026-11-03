@@ -27,7 +27,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 20 heatmap on the dashboard, sync status in the site bar (spec `docs/phases/20-heatmap-sync-status.md`) | DONE | `feat(dashboard): study heatmap and sync status` |
 | 21 data export: `GET /me/export`, `/settings/export` download (spec `docs/phases/21-export.md`) | DONE | `feat(account): download study data as JSON` |
 | 22 levels: BE `level` column, `?level=`/`?page=`, seed by row diff (ADR 005, BUG-004); FE level tabs, paging, lesson level groups, search badge (spec `docs/phases/22-levels.md`) | DONE | `4e437d6` (BE), `feat(levels): level tabs, paging and level groups in the app` (FE) |
-| 23–35 | TODO | |
+| 23 N4 kanji: 181 kanji, lessons 26–45, `similar` pairs (spec `docs/phases/23-n4-kanji.md`) | DONE | `content(n4): kanji and lessons 26-45` |
+| 24–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -70,6 +71,8 @@ After phase 21: BE 31 unit + 31 e2e (export +3); FE Vitest 537 tests, E2E 72 pas
 
 After phase 22: BE 40 unit + 40 e2e + 18 content; seed with unchanged content ~75 ms at 1,080 rows, ~196 ms at 10,480 rows (full rewrite ~5.5 s at 10k, once). FE Vitest 558 tests, E2E 102 passed.
 
+After phase 23: BE 41 unit + 40 e2e + 19 content; FE E2E 106 passed.
+
 ## Next step
-Phase 23 (N4 kanji): add 4 to `INCLUDE_LEVELS` in `kotoba-be/scripts/kanjidic.ts`, run it, author `vi`, assign N4 lessons (numbered after 25), `similar` pairs. Delegate to the `content` agent. Write `docs/phases/23-*.md` first.
+Phase 24 (N4 vocab, batches of ~200: 24a, 24b, 24c…), one `content` agent call and one commit per batch, words placed in N4 lessons 26–44, kanji gate (kanji level ≥ word level). Write `docs/phases/24-n4-vocab.md` first. Decide the /vocab due-count question in BACKLOG (phase 22) when N4 words land.
 Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`), so it needs `lsof` and a built `kotoba-be/dist`.

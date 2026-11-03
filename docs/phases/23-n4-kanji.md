@@ -33,3 +33,10 @@ Out: N4 vocab (24), grammar (25), mock test (26).
 Content phase: happy path (AC-1), wrong data (spec checks), display (long `vi` wraps in tiles/detail; screenshots), large data N/A (284 kanji). Others N/A: no code paths change.
 
 ## Self-review notes
+- N5 entries are not byte-identical after all: 10 N5 kanji (大 間 学 目 午 聞 万 白 休 駅) gained `similar` links, because N4↔N5 pairs must be symmetric. Only `similar` was appended; everything else in N5 is unchanged (right after the script ran, before authoring, all 103 were identical).
+- 20 N4 lessons (26–45, 45 = "Ôn tập N4" with no kanji), 181 kanji, 23 new `similar` pairs (54 kanji / 68 links in all). `content.spec.ts` asserts 181 N4 kanji with `vi` and an N4 lesson.
+- `reviewed: false` on all 181. Least sure meanings: 以 方 代 台 便 質 元 画 去 堂 館 院 英 世. KANJIDIC Hán Việt kept as is though odd: 県 "Huyền", 着 "Khán" (BACKLOG).
+- E2E: the empty-state loop moved from N4 to N3; new tests count N4 kanji per page and the N4 lesson group from the JSON. BE e2e counts now come from the JSON (`kanji.length`, level filters) and the "empty level" checks use N2.
+- Found BUG-005 (stale fetch cache in E2E); Playwright now clears `.next/cache/fetch-cache` before building.
+- `reviewer`: PASS. Fixed after review: `content.spec.ts` pins the inventory exactly (224 kana, 103 + 181 kanji, 25 + 20 lessons) since the BE e2e now derives its counts from the JSON; the N4 E2E asserts exact lesson titles (first/last N4 lesson, lesson 26 heading and "Bài 26 / 45"); 太 "to, dày; béo" (was "béo, to"). Kept: the 姉/妹 pair (same 女 frame and paired in use); loosely themed placements (代 光 力 有 発 回) can move when phases 24–25 fill the lessons.
+

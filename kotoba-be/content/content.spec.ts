@@ -40,9 +40,26 @@ describe('content', () => {
       })
       .map((c) => `${k.char as string}→${c}`));
     expect(bad).toEqual([]);
-    // 11 pairs over 21 kanji (入 is in two pairs): docs/phases/19-vocab-page-similar-kanji.md.
-    expect(kanji.filter((k) => similar(k).length).length).toBe(21);
-    expect(kanji.reduce((n, k) => n + similar(k).length, 0)).toBe(22);
+    // N5: 11 pairs over 21 kanji (docs/phases/19-vocab-page-similar-kanji.md); N4 adds 23 pairs (docs/phases/23-n4-kanji.md).
+    expect(kanji.filter((k) => similar(k).length).length).toBe(54);
+    expect(kanji.reduce((n, k) => n + similar(k).length, 0)).toBe(68);
+  });
+
+  // Phase 23: the 181 N4 kanji are authored and each sits in an N4 lesson.
+  // Inventory pinned to exact numbers so a dropped entry fails (AGENTS.md §7.3); update with each content phase.
+  it('holds exactly the released content', () => {
+    const count = (items: Item[], level: number) => items.filter((d) => d.level === level).length;
+    expect(kana).toHaveLength(224);
+    expect([count(kanji, 5), count(kanji, 4)]).toEqual([103, 181]);
+    expect(kanji).toHaveLength(284);
+    expect([count(lessons, 5), count(lessons, 4)]).toEqual([25, 20]);
+  });
+
+  it('gives every N4 kanji a meaning and an N4 lesson', () => {
+    const levelOf = new Map(lessons.map((l) => [l.lesson, l.level]));
+    const n4 = kanji.filter((k) => k.level === 4);
+    expect(n4.length).toBe(181);
+    expect(n4.filter((k) => typeof k.vi !== 'string' || k.vi.trim() === '' || levelOf.get(k.lesson) !== 4).map((k) => k.id)).toEqual([]);
   });
 
   // JLPT levels 5 (easiest) to 2 (phase 22). Every item and every paper names exactly one.

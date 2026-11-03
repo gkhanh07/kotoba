@@ -10,7 +10,7 @@ const OUT = 'content/kanji.json';
 // and needs its own list (phase 27), so it is not mapped yet.
 const OLD_TO_NEW: Record<string, number> = { 4: 5, 3: 4 };
 // New levels written to kanji.json; a level is added here when its content is authored.
-const INCLUDE_LEVELS = [5];
+const INCLUDE_LEVELS = [5, 4];
 // Characters KANJIDIC2 gives no included level that lessons still teach, with the level they are taught at.
 const EXTRA: Record<string, number> = {};
 

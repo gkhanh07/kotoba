@@ -22,7 +22,7 @@ describe('content (e2e)', () => {
   afterAll(() => app.close());
 
   it('serves every kind from the seeded files', async () => {
-    for (const [kind, n] of [['kana', 224], ['kanji', 103], ['vocab', vocab.length], ['lesson', 25], ['grammar', grammar.length]] as const) {
+    for (const [kind, n] of [['kana', kana.length], ['kanji', kanji.length], ['vocab', vocab.length], ['lesson', lessons.length], ['grammar', grammar.length]] as const) {
       const res = await get(`/content/${kind}`).expect(200);
       expect(res.body, kind).toHaveLength(n);
     }
@@ -85,8 +85,9 @@ describe('content (e2e)', () => {
 
   it('filters content by level', async () => {
     const ids = (body: { id: string }[]) => body.map((d) => d.id);
-    expect(ids((await get('/content/kanji?level=5').expect(200)).body)).toEqual(kanji.map((k) => k.id));
-    expect((await get('/content/kanji?level=4').expect(200)).body).toEqual([]);
+    // Counts come from the JSON so new levels need no edit here; N2 has no content until phase 31.
+    expect(ids((await get('/content/kanji?level=5').expect(200)).body)).toEqual(kanji.filter((k) => k.level === 5).map((k) => k.id));
+    expect(ids((await get('/content/kanji?level=4').expect(200)).body)).toEqual(kanji.filter((k) => k.level === 4).map((k) => k.id));
     expect((await get('/content/kanji?level=2').expect(200)).body).toEqual([]);
     expect(ids((await get('/content/vocab?lesson=13&level=5').expect(200)).body)).toEqual(vocab.filter((v) => v.lesson === 13).map((v) => v.id));
     for (const bad of ['6', '1', 'x', '', '4.5', '5&level=4']) {
@@ -99,10 +100,10 @@ describe('content (e2e)', () => {
     const n5 = (await get(`/search?q=${encodeURIComponent('Nhật')}&level=5`).expect(200)).body as { id: string; level: number }[];
     expect(n5.map((d) => d.id)).toContain('kanji:日');
     expect(n5.filter((d) => d.level !== 5)).toEqual([]);
-    expect((await get(`/search?q=${encodeURIComponent('Nhật')}&level=4`).expect(200)).body).toEqual([]);
+    expect((await get(`/search?q=${encodeURIComponent('Nhật')}&level=2`).expect(200)).body).toEqual([]);
     expect((await get('/search?q=nhat&level=x').expect(400)).body.message).toBe('level');
     expect((await get('/tests?level=5').expect(200)).body.map((p: { id: string }) => p.id)).toEqual(['n5-1']);
-    expect((await get('/tests?level=4').expect(200)).body).toEqual([]);
+    expect((await get('/tests?level=2').expect(200)).body).toEqual([]);
     expect((await get('/tests?level=0').expect(400)).body.message).toBe('level');
   });
 
@@ -129,7 +130,7 @@ describe('content (e2e)', () => {
       pages: Math.ceil(hiragana.length / 100),
       total: hiragana.length,
     });
-    expect((await get('/content/kanji?level=4&page=1').expect(200)).body).toEqual({ items: [], page: 1, pages: 1, total: 0 });
+    expect((await get('/content/kanji?level=2&page=1').expect(200)).body).toEqual({ items: [], page: 1, pages: 1, total: 0 });
   });
 
   describe('with 5,000 synthetic level-3 words', () => {

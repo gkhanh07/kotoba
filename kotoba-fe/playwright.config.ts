@@ -33,7 +33,8 @@ export default defineConfig({
       timeout: 120_000,
     },
     {
-      command: `npm run build && npm run start -- -p ${FE_PORT}`,
+      // The fetch cache outlives builds and would serve content from the previous run for an hour (BUG-005).
+      command: `rm -rf .next/cache/fetch-cache && npm run build && npm run start -- -p ${FE_PORT}`,
       url: `http://localhost:${FE_PORT}`,
       env: { API_URL: `http://127.0.0.1:${BE_PORT}` },
       reuseExistingServer: false,

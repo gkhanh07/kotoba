@@ -72,3 +72,15 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Fix: the seed reads the stored ids, finds the ones missing from the JSON in JS and deletes them with `in`, which Prisma batches. Same scan: no other query binds one parameter per content item.
 - Commit: see `feat(content): content levels and paging in the API`
 - Status: FIXED
+
+## BUG-005: E2E serves the previous run's content from Next's fetch cache
+- Severity: Medium (false E2E failures after any content change; in production new content can take up to an hour to show, which is the chosen `revalidate`)
+- Found: 2026-11-03, phase 23 (N4 kanji added, `/kanji?level=4` still empty in E2E)
+- Environment: kotoba-fe `next build && next start` under Playwright
+- Steps: run `npm run test:e2e`, change `kotoba-be/content/*.json`, run it again.
+- Expected: pages show the new content.
+- Actual: `.next/cache/fetch-cache` holds `GET /content/kanji?level=4&page=1` = `{ items: [], total: 0 }` from the earlier run (`revalidate: 3600`); the rebuilt app serves it.
+- Reproducing test: `kotoba-fe/e2e/levels.spec.ts` › /kanji?level=4 pages the N4 kanji under their lessons (0 tiles before the fix).
+- Root cause: the fetch cache lives in `.next/cache`, which `next build` keeps; content is fetched with `revalidate: HOUR`.
+- Fix: Playwright's FE webServer deletes `.next/cache/fetch-cache` before building. Production keeps the hourly revalidate (content ships with kotoba-be; a deploy that changes content should clear that folder too — noted in BACKLOG for phase 35's deploy notes).
+- Status: FIXED (test environment)
