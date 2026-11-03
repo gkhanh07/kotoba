@@ -6,8 +6,8 @@ import type { Vocab } from "@/lib/flashcards";
 import { FlashcardApp } from "./FlashcardApp";
 
 const SRS = "kotoba.srs.v1";
-// Local day 2026-11-02, 09:00. Only Date is faked: user-event and rAF stay real.
-const NOW = new Date(2026, 10, 2, 9, 0).getTime();
+// 2026-11-02, 09:00 in Vietnam (the study day). Only Date is faked: user-event and rAF stay real.
+const NOW = new Date("2026-11-02T02:00:00Z").getTime();
 
 const word = (id: string, w: string, reading: string, vi: string, en: string): Vocab => ({
   id: `vocab:${id}`, word: w, reading, romaji: "romaji-" + id, vi, en, lesson: 13,

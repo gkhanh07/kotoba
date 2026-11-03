@@ -6,8 +6,8 @@ import type { ReviewItem } from "@/lib/library";
 import { ReviewApp } from "./ReviewApp";
 
 const SRS = "kotoba.srs.v1";
-// Local day 2026-11-02, 09:00. Only Date is faked: user-event and rAF stay real.
-const NOW = new Date(2026, 10, 2, 9, 0).getTime();
+// 2026-11-02, 09:00 in Vietnam (the study day). Only Date is faked: user-event and rAF stay real.
+const NOW = new Date("2026-11-02T02:00:00Z").getTime();
 
 const item = (id: string, kind: ReviewItem["kind"], front: string, lesson: number): ReviewItem => ({
   id, kind, lesson, tag: kind, front, back: [{ label: "Nghĩa", text: `nghĩa của ${front}`, strong: true }],

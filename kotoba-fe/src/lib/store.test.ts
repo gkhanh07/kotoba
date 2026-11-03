@@ -12,7 +12,7 @@ const SYNC = "kotoba.sync.v1";
 beforeEach(async () => {
   vi.resetModules();
   vi.useFakeTimers({ toFake: ["Date"] });
-  vi.setSystemTime(new Date(2026, 10, 2, 9, 0));
+  vi.setSystemTime(new Date("2026-11-02T02:00:00Z"));
   store = await import("./store");
 });
 afterEach(() => {
@@ -20,7 +20,7 @@ afterEach(() => {
 });
 
 describe("today", () => {
-  it("is the local day key", () => {
+  it("is the Vietnam study day", () => {
     expect(store.today()).toBe("2026-11-02");
   });
 });
@@ -199,7 +199,7 @@ describe("applyRemote and clearLocal", () => {
 });
 
 describe("lapses (phase 16)", () => {
-  const MISS_AT = new Date(2026, 10, 2, 9, 0).getTime();
+  const MISS_AT = new Date("2026-11-02T02:00:00Z").getTime();
   const others = (d: object) => Object.fromEntries(Object.entries(d).filter(([id]) => id !== "vocab:水"));
 
   it("reads a deck saved before lapses existed as it is, with ok=true", () => {

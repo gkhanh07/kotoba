@@ -60,6 +60,12 @@ export function examDate(exam: string): Date | null {
   return d;
 }
 
+// The exam's calendar day as a day key, so days left can be counted against today() (study days).
+export function examDay(exam: string): string | null {
+  const d = examDate(exam);
+  return d && `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
 const vi = {
   email: "Email",
   password: "Mật khẩu",

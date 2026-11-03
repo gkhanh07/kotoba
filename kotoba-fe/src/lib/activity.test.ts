@@ -1,20 +1,25 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { continueHref, dayKey, daysBetween, parseActivity, record, summarize } from "./activity";
+import { continueHref, dayKey, parseActivity, record, summarize } from "./activity";
 
-const now = new Date(2026, 9, 16, 20, 30);
-const ago = (n: number) => new Date(2026, 9, 16 - n, 12);
+// Instants are written in UTC so the tests mean the same in any process TZ; Vietnam is UTC+7.
+const now = new Date("2026-10-16T13:30:00Z"); // 20:30 in Vietnam
+const later = new Date("2026-10-16T13:31:00Z");
+const ago = (n: number) => new Date(Date.UTC(2026, 9, 16 - n, 5)); // noon in Vietnam, n days earlier
 const day = (n = 1) => ({ minutes: Array.from({ length: n }, (_, i) => i), kana: [] as string[], vocab: [] as string[] });
 const log = (...ns: number[]) => ({ days: Object.fromEntries(ns.map((n) => [dayKey(ago(n)), day()])) });
 
-describe("dates", () => {
-  it("dayKey pads month and day", () => {
-    expect(dayKey(new Date(2026, 0, 5))).toBe("2026-01-05");
+describe("dayKey", () => {
+  it("pads month and day", () => {
+    expect(dayKey(new Date("2026-01-05T03:00:00Z"))).toBe("2026-01-05");
   });
-  it("daysBetween counts calendar days", () => {
-    expect(daysBetween(new Date(2026, 9, 16, 23), new Date(2026, 11, 6))).toBe(51);
+  it("is still the Vietnam day one second before Vietnam midnight", () => {
+    expect(dayKey(new Date("2026-11-02T16:59:59Z"))).toBe("2026-11-02");
   });
-  it("daysBetween is 0 for the same moment", () => {
-    expect(daysBetween(now, now)).toBe(0);
+  it("turns to the next day exactly at Vietnam midnight, while UTC is still on the previous day", () => {
+    expect(dayKey(new Date("2026-11-02T17:00:00Z"))).toBe("2026-11-03");
+  });
+  it("rolls over the year at Vietnam midnight", () => {
+    expect(dayKey(new Date("2026-12-31T17:00:00Z"))).toBe("2027-01-01");
   });
 });
 
@@ -31,11 +36,18 @@ describe("record", () => {
   it("adds a new ref and minute without changing the previous value, and remembers last", () => {
     let a = record({ days: {} }, "kana", "hiragana:ka", now);
     const before = structuredClone(a);
-    a = record(a, "kana", "hiragana:ki", new Date(2026, 9, 16, 20, 31));
+    a = record(a, "kana", "hiragana:ki", later);
     expect(before.days[dayKey(now)].kana.length).toBe(1);
     expect(a.days[dayKey(now)].kana.length).toBe(2);
     expect(a.days[dayKey(now)].minutes.length).toBe(2);
     expect(a.last).toEqual({ area: "kana", ref: "hiragana:ki" });
+  });
+  it("buckets minutes on the Vietnam clock and splits days at Vietnam midnight", () => {
+    let a = record({ days: {} }, "kana", "hiragana:a", new Date("2026-11-02T16:30:00Z")); // 23:30
+    a = record(a, "kana", "hiragana:i", new Date("2026-11-02T17:10:00Z")); // 00:10 next day
+    expect(a.days["2026-11-02"]).toEqual({ minutes: [23 * 60 + 30], kana: ["hiragana:a"], vocab: [] });
+    expect(a.days["2026-11-03"]).toEqual({ minutes: [10], kana: ["hiragana:i"], vocab: [] });
+    expect(summarize(a, new Date("2026-11-02T17:10:00Z"))).toMatchObject({ streak: 2, minutesToday: 1, today: { kana: 1, vocab: 0, kanji: 0 } });
   });
   it("trims days older than 90 days", () => {
     const old = record({ days: { [dayKey(ago(91))]: day(), [dayKey(ago(89))]: day() } }, "vocab", "water", now);
@@ -71,7 +83,7 @@ describe("summarize", () => {
   });
   it("reports today's counts and minutes", () => {
     let a = record({ days: {} }, "kana", "hiragana:ka", now);
-    a = record(a, "kana", "hiragana:ki", new Date(2026, 9, 16, 20, 31));
+    a = record(a, "kana", "hiragana:ki", later);
     expect(summarize(a, now).today).toEqual({ kana: 2, vocab: 0, kanji: 0 });
     expect(summarize(a, now).minutesToday).toBe(2);
   });
@@ -99,7 +111,7 @@ describe("parseActivity", () => {
   });
   it("round-trips a valid log", () => {
     let a = record({ days: {} }, "kana", "hiragana:ka", now);
-    a = record(a, "kana", "hiragana:ki", new Date(2026, 9, 16, 20, 31));
+    a = record(a, "kana", "hiragana:ki", later);
     expect(parseActivity(JSON.stringify(a))).toEqual(a);
   });
   it("still parses days stored before the kanji area existed", () => {

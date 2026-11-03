@@ -7,7 +7,7 @@ export const INTERVALS = [1, 3, 7, 14, 30];
 // Box = correct reviews in a row. Known = passed the review that came after the 30-day gap.
 export const KNOWN_AT = INTERVALS.length + 1;
 
-// due: local YYYY-MM-DD, at: ms of last change, lapses: wrong answers so far (missing = 0)
+// due: study day YYYY-MM-DD (activity.ts dayKey), at: ms of last change, lapses: wrong answers so far (missing = 0)
 export type Card = { box: number; due: string; at: number; lapses?: number };
 export type Srs = Record<string, Card>;
 

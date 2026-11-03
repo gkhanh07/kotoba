@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useMemo, useSyncExternalStore } from "react";
-import { examDate, type Profile } from "@/lib/account";
-import { ACTIVITY_KEY, continueHref, daysBetween, parseActivity, summarize, type Activity } from "@/lib/activity";
+import { examDate, examDay, type Profile } from "@/lib/account";
+import { ACTIVITY_KEY, continueHref, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
 import { WEAK_LIST_SIZE } from "@/config/srs";
-import { INTERVALS, isDue, isLearned, type Srs } from "@/lib/srs";
+import { INTERVALS, daysUntil, isDue, isLearned, type Srs } from "@/lib/srs";
 import { weakItems, type ItemLink } from "@/lib/weak";
 import { today, useDeck } from "@/lib/store";
 import { remaining } from "@/lib/test";
@@ -42,7 +42,6 @@ const isVocab = (id: string) => id.startsWith("vocab:");
 const isKanji = (id: string) => id.startsWith("kanji:");
 const count = (s: Srs, area: (id: string) => boolean, ok: (id: string) => boolean) =>
   Object.keys(s).filter((id) => area(id) && ok(id)).length;
-const fromKey = (day: string) => { const [y, m, d] = day.split("-").map(Number); return new Date(y, m - 1, d); };
 
 export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTotal, tests, fronts }: {
   fronts: Record<string, ItemLink>;
@@ -66,6 +65,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
     return {
       bad,
       now,
+      day,
       kanaLearned: count(srs, isKana, learned),
       kanaDue: count(srs, isKana, due),
       kanjiLearned: count(srs, isKanji, learned),
@@ -84,7 +84,8 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
 
   const goal = profile?.goal;
   const exam = profile?.exam ? examDate(profile.exam) : null;
-  const days = exam && data ? daysBetween(data.now, exam) : null;
+  const examKey = profile?.exam ? examDay(profile.exam) : null;
+  const days = examKey && data ? daysUntil(examKey, data.day) : null;
 
   return (
     <main className={s.app}>
@@ -171,7 +172,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
             {data.summary.recent.length === 0 ? <p>{t.empty}</p> : (
               <ol className={s.list}>
                 {data.summary.recent.map((r) => {
-                  const ago = daysBetween(fromKey(r.day), data.now);
+                  const ago = daysUntil(data.day, r.day);
                   const label = ago === 0 ? t.todayLabel : ago === 1 ? t.yesterday : `${r.day.slice(8)}/${r.day.slice(5, 7)}`;
                   return <li key={r.day}><span>{label}</span><span>{t.dayLine(r.minutes, r.kana, r.kanji, r.vocab)}</span></li>;
                 })}

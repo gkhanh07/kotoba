@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { examDate, isEmail, isExam, isGoal, isMinutes, isName, jlptSessions, safePath } from "./account";
+import { examDate, examDay, isEmail, isExam, isGoal, isMinutes, isName, jlptSessions, safePath } from "./account";
 
 const values = (now: Date, n = 4) => jlptSessions(now, n).map((s) => s.value);
 
@@ -76,5 +76,15 @@ describe("examDate", () => {
   });
   it("returns null for a non-session month", () => {
     expect(examDate("2027-08")).toBeNull();
+  });
+});
+
+describe("examDay", () => {
+  it("returns the exam's calendar day as a day key", () => {
+    expect(examDay("2026-12")).toBe("2026-12-06");
+    expect(examDay("2027-07")).toBe("2027-07-04");
+  });
+  it("returns null for unknown", () => {
+    expect(examDay("unknown")).toBeNull();
   });
 });
