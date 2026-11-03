@@ -39,3 +39,5 @@ Each should either handle the error (e.g. mark the deck as `ok: false`) or repor
 
 ## Phase 22 follow-ups
 - `GET /content/:kind?page=` pages in memory after the field filters (reads the whole kind + level each call, ~12 ms at 5,000 rows). Use `skip/take` in SQL when no field filter is set if lists grow further.
+- `/vocab` "Ôn n từ đến hạn" counts due words of the selected level, but the link `/review?kind=vocab` reviews every level, so the numbers differ once N4 words exist. Decide in phase 23/24: pass `level` to the review queue or count all levels.
+- The kanji page builds `filter&level` for tabs and `level&filter&page` for the pager: two URL spellings of the same state (cosmetic).

@@ -4,8 +4,8 @@ import type { Page } from "@playwright/test";
 import { expect, test } from "./fixtures";
 
 // Phase 22: level tabs on the list pages, paging, lesson level groups, search badge, legal source line.
-const content = (name: string) => JSON.parse(readFileSync(resolve(process.cwd(), `../kotoba-be/content/${name}.json`), "utf8")) as { lesson?: number }[];
-const KANJI_TOTAL = content("kanji").length; // 103 today: 100 on page 1, the rest on page 2
+const content = (name: string) => JSON.parse(readFileSync(resolve(process.cwd(), `../kotoba-be/content/${name}.json`), "utf8")) as { lesson?: number; level: number }[];
+const KANJI_TOTAL = content("kanji").filter((k) => k.level === 5).length; // N5: 103 today, 100 on page 1, the rest on page 2
 const KANJI_PAGE = 100;
 const PAGES = ["/kanji", "/vocab", "/grammar", "/flashcards", "/test"];
 
@@ -121,7 +121,7 @@ test("/lessons groups the path under an N5 heading", async ({ page, axe }, info)
 test("search results carry a level badge", async ({ page, axe }) => {
   await page.goto("/search?q=taberu");
   const row = page.getByRole("link", { name: /食べる/ }).first();
-  await expect(row).toContainText("N5");
+  await expect(row).toContainText("N5 · Bài 13");
   expect(await hasHorizontalScroll(page)).toBe(false);
   await axe();
 });

@@ -52,3 +52,8 @@ Out: N4+ content; the N3/N2 level list (`scripts/levels.txt`, phase 27, after it
 - Network, time, concurrency: N/A (read-only lists).
 
 ## Self-review notes
+- Default level: a page without `?level=` shows N5. The roadmap's "level of `currentLesson`" needs the browser's deck, which these server components cannot read; revisit in phase 23 when N4 content exists (a client redirect or a level cookie).
+- `/flashcards?deck=n`: the deck's lesson decides the level and `?level=` is ignored there; the tabs then mark that lesson's level.
+- BUG-004 (seed failing at ~1,000 items per kind) was found while measuring the seed; fixed in the BE commit with a reproducing e2e. Seed by row diff instead of a hash gate: ADR 005.
+- `reviewer` (BE part done by the main agent's gate; FE part): PASS. Fixed after review: these notes; `Decks.test.tsx` covers page 2 of 30 decks and that the due count and "next deck" span every deck; `pageOf` accepts any well-formed page number so every page past the end is the same 404 (was capped at 6 digits); `e2e/levels.spec.ts` counts only N5 kanji (would break when N4 lands) and asserts the search badge exactly ("N5 · Bài 13"). BACKLOG: the /vocab due count is per level while `/review?kind=vocab` reviews all levels.
+

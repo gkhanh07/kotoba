@@ -16,7 +16,8 @@ export const levelLabel = (l: Level): string => `N${l}`;
 // ?page= as a positive integer; anything else is page 1.
 export const pageOf = (q: string | string[] | undefined): number => {
   const v = first(q);
-  return v !== undefined && /^[1-9]\d{0,5}$/.test(v) ? Number(v) : 1;
+  // Any well-formed page number counts, however large, so every page past the end is the same 404.
+  return v !== undefined && /^[1-9]\d*$/.test(v) ? Math.min(Number(v), Number.MAX_SAFE_INTEGER) : 1;
 };
 // A list URL with the given query params; undefined and empty values are left out.
 export const listHref = (path: string, params: Record<string, string | number | undefined>): string => {

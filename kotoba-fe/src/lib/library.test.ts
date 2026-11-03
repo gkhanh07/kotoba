@@ -144,10 +144,11 @@ describe("levels", () => {
 
 describe("pageOf", () => {
   it("reads positive integers", () => {
-    expect(["1", "2", "30", "999999"].map(pageOf)).toEqual([1, 2, 30, 999999]);
+    expect(["1", "2", "30", "999999", "1000000"].map(pageOf)).toEqual([1, 2, 30, 999999, 1000000]);
+    expect(pageOf("99999999999999999999")).toBe(Number.MAX_SAFE_INTEGER);
   });
   it("falls back to page 1 for missing, zero, negative, fractional and non-numeric values", () => {
-    expect([undefined, "", "0", "-1", "1.5", "x", "01", "1000000"].map(pageOf)).toEqual([1, 1, 1, 1, 1, 1, 1, 1]);
+    expect([undefined, "", "0", "-1", "1.5", "x", "01"].map(pageOf)).toEqual([1, 1, 1, 1, 1, 1, 1]);
   });
   it("takes the first of a repeated param", () => {
     expect(pageOf(["3", "4"])).toBe(3);

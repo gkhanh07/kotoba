@@ -68,7 +68,7 @@ After phase 20: FE Vitest 530 tests, E2E 66 passed.
 
 After phase 21: BE 31 unit + 31 e2e (export +3); FE Vitest 537 tests, E2E 72 passed.
 
-After phase 22: BE 40 unit + 40 e2e + 18 content; seed with unchanged content ~75 ms at 1,080 rows, ~196 ms at 10,480 rows (full rewrite ~5.5 s at 10k, once). FE Vitest 555 tests, E2E 102 passed.
+After phase 22: BE 40 unit + 40 e2e + 18 content; seed with unchanged content ~75 ms at 1,080 rows, ~196 ms at 10,480 rows (full rewrite ~5.5 s at 10k, once). FE Vitest 558 tests, E2E 102 passed.
 
 ## Next step
 Phase 23 (N4 kanji): add 4 to `INCLUDE_LEVELS` in `kotoba-be/scripts/kanjidic.ts`, run it, author `vi`, assign N4 lessons (numbered after 25), `similar` pairs. Delegate to the `content` agent. Write `docs/phases/23-*.md` first.
