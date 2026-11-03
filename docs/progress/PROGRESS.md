@@ -14,9 +14,10 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 14 BE part: `tests.json` (`n5-1`, 45 questions), `GET /tests`, `GET /tests/:id` | DONE | `d43665d` |
 | A1 `AGENTS.md`, `CLAUDE.md`, `kotoba-be/AGENTS.md`, pointer in `kotoba-fe/AGENTS.md` | DONE | see git log (`docs: add agent working rules and progress docs`) |
 | A2 PROGRESS, BUGS, BACKLOG, ADR 001, ADR 002 | DONE | same commit |
-| A3 phase 13.5: test infrastructure | TODO | |
-| A4 subagents check against `AGENTS.md` | TODO | (files committed in `fd87e2a`) |
-| 14 FE part: mock test flow | TODO | |
+| A3 phase 13.5: test infrastructure | DONE | `563eb00` (BE scripts), `chore(test): add vitest, rtl and playwright with axe to kotoba-fe` |
+| A4 subagents check against `AGENTS.md` | DONE | `49fa1ad`; agents load via the Agent tool in this session; `reviewer` tried on the A3 diff (PASS, read-only) |
+| 14 BE: minutes 60, `explain` on 45 questions, spec check | DONE | `02434f3` |
+| 14 FE part: mock test flow (spec `docs/phases/14-mock-test.md`) | TODO | |
 | 15–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
@@ -28,12 +29,17 @@ kotoba-be:
 - `npm run test:e2e`: 4 files, 18 tests passed.
 - `npm run lint`: 0 findings. `npx tsc --noEmit`: 0 errors. `npm run build`: OK.
 - `npm run jmdict`: 499 words checked against 466113 JMdict spellings, OK.
-- Unit coverage of `src/` (excluding generated Prisma client): measured in A3, see below.
+- Unit coverage of `src/` (excluding generated Prisma client): statements 26.68%, branches 34.56%, functions 33.33%, lines 25.74%. Threshold set to 26/34/33/25 in `kotoba-be/vitest.config.ts`; `check` runs `test:cov`.
 
 kotoba-fe:
 - `npm run check` (`node --test src/lib/*.check.mjs`): 5 files, 5 tests passed, 91 `assert.*` calls in total (account 16, activity 31, flashcards 6, search 10, srs 28).
 - `npm run lint`: 0 findings. `npm run build`: OK, 19 routes.
 - `npx tsc --noEmit` alone fails (`PageProps`/`LayoutProps` undefined) until `next typegen` or `next build` has generated `.next/types`; it passes after a build. The `typecheck` script therefore runs `next typegen` first.
 
+After phase 13.5 (2026-11-03):
+- kotoba-fe `npm run check`: lint 0, typecheck 0, Vitest 11 files / 202 tests pass (103 of them from the 91 old `.check.mjs` assertions), coverage `src/lib/**` lines 100%, branches 99.62%, build OK.
+- kotoba-fe `npm run test:e2e`: 8 passed (smoke on `/`, `/kana`, `/review` + accessible-name test, mobile and desktop), axe 0 serious/critical. Found and fixed BUG-001, BUG-002.
+- kotoba-be `npm run check`: lint, typecheck, 15 unit (with coverage gate), 18 e2e, content 8, JMdict, build all pass.
+
 ## Next step
-A3 (phase 13.5): add Vitest/RTL/Playwright/axe to kotoba-fe, convert `.check.mjs` to Vitest, BE scripts `typecheck`, `validate:content`, `check` and coverage threshold.
+Phase 14 FE: spec is `docs/phases/14-mock-test.md`; fixture `kotoba-fe/tests/fixtures/paper.small.json` is ready. Flow: `test` writes failing tests → `fe` implements → `reviewer` → gate → commit.

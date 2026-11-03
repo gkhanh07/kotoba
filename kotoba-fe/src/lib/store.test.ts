@@ -1,0 +1,198 @@
+import { act, renderHook } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+type Store = typeof import("./store");
+let store: Store;
+
+const SRS = "kotoba.srs.v1";
+const ACT = "kotoba.activity.v1";
+const SYNC = "kotoba.sync.v1";
+
+beforeEach(async () => {
+  vi.resetModules();
+  vi.useFakeTimers({ toFake: ["Date"] });
+  vi.setSystemTime(new Date(2026, 10, 2, 9, 0));
+  store = await import("./store");
+});
+afterEach(() => {
+  vi.useRealTimers();
+});
+
+describe("today", () => {
+  it("is the local day key", () => {
+    expect(store.today()).toBe("2026-11-02");
+  });
+});
+
+describe("useDeck", () => {
+  it("starts empty and writes an empty deck on first run", () => {
+    const { result } = renderHook(() => store.useDeck());
+    expect(result.current).toEqual({ srs: {}, ok: true });
+    expect(localStorage.getItem(SRS)).toBe("{}");
+  });
+  it("imports the pre-SRS keys once, due today", () => {
+    localStorage.setItem("kotoba.progress.v1", JSON.stringify({ "hiragana:a": { streak: 3 } }));
+    localStorage.setItem("kotoba.flashcards.v1", JSON.stringify({ water: "learned" }));
+    const { result } = renderHook(() => store.useDeck());
+    const at = Date.now();
+    expect(result.current!.srs).toEqual({
+      "hiragana:a": { box: 2, due: "2026-11-02", at },
+      "vocab:水": { box: 2, due: "2026-11-02", at },
+    });
+  });
+  it("reads an existing deck", () => {
+    const srs = { "hiragana:a": { box: 1, due: "2026-11-03", at: 5 } };
+    localStorage.setItem(SRS, JSON.stringify(srs));
+    const { result } = renderHook(() => store.useDeck());
+    expect(result.current).toEqual({ srs, ok: true });
+  });
+  it("reports ok=false and an empty deck when stored data is broken", () => {
+    localStorage.setItem(SRS, "broken");
+    const { result } = renderHook(() => store.useDeck());
+    expect(result.current).toEqual({ srs: {}, ok: false });
+  });
+  it("falls back to an in-memory deck when storage throws", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    const { result } = renderHook(() => store.useDeck());
+    expect(result.current).toEqual({ srs: {}, ok: false });
+  });
+  it("re-renders when a storage event for the deck arrives", () => {
+    const { result } = renderHook(() => store.useDeck());
+    const srs = { x: { box: 1, due: "2026-11-03", at: 1 } };
+    act(() => {
+      localStorage.setItem(SRS, JSON.stringify(srs));
+      window.dispatchEvent(new StorageEvent("storage", { key: SRS }));
+    });
+    expect(result.current!.srs).toEqual(srs);
+  });
+  it("ignores storage events for other keys", () => {
+    const { result } = renderHook(() => store.useDeck());
+    const first = result.current;
+    act(() => {
+      localStorage.setItem(SRS, JSON.stringify({ x: { box: 1, due: "2026-11-03", at: 1 } }));
+      window.dispatchEvent(new StorageEvent("storage", { key: "other" }));
+    });
+    expect(result.current).toBe(first);
+  });
+  it("stops listening after unmount", () => {
+    const remove = vi.spyOn(window, "removeEventListener");
+    const { unmount } = renderHook(() => store.useDeck());
+    unmount();
+    expect(remove).toHaveBeenCalledWith("storage", expect.any(Function));
+  });
+});
+
+describe("review", () => {
+  it("stores a hit and updates hook readers", () => {
+    const { result } = renderHook(() => store.useDeck());
+    let after!: ReturnType<Store["review"]>;
+    act(() => {
+      after = store.review("hiragana:a", true);
+    });
+    const at = Date.now();
+    expect(after).toEqual({ "hiragana:a": { box: 1, due: "2026-11-03", at } });
+    expect(result.current!.srs).toEqual(after);
+    expect(JSON.parse(localStorage.getItem(SRS)!)).toEqual(after);
+  });
+  it("does not write for an early hit", () => {
+    act(() => {
+      store.review("hiragana:a", true);
+    });
+    const setItem = vi.spyOn(Storage.prototype, "setItem");
+    act(() => {
+      store.review("hiragana:a", true);
+    });
+    expect(setItem).not.toHaveBeenCalled();
+  });
+  it("keeps the change in memory with ok=false when storage is full", () => {
+    const { result } = renderHook(() => store.useDeck());
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("quota");
+    });
+    act(() => {
+      store.review("hiragana:a", false);
+    });
+    expect(result.current!.ok).toBe(false);
+    expect(Object.keys(result.current!.srs)).toEqual(["hiragana:a"]);
+  });
+});
+
+describe("syncState", () => {
+  it("defaults to never synced", () => {
+    expect(store.syncState()).toEqual({ lastSync: 0, forget: [] });
+  });
+  it("returns stored state", () => {
+    const st = { owner: "a@b.co", lastSync: 7, forget: [{ prefix: "hiragana:", at: 3 }] };
+    localStorage.setItem(SYNC, JSON.stringify(st));
+    expect(store.syncState()).toEqual(st);
+  });
+  it.each(['{"lastSync":"x","forget":[]}', '{"lastSync":1,"forget":{}}', "broken"])("defaults for bad data %s", (bad) => {
+    localStorage.setItem(SYNC, bad);
+    expect(store.syncState()).toEqual({ lastSync: 0, forget: [] });
+  });
+});
+
+describe("snapshot", () => {
+  it("joins the deck and activity raw values", () => {
+    localStorage.setItem(SRS, "{}");
+    localStorage.setItem(ACT, '{"days":{}}');
+    expect(store.snapshot()).toBe('{}\n{"days":{}}');
+  });
+  it("shows null for missing values", () => {
+    expect(store.snapshot()).toBe("null\nnull");
+  });
+  it("is empty when storage throws", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    expect(store.snapshot()).toBe("");
+  });
+});
+
+describe("resetDeck", () => {
+  const card = { box: 1, due: "2026-11-03", at: 1 };
+  it("drops cards with the prefix and records nothing for a guest", () => {
+    localStorage.setItem(SRS, JSON.stringify({ "hiragana:a": card, "katakana:a": card }));
+    act(() => store.resetDeck("hiragana:"));
+    expect(JSON.parse(localStorage.getItem(SRS)!)).toEqual({ "katakana:a": card });
+    expect(localStorage.getItem(SYNC)).toBeNull();
+  });
+  it("queues the forget for a signed-in owner", () => {
+    localStorage.setItem(SRS, JSON.stringify({ "hiragana:a": card }));
+    localStorage.setItem(SYNC, JSON.stringify({ owner: "a@b.co", lastSync: 4, forget: [] }));
+    act(() => store.resetDeck("hiragana:"));
+    expect(JSON.parse(localStorage.getItem(SYNC)!)).toEqual({ owner: "a@b.co", lastSync: 4, forget: [{ prefix: "hiragana:", at: Date.now() }] });
+    expect(JSON.parse(localStorage.getItem(SRS)!)).toEqual({});
+  });
+});
+
+describe("applyRemote and clearLocal", () => {
+  it("stores the account state and announces it to readers", () => {
+    const { result } = renderHook(() => store.useDeck());
+    const cards = { "vocab:水": { box: 3, due: "2026-11-09", at: 2 } };
+    act(() => store.applyRemote({ cards, activity: { days: {} } }, "a@b.co", 99));
+    expect(result.current!.srs).toEqual(cards);
+    expect(JSON.parse(localStorage.getItem(ACT)!)).toEqual({ days: {} });
+    expect(JSON.parse(localStorage.getItem(SYNC)!)).toEqual({ owner: "a@b.co", lastSync: 99, forget: [] });
+  });
+  it("applyRemote survives blocked storage", () => {
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    expect(() => store.applyRemote({ cards: {}, activity: { days: {} } }, "a@b.co", 1)).not.toThrow();
+  });
+  it("clearLocal removes every key including the pre-SRS ones", () => {
+    for (const k of [SRS, ACT, SYNC, "kotoba.progress.v1", "kotoba.flashcards.v1"]) localStorage.setItem(k, "1");
+    localStorage.setItem("keep", "1");
+    act(() => store.clearLocal());
+    expect(Object.keys(localStorage)).toEqual(["keep"]);
+  });
+  it("clearLocal survives blocked storage", () => {
+    vi.spyOn(Storage.prototype, "removeItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    expect(() => store.clearLocal()).not.toThrow();
+  });
+});

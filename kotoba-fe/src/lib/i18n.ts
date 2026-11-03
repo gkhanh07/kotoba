@@ -53,7 +53,7 @@ type Dict = {
   };
   street: {
     signsAria: string;
-    signAria: (word: string, meaning: string) => string;
+    signMeaning: (meaning: string) => string;
     meanings: Record<SignWord, string>;
     longMark: string;
     reads: (romaji: string) => string;
@@ -77,7 +77,7 @@ type Dict = {
     reset: (name: string) => string;
     resetArmed: (name: string) => string;
     chartAria: (name: string) => string;
-    cellAria: (char: string, romaji: string) => string;
+    cellReads: string;
     hintLabel: string;
     noteLabel: string;
     levelLabel: string;
@@ -169,7 +169,7 @@ const DICT: Record<Lang, Dict> = {
     },
     street: {
       signsAria: "Biển hiệu, chạm để đọc",
-      signAria: (word, meaning) => `${word}, ${meaning}`,
+      signMeaning: (meaning) => `, ${meaning}`,
       meanings: {
         "ラーメン": "Mì ramen",
         "くすり": "Thuốc, hiệu thuốc",
@@ -207,7 +207,7 @@ const DICT: Record<Lang, Dict> = {
       reset: (name) => `Xoá tiến độ ${name}`,
       resetArmed: (name) => `Bấm lần nữa để xoá tiến độ ${name}`,
       chartAria: (name) => `Bảng ${name}`,
-      cellAria: (char, romaji) => `${char}, đọc là ${romaji}`,
+      cellReads: ", đọc là ",
       hintLabel: "Đọc gần giống",
       noteLabel: "Nghĩa và cách đọc",
       levelLabel: "Mức nhớ",
@@ -303,7 +303,7 @@ const DICT: Record<Lang, Dict> = {
     },
     street: {
       signsAria: "Shop signs, tap one to read it",
-      signAria: (word, meaning) => `${word}, ${meaning}`,
+      signMeaning: (meaning) => `, ${meaning}`,
       meanings: {
         "ラーメン": "Ramen noodles",
         "くすり": "Medicine, pharmacy",
@@ -341,7 +341,7 @@ const DICT: Record<Lang, Dict> = {
       reset: (name) => `Clear ${name} progress`,
       resetArmed: (name) => `Press again to clear ${name} progress`,
       chartAria: (name) => `${name} chart`,
-      cellAria: (char, romaji) => `${char}, read as ${romaji}`,
+      cellReads: ", read as ",
       hintLabel: "Sounds like",
       noteLabel: "Meaning and reading",
       levelLabel: "Recall",

@@ -369,7 +369,7 @@ npm run check             # lint + typecheck + test + test:e2e + validate:conten
 ```bash
 npm run dev               # Next dev server on :3000 (needs kotoba-be on :4000)
 npm run lint              # ESLint
-npm run typecheck         # tsc --noEmit
+npm run typecheck         # next typegen && tsc --noEmit (route types must exist first)
 npm test                  # Vitest unit + component
 npm run test:coverage     # Vitest with coverage (90% lines/branches on src/lib/**)
 npm run test:e2e          # Playwright (starts BE and FE itself), mobile + desktop, axe

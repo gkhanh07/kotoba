@@ -128,10 +128,10 @@ function Chart({ set, progress, quizHref, lang, t }: { set: KanaSet; progress: S
         className={s.cell}
         data-done={box > 0}
         aria-pressed={selected.id === k.id}
-        aria-label={t.cellAria(k.char, k.romaji)}
         onClick={() => setSelected(k)}
       >
         <span lang="ja" className={s.cellChar} style={fit(k.char)}>{k.char}</span>
+        <span className="sr-only">{t.cellReads}</span>
         <span className={s.cellRomaji}>{k.romaji}</span>
         <span className={s.cellLamps}>{Array.from({ length: KNOWN_AT }, (_, i) => <i key={i} data-on={i < box} />)}</span>
       </button>
