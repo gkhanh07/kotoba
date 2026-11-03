@@ -33,3 +33,7 @@ Out: grammar (25), mock test (26).
 Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanings in decks and the word page). Others N/A.
 
 ## Self-review notes
+- **24a** (lessons 26–32): 178 words (26: 35, 27: 17, 28: 27, 29: 24, 30: 17, 31: 29, 32: 29). Short of ~200 on purpose: most basic season and food words are already N5 (in kana), and a kanji spelling of them would put one word in two levels. Skipped homophones (id collision): かぜ 風邪, かみ 髪/紙, かた 肩, なく 泣く, は 葉, なくなる. Ids now taken: `vocab:かわく` (乾く), `vocab:なおる` (治る), `vocab:ちゅうしゃ` (注射), `vocab:かう` (飼う), `vocab:おこる` (怒る). Unsure-N4 list in the batch report (赤 青 黒 白 as nouns, これから, ちょうど, いっぱい, 先, たまに, もうすぐ, どうぶつえん, 牛, もえる, ゆか, たな, かぐ, 地下, 年, げしゅく, 食料品, きょうみ). Examples keep to N5/N4 kanji (星 島 虫 written in kana).
+- Tests changed by 24a: `e2e/vocab.spec.ts` checks /vocab per level (N5 and N4) instead of the whole file on the N5 tab; the BE kanji-detail test derives the words with 水 from the JSON (N5's two first); the 5,000-row paging test compares N5 with the N5 count.
+- To save the remaining budget, `reviewer` runs once over the three batches at the end of phase 24 instead of per batch (the full gate still runs per batch).
+

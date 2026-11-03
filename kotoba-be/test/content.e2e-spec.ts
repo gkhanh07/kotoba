@@ -40,7 +40,10 @@ describe('content (e2e)', () => {
   it('returns a kanji with the words written with it', async () => {
     const res = await get(`/content/item/${encodeURIComponent('kanji:水')}`).expect(200);
     expect(res.body.hv).toBeDefined();
-    expect(res.body.words.map((w: { id: string }) => w.id)).toEqual(['vocab:水', 'vocab:すいようび']); // すいようび counts through its kanji form 水曜日
+    // The first two are N5 (すいようび counts through its kanji form 水曜日); N4 words with 水 follow in file order.
+    const withMizu = vocab.filter((v) => [v.word, (v as { kanji?: string }).kanji].some((w) => w?.includes('水'))).map((v) => v.id);
+    expect(withMizu.slice(0, 2)).toEqual(['vocab:水', 'vocab:すいようび']);
+    expect(res.body.words.map((w: { id: string }) => w.id)).toEqual(withMizu);
     await get('/content/item/kanji:nope').expect(404);
   });
 
@@ -160,7 +163,7 @@ describe('content (e2e)', () => {
         const ids = Array.from({ length: page <= 50 ? 100 : 0 }, (_, i) => id((page - 1) * 100 + i));
         expect(res.body).toEqual({ items: ids.map((i) => ({ id: i, level: 3 })), page, pages: 50, total: N });
       }
-      expect((await get('/content/vocab?level=5&page=1').expect(200)).body.total).toBe(vocab.length);
+      expect((await get('/content/vocab?level=5&page=1').expect(200)).body.total).toBe(vocab.filter((v) => v.level === 5).length);
       expect((await get('/content/vocab?page=1').expect(200)).body.total).toBe(vocab.length + N);
     });
   });
