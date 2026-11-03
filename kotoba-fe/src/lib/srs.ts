@@ -26,6 +26,12 @@ export const isLearned = (s: Srs, id: string) => boxOf(s, id) >= 1;
 export const dueCount = (s: Srs, today: string, ids?: string[]) =>
   (ids ?? Object.keys(s)).filter((id) => isDue(s[id], today)).length;
 
+// The first day after today when any of ids comes due, and how many come due that day.
+export function nextDue(s: Srs, today: string, ids: string[]): { day: string; n: number } | null {
+  const days = ids.map((id) => s[id]?.due).filter((d): d is string => !!d && d > today).sort();
+  return days.length ? { day: days[0], n: days.filter((d) => d === days[0]).length } : null;
+}
+
 // A miss always drops the card to box 0, due today. A hit moves it up one box,
 // but only when the card is new or due: drilling ahead of schedule does not speed it up.
 export function apply(s: Srs, id: string, correct: boolean, today: string, now: number): Srs {

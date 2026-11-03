@@ -3,8 +3,9 @@
 
 export type Card = { box: number; due: string; at: number };
 export type Cards = Record<string, Card>;
-export const AREAS = ['kana', 'vocab'] as const;
-export type Day = { minutes: number[]; kana: string[]; vocab: string[] };
+export const AREAS = ['kana', 'vocab', 'kanji'] as const;
+// kanji came later, so days stored before it have no kanji list.
+export type Day = { minutes: number[]; kana: string[]; vocab: string[]; kanji?: string[] };
 export type Activity = { days: Record<string, Day>; last?: { area: string; ref: string } };
 export type Forget = { prefix: string; at: number };
 
@@ -24,7 +25,7 @@ export const isCards = (v: unknown): v is Cards => isObject(v) && Object.values(
 
 const isDay = (v: unknown) =>
   isObject(v) && Array.isArray(v.minutes) && v.minutes.length <= 1440 &&
-  v.minutes.every((m) => Number.isInteger(m) && m >= 0 && m < 1440) && AREAS.every((a) => isIds(v[a]));
+  v.minutes.every((m) => Number.isInteger(m) && m >= 0 && m < 1440) && isIds(v.kana) && isIds(v.vocab) && (v.kanji === undefined || isIds(v.kanji));
 export const isActivity = (v: unknown): v is Activity =>
   isObject(v) && isObject(v.days) && Object.keys(v.days).length <= KEEP_DAYS * 2 &&
   Object.entries(v.days).every(([k, d]) => DAY.test(k) && isDay(d)) &&
@@ -45,7 +46,7 @@ export function mergeActivity(stored: Activity, pushed: Activity): Activity {
   const days: Record<string, Day> = { ...stored.days };
   for (const [k, d] of Object.entries(pushed.days)) {
     const s = days[k] ?? { minutes: [], kana: [], vocab: [] };
-    days[k] = { minutes: union(s.minutes, d.minutes), kana: union(s.kana, d.kana), vocab: union(s.vocab, d.vocab) };
+    days[k] = { minutes: union(s.minutes, d.minutes), kana: union(s.kana, d.kana), vocab: union(s.vocab, d.vocab), kanji: union(s.kanji ?? [], d.kanji ?? []) };
   }
   const keep = Object.keys(days).sort().slice(-KEEP_DAYS);
   return { days: Object.fromEntries(keep.map((k) => [k, days[k]])), last: pushed.last ?? stored.last };

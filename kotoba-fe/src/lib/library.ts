@@ -27,6 +27,12 @@ export type Grammar = {
   note?: Translation;
 };
 
+// One card in the shared review queue. The server fills in labels in the page language.
+export const KINDS = ["kana", "kanji", "vocab"] as const;
+export type Kind = (typeof KINDS)[number];
+export type ReviewRow = { label: string; text: string; ja?: boolean; strong?: boolean; sub?: string };
+export type ReviewItem = { id: string; kind: Kind; lesson: number; tag: string; front: string; back: ReviewRow[] };
+
 export const FILTERS = ["all", "learned", "new"] as const;
 export type Filter = (typeof FILTERS)[number];
 
@@ -93,6 +99,39 @@ const en = {
     reviewBody: "This lesson adds nothing new. Every kana, kanji and word you have studied waits in the review queue.",
     speak: "Play",
   },
+  review: {
+    title: "Review",
+    lede: "Kana, kanji and words that are due today, in one queue. Recall it, flip to check, then grade yourself honestly.",
+    scope: { all: "Everything due", kana: "Kana due", kanji: "Kanji due", vocab: "Words due" } satisfies Record<"all" | Kind, string>,
+    scopeLesson: (n: number, title: string) => `Lesson ${n} · ${title}`,
+    all: "Review everything",
+    kinds: { kana: "Kana", kanji: "Kanji", vocab: "Words" } satisfies Record<Kind, string>,
+    left: (n: number, parts: string) => `${n} left${parts ? ` · ${parts}` : ""}`,
+    progress: "Queue progress",
+    flip: "Show the answer",
+    front: "Show the front",
+    hint: "Tap to flip",
+    recall: { kana: "recall the sound", kanji: "recall Hán Việt, readings and meaning", vocab: "recall the reading and meaning" } satisfies Record<Kind, string>,
+    keys: "Space flips · 1 not yet · 2 knew it",
+    grade: "Did you remember it?",
+    gradeHint: "Flip the card first, then grade yourself.",
+    missed: "Not yet",
+    knew: "Knew it",
+    gradedMiss: (x: string) => `${x}: back at the end of today’s queue.`,
+    gradedHit: (x: string, d: number) => `${x}: next review in ${d} ${d === 1 ? "day" : "days"}.`,
+    gradedKnown: (x: string) => `${x}: known. It still comes back every 30 days.`,
+    done: "Today’s queue is clear.",
+    next: (d: number, n: number) => `Next review ${d === 1 ? "tomorrow" : `in ${d} days`}: ${n} ${n === 1 ? "item" : "items"}.`,
+    study: (n: number) => `Study lesson ${n}`,
+    path: "Open the lesson path",
+    dashboard: "Back to the dashboard",
+    empty: "Nothing to review yet. Study a lesson to start a review schedule.",
+    waiting: "Nothing is due right now.",
+    saved: "Your review schedule is saved in this browser.",
+    warning: "Progress could not be read or saved in this browser. You can still review for this session.",
+    // Card back labels
+    romaji: "Romaji", note: "Sound", reading: "Reading", example: "Example",
+  },
 };
 
 const vi: typeof en = {
@@ -157,6 +196,38 @@ const vi: typeof en = {
     review: "Vào ôn tập",
     reviewBody: "Bài ôn không thêm mục mới. Mọi chữ và từ bạn đã học đều nằm trong hàng đợi ôn tập.",
     speak: "Đọc",
+  },
+  review: {
+    title: "Ôn tập",
+    lede: "Kana, kanji và từ vựng đến hạn hôm nay, chung một hàng đợi. Nhớ lại, lật thẻ để kiểm, rồi tự chấm thật lòng.",
+    scope: { all: "Mọi mục đến hạn", kana: "Kana đến hạn", kanji: "Kanji đến hạn", vocab: "Từ vựng đến hạn" },
+    scopeLesson: (n, title) => `Bài ${n} · ${title}`,
+    all: "Ôn tất cả",
+    kinds: { kana: "Kana", kanji: "Kanji", vocab: "Từ vựng" },
+    left: (n, parts) => `Còn ${n} mục${parts ? ` · ${parts}` : ""}`,
+    progress: "Tiến độ hàng đợi",
+    flip: "Xem đáp án",
+    front: "Xem mặt trước",
+    hint: "Chạm để lật",
+    recall: { kana: "nhớ cách đọc", kanji: "nhớ Hán Việt, âm và nghĩa", vocab: "nhớ cách đọc và nghĩa" },
+    keys: "Phím cách: lật · 1: chưa nhớ · 2: nhớ rồi",
+    grade: "Bạn nhớ mục này chưa?",
+    gradeHint: "Lật thẻ trước, rồi tự chấm.",
+    missed: "Chưa nhớ",
+    knew: "Nhớ rồi",
+    gradedMiss: (x) => `${x}: quay lại cuối hàng đợi hôm nay.`,
+    gradedHit: (x, d) => `${x}: ôn lại sau ${d} ngày.`,
+    gradedKnown: (x) => `${x}: đã thuộc. Cứ 30 ngày sẽ quay lại một lần.`,
+    done: "Xong hàng đợi hôm nay.",
+    next: (d, n) => `Lần ôn tới: ${d === 1 ? "ngày mai" : `${d} ngày nữa`}, ${n} mục.`,
+    study: (n) => `Học bài ${n}`,
+    path: "Xem lộ trình bài học",
+    dashboard: "Về bảng điều khiển",
+    empty: "Chưa có gì để ôn. Học một bài để bắt đầu lịch ôn.",
+    waiting: "Hiện chưa có mục nào đến hạn.",
+    saved: "Lịch ôn được lưu trên trình duyệt này.",
+    warning: "Không thể đọc hoặc lưu tiến độ trên trình duyệt này. Bạn vẫn có thể ôn trong phiên này.",
+    romaji: "Romaji", note: "Cách phát âm", reading: "Cách đọc", example: "Ví dụ",
   },
 };
 

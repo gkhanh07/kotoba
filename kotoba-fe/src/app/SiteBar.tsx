@@ -4,11 +4,12 @@ import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
 import { LogoutButton } from "./Sync";
 import { MenuNav } from "./MenuNav";
+import { ReviewLink } from "./ReviewLink";
 export { Arrow } from "./Arrow";
 
 const LIBRARY = ["kana", "kanji", "vocab", "grammar"] as const; // /flashcards is a vocab deck, so it passes "vocab"
-// Primary items (review, search, test) join lessons as their routes ship.
-type Current = "lessons" | (typeof LIBRARY)[number];
+// Primary items (search, test) join lessons and review as their routes ship.
+type Current = "lessons" | "review" | (typeof LIBRARY)[number];
 
 // One nav element: a row from 900px up, the Menu popover below (globals.css, "Site bar").
 export async function SiteBar({ current }: { current?: Current }) {
@@ -26,6 +27,7 @@ export async function SiteBar({ current }: { current?: Current }) {
       <button type="button" className="btn btnGhost menuBtn" popoverTarget="site-nav">{t.menu}</button>
       <MenuNav id="site-nav" label={t.main}>
         <Link href="/lessons" aria-current={here("lessons")}>{t.lessons}</Link>
+        <ReviewLink label={t.review} due={t.reviewDue} current={here("review")} />
         <button type="button" className="libraryBtn" popoverTarget="site-library" data-current={(LIBRARY as readonly string[]).includes(current ?? "") ? "" : undefined}>
           {t.library}
           <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3.5 5 7.5 9 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>

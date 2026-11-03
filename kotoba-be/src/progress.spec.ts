@@ -19,15 +19,15 @@ describe('mergeActivity', () => {
     const stored = { days: { '2026-11-01': { minutes: [1, 2], kana: ['hiragana:a'], vocab: [] } }, last: { area: 'kana', ref: 'hiragana:a' } };
     const pushed = {
       days: {
-        '2026-11-01': { minutes: [2, 3], kana: ['hiragana:i'], vocab: ['vocab:水'] },
+        '2026-11-01': { minutes: [2, 3], kana: ['hiragana:i'], vocab: ['vocab:水'], kanji: ['kanji:日'] },
         '2026-11-02': { minutes: [5], kana: [], vocab: [] },
       },
       last: { area: 'vocab', ref: 'vocab:水' },
     };
     expect(mergeActivity(stored, pushed)).toEqual({
       days: {
-        '2026-11-01': { minutes: [1, 2, 3], kana: ['hiragana:a', 'hiragana:i'], vocab: ['vocab:水'] },
-        '2026-11-02': { minutes: [5], kana: [], vocab: [] },
+        '2026-11-01': { minutes: [1, 2, 3], kana: ['hiragana:a', 'hiragana:i'], vocab: ['vocab:水'], kanji: ['kanji:日'] },
+        '2026-11-02': { minutes: [5], kana: [], vocab: [], kanji: [] },
       },
       last: { area: 'vocab', ref: 'vocab:水' },
     });
@@ -52,6 +52,8 @@ describe('validation', () => {
     expect(isActivity({ days: { '2026-11-02': { minutes: [1440], kana: [], vocab: [] } } })).toBe(false);
     expect(isActivity({ days: { bad: { minutes: [], kana: [], vocab: [] } } })).toBe(false);
     expect(isActivity({ days: {}, last: { area: 'music', ref: 'x' } })).toBe(false);
+    expect(isActivity({ days: { '2026-11-02': { minutes: [], kana: [], vocab: [] } }, last: { area: 'kanji', ref: 'kanji:日' } })).toBe(true);
+    expect(isActivity({ days: { '2026-11-02': { minutes: [], kana: [], vocab: [], kanji: [1] } } })).toBe(false);
     expect(isForget({ prefix: 'hiragana:', at: 1 })).toBe(true);
     expect(isForget({ prefix: '', at: 1 })).toBe(false);
     expect(isForget({ prefix: '%', at: 1 })).toBe(false);

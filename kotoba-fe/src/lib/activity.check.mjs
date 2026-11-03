@@ -37,17 +37,27 @@ const s = summarize(log(0, 1, 2, 3, 4, 5, 6, 7, 8), now);
 assert.equal(s.recent.length, 7);
 assert.equal(s.recent[0].day, dayKey(now));
 assert.equal(s.recent[6].day, dayKey(ago(6)));
-assert.deepEqual(summarize(a, now).today, { kana: 2, vocab: 0 });
+assert.deepEqual(summarize(a, now).today, { kana: 2, vocab: 0, kanji: 0 });
 assert.equal(summarize(a, now).minutesToday, 2);
 
 // parseActivity: missing → empty, broken → null
 assert.deepEqual(parseActivity(null), { days: {} });
 for (const bad of ["broken", "!unavailable", '{"days":[]}', "null", "5",
-  JSON.stringify({ days: {}, last: { area: "kanji", ref: "x" } }),
+  JSON.stringify({ days: {}, last: { area: "grammar", ref: "x" } }),
+  JSON.stringify({ days: { "2026-10-16": { minutes: [], kana: [], vocab: [], kanji: [1] } } }),
   JSON.stringify({ days: { "2026-10-16": { minutes: ["1"], kana: [], vocab: [] } } })]) assert.equal(parseActivity(bad), null, bad);
 assert.deepEqual(parseActivity(JSON.stringify(a)), a);
 
 assert.equal(continueHref(undefined), "/kana?script=hiragana&mode=quiz");
 assert.equal(continueHref({ area: "kana", ref: "katakana:ka" }), "/kana?script=katakana&mode=quiz");
 assert.equal(continueHref({ area: "vocab", ref: "water" }), "/flashcards");
+assert.equal(continueHref({ area: "kanji", ref: "kanji:日" }), "/review?kind=kanji");
+
+// kanji: days stored before the kanji area existed still parse, and gain the list on first use
+const legacy = { days: { [dayKey(now)]: { minutes: [1], kana: [], vocab: [] } } };
+assert.deepEqual(parseActivity(JSON.stringify(legacy)), legacy);
+const k = record(legacy, "kanji", "kanji:日", now);
+assert.deepEqual(k.days[dayKey(now)].kanji, ["kanji:日"]);
+assert.equal(summarize(k, now).today.kanji, 1);
+assert.equal(summarize(legacy, now).recent[0].kanji, 0);
 console.log("activity ok");

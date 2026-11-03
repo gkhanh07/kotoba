@@ -1,6 +1,6 @@
 // Run: node --experimental-strip-types src/lib/srs.check.mjs
 import assert from "node:assert/strict";
-import { KNOWN_AT, addDays, apply, daysUntil, choicesFor, dueCount, forget, isKnown, migrate, parseSrs, pickNext, queue } from "./srs.ts";
+import { KNOWN_AT, addDays, apply, daysUntil, choicesFor, dueCount, forget, isKnown, migrate, nextDue, parseSrs, pickNext, queue } from "./srs.ts";
 
 const D = "2026-11-02";
 assert.equal(addDays("2026-12-30", 3), "2027-01-02");
@@ -31,6 +31,11 @@ assert.equal(queue(items, {}, D).mode, "new");
 const missed = apply(apply({}, "hiragana:a", true, D, 0), "hiragana:i", false, D, 0);
 assert.deepEqual(queue(items, missed, D), { mode: "due", items: [items[1]] });
 assert.equal(dueCount(missed, D), 1);
+// Next due: the earliest future day among the ids asked about, due-today cards excluded.
+const later = { ...missed, x: { box: 2, due: "2026-11-05", at: 0 }, y: { box: 2, due: "2026-11-09", at: 0 } };
+assert.deepEqual(nextDue(later, D, ["hiragana:a", "hiragana:i", "x", "y", "nope"]), { day: "2026-11-03", n: 1 });
+assert.deepEqual(nextDue({ ...later, z: later.x }, D, ["x", "y", "z"]), { day: "2026-11-05", n: 2 });
+assert.equal(nextDue(missed, D, ["hiragana:i"]), null);
 const allSeen = { ...missed, "hiragana:i": one.k, "hiragana:u": one.k };
 assert.equal(queue(items, allSeen, D).mode, "extra");
 for (let n = 0; n < 30; n++) assert.notEqual(pickNext(items, allSeen, "hiragana:u", D).id, "hiragana:u");

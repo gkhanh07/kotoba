@@ -33,12 +33,13 @@ function useStored(key: string) {
 
 const isKana = (id: string) => id.startsWith("hiragana:") || id.startsWith("katakana:");
 const isVocab = (id: string) => id.startsWith("vocab:");
+const isKanji = (id: string) => id.startsWith("kanji:");
 const count = (s: Srs, area: (id: string) => boolean, ok: (id: string) => boolean) =>
   Object.keys(s).filter((id) => area(id) && ok(id)).length;
 const fromKey = (day: string) => { const [y, m, d] = day.split("-").map(Number); return new Date(y, m - 1, d); };
 
-export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
-  lang: Lang; name: string; profile: Profile | null; kanaTotal: number; vocabTotal: number;
+export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTotal }: {
+  lang: Lang; name: string; profile: Profile | null; kanaTotal: number; kanjiTotal: number; vocabTotal: number;
 }) {
   const t = text[lang];
   const deck = useDeck();
@@ -54,14 +55,13 @@ export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
     const { srs } = deck;
     const due = (id: string) => isDue(srs[id], day);
     const learned = (id: string) => isLearned(srs, id);
-    // ponytail: links into the quiz by script only, so a due yōon card needs its group opened by hand; /review replaces this.
-    const firstKanaDue = Object.keys(srs).find((id) => isKana(id) && due(id));
     return {
       bad,
       now,
       kanaLearned: count(srs, isKana, learned),
       kanaDue: count(srs, isKana, due),
-      kanaDueHref: `/kana?script=${firstKanaDue?.split(":")[0] ?? "hiragana"}&mode=quiz`,
+      kanjiLearned: count(srs, isKanji, learned),
+      kanjiDue: count(srs, isKanji, due),
       vocabLearned: count(srs, isVocab, learned),
       vocabDue: count(srs, isVocab, due),
       summary: summarize(activity, now),
@@ -99,7 +99,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
               <dd>{t.minutes(data.summary.minutesToday, profile?.minutes)}</dd>
               {profile?.minutes && <progress aria-label={t.minutesLabel} value={Math.min(data.summary.minutesToday, profile.minutes)} max={profile.minutes} />}
             </div>
-            <div><dt>{t.review}</dt><dd>{data.kanaDue + data.vocabDue}</dd></div>
+            <div><dt>{t.review}</dt><dd>{data.kanaDue + data.kanjiDue + data.vocabDue}</dd></div>
           </dl>
 
           <div className={s.continue}>
@@ -115,6 +115,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
               <tbody>
                 <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.kanaLearned} / {kanaTotal}</td></tr>
                 <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.vocabLearned} / {vocabTotal}</td></tr>
+                <tr><th scope="row">Kanji</th><td>{data.summary.today.kanji}</td><td>{data.kanjiLearned} / {kanjiTotal}</td></tr>
                 {t.soonAreas.map((area) => (
                   <tr key={area}><th scope="row">{area}</th><td colSpan={2} className={s.soon}>{t.soon}</td></tr>
                 ))}
@@ -124,10 +125,11 @@ export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
 
           <section className={s.section} aria-labelledby="dash-review">
             <h2 id="dash-review">{t.review}</h2>
-            {data.kanaDue + data.vocabDue === 0 ? <p>{t.reviewNone}</p> : (
+            {data.kanaDue + data.kanjiDue + data.vocabDue === 0 ? <p>{t.reviewNone}</p> : (
               <ul className={s.list}>
-                {data.kanaDue > 0 && <li><span>{t.reviewKana(data.kanaDue)}</span><Link href={data.kanaDueHref}>{t.practise}</Link></li>}
-                {data.vocabDue > 0 && <li><span>{t.reviewVocab(data.vocabDue)}</span><Link href="/flashcards">{t.practise}</Link></li>}
+                {data.kanaDue > 0 && <li><span>{t.reviewKana(data.kanaDue)}</span><Link href="/review?kind=kana">{t.practise}</Link></li>}
+                {data.kanjiDue > 0 && <li><span>{t.reviewKanji(data.kanjiDue)}</span><Link href="/review?kind=kanji">{t.practise}</Link></li>}
+                {data.vocabDue > 0 && <li><span>{t.reviewVocab(data.vocabDue)}</span><Link href="/review?kind=vocab">{t.practise}</Link></li>}
               </ul>
             )}
             <p className={s.note}>{t.reviewNote(INTERVALS)}</p>
@@ -149,7 +151,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
                 {data.summary.recent.map((r) => {
                   const ago = daysBetween(fromKey(r.day), data.now);
                   const label = ago === 0 ? t.todayLabel : ago === 1 ? t.yesterday : `${r.day.slice(8)}/${r.day.slice(5, 7)}`;
-                  return <li key={r.day}><span>{label}</span><span>{t.dayLine(r.minutes, r.kana, r.vocab)}</span></li>;
+                  return <li key={r.day}><span>{label}</span><span>{t.dayLine(r.minutes, r.kana, r.kanji, r.vocab)}</span></li>;
                 })}
               </ol>
             )}
@@ -176,16 +178,17 @@ const vi = {
   minutes: (m: number, goal?: number) => (goal ? `${m} / ${goal} phút hôm nay` : `${m} phút hôm nay`),
   continue: "Tiếp tục học",
   continueWhat: (last: Activity["last"]): string =>
-    !last ? "Bắt đầu với Hiragana" : last.area === "vocab" ? "Thẻ từ vựng" : last.ref.startsWith("katakana:") ? "Trắc nghiệm Katakana" : "Trắc nghiệm Hiragana",
+    !last ? "Bắt đầu với Hiragana" : last.area === "vocab" ? "Thẻ từ vựng" : last.area === "kanji" ? "Ôn kanji" : last.ref.startsWith("katakana:") ? "Trắc nghiệm Katakana" : "Trắc nghiệm Hiragana",
   progress: "Tiến độ",
   area: "Phần",
   vocab: "Từ vựng",
-  soonAreas: ["Kanji", "Ngữ pháp", "Đọc hiểu"],
+  soonAreas: ["Ngữ pháp", "Đọc hiểu"],
   today: "Hôm nay",
   memorized: "Đã học",
   soon: "Sắp có",
   review: "Đến hạn ôn",
   reviewKana: (n: number) => `${n} chữ kana đến hạn ôn`,
+  reviewKanji: (n: number) => `${n} chữ kanji đến hạn ôn`,
   reviewVocab: (n: number) => `${n} từ đến hạn ôn`,
   reviewNone: "Hôm nay không có gì đến hạn ôn.",
   reviewNote: (gaps: number[]) => `Mỗi lần nhớ đúng, lần ôn sau giãn ra ${gaps.join(", ")} ngày. Sai thì mục đó quay lại ngay trong ngày.`,
@@ -198,7 +201,7 @@ const vi = {
   history: "Gần đây",
   todayLabel: "Hôm nay",
   yesterday: "Hôm qua",
-  dayLine: (min: number, kana: number, vocab: number) => `${min} phút · ${kana} kana · ${vocab} từ`,
+  dayLine: (min: number, kana: number, kanji: number, vocab: number) => `${min} phút · ${kana} kana · ${kanji} kanji · ${vocab} từ`,
   empty: "Chưa có buổi học nào. Bắt đầu từ bảng chữ cái là nhanh nhất.",
   loading: "Đang tải tiến độ…",
   warning: "Không đọc được tiến độ lưu trong trình duyệt. Số liệu có thể thiếu.",
@@ -216,16 +219,17 @@ const en: typeof vi = {
   minutes: (m, goal) => (goal ? `${m} / ${goal} min today` : `${m} min today`),
   continue: "Continue learning",
   continueWhat: (last) =>
-    !last ? "Start with Hiragana" : last.area === "vocab" ? "Flashcards" : last.ref.startsWith("katakana:") ? "Katakana quiz" : "Hiragana quiz",
+    !last ? "Start with Hiragana" : last.area === "vocab" ? "Flashcards" : last.area === "kanji" ? "Kanji review" : last.ref.startsWith("katakana:") ? "Katakana quiz" : "Hiragana quiz",
   progress: "Progress",
   area: "Area",
   vocab: "Vocabulary",
-  soonAreas: ["Kanji", "Grammar", "Reading"],
+  soonAreas: ["Grammar", "Reading"],
   today: "Today",
   memorized: "Learnt",
   soon: "Coming soon",
   review: "Due for review",
   reviewKana: (n) => `${n} kana due`,
+  reviewKanji: (n) => `${n} kanji due`,
   reviewVocab: (n) => `${n} ${n === 1 ? "word" : "words"} due`,
   reviewNone: "Nothing is due today.",
   reviewNote: (gaps) => `Each right answer pushes the next review out: ${gaps.join(", ")} days. A miss brings the item back the same day.`,
@@ -238,7 +242,7 @@ const en: typeof vi = {
   history: "Recent",
   todayLabel: "Today",
   yesterday: "Yesterday",
-  dayLine: (min, kana, vocab) => `${min} min · ${kana} kana · ${vocab} ${vocab === 1 ? "word" : "words"}`,
+  dayLine: (min, kana, kanji, vocab) => `${min} min · ${kana} kana · ${kanji} kanji · ${vocab} ${vocab === 1 ? "word" : "words"}`,
   empty: "No study sessions yet. The alphabet is the quickest start.",
   loading: "Loading progress…",
   warning: "Couldn't read progress saved in this browser. Numbers may be incomplete.",

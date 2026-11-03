@@ -2,10 +2,11 @@
 // No runtime imports: activity.check.mjs loads it directly.
 
 export const ACTIVITY_KEY = "kotoba.activity.v1";
-export const AREAS = ["kana", "vocab"] as const;
+export const AREAS = ["kana", "vocab", "kanji"] as const;
 export type Area = (typeof AREAS)[number];
 // One local day: distinct minute-of-day buckets (0–1439) with any study action, and distinct item ids touched.
-export type Day = { minutes: number[]; kana: string[]; vocab: string[] };
+// kanji came later, so days stored before it have no kanji list.
+export type Day = { minutes: number[]; kana: string[]; vocab: string[]; kanji?: string[] };
 export type Activity = { days: Record<string, Day>; last?: { area: Area; ref: string } };
 export const KEEP_DAYS = 90;
 
@@ -26,7 +27,7 @@ export function record(a: Activity, area: Area, ref: string, now: Date): Activit
   const day: Day = {
     ...prev,
     minutes: prev.minutes.includes(minute) ? prev.minutes : [...prev.minutes, minute],
-    [area]: prev[area].includes(ref) ? prev[area] : [...prev[area], ref],
+    [area]: prev[area]?.includes(ref) ? prev[area] : [...(prev[area] ?? []), ref],
   };
   const oldest = dayKey(shift(now, -KEEP_DAYS));
   const days = Object.fromEntries(Object.entries({ ...a.days, [key]: day }).filter(([k]) => k >= oldest));
@@ -36,7 +37,7 @@ export function record(a: Activity, area: Area, ref: string, now: Date): Activit
 const strings = (v: unknown) => Array.isArray(v) && v.every((x) => typeof x === "string");
 const isDay = (v: unknown) => {
   const d = v as Day | null;
-  return !!d && Array.isArray(d.minutes) && d.minutes.every(Number.isInteger) && strings(d.kana) && strings(d.vocab);
+  return !!d && Array.isArray(d.minutes) && d.minutes.every(Number.isInteger) && strings(d.kana) && strings(d.vocab) && (d.kanji === undefined || strings(d.kanji));
 };
 
 // Missing key → empty log. Unreadable or wrong shape → null, so the caller can warn.
@@ -66,7 +67,7 @@ export type Summary = {
   streak: number;
   minutesToday: number;
   today: Record<Area, number>;
-  recent: { day: string; minutes: number; kana: number; vocab: number }[];
+  recent: ({ day: string; minutes: number } & Record<Area, number>)[];
   last: Activity["last"];
 };
 
@@ -83,11 +84,11 @@ export function summarize(a: Activity, now: Date): Summary {
     .sort()
     .reverse()
     .slice(0, 7)
-    .map((day) => ({ day, minutes: a.days[day].minutes.length, kana: a.days[day].kana.length, vocab: a.days[day].vocab.length }));
+    .map((day) => ({ day, minutes: a.days[day].minutes.length, kana: a.days[day].kana.length, vocab: a.days[day].vocab.length, kanji: a.days[day].kanji?.length ?? 0 }));
   return {
     streak,
     minutesToday: t?.minutes.length ?? 0,
-    today: { kana: t?.kana.length ?? 0, vocab: t?.vocab.length ?? 0 },
+    today: { kana: t?.kana.length ?? 0, vocab: t?.vocab.length ?? 0, kanji: t?.kanji?.length ?? 0 },
     recent,
     last: a.last,
   };
@@ -95,5 +96,6 @@ export function summarize(a: Activity, now: Date): Summary {
 
 export function continueHref(last: Activity["last"]): string {
   if (last?.area === "vocab") return "/flashcards";
+  if (last?.area === "kanji") return "/review?kind=kanji";
   return `/kana?script=${last?.ref.startsWith("katakana:") ? "katakana" : "hiragana"}&mode=quiz`;
 }

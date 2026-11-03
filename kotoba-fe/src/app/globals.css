@@ -248,6 +248,8 @@ p { text-wrap: pretty; }
 .libraryBtn[data-current] { color: var(--amber); border-color: var(--amber); }
 .bar nav .logout { background: none; border-width: 0 0 1.5px; cursor: pointer; }
 .bar nav .who { max-width: 16ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.9rem; color: var(--silver-dim); }
+/* Review's due count: a plain number after the label, no pill. */
+.dueCount { margin-left: 0.45em; color: var(--silver-dim); font-weight: 400; font-variant-numeric: tabular-nums; }
 .account { display: flex; align-items: center; gap: clamp(14px, 3vw, 32px); }
 .libraryBtn { display: inline-flex; align-items: center; gap: 8px; anchor-name: --library; }
 

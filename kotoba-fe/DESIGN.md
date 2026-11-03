@@ -180,7 +180,7 @@ The palette is a night street: four darks, three hairline rules, four silver tex
 ### Neutral
 - **Night** (night): page ground, the opaque backing of the sticky grade row, and text on amber fills.
 - **Asphalt** (asphalt): raised surfaces such as study cards, kana cells, inputs and segments.
-- **Wet Asphalt** (wet): hover fill for rows, cells and ghost buttons. Planned panels also use it (review done-state, reading passages).
+- **Wet Asphalt** (wet): hover fill for rows, cells and ghost buttons, and the fill of the /review empty, waiting and done panels. Reading passages are planned to use it too.
 - **Blue Hour / Falling Dusk / Night Sky** (sky-1, sky-2, sky-3): only the hero sky gradient, the skyline planes (via color-mix), and the sky bleed at the top of /kana.
 - **Faint Rule** (rule-dim): row dividers inside tables and lists, the section tops on /settings and /legal, and the footer rule.
 - **Rule** (rule): default borders, section dividers, ghost-button edges, disabled borders, the progress track, lesson tile edges, and the dashed lesson track past the last started station.
@@ -339,8 +339,19 @@ A 46rem column: back link (Ngữ pháp), then the pattern as the `h1` in the kan
 - **Examples:** Faint Rule rows: the sentence in Chalk in the kana face at 1.2rem with Speak on the right, the translation in Dim Silver below.
 - The one amber `.btn` is "Học bài n" (to /lessons/n). Under it a pager on a Faint Rule top border holds the previous and next patterns as text actions with Arrows, previous on the left and next on the right.
 
+### Review queue (/review)
+One shared Leitner queue for kana, kanji and vocab, built on the flashcard layout (`flashcards.module.css`) with additions in `review.module.css`. The queue is the due items, fixed when the local deck first loads; a miss appends the item to the end. `?kind=kana|kanji|vocab` narrows it to one kind (unknown values are ignored) and `?lesson=n` to one lesson (an unknown or empty lesson is a 404). A lesson queue also takes that lesson's never-started items, and when nothing there is due or new it runs the whole lesson again as practice. The toolbar names the scope (Mọi mục đến hạn, or Bài n · title) and, when narrowed, carries an Ôn tất cả text action.
+- **Header:** with no card showing it is the standard heading and lede. While a card is up the header goes compact: the `h1` drops to Silver 1.75rem and the lede is hidden, so the page is the card. The lede returns with the panels.
+- **Status line:** "Còn n mục · Kana x · Kanji y · Từ vựng z" (kinds with nothing left are dropped), tabular and `aria-live`, beside the 3px amber `progress` bar of answered over queued.
+- **Card:** the flashcard frame (Asphalt, Strong Rule edge, 27rem tall, 420ms Y flip, amber border on hover). The front is the glyph in Blue Hot Core with blue glow over a Dim Silver hint line, "<kind tag> · <what to recall> · Chạm để lật" (Hiragana, Katakana, Kanji or Từ vựng; then nhớ cách đọc, nhớ Hán Việt, âm và nghĩa, or nhớ cách đọc và nghĩa). The keyboard hint (Phím cách: lật · 1: chưa nhớ · 2: nhớ rồi) and the 1/2 key marks on the grade buttons show only under `pointer: fine`, so touch screens never see them. The back repeats the glyph in Chalk 1.7rem, then centred label-over-value rows at most 55ch: kana gives Romaji (plus a Cách phát âm note in Vietnamese); kanji gives Hán Việt, Âm On, Âm Kun and Nghĩa; vocab gives Cách đọc with romaji, Nghĩa, and a Ví dụ sentence with its translation. The strong answer (romaji, Hán Việt, the vocab meaning) is Chalk 1.5rem.
+- **Flip into view:** flipping scrolls the card to `block: nearest`, smoothly unless reduced motion is set. The card's `scroll-margin` (1rem top, 8.5rem bottom) clears the sticky grade bar. Under `max-height: 760px` the faces drop to an 18rem minimum so the front sits above the grade bar on short laptops without scrolling.
+- **Grade row:** the sticky flashcard grade row (The Sticky Decision Rule) with the ghost "Chưa nhớ 1" and the amber "Nhớ rồi 2", both disabled until the card is flipped. Below it a per-grade notice in Silver 0.85rem names the item and what happens to it: "水: ôn lại sau 3 ngày."; a miss goes back to the end of today's queue, and a known item returns every 30 days.
+- **Panels:** empty ("Chưa có gì để ôn. Học một bài để bắt đầu lịch ôn."), waiting ("Hiện chưa có mục nào đến hạn." with a next-review line, "Lần ôn tới: ngày mai, n mục.") and done ("Xong hàng đợi hôm nay.", with the last grade notice above the panel and the next-review line inside). Each is a `role="status"` block on Wet with a 1px Rule border and clamp(1.5rem, 4vw, 2.5rem) padding, a Chalk 1.4rem title and tabular Silver text. Its actions are the one amber `.btn`, to the first unfinished lesson ("Học bài n" with the Arrow, or the lesson path when none is left), and a text action back to the dashboard (Về bảng điều khiển).
+- **Footnote:** a Dim Silver line under the section says the schedule is saved in this browser, plus an alert when local storage cannot be read or written.
+- **Nav due count (`ReviewLink`, `.dueCount`):** the Ôn tập nav item is followed by the number of due items, in Dim Silver, weight 400, tabular, 0.45em off the label. It appears only after hydration and only above 0. The number is `aria-hidden`, and screen readers get ", n mục đến hạn" as sr-only text instead.
+
 ### Navigation
-- **Site bar (`.bar`):** the brand link sits on the left: 言葉 in the sign face with pink glow, then "Kotoba" in Chalk Title tracked 0.08em, plus an sr-only "trang chủ". One `<nav>` follows. Its first item is Bài học (/lessons), a plain nav link; Ôn tập, Tra cứu and Thi thử join it as their routes ship. Nav items are Title 600 at 1.1rem in Silver. Hover goes to Chalk with a Rule underline, and the current item is amber text with a 1.5px amber underline.
+- **Site bar (`.bar`):** the brand link sits on the left: 言葉 in the sign face with pink glow, then "Kotoba" in Chalk Title tracked 0.08em, plus an sr-only "trang chủ". One `<nav>` follows. Its items are Bài học (/lessons) and Ôn tập (/review, with the due-count badge), both plain nav links; Tra cứu and Thi thử join them as their routes ship. Nav items are Title 600 at 1.1rem in Silver. Hover goes to Chalk with a Rule underline, and the current item is amber text with a 1.5px amber underline.
   - **From 900px up** the nav is a plain row: the Thư viện button, then the account group pushed to the right.
   - **Below 900px** the nav is a `popover="auto"` sheet opened by the `.menuBtn` ghost button (44px). The sheet is full width under the bar, Asphalt with Strong Rule top and bottom borders, and its items are 44px rows. Clicking any link inside closes the sheet and the library popover.
   - **Thư viện (`.libraryBtn`):** a button with a small chevron that opens the `#site-library` popover (Bảng chữ cái, Kanji, Từ vựng, Ngữ pháp; /flashcards counts as Từ vựng). It turns amber through `data-current` when the current page is in the library. The popover is Asphalt with a 1px Strong Rule border, anchored under the button. Its rows are 44px and hover to a Wet fill with Amber Hot Core text. In the phone sheet the button is hidden, the primary links are 1.25rem, and the library links are listed inline below a Rule top border.
@@ -356,8 +367,8 @@ Rain over a skyline SVG drawn in three depth planes, a train on the elevated lin
 
 ### Planned (not yet built)
 These exist only in `.impeccable/mocks/n5-ia.md` and are not shipped components. Do not treat them as established:
-- The primary nav items Ôn tập (with a due count), Tra cứu and Thi thử. Each joins the shipped nav when its route ships.
-- The /review queue that reuses the flashcard frame (lesson study already links to `/review?lesson=n`), /search, and /test sitting, result and review.
+- The primary nav items Tra cứu and Thi thử. Each joins the shipped nav when its route ships.
+- /search, and /test sitting, result and review.
 - Chevron and clock icons drawn to match the Arrow.
 
 ### Builder amendments (unratified)
