@@ -1,5 +1,6 @@
 // Kanji, grammar and lesson shapes as kotoba-be serves them, and the text of the library and lesson pages. Client-safe.
 import type { Vocab } from "./flashcards";
+import type { Kana } from "./kana";
 
 type Translation = { vi: string; en: string };
 export type Lesson = { id: string; lesson: number; title: Translation };
@@ -26,6 +27,8 @@ export type Grammar = {
   examples: ({ ja: string } & Translation)[];
   note?: Translation;
 };
+// One /search result; the BE tags each item with its kind.
+export type Hit = ({ kind: "vocab" } & Vocab) | ({ kind: "kanji" } & Kanji) | ({ kind: "grammar" } & Grammar) | ({ kind: "kana" } & Kana) | ({ kind: "lesson" } & Lesson);
 
 // One card in the shared review queue. The server fills in labels in the page language.
 export const KINDS = ["kana", "kanji", "vocab"] as const;
@@ -132,6 +135,18 @@ const en = {
     // Card back labels
     romaji: "Romaji", note: "Sound", reading: "Reading", example: "Example",
   },
+  search: {
+    title: "Search",
+    lede: "Look up kana, kanji, words, grammar and lessons. Type Japanese, romaji, Vietnamese or English; accents are optional.",
+    label: "Search the course",
+    submit: "Search",
+    try: "Try:",
+    none: (q: string) => `Nothing matches “${q}”. Try a shorter part of the word, or its romaji.`,
+    found: (n: number, q: string) => `${n} ${n === 1 ? "result" : "results"} for “${q}”`,
+    lesson: (n: number) => `Lesson ${n}`,
+    more: "Each kind shows its first 20 results. Type more of the word to narrow the list.",
+    kinds: { vocab: "Words", kanji: "Kanji", grammar: "Grammar", kana: "Kana", lesson: "Lessons" } satisfies Record<Hit["kind"], string>,
+  },
 };
 
 const vi: typeof en = {
@@ -228,6 +243,18 @@ const vi: typeof en = {
     saved: "Lịch ôn được lưu trên trình duyệt này.",
     warning: "Không thể đọc hoặc lưu tiến độ trên trình duyệt này. Bạn vẫn có thể ôn trong phiên này.",
     romaji: "Romaji", note: "Cách phát âm", reading: "Cách đọc", example: "Ví dụ",
+  },
+  search: {
+    title: "Tra cứu",
+    lede: "Tra kana, kanji, từ vựng, ngữ pháp và bài học. Gõ tiếng Nhật, romaji, tiếng Việt hoặc tiếng Anh, không cần dấu.",
+    label: "Tra cứu trong khoá học",
+    submit: "Tra",
+    try: "Thử:",
+    none: (q) => `Không có kết quả cho “${q}”. Thử gõ ngắn hơn, hoặc gõ romaji.`,
+    found: (n, q) => `${n} kết quả cho “${q}”`,
+    lesson: (n) => `Bài ${n}`,
+    more: "Mỗi loại chỉ hiện 20 kết quả đầu. Gõ thêm để thu hẹp danh sách.",
+    kinds: { vocab: "Từ vựng", kanji: "Kanji", grammar: "Ngữ pháp", kana: "Kana", lesson: "Bài học" },
   },
 };
 

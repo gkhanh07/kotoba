@@ -1,7 +1,7 @@
 // Learning content from kotoba-be. Server-only, like api.ts.
 import "server-only";
 import { api, ApiError } from "./api";
-import type { Grammar, Kanji, KanjiDetail, Lesson } from "./library";
+import type { Grammar, Hit, Kanji, KanjiDetail, Lesson } from "./library";
 import type { Vocab } from "./flashcards";
 import type { Group, Kana, KanaSet, Script } from "./kana";
 
@@ -31,3 +31,6 @@ export const getKanjiDetail = (char: string) => item<KanjiDetail>(`kanji:${char}
 
 export const getGrammar = () => api<Grammar[]>("/content/grammar", { revalidate: HOUR });
 export const getGrammarItem = (slug: string) => item<Grammar>(`grammar:${slug}`);
+
+// Up to 20 hits per kind, in BE sort order.
+export const search = (q: string) => api<Hit[]>(`/search?q=${encodeURIComponent(q)}`, { revalidate: HOUR });

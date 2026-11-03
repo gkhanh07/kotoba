@@ -141,7 +141,7 @@ components:
 
 # Design System: Kotoba
 
-<!-- Scan of the shipped build, 2026-11-02. Sources: src/app/globals.css (every colour token), src/app/layout.tsx (fonts), page.tsx + Dashboard, kana/*, flashcards/*, (auth)/*; Phase 10 added kanji/*, vocab/*, Speak.tsx; Phase 11 (2026-11-03) added lessons/* (Path.tsx, LessonFooter.tsx, [n]) and grammar/* ([slug]), the Bài học nav item and Arrow's back variant. Descriptive names and the North Star below are drafted by the documenter from the direction contract and are not yet confirmed by the user. -->
+<!-- Scan of the shipped build, 2026-11-02. Sources: src/app/globals.css (every colour token), src/app/layout.tsx (fonts), page.tsx + Dashboard, kana/*, flashcards/*, (auth)/*; Phase 10 added kanji/*, vocab/*, Speak.tsx; Phase 11 (2026-11-03) added lessons/* (Path.tsx, LessonFooter.tsx, [n]) and grammar/* ([slug]), the Bài học nav item and Arrow's back variant; Phase 12 added review/* and the Ôn tập nav item; Phase 13 added search/* (page.tsx, search.module.css) and the Tra cứu nav item. Descriptive names and the North Star below are drafted by the documenter from the direction contract and are not yet confirmed by the user. -->
 
 ## Overview
 
@@ -350,8 +350,17 @@ One shared Leitner queue for kana, kanji and vocab, built on the flashcard layou
 - **Footnote:** a Dim Silver line under the section says the schedule is saved in this browser, plus an alert when local storage cannot be read or written.
 - **Nav due count (`ReviewLink`, `.dueCount`):** the Ôn tập nav item is followed by the number of due items, in Dim Silver, weight 400, tabular, 0.45em off the label. It appears only after hydration and only above 0. The number is `aria-hidden`, and screen readers get ", n mục đến hạn" as sr-only text instead.
 
+### Search (/search)
+One GET form (`role="search"`), rendered on the server: the query lives in the URL as `?q=`, trimmed and cut to 50 characters, so results can be shared and the back button works. Styles are in `search.module.css`; the heading is the standard Silver `h1` with blue glow over a Dim Silver lede.
+- **Form:** a 48rem row. The input is 52px tall on Asphalt with a 1px Strong Rule border, a 2px radius and Chalk text at 1.15rem; hover moves the border to Muted Silver, and focus is the amber outline with an amber border. Beside it is the view's one amber `.btn` ("Tra"), also 52px. Under 700px the two stack and the button runs full width with its label centred.
+- **Empty:** with no query, a Dim Silver "try" line of example queries (たべ, taberu, hoc, 日, は) as amber underlined text links, 44px tall, turning Amber Hot Core on hover; the Japanese ones are in the kana face.
+- **None:** a Dim Silver `role="status"` line naming the query.
+- **Results:** groups in a fixed order (vocab, kanji, grammar, kana, lesson), each a 60rem section with a Chalk 1.1rem `h2` and a tabular Dim Silver "(n)". An sr-only `role="status"` line gives the total. Rows sit on Faint Rule hairlines, each one link at least 56px tall in a four-column grid: the head (kana face, 1.35rem, Chalk; a lesson head is Chalk body text), the Dim Silver parts ending in the meaning in Silver, the Dim Silver "Bài n" label, and the Arrow. Hover is a Wet fill with everything in Amber Hot Core. Under 700px the row collapses to one text column with the Arrow on the right, and an empty lesson label is dropped. A vocab row also shows the kanji written form when a kana word matched through it (日曜日 for にちようび), so the hit makes sense.
+- **Match mark:** the matched span is a `<mark>` with no fill, Chalk text on a 1.5px Silver underline. It is never amber, because an amber underline means "learned" on kanji tiles and amber text reads as a link.
+- **Cap note:** when any group holds 20 rows, a Dim Silver line under the results says only the first 20 per kind are shown.
+
 ### Navigation
-- **Site bar (`.bar`):** the brand link sits on the left: 言葉 in the sign face with pink glow, then "Kotoba" in Chalk Title tracked 0.08em, plus an sr-only "trang chủ". One `<nav>` follows. Its items are Bài học (/lessons) and Ôn tập (/review, with the due-count badge), both plain nav links; Tra cứu and Thi thử join them as their routes ship. Nav items are Title 600 at 1.1rem in Silver. Hover goes to Chalk with a Rule underline, and the current item is amber text with a 1.5px amber underline.
+- **Site bar (`.bar`):** the brand link sits on the left: 言葉 in the sign face with pink glow, then "Kotoba" in Chalk Title tracked 0.08em, plus an sr-only "trang chủ". One `<nav>` follows. Its items are Bài học (/lessons), Ôn tập (/review, with the due-count badge) and Tra cứu (/search), all plain nav links; Thi thử joins them when /test ships. Nav items are Title 600 at 1.1rem in Silver. Hover goes to Chalk with a Rule underline, and the current item is amber text with a 1.5px amber underline.
   - **From 900px up** the nav is a plain row: the Thư viện button, then the account group pushed to the right.
   - **Below 900px** the nav is a `popover="auto"` sheet opened by the `.menuBtn` ghost button (44px). The sheet is full width under the bar, Asphalt with Strong Rule top and bottom borders, and its items are 44px rows. Clicking any link inside closes the sheet and the library popover.
   - **Thư viện (`.libraryBtn`):** a button with a small chevron that opens the `#site-library` popover (Bảng chữ cái, Kanji, Từ vựng, Ngữ pháp; /flashcards counts as Từ vựng). It turns amber through `data-current` when the current page is in the library. The popover is Asphalt with a 1px Strong Rule border, anchored under the button. Its rows are 44px and hover to a Wet fill with Amber Hot Core text. In the phone sheet the button is hidden, the primary links are 1.25rem, and the library links are listed inline below a Rule top border.
@@ -367,8 +376,8 @@ Rain over a skyline SVG drawn in three depth planes, a train on the elevated lin
 
 ### Planned (not yet built)
 These exist only in `.impeccable/mocks/n5-ia.md` and are not shipped components. Do not treat them as established:
-- The primary nav items Tra cứu and Thi thử. Each joins the shipped nav when its route ships.
-- /search, and /test sitting, result and review.
+- The primary nav item Thi thử. It joins the shipped nav when /test ships.
+- /test sitting, result and review.
 - Chevron and clock icons drawn to match the Arrow.
 
 ### Builder amendments (unratified)
