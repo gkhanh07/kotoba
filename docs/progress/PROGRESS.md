@@ -31,7 +31,9 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 24a N4 vocab lessons 26–32 (178 words) | DONE | `content(n4): vocab batch 24a` |
 | 24b N4 vocab lessons 33–38 (197 words) | DONE | `content(n4): vocab batch 24b` |
 | 24c N4 vocab lessons 39–44 (203 words; N4 578 in all) | DONE | `content(n4): vocab batch 24c` |
-| 25–35 | TODO | |
+| 24 review fixes (7 N4 words) | DONE | `cc2791e` |
+| 25 N4 grammar: 44 points in lessons 26–44 (spec `docs/phases/25-n4-grammar.md`) | DONE | `content(n4): grammar for lessons 26-44` |
+| 26–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 

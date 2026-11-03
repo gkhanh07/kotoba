@@ -56,6 +56,17 @@ describe('content', () => {
     // Phase 24a/24b/24c: N4 vocab lessons 26–44 (docs/phases/24-n4-vocab.md).
     expect([count(vocab, 5), count(vocab, 4)]).toEqual([694, 578]);
     expect(vocab).toHaveLength(1272);
+    // Phase 25: N4 grammar in lessons 26–44 (docs/phases/25-n4-grammar.md).
+    expect([count(grammar, 5), count(grammar, 4)]).toEqual([34, 44]);
+    expect(grammar).toHaveLength(78);
+  });
+
+  it('gives every N4 lesson 26–44 at least one grammar point', () => {
+    const withGrammar = new Set(grammar.filter((g) => g.level === 4).map((g) => g.lesson));
+    const lessonsWithout = lessons
+      .filter((l) => l.level === 4 && (l.lesson as number) >= 26 && (l.lesson as number) <= 44 && !withGrammar.has(l.lesson))
+      .map((l) => l.id);
+    expect(lessonsWithout).toEqual([]);
   });
 
   it('gives every N4 kanji a meaning and an N4 lesson', () => {

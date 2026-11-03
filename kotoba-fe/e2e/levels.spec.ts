@@ -77,6 +77,21 @@ test("/lessons lists the N4 lessons under an N4 heading", async ({ page, axe }, 
   await page.screenshot({ path: info.outputPath(`lesson-26-${info.project.name}.png`), fullPage: true });
 });
 
+// Phase 25: N4 grammar points, every one listed and openable.
+test("/grammar?level=4 lists every N4 grammar point", async ({ page, axe }, info) => {
+  const n4Grammar = (content("grammar") as { slug?: string; level: number }[]).filter((g) => g.level === 4);
+  await page.goto("/grammar?level=4");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Ngữ pháp N4");
+  await expect(page.locator('main a[href^="/grammar/"]')).toHaveCount(n4Grammar.length);
+  expect(await hasHorizontalScroll(page)).toBe(false);
+  await axe();
+  await page.goto(`/grammar/${n4Grammar[0].slug}`);
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  expect(await hasHorizontalScroll(page)).toBe(false);
+  await axe();
+  await page.screenshot({ path: info.outputPath(`grammar-n4-${info.project.name}.png`), fullPage: true });
+});
+
 test("a level that is not known shows N5", async ({ page }) => {
   await page.goto("/grammar?level=9");
   await expect(tabs(page).getByRole("link", { name: "N5" })).toHaveAttribute("aria-current", "page");
