@@ -31,3 +31,8 @@ Each should either handle the error (e.g. mark the deck as `ok: false`) or repor
 ## Content (phase 15)
 - Vocab ids are `vocab:<word>` with `word` in kana when the kanji is above the level, so homophones collide and could not be added: 紙/髪 (かみ), 風邪/風 (かぜ), 橋/箸 (はし), 吹く/服 (ふく), 取る/撮る (とる), 切る/着る (きる), 厚い/暑い (あつい), 弾く/引く (ひく), 十 read とお. Needs an id scheme for same-kana words (decision + `be` change; existing ids must stay).
 - Batch 15a words to confirm as N5 (not N4): ごしゅじん, いや, りっぱ, なく (鳴く), だれか, どこか, おおぜい, さらいしゅう, さらいねん, ペット, せっけん, おしいれ, ストーブ, ごろ. Also review `vocab:すく` (written in kana), `vocab:そば` (側 vs 蕎麦), `vocab:七つ` (example uses "seven years old").
+
+## Phase 18 follow-ups
+- `kotoba-fe/src/lib/auth.ts:21-25` forwards the client's own `x-forwarded-for` to kotoba-be's rate limiter, so a client facing Next directly can pick its IP (already flagged "ponytail"). `e2e/daily.spec.ts` relies on it to get its own sign-up allowance.
+- Dashboard due counts every card in the stored deck; `/review` only items that exist in content. A leftover card id would show "1 đến hạn" with an empty queue (predates phase 18; now also decides where "Tiếp tục học" goes).
+- Possible flake: `e2e/test.spec.ts:109` (full n5-1 run, desktop) hit the 30 s test timeout inside `axe()` once on a slow run (3.4 min suite); the rerun passed 52/52. Watch it; if it recurs, give that test a longer timeout or split its axe scans.

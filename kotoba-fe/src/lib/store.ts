@@ -75,7 +75,8 @@ export function review(id: string, correct: boolean): Srs {
     try {
       localStorage.setItem(DAILY_KEY, JSON.stringify(noteNew(parseDaily(localStorage.getItem(DAILY_KEY)), id, day)));
     } catch {
-      // Storage blocked: the deck write below fails too and the page shows its warning; the count just stays 0.
+      // Deliberate (ADR 004): the count is bookkeeping, so a failed write only lets a few extra new items in.
+      // When storage is blocked the deck write below fails too and the page shows its warning.
     }
   }
   if (after !== before) write(after);

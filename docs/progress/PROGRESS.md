@@ -56,7 +56,7 @@ After phase 16: FE Vitest 399 tests, E2E 42 passed; BE 29 unit + 28 e2e; migrati
 
 After phase 17: FE Vitest 449 tests, E2E 48 passed.
 
-After phase 18: FE Vitest 497 tests (suite also passes under TZ=UTC, America/Los_Angeles, Asia/Tokyo, Pacific/Kiritimati), coverage `src/lib/**` lines 98.24%, branches 96.35%; E2E 52 passed. BE unchanged.
+After phase 18: FE Vitest 500 tests (suite also passes under TZ=UTC, America/Los_Angeles, Asia/Tokyo, Pacific/Kiritimati), coverage `src/lib/**` lines 98.24%, branches 96.35%; E2E 52 passed. BE unchanged.
 
 ## Next step
 Phase 19 (vocab detail page `/vocab/[word]`, links to it, `similar` kanji pairs). Write `docs/phases/19-*.md` first.

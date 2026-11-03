@@ -18,4 +18,5 @@ Option 4. The record is pure bookkeeping (losing it only allows a few extra new 
 ## Consequences
 - Exact count of first-time items per study day on one device, from every page that grades (review, flashcards, kana quiz).
 - Two devices on the same day each allow `NEW_PER_DAY` (accepted). Two tabs can lose one id in a race, allowing one extra new item (accepted).
+- Signing out removes the record, so signing out and back in on the same day allows another `NEW_PER_DAY` (accepted).
 - If cross-device limits are needed later, move to option 3 with a `firstSeen` day on the card (additive field, ADR 002).

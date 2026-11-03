@@ -61,3 +61,8 @@ Out: syncing the new-today count to kotoba-be; changing the Leitner intervals; t
 - Large data: N/A (≈800 items, linear filters).
 
 ## Self-review notes
+- `reviewer`: PASS (no Critical/High). Fixed after review: added the AC-6 `lesson` queue case and a `Dashboard.test.tsx` for due > 0 and the no-work fallback (seen failing with `continueTarget(0, 0, …)`); the comment on the deliberate catch in `store.review` now says why (ADR 004); `isDaily` naming; the e2e imports `NEW_PER_DAY`; ADR 004 notes the sign-out reset. The x-forwarded-for pass-through and the dashboard/`/review` due-count mismatch go to BACKLOG.
+- `e2e/lapses.spec.ts`: `/review?weak=0` used to assert the empty text; phase 18 makes any non-`1` weak value a plain `/review`, i.e. today's session, so it now expects the 10 new kana of lesson 1. A behaviour change from this spec, not a loosened test.
+- `e2e/daily.spec.ts` sets its own `x-forwarded-for`: kotoba-be allows 10 sign-ups per IP per hour and the existing specs already use them.
+- The new-items count is not taken from `summarize(activity).today` as the roadmap suggested, because that counts reviews too (ADR 004).
+- Kept: test helpers read the card front by the `#review-front` id, like the phase 17 tests.

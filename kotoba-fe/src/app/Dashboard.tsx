@@ -65,6 +65,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
     const due = (id: string) => isDue(srs[id], day);
     const learned = (id: string) => isLearned(srs, id);
     const kanaDue = count(srs, isKana, due), kanjiDue = count(srs, isKanji, due), vocabDue = count(srs, isVocab, due);
+    const dueTotal = kanaDue + kanjiDue + vocabDue;
     const fresh = freshFor(stops, srs, learnedToday(), NEW_PER_DAY).ids.length;
     const summary = summarize(activity, now);
     return {
@@ -77,11 +78,11 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
       kanjiDue,
       vocabLearned: count(srs, isVocab, learned),
       vocabDue,
-      dueTotal: kanaDue + kanjiDue + vocabDue,
+      dueTotal,
       weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
       fresh,
       summary,
-      next: continueTarget(kanaDue + kanjiDue + vocabDue, fresh, summary.last),
+      next: continueTarget(dueTotal, fresh, summary.last),
       at: now.getTime(),
       attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
     };

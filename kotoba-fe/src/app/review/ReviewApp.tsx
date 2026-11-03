@@ -33,7 +33,7 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
 
   const scoped = items.filter((i) => (!kind || i.kind === kind) && (!lesson || i.lesson === lesson.n));
   // No filter: today's session, due items plus a capped number of new ones from the current lesson.
-  const daily = !kind && !lesson && !weak;
+  const isDaily = !kind && !lesson && !weak;
   if (deck && order === null) {
     const day = today();
     // Weak queue: worst first, whatever the due date.
@@ -43,7 +43,7 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
     // and when nothing there is due or new it runs the whole lesson again.
     const fresh = lesson ? scoped.filter((i) => !deck.srs[i.id]) : [];
     const queue = due.length + fresh.length || !lesson ? [...due, ...fresh] : scoped;
-    const newItems = daily ? freshFor(stopsOf(items), deck.srs, learnedToday(), NEW_PER_DAY) : { ids: [] };
+    const newItems = isDaily ? freshFor(stopsOf(items), deck.srs, learnedToday(), NEW_PER_DAY) : { ids: [] };
     setOrder(weak ? ranked.map((i) => i.id) : [...queue.map((i) => i.id), ...newItems.ids]);
     if (newItems.ids.length) setFreshLesson(newItems.lesson);
   }

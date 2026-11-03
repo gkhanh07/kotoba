@@ -348,6 +348,12 @@ describe("/review daily session", () => {
     expect(await screen.findByText("Hiện chưa có mục nào đến hạn.")).toBeInTheDocument();
   });
 
+  it("keeps a lesson queue as it was: only that lesson, no daily new items", async () => {
+    render(<ReviewApp items={DAY_ITEMS} lang="vi" lesson={{ n: 2, title: "Bài 2" }} />);
+    expect(await screen.findByText("Còn 1 mục · Từ vựng 1")).toBeInTheDocument();
+    expect(screen.queryByText("Mục đến hạn và mục mới của bài 1")).not.toBeInTheDocument();
+  });
+
   it("shows no stats line when the queue was empty from the start", async () => {
     open({ kind: "kanji" });
     expect(await screen.findByText("Chưa có gì để ôn. Học một bài để bắt đầu lịch ôn.")).toBeInTheDocument();

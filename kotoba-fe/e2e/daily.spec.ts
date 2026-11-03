@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Page } from "@playwright/test";
+import { NEW_PER_DAY } from "../src/config/srs";
 import { expect, test } from "./fixtures";
 
 // Phase 18: bare /review is today's session (due items + up to 10 new items of the current lesson),
@@ -8,7 +9,6 @@ import { expect, test } from "./fixtures";
 type Kana = { id: string; char: string; lesson: number };
 const KANA = JSON.parse(readFileSync(resolve(process.cwd(), "../kotoba-be/content/kana.json"), "utf8")) as Kana[];
 const LESSON_1 = KANA.filter((k) => k.lesson === 1);
-const NEW_PER_DAY = 10;
 const DAILY = "kotoba.daily.v1";
 // 09:00 in Vietnam: a fixed clock keeps the study day and the minutes on the end screen exact.
 const NOW = new Date("2026-11-02T02:00:00Z");
