@@ -5,12 +5,15 @@ import { useMemo, useSyncExternalStore } from "react";
 import { examDate, type Profile } from "@/lib/account";
 import { ACTIVITY_KEY, continueHref, daysBetween, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
+import { WEAK_LIST_SIZE } from "@/config/srs";
 import { INTERVALS, isDue, isLearned, type Srs } from "@/lib/srs";
+import { weakItems, type ItemLink } from "@/lib/weak";
 import { today, useDeck } from "@/lib/store";
 import { remaining } from "@/lib/test";
 import { findSession } from "@/lib/testStore";
 import { testText } from "@/lib/testText";
 import s from "./dashboard.module.css";
+import { WeakList } from "./WeakList";
 
 // Copied from SiteBar: that file pulls server-only code, so a client component can't import it.
 function Arrow() {
@@ -41,7 +44,8 @@ const count = (s: Srs, area: (id: string) => boolean, ok: (id: string) => boolea
   Object.keys(s).filter((id) => area(id) && ok(id)).length;
 const fromKey = (day: string) => { const [y, m, d] = day.split("-").map(Number); return new Date(y, m - 1, d); };
 
-export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTotal, tests }: {
+export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTotal, tests, fronts }: {
+  fronts: Record<string, ItemLink>;
   lang: Lang; name: string; profile: Profile | null; kanaTotal: number; kanjiTotal: number; vocabTotal: number;
   tests: { id: string; title: string; minutes: number }[];
 }) {
@@ -68,11 +72,12 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
       kanjiDue: count(srs, isKanji, due),
       vocabLearned: count(srs, isVocab, learned),
       vocabDue: count(srs, isVocab, due),
+      weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
       summary: summarize(activity, now),
       at: now.getTime(),
       attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
     };
-  }, [deck, activityRaw]);
+  }, [deck, activityRaw, fronts]);
   const paper = data?.attempt && tests.find((p) => p.id === data.attempt?.id);
   // Past the deadline the attempt is submitted on open, so "continue" would be a false promise.
   const resume = paper && data.attempt && remaining(data.attempt.session.startedAt, paper.minutes, data.at) > 0 ? paper : undefined;
@@ -149,6 +154,8 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
             )}
             <p className={s.note}>{t.reviewNote(INTERVALS)}</p>
           </section>
+
+          <WeakList items={data.weak} lang={lang} />
 
           <section className={s.section} aria-labelledby="dash-upcoming">
             <h2 id="dash-upcoming">{t.upcoming}</h2>

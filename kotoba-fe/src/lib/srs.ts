@@ -1,5 +1,5 @@
-// Leitner spaced repetition shared by kana, vocab and later kanji. Pure functions, no runtime imports:
-// srs.check.mjs loads this file directly.
+// Leitner spaced repetition shared by kana, vocab and kanji. Pure functions.
+import { WEAK_MIN_LAPSES, MAX_LAPSES } from "@/config/srs";
 
 export const SRS_KEY = "kotoba.srs.v1";
 // Days until the next review after 1, 2, 3… correct reviews in a row.
@@ -7,7 +7,8 @@ export const INTERVALS = [1, 3, 7, 14, 30];
 // Box = correct reviews in a row. Known = passed the review that came after the 30-day gap.
 export const KNOWN_AT = INTERVALS.length + 1;
 
-export type Card = { box: number; due: string; at: number }; // due: local YYYY-MM-DD, at: ms of last change
+// due: local YYYY-MM-DD, at: ms of last change, lapses: wrong answers so far (missing = 0)
+export type Card = { box: number; due: string; at: number; lapses?: number };
 export type Srs = Record<string, Card>;
 
 export const addDays = (day: string, n: number): string => {
@@ -36,10 +37,21 @@ export function nextDue(s: Srs, today: string, ids: string[]): { day: string; n:
 // but only when the card is new or due: drilling ahead of schedule does not speed it up.
 export function apply(s: Srs, id: string, correct: boolean, today: string, now: number): Srs {
   const c = s[id];
-  if (!correct) return { ...s, [id]: { box: 0, due: today, at: now } };
+  if (!correct) return { ...s, [id]: { box: 0, due: today, at: now, lapses: Math.min((c?.lapses ?? 0) + 1, MAX_LAPSES) } };
   if (c && !isDue(c, today)) return s;
   const box = (c?.box ?? 0) + 1;
-  return { ...s, [id]: { box, due: addDays(today, INTERVALS[Math.min(box, INTERVALS.length) - 1]), at: now } };
+  const next: Card = { box, due: addDays(today, INTERVALS[Math.min(box, INTERVALS.length) - 1]), at: now };
+  if (c?.lapses !== undefined) next.lapses = c.lapses;
+  return { ...s, [id]: next };
+}
+
+// Often-wrong cards, worst first: most lapses, then lowest box, then id so the order is stable.
+export function weakest(s: Srs, n: number): { id: string; lapses: number; box: number }[] {
+  return Object.entries(s)
+    .filter(([, c]) => (c.lapses ?? 0) >= WEAK_MIN_LAPSES)
+    .map(([id, c]) => ({ id, lapses: c.lapses ?? 0, box: c.box }))
+    .sort((a, b) => b.lapses - a.lapses || a.box - b.box || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
+    .slice(0, n);
 }
 
 export function forget(s: Srs, prefix: string): Srs {
@@ -86,7 +98,7 @@ export function parseSrs(raw: string): Srs | null {
   try {
     const o = JSON.parse(raw) as Srs | null;
     if (!o || typeof o !== "object" || Array.isArray(o)) return null;
-    const ok = Object.values(o).every((c) => c && Number.isInteger(c.box) && typeof c.due === "string" && typeof c.at === "number");
+    const ok = Object.values(o).every((c) => c && Number.isInteger(c.box) && typeof c.due === "string" && typeof c.at === "number" && (c.lapses === undefined || (Number.isInteger(c.lapses) && c.lapses >= 0 && c.lapses <= MAX_LAPSES)));
     return ok ? o : null;
   } catch {
     return null;

@@ -64,4 +64,7 @@ Out: per-direction lapses (phase 17 keeps one schedule per item), resetting laps
 3. Main agent runs E2E, `reviewer`, gate, commit, push, PROGRESS.
 
 ## Self-review notes
-(filled in after review)
+- `reviewer`: PASS. Fixed after review: scroll-margin now on the card's overlay button (BUG-003 regression); the dashboard mapping moved to `src/lib/weak.ts` (`itemLinks`, `weakItems`) with exact-value tests for kana/kanji/vocab links, and unknown ids are dropped before the cut; FE caps `lapses` at `MAX_LAPSES = 10000` like the BE (apply clamps, parseSrs rejects more) so sync can never 400 on it.
+- Main-agent edit to an old test: `src/lib/srs.test.ts` "resets to box 0 due today on a miss" now expects `lapses: 1` — required by AC-3, not a weakening.
+- Scope addition: BUG-003 (card names, axe) found by this phase's E2E, fixed here; `/flashcards` added to the smoke E2E.
+- Note: the dashboard receives a link map for every item (~1k entries) to label ≤ 5 rows; fine at N5 size, revisit with phase 22 pagination.

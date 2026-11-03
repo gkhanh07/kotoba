@@ -5,6 +5,7 @@ const PAGES = [
   { path: "/", name: "home" },
   { path: "/kana", name: "kana" },
   { path: "/review", name: "review" },
+  { path: "/flashcards", name: "flashcards" },
 ];
 
 for (const { path, name } of PAGES) {

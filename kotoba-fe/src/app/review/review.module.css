@@ -1,7 +1,7 @@
 /* The review queue reuses the flashcard layout (flashcards.module.css); these are its additions. */
 .compact h1 { font-size: 1.75rem; color: var(--silver); }
 /* Room for the sticky grade bar when a flip scrolls the card into view. */
-.card { scroll-margin: 1rem 0 8.5rem; }
+.card, .card > button { scroll-margin: 1rem 0 8.5rem; }
 .compact + section { margin-top: 1.25rem; }
 /* Short laptop screens: the front must sit above the sticky grade bar without scrolling. */
 @media (max-height: 760px) { .card > span > span { min-height: 18rem; } }

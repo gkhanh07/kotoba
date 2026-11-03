@@ -19,7 +19,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 14 BE: minutes 60, `explain` on 45 questions, spec check | DONE | `02434f3` |
 | 14 FE part: mock test flow (spec `docs/phases/14-mock-test.md`) | DONE | `feat(test): mock exam flow` |
 | 15 N5 vocab to ~700 (batch 15a: +195 → 694 words) | DONE | `content(n5): vocab batch 15a` |
-| 16–35 | TODO | |
+| 16 `lapses` + "Hay sai" + `/review?weak=1` (spec `docs/phases/16-lapses.md`) | DONE | `feat(srs): count wrong answers and review often-wrong items` |
+| 17–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -48,6 +49,8 @@ After phase 14 (2026-11-03):
 
 After phase 15: BE check green (15 unit, 18 e2e, 8 content, JMdict 694 words); FE E2E 34 passed incl. `/vocab` counts = JSON.
 
+After phase 16: FE Vitest 399 tests, E2E 42 passed; BE 29 unit + 28 e2e; migration `20261103075918_lapses`. Fixed BUG-003.
+
 ## Next step
-Phase 16 (`lapses` and "Hay sai"): write `docs/phases/16-lapses.md`, then `test` → `be` + `fe` → `reviewer` → gate.
-Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e` (webServer refuses a used port).
+Phase 17 (multi-direction cards): write `docs/phases/17-card-directions.md`, then `test` → `fe` → `reviewer` → gate. Small FE-only phase.
+Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`.

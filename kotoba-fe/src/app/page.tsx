@@ -5,6 +5,7 @@ import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
 import { getKana, getKanji, getTests, getVocab } from "@/lib/content";
+import { itemLinks } from "@/lib/weak";
 import { Dashboard } from "./Dashboard";
 import s from "./page.module.css";
 
@@ -101,10 +102,13 @@ export default async function Home() {
   const user = await currentUser();
   if (user) {
     const [kana, kanji, vocab, tests] = await Promise.all([getKana(), getKanji(), getVocab(), getTests()]);
+    // Fronts and detail links for the "Hay sai" block; the weak ids are only known in the browser.
+    const fronts = itemLinks(kana, kanji, vocab);
     return (
       <>
         <SiteBar />
         <Dashboard
+          fronts={fronts}
           lang={lang}
           name={user.profile?.name ?? user.email.split("@")[0]}
           profile={user.profile}

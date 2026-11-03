@@ -64,16 +64,10 @@ export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang
                 : isKnown(deck.srs, card.id) ? t.stateKnown : t.stateLater(daysUntil(state.due, today()))}
             </span>
           </div>
-          <button
+          <div
             key={card.id + index}
-            ref={cardRef}
-            type="button"
             className={s.card}
             data-flipped={flipped}
-            aria-label={flipped ? t.front : t.flip}
-            aria-pressed={flipped}
-            aria-describedby={flipped ? "flashcard-back" : "flashcard-front"}
-            onClick={() => { if (!flipped) logActivity("vocab", card.id); setFlipped(value => !value); }}
           >
             <span className={s.inner}>
               <span id="flashcard-front" className={s.face} aria-hidden={flipped}>
@@ -93,7 +87,17 @@ export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang
                 <span className={s.hint}>{t.front}</span>
               </span>
             </span>
-          </button>
+            {/* A text-less overlay is the control, so its name never has to repeat the faces (axe label-content-name-mismatch); the faces are its description. */}
+            <button
+              ref={cardRef}
+              type="button"
+              aria-label={flipped ? t.front : t.flip}
+              aria-pressed={flipped}
+              aria-describedby={flipped ? "flashcard-back" : "flashcard-front"}
+              onClick={() => { if (!flipped) logActivity("vocab", card.id); setFlipped(value => !value); }}
+              className={s.hit}
+            />
+          </div>
           <fieldset className={s.status}>
             <legend>{flipped ? t.grade : t.gradeHint}</legend>
             <button type="button" className="btn btnGhost" disabled={!flipped} onClick={() => grade(false)}>{t.missed}</button>

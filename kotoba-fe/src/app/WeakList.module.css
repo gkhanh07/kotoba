@@ -1,0 +1,7 @@
+.weak { border-top: 1px solid var(--rule); padding-block: 1.5rem; }
+.weak h2 { margin-bottom: 1rem; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--silver-dim); }
+.list { display: grid; gap: .25rem; margin: 0 0 1rem; padding: 0; list-style: none; }
+.list li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .25rem 1rem; min-height: 44px; border-bottom: 1px solid var(--rule-dim); }
+.list li span { color: var(--silver); font-variant-numeric: tabular-nums; }
+.front { display: inline-flex; align-items: center; min-height: 44px; min-width: 0; overflow-wrap: anywhere; font-size: 1.25rem; color: var(--amber); text-decoration: underline; text-underline-offset: .25em; }
+.front:hover { color: var(--amber-core); }

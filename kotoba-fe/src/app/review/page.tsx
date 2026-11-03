@@ -56,7 +56,7 @@ export default async function ReviewPage(props: PageProps<"/review">) {
   return (
     <>
       <SiteBar current="review" />
-      <ReviewApp items={items} lang={lang} kind={kind} lesson={lesson} />
+      <ReviewApp items={items} lang={lang} kind={kind} lesson={lesson} weak={q.weak === "1"} />
       <SiteFooter />
     </>
   );

@@ -1,4 +1,4 @@
-import { isActivity, isCards, isForget, mergeActivity, newer } from './progress.js';
+import { isActivity, isCard, isCards, isForget, mergeActivity, newer } from './progress.js';
 
 const card = (box: number, at: number) => ({ box, due: '2026-11-02', at });
 
@@ -57,5 +57,31 @@ describe('validation', () => {
     expect(isForget({ prefix: 'hiragana:', at: 1 })).toBe(true);
     expect(isForget({ prefix: '', at: 1 })).toBe(false);
     expect(isForget({ prefix: '%', at: 1 })).toBe(false);
+  });
+});
+
+describe('isCard lapses', () => {
+  const withLapses = (lapses: unknown) => ({ ...card(1, 1), lapses });
+  it('accepts a card without lapses (old clients)', () => {
+    expect(isCard(card(1, 1))).toBe(true);
+  });
+  it.each([0, 1, 2, 10000])('accepts lapses %s', (n) => {
+    expect(isCard(withLapses(n))).toBe(true);
+  });
+  it.each([
+    ['negative', -1],
+    ['a fraction', 1.5],
+    ['a numeric string', '2'],
+    ['above the maximum', 10001],
+    ['null', null],
+    ['NaN', Number.NaN],
+    ['Infinity', Number.POSITIVE_INFINITY],
+    ['a boolean', true],
+  ])('rejects lapses that is %s', (_name, v) => {
+    expect(isCard(withLapses(v))).toBe(false);
+  });
+  it('rejects a bad lapses inside isCards', () => {
+    expect(isCards({ a: card(1, 1), b: withLapses(-1) })).toBe(false);
+    expect(isCards({ a: withLapses(3) })).toBe(true);
   });
 });

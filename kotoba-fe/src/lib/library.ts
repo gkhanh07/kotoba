@@ -1,5 +1,6 @@
 // Kanji, grammar and lesson shapes as kotoba-be serves them, and the text of the library and lesson pages. Client-safe.
 import type { Vocab } from "./flashcards";
+import type { Lang } from "./i18n";
 import type { Kana } from "./kana";
 
 type Translation = { vi: string; en: string };
@@ -128,6 +129,7 @@ const en = {
     study: (n: number) => `Study lesson ${n}`,
     path: "Open the lesson path",
     dashboard: "Back to the dashboard",
+    weakEmpty: "Nothing is often wrong yet",
     empty: "Nothing to review yet. Study a lesson to start a review schedule.",
     waiting: "Nothing is due right now.",
     saved: "Your review schedule is saved in this browser.",
@@ -238,6 +240,7 @@ const vi: typeof en = {
     study: (n) => `Học bài ${n}`,
     path: "Xem lộ trình bài học",
     dashboard: "Về bảng điều khiển",
+    weakEmpty: "Chưa có mục nào hay sai",
     empty: "Chưa có gì để ôn. Học một bài để bắt đầu lịch ôn.",
     waiting: "Hiện chưa có mục nào đến hạn.",
     saved: "Lịch ôn được lưu trên trình duyệt này.",
@@ -259,3 +262,10 @@ const vi: typeof en = {
 };
 
 export const libraryText = { en, vi };
+
+// Dashboard block "often wrong" (phase 16).
+const weakVi = { title: "Hay sai", times: (n: number) => `sai ${n} lần`, review: "Ôn các mục này" };
+export const weakText: Record<Lang, typeof weakVi> = {
+  vi: weakVi,
+  en: { title: "Often wrong", times: (n) => `wrong ${n} ${n === 1 ? "time" : "times"}`, review: "Review these" },
+};

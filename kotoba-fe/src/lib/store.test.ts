@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import oldDeck from "../../tests/fixtures/progress.v1.without-lapses.json";
 
 type Store = typeof import("./store");
 let store: Store;
@@ -194,5 +195,57 @@ describe("applyRemote and clearLocal", () => {
       throw new Error("blocked");
     });
     expect(() => store.clearLocal()).not.toThrow();
+  });
+});
+
+describe("lapses (phase 16)", () => {
+  const MISS_AT = new Date(2026, 10, 2, 9, 0).getTime();
+  const others = (d: object) => Object.fromEntries(Object.entries(d).filter(([id]) => id !== "vocab:水"));
+
+  it("reads a deck saved before lapses existed as it is, with ok=true", () => {
+    localStorage.setItem(SRS, JSON.stringify(oldDeck));
+    const { result } = renderHook(() => store.useDeck());
+    expect(result.current).toEqual({ srs: oldDeck, ok: true });
+  });
+  it("stores lapses 1 after one miss on an old card and leaves the other cards as they were", () => {
+    localStorage.setItem(SRS, JSON.stringify(oldDeck));
+    const { result } = renderHook(() => store.useDeck());
+    act(() => {
+      store.review("vocab:水", false);
+    });
+    const saved = JSON.parse(localStorage.getItem(SRS)!);
+    expect(saved["vocab:水"]).toEqual({ box: 0, due: "2026-11-02", at: MISS_AT, lapses: 1 });
+    expect(others(saved)).toEqual(others(oldDeck));
+    expect(result.current!.srs).toEqual(saved);
+  });
+  it("counts a second miss and keeps the count through a reload", async () => {
+    localStorage.setItem(SRS, JSON.stringify(oldDeck));
+    renderHook(() => store.useDeck());
+    act(() => {
+      store.review("vocab:水", false);
+      store.review("vocab:水", false);
+    });
+    vi.resetModules();
+    store = await import("./store");
+    const { result } = renderHook(() => store.useDeck());
+    expect(result.current!.srs["vocab:水"].lapses).toBe(2);
+  });
+  it("keeps lapses on a right answer given the same day", () => {
+    renderHook(() => store.useDeck());
+    act(() => {
+      store.review("hiragana:a", false);
+      store.review("hiragana:a", true);
+    });
+    expect(JSON.parse(localStorage.getItem(SRS)!)["hiragana:a"]).toEqual({ box: 1, due: "2026-11-03", at: MISS_AT, lapses: 1 });
+  });
+  it("keeps lapses on cards that come from the account", () => {
+    const { result } = renderHook(() => store.useDeck());
+    const cards = {
+      "vocab:水": { box: 0, due: "2026-11-02", at: 2, lapses: 3 },
+      "vocab:本": { box: 2, due: "2026-11-05", at: 2, lapses: 0 },
+    };
+    act(() => store.applyRemote({ cards, activity: { days: {} } }, "a@b.co", 99));
+    expect(result.current).toEqual({ srs: cards, ok: true });
+    expect(JSON.parse(localStorage.getItem(SRS)!)).toEqual(cards);
   });
 });

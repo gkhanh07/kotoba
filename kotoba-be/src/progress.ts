@@ -1,7 +1,10 @@
 // Merging a browser's study progress into the account. Pure: progress.spec.ts tests it directly.
 // Shapes match kotoba-fe/src/lib/srs.ts (Card) and kotoba-fe/src/lib/activity.ts (Activity).
 
-export type Card = { box: number; due: string; at: number };
+import { MAX_LAPSES } from './config.js';
+
+// lapses came later (ADR 002, phase 16): old clients push cards without it, and it then reads 0.
+export type Card = { box: number; due: string; at: number; lapses?: number };
 export type Cards = Record<string, Card>;
 export const AREAS = ['kana', 'vocab', 'kanji'] as const;
 // kanji came later, so days stored before it have no kanji list.
@@ -15,12 +18,13 @@ const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 const isTime = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v) && v > 0;
+const isLapses = (v: unknown) => v === undefined || (Number.isInteger(v) && (v as number) >= 0 && (v as number) <= MAX_LAPSES);
 const isIds = (v: unknown) =>
   Array.isArray(v) && v.length <= MAX_IDS && v.every((x) => typeof x === 'string' && x.length <= 64);
 
 export const isCard = (v: unknown): v is Card =>
   isObject(v) && Number.isInteger(v.box) && (v.box as number) >= 0 && (v.box as number) <= 100 &&
-  typeof v.due === 'string' && DAY.test(v.due) && isTime(v.at);
+  typeof v.due === 'string' && DAY.test(v.due) && isTime(v.at) && isLapses(v.lapses);
 export const isCards = (v: unknown): v is Cards => isObject(v) && Object.values(v).every(isCard);
 
 const isDay = (v: unknown) =>

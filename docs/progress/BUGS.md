@@ -45,3 +45,17 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Regression test: as BUG-001.
 - Commit: `chore(test): add vitest, rtl and playwright with axe to kotoba-fe`
 - Status: FIXED
+
+
+## BUG-003: review and flashcard cards have a name that does not contain their visible text
+- Severity: High (axe serious, `label-content-name-mismatch`)
+- Found: 2026-11-03, phase 16 E2E (`e2e/lapses.spec.ts`), the first E2E to show a card with content in `/review`
+- Environment: kotoba-fe `/review` and `/flashcards`, Chromium, both viewports
+- Steps: open `/review?lesson=5&kind=vocab` as a guest, run axe.
+- Expected: 0 serious/critical. Actual: the card `<button aria-label="Xem đáp án">` contains the word and hints as visible text.
+- Root cause: the whole 3D card was the button and its name was an action label unrelated to the faces it contains.
+- Attempt 1 (rejected): `aria-hidden` on the faces; axe still counts them as visible text.
+- Fix: the card is a `div`; the control is a text-less overlay `<button>` (class `.hit`) with the same `aria-label`, `aria-pressed` and `aria-describedby` → faces. Same pattern fixed in `FlashcardApp` (scan for similar code).
+- Regression tests: `e2e/lapses.spec.ts` (axe on a review card), `e2e/smoke.spec.ts` now includes `/flashcards`.
+- Commit: `feat(srs): count wrong answers and review often-wrong items`
+- Status: FIXED

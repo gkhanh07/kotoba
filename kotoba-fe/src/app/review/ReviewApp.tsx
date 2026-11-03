@@ -5,14 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import { logActivity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
 import { KINDS, libraryText, type Kind, type ReviewItem } from "@/lib/library";
-import { daysUntil, isDue, isKnown, isLearned, nextDue } from "@/lib/srs";
+import { daysUntil, isDue, isKnown, isLearned, nextDue, weakest } from "@/lib/srs";
 import { review, today, useDeck } from "@/lib/store";
 import { Arrow } from "../Arrow";
 import f from "../flashcards/flashcards.module.css";
 import s from "./review.module.css";
 
-export function ReviewApp({ items, lang, kind, lesson }: {
-  items: ReviewItem[]; lang: Lang; kind?: Kind; lesson?: { n: number; title: string };
+export function ReviewApp({ items, lang, kind, lesson, weak }: {
+  items: ReviewItem[]; lang: Lang; kind?: Kind; weak?: boolean; lesson?: { n: number; title: string };
 }) {
   const t = libraryText[lang].review;
   const deck = useDeck();
@@ -26,12 +26,14 @@ export function ReviewApp({ items, lang, kind, lesson }: {
   const scoped = items.filter((i) => (!kind || i.kind === kind) && (!lesson || i.lesson === lesson.n));
   if (deck && order === null) {
     const day = today();
+    // Weak queue: worst first, whatever the due date.
+    const ranked = weak ? weakest(deck.srs, Infinity).flatMap((w) => scoped.filter((i) => i.id === w.id)) : [];
     const due = scoped.filter((i) => isDue(deck.srs[i.id], day));
     // A lesson queue also brings in what that lesson has not started yet,
     // and when nothing there is due or new it runs the whole lesson again.
     const fresh = lesson ? scoped.filter((i) => !deck.srs[i.id]) : [];
     const queue = due.length + fresh.length || !lesson ? [...due, ...fresh] : scoped;
-    setOrder(queue.map((i) => i.id));
+    setOrder((weak ? ranked : queue).map((i) => i.id));
   }
   const byId = new Map(items.map((i) => [i.id, i]));
   const item = order?.[index] !== undefined ? byId.get(order[index]) : undefined;
@@ -40,7 +42,7 @@ export function ReviewApp({ items, lang, kind, lesson }: {
     if (!item) return;
     if (!flipped) {
       logActivity(item.kind, item.id);
-      // The answer must clear the sticky grade bar on short screens (scroll-margin on .card).
+      // The answer must clear the sticky grade bar on short screens (scroll-margin on the card's overlay button).
       const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
       requestAnimationFrame(() => cardRef.current?.scrollIntoView({ block: "nearest", behavior: still ? "auto" : "smooth" }));
     }
@@ -104,7 +106,7 @@ export function ReviewApp({ items, lang, kind, lesson }: {
           {(kind || lesson) && <div className={f.tools}><Link href="/review" className={s.textLink}>{t.all}</Link></div>}
         </div>
         {!deck || !order ? <p className={f.notice} role="status">…</p>
-          : !order.length ? (soon ? panel(t.waiting, t.next(daysUntil(soon.day, today()), soon.n)) : panel(t.empty))
+          : !order.length ? (weak ? panel(t.weakEmpty) : soon ? panel(t.waiting, t.next(daysUntil(soon.day, today()), soon.n)) : panel(t.empty))
           : !item ? <>{notice && <p className={f.notice}>{notice}</p>}{panel(t.done, soon ? t.next(daysUntil(soon.day, today()), soon.n) : undefined)}</>
           : (
             <>
@@ -112,16 +114,10 @@ export function ReviewApp({ items, lang, kind, lesson }: {
                 <span aria-live="polite" aria-atomic="true">{t.left(left.length, parts)}</span>
                 <progress aria-label={t.progress} value={index} max={order.length} />
               </div>
-              <button
+              <div
                 key={item.id + index}
-                ref={cardRef}
-                type="button"
                 className={`${f.card} ${s.card}`}
                 data-flipped={flipped}
-                aria-label={flipped ? t.front : t.flip}
-                aria-pressed={flipped}
-                aria-describedby={flipped ? "review-back" : "review-front"}
-                onClick={flip}
               >
                 <span className={f.inner}>
                   <span id="review-front" className={f.face} aria-hidden={flipped}>
@@ -141,7 +137,17 @@ export function ReviewApp({ items, lang, kind, lesson }: {
                     <span className={f.hint}>{t.front}</span>
                   </span>
                 </span>
-              </button>
+                {/* A text-less overlay is the control, so its name never has to repeat the faces (axe label-content-name-mismatch); the faces are its description. */}
+                <button
+                  ref={cardRef}
+                  type="button"
+                  aria-label={flipped ? t.front : t.flip}
+                  aria-pressed={flipped}
+                  aria-describedby={flipped ? "review-back" : "review-front"}
+                  onClick={flip}
+                  className={f.hit}
+                />
+              </div>
               <fieldset className={f.status}>
                 <legend>{flipped ? t.grade : t.gradeHint}</legend>
                 <button type="button" className="btn btnGhost" disabled={!flipped} onClick={() => grade(false)}>{t.missed}<span className={s.keys} aria-hidden="true"> 1</span></button>

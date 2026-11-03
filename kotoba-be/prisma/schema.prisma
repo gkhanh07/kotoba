@@ -55,6 +55,7 @@ model Card {
   box    Int
   due    String?
   at     Float
+  lapses Int    @default(0)
 
   @@id([userId, itemId])
 }
