@@ -31,6 +31,16 @@ Out: listening section, server-side scoring or result sync, per-part timers (`po
 - `segments(q)` → `{ text, kind: "plain" | "underline" | "blank" }[]` for the `{…}` → `<u>` and `★` → blank-box renderer.
 - `parseSession(raw)`, `parseResults(raw)` type guards.
 
+## Interfaces (contract between `test` and `fe`)
+- `src/lib/test.ts` exports the types `Paper`, `Part`, `Question`, `Flat`, `Score`, `Session`, `Results` and the functions above. `Paper` matches the BE shape.
+- `src/lib/testStore.ts` (browser-only readers/writers): `readSession(id)`, `writeSession(id, s)` (returns `false` when storage throws), `clearSession(id)`, `findSession()` → `{ id, session } | null` (first `kotoba.test.*` entry that parses), `readResults()`, `saveResult(id, result)`.
+- `src/config/test.ts`: `TEST_SESSION_PREFIX = "kotoba.test."`, `TEST_RESULTS_KEY = "kotoba.tests.v1"`.
+- `src/app/test/[id]/TestApp.tsx`: `export function TestApp({ paper, lang }: { paper: Paper; lang: Lang })` (client). Strings in `testText` (`{ vi, en }`) in `src/lib/library.ts` or a new `src/lib/testText.ts`.
+- `src/app/test/Last.tsx` (client island on `/test`): `export function Last({ id, total, lang })` shows the saved score or nothing.
+- `src/app/test/Question.tsx` or a function in `TestApp.tsx`: `<QuestionText text lang />` renders `segments()`.
+- Accessible names used by tests (vi): button "Bắt đầu"; palette buttons "Câu 3, đã làm" / "Câu 3, chưa làm" / "Câu 3, đã đánh dấu" (current one also has `aria-current="step"`); buttons "Câu trước", "Câu sau", "Đánh dấu", "Nộp bài"; dialog buttons "Nộp bài" and "Làm tiếp"; result buttons "Xem lại câu sai", "Làm lại câu sai"; the timer has `role="timer"` and `aria-label` "Thời gian còn lại"; progress text "2/6".
+- Choices are radio inputs in a `radiogroup`-like fieldset whose legend is the question number, so `getByRole("radio", { name })` works.
+
 ## Acceptance criteria
 - **AC-1** Given the BE, when `GET /tests` is called, then `n5-1` has `minutes: 60` and 45 questions; every question in `tests.json` has a non-empty `explain` (content spec).
 - **AC-2** Given a paper and answers, `score` returns exact totals per part and overall; `wrongIds` and `remaining` are exact (incl. boundaries: 0 answered, all right, 1 s left, past the end).
