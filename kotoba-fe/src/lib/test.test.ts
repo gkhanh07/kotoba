@@ -280,3 +280,17 @@ describe("parseResults", () => {
     expect(parseResults(JSON.stringify({ "n5-1": entry, "n5-2": 7 }))).toBeNull();
   });
 });
+
+// Phase 26: every part type a paper uses has a label in both languages, or the paper shows a raw id.
+describe("part labels", () => {
+  it("names every part type found in tests.json", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { resolve } = await import("node:path");
+    const { testText } = await import("./testText");
+    // Vitest runs from kotoba-fe; jsdom gives import.meta.url a non-file scheme, so resolve from cwd.
+    const papers = JSON.parse(readFileSync(resolve(process.cwd(), "../kotoba-be/content/tests.json"), "utf8")) as { parts: { part: string }[] }[];
+    const parts = [...new Set(papers.flatMap((p) => p.parts.map((x) => x.part)))];
+    expect(parts.filter((p) => !testText.vi.parts[p] || !testText.en.parts[p as keyof typeof testText.en.parts])).toEqual([]);
+    expect([testText.vi.parts.usage, testText.vi.parts.text]).toEqual(["Cách dùng từ", "Ngữ pháp theo đoạn văn"]);
+  });
+});
