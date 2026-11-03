@@ -26,7 +26,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 19 word page `/vocab/[word]`, links to it, `similar` kanji (spec `docs/phases/19-vocab-page-similar-kanji.md`) | DONE | `feat(vocab): word page and easily confused kanji` |
 | 20 heatmap on the dashboard, sync status in the site bar (spec `docs/phases/20-heatmap-sync-status.md`) | DONE | `feat(dashboard): study heatmap and sync status` |
 | 21 data export: `GET /me/export`, `/settings/export` download (spec `docs/phases/21-export.md`) | DONE | `feat(account): download study data as JSON` |
-| 22–35 | TODO | |
+| 22 levels: BE `level` column, `?level=`/`?page=`, seed by row diff (ADR 005, BUG-004); FE level tabs, paging, lesson level groups, search badge (spec `docs/phases/22-levels.md`) | DONE | `4e437d6` (BE), `feat(levels): level tabs, paging and level groups in the app` (FE) |
+| 23–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -67,6 +68,8 @@ After phase 20: FE Vitest 530 tests, E2E 66 passed.
 
 After phase 21: BE 31 unit + 31 e2e (export +3); FE Vitest 537 tests, E2E 72 passed.
 
+After phase 22: BE 40 unit + 40 e2e + 18 content; seed with unchanged content ~75 ms at 1,080 rows, ~196 ms at 10,480 rows (full rewrite ~5.5 s at 10k, once). FE Vitest 555 tests, E2E 102 passed.
+
 ## Next step
-N4 roadmap, phase 22 (see `docs/plan/PLAN.md` "Lộ trình N4 → N3 → N2"). Write `docs/phases/22-*.md` first.
+Phase 23 (N4 kanji): add 4 to `INCLUDE_LEVELS` in `kotoba-be/scripts/kanjidic.ts`, run it, author `vi`, assign N4 lessons (numbered after 25), `similar` pairs. Delegate to the `content` agent. Write `docs/phases/23-*.md` first.
 Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`), so it needs `lsof` and a built `kotoba-be/dist`.

@@ -1,7 +1,7 @@
 // Learning content from kotoba-be. Server-only, like api.ts.
 import "server-only";
 import { api, ApiError } from "./api";
-import type { Grammar, Hit, Kanji, KanjiDetail, Lesson } from "./library";
+import type { Grammar, Hit, Kanji, KanjiDetail, Lesson, Level, Paged } from "./library";
 import type { Vocab } from "./flashcards";
 import type { Group, Kana, KanaSet, Script } from "./kana";
 import type { Paper } from "./test";
@@ -19,8 +19,12 @@ export async function getKanaSet(script: Script, group: Group): Promise<KanaSet>
 
 export const getVocab = (query = "") => api<Vocab[]>(`/content/vocab${query}`, { revalidate: HOUR });
 
-export const getKanji = () => api<Kanji[]>("/content/kanji", { revalidate: HOUR });
-export const getLessons = () => api<Lesson[]>("/content/lesson", { revalidate: HOUR });
+const levelQuery = (level?: Level) => (level === undefined ? "" : `?level=${level}`);
+
+export const getKanji = (level?: Level) => api<Kanji[]>(`/content/kanji${levelQuery(level)}`, { revalidate: HOUR });
+// One page of a level's kanji (the BE pages by 100); pages is at least 1 even for an empty level.
+export const getKanjiPage = (level: Level, page: number) => api<Paged<Kanji>>(`/content/kanji?level=${level}&page=${page}`, { revalidate: HOUR });
+export const getLessons = (level?: Level) => api<Lesson[]>(`/content/lesson${levelQuery(level)}`, { revalidate: HOUR });
 
 // null when the BE has no such item; other failures still throw to the error boundary.
 const item = <T,>(id: string) =>
@@ -31,14 +35,14 @@ const item = <T,>(id: string) =>
 export const getKanjiDetail = (char: string) => item<KanjiDetail>(`kanji:${char}`);
 export const getVocabItem = (word: string) => item<Vocab>(`vocab:${word}`);
 
-export const getGrammar = () => api<Grammar[]>("/content/grammar", { revalidate: HOUR });
+export const getGrammar = (level?: Level) => api<Grammar[]>(`/content/grammar${levelQuery(level)}`, { revalidate: HOUR });
 export const getGrammarItem = (slug: string) => item<Grammar>(`grammar:${slug}`);
 
 // Up to 20 hits per kind, in BE sort order.
 export const search = (q: string) => api<Hit[]>(`/search?q=${encodeURIComponent(q)}`, { revalidate: HOUR });
 
 export type TestSummary = { id: string; title: { vi: string; en: string }; minutes: number; questions: number };
-export const getTests = () => api<TestSummary[]>("/tests", { revalidate: HOUR });
+export const getTests = (level?: Level) => api<TestSummary[]>(`/tests${levelQuery(level)}`, { revalidate: HOUR });
 // null on 404 so the page can call notFound(); the whole paper, answers included, is fetched on the server.
 export const getTest = (id: string) =>
   api<Paper>(`/tests/${encodeURIComponent(id)}`, { revalidate: HOUR }).catch((e) => {

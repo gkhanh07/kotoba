@@ -5,7 +5,29 @@ import type { Kana } from "./kana";
 import { isLearned, type Srs } from "./srs";
 
 type Translation = { vi: string; en: string };
-export type Lesson = { id: string; lesson: number; title: Translation };
+
+// JLPT levels, easiest first. Content items carry one (phase 22); pages show one at a time.
+export const LEVELS = [5, 4, 3, 2] as const;
+export type Level = (typeof LEVELS)[number];
+const first = (q: string | string[] | undefined) => (Array.isArray(q) ? q[0] : q);
+// Anything that is not a known level (missing, "x", "6", "05") is N5, never an error.
+export const levelOf = (q: string | string[] | undefined): Level => LEVELS.find((l) => String(l) === first(q)) ?? 5;
+export const levelLabel = (l: Level): string => `N${l}`;
+// ?page= as a positive integer; anything else is page 1.
+export const pageOf = (q: string | string[] | undefined): number => {
+  const v = first(q);
+  return v !== undefined && /^[1-9]\d{0,5}$/.test(v) ? Number(v) : 1;
+};
+// A list URL with the given query params; undefined and empty values are left out.
+export const listHref = (path: string, params: Record<string, string | number | undefined>): string => {
+  const qs = new URLSearchParams();
+  for (const [k, v] of Object.entries(params)) if (v !== undefined && v !== "") qs.set(k, String(v));
+  const text = qs.toString();
+  return text ? `${path}?${text}` : path;
+};
+// kotoba-be's answer to ?page=.
+export type Paged<T> = { items: T[]; page: number; pages: number; total: number };
+export type Lesson = { id: string; lesson: number; level: Level; title: Translation };
 export type Kanji = {
   id: string; // "kanji:日"
   char: string;
@@ -17,6 +39,7 @@ export type Kanji = {
   vi?: string;
   lesson: number;
   similar?: string[]; // look-alike kanji (phase 19)
+  level: Level;
 };
 export type KanjiDetail = Kanji & { words: Vocab[] };
 export type Grammar = {
@@ -29,9 +52,10 @@ export type Grammar = {
   explain: Translation;
   examples: ({ ja: string } & Translation)[];
   note?: Translation;
+  level: Level;
 };
 // One /search result; the BE tags each item with its kind.
-export type Hit = ({ kind: "vocab" } & Vocab) | ({ kind: "kanji" } & Kanji) | ({ kind: "grammar" } & Grammar) | ({ kind: "kana" } & Kana) | ({ kind: "lesson" } & Lesson);
+export type Hit = { level: Level } & (({ kind: "vocab" } & Vocab) | ({ kind: "kanji" } & Kanji) | ({ kind: "grammar" } & Grammar) | ({ kind: "kana" } & Kana) | ({ kind: "lesson" } & Lesson));
 
 // One card in the shared review queue. The server fills in labels in the page language.
 export const KINDS = ["kana", "kanji", "vocab"] as const;
@@ -84,7 +108,7 @@ export type Filter = (typeof FILTERS)[number];
 
 const en = {
   kanji: {
-    title: "N5 kanji",
+    title: (l: string) => `${l} kanji`,
     lede: (n: number) => `${n} kanji, ordered by lesson. Tap one for its readings, Hán Việt and the words that use it.`,
     filter: "Show",
     filters: { all: "All", learned: "Learned", new: "Not started" } satisfies Record<Filter, string>,
@@ -99,7 +123,7 @@ const en = {
     similar: "Easily confused with",
   },
   vocab: {
-    title: "N5 vocabulary",
+    title: (l: string) => `${l} vocabulary`,
     lede: "Each lesson is a deck. Study one, or review every word that is due.",
     decks: "Decks",
     lesson: (n: number) => `Lesson ${n}`,
@@ -120,7 +144,7 @@ const en = {
     lapses: (n: number) => `wrong ${n} ${n === 1 ? "time" : "times"}`,
   },
   grammar: {
-    title: "N5 grammar",
+    title: (l: string) => `${l} grammar`,
     lede: (n: number) => `${n} grammar points, each with translated examples.`,
     lesson: (n: number) => `Lesson ${n}`,
     back: "Grammar",
@@ -192,6 +216,14 @@ const en = {
     // Card back labels
     romaji: "Romaji", note: "Sound", reading: "Reading", example: "Example",
   },
+  levels: {
+    nav: "JLPT level",
+    empty: (l: string) => `No ${l} content yet.`,
+    prev: "Previous page",
+    next: "Next page",
+    pages: "Pages",
+    page: (x: number, y: number) => `Page ${x} / ${y}`,
+  },
   search: {
     title: "Search",
     lede: "Look up kana, kanji, words, grammar and lessons. Type Japanese, romaji, Vietnamese or English; accents are optional.",
@@ -208,7 +240,7 @@ const en = {
 
 const vi: typeof en = {
   kanji: {
-    title: "Kanji N5",
+    title: (l) => `Kanji ${l}`,
     lede: (n) => `${n} chữ, xếp theo bài học. Chạm một chữ để xem âm đọc, Hán Việt và từ chứa nó.`,
     filter: "Lọc",
     filters: { all: "Tất cả", learned: "Đã học", new: "Chưa học" },
@@ -223,7 +255,7 @@ const vi: typeof en = {
     similar: "Dễ nhầm với",
   },
   vocab: {
-    title: "Từ vựng N5",
+    title: (l) => `Từ vựng ${l}`,
     lede: "Mỗi bài học là một bộ thẻ. Học một bộ hoặc ôn tất cả từ đến hạn.",
     decks: "Các bộ từ",
     lesson: (n) => `Bài ${n}`,
@@ -244,7 +276,7 @@ const vi: typeof en = {
     lapses: (n) => `sai ${n} lần`,
   },
   grammar: {
-    title: "Ngữ pháp N5",
+    title: (l) => `Ngữ pháp ${l}`,
     lede: (n) => `${n} điểm ngữ pháp, mỗi điểm có ví dụ kèm bản dịch.`,
     lesson: (n) => `Bài ${n}`,
     back: "Ngữ pháp",
@@ -314,6 +346,14 @@ const vi: typeof en = {
     saved: "Lịch ôn được lưu trên trình duyệt này.",
     warning: "Không thể đọc hoặc lưu tiến độ trên trình duyệt này. Bạn vẫn có thể ôn trong phiên này.",
     romaji: "Romaji", note: "Cách phát âm", reading: "Cách đọc", example: "Ví dụ",
+  },
+  levels: {
+    nav: "Cấp độ JLPT",
+    empty: (l) => `Chưa có nội dung ${l}.`,
+    prev: "Trước",
+    next: "Sau",
+    pages: "Phân trang",
+    page: (x, y) => `Trang ${x} / ${y}`,
   },
   search: {
     title: "Tra cứu",

@@ -18,13 +18,15 @@
 .group h2 { font-size: 1.1rem; color: var(--chalk); }
 .group h2 small { color: var(--silver-dim); font-size: .9rem; font-variant-numeric: tabular-nums; }
 .list { margin: .75rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--rule-dim); }
-.row { display: grid; grid-template-columns: minmax(6rem, 10rem) 1fr 5rem 18px; align-items: center; gap: 1.25rem; min-height: 56px; padding: .5rem .75rem; border-bottom: 1px solid var(--rule-dim); color: var(--silver-dim); text-decoration: none; transition: background-color 160ms, color 160ms; }
+.row { display: grid; grid-template-columns: minmax(6rem, 10rem) 1fr 8rem 18px; align-items: center; gap: 1.25rem; min-height: 56px; padding: .5rem .75rem; border-bottom: 1px solid var(--rule-dim); color: var(--silver-dim); text-decoration: none; transition: background-color 160ms, color 160ms; }
 .row:hover { background: var(--wet); color: var(--amber-core); }
 .head { font-family: var(--font-kana); font-size: 1.35rem; color: var(--chalk); }
 .headText { color: var(--chalk); }
 .parts { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; min-width: 0; }
 .meaning { color: var(--silver); }
 .lesson { font-size: .9rem; font-variant-numeric: tabular-nums; }
+/* The level is text, set apart by a hairline box, so it never relies on colour. */
+.badge { padding: 0 .35rem; border: 1px solid var(--rule-strong); color: var(--silver); font-size: .75rem; letter-spacing: .06em; }
 .row:hover .head, .row:hover .headText, .row:hover .meaning, .row:hover mark { color: inherit; }
 /* Match mark: Chalk on a Silver underline. Never amber, which reads as "learned" (kanji tiles) or as a link. */
 .row mark { background: none; color: var(--chalk); text-decoration: underline 1.5px var(--silver); text-underline-offset: .25em; }
@@ -34,7 +36,6 @@
   .row { grid-template-columns: 1fr 18px; gap: .2rem 1rem; padding: .75rem 0; }
   .row > :not(svg) { grid-column: 1; }
   .row svg { grid-column: 2; grid-row: 1 / 4; }
-  .lesson:empty { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .row { transition: none; }

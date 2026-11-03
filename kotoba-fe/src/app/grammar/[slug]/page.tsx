@@ -62,7 +62,7 @@ export default async function GrammarDetailPage(props: PageProps<"/grammar/[slug
           </section>
         )}
         <Link href={`/lessons/${g.lesson}`} className={`btn ${s.study}`}>{t.study(g.lesson)} <Arrow /></Link>
-        <nav className={s.pager} aria-label={t.title}>
+        <nav className={s.pager} aria-label={t.back}>
           {prev && <Link href={`/grammar/${prev.slug}`} rel="prev"><Arrow back /><span className="sr-only">{t.prev}: </span><span lang="ja">{prev.pattern}</span></Link>}
           {next && <Link href={`/grammar/${next.slug}`} rel="next"><span className="sr-only">{t.next}: </span><span lang="ja">{next.pattern}</span><Arrow /></Link>}
         </nav>

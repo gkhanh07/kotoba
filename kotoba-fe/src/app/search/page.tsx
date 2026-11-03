@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { search } from "@/lib/content";
-import { libraryText, vocabHref, type Hit } from "@/lib/library";
+import { levelLabel, libraryText, vocabHref, type Hit } from "@/lib/library";
 import { mark } from "@/lib/search";
 import { getLang } from "../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../SiteBar";
@@ -17,7 +17,7 @@ const ORDER = ["vocab", "kanji", "grammar", "kana", "lesson"] as const;
 const cap = (x: string) => x.charAt(0).toUpperCase() + x.slice(1);
 
 type Part = { text: string; ja?: boolean };
-type Row = { href: string; head: string; ja: boolean; parts: Part[]; lesson?: number };
+type Row = { href: string; head: string; ja: boolean; parts: Part[]; lesson?: number; level: Hit["level"] };
 const ja = (text: string): Part => ({ text, ja: true });
 
 // GET form, rendered on the server: the query lives in the URL, so results can be shared and the back button works.
@@ -28,7 +28,8 @@ export default async function SearchPage(props: PageProps<"/search">) {
   const t = libraryText[lang].search;
   const hits = q ? await search(q) : [];
 
-  const row = (h: Hit): Row => {
+  const row = (h: Hit): Row => ({ ...rowOf(h), level: h.level });
+  const rowOf = (h: Hit): Omit<Row, "level"> => {
     switch (h.kind) {
       case "vocab": // h.kanji: the written form a kana-only word can match on (日曜日 for にちようび), shown so the hit makes sense.
         return { href: vocabHref(h.word), head: h.word, ja: true,
@@ -90,7 +91,10 @@ export default async function SearchPage(props: PageProps<"/search">) {
                         <span className={s.parts}>
                           {r.parts.map((p, i) => <span key={i} lang={p.ja ? "ja" : undefined} className={i === r.parts.length - 1 ? s.meaning : undefined}>{marked(p.text)}</span>)}
                         </span>
-                        <span className={s.lesson}>{r.lesson !== undefined && t.lesson(r.lesson)}</span>
+                        <span className={s.lesson}>
+                          <span className={s.badge}>{levelLabel(r.level)}</span>
+                          {r.lesson !== undefined && ` · ${t.lesson(r.lesson)}`}
+                        </span>
                         <Arrow />
                       </Link>
                     </li>

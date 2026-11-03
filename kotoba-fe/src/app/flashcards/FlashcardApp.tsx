@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flashcardText, shuffleCards, type Vocab } from "@/lib/flashcards";
 import { logActivity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
@@ -11,7 +11,8 @@ import { Speak } from "../Speak";
 import { useCardPrompt } from "../useCardPrompt";
 import s from "./flashcards.module.css";
 
-export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang: Lang; deck: string }) {
+// `tabs` is the server-rendered level switcher; `empty` replaces the generic empty line when a level has no words.
+export function FlashcardApp({ cards, lang, deck: name, tabs, empty }: { cards: Vocab[]; lang: Lang; deck: string; tabs?: ReactNode; empty?: string }) {
   const t = flashcardText[lang];
   const [order, setOrder] = useState(cards);
   const [index, setIndex] = useState(0);
@@ -69,7 +70,8 @@ export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang
   return (
     <main className={s.app}>
       <header className={s.heading}><h1>{t.title}</h1><p>{t.lede}</p></header>
-      {!card ? <p className={s.empty}>{t.empty}</p> : (
+      {tabs}
+      {!card ? <p className={s.empty}>{empty ?? t.empty}</p> : (
         <section className={s.study} aria-label={name}>
           <div className={s.toolbar}>
             <p>{name}</p>

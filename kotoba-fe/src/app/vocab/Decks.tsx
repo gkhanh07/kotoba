@@ -10,7 +10,8 @@ import s from "./vocab.module.css";
 type Deck = { lesson: number; title: string; ids: string[] };
 
 // Counts come from this browser's schedule, so they read "—" until it is loaded.
-export function Decks({ decks, lang }: { decks: Deck[]; lang: Lang }) {
+// Stats and the action cover every deck; only decks[from, to) are listed.
+export function Decks({ decks, from, to, lang }: { decks: Deck[]; from: number; to: number; lang: Lang }) {
   const t = libraryText[lang].vocab;
   const srs = useDeck()?.srs;
   const day = today();
@@ -32,7 +33,7 @@ export function Decks({ decks, lang }: { decks: Deck[]; lang: Lang }) {
       </div>
       <h2 className="sr-only">{t.decks}</h2>
       <ul className={s.decks}>
-        {stats.map((d) => (
+        {stats.slice(from, to).map((d) => (
           <li key={d.lesson}>
             <Link href={`/flashcards?deck=${d.lesson}`} className={s.deck}>
               <span className={s.num}>{t.lesson(d.lesson)}</span>

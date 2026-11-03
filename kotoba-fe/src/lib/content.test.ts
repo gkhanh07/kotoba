@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("./api", async (orig) => ({ ...(await orig<typeof import("./api")>()), api: vi.fn() }));
 
 import { ApiError, api } from "./api";
-import { getGrammar, getGrammarItem, getKana, getKanaSet, getKanji, getKanjiDetail, getLessons, getTest, getTests, getVocab, search } from "./content";
+import { getGrammar, getGrammarItem, getKana, getKanaSet, getKanji, getKanjiDetail, getKanjiPage, getLessons, getTest, getTests, getVocab, search } from "./content";
 
 const apiMock = vi.mocked(api);
 beforeEach(() => {
@@ -24,6 +24,21 @@ describe("content", () => {
   it("getKanaSet names hiragana sets Hiragana", async () => {
     apiMock.mockResolvedValue([]);
     expect((await getKanaSet("hiragana", "yoon")).name).toBe("Hiragana");
+  });
+  it("level and page go into the query", async () => {
+    apiMock.mockResolvedValue([]);
+    await getKanji(4);
+    await getKanjiPage(5, 2);
+    await getLessons(3);
+    await getGrammar(2);
+    await getTests(5);
+    expect(apiMock.mock.calls).toEqual([
+      ["/content/kanji?level=4", { revalidate: 3600 }],
+      ["/content/kanji?level=5&page=2", { revalidate: 3600 }],
+      ["/content/lesson?level=3", { revalidate: 3600 }],
+      ["/content/grammar?level=2", { revalidate: 3600 }],
+      ["/tests?level=5", { revalidate: 3600 }],
+    ]);
   });
   it("getVocab, getKanji, getLessons and getGrammar hit their paths", async () => {
     apiMock.mockResolvedValue([]);

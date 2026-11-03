@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTests } from "@/lib/content";
+import { levelLabel, levelOf, libraryText } from "@/lib/library";
 import { testText } from "@/lib/testText";
+import { LevelTabs } from "../LevelTabs";
 import { getLang } from "../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../SiteBar";
 import { Last } from "./Last";
@@ -12,8 +14,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: `${t.title} · Kotoba`, description: t.metaDesc };
 }
 
-export default async function TestListPage() {
-  const [lang, tests] = await Promise.all([getLang(), getTests()]);
+export default async function TestListPage(props: PageProps<"/test">) {
+  const level = levelOf((await props.searchParams).level);
+  const [lang, tests] = await Promise.all([getLang(), getTests(level)]);
   const t = testText[lang];
   return (
     <>
@@ -23,7 +26,8 @@ export default async function TestListPage() {
           <h1>{t.title}</h1>
           <p>{t.lede}</p>
         </header>
-        {tests.length === 0 ? <p className={s.note}>{t.empty}</p> : (
+        <LevelTabs path="/test" level={level} lang={lang} />
+        {tests.length === 0 ? <p className={s.note}>{libraryText[lang].levels.empty(levelLabel(level))}</p> : (
           <ul className={s.papers}>
             {tests.map((p) => (
               <li key={p.id}>

@@ -51,6 +51,7 @@ const TEXT: Record<Lang, { title: string; updated: string; sections: { id: strin
         body: (
           <>
             <p>Dữ liệu kanji (âm on, âm kun, âm Hán Việt, số nét) lấy từ KANJIDIC2. Âm đọc từ vựng được đối chiếu với JMdict. Cả hai thuộc Electronic Dictionary Research and Development Group (EDRDG), dùng theo {ext(EDRDG, "giấy phép của EDRDG")}.</p>
+            <p>Danh sách kanji theo cấp N5 và N4 lấy từ trường JLPT của KANJIDIC2 (cùng giấy phép EDRDG ở trên). Danh sách N3 và N2 sẽ được ghi nguồn tại đây khi được thêm vào.</p>
             <p>Phần dữ liệu dẫn xuất từ hai nguồn này được chia sẻ lại theo cùng giấy phép {ext(CC, "Creative Commons BY-SA 4.0")}.</p>
           </>
         ),
@@ -97,6 +98,7 @@ const TEXT: Record<Lang, { title: string; updated: string; sections: { id: strin
         body: (
           <>
             <p>Kanji data (on and kun readings, Sino-Vietnamese readings, stroke counts) comes from KANJIDIC2. Vocabulary readings are checked against JMdict. Both belong to the Electronic Dictionary Research and Development Group (EDRDG) and are used under {ext(EDRDG, "the EDRDG licence")}.</p>
+            <p>The N5 and N4 kanji lists come from the JLPT field of KANJIDIC2 (same EDRDG licence as above). The N3 and N2 lists will be credited here when they are added.</p>
             <p>Data derived from them is shared under the same {ext(CC, "Creative Commons BY-SA 4.0")} licence.</p>
           </>
         ),

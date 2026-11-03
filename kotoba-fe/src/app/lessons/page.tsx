@@ -17,7 +17,7 @@ export default async function LessonsPage() {
   const t = libraryText[lang].lessons;
   // Grammar is read, not scheduled, so a lesson is done when its kana, kanji and words are all learned.
   const items = [...kana, ...kanji, ...vocab];
-  const stops = lessons.map((l) => ({ lesson: l.lesson, title: l.title[lang], ids: items.filter((k) => k.lesson === l.lesson).map((k) => k.id) }));
+  const stops = lessons.map((l) => ({ lesson: l.lesson, level: l.level, title: l.title[lang], ids: items.filter((k) => k.lesson === l.lesson).map((k) => k.id) }));
   return (
     <>
       <SiteBar current="lessons" />

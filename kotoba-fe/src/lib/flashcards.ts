@@ -24,7 +24,7 @@ export function shuffleCards<T>(items: readonly T[]): T[] {
 
 const en = {
   title: "Flashcards", lede: "A word at a time. Recall the meaning, flip to check, then say honestly whether you knew it.",
-  deck: "All N5 words", speak: "Play", flip: "Flip card", front: "Show vocabulary",
+  deck: (l: string) => `All ${l} words`, speak: "Play", flip: "Flip card", front: "Show vocabulary",
   reading: "Reading", meaning: "Meaning",
   example: "Example", notes: "Notes", grade: "Did you know it?", gradeHint: "Flip the card first, then grade yourself.",
   missed: "Not yet", knew: "I knew it", previous: "Previous",
@@ -44,7 +44,7 @@ const en = {
 
 const vi: typeof en = {
   title: "Thẻ từ vựng", lede: "Mỗi lần một từ. Nhớ lại nghĩa, lật thẻ để kiểm tra, rồi tự chấm thật lòng.",
-  deck: "Tất cả từ N5", speak: "Đọc", flip: "Lật thẻ", front: "Xem từ vựng",
+  deck: (l) => `Tất cả từ ${l}`, speak: "Đọc", flip: "Lật thẻ", front: "Xem từ vựng",
   reading: "Cách đọc", meaning: "Nghĩa",
   example: "Ví dụ", notes: "Ghi chú", grade: "Bạn nhớ từ này chưa?", gradeHint: "Lật thẻ trước, rồi tự chấm.",
   missed: "Chưa nhớ", knew: "Nhớ rồi", previous: "Thẻ trước",

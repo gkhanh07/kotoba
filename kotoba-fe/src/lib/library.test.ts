@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { currentLesson, formatDay, kanjiIn, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
+import { currentLesson, formatDay, kanjiIn, LEVELS, levelLabel, levelOf, listHref, pageOf, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
 
 const VOCAB: PromptSource = { kind: "vocab", word: "水", reading: "みず", meaning: "nước" };
 const KANA_WORD: PromptSource = { kind: "vocab", word: "ねこ", reading: "ねこ", meaning: "mèo" };
@@ -120,5 +120,48 @@ describe("vocab page helpers", () => {
   it("writes a day key as d/m/yyyy", () => {
     expect(formatDay("2026-11-03")).toBe("3/11/2026");
     expect(formatDay("2027-01-10")).toBe("10/1/2027");
+  });
+});
+
+describe("levels", () => {
+  it("lists N5 first and N2 last", () => {
+    expect([...LEVELS]).toEqual([5, 4, 3, 2]);
+  });
+  it("levelOf reads each known level", () => {
+    expect(["5", "4", "3", "2"].map(levelOf)).toEqual([5, 4, 3, 2]);
+  });
+  it("levelOf falls back to N5 for missing and unknown values", () => {
+    expect([undefined, "", "1", "6", "x", "05", "4.5"].map(levelOf)).toEqual([5, 5, 5, 5, 5, 5, 5]);
+  });
+  it("levelOf takes the first of a repeated param", () => {
+    expect(levelOf(["3", "4"])).toBe(3);
+    expect(levelOf([])).toBe(5);
+  });
+  it("levelLabel writes N before the number", () => {
+    expect(LEVELS.map(levelLabel)).toEqual(["N5", "N4", "N3", "N2"]);
+  });
+});
+
+describe("pageOf", () => {
+  it("reads positive integers", () => {
+    expect(["1", "2", "30", "999999"].map(pageOf)).toEqual([1, 2, 30, 999999]);
+  });
+  it("falls back to page 1 for missing, zero, negative, fractional and non-numeric values", () => {
+    expect([undefined, "", "0", "-1", "1.5", "x", "01", "1000000"].map(pageOf)).toEqual([1, 1, 1, 1, 1, 1, 1, 1]);
+  });
+  it("takes the first of a repeated param", () => {
+    expect(pageOf(["3", "4"])).toBe(3);
+  });
+});
+
+describe("listHref", () => {
+  it("joins the params in order", () => {
+    expect(listHref("/kanji", { level: 4, filter: "new", page: 2 })).toBe("/kanji?level=4&filter=new&page=2");
+  });
+  it("leaves out undefined and empty values", () => {
+    expect(listHref("/kanji", { level: 5, filter: undefined, page: "" })).toBe("/kanji?level=5");
+  });
+  it("is the bare path with no params", () => {
+    expect(listHref("/vocab", {})).toBe("/vocab");
   });
 });

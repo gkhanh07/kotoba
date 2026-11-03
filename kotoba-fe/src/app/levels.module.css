@@ -1,0 +1,13 @@
+/* Level tabs and page links, shared by the list pages. Same link style as the /kanji filters. */
+.tabs { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin-top: 2rem; }
+.tabs a { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; font-family: var(--font-title); font-weight: 600; font-size: 1.1rem; color: var(--silver); text-decoration: none; border-bottom: 1.5px solid transparent; transition: color 160ms, border-color 160ms; }
+.tabs a:hover { color: var(--chalk); border-color: var(--rule); }
+.tabs a[aria-current="page"] { color: var(--amber); border-color: var(--amber); }
+.pager { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule-dim); }
+.pager p { color: var(--silver-dim); font-variant-numeric: tabular-nums; }
+.pager a { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; color: var(--silver); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: .25em; }
+.pager a:hover { color: var(--amber-core); text-decoration-color: currentColor; }
+.note { margin-top: 2.5rem; color: var(--silver-dim); }
+@media (prefers-reduced-motion: reduce) {
+  .tabs a { transition: none; }
+}
