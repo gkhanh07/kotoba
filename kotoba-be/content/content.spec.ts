@@ -123,11 +123,58 @@ describe('content', () => {
               !Number.isInteger(answer) ||
               answer < 0 ||
               answer > 3 ||
-              (['kanji', 'writing', 'paraphrase'].includes(part) && !/\{.+\}/.test(q)) ||
+              (['kanji', 'writing', 'paraphrase', 'usage'].includes(part) && !/\{.+\}/.test(q)) ||
               (part === 'order' && !q.includes('★')),
           )
           .map(({ q }) => `${p.id} ${part}: ${q}`),
       ),
+    );
+    expect(bad).toEqual([]);
+  });
+
+  // Phase 26: each paper follows its level's exam blueprint: part types in exam order, questions per type,
+  // number of reading passages and the clock. N5 is today's n5-1; N4 follows the jlpt.jp sample paper.
+  const BLUEPRINT: Record<number, { minutes: number; parts: Record<string, number>; passages: number }> = {
+    5: { minutes: 60, parts: { kanji: 8, writing: 6, context: 8, paraphrase: 4, grammar: 9, order: 4, reading: 6 }, passages: 4 },
+    4: {
+      minutes: 80,
+      parts: { kanji: 7, writing: 5, context: 8, paraphrase: 4, usage: 4, grammar: 13, order: 4, text: 4, reading: 9 },
+      passages: 6,
+    },
+  };
+  it('builds every paper to its level blueprint', () => {
+    type P = { id: string; level: number; minutes: number; parts: { part: string; passage?: string; questions: unknown[] }[] };
+    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as P[];
+    const shape = (p: P) => {
+      const parts: Record<string, number> = {};
+      for (const { part, questions } of p.parts) parts[part] = (parts[part] ?? 0) + questions.length;
+      return { minutes: p.minutes, parts, passages: p.parts.filter((x) => x.part === 'reading').length };
+    };
+    for (const p of papers) {
+      const actual = shape(p);
+      expect({ id: p.id, ...actual, order: Object.keys(actual.parts) }).toEqual({
+        id: p.id,
+        ...BLUEPRINT[p.level],
+        order: Object.keys(BLUEPRINT[p.level]?.parts ?? {}),
+      });
+    }
+    expect(papers.map((p) => p.level).sort()).toEqual([4, 5]);
+  });
+
+  // Reading and text parts carry their passage; a text passage has one numbered blank （１）… per question.
+  it('gives passage parts their passage and blanks', () => {
+    type P = { id: string; parts: { part: string; passage?: string; questions: { q: string }[] }[] };
+    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as P[];
+    const bad = papers.flatMap((p) =>
+      p.parts
+        .filter(({ part, passage, questions }) => {
+          if (part !== 'reading' && part !== 'text') return false;
+          if (typeof passage !== 'string' || passage.trim() === '') return true;
+          if (part !== 'text') return false;
+          const blanks = [...passage.matchAll(/（[１-９]）/g)].map(([b]) => b);
+          return blanks.length !== questions.length || questions.some(({ q }, i) => !q.includes(blanks[i]));
+        })
+        .map(({ part }) => `${p.id} ${part}`),
     );
     expect(bad).toEqual([]);
   });

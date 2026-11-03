@@ -43,3 +43,7 @@ Each should either handle the error (e.g. mark the deck as `ok: false`) or repor
 - The kanji page builds `filter&level` for tabs and `level&filter&page` for the pager: two URL spellings of the same state (cosmetic).
 - Deploy notes (phase 35): after a kotoba-be content change, clear kotoba-fe's `.next/cache/fetch-cache` (or wait an hour) — see BUG-005.
 - Kanji Hán Việt from KANJIDIC2 that look off and are kept as the source has them: 県 "Huyền" (usually "Huyện"), 着 "Khán" (usually "Trước/Trứ"). Decide whether an authored `hvFix` field is worth it.
+
+## Phase 26 follow-ups
+- Mock test passages: line breaks in `passage` (title, paragraphs) are not kept on screen, so the N4 `text` passage reads as one block. Render `\n` as paragraph breaks in TestApp (and check n5-1's memo passages).
+- N4 content not yet seen by a reviewer pass: grammar (phase 25) and paper n4-1 (phase 26); all `reviewed: false`.

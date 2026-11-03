@@ -62,7 +62,10 @@ describe('content (e2e)', () => {
 
   it('serves mock test papers', async () => {
     const list = await get('/tests').expect(200);
-    expect(list.body).toEqual([{ id: 'n5-1', title: { vi: 'Đề 1', en: 'Paper 1' }, minutes: 60, questions: 45 }]);
+    expect(list.body).toEqual([
+      { id: 'n5-1', title: { vi: 'Đề 1', en: 'Paper 1' }, minutes: 60, questions: 45 },
+      { id: 'n4-1', title: { vi: 'Đề thi thử N4 số 1', en: 'N4 mock test 1' }, minutes: 80, questions: 58 },
+    ]);
     const paper = await get('/tests/n5-1').expect(200);
     expect(paper.body.parts[0].questions[0].choices).toHaveLength(4);
     await get('/tests/nope').expect(404);
@@ -106,6 +109,7 @@ describe('content (e2e)', () => {
     expect((await get(`/search?q=${encodeURIComponent('Nhật')}&level=2`).expect(200)).body).toEqual([]);
     expect((await get('/search?q=nhat&level=x').expect(400)).body.message).toBe('level');
     expect((await get('/tests?level=5').expect(200)).body.map((p: { id: string }) => p.id)).toEqual(['n5-1']);
+    expect((await get('/tests?level=4').expect(200)).body.map((p: { id: string }) => p.id)).toEqual(['n4-1']);
     expect((await get('/tests?level=2').expect(200)).body).toEqual([]);
     expect((await get('/tests?level=0').expect(400)).body.message).toBe('level');
   });

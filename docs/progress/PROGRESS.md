@@ -33,7 +33,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 24c N4 vocab lessons 39–44 (203 words; N4 578 in all) | DONE | `content(n4): vocab batch 24c` |
 | 24 review fixes (7 N4 words) | DONE | `cc2791e` |
 | 25 N4 grammar: 44 points in lessons 26–44 (spec `docs/phases/25-n4-grammar.md`) | DONE | `content(n4): grammar for lessons 26-44` |
-| 26–35 | TODO | |
+| 26 N4 mock test `n4-1` (58 questions, 80 min, parts `usage` and `text`), N5 → N4 journey (spec `docs/phases/26-n4-mock-test.md`) | DONE | `424a205` (FE labels, journey e2e), `content(n4): mock test paper n4-1` |
+| 27–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -78,6 +79,11 @@ After phase 22: BE 40 unit + 40 e2e + 18 content; seed with unchanged content ~7
 
 After phase 23: BE 41 unit + 40 e2e + 19 content; FE E2E 106 passed.
 
+After phase 26 (N4 complete): BE 45 unit + 40 e2e + 23 content, JMdict 1,272 words; FE Vitest 559 tests, E2E 116 passed. Content: N5 + N4 = 224 kana, 284 kanji, 1,272 words, 78 grammar points, 45 lessons, 2 papers.
+
+## Stopped here (2026-11-03, at the user's request: "làm xong N4 rồi dừng")
+N4 is done. Work resumes with N3.
+
 ## Next step
-Phase 24 (N4 vocab, batches of ~200: 24a, 24b, 24c…), one `content` agent call and one commit per batch, words placed in N4 lessons 26–44, kanji gate (kanji level ≥ word level). Write `docs/phases/24-n4-vocab.md` first. Decide the /vocab due-count question in BACKLOG (phase 22) when N4 words land.
-Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`), so it needs `lsof` and a built `kotoba-be/dist`.
+Phase 27 (N3 kanji). First settle the N3/N2 level list: KANJIDIC2 merges old level 2 (N3 + N2), so `scripts/levels.txt` must come from a vetted source (Jonathan Waller's lists on tanos.co.uk; verify the licence and record it in an ADR) or, failing that, split by KANJIDIC `freq` (heuristic, say so in the ADR). Then add 3 to `INCLUDE_LEVELS` with the mapping, author `vi`, lessons from 46 on, `similar`. Write `docs/phases/27-*.md` first. Open items before N3: the kana-id homophone collisions (BACKLOG, phase 15/24), the /vocab due count per level (BACKLOG, phase 22), default level by current lesson (phase 22 notes), passage line breaks (BACKLOG, phase 26).
+Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`), so it needs `lsof` and a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).

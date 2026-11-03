@@ -33,3 +33,10 @@ An N4 paper with the real exam's sections and an 80-minute clock, and proof that
 Content + one journey: happy path, wrong data (blueprint, explain), boundaries (all N5 learned exactly; N4 lesson 26 first), display (long passages at 360 and 768). Others as phase 14 (unchanged code paths).
 
 ## Self-review notes
+- Paper `n4-1`: 58 questions in 14 parts (kanji 7, writing 5, context 8, paraphrase 4, usage 4, grammar 13, order 4, text 4, reading 9 over 6 passages), 80 minutes, answers spread 14/15/15/14, every kanji N5/N4 (script-checked). Title "Đề thi thử N4 số 1" (not "Đề 1") so the dashboard's resume link tells the two papers apart.
+- `content.spec.ts`: per-level blueprint (questions per part type, part order, reading passages, minutes; paper levels pinned to [4, 5]); `usage` needs `{…}`; `reading`/`text` parts need a passage and a `text` passage one （n） blank per question.
+- Review wanted (`reviewed: false`): words not in vocab.json in passages (スポーツセンター, テニスコート, クリームパン, パン屋, お知らせ, 中学生) and distractors ひとくち, じけん; grammar 5, 6, 9 distractors are wrong by meaning, not form; usage 4 distractor a little artificial; writing 3 distractor 図書飯.
+- E2E `test-n4.spec.ts`: full run with every 4th answer wrong, exact headline and per-part rows with the new labels; `n4-path.spec.ts` (committed in 424a205): after all of N5, /lessons, /review and the dashboard lead to lesson 26. BE e2e lists both papers.
+- Seen in the screenshots: the `text` passage's title and paragraphs run together (line breaks in the passage are not kept on screen). BACKLOG.
+- Content `reviewer` skipped for this paper to save budget; the full gate ran (BE check, FE e2e 116).
+
