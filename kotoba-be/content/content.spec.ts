@@ -53,9 +53,9 @@ describe('content', () => {
     expect([count(kanji, 5), count(kanji, 4)]).toEqual([103, 181]);
     expect(kanji).toHaveLength(284);
     expect([count(lessons, 5), count(lessons, 4)]).toEqual([25, 20]);
-    // Phase 24a/24b: N4 vocab lessons 26–38 (docs/phases/24-n4-vocab.md).
-    expect([count(vocab, 5), count(vocab, 4)]).toEqual([694, 375]);
-    expect(vocab).toHaveLength(1069);
+    // Phase 24a/24b/24c: N4 vocab lessons 26–44 (docs/phases/24-n4-vocab.md).
+    expect([count(vocab, 5), count(vocab, 4)]).toEqual([694, 578]);
+    expect(vocab).toHaveLength(1272);
   });
 
   it('gives every N4 kanji a meaning and an N4 lesson', () => {

@@ -30,7 +30,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 23 N4 kanji: 181 kanji, lessons 26–45, `similar` pairs (spec `docs/phases/23-n4-kanji.md`) | DONE | `content(n4): kanji and lessons 26-45` |
 | 24a N4 vocab lessons 26–32 (178 words) | DONE | `content(n4): vocab batch 24a` |
 | 24b N4 vocab lessons 33–38 (197 words) | DONE | `content(n4): vocab batch 24b` |
-| 24c–35 | TODO | |
+| 24c N4 vocab lessons 39–44 (203 words; N4 578 in all) | DONE | `content(n4): vocab batch 24c` |
+| 25–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
