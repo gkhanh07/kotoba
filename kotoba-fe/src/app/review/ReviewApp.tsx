@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { NEW_PER_DAY } from "@/config/srs";
 import { logActivity } from "@/lib/activity";
+import { freshFor, sessionStats } from "@/lib/daily";
 import type { Lang } from "@/lib/i18n";
-import { KINDS, libraryText, type Kind, type ReviewItem } from "@/lib/library";
+import { KINDS, libraryText, stopsOf, type Kind, type ReviewItem } from "@/lib/library";
 import { daysUntil, isDue, isKnown, isLearned, nextDue, weakest } from "@/lib/srs";
-import { review, today, useDeck } from "@/lib/store";
+import { learnedToday, review, today, useDeck } from "@/lib/store";
 import { Arrow } from "../Arrow";
 import { useCardPrompt } from "../useCardPrompt";
 import f from "../flashcards/flashcards.module.css";
@@ -22,9 +24,16 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [notice, setNotice] = useState("");
+  // Lesson the daily session took new items from, fixed with the order.
+  const [freshLesson, setFreshLesson] = useState<number>();
+  // End-screen numbers: each item's first grade this visit, and the clock minute of every grade.
+  const [first, setFirst] = useState<Record<string, boolean>>({});
+  const [minutes, setMinutes] = useState<number[]>([]);
   const cardRef = useRef<HTMLButtonElement>(null);
 
   const scoped = items.filter((i) => (!kind || i.kind === kind) && (!lesson || i.lesson === lesson.n));
+  // No filter: today's session, due items plus a capped number of new ones from the current lesson.
+  const daily = !kind && !lesson && !weak;
   if (deck && order === null) {
     const day = today();
     // Weak queue: worst first, whatever the due date.
@@ -34,7 +43,9 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
     // and when nothing there is due or new it runs the whole lesson again.
     const fresh = lesson ? scoped.filter((i) => !deck.srs[i.id]) : [];
     const queue = due.length + fresh.length || !lesson ? [...due, ...fresh] : scoped;
-    setOrder((weak ? ranked : queue).map((i) => i.id));
+    const newItems = daily ? freshFor(stopsOf(items), deck.srs, learnedToday(), NEW_PER_DAY) : { ids: [] };
+    setOrder(weak ? ranked.map((i) => i.id) : [...queue.map((i) => i.id), ...newItems.ids]);
+    if (newItems.ids.length) setFreshLesson(newItems.lesson);
   }
   const byId = new Map(items.map((i) => [i.id, i]));
   const item = order?.[index] !== undefined ? byId.get(order[index]) : undefined;
@@ -60,6 +71,8 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
       : isKnown(after, item.id) ? t.gradedKnown(item.front)
       : t.gradedHit(item.front, due ? daysUntil(due, today()) : 1));
     if (!knew) setOrder([...order, item.id]);
+    if (!(item.id in first)) setFirst({ ...first, [item.id]: knew });
+    setMinutes([...minutes, Math.floor(Date.now() / 60_000)]);
     setIndex(index + 1);
     setFlipped(false);
     // The card button remounts per card, so hand focus to the new one.
@@ -83,14 +96,16 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
   const parts = KINDS.map((k) => [k, left.filter((id) => byId.get(id)?.kind === k).length] as const)
     .filter(([, n]) => n > 0).map(([k, n]) => `${t.kinds[k]} ${n}`).join(" · ");
   const scope = [lesson && t.scopeLesson(lesson.n, lesson.title), kind && (lesson ? t.kinds[kind] : t.scope[kind])]
-    .filter(Boolean).join(" · ") || t.scope.all;
+    .filter(Boolean).join(" · ") || (freshLesson ? t.daily(freshLesson) : t.scope.all);
   // The first lesson that still has something never answered right.
   const nextLesson = deck && items.find((i) => !isLearned(deck.srs, i.id))?.lesson;
   const soon = deck && nextDue(deck.srs, today(), scoped.map((i) => i.id));
+  const stats = sessionStats(first, minutes);
 
-  const panel = (body: string, extra?: string) => (
+  const panel = (body: string, extra?: string, done?: typeof stats) => (
     <div className={s.panel} role="status">
       <p className={s.panelTitle}>{body}</p>
+      {done && done.items > 0 && <p>{t.stats(done.items, done.pct, done.minutes)}</p>}
       {extra && <p>{extra}</p>}
       <div className={s.actions}>
         {nextLesson ? <Link href={`/lessons/${nextLesson}`} className="btn">{t.study(nextLesson)} <Arrow /></Link>
@@ -111,7 +126,7 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
         </div>
         {!deck || !order ? <p className={f.notice} role="status">…</p>
           : !order.length ? (weak ? panel(t.weakEmpty) : soon ? panel(t.waiting, t.next(daysUntil(soon.day, today()), soon.n)) : panel(t.empty))
-          : !item ? <>{notice && <p className={f.notice}>{notice}</p>}{panel(t.done, soon ? t.next(daysUntil(soon.day, today()), soon.n) : undefined)}</>
+          : !item ? <>{notice && <p className={f.notice}>{notice}</p>}{panel(t.done, soon ? t.next(daysUntil(soon.day, today()), soon.n) : undefined, stats)}</>
           : (
             <>
               <div className={f.progress}>

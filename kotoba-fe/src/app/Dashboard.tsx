@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useMemo, useSyncExternalStore } from "react";
 import { examDate, examDay, type Profile } from "@/lib/account";
-import { ACTIVITY_KEY, continueHref, parseActivity, summarize, type Activity } from "@/lib/activity";
+import { ACTIVITY_KEY, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
-import { WEAK_LIST_SIZE } from "@/config/srs";
+import { NEW_PER_DAY, WEAK_LIST_SIZE } from "@/config/srs";
+import { continueTarget, freshFor } from "@/lib/daily";
+import type { Stop } from "@/lib/library";
 import { INTERVALS, daysUntil, isDue, isLearned, type Srs } from "@/lib/srs";
 import { weakItems, type ItemLink } from "@/lib/weak";
-import { today, useDeck } from "@/lib/store";
+import { learnedToday, today, useDeck } from "@/lib/store";
 import { remaining } from "@/lib/test";
 import { findSession } from "@/lib/testStore";
 import { testText } from "@/lib/testText";
@@ -43,8 +45,8 @@ const isKanji = (id: string) => id.startsWith("kanji:");
 const count = (s: Srs, area: (id: string) => boolean, ok: (id: string) => boolean) =>
   Object.keys(s).filter((id) => area(id) && ok(id)).length;
 
-export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTotal, tests, fronts }: {
-  fronts: Record<string, ItemLink>;
+export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTotal, tests, fronts, stops }: {
+  fronts: Record<string, ItemLink>; stops: Stop[];
   lang: Lang; name: string; profile: Profile | null; kanaTotal: number; kanjiTotal: number; vocabTotal: number;
   tests: { id: string; title: string; minutes: number }[];
 }) {
@@ -62,22 +64,28 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
     const { srs } = deck;
     const due = (id: string) => isDue(srs[id], day);
     const learned = (id: string) => isLearned(srs, id);
+    const kanaDue = count(srs, isKana, due), kanjiDue = count(srs, isKanji, due), vocabDue = count(srs, isVocab, due);
+    const fresh = freshFor(stops, srs, learnedToday(), NEW_PER_DAY).ids.length;
+    const summary = summarize(activity, now);
     return {
       bad,
       now,
       day,
       kanaLearned: count(srs, isKana, learned),
-      kanaDue: count(srs, isKana, due),
+      kanaDue,
       kanjiLearned: count(srs, isKanji, learned),
-      kanjiDue: count(srs, isKanji, due),
+      kanjiDue,
       vocabLearned: count(srs, isVocab, learned),
-      vocabDue: count(srs, isVocab, due),
+      vocabDue,
+      dueTotal: kanaDue + kanjiDue + vocabDue,
       weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
-      summary: summarize(activity, now),
+      fresh,
+      summary,
+      next: continueTarget(kanaDue + kanjiDue + vocabDue, fresh, summary.last),
       at: now.getTime(),
       attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
     };
-  }, [deck, activityRaw, fronts]);
+  }, [deck, activityRaw, fronts, stops]);
   const paper = data?.attempt && tests.find((p) => p.id === data.attempt?.id);
   // Past the deadline the attempt is submitted on open, so "continue" would be a false promise.
   const resume = paper && data.attempt && remaining(data.attempt.session.startedAt, paper.minutes, data.at) > 0 ? paper : undefined;
@@ -114,12 +122,12 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
               <dd>{t.minutes(data.summary.minutesToday, profile?.minutes)}</dd>
               {profile?.minutes && <progress aria-label={t.minutesLabel} value={Math.min(data.summary.minutesToday, profile.minutes)} max={profile.minutes} />}
             </div>
-            <div><dt>{t.review}</dt><dd>{data.kanaDue + data.kanjiDue + data.vocabDue}</dd></div>
+            <div><dt>{t.review}</dt><dd>{data.dueTotal}</dd></div>
           </dl>
 
           <div className={s.continue}>
-            <Link className="btn" href={continueHref(data.summary.last)}>{t.continue} <Arrow /></Link>
-            <p>{t.continueWhat(data.summary.last)}</p>
+            <Link className="btn" href={data.next.href}>{t.continue} <Arrow /></Link>
+            <p>{data.next.daily ? t.continueDaily(data.dueTotal, data.fresh) : t.continueWhat(data.summary.last)}</p>
           </div>
 
           {resume && data.attempt && (
@@ -146,7 +154,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
 
           <section className={s.section} aria-labelledby="dash-review">
             <h2 id="dash-review">{t.review}</h2>
-            {data.kanaDue + data.kanjiDue + data.vocabDue === 0 ? <p>{t.reviewNone}</p> : (
+            {data.dueTotal === 0 ? <p>{t.reviewNone}</p> : (
               <ul className={s.list}>
                 {data.kanaDue > 0 && <li><span>{t.reviewKana(data.kanaDue)}</span><Link href="/review?kind=kana">{t.practise}</Link></li>}
                 {data.kanjiDue > 0 && <li><span>{t.reviewKanji(data.kanjiDue)}</span><Link href="/review?kind=kanji">{t.practise}</Link></li>}
@@ -200,6 +208,7 @@ const vi = {
   minutesLabel: "Thời gian học",
   minutes: (m: number, goal?: number) => (goal ? `${m} / ${goal} phút hôm nay` : `${m} phút hôm nay`),
   continue: "Tiếp tục học",
+  continueDaily: (due: number, fresh: number) => `Phiên hôm nay: ${due} đến hạn · ${fresh} mới`,
   continueWhat: (last: Activity["last"]): string =>
     !last ? "Bắt đầu với Hiragana" : last.area === "vocab" ? "Thẻ từ vựng" : last.area === "kanji" ? "Ôn kanji" : last.ref.startsWith("katakana:") ? "Trắc nghiệm Katakana" : "Trắc nghiệm Hiragana",
   progress: "Tiến độ",
@@ -241,6 +250,7 @@ const en: typeof vi = {
   minutesLabel: "Study time",
   minutes: (m, goal) => (goal ? `${m} / ${goal} min today` : `${m} min today`),
   continue: "Continue learning",
+  continueDaily: (due, fresh) => `Today’s session: ${due} due · ${fresh} new`,
   continueWhat: (last) =>
     !last ? "Start with Hiragana" : last.area === "vocab" ? "Flashcards" : last.area === "kanji" ? "Kanji review" : last.ref.startsWith("katakana:") ? "Katakana quiz" : "Hiragana quiz",
   progress: "Progress",

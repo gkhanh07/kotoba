@@ -21,7 +21,9 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 15 N5 vocab to ~700 (batch 15a: +195 → 694 words) | DONE | `content(n5): vocab batch 15a` |
 | 16 `lapses` + "Hay sai" + `/review?weak=1` (spec `docs/phases/16-lapses.md`) | DONE | `feat(srs): count wrong answers and review often-wrong items` |
 | 17 multi-direction cards + flashcard shortcuts (spec `docs/phases/17-card-directions.md`) | DONE | `feat(review): ask cards in several directions` |
-| 18–35 | TODO | |
+| 18 study day in Asia/Ho_Chi_Minh (ADR 003) | DONE | `861dfe1` |
+| 18 daily session via `/review`, `currentLesson`, end stats, dashboard link (spec `docs/phases/18-daily-session.md`, ADR 004) | DONE | `feat(review): daily session with new items of the current lesson` |
+| 19–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -54,6 +56,8 @@ After phase 16: FE Vitest 399 tests, E2E 42 passed; BE 29 unit + 28 e2e; migrati
 
 After phase 17: FE Vitest 449 tests, E2E 48 passed.
 
+After phase 18: FE Vitest 497 tests (suite also passes under TZ=UTC, America/Los_Angeles, Asia/Tokyo, Pacific/Kiritimati), coverage `src/lib/**` lines 98.24%, branches 96.35%; E2E 52 passed. BE unchanged.
+
 ## Next step
-Phase 18 (daily session via `/review`): first a separate commit `fix(activity): compute study day in Asia/Ho_Chi_Minh` (single `dayKey`, midnight tests 16:59:59Z / 17:00:00Z), then `currentLesson(stops, srs)` in `lib/library.ts`, `/review` with due + up to `NEW_PER_DAY` (src/config) new items, end screen stats, dashboard "Tiếp tục học". Write `docs/phases/18-daily-session.md` first.
-Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`.
+Phase 19 (vocab detail page `/vocab/[word]`, links to it, `similar` kanji pairs). Write `docs/phases/19-*.md` first.
+Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`).

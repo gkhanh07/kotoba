@@ -4,3 +4,5 @@ export const WEAK_MIN_LAPSES = 2;
 export const WEAK_LIST_SIZE = 5;
 // Same cap as kotoba-be (src/config.ts MAX_LAPSES): a larger count would make every push fail with 400.
 export const MAX_LAPSES = 10000;
+// New items the daily session at /review brings in per study day (phase 18).
+export const NEW_PER_DAY = 10;

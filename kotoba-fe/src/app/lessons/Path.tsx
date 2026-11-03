@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import type { Lang } from "@/lib/i18n";
-import { libraryText } from "@/lib/library";
+import { currentLesson, libraryText } from "@/lib/library";
 import { isLearned } from "@/lib/srs";
 import { useDeck } from "@/lib/store";
 import { Arrow } from "../Arrow";
@@ -19,8 +19,7 @@ export function Path({ stops, lang }: { stops: Stop[]; lang: Lang }) {
     const state: State = p.ids.length && learned === p.ids.length ? "done" : learned ? "started" : "fresh";
     return { ...p, learned, state };
   });
-  const open = (r: (typeof rows)[number]) => r.ids.length > 0 && r.state !== "done";
-  const target = srs ? (rows.find((r) => r.state === "started") ?? rows.find(open)) : undefined;
+  const target = srs ? currentLesson(stops, srs) : undefined;
   const anyLearned = rows.some((r) => r.learned);
   const first = rows.findIndex((r) => r.ids.length > 0); // the one row that shows the unit, as a column head would
   const last = rows.findLastIndex((r) => r.learned > 0);
@@ -49,7 +48,7 @@ export function Path({ stops, lang }: { stops: Stop[]; lang: Lang }) {
             <span className={s.count}>
               {r.ids.length > 0 && (srs ? <>{r.learned}/{r.ids.length}<span className={i === first ? undefined : "sr-only"}> {t.learned}</span></> : "—")}
             </span>
-            {target === r && (
+            {target === r.lesson && (
               <span className={`btn ${s.go}`}>{anyLearned ? t.continue : t.start} <Arrow /></span>
             )}
           </Link>

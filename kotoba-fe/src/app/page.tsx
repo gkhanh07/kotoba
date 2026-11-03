@@ -5,6 +5,7 @@ import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
 import { getKana, getKanji, getTests, getVocab } from "@/lib/content";
+import { stopsOf } from "@/lib/library";
 import { itemLinks } from "@/lib/weak";
 import { Dashboard } from "./Dashboard";
 import s from "./page.module.css";
@@ -109,6 +110,7 @@ export default async function Home() {
         <SiteBar />
         <Dashboard
           fronts={fronts}
+          stops={stopsOf([...kana, ...kanji, ...vocab])}
           lang={lang}
           name={user.profile?.name ?? user.email.split("@")[0]}
           profile={user.profile}

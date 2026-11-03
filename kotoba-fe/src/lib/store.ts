@@ -1,6 +1,7 @@
 // The SRS deck in localStorage, shared by every page through one external store.
 import { useSyncExternalStore } from "react";
 import { ACTIVITY_KEY, dayKey, type Activity } from "./activity";
+import { DAILY_KEY, newToday, noteNew, parseDaily } from "./daily";
 import { OLD_FLASHCARDS_KEY, OLD_PROGRESS_KEY, SRS_KEY, apply, forget, migrate, parseSrs, type Srs } from "./srs";
 
 export type Deck = { srs: Srs; ok: boolean }; // ok = false: storage blocked or unreadable, changes live in memory only
@@ -56,9 +57,27 @@ function subscribe(cb: () => void) {
 // null until hydrated: the server has no deck.
 export const useDeck = () => useSyncExternalStore(subscribe, read, () => null);
 
+// How many items got their first grade today (ADR 004). Unreadable or blocked storage counts 0.
+export function learnedToday(): number {
+  try {
+    return newToday(parseDaily(localStorage.getItem(DAILY_KEY)), today());
+  } catch {
+    return 0;
+  }
+}
+
 export function review(id: string, correct: boolean): Srs {
   const before = read().srs;
-  const after = apply(before, id, correct, today(), Date.now());
+  const day = today();
+  const after = apply(before, id, correct, day, Date.now());
+  // Written before the deck so readers notified by write() already see the new count.
+  if (!before[id]) {
+    try {
+      localStorage.setItem(DAILY_KEY, JSON.stringify(noteNew(parseDaily(localStorage.getItem(DAILY_KEY)), id, day)));
+    } catch {
+      // Storage blocked: the deck write below fails too and the page shows its warning; the count just stays 0.
+    }
+  }
   if (after !== before) write(after);
   return after;
 }
@@ -113,7 +132,7 @@ export function applyRemote(p: Progress, owner: string, lastSync: number) {
 // Sign-out: nothing of this account stays in the browser. The pre-SRS keys go too, or read() re-imports them.
 export function clearLocal() {
   try {
-    for (const k of [SRS_KEY, ACTIVITY_KEY, SYNC_KEY, OLD_PROGRESS_KEY, OLD_FLASHCARDS_KEY]) localStorage.removeItem(k);
+    for (const k of [SRS_KEY, ACTIVITY_KEY, SYNC_KEY, DAILY_KEY, OLD_PROGRESS_KEY, OLD_FLASHCARDS_KEY]) localStorage.removeItem(k);
   } catch {}
   announce();
 }

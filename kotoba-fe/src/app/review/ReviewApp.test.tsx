@@ -267,3 +267,90 @@ describe("/review card directions", () => {
     expect(spy).not.toHaveBeenCalled();
   });
 });
+
+// Phase 18: /review with no filter is today's session, due items then up to NEW_PER_DAY (10) new items
+// from the current lesson, minus the new items already learned today.
+describe("/review daily session", () => {
+  const DAILY = "kotoba.daily.v1";
+  const KANA = Array.from({ length: 12 }, (_, i) => item(`hiragana:k${i}`, "kana", `k${i}`, 1));
+  const DAY_ITEMS = [...KANA, item("vocab:水", "vocab", "水", 2)];
+  const open = (props: { kind?: "kana" | "kanji" | "vocab"; weak?: boolean } = {}) =>
+    ({ user: userEvent.setup(), ...render(<ReviewApp items={DAY_ITEMS} lang="vi" {...props} />) });
+  const learned = (ids: string[], due = "2026-11-03") => Object.fromEntries(ids.map((id) => [id, { box: 1, due, at: 1 }]));
+  const frontText = () => document.getElementById("review-front")!.firstElementChild!.textContent;
+
+  it("gives a new learner the first 10 new items of lesson 1", async () => {
+    open();
+    expect(await screen.findByText("Còn 10 mục · Kana 10")).toBeInTheDocument();
+    expect(screen.getAllByText("Mục đến hạn và mục mới của bài 1").length).toBeGreaterThan(0);
+    expect(frontText()).toBe("k0");
+  });
+
+  it("gives only what is left after the new items learned today", async () => {
+    const done = KANA.slice(0, 4).map((k) => k.id);
+    seed(learned(done));
+    localStorage.setItem(DAILY, JSON.stringify({ day: "2026-11-02", ids: done }));
+    open();
+    expect(await screen.findByText("Còn 6 mục · Kana 6")).toBeInTheDocument();
+    expect(frontText()).toBe("k4");
+  });
+
+  it("ignores a count from another day", async () => {
+    const done = KANA.slice(0, 4).map((k) => k.id);
+    seed(learned(done));
+    localStorage.setItem(DAILY, JSON.stringify({ day: "2026-11-01", ids: done }));
+    open();
+    expect(await screen.findByText("Còn 8 mục · Kana 8")).toBeInTheDocument();
+  });
+
+  it("asks due items first, then the new ones", async () => {
+    seed({ "vocab:水": { box: 0, due: "2026-11-02", at: 1, lapses: 1 } });
+    open();
+    expect(await screen.findByText("Còn 11 mục · Kana 10 · Từ vựng 1")).toBeInTheDocument();
+    expect(frontText()).toBe("水");
+  });
+
+  it("brings no new items once 10 were learned today, and shows the plain scope", async () => {
+    const done = KANA.slice(0, 10).map((k) => k.id);
+    seed({ ...learned(done), "vocab:水": { box: 0, due: "2026-11-02", at: 1 } });
+    localStorage.setItem(DAILY, JSON.stringify({ day: "2026-11-02", ids: done }));
+    open();
+    expect(await screen.findByText("Còn 1 mục · Từ vựng 1")).toBeInTheDocument();
+    expect(screen.getAllByText("Mọi mục đến hạn").length).toBeGreaterThan(0);
+  });
+
+  it("keeps filtered queues as they were: kind and weak bring no new items", async () => {
+    const { unmount } = open({ kind: "kana" });
+    expect(await screen.findByText("Chưa có gì để ôn. Học một bài để bắt đầu lịch ôn.")).toBeInTheDocument();
+    unmount();
+    open({ weak: true });
+    expect(await screen.findByText("Chưa có mục nào hay sai")).toBeInTheDocument();
+  });
+
+  it("ends with the items, first-time accuracy and minutes, and has nothing left once the miss was answered right", async () => {
+    const done = KANA.slice(0, 7).map((k) => k.id);
+    seed(learned(done));
+    localStorage.setItem(DAILY, JSON.stringify({ day: "2026-11-02", ids: done }));
+    const { user, unmount } = open();
+    expect(await screen.findByText("Còn 3 mục · Kana 3")).toBeInTheDocument();
+    await answer(user, true); // k7
+    await answer(user, false); // k8, asked again at the end
+    vi.setSystemTime(NOW + 60_000);
+    await answer(user, true); // k9
+    await answer(user, true); // k8 again
+    expect(screen.getByText("Xong hàng đợi hôm nay.")).toBeInTheDocument();
+    expect(screen.getByText("3 mục · đúng 67% ngay lần đầu · 2 phút")).toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem(DAILY)!)).toEqual({ day: "2026-11-02", ids: [...done, "hiragana:k7", "hiragana:k8", "hiragana:k9"] });
+    unmount();
+
+    // k8 was missed (box 0, due today) then right (box 1, due tomorrow): nothing due, allowance used.
+    open();
+    expect(await screen.findByText("Hiện chưa có mục nào đến hạn.")).toBeInTheDocument();
+  });
+
+  it("shows no stats line when the queue was empty from the start", async () => {
+    open({ kind: "kanji" });
+    expect(await screen.findByText("Chưa có gì để ôn. Học một bài để bắt đầu lịch ôn.")).toBeInTheDocument();
+    expect(screen.queryByText(/ngay lần đầu/)).not.toBeInTheDocument();
+  });
+});

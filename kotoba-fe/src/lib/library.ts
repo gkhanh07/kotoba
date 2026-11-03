@@ -2,6 +2,7 @@
 import type { Vocab } from "./flashcards";
 import type { Lang } from "./i18n";
 import type { Kana } from "./kana";
+import { isLearned, type Srs } from "./srs";
 
 type Translation = { vi: string; en: string };
 export type Lesson = { id: string; lesson: number; title: Translation };
@@ -47,6 +48,23 @@ export function prompt(src: PromptSource, rand: () => number): Prompt {
   if (src.kind === "vocab" && src.reading !== undefined && src.reading !== src.word) dirs.push("word-reading");
   const dir = dirs[Math.min(Math.floor(rand() * dirs.length), dirs.length - 1)];
   return dir === "meaning-word" ? { dir, front: src.meaning, frontIsJa: false } : { dir, front: src.word, frontIsJa: true };
+}
+
+// A lesson's scheduled items (kana, kanji, words), in lesson order. Grammar is read, not scheduled.
+export type Stop = { lesson: number; ids: string[] };
+
+export function stopsOf(items: { id: string; lesson: number }[]): Stop[] {
+  const byLesson = new Map<number, string[]>();
+  for (const i of items) byLesson.set(i.lesson, [...(byLesson.get(i.lesson) ?? []), i.id]);
+  return [...byLesson].sort(([a], [b]) => a - b).map(([lesson, ids]) => ({ lesson, ids }));
+}
+
+// The lesson being studied: the first one started but not finished, else the first one not finished.
+// Lesson numbers run on across levels, so finishing N5 moves on to N4 by itself.
+export function currentLesson(stops: Stop[], srs: Srs): number | undefined {
+  const learned = (p: Stop) => p.ids.filter((id) => isLearned(srs, id)).length;
+  const open = stops.filter((p) => p.ids.length > 0 && learned(p) < p.ids.length);
+  return (open.find((p) => learned(p) > 0) ?? open[0])?.lesson;
 }
 
 export const FILTERS = ["all", "learned", "new"] as const;
@@ -120,6 +138,7 @@ const en = {
     lede: "Kana, kanji and words that are due today, in one queue. Recall it, flip to check, then grade yourself honestly.",
     scope: { all: "Everything due", kana: "Kana due", kanji: "Kanji due", vocab: "Words due" } satisfies Record<"all" | Kind, string>,
     scopeLesson: (n: number, title: string) => `Lesson ${n} · ${title}`,
+    daily: (n: number) => `Due items and new items from lesson ${n}`,
     all: "Review everything",
     kinds: { kana: "Kana", kanji: "Kanji", vocab: "Words" } satisfies Record<Kind, string>,
     left: (n: number, parts: string) => `${n} left${parts ? ` · ${parts}` : ""}`,
@@ -137,6 +156,7 @@ const en = {
     gradedHit: (x: string, d: number) => `${x}: next review in ${d} ${d === 1 ? "day" : "days"}.`,
     gradedKnown: (x: string) => `${x}: known. It still comes back every 30 days.`,
     done: "Today’s queue is clear.",
+    stats: (n: number, pct: number, min: number) => `${n} ${n === 1 ? "item" : "items"} · ${pct}% right first time · ${min} min`,
     next: (d: number, n: number) => `Next review ${d === 1 ? "tomorrow" : `in ${d} days`}: ${n} ${n === 1 ? "item" : "items"}.`,
     study: (n: number) => `Study lesson ${n}`,
     path: "Open the lesson path",
@@ -231,6 +251,7 @@ const vi: typeof en = {
     lede: "Kana, kanji và từ vựng đến hạn hôm nay, chung một hàng đợi. Nhớ lại, lật thẻ để kiểm, rồi tự chấm thật lòng.",
     scope: { all: "Mọi mục đến hạn", kana: "Kana đến hạn", kanji: "Kanji đến hạn", vocab: "Từ vựng đến hạn" },
     scopeLesson: (n, title) => `Bài ${n} · ${title}`,
+    daily: (n) => `Mục đến hạn và mục mới của bài ${n}`,
     all: "Ôn tất cả",
     kinds: { kana: "Kana", kanji: "Kanji", vocab: "Từ vựng" },
     left: (n, parts) => `Còn ${n} mục${parts ? ` · ${parts}` : ""}`,
@@ -248,6 +269,7 @@ const vi: typeof en = {
     gradedHit: (x, d) => `${x}: ôn lại sau ${d} ngày.`,
     gradedKnown: (x) => `${x}: đã thuộc. Cứ 30 ngày sẽ quay lại một lần.`,
     done: "Xong hàng đợi hôm nay.",
+    stats: (n, pct, min) => `${n} mục · đúng ${pct}% ngay lần đầu · ${min} phút`,
     next: (d, n) => `Lần ôn tới: ${d === 1 ? "ngày mai" : `${d} ngày nữa`}, ${n} mục.`,
     study: (n) => `Học bài ${n}`,
     path: "Xem lộ trình bài học",

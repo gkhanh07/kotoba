@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { prompt, type PromptSource } from "./library";
+import { currentLesson, prompt, stopsOf, type PromptSource } from "./library";
 
 const VOCAB: PromptSource = { kind: "vocab", word: "水", reading: "みず", meaning: "nước" };
 const KANA_WORD: PromptSource = { kind: "vocab", word: "ねこ", reading: "ねこ", meaning: "mèo" };
@@ -57,5 +57,48 @@ describe("prompt", () => {
     let calls = 0;
     prompt(VOCAB, () => (calls++, 0.5));
     expect(calls).toBe(1);
+  });
+});
+
+describe("stopsOf", () => {
+  it("groups ids by lesson, lessons ascending, ids in input order", () => {
+    const items = [{ id: "vocab:水", lesson: 13 }, { id: "hiragana:a", lesson: 1 }, { id: "kanji:日", lesson: 8 }, { id: "hiragana:i", lesson: 1 }];
+    expect(stopsOf(items)).toEqual([
+      { lesson: 1, ids: ["hiragana:a", "hiragana:i"] },
+      { lesson: 8, ids: ["kanji:日"] },
+      { lesson: 13, ids: ["vocab:水"] },
+    ]);
+  });
+  it("is empty for no items", () => {
+    expect(stopsOf([])).toEqual([]);
+  });
+});
+
+describe("currentLesson", () => {
+  const card = (box: number) => ({ box, due: "2026-11-02", at: 1 });
+  const STOPS = [
+    { lesson: 1, ids: ["a", "b"] },
+    { lesson: 2, ids: [] },
+    { lesson: 3, ids: ["c", "d"] },
+    { lesson: 4, ids: ["e"] },
+  ];
+  it("is the first lesson with items for a new learner, skipping lessons without items", () => {
+    expect(currentLesson(STOPS, {})).toBe(1);
+    expect(currentLesson([{ lesson: 1, ids: [] }, ...STOPS.slice(2)], {})).toBe(3);
+  });
+  it("prefers a started lesson over an earlier untouched one", () => {
+    expect(currentLesson(STOPS, { c: card(1) })).toBe(3);
+  });
+  it("moves past a finished lesson to the next open one", () => {
+    expect(currentLesson(STOPS, { a: card(1), b: card(2) })).toBe(3);
+  });
+  it("counts a card back at box 0 as not learned", () => {
+    expect(currentLesson(STOPS, { a: card(0), b: card(0) })).toBe(1);
+    expect(currentLesson(STOPS, { a: card(1), b: card(0) })).toBe(1);
+  });
+  it("is undefined when every lesson is finished or there are none", () => {
+    const all = Object.fromEntries(["a", "b", "c", "d", "e"].map((id) => [id, card(3)]));
+    expect(currentLesson(STOPS, all)).toBeUndefined();
+    expect(currentLesson([], {})).toBeUndefined();
   });
 });

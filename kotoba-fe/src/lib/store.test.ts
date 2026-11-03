@@ -8,6 +8,7 @@ let store: Store;
 const SRS = "kotoba.srs.v1";
 const ACT = "kotoba.activity.v1";
 const SYNC = "kotoba.sync.v1";
+const DAILY = "kotoba.daily.v1";
 
 beforeEach(async () => {
   vi.resetModules();
@@ -185,7 +186,7 @@ describe("applyRemote and clearLocal", () => {
     expect(() => store.applyRemote({ cards: {}, activity: { days: {} } }, "a@b.co", 1)).not.toThrow();
   });
   it("clearLocal removes every key including the pre-SRS ones", () => {
-    for (const k of [SRS, ACT, SYNC, "kotoba.progress.v1", "kotoba.flashcards.v1"]) localStorage.setItem(k, "1");
+    for (const k of [SRS, ACT, SYNC, DAILY, "kotoba.progress.v1", "kotoba.flashcards.v1"]) localStorage.setItem(k, "1");
     localStorage.setItem("keep", "1");
     act(() => store.clearLocal());
     expect(Object.keys(localStorage)).toEqual(["keep"]);
@@ -247,5 +248,45 @@ describe("lapses (phase 16)", () => {
     act(() => store.applyRemote({ cards, activity: { days: {} } }, "a@b.co", 99));
     expect(result.current).toEqual({ srs: cards, ok: true });
     expect(JSON.parse(localStorage.getItem(SRS)!)).toEqual(cards);
+  });
+});
+
+describe("learnedToday (phase 18)", () => {
+  const daily = () => JSON.parse(localStorage.getItem(DAILY)!);
+  it("is 0 before anything was graded", () => {
+    expect(store.learnedToday()).toBe(0);
+  });
+  it("counts the first grade of a never-seen item, right or wrong, once", () => {
+    store.review("hiragana:a", true);
+    store.review("hiragana:i", false);
+    store.review("hiragana:i", true);
+    expect(daily()).toEqual({ day: "2026-11-02", ids: ["hiragana:a", "hiragana:i"] });
+    expect(store.learnedToday()).toBe(2);
+  });
+  it("does not count a card the deck already had", () => {
+    localStorage.setItem(SRS, JSON.stringify({ "hiragana:a": { box: 1, due: "2026-11-02", at: 1 } }));
+    store.review("hiragana:a", true);
+    expect(localStorage.getItem(DAILY)).toBeNull();
+    expect(store.learnedToday()).toBe(0);
+  });
+  it("starts again on the next study day", () => {
+    store.review("hiragana:a", true);
+    vi.setSystemTime(new Date("2026-11-02T17:00:00Z")); // Vietnam midnight
+    expect(store.learnedToday()).toBe(0);
+    store.review("hiragana:i", true);
+    expect(daily()).toEqual({ day: "2026-11-03", ids: ["hiragana:i"] });
+  });
+  it("counts 0 for an unreadable value and replaces it on the next new item", () => {
+    localStorage.setItem(DAILY, "broken");
+    expect(store.learnedToday()).toBe(0);
+    store.review("hiragana:a", true);
+    expect(daily()).toEqual({ day: "2026-11-02", ids: ["hiragana:a"] });
+  });
+  it("is 0 and grading still works when storage throws", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    expect(store.learnedToday()).toBe(0);
+    expect(store.review("hiragana:a", true)["hiragana:a"].box).toBe(1);
   });
 });
