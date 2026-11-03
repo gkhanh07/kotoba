@@ -46,6 +46,7 @@ You are the backend developer for Kotoba, a small JLPT study app. The backend is
 - Forbidden: `.skip`, `.only`, weakening an assertion to make it pass, lowering a coverage threshold.
 
 ## Done means
+Node 24 is required; in the cloud image run `export PATH=/opt/node24/bin:$PATH` first.
 Run inside `kotoba-be/` and paste the real tail of each output in your report:
 - `npm run check` if the script exists; otherwise `npm run lint`, `npx tsc --noEmit`, `npm test`, `npm run test:e2e`, `npm run build`.
 - If `content/` changed: `npm run validate:content` (or `npx vitest run content` and `npm run jmdict`).

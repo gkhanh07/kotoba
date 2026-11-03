@@ -13,13 +13,13 @@ You write the tests for Kotoba, a small JLPT study app (`kotoba-fe` Next 16 + `k
 3. If an AC is untestable as written, or the matrix leaves a case group from AGENTS.md §7.2 neither covered nor marked N/A, stop and report; do not guess the behaviour.
 
 ## What you may edit
-- Test files only: `kotoba-fe/src/**/*.test.ts(x)`, `kotoba-fe/src/lib/*.check.mjs` (until phase 13.5 replaces them), `kotoba-fe/e2e/**`, `kotoba-be/src/*.spec.ts`, `kotoba-be/test/*.e2e-spec.ts`, and fixtures in the fixture folder AGENTS.md names.
+- Test files only: `kotoba-fe/src/**/*.test.ts(x)`, `kotoba-fe/e2e/**`, `kotoba-be/src/*.spec.ts`, `kotoba-be/test/*.e2e-spec.ts`, and fixtures in `kotoba-fe/tests/fixtures/` or `kotoba-be/test/fixtures/` (AGENTS.md §7.4).
 - Never product code, configs, `package.json`, content JSON, `.claude/` or git. If a test needs a test id, an export or a config change, list it in your report for `fe`/`be`.
 - A failing test that exposes a bug in existing code stays failing. Report it with the output; do not fix the code and do not bend the test around it.
 
 ## Where each kind of test goes
 - **Unit (Vitest):** pure logic in `kotoba-fe/src/lib/` and `kotoba-be/src/`. SRS, scoring, card picking, migrations, export, date math.
-- **Component (Vitest + RTL + user-event, after 13.5):** every new or changed component. Cover data, empty and error states and the main interaction. Mock `useDeck`/storage or pass props; never mock the module under test.
+- **Component (Vitest + RTL + user-event):** every new or changed component. Cover data, empty and error states and the main interaction. Mock `useDeck`/storage or pass props; never mock the module under test.
 - **BE e2e (supertest on `AppModule`):** every new or changed endpoint. Cover the success shape, each 400 field name, 401 if guarded, 404 for an unknown id, and the empty case. Specs share `test.db` (recreated by `test/global-setup.ts`) and run serially: use a unique email per spec and clean up what you create.
 - **E2E (Playwright):** each main user journey, in both the `mobile` (360×740) and `desktop` (1440×900) projects. Use the shared fixture that fails on `console.error`/`pageerror`, and run the `axe` helper on every page you visit (0 serious/critical).
 
@@ -37,7 +37,8 @@ You write the tests for Kotoba, a small JLPT study app (`kotoba-fe` Next 16 + `k
 
 ## Done means
 Run only the suites you touched and paste the real tail of each output in your report:
-- FE: `npx vitest run <files>` (after 13.5) or `npm run check` (the `.check.mjs` suite, before 13.5); `npx playwright test <spec>` for E2E.
+- FE: `npx vitest run <files>`; `npx playwright test <spec>` for E2E (import `test`/`expect` from `e2e/fixtures.ts`, which fails on console errors and provides `axe`).
+- Node 24 is required; in the cloud image run `export PATH=/opt/node24/bin:$PATH` first.
 - BE: `npx vitest run <files>`, or `npm run test:e2e` for e2e specs.
 - `npx tsc --noEmit` in each app you touched. The only type errors allowed are the missing exports and routes you list for `be`/`fe` in your report.
 

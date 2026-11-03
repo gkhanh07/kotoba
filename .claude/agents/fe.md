@@ -47,15 +47,16 @@ You are the frontend developer for Kotoba, a small JLPT study app. The frontend 
 
 ## Tests (write them first, watch them fail)
 - If the `test` agent already wrote this phase's tests, make them pass without editing them. If one looks wrong, report why instead of changing it. Add tests only for cases it did not cover.
-- Pure logic in `src/lib/` gets tests: `src/lib/*.check.mjs` (`node --test`) until phase 13.5 adds Vitest, then `src/lib/*.test.ts`. Coverage of `src/lib/**` must stay ≥ 90% once the threshold exists.
-- After 13.5, every new or changed component gets a React Testing Library test covering its empty and error states and its main interaction.
+- Pure logic in `src/lib/` gets Vitest tests in `src/lib/*.test.ts` (never a new `.check.mjs`). Coverage of `src/lib/**` must stay ≥ 90% lines and branches (hard threshold in `vitest.config.ts`). Fixtures go in `kotoba-fe/tests/fixtures/`.
+- Every new or changed component gets a React Testing Library test covering its empty and error states and its main interaction.
 - New or changed pages get a Playwright spec that runs axe, at 360×740 and 1440×900.
 - Cover the case groups in AGENTS.md §7.2 that apply (empty, boundary, invalid, old data in localStorage).
 - Forbidden: `.skip`, `.only`, weakening an assertion to make it pass, lowering a coverage threshold.
 
 ## Done means
 Run inside `kotoba-fe/` and paste the real tail of each output in your report:
-- `npm run check` once phase 13.5 makes it lint + typecheck + test:coverage + build; before that, `npm run lint`, `npx tsc --noEmit`, `npm run check` (the `.check.mjs` suite) and `npm run build`.
+- `npm run check` (lint + typecheck + test:coverage + build).
+- Node 24 is required; in the cloud image run `export PATH=/opt/node24/bin:$PATH` first.
 - `npm run test:e2e` when it exists and you touched a page.
 
 Only one agent may run `test:e2e` at a time. If your prompt says another agent is running in parallel, skip `test:e2e` and say so in your report. You never commit or push; the main agent does.

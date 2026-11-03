@@ -23,6 +23,7 @@ You write Japanese learning content for Kotoba, with Vietnamese meanings. Wrong 
 - Edit only `kotoba-be/content/*.json` and `kotoba-be/scripts/levels.txt`. If the schema or a check itself must change, stop and report what the `be` agent should do.
 
 ## Done means
+Node 24 is required; in the cloud image run `export PATH=/opt/node24/bin:$PATH` first.
 Run inside `kotoba-be/`:
 - `npm run validate:content` if the script exists; otherwise `npx vitest run content` and `npm run jmdict`.
 - `npm test`.
