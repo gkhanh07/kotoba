@@ -1,6 +1,6 @@
 [
   {
-    "id": "grammar:wa-desu", "slug": "wa-desu", "lesson": 5, "pattern": "〜は 〜です",
+    "id": "grammar:wa-desu", "slug": "wa-desu", "lesson": 5, "level": 5, "pattern": "〜は 〜です",
     "title": { "vi": "A là B", "en": "A is B" },
     "structure": "N1 は N2 です",
     "explain": {
@@ -15,7 +15,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:ja-arimasen", "slug": "ja-arimasen", "lesson": 5, "pattern": "〜じゃ ありません",
+    "id": "grammar:ja-arimasen", "slug": "ja-arimasen", "lesson": 5, "level": 5, "pattern": "〜じゃ ありません",
     "title": { "vi": "A không phải là B", "en": "A is not B" },
     "structure": "N1 は N2 じゃ ありません",
     "explain": {
@@ -29,7 +29,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:ka", "slug": "ka", "lesson": 5, "pattern": "〜か",
+    "id": "grammar:ka", "slug": "ka", "lesson": 5, "level": 5, "pattern": "〜か",
     "title": { "vi": "Câu hỏi có hoặc không", "en": "Yes-or-no questions" },
     "structure": "câu + か",
     "explain": {
@@ -44,7 +44,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:no", "slug": "no", "lesson": 5, "pattern": "N1 の N2",
+    "id": "grammar:no", "slug": "no", "lesson": 5, "level": 5, "pattern": "N1 の N2",
     "title": { "vi": "N2 của N1", "en": "N1's N2" },
     "structure": "N1 の N2",
     "explain": {
@@ -58,7 +58,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:sai", "slug": "sai", "lesson": 6, "pattern": "〜さい",
+    "id": "grammar:sai", "slug": "sai", "lesson": 6, "level": 5, "pattern": "〜さい",
     "title": { "vi": "Nói tuổi", "en": "Saying your age" },
     "structure": "số + さい / なんさい ですか",
     "explain": {
@@ -73,7 +73,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:ni-time", "slug": "ni-time", "lesson": 7, "pattern": "時間 + に",
+    "id": "grammar:ni-time", "slug": "ni-time", "lesson": 7, "level": 5, "pattern": "時間 + に",
     "title": { "vi": "Vào lúc (thời điểm)", "en": "At (a point in time)" },
     "structure": "giờ / ngày + に + V",
     "explain": {
@@ -91,7 +91,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:kara-made", "slug": "kara-made", "lesson": 7, "pattern": "〜から 〜まで",
+    "id": "grammar:kara-made", "slug": "kara-made", "lesson": 7, "level": 5, "pattern": "〜から 〜まで",
     "title": { "vi": "Từ ~ đến ~", "en": "From ~ to ~" },
     "structure": "N1 から N2 まで",
     "explain": {
@@ -105,7 +105,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:mo", "slug": "mo", "lesson": 8, "pattern": "〜も",
+    "id": "grammar:mo", "slug": "mo", "lesson": 8, "level": 5, "pattern": "〜も",
     "title": { "vi": "Cũng", "en": "Also, too" },
     "structure": "N + も",
     "explain": {
@@ -119,7 +119,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:to", "slug": "to", "lesson": 9, "pattern": "〜と",
+    "id": "grammar:to", "slug": "to", "lesson": 9, "level": 5, "pattern": "〜と",
     "title": { "vi": "Và; cùng với", "en": "And; together with" },
     "structure": "N1 と N2 / N と V",
     "explain": {
@@ -133,7 +133,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:kore-sore-are", "slug": "kore-sore-are", "lesson": 10, "pattern": "これ・それ・あれ",
+    "id": "grammar:kore-sore-are", "slug": "kore-sore-are", "lesson": 10, "level": 5, "pattern": "これ・それ・あれ",
     "title": { "vi": "Cái này, cái đó, cái kia", "en": "This, that, that over there" },
     "structure": "これ / それ / あれ は N です",
     "explain": {
@@ -147,7 +147,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:kono-sono-ano", "slug": "kono-sono-ano", "lesson": 10, "pattern": "この・その・あの + N",
+    "id": "grammar:kono-sono-ano", "slug": "kono-sono-ano", "lesson": 10, "level": 5, "pattern": "この・その・あの + N",
     "title": { "vi": "N này, N đó, N kia", "en": "This N, that N" },
     "structure": "この / その / あの + N",
     "explain": {
@@ -161,7 +161,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:doko", "slug": "doko", "lesson": 11, "pattern": "〜は どこですか",
+    "id": "grammar:doko", "slug": "doko", "lesson": 11, "level": 5, "pattern": "〜は どこですか",
     "title": { "vi": "~ ở đâu?", "en": "Where is ~?" },
     "structure": "N は どこ ですか / ここ・そこ・あそこ です",
     "explain": {
@@ -175,7 +175,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:no-ue", "slug": "no-ue", "lesson": 11, "pattern": "N の 上・下・中",
+    "id": "grammar:no-ue", "slug": "no-ue", "lesson": 11, "level": 5, "pattern": "N の 上・下・中",
     "title": { "vi": "Trên, dưới, trong N", "en": "On, under, in N" },
     "structure": "N の 上 / 下 / 中 / 前 / 後ろ",
     "explain": {
@@ -189,7 +189,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:de-place", "slug": "de-place", "lesson": 12, "pattern": "場所 + で",
+    "id": "grammar:de-place", "slug": "de-place", "lesson": 12, "level": 5, "pattern": "場所 + で",
     "title": { "vi": "Ở (nơi làm việc gì)", "en": "At (where something is done)" },
     "structure": "nơi chốn + で + V",
     "explain": {
@@ -203,7 +203,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:wo", "slug": "wo", "lesson": 13, "pattern": "N を V",
+    "id": "grammar:wo", "slug": "wo", "lesson": 13, "level": 5, "pattern": "N を V",
     "title": { "vi": "Tân ngữ của động từ", "en": "The object of a verb" },
     "structure": "N を V",
     "explain": {
@@ -217,7 +217,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:ga-suki", "slug": "ga-suki", "lesson": 13, "pattern": "〜が すきです",
+    "id": "grammar:ga-suki", "slug": "ga-suki", "lesson": 13, "level": 5, "pattern": "〜が すきです",
     "title": { "vi": "Thích ~", "en": "To like ~" },
     "structure": "N が すき / きらい です",
     "explain": {
@@ -232,7 +232,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:wo-kudasai", "slug": "wo-kudasai", "lesson": 13, "pattern": "〜を ください",
+    "id": "grammar:wo-kudasai", "slug": "wo-kudasai", "lesson": 13, "level": 5, "pattern": "〜を ください",
     "title": { "vi": "Cho tôi ~", "en": "~, please" },
     "structure": "N を ください",
     "explain": {
@@ -246,7 +246,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:he-iku", "slug": "he-iku", "lesson": 14, "pattern": "場所 + へ 行きます",
+    "id": "grammar:he-iku", "slug": "he-iku", "lesson": 14, "level": 5, "pattern": "場所 + へ 行きます",
     "title": { "vi": "Đi đến (nơi nào)", "en": "To go to (a place)" },
     "structure": "nơi chốn + へ + 行きます / 来ます / かえります",
     "explain": {
@@ -261,7 +261,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:de-means", "slug": "de-means", "lesson": 14, "pattern": "乗り物 + で",
+    "id": "grammar:de-means", "slug": "de-means", "lesson": 14, "level": 5, "pattern": "乗り物 + で",
     "title": { "vi": "Bằng (phương tiện)", "en": "By (a means)" },
     "structure": "phương tiện + で + V",
     "explain": {
@@ -275,7 +275,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:ikura", "slug": "ikura", "lesson": 15, "pattern": "〜は いくらですか",
+    "id": "grammar:ikura", "slug": "ikura", "lesson": 15, "level": 5, "pattern": "〜は いくらですか",
     "title": { "vi": "~ bao nhiêu tiền?", "en": "How much is ~?" },
     "structure": "N は いくら ですか",
     "explain": {
@@ -290,7 +290,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:desu-ne", "slug": "desu-ne", "lesson": 16, "pattern": "〜ね・〜よ",
+    "id": "grammar:desu-ne", "slug": "desu-ne", "lesson": 16, "level": 5, "pattern": "〜ね・〜よ",
     "title": { "vi": "Nhỉ; đấy", "en": "Isn't it; you know" },
     "structure": "câu + ね / よ",
     "explain": {
@@ -304,7 +304,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:wa-ga", "slug": "wa-ga", "lesson": 17, "pattern": "〜は 〜が adj",
+    "id": "grammar:wa-ga", "slug": "wa-ga", "lesson": 17, "level": 5, "pattern": "〜は 〜が adj",
     "title": { "vi": "~ thì (bộ phận) ~", "en": "~ has (a part that is) ~" },
     "structure": "N1 は N2 が adj です",
     "explain": {
@@ -318,7 +318,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:i-adj", "slug": "i-adj", "lesson": 18, "pattern": "い形容詞",
+    "id": "grammar:i-adj", "slug": "i-adj", "lesson": 18, "level": 5, "pattern": "い形容詞",
     "title": { "vi": "Tính từ đuôi い", "en": "い-adjectives" },
     "structure": "adj-い + N / adj-い です / adj-くない です",
     "explain": {
@@ -333,7 +333,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:na-adj", "slug": "na-adj", "lesson": 18, "pattern": "な形容詞",
+    "id": "grammar:na-adj", "slug": "na-adj", "lesson": 18, "level": 5, "pattern": "な形容詞",
     "title": { "vi": "Tính từ đuôi な", "en": "な-adjectives" },
     "structure": "adj + な + N / adj です / adj じゃ ありません",
     "explain": {
@@ -348,7 +348,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:masu", "slug": "masu", "lesson": 19, "pattern": "V-ます・V-ません",
+    "id": "grammar:masu", "slug": "masu", "lesson": 19, "level": 5, "pattern": "V-ます・V-ません",
     "title": { "vi": "Động từ thể lịch sự", "en": "Polite verbs" },
     "structure": "V-ます / V-ません",
     "explain": {
@@ -362,7 +362,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:te-kudasai", "slug": "te-kudasai", "lesson": 20, "pattern": "V-て ください",
+    "id": "grammar:te-kudasai", "slug": "te-kudasai", "lesson": 20, "level": 5, "pattern": "V-て ください",
     "title": { "vi": "Hãy làm ~", "en": "Please do ~" },
     "structure": "V-て + ください",
     "explain": {
@@ -376,7 +376,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:te-imasu", "slug": "te-imasu", "lesson": 20, "pattern": "V-て います",
+    "id": "grammar:te-imasu", "slug": "te-imasu", "lesson": 20, "level": 5, "pattern": "V-て います",
     "title": { "vi": "Đang làm ~", "en": "Is doing ~" },
     "structure": "V-て + います",
     "explain": {
@@ -390,7 +390,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:arimasu-imasu", "slug": "arimasu-imasu", "lesson": 21, "pattern": "〜が あります・います",
+    "id": "grammar:arimasu-imasu", "slug": "arimasu-imasu", "lesson": 21, "level": 5, "pattern": "〜が あります・います",
     "title": { "vi": "Có; ở", "en": "There is; to be (somewhere)" },
     "structure": "nơi chốn に N が あります / います",
     "explain": {
@@ -404,7 +404,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:mashita", "slug": "mashita", "lesson": 22, "pattern": "V-ました・V-ませんでした",
+    "id": "grammar:mashita", "slug": "mashita", "lesson": 22, "level": 5, "pattern": "V-ました・V-ませんでした",
     "title": { "vi": "Động từ quá khứ", "en": "Past tense verbs" },
     "structure": "V-ました / V-ませんでした",
     "explain": {
@@ -418,7 +418,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:deshita", "slug": "deshita", "lesson": 22, "pattern": "〜でした・〜かったです",
+    "id": "grammar:deshita", "slug": "deshita", "lesson": 22, "level": 5, "pattern": "〜でした・〜かったです",
     "title": { "vi": "Danh từ và tính từ ở quá khứ", "en": "Past nouns and adjectives" },
     "structure": "N / adj-な でした · adj-い → かったです",
     "explain": {
@@ -433,7 +433,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:tai", "slug": "tai", "lesson": 23, "pattern": "V-たいです",
+    "id": "grammar:tai", "slug": "tai", "lesson": 23, "level": 5, "pattern": "V-たいです",
     "title": { "vi": "Muốn làm ~", "en": "Want to do ~" },
     "structure": "V (bỏ ます) + たいです",
     "explain": {
@@ -447,7 +447,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:masenka", "slug": "masenka", "lesson": 23, "pattern": "V-ませんか・V-ましょう",
+    "id": "grammar:masenka", "slug": "masenka", "lesson": 23, "level": 5, "pattern": "V-ませんか・V-ましょう",
     "title": { "vi": "Rủ rê: cùng ~ nhé", "en": "Invitations: shall we ~" },
     "structure": "V-ませんか / V-ましょう",
     "explain": {
@@ -461,7 +461,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:yori", "slug": "yori", "lesson": 24, "pattern": "〜は 〜より adj",
+    "id": "grammar:yori", "slug": "yori", "lesson": 24, "level": 5, "pattern": "〜は 〜より adj",
     "title": { "vi": "A hơn B", "en": "A is more ~ than B" },
     "structure": "N1 は N2 より adj です",
     "explain": {
@@ -475,7 +475,7 @@
     "reviewed": false
   },
   {
-    "id": "grammar:ichiban", "slug": "ichiban", "lesson": 24, "pattern": "〜の 中で 〜が いちばん",
+    "id": "grammar:ichiban", "slug": "ichiban", "lesson": 24, "level": 5, "pattern": "〜の 中で 〜が いちばん",
     "title": { "vi": "Nhất trong ~", "en": "The most ~ of all" },
     "structure": "N1 の 中で N2 が いちばん adj です",
     "explain": {

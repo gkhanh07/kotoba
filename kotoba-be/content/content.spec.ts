@@ -1,7 +1,7 @@
 // Integrity of the hand-written and generated content. Runs with `npm test`.
 import { readFileSync } from 'node:fs';
 
-type Item = Record<string, unknown> & { id: string; lesson?: number };
+type Item = Record<string, unknown> & { id: string; lesson?: number; level?: number };
 const load = (f: string) => JSON.parse(readFileSync(new URL(`${f}.json`, import.meta.url), 'utf8')) as Item[];
 const kana = load('kana');
 const kanji = load('kanji');
@@ -45,10 +45,32 @@ describe('content', () => {
     expect(kanji.reduce((n, k) => n + similar(k).length, 0)).toBe(22);
   });
 
-  // Words with harder kanji are written in kana, with the full form kept in `kanji`.
-  it('writes vocab only with N5 kanji', () => {
-    const n5 = new Set(kanji.map((k) => k.char));
-    const bad = vocab.filter((v) => [...(v.word as string).matchAll(/[一-鿿]/g)].some(([c]) => !n5.has(c)));
+  // JLPT levels 5 (easiest) to 2 (phase 22). Every item and every paper names exactly one.
+  const LEVELS = [5, 4, 3, 2];
+  it('gives every item and paper a level', () => {
+    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as Item[];
+    expect([...all, ...papers].filter((d) => !LEVELS.includes(d.level as number)).map((d) => d.id)).toEqual([]);
+  });
+
+  it("keeps a lesson's items at the lesson's level", () => {
+    const levelOf = new Map(lessons.map((l) => [l.lesson, l.level]));
+    expect(all.filter((d) => typeof d.lesson === 'number' && d.level !== levelOf.get(d.lesson)).map((d) => d.id)).toEqual([]);
+  });
+
+  // Kanji gate: a word is written only with kanji of its own level or easier (a higher number);
+  // words with harder kanji are written in kana, with the full form kept in `kanji`.
+  it('writes vocab only with kanji at its level or easier', () => {
+    const kanjiLevel = new Map(kanji.map((k) => [k.char as string, k.level as number]));
+    const bad = vocab.filter((v) =>
+      [...(v.word as string).matchAll(/[一-鿿]/g)].some(([c]) => (kanjiLevel.get(c) ?? 0) < (v.level as number)),
+    );
+    expect(bad.map((v) => v.id)).toEqual([]);
+  });
+
+  // While there is only N5 content, the gate above means: N5 words use only N5 kanji.
+  it('writes N5 vocab only with N5 kanji', () => {
+    const n5 = new Set(kanji.filter((k) => k.level === 5).map((k) => k.char));
+    const bad = vocab.filter((v) => v.level === 5 && [...(v.word as string).matchAll(/[一-鿿]/g)].some(([c]) => !n5.has(c)));
     expect(bad.map((v) => v.id)).toEqual([]);
   });
 

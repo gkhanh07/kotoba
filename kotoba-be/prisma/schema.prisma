@@ -39,12 +39,14 @@ model Item {
   id     String  @id
   kind   String
   lesson Int?
+  level  Int     @default(5)
   sort   Int
   search String
   data   String
   cards  Card[]
 
   @@index([kind, sort])
+  @@index([kind, level, sort])
 }
 
 model Card {

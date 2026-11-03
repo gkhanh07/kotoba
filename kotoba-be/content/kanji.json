@@ -24,6 +24,7 @@
   "freq": 1,
   "vi": "mặt trời; ngày",
   "lesson": 8,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "目"
@@ -51,6 +52,7 @@
   "freq": 2,
   "vi": "một",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -73,6 +75,7 @@
   "freq": 3,
   "vi": "đất nước",
   "lesson": 5,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -104,6 +107,7 @@
   "freq": 4,
   "vi": "gặp; hội",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -128,6 +132,7 @@
   "freq": 5,
   "vi": "người",
   "lesson": 9,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "入"
@@ -153,6 +158,7 @@
   "freq": 6,
   "vi": "năm (thời gian)",
   "lesson": 7,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -179,6 +185,7 @@
   "freq": 7,
   "vi": "to, lớn",
   "lesson": 18,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "天"
@@ -207,6 +214,7 @@
   "freq": 8,
   "vi": "mười",
   "lesson": 6,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "千"
@@ -235,6 +243,7 @@
   "freq": 9,
   "vi": "hai",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -263,6 +272,7 @@
   "freq": 10,
   "vi": "sách; gốc",
   "lesson": 10,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "木"
@@ -294,6 +304,7 @@
   "freq": 11,
   "vi": "trong, giữa",
   "lesson": 11,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -321,6 +332,7 @@
   "freq": 12,
   "vi": "dài",
   "lesson": 18,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -354,6 +366,7 @@
   "freq": 13,
   "vi": "ra",
   "lesson": 14,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -379,6 +392,7 @@
   "freq": 14,
   "vi": "ba",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -403,6 +417,7 @@
   "freq": 16,
   "vi": "giờ; thời gian",
   "lesson": 7,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -443,6 +458,7 @@
   "freq": 20,
   "vi": "đi",
   "lesson": 14,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -468,6 +484,7 @@
   "freq": 21,
   "vi": "công ty; đền thờ",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -498,6 +515,7 @@
   "freq": 22,
   "vi": "nhìn, xem",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -521,6 +539,7 @@
   "freq": 23,
   "vi": "mặt trăng; tháng",
   "lesson": 8,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -561,6 +580,7 @@
   "freq": 24,
   "vi": "phút; chia, hiểu",
   "lesson": 7,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -590,6 +610,7 @@
   "freq": 26,
   "vi": "sau",
   "lesson": 7,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -613,6 +634,7 @@
   "freq": 27,
   "vi": "trước",
   "lesson": 7,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -655,6 +677,7 @@
   "freq": 29,
   "vi": "sống; sinh ra",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -677,6 +700,7 @@
   "freq": 31,
   "vi": "năm (số 5)",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -702,6 +726,7 @@
   "freq": 33,
   "vi": "khoảng giữa; thời gian",
   "lesson": 7,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "聞"
@@ -744,6 +769,7 @@
   "freq": 35,
   "vi": "trên",
   "lesson": 11,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -765,6 +791,7 @@
   "freq": 37,
   "vi": "đông",
   "lesson": 11,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -789,6 +816,7 @@
   "freq": 47,
   "vi": "bốn",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -811,6 +839,7 @@
   "freq": 49,
   "vi": "bây giờ",
   "lesson": 7,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -835,6 +864,7 @@
   "freq": 51,
   "vi": "mới",
   "lesson": 18,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -860,6 +890,7 @@
   "freq": 53,
   "vi": "vàng; tiền",
   "lesson": 8,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -884,6 +915,7 @@
   "freq": 55,
   "vi": "chín",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -912,6 +944,7 @@
   "freq": 56,
   "vi": "vào",
   "lesson": 14,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "人",
@@ -951,6 +984,7 @@
   "freq": 58,
   "vi": "đứng",
   "lesson": 14,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -976,6 +1010,7 @@
   "freq": 60,
   "vi": "tay",
   "lesson": 17,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -999,6 +1034,7 @@
   "freq": 63,
   "vi": "học",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1026,6 +1062,7 @@
   "freq": 65,
   "vi": "cao; đắt",
   "lesson": 15,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1053,6 +1090,7 @@
   "freq": 69,
   "vi": "yên (tiền Nhật); hình tròn",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1082,6 +1120,7 @@
   "freq": 72,
   "vi": "con, trẻ em",
   "lesson": 9,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1112,6 +1151,7 @@
   "freq": 76,
   "vi": "mắt",
   "lesson": 17,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "日"
@@ -1141,6 +1181,7 @@
   "freq": 81,
   "vi": "ngoài",
   "lesson": 11,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1166,6 +1207,7 @@
   "freq": 83,
   "vi": "nói",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1192,6 +1234,7 @@
   "freq": 92,
   "vi": "tám",
   "lesson": 6,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "入"
@@ -1220,6 +1263,7 @@
   "freq": 93,
   "vi": "sáu",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1259,6 +1303,7 @@
   "freq": 97,
   "vi": "dưới",
   "lesson": 11,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1296,6 +1341,7 @@
   "freq": 102,
   "vi": "đến",
   "lesson": 14,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1323,6 +1369,7 @@
   "freq": 113,
   "vi": "khí; tinh thần",
   "lesson": 16,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1348,6 +1395,7 @@
   "freq": 114,
   "vi": "nhỏ",
   "lesson": 18,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "少"
@@ -1374,6 +1422,7 @@
   "freq": 115,
   "vi": "bảy",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1397,6 +1446,7 @@
   "freq": 131,
   "vi": "núi",
   "lesson": 16,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1420,6 +1470,7 @@
   "freq": 134,
   "vi": "nói chuyện",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1445,6 +1496,7 @@
   "freq": 139,
   "vi": "nhiều",
   "lesson": 18,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1475,6 +1527,7 @@
   "freq": 144,
   "vi": "rẻ; yên ổn",
   "lesson": 15,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1502,6 +1555,7 @@
   "freq": 151,
   "vi": "phụ nữ, con gái",
   "lesson": 9,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1523,6 +1577,7 @@
   "freq": 153,
   "vi": "bắc",
   "lesson": 11,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1547,6 +1602,7 @@
   "freq": 154,
   "vi": "giữa trưa",
   "lesson": 7,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1571,6 +1627,7 @@
   "freq": 163,
   "vi": "trăm",
   "lesson": 6,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "白"
@@ -1597,6 +1654,7 @@
   "freq": 169,
   "vi": "viết",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1624,6 +1682,7 @@
   "freq": 173,
   "vi": "trước, đi trước",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1650,6 +1709,7 @@
   "freq": 177,
   "vi": "tên",
   "lesson": 9,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1673,6 +1733,7 @@
   "freq": 181,
   "vi": "sông",
   "lesson": 16,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1694,6 +1755,7 @@
   "freq": 195,
   "vi": "nghìn",
   "lesson": 6,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "十"
@@ -1727,6 +1789,7 @@
   "freq": 207,
   "vi": "con đường",
   "lesson": 14,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1749,6 +1812,7 @@
   "freq": 223,
   "vi": "nước",
   "lesson": 8,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1774,6 +1838,7 @@
   "freq": 224,
   "vi": "một nửa, rưỡi",
   "lesson": 7,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1797,6 +1862,7 @@
   "freq": 240,
   "vi": "đàn ông, con trai",
   "lesson": 9,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1822,6 +1888,7 @@
   "freq": 259,
   "vi": "tây",
   "lesson": 11,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1841,6 +1908,7 @@
   "freq": 268,
   "vi": "điện",
   "lesson": 14,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1863,6 +1931,7 @@
   "freq": 284,
   "vi": "miệng",
   "lesson": 17,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1887,6 +1956,7 @@
   "freq": 287,
   "vi": "ít",
   "lesson": 18,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "小"
@@ -1916,6 +1986,7 @@
   "freq": 294,
   "vi": "trường",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1941,6 +2012,7 @@
   "freq": 301,
   "vi": "ngôn ngữ, từ",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -1975,6 +2047,7 @@
   "freq": 304,
   "vi": "bầu trời; trống",
   "lesson": 16,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2002,6 +2075,7 @@
   "freq": 307,
   "vi": "đất",
   "lesson": 8,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2026,6 +2100,7 @@
   "freq": 317,
   "vi": "cây, gỗ",
   "lesson": 8,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "本"
@@ -2056,6 +2131,7 @@
   "freq": 319,
   "vi": "nghe; hỏi",
   "lesson": 12,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "間"
@@ -2086,6 +2162,7 @@
   "freq": 328,
   "vi": "ăn",
   "lesson": 13,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2107,6 +2184,7 @@
   "freq": 333,
   "vi": "xe",
   "lesson": 14,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2131,6 +2209,7 @@
   "freq": 340,
   "vi": "cái gì",
   "lesson": 15,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2153,6 +2232,7 @@
   "freq": 341,
   "vi": "nam (hướng)",
   "lesson": 11,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2180,6 +2260,7 @@
   "freq": 343,
   "vi": "chân",
   "lesson": 17,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2204,6 +2285,7 @@
   "freq": 375,
   "vi": "vạn, mười nghìn",
   "lesson": 6,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2227,6 +2309,7 @@
   "freq": 378,
   "vi": "cửa hàng",
   "lesson": 15,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2249,6 +2332,7 @@
   "freq": 436,
   "vi": "mỗi",
   "lesson": 7,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "母"
@@ -2276,6 +2360,7 @@
   "freq": 483,
   "vi": "trắng",
   "lesson": 18,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "百"
@@ -2302,6 +2387,7 @@
   "freq": 509,
   "vi": "cũ",
   "lesson": 18,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2327,6 +2413,7 @@
   "freq": 512,
   "vi": "trời",
   "lesson": 16,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "大"
@@ -2351,6 +2438,7 @@
   "freq": 520,
   "vi": "mua",
   "lesson": 15,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2370,6 +2458,7 @@
   "freq": 540,
   "vi": "tuần",
   "lesson": 7,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2392,6 +2481,7 @@
   "freq": 570,
   "vi": "mẹ",
   "lesson": 9,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "毎"
@@ -2418,6 +2508,7 @@
   "freq": 574,
   "vi": "lửa",
   "lesson": 8,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2440,6 +2531,7 @@
   "freq": 578,
   "vi": "hoa",
   "lesson": 16,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2462,6 +2554,7 @@
   "freq": 602,
   "vi": "phải (bên phải)",
   "lesson": 11,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "左"
@@ -2490,6 +2583,7 @@
   "freq": 618,
   "vi": "đọc",
   "lesson": 12,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2511,6 +2605,7 @@
   "freq": 622,
   "vi": "bạn",
   "lesson": 9,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2534,6 +2629,7 @@
   "freq": 630,
   "vi": "trái (bên trái)",
   "lesson": 11,
+  "level": 5,
   "reviewed": false,
   "similar": [
    "右"
@@ -2563,6 +2659,7 @@
   "freq": 642,
   "vi": "nghỉ",
   "lesson": 14,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2585,6 +2682,7 @@
   "freq": 646,
   "vi": "bố",
   "lesson": 9,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2604,6 +2702,7 @@
   "freq": 724,
   "vi": "nhà ga",
   "lesson": 14,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2628,6 +2727,7 @@
   "freq": 950,
   "vi": "mưa",
   "lesson": 16,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2656,6 +2756,7 @@
   "freq": 969,
   "vi": "uống",
   "lesson": 13,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2679,6 +2780,7 @@
   "freq": 1208,
   "vi": "cá",
   "lesson": 13,
+  "level": 5,
   "reviewed": false
  },
  {
@@ -2700,6 +2802,7 @@
   "freq": 1328,
   "vi": "tai",
   "lesson": 17,
+  "level": 5,
   "reviewed": false
  }
 ]

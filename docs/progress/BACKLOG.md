@@ -36,3 +36,6 @@ Each should either handle the error (e.g. mark the deck as `ok: false`) or repor
 - `kotoba-fe/src/lib/auth.ts:21-25` forwards the client's own `x-forwarded-for` to kotoba-be's rate limiter, so a client facing Next directly can pick its IP (already flagged "ponytail"). `e2e/daily.spec.ts` relies on it to get its own sign-up allowance.
 - Dashboard due counts every card in the stored deck; `/review` only items that exist in content. A leftover card id would show "1 đến hạn" with an empty queue (predates phase 18; now also decides where "Tiếp tục học" goes).
 - Possible flake: `e2e/test.spec.ts:109` (full n5-1 run, desktop) hit the 30 s test timeout inside `axe()` once on a slow run (3.4 min suite); the rerun passed 52/52. Watch it; if it recurs, give that test a longer timeout or split its axe scans.
+
+## Phase 22 follow-ups
+- `GET /content/:kind?page=` pages in memory after the field filters (reads the whole kind + level each call, ~12 ms at 5,000 rows). Use `skip/take` in SQL when no field filter is set if lists grow further.

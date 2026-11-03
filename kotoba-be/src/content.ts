@@ -29,3 +29,10 @@ export function searchText(d: Record<string, unknown>): string {
   FIELDS.forEach((f) => add(d[f]));
   return out.join('\n');
 }
+
+export type Page<T> = { items: T[]; page: number; pages: number; total: number };
+
+// Page 1 always exists, so an empty list is an empty page rather than a page past the end.
+export function paginate<T>(all: T[], page: number, size: number): Page<T> {
+  return { items: all.slice((page - 1) * size, page * size), page, pages: Math.max(1, Math.ceil(all.length / size)), total: all.length };
+}

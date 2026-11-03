@@ -1,4 +1,4 @@
-// Builds content/kanji.json from KANJIDIC2 (old JLPT level 4 = N5). Run: node scripts/kanjidic.ts
+// Builds content/kanji.json from KANJIDIC2. Run: node scripts/kanjidic.ts
 // Keeps the hand-written fields (vi, lesson, reviewed, similar) already in kanji.json. Delete .cache/ to refetch.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
@@ -6,8 +6,13 @@ import { gunzipSync } from 'node:zlib';
 const URL = 'http://www.edrdg.org/kanjidic/kanjidic2.xml.gz';
 const CACHE = '.cache/kanjidic2.xml.gz';
 const OUT = 'content/kanji.json';
-// Characters outside KANJIDIC's level 4 that N5 lessons still teach.
-const EXTRA: string[] = [];
+// KANJIDIC2 has the four pre-2010 JLPT levels. Old 4 = N5, old 3 = N4; old 2 splits into N3/N2
+// and needs its own list (phase 27), so it is not mapped yet.
+const OLD_TO_NEW: Record<string, number> = { 4: 5, 3: 4 };
+// New levels written to kanji.json; a level is added here when its content is authored.
+const INCLUDE_LEVELS = [5];
+// Characters KANJIDIC2 gives no included level that lessons still teach, with the level they are taught at.
+const EXTRA: Record<string, number> = {};
 
 if (!existsSync(CACHE)) {
   mkdirSync('.cache', { recursive: true });
@@ -28,9 +33,13 @@ const old = new Map<string, Authored>(
 const kanji = xml
   .split('<character>')
   .slice(1)
-  .filter((c) => c.includes('<jlpt>4</jlpt>') || EXTRA.includes(one(c, /<literal>(.+?)<\/literal>/)!))
   .map((c) => {
     const char = one(c, /<literal>(.+?)<\/literal>/)!;
+    const jlpt = one(c, /<jlpt>(\d)<\/jlpt>/);
+    return { c, char, level: EXTRA[char] ?? (jlpt === undefined ? undefined : OLD_TO_NEW[jlpt]) };
+  })
+  .filter((k): k is typeof k & { level: number } => k.level !== undefined && INCLUDE_LEVELS.includes(k.level))
+  .map(({ c, char, level }) => {
     const a = old.get(char) ?? {};
     return {
       id: `kanji:${char}`,
@@ -43,6 +52,7 @@ const kanji = xml
       freq: Number(one(c, /<freq>(\d+)<\/freq>/) ?? 9999),
       vi: a.vi ?? '',
       lesson: a.lesson ?? null,
+      level,
       reviewed: a.reviewed ?? false,
       // Look-alike kanji, authored by hand (phase 19); only set on the kanji that have some.
       ...(a.similar ? { similar: a.similar } : {}),

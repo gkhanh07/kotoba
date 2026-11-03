@@ -59,3 +59,16 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Regression tests: `e2e/lapses.spec.ts` (axe on a review card), `e2e/smoke.spec.ts` now includes `/flashcards`.
 - Commit: `feat(srs): count wrong answers and review often-wrong items`
 - Status: FIXED
+
+## BUG-004: kotoba-be cannot boot once a content kind has about 1,000 items
+- Severity: High (N4 vocab pushes `vocab.json` past it; the API would not start)
+- Found: 2026-11-03, phase 22 (seed timing with 10k synthetic rows)
+- Environment: kotoba-be, Prisma 7 + better-sqlite3, Node 24
+- Steps: put 999 or more items in one `content/*.json` kind, start the API.
+- Expected: the seed runs.
+- Actual: `deleteMany({ where: { id: { notIn: ids } } })` fails with P2029 "query parameter limit exceeded" (990 ids work, 999 fail).
+- Reproducing test: `kotoba-be/test/content.e2e-spec.ts` › seeds a kind with more items than SQLite takes parameters (failed with P2029 before the fix).
+- Root cause: `notIn` puts every JSON id in one statement; SQLite caps bound parameters per statement and Prisma does not split `notIn`.
+- Fix: the seed reads the stored ids, finds the ones missing from the JSON in JS and deletes them with `in`, which Prisma batches. Same scan: no other query binds one parameter per content item.
+- Commit: see `feat(content): content levels and paging in the API`
+- Status: FIXED
