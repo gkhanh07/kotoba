@@ -64,3 +64,7 @@ export function parseActivity(raw: string): Activity {
     return { days: {} };
   }
 }
+
+// A card row as the API answers it: /progress and /me/export share this shape.
+export const cardsOf = (rows: { itemId: string; box: number; due: string | null; at: number; lapses: number }[]): Cards =>
+  Object.fromEntries(rows.map((c) => [c.itemId, { box: c.box, due: c.due ?? '', at: c.at, lapses: c.lapses }]));

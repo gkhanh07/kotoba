@@ -7,6 +7,7 @@
 .saved span { animation: fade .4s 4s forwards; }
 @keyframes fade { to { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .saved span { animation-duration: 0s; } }
+.download { margin-top: 1.25rem; }
 .danger { margin-top: 1.25rem; color: var(--neon-soft); }
 .danger:hover:not(:disabled) { color: var(--neon-core); border-color: var(--neon); background: var(--spill-neon); }
 .dialog { width: min(28rem, calc(100% - 2rem)); margin: auto; padding: 1.75rem; background: var(--asphalt); border: 1px solid var(--rule-strong); border-radius: 2px; color: var(--silver); }

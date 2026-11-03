@@ -1,4 +1,4 @@
-import { isActivity, isCard, isCards, isForget, mergeActivity, newer } from './progress.js';
+import { cardsOf, isActivity, isCard, isCards, isForget, mergeActivity, newer } from './progress.js';
 
 const card = (box: number, at: number) => ({ box, due: '2026-11-02', at });
 
@@ -83,5 +83,14 @@ describe('isCard lapses', () => {
   it('rejects a bad lapses inside isCards', () => {
     expect(isCards({ a: card(1, 1), b: withLapses(-1) })).toBe(false);
     expect(isCards({ a: withLapses(3) })).toBe(true);
+  });
+});
+
+describe('cardsOf', () => {
+  it('keys rows by item id and reads a null due as an empty string', () => {
+    expect(cardsOf([
+      { itemId: 'kanji:日', box: 2, due: '2026-11-05', at: 9, lapses: 1 },
+      { itemId: 'hiragana:a', box: 0, due: null, at: 3, lapses: 0 },
+    ])).toEqual({ 'kanji:日': { box: 2, due: '2026-11-05', at: 9, lapses: 1 }, 'hiragana:a': { box: 0, due: '', at: 3, lapses: 0 } });
   });
 });

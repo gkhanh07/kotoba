@@ -61,6 +61,43 @@ describe('progress (e2e)', () => {
     expect(Object.keys(res.body.cards).sort()).toEqual(['hiragana:a', 'hiragana:u', 'vocab:水']);
   });
 
+  describe('export (phase 21)', () => {
+    const exp = (t = token) => http.get('/me/export').set('Authorization', `Bearer ${t}`);
+
+    it('needs a session', async () => {
+      await http.get('/me/export').expect(401);
+      await exp('nope').expect(401);
+    });
+
+    it('returns the profile, every card and the activity log, and nothing secret', async () => {
+      await put({
+        cards: { 'kanji:日': { ...card(3, 900), lapses: 2 } },
+        activity: { days: { '2026-11-03': { minutes: [7], kana: [], vocab: [], kanji: ['kanji:日'] } } },
+      }).expect(200);
+      const pulled = await put({}).expect(200);
+      const res = await exp().expect(200);
+      expect(Object.keys(res.body).sort()).toEqual(['activity', 'cards', 'exportedAt', 'format', 'profile', 'version']);
+      expect(res.body.format).toBe('kotoba-export');
+      expect(res.body.version).toBe(1);
+      expect(Number.isNaN(Date.parse(res.body.exportedAt))).toBe(false);
+      expect(res.body.profile).toEqual({ email: 'sync@example.com', goal: 'N5' });
+      expect(res.body.cards).toEqual(pulled.body.cards);
+      expect(res.body.cards['kanji:日']).toEqual(read(3, 900, 2));
+      expect(res.body.activity).toEqual(pulled.body.activity);
+      const json = JSON.stringify(res.body);
+      for (const secret of ['hash', 'password', 'token', '"id"', 'userId', 'expiresAt']) expect(json).not.toContain(secret);
+    });
+
+    it('exports an empty deck and log for a new account', async () => {
+      await app.get(Db).user.deleteMany({ where: { email: 'empty-export@example.com' } });
+      const reg = await http.post('/auth/register').send({ email: 'empty-export@example.com', password: 'password-1', goal: 'N4' }).expect(201);
+      const res = await exp(reg.body.token).expect(200);
+      expect(res.body.cards).toEqual({});
+      expect(res.body.activity).toEqual({ days: {} });
+      expect(res.body.profile).toEqual({ email: 'empty-export@example.com', goal: 'N4' });
+    });
+  });
+
   describe('lapses (phase 16)', () => {
     const EMAIL = 'lapses@example.com';
     let lt: string;

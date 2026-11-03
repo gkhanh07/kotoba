@@ -6,7 +6,9 @@ import type { Request } from 'express';
 import { AuthGuard, burnTime, clientIp, hashPassword, hashToken, Limiter, newToken, verifyPassword, type Authed } from './auth.js';
 import { Db } from './db.js';
 import type { User } from './generated/prisma/client.js';
+import { EXPORT_VERSION } from './config.js';
 import { Mailer } from './mailer.js';
+import { cardsOf, parseActivity } from './progress.js';
 import { body, check, isEmail, isExam, isGoal, isMinutes, isName, isPassword, normEmail } from './validate.js';
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -130,6 +132,23 @@ export class AuthController {
   @UseGuards(AuthGuard)
   me(@Req() req: Authed) {
     return profile(req.user);
+  }
+
+  // Everything the account holds about the learner's study (phase 21). Built field by field, so a
+  // password hash, session or token can never slip in (AGENTS.md §8.4).
+  @Get('me/export')
+  @UseGuards(AuthGuard)
+  async export(@Req() req: Authed) {
+    const userId = req.user.id;
+    const rows = await this.db.card.findMany({ where: { userId }, orderBy: { itemId: 'asc' } });
+    return {
+      format: 'kotoba-export',
+      version: EXPORT_VERSION,
+      exportedAt: new Date().toISOString(),
+      profile: profile(req.user),
+      cards: cardsOf(rows),
+      activity: parseActivity(req.user.activity),
+    };
   }
 
   // Fields left out stay as they are; name: null clears the name.

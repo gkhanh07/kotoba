@@ -21,6 +21,7 @@ export function SettingsForms({ lang, email, sessions, initial }: Props) {
         <Profile lang={lang} sessions={sessions} initial={initial} />
         <Language lang={lang} />
         <NewPassword lang={lang} email={email} />
+        <Data lang={lang} />
         <Remove lang={lang} />
       </div>
     </main>
@@ -123,6 +124,18 @@ function NewPassword({ lang, email }: { lang: Lang; email: string }) {
           <p role="status" className={a.note}>{state.sent && t.settings.changed}</p>
         </div>
       </form>
+    </section>
+  );
+}
+
+// A plain link: the route handler answers with an attachment, so the page stays where it is.
+function Data({ lang }: { lang: Lang }) {
+  const t = accountText[lang].settings;
+  return (
+    <section className={s.section} aria-labelledby="set-data">
+      <h2 id="set-data">{t.data}</h2>
+      <p className={a.lede}>{t.dataBody}</p>
+      <a href="/settings/export" className={`btn btnGhost ${s.download}`}>{t.download}</a>
     </section>
   );
 }

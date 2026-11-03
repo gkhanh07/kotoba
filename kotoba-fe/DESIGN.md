@@ -293,7 +293,9 @@ Buttons are framed tubes that light up when touched.
 - **Saved (`.saved`, `role="status"`):** a Dim Silver 0.9rem line beside the submit button. The text holds for 4s, then fades to 0 over 0.4s. It is re-keyed on each save so it shows again. Reduced motion makes the fade instant. The line keeps a 1.5em minimum height so the row does not jump.
 
 ### Settings (/settings)
-There are four sections (profile, language, password, delete account), each its own form with its own result line. They sit in a 40rem column, separated by Faint Rule top borders with 2rem padding. Section `h2`s are Chalk at 1.25rem. The profile save is the view's amber action and stays disabled until a field changes. Changing the password uses a ghost button.
+There are five sections (profile, language, password, data, delete account), each its own form with its own result line. They sit in a 40rem column, separated by Faint Rule top borders with 2rem padding. Section `h2`s are Chalk at 1.25rem. The profile save is the view's amber action and stays disabled until a field changes. Changing the password uses a ghost button.
+
+- **Dữ liệu (phase 21):** between Mật khẩu and Xóa tài khoản: the Dim Silver lede says what the file holds, then a ghost `.btn` link "Tải dữ liệu học (JSON)" to `/settings/export` (1.25rem above, like the delete button). The route answers with the `kotoba-export.json` attachment, so the page does not move.
 
 ### Status pages (`.statusPage`: not-found, error, global-error)
 Each is an unlit sign, one line and one way out. The layout is a left-aligned grid in a 40rem column with 1.25rem gaps. The mark above the heading is `.statusMark`, set in the sign face at clamp(4.5rem, 16vw, 9rem) with no glow:

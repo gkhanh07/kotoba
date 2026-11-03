@@ -112,6 +112,18 @@ export async function deleteAccount(password: string): Promise<{ error?: AuthErr
   return {};
 }
 
+// The account's export file (phase 21). null: no session, or the session ran out.
+export async function exportProgress(): Promise<unknown> {
+  const t = await token();
+  if (!t) return null;
+  try {
+    return await api<unknown>("/me/export", { token: t });
+  } catch (e) {
+    if (e instanceof ApiError && e.status === 401) return null;
+    throw e;
+  }
+}
+
 // Sends the browser's changes, gets the whole account state back. null: no session (signed out meanwhile).
 export async function pushProgress(push: { cards: Progress["cards"]; activity: Progress["activity"] | null; forget: SyncState["forget"] }) {
   const t = await token();

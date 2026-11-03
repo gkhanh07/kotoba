@@ -6,7 +6,7 @@ vi.mock("next/headers", () => ({ cookies: async () => jar, headers: async () => 
 vi.mock("./api", async (orig) => ({ ...(await orig<typeof import("./api")>()), api: vi.fn() }));
 
 import { ApiError, api } from "./api";
-import { changePassword, currentUser, deleteAccount, pushProgress, requestReset, resetPassword, saveProfile, signIn, signOut, signUp } from "./auth";
+import { changePassword, currentUser, deleteAccount, exportProgress, pushProgress, requestReset, resetPassword, saveProfile, signIn, signOut, signUp } from "./auth";
 
 const apiMock = vi.mocked(api);
 const withToken = (t: string | undefined) => jar.get.mockReturnValue(t ? { value: t } : undefined);
@@ -175,5 +175,29 @@ describe("pushProgress", () => {
     withToken("tok");
     apiMock.mockRejectedValue(new ApiError(500, ""));
     await expect(pushProgress(push)).rejects.toBeInstanceOf(ApiError);
+  });
+});
+
+describe("exportProgress (phase 21)", () => {
+  it("is null without a session and does not call the BE", async () => {
+    withToken(undefined);
+    expect(await exportProgress()).toBeNull();
+    expect(apiMock).not.toHaveBeenCalled();
+  });
+  it("returns the export file with the session's token", async () => {
+    withToken("tok");
+    apiMock.mockResolvedValue({ format: "kotoba-export", cards: {} });
+    expect(await exportProgress()).toEqual({ format: "kotoba-export", cards: {} });
+    expect(apiMock).toHaveBeenCalledWith("/me/export", { token: "tok" });
+  });
+  it("is null when the session died meanwhile", async () => {
+    withToken("tok");
+    apiMock.mockRejectedValue(new ApiError(401, ""));
+    expect(await exportProgress()).toBeNull();
+  });
+  it("throws other failures", async () => {
+    withToken("tok");
+    apiMock.mockRejectedValue(new ApiError(500, ""));
+    await expect(exportProgress()).rejects.toBeInstanceOf(ApiError);
   });
 });

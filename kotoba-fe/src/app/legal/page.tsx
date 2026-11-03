@@ -29,6 +29,7 @@ const TEXT: Record<Lang, { title: string; updated: string; sections: { id: strin
               <li>tiến độ học: thẻ nào ở hộp nào, đến hạn ôn ngày nào, và những ngày bạn có học.</li>
             </ul>
             <p>Có hai cookie: một cookie phiên đăng nhập (httpOnly, trang không đọc được bằng script) và một cookie nhớ ngôn ngữ. Không có quảng cáo, không có công cụ theo dõi của bên thứ ba.</p>
+            <p>Bạn có thể tải toàn bộ dữ liệu học của tài khoản (hồ sơ, lịch ôn, nhật ký học) dưới dạng tệp JSON ở mục Dữ liệu trong Cài đặt. Tệp không chứa mật khẩu hay phiên đăng nhập.</p>
             <p>Xoá tài khoản trong Cài đặt sẽ xoá email, hồ sơ và toàn bộ tiến độ trên máy chủ, và xoá tiến độ trên thiết bị đang dùng.</p>
           </>
         ),
@@ -74,6 +75,7 @@ const TEXT: Record<Lang, { title: string; updated: string; sections: { id: strin
               <li>your study progress: which box each card is in, when it’s due, and the days you studied.</li>
             </ul>
             <p>There are two cookies: a sign-in session cookie (httpOnly, so page scripts can’t read it) and one that remembers your language. No ads, no third-party trackers.</p>
+            <p>You can download all of your account’s study data (profile, review schedule, study log) as a JSON file under Your data in Settings. The file holds no password or session.</p>
             <p>Deleting your account in Settings removes your email, profile and all progress from the server, and clears progress on the device you’re using.</p>
           </>
         ),
