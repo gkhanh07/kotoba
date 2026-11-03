@@ -48,7 +48,7 @@ Người dùng đưa 17 mục quy tắc bằng tiếng Việt (`docs/plan/rules-
 `AGENTS.md`:
 - Bản dịch tiếng Anh đầy đủ 17 mục, giữ nguyên thứ tự và mức độ bắt buộc.
 - Chỉ sửa những chỗ phải khớp với repo thật, và các quyết định ở bảng "Quyết định cho cloud session". Mục 17 vốn đã yêu cầu cập nhật theo `package.json`.
-  - **Mục 12:** `scripts/verify-jmdict.ts` → `kotoba-be/scripts/jmdict-check.ts` (`npm run jmdict`). Cờ `needsReview: true` → `reviewed: false`, là trường đang có trong JSON nên không đổi tên để khỏi phải migrate. Thêm "`kanaOnly` khi kanji vượt cấp".
+  - **Mục 12:** `scripts/verify-jmdict.ts` → `kotoba-be/scripts/jmdict-check.ts` (`npm run jmdict`). Cờ `needsReview: true` → `reviewed: false`, là trường đang có trong JSON nên không đổi tên để khỏi phải migrate. Thêm "kanji vượt cấp thì `word` viết bằng kana, chữ kanji để ở trường `kanji`". Repo không có cờ `kanaOnly`: xem `vocab:ねこ`.
   - **Mục 4:**
     - Thêm "không dòng `Co-Authored-By` hay attribution của AI trong commit và PR".
     - Ngoại lệ push như bảng quyết định (cả ở mục 15 và 16).
@@ -112,22 +112,25 @@ Các file đi kèm:
 **Commit:** `chore(test): add vitest, rtl and playwright with axe to kotoba-fe` (và một commit `chore(test): …` riêng cho scripts BE nếu tách được).
 
 ### A4. Subagent hỗ trợ (`.claude/agents/*.md` ở gốc repo, commit vào repo)
-Hiện chưa có agent nào trong repo. Mỗi file gồm frontmatter `name`, `description` (nói rõ khi nào gọi) và `tools`. Thân file là quy tắc riêng cho vai trò đó. Mọi agent đều mở đầu bằng: "Read `AGENTS.md` and the phase spec named in your prompt first".
+Mỗi file gồm frontmatter `name`, `description` (nói rõ khi nào gọi) và `tools`. Thân file là quy tắc riêng cho vai trò đó. Mọi agent đều mở đầu bằng: "Read `AGENTS.md` and the phase spec named in your prompt first".
 
 | Agent | Phạm vi được sửa | Tools | Quy tắc riêng |
 |---|---|---|---|
 | `be` | `kotoba-be/src`, `prisma`, `test` | Read, Edit, Write, Grep, Glob, Bash | Đổi schema thì phải kèm migration. Endpoint mới có e2e. Guard dùng `validate.ts`. Kết thúc bằng `npm run check` trong `kotoba-be` |
-| `fe` | `kotoba-fe/src` | Read, Edit, Write, Grep, Glob, Bash | Đọc docs Next 16 trong `node_modules/next/dist/docs` trước khi dùng API. Màu chỉ dùng `var(--token)`. Trình duyệt không gọi BE. Mỗi component có test RTL. Kết thúc bằng `npm run check` trong `kotoba-fe` |
+| `fe` | `kotoba-fe/src`, `kotoba-fe/e2e` | Read, Edit, Write, Grep, Glob, Bash | Đọc docs Next 16 trong `node_modules/next/dist/docs` trước khi dùng API. Màu chỉ dùng `var(--token)`. Trình duyệt không gọi BE. Mỗi component có test RTL. Kết thúc bằng `npm run check` trong `kotoba-fe` |
 | `test` | Chỉ file test (`*.test.ts(x)`, `*.e2e-spec.ts`, `e2e/**`, fixture) | Read, Edit, Write, Grep, Glob, Bash | Viết test theo ma trận trong spec, cho fail trước rồi mới pass. Không sửa code sản phẩm: thấy lỗi thì báo về kèm output. Cấm `.skip`, `.only`, nới assertion. Chạy Playwright và axe ở 360×740 và 1440×900 |
 | `content` | `kotoba-be/content/*.json`, `scripts/levels.txt` | Read, Edit, Write, Grep, Glob, Bash | Mỗi lần gọi soạn đúng một đợt (~200 từ, hoặc một nhóm kanji hay ngữ pháp). Gắn `reviewed:false`. Không tự bịa âm đọc. Không đổi id đã có. Phải qua `npm run validate:content`. Báo số mục và các mục bị loại |
-| `reviewer` | Không sửa gì | Read, Grep, Glob, Bash (chỉ chạy lệnh đọc và lệnh check) | Đối chiếu `git diff` với `AGENTS.md`: phạm vi thay đổi, mục cấm (§5), test, migration, màu, việc gọi :4000. Trả về danh sách lỗi theo mức độ. Gọi trước mỗi commit của một giai đoạn |
+| `reviewer` | Không sửa gì | Read, Grep, Glob, Bash (chỉ lệnh đọc, `lint` và `tsc --noEmit`; không chạy test) | Đối chiếu `git diff` với `AGENTS.md` và spec: phạm vi thay đổi, mục cấm (§5, §16), test, migration, màu, việc gọi :4000. Trả về danh sách lỗi theo mức độ. Gọi trước mỗi commit của một giai đoạn |
+
+**Đã có sẵn:** cả năm file `.claude/agents/{be,fe,test,content,reviewer}.md` đã được viết và commit trước, theo đúng code thật của `kotoba-be` và `kotoba-fe`. Ở A4 không tạo lại, chỉ đối chiếu với `AGENTS.md` vừa viết và sửa chỗ lệch: lệnh, đường dẫn (ví dụ thư mục fixture), số mục `§` được trích, `npm run check` sau phase 13.5. Nếu không lệch thì A4 chỉ còn phần "Kiểm" bên dưới.
 
 Không thêm agent thiết kế: đã có `impeccable-finish-reviewer` và `impeccable-documenter` (plugin impeccable), dùng ở giai đoạn 35. Không thêm agent lập kế hoạch: đã có `Plan` sẵn.
 
 Quy tắc phối hợp, ghi thành một mục "Agents" trong `AGENTS.md`:
 - Chỉ agent chính được commit, push và cập nhật `PROGRESS.md`. Subagent không commit, không push.
 - BE và FE chỉ chạy song song khi hai bên sửa những file tách biệt nhau.
-- Mỗi lúc chỉ một agent chạy `test:e2e`, vì chung cổng :4000/:3000 và chung `dev.db`.
+- Mỗi lúc chỉ một agent chạy `test:e2e` hoặc Playwright, vì chung cổng :4000/:3000 và chung `dev.db`/`test.db`. Khi gọi hai agent song song, agent chính ghi rõ trong prompt "another agent is running in parallel": khi đó subagent bỏ qua e2e, agent chính tự chạy e2e sau.
+- Test do `test` viết là hợp đồng: `be`/`fe` không được sửa hay nới chúng. Test sai thì báo về, agent chính quyết định.
 - Luồng chuẩn của một giai đoạn:
   1. Agent chính viết spec.
   2. `test` viết test cho fail.
@@ -196,7 +199,7 @@ Mọi giai đoạn từ giờ theo `AGENTS.md`:
 | Nguồn danh sách kanji và từ theo cấp | N4 lấy từ KANJIDIC2 (cấp cũ 3). N3/N2 tách theo danh sách JLPT của Jonathan Waller (tanos.co.uk). Kiểm license (theo hiểu biết là CC BY, phải xác minh trên trang trước khi dùng, ghi URL và nội dung license vào ADR) rồi ghi nguồn ở `/legal`. Nếu license không ổn hoặc không truy cập được: chia cấp cũ 2 theo `freq` của KANJIDIC (`ponytail:` heuristic, không phải danh sách chính thức). Danh sách chỉ dùng để chọn mục. Nghĩa tiếng Việt tự soạn |
 | Thời gian đề | N4 80 phút (25 + 55), N3 100 phút (30 + 70), N2 105 phút (từ vựng, ngữ pháp và đọc gộp một phần). Không có phần nghe ([jlpt.jp](https://www.jlpt.jp/sp/e/guideline/testsections.html)) |
 | Kết quả đề N3/N2 | Chỉ hiện điểm thô và điểm theo từng phần. Ghi rõ "Không mô phỏng đỗ/trượt: thiếu phần nghe và điểm liệt từng phần". Không quy đổi sang thang 180 |
-| Gate kanji trong từ | `content.spec.ts` đổi từ "kanji phải là N5" thành "kanji phải có trong `kanji.json` với `level ≥ level của từ`", tức là cấp bằng hoặc dễ hơn. Nếu không thì từ có `kanaOnly` |
+| Gate kanji trong từ | `content.spec.ts` đổi từ "kanji phải là N5" thành "kanji phải có trong `kanji.json` với `level ≥ level của từ`", tức là cấp bằng hoặc dễ hơn. Nếu không thì `word` viết bằng kana, chữ kanji để ở trường `kanji` |
 
 ## Các giai đoạn (theo Quality Gate trong `AGENTS.md`)
 Kiểm chung cho mọi giai đoạn UI:
@@ -248,7 +251,7 @@ Kiểm chung cho mọi giai đoạn UI:
 - Soạn thêm khoảng 200 từ vào `kotoba-be/content/vocab.json`, theo đợt từng bài (lessons 5–24). Ưu tiên bài đang ít từ nhất. Mỗi từ gắn `reviewed:false`.
 - Mỗi đợt phải qua:
   - `scripts/jmdict-check.ts`: âm đọc có trong JMdict, câu ví dụ chứa từ.
-  - `content.spec.ts`: kanji trong từ phải là kanji N5, nếu không thì từ có cờ `kanaOnly`.
+  - `content.spec.ts`: kanji trong từ phải là kanji N5, nếu không thì `word` viết bằng kana, chữ kanji để ở trường `kanji`.
 - Sửa các con số đếm cố định trong e2e.
 - **Kiểm:**
   - `npm run validate:content` pass.
