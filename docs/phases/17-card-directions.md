@@ -51,4 +51,6 @@ Out: separate schedules per direction, typing answers, kana directions (kana sta
 - Large data: N/A.
 
 ## Self-review notes
-(filled in after review)
+- `reviewer`: PASS. Fixed after review: the flashcard key hint is hidden without a fine pointer, as in `/review` (the E2E now expects it on desktop only and absent on the touch project — main-agent edit to the contract test); the unmount test now asserts the same `keydown` handler is removed (seen failing without cleanup); prompt keys are `${id}#${index}`; vocab `meaning` is capitalised like the back face.
+- `src/app/useCardPrompt.ts` carries the only `eslint-disable-next-line react-hooks/set-state-in-effect` in `src`: the direction must be picked after mount (no `Math.random` during render, AGENTS.md §5.2), so the state is set in an effect on purpose.
+- Accepted: a meaning-word front may paint the default word for one frame on the very first card after load (spec trade-off); "Chạm để lật" replaces the old desktop-specific flip wording on flashcards, matching `/review`.

@@ -28,6 +28,7 @@ export default async function ReviewPage(props: PageProps<"/review">) {
     })),
     ...kanji.map((k) => ({
       id: k.id, kind: "kanji" as const, lesson: k.lesson, tag: "Kanji", front: k.char,
+      meaning: cap(lang === "vi" ? (k.vi ?? k.en.join(", ")) : k.en.join(", ")),
       back: [
         { label: t.kanji.hv, text: k.hv.join(" · "), strong: true },
         ...(k.on.length ? [{ label: t.kanji.on, text: k.on.join("、"), ja: true }] : []),
@@ -37,6 +38,7 @@ export default async function ReviewPage(props: PageProps<"/review">) {
     })),
     ...vocab.map((w) => ({
       id: w.id, kind: "vocab" as const, lesson: w.lesson, tag: t.review.kinds.vocab, front: w.word,
+      meaning: cap(w[lang]), reading: w.reading,
       back: [
         { label: t.review.reading, text: w.reading, ja: true, sub: w.romaji },
         { label: t.kanji.meaning, text: cap(w[lang]), strong: true },

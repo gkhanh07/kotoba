@@ -1,12 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { flashcardText, shuffleCards, type Vocab } from "@/lib/flashcards";
 import { logActivity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
+import { libraryText } from "@/lib/library";
 import { daysUntil, isDue, isKnown } from "@/lib/srs";
 import { review, today, useDeck } from "@/lib/store";
 import { Speak } from "../Speak";
+import { useCardPrompt } from "../useCardPrompt";
 import s from "./flashcards.module.css";
 
 export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang: Lang; deck: string }) {
@@ -18,6 +20,8 @@ export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang
   const deck = useDeck();
   const cardRef = useRef<HTMLButtonElement>(null);
   const card = order[index];
+  const r = libraryText[lang].review;
+  const asked = useCardPrompt(card ? `${card.id}#${index}` : "", card ? { kind: "vocab", word: card.word, reading: card.reading, meaning: card[lang] } : undefined);
   const state = card && deck?.srs[card.id];
 
   function move(next: number, message = "") {
@@ -42,6 +46,25 @@ export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang
       requestAnimationFrame(() => cardRef.current?.focus({ preventScroll: true }));
     } else setNotice(`${message} ${t.end}`);
   }
+
+  function flip() {
+    if (!card) return;
+    if (!flipped) logActivity("vocab", card.id);
+    setFlipped((value) => !value);
+  }
+
+  // Space flips, 1/2 grade. Re-bound every render so the handler sees current state.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.ctrlKey || e.metaKey || e.altKey || e.repeat || !card) return;
+      const el = e.target as Element;
+      if (el.closest("input, textarea, select, [contenteditable]")) return;
+      if (e.key === " " && !el.closest("a, button, summary")) { e.preventDefault(); flip(); }
+      else if ((e.key === "1" || e.key === "2") && flipped) grade(e.key === "2");
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
 
   return (
     <main className={s.app}>
@@ -71,8 +94,8 @@ export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang
           >
             <span className={s.inner}>
               <span id="flashcard-front" className={s.face} aria-hidden={flipped}>
-                <span lang="ja" className={s.word}>{card.word}</span>
-                <span className={s.hint}>{t.hint}</span>
+                <span lang={asked?.frontIsJa === false ? lang : "ja"} className={asked?.frontIsJa === false ? `${s.word} ${s.wordText}` : s.word}>{asked?.front ?? card.word}</span>
+                <span className={s.hint}>{r.recall[asked?.dir ?? "word-meaning"]} · {r.hint}<span className={s.keys}> · {r.keys}</span></span>
               </span>
               <span id="flashcard-back" className={s.back} aria-hidden={!flipped}>
                 <span lang="ja" className={s.backWord}>{card.word}{card.kanji && `（${card.kanji}）`}</span>
@@ -94,7 +117,7 @@ export function FlashcardApp({ cards, lang, deck: name }: { cards: Vocab[]; lang
               aria-label={flipped ? t.front : t.flip}
               aria-pressed={flipped}
               aria-describedby={flipped ? "flashcard-back" : "flashcard-front"}
-              onClick={() => { if (!flipped) logActivity("vocab", card.id); setFlipped(value => !value); }}
+              onClick={flip}
               className={s.hit}
             />
           </div>

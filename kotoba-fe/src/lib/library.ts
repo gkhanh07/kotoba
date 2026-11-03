@@ -35,7 +35,19 @@ export type Hit = ({ kind: "vocab" } & Vocab) | ({ kind: "kanji" } & Kanji) | ({
 export const KINDS = ["kana", "kanji", "vocab"] as const;
 export type Kind = (typeof KINDS)[number];
 export type ReviewRow = { label: string; text: string; ja?: boolean; strong?: boolean; sub?: string };
-export type ReviewItem = { id: string; kind: Kind; lesson: number; tag: string; front: string; back: ReviewRow[] };
+export type ReviewItem = { id: string; kind: Kind; lesson: number; tag: string; front: string; back: ReviewRow[]; meaning?: string; reading?: string };
+
+// Direction a card is asked in (phase 17). The SRS schedule stays one per item.
+export type Dir = "word-meaning" | "meaning-word" | "word-reading";
+export type PromptSource = { kind: Kind; word: string; reading?: string; meaning: string };
+export type Prompt = { dir: Dir; front: string; frontIsJa: boolean };
+
+export function prompt(src: PromptSource, rand: () => number): Prompt {
+  const dirs: Dir[] = src.kind === "kana" ? ["word-meaning"] : ["word-meaning", "meaning-word"];
+  if (src.kind === "vocab" && src.reading !== undefined && src.reading !== src.word) dirs.push("word-reading");
+  const dir = dirs[Math.min(Math.floor(rand() * dirs.length), dirs.length - 1)];
+  return dir === "meaning-word" ? { dir, front: src.meaning, frontIsJa: false } : { dir, front: src.word, frontIsJa: true };
+}
 
 export const FILTERS = ["all", "learned", "new"] as const;
 export type Filter = (typeof FILTERS)[number];
@@ -115,7 +127,7 @@ const en = {
     flip: "Show the answer",
     front: "Show the front",
     hint: "Tap to flip",
-    recall: { kana: "recall the sound", kanji: "recall Hán Việt, readings and meaning", vocab: "recall the reading and meaning" } satisfies Record<Kind, string>,
+    recall: { kana: "recall the sound", "word-meaning": "recall the meaning", "meaning-word": "recall the Japanese", "word-reading": "recall the reading" } satisfies Record<"kana" | Dir, string>,
     keys: "Space flips · 1 not yet · 2 knew it",
     grade: "Did you remember it?",
     gradeHint: "Flip the card first, then grade yourself.",
@@ -226,7 +238,7 @@ const vi: typeof en = {
     flip: "Xem đáp án",
     front: "Xem mặt trước",
     hint: "Chạm để lật",
-    recall: { kana: "nhớ cách đọc", kanji: "nhớ Hán Việt, âm và nghĩa", vocab: "nhớ cách đọc và nghĩa" },
+    recall: { kana: "nhớ cách đọc", "word-meaning": "nhớ nghĩa", "meaning-word": "nhớ từ tiếng Nhật", "word-reading": "nhớ cách đọc" },
     keys: "Phím cách: lật · 1: chưa nhớ · 2: nhớ rồi",
     grade: "Bạn nhớ mục này chưa?",
     gradeHint: "Lật thẻ trước, rồi tự chấm.",

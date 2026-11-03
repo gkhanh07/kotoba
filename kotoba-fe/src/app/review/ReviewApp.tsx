@@ -8,6 +8,7 @@ import { KINDS, libraryText, type Kind, type ReviewItem } from "@/lib/library";
 import { daysUntil, isDue, isKnown, isLearned, nextDue, weakest } from "@/lib/srs";
 import { review, today, useDeck } from "@/lib/store";
 import { Arrow } from "../Arrow";
+import { useCardPrompt } from "../useCardPrompt";
 import f from "../flashcards/flashcards.module.css";
 import s from "./review.module.css";
 
@@ -37,6 +38,9 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
   }
   const byId = new Map(items.map((i) => [i.id, i]));
   const item = order?.[index] !== undefined ? byId.get(order[index]) : undefined;
+  const asked = useCardPrompt(item ? `${item.id}#${index}` : "", item && item.meaning !== undefined
+    ? { kind: item.kind, word: item.front, reading: item.reading, meaning: item.meaning } : undefined);
+  const recall = item && (item.kind === "kana" ? t.recall.kana : t.recall[asked?.dir ?? "word-meaning"]);
 
   function flip() {
     if (!item) return;
@@ -121,8 +125,8 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
               >
                 <span className={f.inner}>
                   <span id="review-front" className={f.face} aria-hidden={flipped}>
-                    <span lang="ja" className={f.word}>{item.front}</span>
-                    <span className={f.hint}>{item.tag} · {t.recall[item.kind]} · {t.hint}<span className={s.keys}> · {t.keys}</span></span>
+                    <span lang={asked && !asked.frontIsJa ? lang : "ja"} className={asked && !asked.frontIsJa ? `${f.word} ${f.wordText}` : f.word}>{asked?.front ?? item.front}</span>
+                    <span className={f.hint}>{item.tag} · {recall} · {t.hint}<span className={s.keys}> · {t.keys}</span></span>
                   </span>
                   <span id="review-back" className={f.back} aria-hidden={!flipped}>
                     <span lang="ja" className={f.backWord}>{item.front}</span>

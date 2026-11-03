@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReviewItem } from "@/lib/library";
 import { ReviewApp } from "./ReviewApp";
@@ -129,5 +130,140 @@ describe("/review without weak", () => {
     mount();
     expect(await screen.findByText("Còn 2 mục · Kanji 1 · Từ vựng 1")).toBeInTheDocument();
     expect(screen.queryByText("Chưa có mục nào hay sai")).not.toBeInTheDocument();
+  });
+});
+
+// Phase 17: the front face asks in a direction picked when the card is shown. ReviewItem carries
+// optional `meaning` (in the page language) and `reading`, which the review page fills for vocab and kanji.
+describe("/review card directions", () => {
+  const dirItem = (id: string, kind: ReviewItem["kind"], front: string, meaning: string, reading?: string): ReviewItem => ({
+    id, kind, lesson: 13, tag: kind, front, meaning, ...(reading ? { reading } : {}),
+    back: [{ label: "Nghĩa", text: `đáp án ${front}`, strong: true }, { label: "Cách đọc", text: reading ?? "-", ja: true }],
+  });
+  const DIR_ITEMS: ReviewItem[] = [
+    dirItem("vocab:水", "vocab", "水", "nước", "みず"),
+    dirItem("vocab:ねこ", "vocab", "ねこ", "mèo", "ねこ"),
+    dirItem("kanji:日", "kanji", "日", "ngày"),
+    dirItem("hiragana:a", "kana", "あ", "a"),
+  ];
+  const LESSON = { n: 13, title: "Bài" };
+  const rand = (...values: number[]) => {
+    const spy = vi.spyOn(Math, "random");
+    values.forEach((v) => spy.mockReturnValueOnce(v));
+    return spy.mockReturnValue(values.at(-1) ?? 0);
+  };
+  const open = (kind: "vocab" | "kanji" | "kana", lang: "vi" | "en" = "vi") =>
+    ({ user: userEvent.setup(), ...render(<ReviewApp items={DIR_ITEMS} lang={lang} kind={kind} lesson={LESSON} />) });
+  const flipButton = () => screen.getByRole("button", { name: /^(Xem đáp án|Xem mặt trước|Show the answer|Show the front)$/ });
+  const described = () => document.getElementById(flipButton().getAttribute("aria-describedby")!)!;
+  const front = () => within(described());
+
+  it("shows the word in Japanese and asks to recall the meaning for word-meaning", async () => {
+    rand(0);
+    open("vocab");
+    expect(await screen.findByText("Còn 2 mục · Từ vựng 2")).toBeInTheDocument();
+    expect(front().getByText("水")).toHaveAttribute("lang", "ja");
+    expect(described()).toHaveTextContent("nhớ nghĩa");
+    expect(front().queryByText("nước")).not.toBeInTheDocument();
+  });
+
+  it("shows the meaning with the page language and asks to recall the Japanese for meaning-word", async () => {
+    rand(0.5);
+    open("vocab");
+    await screen.findByText("Còn 2 mục · Từ vựng 2");
+    expect(front().getByText("nước")).toHaveAttribute("lang", "vi");
+    expect(described()).toHaveTextContent("nhớ từ tiếng Nhật");
+    expect(front().queryByText("水")).not.toBeInTheDocument();
+  });
+
+  it("uses lang en and the English hint for meaning-word in English", async () => {
+    rand(0.5);
+    open("vocab", "en");
+    await screen.findByText("2 left · Words 2");
+    expect(front().getByText("nước")).toHaveAttribute("lang", "en");
+    expect(described()).toHaveTextContent("recall the Japanese");
+  });
+
+  it("shows the word and asks to recall the reading for word-reading", async () => {
+    rand(0.99);
+    open("vocab");
+    await screen.findByText("Còn 2 mục · Từ vựng 2");
+    expect(front().getByText("水")).toHaveAttribute("lang", "ja");
+    expect(described()).toHaveTextContent(/nhớ cách đọc(?! và nghĩa)/);
+    expect(front().queryByText("みず")).not.toBeInTheDocument();
+  });
+
+  it("never asks word-reading for a vocab whose reading equals its word", async () => {
+    rand(0.99);
+    const { user } = open("vocab");
+    await screen.findByText("Còn 2 mục · Từ vựng 2");
+    await answer(user, true);
+    expect(front().getByText("mèo")).toHaveAttribute("lang", "vi");
+    expect(described()).toHaveTextContent("nhớ từ tiếng Nhật");
+    expect(described()).not.toHaveTextContent(/nhớ cách đọc/);
+  });
+
+  it("asks a kanji only word-meaning or meaning-word", async () => {
+    rand(0.99);
+    open("kanji");
+    await screen.findByText("Còn 1 mục · Kanji 1");
+    expect(front().getByText("ngày")).toHaveAttribute("lang", "vi");
+    expect(described()).toHaveTextContent("nhớ từ tiếng Nhật");
+  });
+
+  it("keeps the kana card as it was: the character and the reading hint", async () => {
+    rand(0.99);
+    open("kana");
+    await screen.findByText("Còn 1 mục · Kana 1");
+    expect(front().getByText("あ")).toHaveAttribute("lang", "ja");
+    expect(described()).toHaveTextContent("nhớ cách đọc");
+    expect(front().queryByText("a")).not.toBeInTheDocument();
+  });
+
+  it("keeps the whole answer on the back for meaning-word", async () => {
+    rand(0.5);
+    const { user } = open("vocab");
+    await screen.findByText("Còn 2 mục · Từ vựng 2");
+    await user.click(flipButton());
+    const back = within(described());
+    expect(back.getByText("水")).toHaveAttribute("lang", "ja");
+    expect(back.getByText("đáp án 水")).toBeInTheDocument();
+    expect(back.getByText("みず")).toBeInTheDocument();
+  });
+
+  it("keeps the chosen direction across a flip and picks again for the next card", async () => {
+    rand(0.5, 0);
+    const { user } = open("vocab");
+    await screen.findByText("Còn 2 mục · Từ vựng 2");
+    await user.click(flipButton());
+    await user.click(flipButton());
+    expect(front().getByText("nước")).toBeInTheDocument();
+    await user.click(flipButton());
+    await user.click(screen.getByRole("button", { name: "Nhớ rồi" }));
+    expect(front().getByText("ねこ")).toHaveAttribute("lang", "ja");
+    expect(described()).toHaveTextContent("nhớ nghĩa");
+  });
+
+  it("records the grade against the item id whichever direction was shown", async () => {
+    rand(0.5);
+    const { user } = open("vocab");
+    await screen.findByText("Còn 2 mục · Từ vựng 2");
+    await answer(user, false);
+    expect(stored()).toEqual({ "vocab:水": { box: 0, due: "2026-11-02", at: NOW, lapses: 1 } });
+    expect(screen.getByText("水: quay lại cuối hàng đợi hôm nay.")).toBeInTheDocument();
+  });
+
+  it("does not call Math.random while rendering on the server", () => {
+    const spy = rand(0.99);
+    renderToString(<ReviewApp items={DIR_ITEMS} lang="vi" kind="vocab" lesson={LESSON} />);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it("does not ask for a direction when there is nothing to review", async () => {
+    const spy = rand(0.5);
+    seed({ "vocab:水": { box: 1, due: "2026-11-09", at: 1 } });
+    render(<ReviewApp items={DIR_ITEMS.slice(0, 1)} lang="vi" kind="vocab" />);
+    expect(await screen.findByText("Hiện chưa có mục nào đến hạn.")).toBeInTheDocument();
+    expect(spy).not.toHaveBeenCalled();
   });
 });
