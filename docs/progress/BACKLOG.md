@@ -27,3 +27,7 @@ Each should either handle the error (e.g. mark the deck as `ok: false`) or repor
 - `kotoba-fe/src/app/test/error.tsx` has no automated test (BE down while loading `/test`).
 - `TestApp` ←/→ call `preventDefault` whenever focus is outside an input, which overrides horizontal scrolling by arrow keys (AGENTS.md §8.1, minor).
 - `e2e/test.spec.ts` uses non-null `!` in four places (test-only).
+
+## Content (phase 15)
+- Vocab ids are `vocab:<word>` with `word` in kana when the kanji is above the level, so homophones collide and could not be added: 紙/髪 (かみ), 風邪/風 (かぜ), 橋/箸 (はし), 吹く/服 (ふく), 取る/撮る (とる), 切る/着る (きる), 厚い/暑い (あつい), 弾く/引く (ひく), 十 read とお. Needs an id scheme for same-kana words (decision + `be` change; existing ids must stay).
+- Batch 15a words to confirm as N5 (not N4): ごしゅじん, いや, りっぱ, なく (鳴く), だれか, どこか, おおぜい, さらいしゅう, さらいねん, ペット, せっけん, おしいれ, ストーブ, ごろ. Also review `vocab:すく` (written in kana), `vocab:そば` (側 vs 蕎麦), `vocab:七つ` (example uses "seven years old").
