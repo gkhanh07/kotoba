@@ -4,6 +4,7 @@ import request from 'supertest';
 import { AppModule } from '../src/app.module.js';
 import { Db } from '../src/db.js';
 import vocab from '../content/vocab.json' with { type: 'json' };
+import grammar from '../content/grammar.json' with { type: 'json' };
 
 describe('content (e2e)', () => {
   let app: INestApplication;
@@ -18,7 +19,7 @@ describe('content (e2e)', () => {
   afterAll(() => app.close());
 
   it('serves every kind from the seeded files', async () => {
-    for (const [kind, n] of [['kana', 224], ['kanji', 103], ['vocab', vocab.length], ['lesson', 25]] as const) {
+    for (const [kind, n] of [['kana', 224], ['kanji', 103], ['vocab', vocab.length], ['lesson', 25], ['grammar', grammar.length]] as const) {
       const res = await get(`/content/${kind}`).expect(200);
       expect(res.body, kind).toHaveLength(n);
     }
@@ -47,6 +48,8 @@ describe('content (e2e)', () => {
     expect(await ids('Nhật')).toContain('kanji:日');
     expect(await ids('タベ')).toContain('vocab:食べる');
     expect(await ids('gakko')).toContain('vocab:学校');
+    expect(await ids('yori')).not.toContain('grammar:yori'); // slugs are not searchable
+    expect(await ids('より')).toContain('grammar:yori');
     await get('/search?q=').expect(400);
     await get(`/search?q=${'a'.repeat(51)}`).expect(400);
   });

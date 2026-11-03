@@ -1,7 +1,7 @@
 // Learning content from kotoba-be. Server-only, like api.ts.
 import "server-only";
 import { api, ApiError } from "./api";
-import type { Kanji, KanjiDetail, Lesson } from "./library";
+import type { Grammar, Kanji, KanjiDetail, Lesson } from "./library";
 import type { Vocab } from "./flashcards";
 import type { Group, Kana, KanaSet, Script } from "./kana";
 
@@ -22,8 +22,12 @@ export const getKanji = () => api<Kanji[]>("/content/kanji", { revalidate: HOUR 
 export const getLessons = () => api<Lesson[]>("/content/lesson", { revalidate: HOUR });
 
 // null when the BE has no such item; other failures still throw to the error boundary.
-export const getKanjiDetail = (char: string) =>
-  api<KanjiDetail>(`/content/item/${encodeURIComponent(`kanji:${char}`)}`, { revalidate: HOUR }).catch((e) => {
+const item = <T,>(id: string) =>
+  api<T>(`/content/item/${encodeURIComponent(id)}`, { revalidate: HOUR }).catch((e) => {
     if (e instanceof ApiError && e.status === 404) return null;
     throw e;
   });
+export const getKanjiDetail = (char: string) => item<KanjiDetail>(`kanji:${char}`);
+
+export const getGrammar = () => api<Grammar[]>("/content/grammar", { revalidate: HOUR });
+export const getGrammarItem = (slug: string) => item<Grammar>(`grammar:${slug}`);

@@ -1,0 +1,491 @@
+[
+  {
+    "id": "grammar:wa-desu", "slug": "wa-desu", "lesson": 5, "pattern": "〜は 〜です",
+    "title": { "vi": "A là B", "en": "A is B" },
+    "structure": "N1 は N2 です",
+    "explain": {
+      "vi": "は (đọc là わ) đánh dấu chủ đề câu. です đứng cuối câu, khẳng định một cách lịch sự rằng chủ đề là N2.",
+      "en": "は (read わ) marks the topic. です closes the sentence and politely states that the topic is N2."
+    },
+    "examples": [
+      { "ja": "わたしは 学生です。", "vi": "Tôi là học sinh.", "en": "I am a student." },
+      { "ja": "たなかさんは 先生です。", "vi": "Anh Tanaka là giáo viên.", "en": "Mr Tanaka is a teacher." }
+    ],
+    "note": { "vi": "Không dùng さん cho chính mình.", "en": "Never put さん after your own name." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ja-arimasen", "slug": "ja-arimasen", "lesson": 5, "pattern": "〜じゃ ありません",
+    "title": { "vi": "A không phải là B", "en": "A is not B" },
+    "structure": "N1 は N2 じゃ ありません",
+    "explain": {
+      "vi": "Dạng phủ định của です. じゃ ありません dùng khi nói; では ありません trang trọng hơn, hay gặp khi viết.",
+      "en": "The negative of です. じゃ ありません is spoken; では ありません is more formal and common in writing."
+    },
+    "examples": [
+      { "ja": "わたしは 先生じゃ ありません。", "vi": "Tôi không phải là giáo viên.", "en": "I am not a teacher." },
+      { "ja": "これは 水じゃ ありません。", "vi": "Đây không phải là nước.", "en": "This is not water." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ka", "slug": "ka", "lesson": 5, "pattern": "〜か",
+    "title": { "vi": "Câu hỏi có hoặc không", "en": "Yes-or-no questions" },
+    "structure": "câu + か",
+    "explain": {
+      "vi": "Thêm か vào cuối câu để biến nó thành câu hỏi. Trật tự từ giữ nguyên, khi nói thì lên giọng ở cuối.",
+      "en": "Add か at the end to make a question. Word order stays the same; the voice rises at the end."
+    },
+    "examples": [
+      { "ja": "あなたは 学生ですか。", "vi": "Bạn là học sinh phải không?", "en": "Are you a student?" },
+      { "ja": "はい、学生です。", "vi": "Vâng, tôi là học sinh.", "en": "Yes, I am a student." }
+    ],
+    "note": { "vi": "Tiếng Nhật thường không dùng dấu ? sau か.", "en": "Japanese usually writes no ? after か." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:no", "slug": "no", "lesson": 5, "pattern": "N1 の N2",
+    "title": { "vi": "N2 của N1", "en": "N1's N2" },
+    "structure": "N1 の N2",
+    "explain": {
+      "vi": "の nối hai danh từ: N1 bổ nghĩa cho N2, có thể là sở hữu, xuất xứ hay lĩnh vực. Thứ tự ngược với tiếng Việt.",
+      "en": "の joins two nouns so that N1 describes N2: owner, origin or field. The order is the reverse of Vietnamese."
+    },
+    "examples": [
+      { "ja": "わたしの 本です。", "vi": "Đây là sách của tôi.", "en": "It is my book." },
+      { "ja": "日本語の 先生", "vi": "giáo viên tiếng Nhật", "en": "a Japanese teacher" }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:sai", "slug": "sai", "lesson": 6, "pattern": "〜さい",
+    "title": { "vi": "Nói tuổi", "en": "Saying your age" },
+    "structure": "số + さい / なんさい ですか",
+    "explain": {
+      "vi": "さい đếm tuổi. Hỏi tuổi dùng なんさいですか, lịch sự hơn là おいくつですか.",
+      "en": "さい counts years of age. Ask with なんさいですか, or more politely おいくつですか."
+    },
+    "examples": [
+      { "ja": "なんさいですか。", "vi": "Bạn bao nhiêu tuổi?", "en": "How old are you?" },
+      { "ja": "十九さいです。", "vi": "Tôi mười chín tuổi.", "en": "I am nineteen." }
+    ],
+    "note": { "vi": "Hai mươi tuổi đọc riêng là はたち.", "en": "Twenty years old has its own reading, はたち." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ni-time", "slug": "ni-time", "lesson": 7, "pattern": "時間 + に",
+    "title": { "vi": "Vào lúc (thời điểm)", "en": "At (a point in time)" },
+    "structure": "giờ / ngày + に + V",
+    "explain": {
+      "vi": "に đứng sau một thời điểm có số cụ thể để nói hành động xảy ra lúc đó.",
+      "en": "に follows a time with a number in it to say when the action happens."
+    },
+    "examples": [
+      { "ja": "七時に おきます。", "vi": "Tôi dậy lúc bảy giờ.", "en": "I get up at seven." },
+      { "ja": "十時半に ねます。", "vi": "Tôi ngủ lúc mười giờ rưỡi.", "en": "I go to bed at half past ten." }
+    ],
+    "note": {
+      "vi": "Không dùng に với từ chỉ thời gian tương đối như きょう, あした, まいにち, いま.",
+      "en": "Relative times such as きょう, あした, まいにち and いま take no に."
+    },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:kara-made", "slug": "kara-made", "lesson": 7, "pattern": "〜から 〜まで",
+    "title": { "vi": "Từ ~ đến ~", "en": "From ~ to ~" },
+    "structure": "N1 から N2 まで",
+    "explain": {
+      "vi": "から chỉ điểm bắt đầu, まで chỉ điểm kết thúc, dùng cho cả thời gian lẫn nơi chốn. Có thể dùng riêng từng từ.",
+      "en": "から marks the start and まで the end, for times and places alike. Either can stand alone."
+    },
+    "examples": [
+      { "ja": "九時から 五時まで はたらきます。", "vi": "Tôi làm việc từ chín giờ đến năm giờ.", "en": "I work from nine to five." },
+      { "ja": "うちから 駅まで あるきます。", "vi": "Tôi đi bộ từ nhà đến ga.", "en": "I walk from home to the station." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:mo", "slug": "mo", "lesson": 8, "pattern": "〜も",
+    "title": { "vi": "Cũng", "en": "Also, too" },
+    "structure": "N + も",
+    "explain": {
+      "vi": "も thay cho は (hoặc が, を) khi điều được nói giống với điều vừa nói trước đó.",
+      "en": "も replaces は (or が, を) when the same thing holds for something just mentioned."
+    },
+    "examples": [
+      { "ja": "きょうは 休みです。あしたも 休みです。", "vi": "Hôm nay là ngày nghỉ. Ngày mai cũng nghỉ.", "en": "Today is a day off. Tomorrow is too." },
+      { "ja": "わたしも 学生です。", "vi": "Tôi cũng là học sinh.", "en": "I am a student too." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:to", "slug": "to", "lesson": 9, "pattern": "〜と",
+    "title": { "vi": "Và; cùng với", "en": "And; together with" },
+    "structure": "N1 と N2 / N と V",
+    "explain": {
+      "vi": "と nối các danh từ khi kể hết một danh sách. Trước động từ, と nghĩa là làm việc đó cùng với ai.",
+      "en": "と joins nouns in a complete list. Before a verb it means doing it together with someone."
+    },
+    "examples": [
+      { "ja": "父と 母", "vi": "bố và mẹ", "en": "my father and mother" },
+      { "ja": "友だちと 日本へ 行きます。", "vi": "Tôi đi Nhật cùng bạn.", "en": "I am going to Japan with a friend." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:kore-sore-are", "slug": "kore-sore-are", "lesson": 10, "pattern": "これ・それ・あれ",
+    "title": { "vi": "Cái này, cái đó, cái kia", "en": "This, that, that over there" },
+    "structure": "これ / それ / あれ は N です",
+    "explain": {
+      "vi": "これ là vật gần người nói, それ gần người nghe, あれ xa cả hai. Hỏi \"cái nào\" dùng どれ.",
+      "en": "これ is near the speaker, それ near the listener, あれ far from both. Ask \"which one\" with どれ."
+    },
+    "examples": [
+      { "ja": "これは なんですか。", "vi": "Đây là cái gì?", "en": "What is this?" },
+      { "ja": "それは わたしの かばんです。", "vi": "Đó là cặp của tôi.", "en": "That is my bag." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:kono-sono-ano", "slug": "kono-sono-ano", "lesson": 10, "pattern": "この・その・あの + N",
+    "title": { "vi": "N này, N đó, N kia", "en": "This N, that N" },
+    "structure": "この / その / あの + N",
+    "explain": {
+      "vi": "Giống これ・それ・あれ nhưng luôn đứng trước một danh từ, không đứng một mình.",
+      "en": "Like これ・それ・あれ, but always placed before a noun, never alone."
+    },
+    "examples": [
+      { "ja": "この 本は わたしのです。", "vi": "Quyển sách này là của tôi.", "en": "This book is mine." },
+      { "ja": "あの 人は だれですか。", "vi": "Người kia là ai?", "en": "Who is that person?" }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:doko", "slug": "doko", "lesson": 11, "pattern": "〜は どこですか",
+    "title": { "vi": "~ ở đâu?", "en": "Where is ~?" },
+    "structure": "N は どこ ですか / ここ・そこ・あそこ です",
+    "explain": {
+      "vi": "Hỏi vị trí bằng どこ. Trả lời bằng ここ (chỗ này), そこ (chỗ đó), あそこ (chỗ kia) hoặc tên nơi chốn.",
+      "en": "Ask for a place with どこ. Answer with ここ (here), そこ (there), あそこ (over there) or a place name."
+    },
+    "examples": [
+      { "ja": "トイレは どこですか。", "vi": "Nhà vệ sinh ở đâu?", "en": "Where is the toilet?" },
+      { "ja": "あそこです。", "vi": "Ở đằng kia.", "en": "Over there." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:no-ue", "slug": "no-ue", "lesson": 11, "pattern": "N の 上・下・中",
+    "title": { "vi": "Trên, dưới, trong N", "en": "On, under, in N" },
+    "structure": "N の 上 / 下 / 中 / 前 / 後ろ",
+    "explain": {
+      "vi": "Từ chỉ vị trí đứng sau N の. Khác tiếng Việt: vật mốc nói trước, vị trí nói sau.",
+      "en": "Position words follow N の: the landmark comes first, then the position."
+    },
+    "examples": [
+      { "ja": "つくえの 上に 本が あります。", "vi": "Trên bàn có quyển sách.", "en": "There is a book on the desk." },
+      { "ja": "駅の 前で まって います。", "vi": "Tôi đang đợi trước nhà ga.", "en": "I am waiting in front of the station." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:de-place", "slug": "de-place", "lesson": 12, "pattern": "場所 + で",
+    "title": { "vi": "Ở (nơi làm việc gì)", "en": "At (where something is done)" },
+    "structure": "nơi chốn + で + V",
+    "explain": {
+      "vi": "で đánh dấu nơi diễn ra hành động. Nơi một vật tồn tại thì dùng に, không dùng で.",
+      "en": "で marks where an action takes place. Where something simply is takes に, not で."
+    },
+    "examples": [
+      { "ja": "学校で 日本語を べんきょうします。", "vi": "Tôi học tiếng Nhật ở trường.", "en": "I study Japanese at school." },
+      { "ja": "会社で はたらきます。", "vi": "Tôi làm việc ở công ty.", "en": "I work at a company." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:wo", "slug": "wo", "lesson": 13, "pattern": "N を V",
+    "title": { "vi": "Tân ngữ của động từ", "en": "The object of a verb" },
+    "structure": "N を V",
+    "explain": {
+      "vi": "を (đọc là お) đánh dấu đối tượng chịu tác động của động từ: ăn cái gì, uống cái gì.",
+      "en": "を (read お) marks what the verb acts on: what you eat, what you drink."
+    },
+    "examples": [
+      { "ja": "パンを 食べます。", "vi": "Tôi ăn bánh mì.", "en": "I eat bread." },
+      { "ja": "おちゃを 飲みます。", "vi": "Tôi uống trà.", "en": "I drink tea." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ga-suki", "slug": "ga-suki", "lesson": 13, "pattern": "〜が すきです",
+    "title": { "vi": "Thích ~", "en": "To like ~" },
+    "structure": "N が すき / きらい です",
+    "explain": {
+      "vi": "すき (thích) và きらい (ghét) là tính từ đuôi な. Thứ được thích đứng trước が.",
+      "en": "すき (like) and きらい (dislike) are な-adjectives. The thing liked comes before が."
+    },
+    "examples": [
+      { "ja": "ねこが すきです。", "vi": "Tôi thích mèo.", "en": "I like cats." },
+      { "ja": "にくが きらいです。", "vi": "Tôi ghét thịt.", "en": "I dislike meat." }
+    ],
+    "note": { "vi": "Với すき, đối tượng dùng が, không dùng を.", "en": "With すき the object takes が, not を." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:wo-kudasai", "slug": "wo-kudasai", "lesson": 13, "pattern": "〜を ください",
+    "title": { "vi": "Cho tôi ~", "en": "~, please" },
+    "structure": "N を ください",
+    "explain": {
+      "vi": "Dùng khi gọi món hay mua hàng để xin một thứ gì đó. Số lượng đặt sau を.",
+      "en": "Used when ordering or shopping to ask for something. A quantity goes after を."
+    },
+    "examples": [
+      { "ja": "コーヒーを ください。", "vi": "Cho tôi cà phê.", "en": "A coffee, please." },
+      { "ja": "りんごを 三つ ください。", "vi": "Cho tôi ba quả táo.", "en": "Three apples, please." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:he-iku", "slug": "he-iku", "lesson": 14, "pattern": "場所 + へ 行きます",
+    "title": { "vi": "Đi đến (nơi nào)", "en": "To go to (a place)" },
+    "structure": "nơi chốn + へ + 行きます / 来ます / かえります",
+    "explain": {
+      "vi": "へ (đọc là え) chỉ hướng di chuyển, đi cùng 行きます (đi), 来ます (đến), かえります (về).",
+      "en": "へ (read え) marks the direction of movement with 行きます (go), 来ます (come) and かえります (return)."
+    },
+    "examples": [
+      { "ja": "あした 東京へ 行きます。", "vi": "Ngày mai tôi đi Tokyo.", "en": "I am going to Tokyo tomorrow." },
+      { "ja": "七時に うちへ かえります。", "vi": "Tôi về nhà lúc bảy giờ.", "en": "I go home at seven." }
+    ],
+    "note": { "vi": "Có thể thay へ bằng に mà nghĩa gần như không đổi.", "en": "に can replace へ with almost no change in meaning." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:de-means", "slug": "de-means", "lesson": 14, "pattern": "乗り物 + で",
+    "title": { "vi": "Bằng (phương tiện)", "en": "By (a means)" },
+    "structure": "phương tiện + で + V",
+    "explain": {
+      "vi": "で chỉ phương tiện hay cách thức: đi bằng gì, viết bằng gì. Đi bộ thì nói あるいて, không dùng で.",
+      "en": "で marks the means: how you travel, what you write with. On foot is あるいて, without で."
+    },
+    "examples": [
+      { "ja": "電車で 学校へ 行きます。", "vi": "Tôi đi học bằng tàu điện.", "en": "I go to school by train." },
+      { "ja": "日本語で 話します。", "vi": "Tôi nói bằng tiếng Nhật.", "en": "I speak in Japanese." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ikura", "slug": "ikura", "lesson": 15, "pattern": "〜は いくらですか",
+    "title": { "vi": "~ bao nhiêu tiền?", "en": "How much is ~?" },
+    "structure": "N は いくら ですか",
+    "explain": {
+      "vi": "いくら hỏi giá. Trả lời bằng số + 円 (えん).",
+      "en": "いくら asks for a price. Answer with a number + 円 (えん)."
+    },
+    "examples": [
+      { "ja": "この 本は いくらですか。", "vi": "Quyển sách này bao nhiêu tiền?", "en": "How much is this book?" },
+      { "ja": "三百円です。", "vi": "Ba trăm yên.", "en": "Three hundred yen." }
+    ],
+    "note": { "vi": "三百 đọc là さんびゃく, không phải さんひゃく.", "en": "三百 is read さんびゃく, not さんひゃく." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:desu-ne", "slug": "desu-ne", "lesson": 16, "pattern": "〜ね・〜よ",
+    "title": { "vi": "Nhỉ; đấy", "en": "Isn't it; you know" },
+    "structure": "câu + ね / よ",
+    "explain": {
+      "vi": "ね cuối câu mong người nghe đồng tình (nhỉ). よ báo cho người nghe điều họ chưa biết (đấy).",
+      "en": "ね at the end invites agreement (isn't it). よ tells the listener something new (you know)."
+    },
+    "examples": [
+      { "ja": "いい てんきですね。", "vi": "Trời đẹp nhỉ.", "en": "Lovely weather, isn't it?" },
+      { "ja": "あしたは 雨ですよ。", "vi": "Ngày mai trời mưa đấy.", "en": "It will rain tomorrow, you know." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:wa-ga", "slug": "wa-ga", "lesson": 17, "pattern": "〜は 〜が adj",
+    "title": { "vi": "~ thì (bộ phận) ~", "en": "~ has (a part that is) ~" },
+    "structure": "N1 は N2 が adj です",
+    "explain": {
+      "vi": "N1 là chủ đề, N2 là bộ phận hay khía cạnh của N1 được miêu tả bằng tính từ.",
+      "en": "N1 is the topic; N2 is a part or aspect of it that the adjective describes."
+    },
+    "examples": [
+      { "ja": "ぞうは はなが ながいです。", "vi": "Voi có vòi dài.", "en": "Elephants have long trunks." },
+      { "ja": "わたしは あたまが いたいです。", "vi": "Tôi bị đau đầu.", "en": "I have a headache." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:i-adj", "slug": "i-adj", "lesson": 18, "pattern": "い形容詞",
+    "title": { "vi": "Tính từ đuôi い", "en": "い-adjectives" },
+    "structure": "adj-い + N / adj-い です / adj-くない です",
+    "explain": {
+      "vi": "Tính từ đuôi い đứng thẳng trước danh từ. Phủ định: bỏ い, thêm くないです.",
+      "en": "An い-adjective goes straight before a noun. Negative: drop い and add くないです."
+    },
+    "examples": [
+      { "ja": "たかい 山です。", "vi": "Đó là ngọn núi cao.", "en": "It is a tall mountain." },
+      { "ja": "この へやは ひろくないです。", "vi": "Căn phòng này không rộng.", "en": "This room is not big." }
+    ],
+    "note": { "vi": "いい là ngoại lệ: phủ định là よくないです.", "en": "いい is irregular: its negative is よくないです." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:na-adj", "slug": "na-adj", "lesson": 18, "pattern": "な形容詞",
+    "title": { "vi": "Tính từ đuôi な", "en": "な-adjectives" },
+    "structure": "adj + な + N / adj です / adj じゃ ありません",
+    "explain": {
+      "vi": "Tính từ đuôi な cần な khi đứng trước danh từ. Cuối câu thì dùng です và phủ định như danh từ.",
+      "en": "A な-adjective needs な before a noun. At the end it takes です and negates like a noun."
+    },
+    "examples": [
+      { "ja": "しずかな まちです。", "vi": "Đó là một thị trấn yên tĩnh.", "en": "It is a quiet town." },
+      { "ja": "この 店は きれいじゃ ありません。", "vi": "Cửa hàng này không sạch.", "en": "This shop is not clean." }
+    ],
+    "note": { "vi": "きれい tuy tận cùng bằng い nhưng là tính từ đuôi な.", "en": "きれい ends in い but is a な-adjective." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:masu", "slug": "masu", "lesson": 19, "pattern": "V-ます・V-ません",
+    "title": { "vi": "Động từ thể lịch sự", "en": "Polite verbs" },
+    "structure": "V-ます / V-ません",
+    "explain": {
+      "vi": "ます là thể lịch sự cho hiện tại và tương lai, ません là phủ định. Động từ luôn đứng cuối câu.",
+      "en": "ます is the polite present and future, ません its negative. The verb always ends the sentence."
+    },
+    "examples": [
+      { "ja": "まいにち 日本語を べんきょうします。", "vi": "Hằng ngày tôi học tiếng Nhật.", "en": "I study Japanese every day." },
+      { "ja": "おさけを 飲みません。", "vi": "Tôi không uống rượu.", "en": "I don't drink alcohol." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:te-kudasai", "slug": "te-kudasai", "lesson": 20, "pattern": "V-て ください",
+    "title": { "vi": "Hãy làm ~", "en": "Please do ~" },
+    "structure": "V-て + ください",
+    "explain": {
+      "vi": "Thể て cộng ください là lời nhờ hay chỉ dẫn lịch sự.",
+      "en": "The て form plus ください makes a polite request or instruction."
+    },
+    "examples": [
+      { "ja": "ここに 名前を 書いて ください。", "vi": "Hãy viết tên vào đây.", "en": "Please write your name here." },
+      { "ja": "ゆっくり 話して ください。", "vi": "Xin hãy nói chậm.", "en": "Please speak slowly." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:te-imasu", "slug": "te-imasu", "lesson": 20, "pattern": "V-て います",
+    "title": { "vi": "Đang làm ~", "en": "Is doing ~" },
+    "structure": "V-て + います",
+    "explain": {
+      "vi": "Thể て cộng います diễn tả hành động đang diễn ra, hoặc một trạng thái kéo dài.",
+      "en": "The て form plus います describes an action in progress or a lasting state."
+    },
+    "examples": [
+      { "ja": "いま 雨が ふって います。", "vi": "Bây giờ trời đang mưa.", "en": "It is raining now." },
+      { "ja": "ちちは 会社で はたらいて います。", "vi": "Bố tôi làm việc ở công ty.", "en": "My father works at a company." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:arimasu-imasu", "slug": "arimasu-imasu", "lesson": 21, "pattern": "〜が あります・います",
+    "title": { "vi": "Có; ở", "en": "There is; to be (somewhere)" },
+    "structure": "nơi chốn に N が あります / います",
+    "explain": {
+      "vi": "あります dùng cho đồ vật, cây cối. います dùng cho người và con vật.",
+      "en": "あります is for things and plants; います is for people and animals."
+    },
+    "examples": [
+      { "ja": "へやに テレビが あります。", "vi": "Trong phòng có cái tivi.", "en": "There is a TV in the room." },
+      { "ja": "こうえんに 子どもが います。", "vi": "Có trẻ con ở công viên.", "en": "There are children in the park." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:mashita", "slug": "mashita", "lesson": 22, "pattern": "V-ました・V-ませんでした",
+    "title": { "vi": "Động từ quá khứ", "en": "Past tense verbs" },
+    "structure": "V-ました / V-ませんでした",
+    "explain": {
+      "vi": "Đổi ます thành ました để nói về quá khứ, ません thành ませんでした cho quá khứ phủ định.",
+      "en": "Change ます to ました for the past, and ません to ませんでした for the past negative."
+    },
+    "examples": [
+      { "ja": "きのう えいがを 見ました。", "vi": "Hôm qua tôi đã xem phim.", "en": "I saw a film yesterday." },
+      { "ja": "けさ ごはんを 食べませんでした。", "vi": "Sáng nay tôi đã không ăn cơm.", "en": "I didn't eat breakfast this morning." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:deshita", "slug": "deshita", "lesson": 22, "pattern": "〜でした・〜かったです",
+    "title": { "vi": "Danh từ và tính từ ở quá khứ", "en": "Past nouns and adjectives" },
+    "structure": "N / adj-な でした · adj-い → かったです",
+    "explain": {
+      "vi": "Danh từ và tính từ đuôi な: です → でした. Tính từ đuôi い: bỏ い, thêm かったです.",
+      "en": "Nouns and な-adjectives: です → でした. い-adjectives: drop い and add かったです."
+    },
+    "examples": [
+      { "ja": "きのうは 雨でした。", "vi": "Hôm qua trời mưa.", "en": "It rained yesterday." },
+      { "ja": "りょこうは たのしかったです。", "vi": "Chuyến du lịch đã rất vui.", "en": "The trip was fun." }
+    ],
+    "note": { "vi": "いい → よかったです.", "en": "いい → よかったです." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:tai", "slug": "tai", "lesson": 23, "pattern": "V-たいです",
+    "title": { "vi": "Muốn làm ~", "en": "Want to do ~" },
+    "structure": "V (bỏ ます) + たいです",
+    "explain": {
+      "vi": "Bỏ ます rồi thêm たいです để nói điều mình muốn làm. Thường chỉ dùng cho chính người nói.",
+      "en": "Drop ます and add たいです to say what you want to do. It is normally only used about yourself."
+    },
+    "examples": [
+      { "ja": "日本へ 行きたいです。", "vi": "Tôi muốn đi Nhật.", "en": "I want to go to Japan." },
+      { "ja": "すしを 食べたいです。", "vi": "Tôi muốn ăn sushi.", "en": "I want to eat sushi." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:masenka", "slug": "masenka", "lesson": 23, "pattern": "V-ませんか・V-ましょう",
+    "title": { "vi": "Rủ rê: cùng ~ nhé", "en": "Invitations: shall we ~" },
+    "structure": "V-ませんか / V-ましょう",
+    "explain": {
+      "vi": "ませんか là lời mời nhẹ nhàng (bạn có muốn ~ không). ましょう là đề nghị cùng làm (hãy cùng ~).",
+      "en": "ませんか is a gentle invitation (won't you ~). ましょう proposes doing it together (let's ~)."
+    },
+    "examples": [
+      { "ja": "いっしょに 昼ごはんを 食べませんか。", "vi": "Cùng ăn trưa không?", "en": "Would you like to have lunch together?" },
+      { "ja": "ええ、食べましょう。", "vi": "Ừ, cùng ăn nào.", "en": "Yes, let's." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:yori", "slug": "yori", "lesson": 24, "pattern": "〜は 〜より adj",
+    "title": { "vi": "A hơn B", "en": "A is more ~ than B" },
+    "structure": "N1 は N2 より adj です",
+    "explain": {
+      "vi": "より đứng sau vật được đem ra so sánh. Tính từ giữ nguyên, không cần thêm từ \"hơn\".",
+      "en": "より follows the thing compared against. The adjective stays as it is; no word for \"more\" is needed."
+    },
+    "examples": [
+      { "ja": "東京は 大阪より 大きいです。", "vi": "Tokyo lớn hơn Osaka.", "en": "Tokyo is bigger than Osaka." },
+      { "ja": "きょうは きのうより さむいです。", "vi": "Hôm nay lạnh hơn hôm qua.", "en": "Today is colder than yesterday." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ichiban", "slug": "ichiban", "lesson": 24, "pattern": "〜の 中で 〜が いちばん",
+    "title": { "vi": "Nhất trong ~", "en": "The most ~ of all" },
+    "structure": "N1 の 中で N2 が いちばん adj です",
+    "explain": {
+      "vi": "いちばん (nhất) đứng trước tính từ. の 中で cho biết phạm vi so sánh.",
+      "en": "いちばん (most) goes before the adjective. の 中で sets the group being compared."
+    },
+    "examples": [
+      { "ja": "くだものの 中で りんごが いちばん すきです。", "vi": "Trong các loại hoa quả, tôi thích táo nhất.", "en": "Of all fruit, I like apples best." },
+      { "ja": "クラスで だれが いちばん 高いですか。", "vi": "Trong lớp ai cao nhất?", "en": "Who is the tallest in the class?" }
+    ],
+    "reviewed": false
+  }
+]

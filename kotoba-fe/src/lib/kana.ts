@@ -13,6 +13,7 @@ export type Kana = {
   hint: string; // Vietnamese: the sound for letters, meaning + note for special words
   row: number;
   col: number;
+  lesson: number;
 };
 
 export type KanaSet = { script: Script; group: Group; name: string; items: Kana[] };

@@ -321,7 +321,8 @@ p { text-wrap: pretty; }
   }
   .bar nav a,
   .bar nav .logout { min-height: 44px; display: flex; align-items: center; }
-  /* The library lists inline in the sheet. */
+  .bar nav > a { font-size: 1.25rem; }
+  /* The library lists inline in the sheet, under a rule. */
   .bar nav .library {
     display: flex;
     flex-wrap: wrap;
@@ -330,9 +331,10 @@ p { text-wrap: pretty; }
     inset: auto;
     width: auto;
     height: auto;
-    margin: 0;
-    padding: 0;
+    margin: 8px 0 0;
+    padding: 8px 0 0;
     border: 0;
+    border-top: 1px solid var(--rule);
     background: none;
     overflow: visible;
   }

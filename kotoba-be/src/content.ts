@@ -1,5 +1,5 @@
 // Content kinds served from kotoba-be/content/*.json and the text search over them.
-export const KINDS = { kana: 'kana', kanji: 'kanji', vocab: 'vocab', lesson: 'lessons' } as const;
+export const KINDS = { kana: 'kana', kanji: 'kanji', vocab: 'vocab', lesson: 'lessons', grammar: 'grammar' } as const;
 export type Kind = keyof typeof KINDS;
 export const isKind = (v: unknown): v is Kind => typeof v === 'string' && Object.hasOwn(KINDS, v);
 
@@ -17,7 +17,7 @@ export const normalize = (s: string) =>
     .trim();
 
 // Fields worth matching; kana hints are left out so "ca" finds cà phê, not か.
-const FIELDS = ['char', 'word', 'kanji', 'reading', 'romaji', 'hv', 'on', 'kun', 'vi', 'en', 'title'];
+const FIELDS = ['char', 'word', 'kanji', 'reading', 'romaji', 'hv', 'on', 'kun', 'vi', 'en', 'title', 'pattern'];
 
 export function searchText(d: Record<string, unknown>): string {
   const out: string[] = [];

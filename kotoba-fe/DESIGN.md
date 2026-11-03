@@ -129,11 +129,19 @@ components:
     textColor: "{colors.silver-mute}"
   status-mark-off:
     textColor: "{colors.silver-dim}"
+  text-action:
+    textColor: "{colors.amber}"
+  text-action-hover:
+    textColor: "{colors.amber-core}"
+  structure-frame:
+    backgroundColor: "transparent"
+    textColor: "{colors.cool-core}"
+    padding: "1rem 1.25rem"
 ---
 
 # Design System: Kotoba
 
-<!-- Scan of the shipped build, 2026-11-02. Sources: src/app/globals.css (every colour token), src/app/layout.tsx (fonts), page.tsx + Dashboard, kana/*, flashcards/*, (auth)/*; Phase 10 added kanji/*, vocab/*, Speak.tsx. Descriptive names and the North Star below are drafted by the documenter from the direction contract and are not yet confirmed by the user. -->
+<!-- Scan of the shipped build, 2026-11-02. Sources: src/app/globals.css (every colour token), src/app/layout.tsx (fonts), page.tsx + Dashboard, kana/*, flashcards/*, (auth)/*; Phase 10 added kanji/*, vocab/*, Speak.tsx; Phase 11 (2026-11-03) added lessons/* (Path.tsx, LessonFooter.tsx, [n]) and grammar/* ([slug]), the Bài học nav item and Arrow's back variant. Descriptive names and the North Star below are drafted by the documenter from the direction contract and are not yet confirmed by the user. -->
 
 ## Overview
 
@@ -157,7 +165,7 @@ Product context: PRODUCT.md is stale. It describes a kana-only first release and
 The palette is a night street: four darks, three hairline rules, four silver text steps, and three neon tubes, each with a hot core.
 
 ### Primary
-- **Sodium Amber Tube** (amber): the one action colour. It is used for the `.btn` outline and fill, the current nav link, the active segment, the focus ring, the caret, and progress (meter counts, mastered kana, `progress` bars). It also marks earned state, such as a learned cell's character.
+- **Sodium Amber Tube** (amber): the one action colour. It is used for the `.btn` outline and fill, the current nav link, the active segment, the focus ring, the caret, and progress (meter counts, mastered kana, `progress` bars). It also marks earned state, such as a learned cell's character and the lesson station marks (half amber when started, full amber when done).
 - **Amber Hot Core** (amber-core): the hover state of amber text links and the centre of the hero's amber headline line.
 
 ### Secondary
@@ -167,7 +175,7 @@ The palette is a night street: four darks, three hairline rules, four silver tex
 
 ### Tertiary
 - **Train-Line Blue Tube** (cool): blue glow (`--glow-cool`) on page `h1`s and study-card words, and the light that spills from cool signs.
-- **Blue Hot Core** (cool-core): the flashcard front word and the hero's cool headline line.
+- **Blue Hot Core** (cool-core): the flashcard front word, lesson tile characters, the grammar structure line, and the hero's cool headline line.
 
 ### Neutral
 - **Night** (night): page ground, the opaque backing of the sticky grade row, and text on amber fills.
@@ -175,8 +183,8 @@ The palette is a night street: four darks, three hairline rules, four silver tex
 - **Wet Asphalt** (wet): hover fill for rows, cells and ghost buttons. Planned panels also use it (review done-state, reading passages).
 - **Blue Hour / Falling Dusk / Night Sky** (sky-1, sky-2, sky-3): only the hero sky gradient, the skyline planes (via color-mix), and the sky bleed at the top of /kana.
 - **Faint Rule** (rule-dim): row dividers inside tables and lists, the section tops on /settings and /legal, and the footer rule.
-- **Rule** (rule): default borders, section dividers, ghost-button edges, disabled borders, and the progress track.
-- **Strong Rule** (rule-strong): card edges and ghost-button hover rings.
+- **Rule** (rule): default borders, section dividers, ghost-button edges, disabled borders, the progress track, lesson tile edges, and the dashed lesson track past the last started station.
+- **Strong Rule** (rule-strong): card edges, ghost-button hover rings, station-mark outlines, the solid lesson track up to the last started station, and the grammar structure frame.
 - **Chalk** (chalk): headings and the strongest text, such as the brand word, card backs and input text.
 - **Silver** (silver): body text.
 - **Dim Silver** (silver-dim): ledes, labels, hints, table heads, and disabled text. It is the faintest step allowed for readable text.
@@ -192,6 +200,8 @@ Derived tokens (defined in `globals.css` with `color-mix`, not primitives): `tow
 **The Readable Floor Rule.** Readable text uses Dim Silver or brighter. Muted Silver is for the 404 numeral only. Disabled controls are Dim Silver text on a Rule border, with no glow, as `.btn:disabled` does.
 
 **The One Palette Rule.** Do not write hex values in components. A shade that differs from an existing token by less than about 10% per channel is that token. Use `color-mix(in srgb, var(--x) N%, var(--night))` instead of a new hex value.
+
+**The Amber Moves On Rule.** On a lesson, the study action is the amber `.btn` and the next-lesson link is an amber text action. Once every item in the lesson is learned, the study action drops to a ghost (Ôn lại) and the next-lesson link becomes the `.btn`. The amber always sits on the next useful step, and there is never more than one `.btn`.
 
 ## Typography
 
@@ -218,11 +228,11 @@ Derived tokens (defined in `globals.css` with `color-mix`, not primitives): `tow
 
 ## Layout
 
-There is one content edge for the whole site. `--pad-x` is `calc(gutter + max(0px, (100% - 88rem) / 2))`, with `--gutter` at clamp(16px, 4vw, 56px). Full-bleed bands and text columns align to it. Pages pad clamp(1.5rem, 4vw, 3.5rem) at the top and 4rem to 5rem at the bottom. Reading and drilling columns narrow inside it. The flashcard study column is 48rem and centred, the Dashboard is 60rem, and auth panels are 26rem.
+There is one content edge for the whole site. `--pad-x` is `calc(gutter + max(0px, (100% - 88rem) / 2))`, with `--gutter` at clamp(16px, 4vw, 56px). Full-bleed bands and text columns align to it. Pages pad clamp(1.5rem, 4vw, 3.5rem) at the top and 4rem to 5rem at the bottom. Reading and drilling columns narrow inside it. The flashcard study column is 48rem and centred, the Dashboard, lesson path and grammar list are 60rem, a single lesson and a grammar detail are 46rem, and auth panels are 26rem.
 
 Study structure is rows and rules. Study sections are separated by 1px Rule borders (`border-top` or `border-block`); the quieter frame pages (/settings, /legal, the footer) use Faint Rule. Tables and lists divide rows with Faint Rule lines. Every row and link has a target of at least 44px, and form controls and buttons are 48px.
 
-Breakpoints are 900px (the site nav becomes the Menu popover sheet, kana chart and quiz go to one column, and the kana detail panel becomes a sticky bottom sheet), 560px (segments become 2-up grids) and 480px (tighter card and table sizes).
+Breakpoints are 900px (the site nav becomes the Menu popover sheet, kana chart and quiz go to one column, and the kana detail panel becomes a sticky bottom sheet), 560px (segments become 2-up grids) and 480px (tighter card and table sizes). Route rows fold at 700px (lesson path, grammar list, vocab decks), and the lesson's two-column word list goes to one column at 640px.
 
 **The Sticky Decision Rule.** On a long graded surface the one decision stays reachable. The flashcard grade row is `position: sticky; bottom: 0` with an opaque Night background and a Rule top edge, so the card back can scroll past without hiding Chưa nhớ / Nhớ rồi. The kana detail panel does the same on phones.
 
@@ -242,7 +252,7 @@ Study surfaces are flat. Depth comes from tonal steps (Night to Asphalt to Wet) 
 
 ## Shapes
 
-Shapes are hairline and squared. Buttons, cards, inputs and choice chips use a 2px radius (`hairline`). Borders are 1px for structure and 1.5px for controls (`.btn`, `.langSwitch`, nav underline). Circles appear only as small lamps and dots (kana progress lamps, hero lamps). Hanging hero signs use the 7px `sign` radius, and hero ticket panels use 4px. Those softer corners belong to street objects and do not carry over to study UI. Icons are 18px SVGs with a 1.75 currentColor stroke: the Arrow (square caps; mirrored to point left on back links) and Play (an outlined triangle with miter joins, used by Speak).
+Shapes are hairline and squared. Buttons, cards, inputs and choice chips use a 2px radius (`hairline`). Borders are 1px for structure and 1.5px for controls (`.btn`, `.langSwitch`, nav underline). Circles appear only as small lamps and dots (kana progress lamps, hero lamps) and as the 14px lesson station marks. Hanging hero signs use the 7px `sign` radius, and hero ticket panels use 4px. Those softer corners belong to street objects and do not carry over to study UI. Icons are 18px SVGs with a 1.75 currentColor stroke: the Arrow (square caps; its `back` variant points left on back links and the pager's previous link) and Play (an outlined triangle with miter joins, used by Speak).
 
 ## Components
 
@@ -254,7 +264,8 @@ Buttons are framed tubes that light up when touched.
 - **Ghost (`.btn btnGhost`):** a Rule border and Silver text with no glow. On hover it gets a Wet fill, Chalk text and a Strong Rule ring.
 - **Disabled:** Rule border and Dim Silver text, with no fill, no glow and `cursor: not-allowed`.
 - **Speak (`Speak.tsx`):** a ghost `.btn btnGhost` with the Play icon before a label (Đọc). It speaks the text through `speechSynthesis` with a `ja` voice and is not rendered at all when the browser has no `ja` voice.
-- **Text action:** an amber underlined link with a 0.25em offset that goes to Amber Hot Core on hover. Examples are the flashcard tools and Dashboard links. Disabled text actions use Dim Silver.
+- **Text action:** an amber link, underlined with a 0.25em offset, that goes to Amber Hot Core on hover. It is the standard secondary text link: the flashcard tools, Dashboard links, the kana section's chart link on a lesson, the lesson footer's next-lesson link, and the grammar pager. Standalone ones are 44px inline-flex with the Arrow. Disabled text actions use Dim Silver.
+- **Back link:** Silver text with the back Arrow in a 44px row, Amber Hot Core on hover, no underline. It sits above the `h1` on kanji, lesson and grammar detail.
 
 ### Segmented controls
 - **Language switch (`.langSwitch`):** a 1.5px Rule frame with Title 0.85rem buttons. The pressed button is solid amber with Night text.
@@ -302,11 +313,37 @@ A 44px bar holds the back link (left Arrow, Silver, Amber Hot Core on hover) and
 ### Vocab decks (/vocab)
 The standard heading and lede, then the one amber `.btn` in a 48px slot that holds its height until the local schedule loads: "Ôn n từ đến hạn" (to `/review?kind=vocab`) when words are due, otherwise "Học bài tiếp" (to the next unfinished deck). Decks are ruled rows in a 60rem column (Faint Rule top and row borders, at least 56px tall): Bài n, title, n từ, learned/due stats, Arrow. Counts are tabular and read "—" until the schedule hydrates. Hover gives Wet and Amber Hot Core text. Each row links `/flashcards?deck=n`, where the toolbar names the deck and an unknown deck is a 404. Below 700px the row folds to two lines.
 
+### Lesson path (/lessons)
+The standard heading and lede, then the course as a train line: an ordered list of stations, one per lesson, in a 60rem column. Each row is one link at least 56px tall, with columns for the station, the lesson number (Dim Silver 0.9rem, tabular), the title, the count and the action. Hover gives Wet and Amber Hot Core text.
+- **Station mark:** a 14px SVG circle with a 1px stroke on Night. Fresh is a Strong Rule outline, started is an amber outline with the left half filled amber, and done is solid amber. Screen readers get the state as sr-only text after the title.
+- **Track:** a 1px vertical line through the station column, drawn into and out of each mark. It is solid Strong Rule up to the last started station, then dashed Rule to the end. The first and last stations have no outer stub.
+- **Count:** learned/total in Dim Silver 0.9rem, tabular, right-aligned. The unit (đã học) is visible on the first counted row only, like a column head, and sr-only on the rest. Counts read "—" and every station is fresh until the local schedule loads. A lesson with no items (Ôn tập N5) has no count.
+- **Action:** one amber `.btn` span inside the row link (40px, 1rem): "Học tiếp" if anything is learned, otherwise the start label, on the first started lesson or else the first open one. Hovering anywhere on its row fills it. It is the page's one amber action and is absent until the schedule loads.
+- Below 700px the row becomes the station, number and title with the count under the title, and the action becomes a full-width button under them; the mark stays on the title line.
+
+### Lesson (/lessons/[n])
+A 46rem column: back link (Bài học), the `h1` lesson title, and a Dim Silver lede built from the counts ("Bài 6 / 25 · 14 kanji · 22 từ · 1 điểm ngữ pháp"). Sections follow at 2.5rem, each with a Chalk 1.1rem `h2` and a Dim Silver tabular count in parentheses.
+- **Lesson tiles:** the kanji-tile grid (`minmax(4.5rem, 1fr)`, 6px gap, at least 5.5rem tall) with a 1px Rule border, the character in Blue Hot Core in the kana face at 2.5rem (1.8rem for kana), and the Hán Việt or romaji under it in Dim Silver 0.75rem uppercase. Kanji tiles link to /kanji/[char] and hover to Wet with Amber Hot Core text. Kana tiles are not links; their section `h2` carries a text action to the chart.
+- **Word list:** a two-column `dl` (one column below 640px) of Faint Rule rows: the word in Chalk in the kana face at 1.15rem, the reading after it in Dim Silver, the meaning in Silver below, and Speak on the right.
+- **Grammar rows:** 52px Faint Rule rows: the pattern in Chalk in the kana face, the title in Silver, and an Arrow. Hover gives Amber Hot Core.
+- **Footer:** a Faint Rule top border, then the schedule count ("3 / 36 mục đã vào lịch ôn", Dim Silver, tabular) on the left and the actions on the right: the amber "Học bài này" `.btn` and the next lesson as a text action (see The Amber Moves On Rule). Kana lessons study each chart group in the kana quiz in turn; other lessons study at `/review?lesson=n`. Before the schedule loads the count reads "—" and the study button is absent.
+- A lesson with no items (the N5 review) shows a Silver note and one amber `.btn` to /review.
+
+### Grammar list (/grammar)
+The standard heading and lede, then ruled link rows in a 60rem column (Faint Rule top and row borders, at least 56px): Bài n in Dim Silver tabular, the pattern in Chalk in the kana face, the title in Silver, and an Arrow. Hover gives Wet and Amber Hot Core text. Below 700px the three texts stack beside the Arrow. There is no amber action.
+
+### Grammar detail (/grammar/[slug])
+A 46rem column: back link (Ngữ pháp), then the pattern as the `h1` in the kana face at weight 400, clamp(2.2rem, 5vw, 3.5rem), Silver with `--glow-cool`, over a Dim Silver lede (Bài n · title). Sections have Chalk 1.1rem `h2`s.
+- **Structure frame:** the one framed block on the page: a 1px Strong Rule border with no fill and no radius, padding 1rem 1.25rem, the structure in Blue Hot Core in the kana face at 1.3rem.
+- **Explanation and note:** Silver prose, at most 70ch.
+- **Examples:** Faint Rule rows: the sentence in Chalk in the kana face at 1.2rem with Speak on the right, the translation in Dim Silver below.
+- The one amber `.btn` is "Học bài n" (to /lessons/n). Under it a pager on a Faint Rule top border holds the previous and next patterns as text actions with Arrows, previous on the left and next on the right.
+
 ### Navigation
-- **Site bar (`.bar`):** the brand link sits on the left: 言葉 in the sign face with pink glow, then "Kotoba" in Chalk Title tracked 0.08em, plus an sr-only "trang chủ". One `<nav>` follows. Nav items are Title 600 at 1.1rem in Silver. Hover goes to Chalk with a Rule underline, and the current item is amber text with a 1.5px amber underline.
+- **Site bar (`.bar`):** the brand link sits on the left: 言葉 in the sign face with pink glow, then "Kotoba" in Chalk Title tracked 0.08em, plus an sr-only "trang chủ". One `<nav>` follows. Its first item is Bài học (/lessons), a plain nav link; Ôn tập, Tra cứu and Thi thử join it as their routes ship. Nav items are Title 600 at 1.1rem in Silver. Hover goes to Chalk with a Rule underline, and the current item is amber text with a 1.5px amber underline.
   - **From 900px up** the nav is a plain row: the Thư viện button, then the account group pushed to the right.
   - **Below 900px** the nav is a `popover="auto"` sheet opened by the `.menuBtn` ghost button (44px). The sheet is full width under the bar, Asphalt with Strong Rule top and bottom borders, and its items are 44px rows. Clicking any link inside closes the sheet and the library popover.
-  - **Thư viện (`.libraryBtn`):** a button with a small chevron that opens the `#site-library` popover (Bảng chữ cái, Kanji, Từ vựng; /flashcards counts as Từ vựng). It turns amber through `data-current` when the current page is in the library. The popover is Asphalt with a 1px Strong Rule border, anchored under the button. Its rows are 44px and hover to a Wet fill with Amber Hot Core text. In the phone sheet the button is hidden and the library links are listed inline.
+  - **Thư viện (`.libraryBtn`):** a button with a small chevron that opens the `#site-library` popover (Bảng chữ cái, Kanji, Từ vựng, Ngữ pháp; /flashcards counts as Từ vựng). It turns amber through `data-current` when the current page is in the library. The popover is Asphalt with a 1px Strong Rule border, anchored under the button. Its rows are 44px and hover to a Wet fill with Amber Hot Core text. In the phone sheet the button is hidden, the primary links are 1.25rem, and the library links are listed inline below a Rule top border.
   - **Account group (`.account`):** when signed in, it shows the email (Dim Silver, 0.9rem, truncated) as a link to /settings, then Đăng xuất, then VI|EN. When signed out, Đăng nhập replaces the email and Đăng xuất. In the phone sheet the group sits below a Rule top border.
 - **Site footer (`.siteFooter`):** one Dim Silver 0.85rem line above a Faint Rule top border. It holds the KANJIDIC2 / JMdict / CC BY-SA 4.0 credits and a link to /legal that turns Amber Hot Core on hover.
 
@@ -319,14 +356,14 @@ Rain over a skyline SVG drawn in three depth planes, a train on the elevated lin
 
 ### Planned (not yet built)
 These exist only in `.impeccable/mocks/n5-ia.md` and are not shipped components. Do not treat them as established:
-- The primary nav items Bài học, Ôn tập (with a due count), Tra cứu and Thi thử. Each joins the shipped nav when its route ships.
-- The /lessons train-line path with station marks, /lessons/[n], the /review queue that reuses the flashcard frame, /search, /test sitting, result and review, and /grammar.
+- The primary nav items Ôn tập (with a due count), Tra cứu and Thi thử. Each joins the shipped nav when its route ships.
+- The /review queue that reuses the flashcard frame (lesson study already links to `/review?lesson=n`), /search, and /test sitting, result and review.
 - Chevron and clock icons drawn to match the Arrow.
 
 ### Builder amendments (unratified)
 The N5 build relies on these interpretations, but **the user has not confirmed them**, so they are provisional:
 - Secondary actions are ghost buttons so each view keeps one amber action. The shipped code already follows this.
-- The lesson path is drawn as a train line (planned).
+- The lesson path is drawn as a train line. Shipped in Phase 11.
 - Study routes avoid catalogue grids of cards and badges, and use rows, tables and specimens instead. The shipped code already follows this.
 
 ## Do's and Don'ts

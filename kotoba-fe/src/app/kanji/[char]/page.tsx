@@ -33,9 +33,7 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
       <main className={s.app}>
         <div className={s.detailBar}>
           <Link href="/kanji" className={s.back}>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <path d="M15 9H4M8.5 4.5 4 9l4.5 4.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" />
-            </svg>
+            <Arrow back />
             {t.back}
           </Link>
           <Speak text={k.char} label={t.speak} />

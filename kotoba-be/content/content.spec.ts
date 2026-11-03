@@ -7,7 +7,8 @@ const kana = load('kana');
 const kanji = load('kanji');
 const vocab = load('vocab');
 const lessons = load('lessons');
-const all = [...kana, ...kanji, ...vocab, ...lessons];
+const grammar = load('grammar');
+const all = [...kana, ...kanji, ...vocab, ...lessons, ...grammar];
 
 describe('content', () => {
   it('has unique ids', () => {
@@ -19,6 +20,7 @@ describe('content', () => {
   it('ids follow their kind', () => {
     expect(kanji.filter((d) => d.id !== `kanji:${d.char as string}`)).toEqual([]);
     expect(vocab.filter((d) => d.id !== `vocab:${d.word as string}`)).toEqual([]);
+    expect(grammar.filter((d) => d.id !== `grammar:${d.slug as string}`)).toEqual([]);
     expect(kana.filter((d) => d.id !== `${d.script as string}:${d.id.split(':')[1]}`)).toEqual([]);
   });
 
