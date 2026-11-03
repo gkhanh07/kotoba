@@ -3,7 +3,8 @@
 import { useEffect } from "react";
 import { logout, syncProgress } from "./(auth)/actions";
 import { parseActivity } from "@/lib/activity";
-import { applyRemote, clearLocal, snapshot, syncState, useDeck } from "@/lib/store";
+import { dict, type Lang } from "@/lib/i18n";
+import { applyRemote, clearLocal, pendingCount, setSyncPhase, snapshot, syncState, useDeck, useSyncPhase } from "@/lib/store";
 import { parseSrs } from "@/lib/srs";
 
 let uid: string | null = null;
@@ -11,7 +12,13 @@ let chain = Promise.resolve(true);
 
 // One push at a time. pull: sync even with nothing to send, to bring in other devices' progress.
 // Resolves false when the push failed (BE down); local data is left as it was.
-const flush = (pull = false) => (chain = chain.then(() => push(pull)));
+const flush = (pull = false) => (chain = chain.then(() => {
+  setSyncPhase("syncing");
+  return push(pull);
+}).then((ok) => {
+  setSyncPhase(ok ? "idle" : "failed");
+  return ok;
+}));
 
 async function push(pull: boolean): Promise<boolean> {
   const owner = uid;
@@ -28,13 +35,14 @@ async function push(pull: boolean): Promise<boolean> {
   if (!pull && st.owner === owner && !Object.keys(cards).length && !st.forget.length) return true;
   const sentAt = Date.now();
   try {
-    const remote = await syncProgress({
+    const res = await syncProgress({
       cards,
       activity: foreign ? null : parseActivity(activityRaw === "null" ? null : activityRaw),
       forget: foreign ? [] : st.forget,
     });
+    if (res.failed) return false;
     // Studied while the push was in flight: keep the local copy; that change schedules the next push.
-    if (remote && (foreign || snapshot() === before)) applyRemote(remote, owner, sentAt);
+    if (res.remote && (foreign || snapshot() === before)) applyRemote(res.remote, owner, sentAt);
     return true;
   } catch {
     return false;
@@ -71,5 +79,21 @@ export function LogoutButton({ label }: { label: string }) {
     }}>
       <button type="submit" className="logout">{label}</button>
     </form>
+  );
+}
+
+// SiteBar status line for a signed-in user (phase 20). Nothing until the deck loads.
+export function SyncStatus({ uid: owner, lang }: { uid: string; lang: Lang }) {
+  const labels = dict(lang).nav.sync;
+  const deck = useDeck();
+  const phase = useSyncPhase();
+  const n = deck ? pendingCount(deck.srs, syncState(), owner) : 0;
+  // While a push is in flight the retry button is gone, so it cannot queue a second one.
+  return (
+    <span className="syncStatus" aria-live="polite">
+      {!deck ? null : phase === "failed" ? (
+        <>{labels.failed} · <button type="button" className="syncRetry" onClick={() => flush(true)}>{labels.retry}</button></>
+      ) : n > 0 ? labels.pending(n) : phase === "syncing" ? labels.saving : labels.saved}
+    </span>
   );
 }

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useSyncExternalStore } from "react";
 import { examDate, examDay, type Profile } from "@/lib/account";
-import { ACTIVITY_KEY, parseActivity, summarize, type Activity } from "@/lib/activity";
+import { ACTIVITY_KEY, heat, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
 import { NEW_PER_DAY, WEAK_LIST_SIZE } from "@/config/srs";
 import { continueTarget, freshFor } from "@/lib/daily";
@@ -15,6 +15,7 @@ import { remaining } from "@/lib/test";
 import { findSession } from "@/lib/testStore";
 import { testText } from "@/lib/testText";
 import s from "./dashboard.module.css";
+import { Heatmap } from "./Heatmap";
 import { WeakList } from "./WeakList";
 
 // Copied from SiteBar: that file pulls server-only code, so a client component can't import it.
@@ -82,6 +83,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
       weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
       fresh,
       summary,
+      heat: heat(activity, day),
       next: continueTarget(dueTotal, fresh, summary.last),
       at: now.getTime(),
       attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
@@ -175,6 +177,8 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
               <p className={s.list}><span>{exam ? t.examPast : t.examNone}</span> <Link href="/onboarding">{t.pick}</Link></p>
             )}
           </section>
+
+          <Heatmap heat={data.heat} lang={lang} />
 
           <section className={s.section} aria-labelledby="dash-history">
             <h2 id="dash-history">{t.history}</h2>

@@ -1,4 +1,5 @@
 // Study log kept in the browser and synced to kotoba-be. Pure functions + a tiny storage wrapper.
+import { HEAT_LEVELS, HEAT_WEEKS } from "@/config/activity";
 import { STUDY_TIME_ZONE } from "@/config/time";
 import { addDays } from "./srs";
 
@@ -101,4 +102,27 @@ export function continueHref(last: Activity["last"]): string {
   if (last?.area === "vocab") return "/flashcards";
   if (last?.area === "kanji") return "/review?kind=kanji";
   return `/kana?script=${last?.ref.startsWith("katakana:") ? "katakana" : "hiragana"}&mode=quiz`;
+}
+
+// Heatmap (phase 20): HEAT_WEEKS Monday-first columns, the last one holding today; days after today are null.
+// Levels follow HEAT_LEVELS minute thresholds. Day keys only, so the grid follows the study day (ADR 003).
+export type HeatCell = { day: string; minutes: number; level: number };
+export type Heat = { weeks: (HeatCell | null)[][]; activeDays: number; totalMinutes: number };
+
+export function heat(a: Activity, today: string): Heat {
+  const weekday = (new Date(`${today}T00:00:00Z`).getUTCDay() + 6) % 7; // Monday = 0
+  const start = addDays(today, -((HEAT_WEEKS - 1) * 7 + weekday));
+  let activeDays = 0;
+  let totalMinutes = 0;
+  const weeks = Array.from({ length: HEAT_WEEKS }, (_, w) =>
+    Array.from({ length: 7 }, (_, d) => {
+      const day = addDays(start, w * 7 + d);
+      if (day > today) return null;
+      const minutes = a.days[day]?.minutes.length ?? 0;
+      if (minutes) activeDays++;
+      totalMinutes += minutes;
+      return { day, minutes, level: HEAT_LEVELS.filter((m) => minutes >= m).length };
+    }),
+  );
+  return { weeks, activeDays, totalMinutes };
 }

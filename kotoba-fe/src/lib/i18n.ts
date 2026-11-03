@@ -21,7 +21,7 @@ type Split3 = { a: string; b: string; c: string };
 type Split4 = { a: string; b: string; c: string; d: string };
 
 type Dict = {
-  nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string; menu: string; library: string; kana: string; kanji: string; vocab: string; grammar: string; lessons: string; review: string; reviewDue: string; test: string; search: string; settings: string };
+  nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string; menu: string; library: string; kana: string; kanji: string; vocab: string; grammar: string; lessons: string; review: string; reviewDue: string; test: string; search: string; settings: string; sync: { saved: string; saving: string; pending: (n: number) => string; failed: string; retry: string } };
   footer: { kanji: string; dict: string; legal: string };
   notFound: { title: string; body: string; home: string };
   down: { title: string; body: string; retry: string };
@@ -123,6 +123,7 @@ const DICT: Record<Lang, Dict> = {
       test: "Thi thử",
       search: "Tra cứu",
       settings: "Cài đặt tài khoản",
+      sync: { saved: "Đã lưu", saving: "Đang lưu…", pending: (n) => `Chờ lưu ${n} thay đổi`, failed: "Lỗi đồng bộ", retry: "Thử lại" },
     },
     footer: { kanji: "Dữ liệu kanji", dict: "Từ điển", legal: "Điều khoản và quyền riêng tư" },
     notFound: {
@@ -258,6 +259,7 @@ const DICT: Record<Lang, Dict> = {
       test: "Mock test",
       search: "Search",
       settings: "Account settings",
+      sync: { saved: "Saved", saving: "Saving…", pending: (n) => `${n} ${n === 1 ? "change" : "changes"} waiting to save`, failed: "Sync failed", retry: "Retry" },
     },
     footer: { kanji: "Kanji data", dict: "Dictionary", legal: "Terms and privacy" },
     notFound: {

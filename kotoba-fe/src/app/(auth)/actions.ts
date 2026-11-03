@@ -117,7 +117,13 @@ export async function logout() {
   redirect("/");
 }
 
-// Called by Sync.tsx; the BE validates the push.
+// Called by Sync.tsx; the BE validates the push. A failed push (kotoba-be down) comes back as { failed: true }
+// instead of a thrown error, so the browser gets a normal response, not a 500, and Sync shows "Lỗi đồng bộ".
 export async function syncProgress(push: Parameters<typeof pushProgress>[0]) {
-  return pushProgress(push);
+  try {
+    return { failed: false as const, remote: await pushProgress(push) };
+  } catch (e) {
+    console.error("sync push failed", e);
+    return { failed: true as const };
+  }
 }

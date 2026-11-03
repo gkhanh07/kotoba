@@ -208,6 +208,7 @@ p { text-wrap: pretty; }
   anchor-name: --bar;
 }
 .brand {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: baseline;
   gap: 10px;
@@ -247,6 +248,10 @@ p { text-wrap: pretty; }
 .bar nav a[aria-current="page"],
 .libraryBtn[data-current] { color: var(--amber); border-color: var(--amber); }
 .bar nav .logout { background: none; border-width: 0 0 1.5px; cursor: pointer; }
+.bar .syncStatus { font-size: 0.85rem; color: var(--silver-dim); white-space: nowrap; }
+.bar .syncStatus:empty { display: none; }
+.bar .syncRetry { min-height: 44px; padding: 0; border: 0; border-bottom: 1.5px solid var(--rule-strong); background: none; color: var(--silver); font: inherit; cursor: pointer; }
+.bar .syncRetry:hover { color: var(--chalk); border-color: currentColor; }
 .bar nav .who { max-width: 16ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.9rem; color: var(--silver-dim); }
 /* Review's due count: a plain number after the label, no pill. */
 .dueCount { margin-left: 0.45em; color: var(--silver-dim); font-weight: 400; font-variant-numeric: tabular-nums; }
@@ -301,7 +306,8 @@ p { text-wrap: pretty; }
 }
 
 @media (max-width: 899.98px) {
-  .menuBtn { min-height: 44px; font-size: 1rem; }
+  .menuBtn { min-height: 44px; font-size: 1rem; order: 2; }
+  .bar .syncStatus { order: 1; min-width: 0; margin-left: auto; font-size: 0.8rem; white-space: normal; text-align: right; }
   .libraryBtn { display: none; }
   .bar nav:popover-open {
     position: fixed;

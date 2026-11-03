@@ -24,7 +24,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 18 study day in Asia/Ho_Chi_Minh (ADR 003) | DONE | `861dfe1` |
 | 18 daily session via `/review`, `currentLesson`, end stats, dashboard link (spec `docs/phases/18-daily-session.md`, ADR 004) | DONE | `feat(review): daily session with new items of the current lesson` |
 | 19 word page `/vocab/[word]`, links to it, `similar` kanji (spec `docs/phases/19-vocab-page-similar-kanji.md`) | DONE | `feat(vocab): word page and easily confused kanji` |
-| 20–35 | TODO | |
+| 20 heatmap on the dashboard, sync status in the site bar (spec `docs/phases/20-heatmap-sync-status.md`) | DONE | `feat(dashboard): study heatmap and sync status` |
+| 21–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -62,5 +63,5 @@ After phase 18: FE Vitest 500 tests (suite also passes under TZ=UTC, America/Los
 After phase 19: BE check green (30 unit, 28 e2e, 9 content, JMdict 694 words; `npm run kanjidic` reproduces kanji.json); FE Vitest 509 tests, E2E 62 passed.
 
 ## Next step
-Phase 20 (dashboard heatmap from `activity.days`, sync status). Read the `dataviz` skill first; write `docs/phases/20-*.md` first.
-Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`).
+Phase 21 (data export: BE `GET /me/export`, FE route handler `app/settings/export/route.ts`). Write `docs/phases/21-*.md` first.
+Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`), so it needs `lsof` and a built `kotoba-be/dist`.

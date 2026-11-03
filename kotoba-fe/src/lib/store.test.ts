@@ -290,3 +290,32 @@ describe("learnedToday (phase 18)", () => {
     expect(store.review("hiragana:a", true)["hiragana:a"].box).toBe(1);
   });
 });
+
+describe("pendingCount and the sync phase (phase 20)", () => {
+  const card = (at: number) => ({ box: 1, due: "2026-11-03", at });
+  const SRS3 = { a: card(5), b: card(10), c: card(20) };
+  it("counts every card on the first sync of this browser", () => {
+    expect(store.pendingCount(SRS3, { lastSync: 0, forget: [] }, "me@x.co")).toBe(3);
+  });
+  it("counts cards changed after the last push, plus queued resets", () => {
+    expect(store.pendingCount(SRS3, { owner: "me@x.co", lastSync: 10, forget: [{ prefix: "kanji:", at: 11 }] }, "me@x.co")).toBe(2);
+    expect(store.pendingCount(SRS3, { owner: "me@x.co", lastSync: 20, forget: [] }, "me@x.co")).toBe(0);
+  });
+  it("counts nothing when the data belongs to another account", () => {
+    expect(store.pendingCount(SRS3, { owner: "other@x.co", lastSync: 0, forget: [] }, "me@x.co")).toBe(0);
+  });
+  it("tells readers about every phase change, including idle after idle", () => {
+    let renders = 0;
+    const { result } = renderHook(() => { renders++; return store.useSyncPhase(); });
+    expect(result.current).toBe("idle");
+    act(() => store.setSyncPhase("syncing"));
+    expect(result.current).toBe("syncing");
+    act(() => store.setSyncPhase("failed"));
+    expect(result.current).toBe("failed");
+    act(() => store.setSyncPhase("idle"));
+    const before = renders;
+    act(() => store.setSyncPhase("idle"));
+    expect(result.current).toBe("idle");
+    expect(renders).toBe(before + 1);
+  });
+});

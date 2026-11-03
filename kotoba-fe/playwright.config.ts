@@ -10,6 +10,8 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   forbidOnly: true,
+  // e2e/sync-status.spec.ts restarts kotoba-be outside Playwright's control; this stops whatever still listens.
+  globalTeardown: "./e2e/backend.ts",
   retries: 0,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {

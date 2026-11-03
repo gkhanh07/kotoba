@@ -98,6 +98,31 @@ export function syncState(): SyncState {
   return { lastSync: 0, forget: [] };
 }
 
+// Cards the next push would send (phase 20 status line): everything on a first sync, cards changed since the
+// last applied push otherwise, plus queued resets. Someone else's data in this browser is never sent.
+export function pendingCount(srs: Srs, st: SyncState, owner: string): number {
+  if (st.owner !== undefined && st.owner !== owner) return 0;
+  const cards = st.owner === undefined ? Object.keys(srs).length : Object.values(srs).filter((c) => c.at > st.lastSync).length;
+  return cards + (st.owner === undefined ? 0 : st.forget.length);
+}
+
+// Push lifecycle for the status line: idle, a push in flight, or the last push failed (BE down).
+// Per tab, in memory: a reload tries again on mount. Every change is a new object, so readers re-render
+// after each push even when the account sent back exactly the local cards (the deck object stays the same).
+export type SyncPhase = "idle" | "syncing" | "failed";
+const IDLE = { phase: "idle" as SyncPhase };
+let syncPhase = IDLE;
+const syncListeners = new Set<() => void>();
+export function setSyncPhase(phase: SyncPhase) {
+  syncPhase = { phase };
+  syncListeners.forEach((l) => l());
+}
+const subscribeSync = (cb: () => void) => {
+  syncListeners.add(cb);
+  return () => { syncListeners.delete(cb); };
+};
+export const useSyncPhase = () => useSyncExternalStore(subscribeSync, () => syncPhase, () => IDLE).phase;
+
 // What a push compares against to tell whether the user studied while it was in flight.
 export function snapshot() {
   try {

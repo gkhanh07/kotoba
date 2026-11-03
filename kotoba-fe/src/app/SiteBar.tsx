@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getLang, LangSwitch } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
-import { LogoutButton } from "./Sync";
+import { LogoutButton, SyncStatus } from "./Sync";
 import { MenuNav } from "./MenuNav";
 import { ReviewLink } from "./ReviewLink";
 export { Arrow } from "./Arrow";
@@ -51,6 +51,8 @@ export async function SiteBar({ current }: { current?: Current }) {
           <LangSwitch lang={lang} />
         </div>
       </MenuNav>
+      {/* Outside the menu so a failed sync stays in sight on small screens, where the menu is a closed popover. */}
+      {user && <SyncStatus uid={user.email} lang={lang} />}
     </header>
   );
 }
