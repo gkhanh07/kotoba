@@ -43,7 +43,7 @@ describe('progress (e2e)', () => {
     expect(second.body.cards['hiragana:a']).toEqual(card(3, 200));
     expect(second.body.cards['hiragana:i']).toEqual(card(2, 100));
     expect(second.body.activity).toEqual({
-      days: { '2026-11-01': { minutes: [1, 2], kana: ['hiragana:a'], vocab: ['vocab:水'] } },
+      days: { '2026-11-01': { minutes: [1, 2], kana: ['hiragana:a'], kanji: [], vocab: ['vocab:水'] } },
       last: { area: 'vocab', ref: 'vocab:水' },
     });
   });

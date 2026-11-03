@@ -36,6 +36,30 @@ describe('content', () => {
     expect(bad.map((v) => v.id)).toEqual([]);
   });
 
+  // {…} marks the underlined word; ★ marks the blank asked about in sentence order.
+  it('has well-formed mock test papers', () => {
+    type Q = { q: string; choices: string[]; answer: number };
+    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as { id: string; parts: { part: string; questions: Q[] }[] }[];
+    expect(new Set(papers.map((p) => p.id)).size).toBe(papers.length);
+    const bad = papers.flatMap((p) =>
+      p.parts.flatMap(({ part, questions }) =>
+        questions
+          .filter(
+            ({ q, choices, answer }) =>
+              new Set(choices).size !== 4 ||
+              choices.length !== 4 ||
+              !Number.isInteger(answer) ||
+              answer < 0 ||
+              answer > 3 ||
+              (['kanji', 'writing', 'paraphrase'].includes(part) && !/\{.+\}/.test(q)) ||
+              (part === 'order' && !q.includes('★')),
+          )
+          .map(({ q }) => `${p.id} ${part}: ${q}`),
+      ),
+    );
+    expect(bad).toEqual([]);
+  });
+
   it('reports what still needs a human review', () => {
     const todo = all.filter((d) => d.reviewed === false).length;
     console.log(`content: ${all.length} items, ${todo} reviewed:false`);

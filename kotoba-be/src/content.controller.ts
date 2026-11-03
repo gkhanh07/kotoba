@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { Controller, Get, NotFoundException, Param, Query } from '@nestjs/common';
 import { isKind, KINDS, normalize } from './content.js';
 import { Db } from './db.js';
@@ -5,6 +6,10 @@ import { check } from './validate.js';
 
 type Data = Record<string, unknown>;
 const parse = (rows: { data: string }[]) => rows.map((r) => JSON.parse(r.data) as Data);
+
+// Mock test papers stay out of the Item table: they are served whole, never searched or reviewed.
+type Paper = { id: string; title: unknown; minutes: number; parts: { questions: unknown[] }[] };
+const PAPERS = JSON.parse(readFileSync(new URL('../content/tests.json', import.meta.url), 'utf8')) as Paper[];
 
 // Exact-match filters on item fields, e.g. /content/kana?script=hiragana&group=yoon.
 const FILTERS = ['script', 'group', 'topic'];
@@ -48,5 +53,18 @@ export class ContentController {
       ),
     );
     return groups.flat();
+  }
+
+  @Get('tests')
+  tests() {
+    return PAPERS.map(({ id, title, minutes, parts }) => ({ id, title, minutes, questions: parts.reduce((n, p) => n + p.questions.length, 0) }));
+  }
+
+  // ponytail: answers ship with the paper, fine for self-study; score on the server if results ever count.
+  @Get('tests/:id')
+  test(@Param('id') id: string) {
+    const paper = PAPERS.find((p) => p.id === id);
+    if (!paper) throw new NotFoundException();
+    return paper;
   }
 }
