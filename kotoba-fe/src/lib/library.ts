@@ -16,6 +16,7 @@ export type Kanji = {
   strokes: number;
   vi?: string;
   lesson: number;
+  similar?: string[]; // look-alike kanji (phase 19)
 };
 export type KanjiDetail = Kanji & { words: Vocab[] };
 export type Grammar = {
@@ -49,6 +50,17 @@ export function prompt(src: PromptSource, rand: () => number): Prompt {
   const dir = dirs[Math.min(Math.floor(rand() * dirs.length), dirs.length - 1)];
   return dir === "meaning-word" ? { dir, front: src.meaning, frontIsJa: false } : { dir, front: src.word, frontIsJa: true };
 }
+
+// Word detail page (phase 19). The id suffix is the word itself (`vocab:<word>`).
+export const vocabHref = (word: string) => `/vocab/${encodeURIComponent(word)}`;
+// Distinct kanji of the written word that the course teaches, in order. Kana and other kanji are skipped.
+export const kanjiIn = (word: string, taught: ReadonlySet<string>): string[] => [...new Set([...word].filter((c) => taught.has(c)))];
+
+// A study day key as d/m/yyyy, the way the dashboard writes dates. Pure string work: no time zone involved.
+export const formatDay = (day: string): string => {
+  const [y, m, d] = day.split("-");
+  return `${Number(d)}/${Number(m)}/${y}`;
+};
 
 // A lesson's scheduled items (kana, kanji, words), in lesson order. Grammar is read, not scheduled.
 export type Stop = { lesson: number; ids: string[] };
@@ -84,6 +96,7 @@ const en = {
     words: "Words with",
     study: (n: number) => `Study lesson ${n}`,
     speak: "Play",
+    similar: "Easily confused with",
   },
   vocab: {
     title: "N5 vocabulary",
@@ -95,6 +108,16 @@ const en = {
     fresh: "Not started",
     review: (n: number) => `Review ${n} due ${n === 1 ? "word" : "words"}`,
     next: "Study the next deck",
+    back: "Vocabulary",
+    reading: "Reading", romaji: "Romaji", meaning: "Meaning", kanjiForm: "Kanji spelling", lessonLabel: "Lesson",
+    example: "Example", notes: "Notes", kanji: "Kanji in this word", speak: "Play",
+    study: (n: number) => `Study lesson ${n}`,
+    schedule: "Review schedule",
+    box: (b: number, max: number) => `Box ${b}/${max}`,
+    known: "known",
+    dueToday: "due today",
+    due: (day: string) => `due ${day}`,
+    lapses: (n: number) => `wrong ${n} ${n === 1 ? "time" : "times"}`,
   },
   grammar: {
     title: "N5 grammar",
@@ -197,6 +220,7 @@ const vi: typeof en = {
     words: "Từ chứa",
     study: (n) => `Học bài ${n}`,
     speak: "Đọc",
+    similar: "Dễ nhầm với",
   },
   vocab: {
     title: "Từ vựng N5",
@@ -208,6 +232,16 @@ const vi: typeof en = {
     fresh: "Chưa học",
     review: (n) => `Ôn ${n} từ đến hạn`,
     next: "Học bài tiếp",
+    back: "Từ vựng",
+    reading: "Cách đọc", romaji: "Romaji", meaning: "Nghĩa", kanjiForm: "Cách viết kanji", lessonLabel: "Bài",
+    example: "Ví dụ", notes: "Ghi chú", kanji: "Kanji trong từ", speak: "Đọc",
+    study: (n) => `Học bài ${n}`,
+    schedule: "Lịch ôn",
+    box: (b, max) => `Hộp ${b}/${max}`,
+    known: "đã thuộc",
+    dueToday: "đến hạn hôm nay",
+    due: (day) => `đến hạn ${day}`,
+    lapses: (n) => `sai ${n} lần`,
   },
   grammar: {
     title: "Ngữ pháp N5",

@@ -24,7 +24,10 @@
   "freq": 1,
   "vi": "mặt trời; ngày",
   "lesson": 8,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "目"
+  ]
  },
  {
   "id": "kanji:一",
@@ -125,7 +128,10 @@
   "freq": 5,
   "vi": "người",
   "lesson": 9,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "入"
+  ]
  },
  {
   "id": "kanji:年",
@@ -173,7 +179,10 @@
   "freq": 7,
   "vi": "to, lớn",
   "lesson": 18,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "天"
+  ]
  },
  {
   "id": "kanji:十",
@@ -198,7 +207,10 @@
   "freq": 8,
   "vi": "mười",
   "lesson": 6,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "千"
+  ]
  },
  {
   "id": "kanji:二",
@@ -251,7 +263,10 @@
   "freq": 10,
   "vi": "sách; gốc",
   "lesson": 10,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "木"
+  ]
  },
  {
   "id": "kanji:中",
@@ -687,7 +702,10 @@
   "freq": 33,
   "vi": "khoảng giữa; thời gian",
   "lesson": 7,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "聞"
+  ]
  },
  {
   "id": "kanji:上",
@@ -894,7 +912,11 @@
   "freq": 56,
   "vi": "vào",
   "lesson": 14,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "人",
+   "八"
+  ]
  },
  {
   "id": "kanji:立",
@@ -1090,7 +1112,10 @@
   "freq": 76,
   "vi": "mắt",
   "lesson": 17,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "日"
+  ]
  },
  {
   "id": "kanji:外",
@@ -1167,7 +1192,10 @@
   "freq": 92,
   "vi": "tám",
   "lesson": 6,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "入"
+  ]
  },
  {
   "id": "kanji:六",
@@ -1320,7 +1348,10 @@
   "freq": 114,
   "vi": "nhỏ",
   "lesson": 18,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "少"
+  ]
  },
  {
   "id": "kanji:七",
@@ -1540,7 +1571,10 @@
   "freq": 163,
   "vi": "trăm",
   "lesson": 6,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "白"
+  ]
  },
  {
   "id": "kanji:書",
@@ -1660,7 +1694,10 @@
   "freq": 195,
   "vi": "nghìn",
   "lesson": 6,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "十"
+  ]
  },
  {
   "id": "kanji:道",
@@ -1850,7 +1887,10 @@
   "freq": 287,
   "vi": "ít",
   "lesson": 18,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "小"
+  ]
  },
  {
   "id": "kanji:校",
@@ -1986,7 +2026,10 @@
   "freq": 317,
   "vi": "cây, gỗ",
   "lesson": 8,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "本"
+  ]
  },
  {
   "id": "kanji:聞",
@@ -2013,7 +2056,10 @@
   "freq": 319,
   "vi": "nghe; hỏi",
   "lesson": 12,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "間"
+  ]
  },
  {
   "id": "kanji:食",
@@ -2203,7 +2249,10 @@
   "freq": 436,
   "vi": "mỗi",
   "lesson": 7,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "母"
+  ]
  },
  {
   "id": "kanji:白",
@@ -2227,7 +2276,10 @@
   "freq": 483,
   "vi": "trắng",
   "lesson": 18,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "百"
+  ]
  },
  {
   "id": "kanji:古",
@@ -2275,7 +2327,10 @@
   "freq": 512,
   "vi": "trời",
   "lesson": 16,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "大"
+  ]
  },
  {
   "id": "kanji:買",
@@ -2337,7 +2392,10 @@
   "freq": 570,
   "vi": "mẹ",
   "lesson": 9,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "毎"
+  ]
  },
  {
   "id": "kanji:火",
@@ -2404,7 +2462,10 @@
   "freq": 602,
   "vi": "phải (bên phải)",
   "lesson": 11,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "左"
+  ]
  },
  {
   "id": "kanji:読",
@@ -2473,7 +2534,10 @@
   "freq": 630,
   "vi": "trái (bên trái)",
   "lesson": 11,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "右"
+  ]
  },
  {
   "id": "kanji:休",

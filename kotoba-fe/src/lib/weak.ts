@@ -2,17 +2,17 @@
 import { weakest, type Srs } from "./srs";
 import type { Vocab } from "./flashcards";
 import type { Kana } from "./kana";
-import type { Kanji } from "./library";
+import { vocabHref, type Kanji } from "./library";
 
 export type ItemLink = { front: string; href: string };
 export type WeakItem = ItemLink & { id: string; lapses: number };
 
-// Kanji and kana have their own pages; vocab links to its lesson until it gets a detail page (phase 19).
+// Each kind links to its own page: the kana chart, the kanji page, the word page.
 export function itemLinks(kana: Kana[], kanji: Kanji[], vocab: Vocab[]): Record<string, ItemLink> {
   const links: Record<string, ItemLink> = {};
   for (const k of kana) links[k.id] = { front: k.char, href: `/kana?script=${k.script}` };
   for (const k of kanji) links[k.id] = { front: k.char, href: `/kanji/${encodeURIComponent(k.char)}` };
-  for (const w of vocab) links[w.id] = { front: w.word, href: `/lessons/${w.lesson}#l-vocab` };
+  for (const w of vocab) links[w.id] = { front: w.word, href: vocabHref(w.word) };
   return links;
 }
 

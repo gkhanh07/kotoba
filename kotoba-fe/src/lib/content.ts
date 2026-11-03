@@ -29,6 +29,7 @@ const item = <T,>(id: string) =>
     throw e;
   });
 export const getKanjiDetail = (char: string) => item<KanjiDetail>(`kanji:${char}`);
+export const getVocabItem = (word: string) => item<Vocab>(`vocab:${word}`);
 
 export const getGrammar = () => api<Grammar[]>("/content/grammar", { revalidate: HOUR });
 export const getGrammarItem = (slug: string) => item<Grammar>(`grammar:${slug}`);

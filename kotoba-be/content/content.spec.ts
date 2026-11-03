@@ -29,6 +29,22 @@ describe('content', () => {
     expect(all.filter((d) => d.lesson !== undefined && !ids.has(d.lesson)).map((d) => d.id)).toEqual([]);
   });
 
+  // Look-alike kanji (phase 19): every listed char is a kanji here, never itself, listed once, and the relation goes both ways.
+  it('lists similar kanji that exist, both ways', () => {
+    const byChar = new Map(kanji.map((k) => [k.char as string, k]));
+    const similar = (k: Item) => (k.similar as string[] | undefined) ?? [];
+    const bad = kanji.flatMap((k) => similar(k)
+      .filter((c, i, a) => {
+        const other = byChar.get(c);
+        return c === k.char || a.indexOf(c) !== i || !other || !similar(other).includes(k.char as string);
+      })
+      .map((c) => `${k.char as string}→${c}`));
+    expect(bad).toEqual([]);
+    // 11 pairs over 21 kanji (入 is in two pairs): docs/phases/19-vocab-page-similar-kanji.md.
+    expect(kanji.filter((k) => similar(k).length).length).toBe(21);
+    expect(kanji.reduce((n, k) => n + similar(k).length, 0)).toBe(22);
+  });
+
   // Words with harder kanji are written in kana, with the full form kept in `kanji`.
   it('writes vocab only with N5 kanji', () => {
     const n5 = new Set(kanji.map((k) => k.char));

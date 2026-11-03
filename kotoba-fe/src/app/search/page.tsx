@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { search } from "@/lib/content";
-import { libraryText, type Hit } from "@/lib/library";
+import { libraryText, vocabHref, type Hit } from "@/lib/library";
 import { mark } from "@/lib/search";
 import { getLang } from "../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../SiteBar";
@@ -31,7 +31,7 @@ export default async function SearchPage(props: PageProps<"/search">) {
   const row = (h: Hit): Row => {
     switch (h.kind) {
       case "vocab": // h.kanji: the written form a kana-only word can match on (日曜日 for にちようび), shown so the hit makes sense.
-        return { href: `/lessons/${h.lesson}#l-vocab`, head: h.word, ja: true,
+        return { href: vocabHref(h.word), head: h.word, ja: true,
           parts: [ja(h.word === h.reading ? "" : h.reading), { text: h.romaji }, ja(h.kanji ?? ""), { text: cap(h[lang]) }], lesson: h.lesson };
       case "kanji":
         return { href: `/kanji/${encodeURIComponent(h.char)}`, head: h.char, ja: true, parts: [{ text: h.hv.join(" · ").toUpperCase() }, ja([...h.on, ...h.kun].join(" · ")), { text: cap(lang === "vi" && h.vi ? h.vi : h.en.join(", ")) }], lesson: h.lesson };

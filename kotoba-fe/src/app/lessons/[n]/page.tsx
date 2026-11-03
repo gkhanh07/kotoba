@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getGrammar, getKana, getKanji, getLessons, getVocab } from "@/lib/content";
 import { dict } from "@/lib/i18n";
 import type { Kana } from "@/lib/kana";
-import { libraryText } from "@/lib/library";
+import { libraryText, vocabHref } from "@/lib/library";
 import { getLang } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
 import { Speak } from "../../Speak";
@@ -97,7 +97,7 @@ export default async function LessonPage(props: PageProps<"/lessons/[n]">) {
             <dl className={s.words}>
               {vocab.map((w) => (
                 <div key={w.id}>
-                  <dt lang="ja">{w.word}{w.word !== w.reading && <span>{w.reading}</span>}</dt>
+                  <dt lang="ja"><Link href={vocabHref(w.word)}>{w.word}</Link>{w.word !== w.reading && <span>{w.reading}</span>}</dt>
                   <dd>{w[lang]}</dd>
                   <dd><Speak text={w.reading} label={t.speak} /></dd>
                 </div>

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getKanjiDetail } from "@/lib/content";
-import { libraryText } from "@/lib/library";
+import { getKanji, getKanjiDetail } from "@/lib/content";
+import { libraryText, vocabHref } from "@/lib/library";
 import { getLang } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
 import { Speak } from "../../Speak";
@@ -16,8 +16,9 @@ export async function generateMetadata(props: PageProps<"/kanji/[char]">): Promi
 
 export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">) {
   const { char } = await props.params;
-  const [lang, k] = await Promise.all([getLang(), getKanjiDetail(decodeURIComponent(char))]);
+  const [lang, k, all] = await Promise.all([getLang(), getKanjiDetail(decodeURIComponent(char)), getKanji()]);
   if (!k) notFound();
+  const similar = (k.similar ?? []).flatMap((c) => all.filter((x) => x.char === c));
   const t = libraryText[lang].kanji;
   const meaning = lang === "en" ? k.en.join(", ") : k.vi;
   const rows: [string, React.ReactNode][] = [
@@ -52,13 +53,28 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
             </dl>
           </div>
         </article>
+        {similar.length > 0 && (
+          <section className={s.words} aria-labelledby="kanji-similar">
+            <h2 id="kanji-similar">{t.similar}</h2>
+            <ul className={s.similar}>
+              {similar.map((x) => (
+                <li key={x.id}>
+                  <Link href={`/kanji/${encodeURIComponent(x.char)}`} className={s.tile}>
+                    <span lang="ja" className={s.char}>{x.char}</span>
+                    <span className={s.hv}>{x.hv.join(" · ")}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         {k.words.length > 0 && (
           <section className={s.words} aria-labelledby="kanji-words">
             <h2 id="kanji-words">{t.words} <span lang="ja" className={s.inlineJa}>{k.char}</span></h2>
             <ul>
               {k.words.map((w) => (
                 <li key={w.id}>
-                  <span lang="ja" className={s.word}>{w.kanji ?? w.word}</span>
+                  <Link href={vocabHref(w.word)} lang="ja" className={s.word}>{w.kanji ?? w.word}</Link>
                   <span lang="ja">{w.reading}</span>
                   <span>{w[lang]}</span>
                 </li>

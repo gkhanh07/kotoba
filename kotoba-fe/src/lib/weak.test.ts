@@ -12,12 +12,12 @@ const links = itemLinks(kana, kanji, vocab);
 const card = (lapses: number, box = 0) => ({ box, due: "2026-11-03", at: 1, lapses });
 
 describe("itemLinks", () => {
-  it("links kana to its chart, kanji to its page and vocab to its lesson", () => {
+  it("links kana to its chart, kanji to its page and vocab to its word page", () => {
     expect(links).toEqual({
       "katakana:a": { front: "ア", href: "/kana?script=katakana" },
       "kanji:日": { front: "日", href: "/kanji/%E6%97%A5" },
-      "vocab:水": { front: "水", href: "/lessons/13#l-vocab" },
-      "vocab:ねこ": { front: "ねこ", href: "/lessons/16#l-vocab" },
+      "vocab:水": { front: "水", href: "/vocab/%E6%B0%B4" },
+      "vocab:ねこ": { front: "ねこ", href: "/vocab/%E3%81%AD%E3%81%93" },
     });
   });
 });
@@ -27,7 +27,7 @@ describe("weakItems", () => {
     const srs: Srs = { "vocab:水": card(2), "kanji:日": card(5), "katakana:a": card(1) };
     expect(weakItems(srs, links, 5)).toEqual([
       { id: "kanji:日", front: "日", href: "/kanji/%E6%97%A5", lapses: 5 },
-      { id: "vocab:水", front: "水", href: "/lessons/13#l-vocab", lapses: 2 },
+      { id: "vocab:水", front: "水", href: "/vocab/%E6%B0%B4", lapses: 2 },
     ]);
   });
   it("skips cards of unknown items before cutting, so the list still fills up", () => {

@@ -69,7 +69,7 @@ test("a guest who misses a word twice sees it under Hay sai after sign-up and ca
   await expect(rows).toHaveCount(1);
   await expect(rows.first()).toContainText(TARGET.word);
   await expect(rows.first()).toContainText("sai 2 lần");
-  await expect(rows.first().getByRole("link").first()).toHaveAttribute("href", `/lessons/${TARGET.lesson}#l-vocab`);
+  await expect(rows.first().getByRole("link").first()).toHaveAttribute("href", `/vocab/${encodeURIComponent(TARGET.word)}`);
   expect(await hasHorizontalScroll(page)).toBe(false);
   await axe();
   await page.screenshot({ path: info.outputPath(`lapses-dashboard-${info.project.name}.png`), fullPage: true });

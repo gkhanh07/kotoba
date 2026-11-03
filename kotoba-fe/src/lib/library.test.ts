@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { currentLesson, prompt, stopsOf, type PromptSource } from "./library";
+import { currentLesson, formatDay, kanjiIn, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
 
 const VOCAB: PromptSource = { kind: "vocab", word: "水", reading: "みず", meaning: "nước" };
 const KANA_WORD: PromptSource = { kind: "vocab", word: "ねこ", reading: "ねこ", meaning: "mèo" };
@@ -100,5 +100,25 @@ describe("currentLesson", () => {
     const all = Object.fromEntries(["a", "b", "c", "d", "e"].map((id) => [id, card(3)]));
     expect(currentLesson(STOPS, all)).toBeUndefined();
     expect(currentLesson([], {})).toBeUndefined();
+  });
+});
+
+describe("vocab page helpers", () => {
+  const TAUGHT = new Set(["食", "日", "本", "人"]);
+  it("builds the encoded word page path", () => {
+    expect(vocabHref("食べる")).toBe("/vocab/%E9%A3%9F%E3%81%B9%E3%82%8B");
+  });
+  it("lists the taught kanji of a word in order, once each", () => {
+    expect(kanjiIn("日本人", TAUGHT)).toEqual(["日", "本", "人"]);
+    expect(kanjiIn("人々", TAUGHT)).toEqual(["人"]);
+    expect(kanjiIn("日日", TAUGHT)).toEqual(["日"]);
+  });
+  it("skips kana and kanji the course does not teach", () => {
+    expect(kanjiIn("ねこ", TAUGHT)).toEqual([]);
+    expect(kanjiIn("食堂", TAUGHT)).toEqual(["食"]);
+  });
+  it("writes a day key as d/m/yyyy", () => {
+    expect(formatDay("2026-11-03")).toBe("3/11/2026");
+    expect(formatDay("2027-01-10")).toBe("10/1/2027");
   });
 });

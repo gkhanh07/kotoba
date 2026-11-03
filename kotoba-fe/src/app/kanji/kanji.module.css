@@ -33,7 +33,11 @@
 .words h2 { font-size: 1.1rem; color: var(--chalk); }
 .words ul { margin: 1rem 0 0; padding: 0; list-style: none; }
 .words li { display: grid; grid-template-columns: minmax(6rem, auto) minmax(6rem, auto) 1fr; gap: 1.25rem; padding: .7rem 0; border-bottom: 1px solid var(--rule-dim); color: var(--silver-dim); }
-.word { color: var(--chalk); }
+a.word { display: inline-block; padding-block: .6rem; margin-block: -.6rem; }
+.word { color: var(--chalk); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: .25em; }
+.word:hover { color: var(--amber-core); text-decoration-color: currentColor; }
+.words .similar { display: flex; flex-wrap: wrap; gap: 6px; }
+.words .similar li { display: block; width: 5.5rem; padding: 0; border: 0; }
 .inlineJa { font-family: var(--font-kana); }
 .study { margin-top: 2.5rem; }
 

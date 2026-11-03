@@ -1,5 +1,5 @@
 // Builds content/kanji.json from KANJIDIC2 (old JLPT level 4 = N5). Run: node scripts/kanjidic.ts
-// Keeps the hand-written fields (vi, lesson, reviewed) already in kanji.json. Delete .cache/ to refetch.
+// Keeps the hand-written fields (vi, lesson, reviewed, similar) already in kanji.json. Delete .cache/ to refetch.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 
@@ -20,7 +20,7 @@ const xml = gunzipSync(readFileSync(CACHE)).toString();
 const all = (s: string, re: RegExp) => [...s.matchAll(re)].map((m) => m[1]);
 const one = (s: string, re: RegExp) => s.match(re)?.[1];
 
-type Authored = { vi?: string; lesson?: number | null; reviewed?: boolean };
+type Authored = { vi?: string; lesson?: number | null; reviewed?: boolean; similar?: string[] };
 const old = new Map<string, Authored>(
   existsSync(OUT) ? (JSON.parse(readFileSync(OUT, 'utf8')) as ({ char: string } & Authored)[]).map((k) => [k.char, k]) : [],
 );
@@ -44,6 +44,8 @@ const kanji = xml
       vi: a.vi ?? '',
       lesson: a.lesson ?? null,
       reviewed: a.reviewed ?? false,
+      // Look-alike kanji, authored by hand (phase 19); only set on the kanji that have some.
+      ...(a.similar ? { similar: a.similar } : {}),
     };
   })
   // Most frequent first: the order lessons and lists use.
