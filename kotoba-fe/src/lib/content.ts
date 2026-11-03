@@ -4,6 +4,7 @@ import { api, ApiError } from "./api";
 import type { Grammar, Hit, Kanji, KanjiDetail, Lesson } from "./library";
 import type { Vocab } from "./flashcards";
 import type { Group, Kana, KanaSet, Script } from "./kana";
+import type { Paper } from "./test";
 
 // ponytail: content only changes when kotoba-be reseeds, so an hour of staleness is fine;
 // add revalidateTag on a BE webhook if editors ever need instant updates.
@@ -34,3 +35,12 @@ export const getGrammarItem = (slug: string) => item<Grammar>(`grammar:${slug}`)
 
 // Up to 20 hits per kind, in BE sort order.
 export const search = (q: string) => api<Hit[]>(`/search?q=${encodeURIComponent(q)}`, { revalidate: HOUR });
+
+export type TestSummary = { id: string; title: { vi: string; en: string }; minutes: number; questions: number };
+export const getTests = () => api<TestSummary[]>("/tests", { revalidate: HOUR });
+// null on 404 so the page can call notFound(); the whole paper, answers included, is fetched on the server.
+export const getTest = (id: string) =>
+  api<Paper>(`/tests/${encodeURIComponent(id)}`, { revalidate: HOUR }).catch((e) => {
+    if (e instanceof ApiError && e.status === 404) return null;
+    throw e;
+  });

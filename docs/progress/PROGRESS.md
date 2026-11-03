@@ -17,7 +17,7 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | A3 phase 13.5: test infrastructure | DONE | `563eb00` (BE scripts), `chore(test): add vitest, rtl and playwright with axe to kotoba-fe` |
 | A4 subagents check against `AGENTS.md` | DONE | `49fa1ad`; agents load via the Agent tool in this session; `reviewer` tried on the A3 diff (PASS, read-only) |
 | 14 BE: minutes 60, `explain` on 45 questions, spec check | DONE | `02434f3` |
-| 14 FE part: mock test flow (spec `docs/phases/14-mock-test.md`) | TODO | |
+| 14 FE part: mock test flow (spec `docs/phases/14-mock-test.md`) | DONE | `feat(test): mock exam flow` |
 | 15–35 | TODO | |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
@@ -41,5 +41,10 @@ After phase 13.5 (2026-11-03):
 - kotoba-fe `npm run test:e2e`: 8 passed (smoke on `/`, `/kana`, `/review` + accessible-name test, mobile and desktop), axe 0 serious/critical. Found and fixed BUG-001, BUG-002.
 - kotoba-be `npm run check`: lint, typecheck, 15 unit (with coverage gate), 18 e2e, content 8, JMdict, build all pass.
 
+After phase 14 (2026-11-03):
+- kotoba-fe `npm run check`: Vitest 17 files / 335 tests, coverage `src/lib/**` lines 98.24%, branches 97.42%; build OK.
+- kotoba-fe `npm run test:e2e`: 32 passed (smoke + 13 mock-test journeys × 2 projects, + 768px check), axe 0 serious/critical, no :4000 requests.
+
 ## Next step
-Phase 14 FE: spec is `docs/phases/14-mock-test.md`; fixture `kotoba-fe/tests/fixtures/paper.small.json` is ready. Flow: `test` writes failing tests → `fe` implements → `reviewer` → gate → commit.
+Phase 15: add ~200 N5 vocab (lessons 5–24, fewest-words lessons first) via `content` in batches; then fix fixed counts in e2e; Playwright `/vocab` count equals JSON.
+Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e` (webServer refuses a used port).

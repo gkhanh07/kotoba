@@ -53,7 +53,7 @@ Out: listening section, server-side scoring or result sync, per-part timers (`po
 - **AC-9** When the timer reaches zero, the attempt is submitted **exactly once** (also when the page is reloaded after the deadline: it submits on load).
 - **AC-10** Submitting manually opens a native `<dialog>` confirming, which states the number of unanswered questions; cancel returns to the test.
 - **AC-11** Result shows `right/total — pct%` (pct rounded to the nearest integer), a per-part table with exact numbers, the weakest part, and buttons "Xem lại câu sai" and "Làm lại câu sai"; the result is saved to `kotoba.tests.v1` and the session entry is removed.
-- **AC-12** Review shows, per question, the learner's choice, the right answer (not by colour alone: text label) and the explanation.
+- **AC-12** Review ("Xem lại câu sai") shows, per wrong or unanswered question, the learner's choice, the right answer (not by colour alone: text label) and the explanation.
 - **AC-13** "Làm lại câu sai" runs only the `wrongIds` questions, without a timer, and its outcome does not change the saved result.
 - **AC-14** `{…}` renders as `<u>` and `★` as an empty box with an accessible label, via one shared helper used in taking, review and retry.
 - **AC-15** Nav: "Thi thử" in `SiteBar` and `MenuNav` with `current: "test"`.
@@ -86,7 +86,8 @@ Fixture paper for unit/RTL: `kotoba-fe/tests/fixtures/paper.small.json` (3 parts
 - Happy path: AC-11 full run. Boundaries: 0 answered, all answered, 1 s left, exactly 0, after the deadline (AC-2, AC-9).
 - Empty: no saved result / no session (AC-3, AC-16). Paper with 0 questions: N/A (BE content spec forbids it).
 - Broken/old data: invalid JSON or wrong shape in sessionStorage and localStorage is ignored, not thrown, and not overwritten without a backup (parse* tests, RTL).
-- Network: BE down → `/test` falls into the existing `error.tsx` (server fetch); no client fetch exists. Storage full: write failure keeps the attempt in memory and shows nothing broken (RTL with a throwing `setItem`).
+- Loading: no `loading.tsx` for `/test` (N/A by design): a streamed loading boundary made `notFound()` answer HTTP 200 instead of 404; both pages are cached server fetches.
+- Network: BE down → `/test` falls into the new `src/app/test/error.tsx` (server fetch; not covered by an automated test yet, BACKLOG); no client fetch exists. Storage full: write failure keeps the attempt in memory and shows nothing broken (RTL with a throwing `setItem`).
 - Concurrency: double-click on submit/confirm submits once (same guard as AC-9). Two tabs: N/A for scoring (sessionStorage is per tab by design); results: latest write wins (ADR not needed, documented here).
 - Time: hidden tab/sleep — the clock is derived from `startedAt`, not from ticks, so it is correct after wake (RTL advancing system time). Reload midway (AC-8). Day rollover/time zone: N/A (durations only, UTC ms).
 - Transitions: intro→taking→result→review/retry; result can't go back to taking for the same attempt.
@@ -102,4 +103,7 @@ Fixture paper for unit/RTL: `kotoba-fe/tests/fixtures/paper.small.json` (3 parts
 4. `reviewer`, Quality Gate, commit, push, PROGRESS.
 
 ## Self-review notes
-(filled in after review)
+- `reviewer`: PASS, no Critical/High. Fixed after review: saved answers must be integers; a `startedAt` in the future is clamped to now; the ★ box label carries the UI `lang`; the dashboard hides "Làm tiếp" once the deadline has passed (each with a test, seen failing first). AC-12 clarified to wrong/unanswered questions, matching the "Xem lại câu sai" button.
+- Main-agent edits to contract tests (reasons): typed `c: unknown[]` in `TestApp.test.tsx` (TS7006 broke typecheck/build); the 404 E2E now asserts that the only console error is Chromium's own "Failed to load resource … 404" for the document, then clears it (Chromium always logs it; any other error still fails); removed an unused `MINUTE` and an unused `_v` (lint warnings).
+- `eslint.config.mjs` ignores generated `playwright-report/`, `test-results/`, `coverage/`.
+- Left as Low/BACKLOG: ←/→ `preventDefault` outside inputs; `error.tsx` without a test; test-only non-null `!` in `e2e/test.spec.ts`.

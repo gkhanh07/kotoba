@@ -8,8 +8,7 @@ import { ReviewLink } from "./ReviewLink";
 export { Arrow } from "./Arrow";
 
 const LIBRARY = ["kana", "kanji", "vocab", "grammar"] as const; // /flashcards is a vocab deck, so it passes "vocab"
-// Primary items (test) join lessons, review and search as their routes ship.
-type Current = "lessons" | "review" | "search" | (typeof LIBRARY)[number];
+type Current = "lessons" | "review" | "test" | "search" | (typeof LIBRARY)[number];
 
 // One nav element: a row from 900px up, the Menu popover below (globals.css, "Site bar").
 export async function SiteBar({ current }: { current?: Current }) {
@@ -28,6 +27,7 @@ export async function SiteBar({ current }: { current?: Current }) {
       <MenuNav id="site-nav" label={t.main}>
         <Link href="/lessons" aria-current={here("lessons")}>{t.lessons}</Link>
         <ReviewLink label={t.review} due={t.reviewDue} current={here("review")} />
+        <Link href="/test" aria-current={here("test")}>{t.test}</Link>
         <Link href="/search" aria-current={here("search")}>{t.search}</Link>
         <button type="button" className="libraryBtn" popoverTarget="site-library" data-current={(LIBRARY as readonly string[]).includes(current ?? "") ? "" : undefined}>
           {t.library}

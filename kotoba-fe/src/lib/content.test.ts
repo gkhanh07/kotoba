@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("./api", async (orig) => ({ ...(await orig<typeof import("./api")>()), api: vi.fn() }));
 
 import { ApiError, api } from "./api";
-import { getGrammar, getGrammarItem, getKana, getKanaSet, getKanji, getKanjiDetail, getLessons, getVocab, search } from "./content";
+import { getGrammar, getGrammarItem, getKana, getKanaSet, getKanji, getKanjiDetail, getLessons, getTest, getTests, getVocab, search } from "./content";
 
 const apiMock = vi.mocked(api);
 beforeEach(() => {
@@ -62,5 +62,26 @@ describe("content", () => {
     apiMock.mockResolvedValue([]);
     await search("a b&c");
     expect(apiMock).toHaveBeenCalledWith("/search?q=a%20b%26c", { revalidate: 3600 });
+  });
+});
+
+describe("mock tests", () => {
+  it("getTests lists the papers cached for an hour", async () => {
+    apiMock.mockResolvedValue([]);
+    await getTests();
+    expect(apiMock).toHaveBeenCalledWith("/tests", { revalidate: 3600 });
+  });
+  it("getTest returns the paper and encodes the id", async () => {
+    apiMock.mockResolvedValue({ id: "n5-1" });
+    expect(await getTest("n5-1")).toEqual({ id: "n5-1" });
+    await getTest("a/b");
+    expect(apiMock).toHaveBeenLastCalledWith("/tests/a%2Fb", { revalidate: 3600 });
+  });
+  it("getTest returns null on 404 and rethrows other errors", async () => {
+    apiMock.mockImplementation(() => Promise.reject(new ApiError(404, "")));
+    expect(await getTest("nope")).toBeNull();
+    const err = new ApiError(500, "");
+    apiMock.mockImplementation(() => Promise.reject(err));
+    await expect(getTest("x")).rejects.toBe(err);
   });
 });

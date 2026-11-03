@@ -7,6 +7,9 @@ import { ACTIVITY_KEY, continueHref, daysBetween, parseActivity, summarize, type
 import type { Lang } from "@/lib/i18n";
 import { INTERVALS, isDue, isLearned, type Srs } from "@/lib/srs";
 import { today, useDeck } from "@/lib/store";
+import { remaining } from "@/lib/test";
+import { findSession } from "@/lib/testStore";
+import { testText } from "@/lib/testText";
 import s from "./dashboard.module.css";
 
 // Copied from SiteBar: that file pulls server-only code, so a client component can't import it.
@@ -38,8 +41,9 @@ const count = (s: Srs, area: (id: string) => boolean, ok: (id: string) => boolea
   Object.keys(s).filter((id) => area(id) && ok(id)).length;
 const fromKey = (day: string) => { const [y, m, d] = day.split("-").map(Number); return new Date(y, m - 1, d); };
 
-export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTotal }: {
+export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTotal, tests }: {
   lang: Lang; name: string; profile: Profile | null; kanaTotal: number; kanjiTotal: number; vocabTotal: number;
+  tests: { id: string; title: string; minutes: number }[];
 }) {
   const t = text[lang];
   const deck = useDeck();
@@ -65,8 +69,13 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
       vocabLearned: count(srs, isVocab, learned),
       vocabDue: count(srs, isVocab, due),
       summary: summarize(activity, now),
+      at: now.getTime(),
+      attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
     };
   }, [deck, activityRaw]);
+  const paper = data?.attempt && tests.find((p) => p.id === data.attempt?.id);
+  // Past the deadline the attempt is submitted on open, so "continue" would be a false promise.
+  const resume = paper && data.attempt && remaining(data.attempt.session.startedAt, paper.minutes, data.at) > 0 ? paper : undefined;
 
   const goal = profile?.goal;
   const exam = profile?.exam ? examDate(profile.exam) : null;
@@ -106,6 +115,12 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
             <Link className="btn" href={continueHref(data.summary.last)}>{t.continue} <Arrow /></Link>
             <p>{t.continueWhat(data.summary.last)}</p>
           </div>
+
+          {resume && data.attempt && (
+            <p className={s.resume}>
+              <Link href={`/test/${resume.id}`}>{testText[lang].resume(resume.title, data.attempt.session.current + 1, data.attempt.session.answers.length)}</Link>
+            </p>
+          )}
 
           <section className={s.section} aria-labelledby="dash-progress">
             <h2 id="dash-progress">{t.progress}</h2>

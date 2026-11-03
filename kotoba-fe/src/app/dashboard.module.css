@@ -35,3 +35,6 @@
   .stage { flex-wrap: wrap; }
   .stage progress { flex-basis: 100%; order: 3; }
 }
+.resume { margin: -1rem 0 2rem; }
+.resume a { display: inline-flex; align-items: center; min-height: 44px; color: var(--amber); text-decoration: underline; text-underline-offset: .25em; }
+.resume a:hover { color: var(--amber-core); }

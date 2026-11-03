@@ -22,3 +22,8 @@ Each should either handle the error (e.g. mark the deck as `ok: false`) or repor
 
 ### BE coverage below 90%
 - See PROGRESS.md "Baseline" for the measured BE unit coverage. Controllers, `validate.ts`, `db.ts`, `mailer.ts` and `main.ts` are only exercised by the supertest e2e suite, which is not counted. Raising unit coverage of `src/` to 90% is backlog; the threshold in `kotoba-be/vitest.config.ts` may only be raised.
+
+## Phase 14 follow-ups
+- `kotoba-fe/src/app/test/error.tsx` has no automated test (BE down while loading `/test`).
+- `TestApp` ←/→ call `preventDefault` whenever focus is outside an input, which overrides horizontal scrolling by arrow keys (AGENTS.md §8.1, minor).
+- `e2e/test.spec.ts` uses non-null `!` in four places (test-only).

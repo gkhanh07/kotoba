@@ -4,7 +4,7 @@ import { Street } from "./Street";
 import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
-import { getKana, getKanji, getVocab } from "@/lib/content";
+import { getKana, getKanji, getTests, getVocab } from "@/lib/content";
 import { Dashboard } from "./Dashboard";
 import s from "./page.module.css";
 
@@ -100,7 +100,7 @@ export default async function Home() {
   const lang = await getLang();
   const user = await currentUser();
   if (user) {
-    const [kana, kanji, vocab] = await Promise.all([getKana(), getKanji(), getVocab()]);
+    const [kana, kanji, vocab, tests] = await Promise.all([getKana(), getKanji(), getVocab(), getTests()]);
     return (
       <>
         <SiteBar />
@@ -111,6 +111,7 @@ export default async function Home() {
           kanaTotal={kana.length}
           kanjiTotal={kanji.length}
           vocabTotal={vocab.length}
+          tests={tests.map((p) => ({ id: p.id, title: p.title[lang], minutes: p.minutes }))}
         />
         <SiteFooter />
       </>
