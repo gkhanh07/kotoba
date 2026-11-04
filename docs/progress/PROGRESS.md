@@ -85,9 +85,9 @@ After phase 26 (N4 complete): BE 45 unit + 40 e2e + 23 content, JMdict 1,272 wor
 
 After phase 27: BE 49 unit + 41 e2e + 27 content, JMdict 1,272 words; FE Vitest 559 tests (lib lines 98.44%, branches 96.67%), E2E 166 passed. Content: 625 kanji (103/181/341), 81 lessons. All 341 N3 kanji are `reviewed: false`; BUG-009 (doubtful Hán Việt readings) is OPEN and needs the user to choose a source.
 
-## Stopped here (2026-11-03, at the user's request: "làm xong N4 rồi dừng")
-N4 is done. Work resumes with N3.
+## Stopped here (2026-11-04, after phase 27, at `aaac7eb`, pushed)
+N3 kanji are done and the tree is clean apart from two local-only changes that are never committed: `kotoba-be/package-lock.json` (an `npm install` adds `"hasInstallScript": true`) and `kotoba-fe/.impeccable/hook.cache.json` (editor tool cache). `.codegraph/` is the local CodeGraph index (untracked; `codegraph sync .` refreshes it). Waiting on the user: a Hán Việt source for BUG-009.
 
 ## Next step
 Phase 28 (N3 vocab) in lessons 46–80, batches of ~200 words; write `docs/phases/28-*.md` first. While authoring, review the loose lesson fits of 和 (48), 園/遊 (54), 鳴 (58), 原 (74), 王 (78) (phase 27 notes). Open items: BUG-009, the kana-id homophone collisions (BACKLOG, phase 15/24), the /vocab due count per level (BACKLOG, phase 22), default level by current lesson (phase 22 notes), passage line breaks (BACKLOG, phase 26).
-Note: kill stray `next-server` / `kotoba-be/dist/main` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`; it finds the process with `lsof`, or PowerShell on Windows, BUG-008), so it needs a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).
+Note: kill stray `next-server` / `kotoba-be/dist/main` / `nest start --watch` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`; it finds the process with `lsof`, or PowerShell on Windows, BUG-008), so it needs a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).
