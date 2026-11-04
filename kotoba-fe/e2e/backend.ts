@@ -10,8 +10,18 @@ const BE_DIR = resolve(process.cwd(), "../kotoba-be");
 const POLL_MS = 200;
 const POLL_TRIES = 100; // 20 s
 
+// Windows has no lsof/ps (BUG-008); `exit 0` because an empty Get-NetTCPConnection is an error there.
+const WINDOWS_LISTENERS =
+  `Get-NetTCPConnection -State Listen -LocalPort ${BE_PORT} -ErrorAction SilentlyContinue | ` +
+  `Select-Object -ExpandProperty OwningProcess -Unique | ` +
+  `Where-Object { (Get-CimInstance Win32_Process -Filter "ProcessId=$_").CommandLine -like '*dist?main*' }; exit 0`;
+
 // Only kotoba-be's own Node process on the port: never some other program that happens to listen there.
 function listeners(): number[] {
+  if (process.platform === "win32") {
+    const out = execFileSync("powershell", ["-NoProfile", "-Command", WINDOWS_LISTENERS], { encoding: "utf8" });
+    return out.split(/\r?\n/).filter(Boolean).map(Number);
+  }
   let pids: number[];
   try {
     pids = execFileSync("lsof", ["-ti", `tcp:${BE_PORT}`, "-sTCP:LISTEN"], { encoding: "utf8" }).split("\n").filter(Boolean).map(Number);

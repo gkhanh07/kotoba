@@ -107,3 +107,15 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Root cause: the sky behind the page (`kana.module.css:11`, `.app::before`) used `inset: … calc(50% - 50vw)` to bleed to the screen edges; `100vw` includes the scrollbar, so it ran past the page on the right. `.app` is already full width, so the bleed was not needed.
 - Fix: `inset: -6rem 0 auto`.
 - Status: FIXED
+
+## BUG-008: the sync-status E2E cannot stop kotoba-be on Windows
+- Severity: Medium (test environment only; the Quality Gate cannot go green on a Windows machine)
+- Found: 2026-11-04, full `npm run test:e2e` on Windows Server 2019 during the BUG-006 fix
+- Environment: kotoba-fe Playwright, Windows, Git Bash (no `lsof`)
+- Steps: run `npx playwright test e2e/sync-status.spec.ts` on Windows.
+- Expected: the journey stops kotoba-be, sees "failed", restarts it, sees "saved".
+- Actual: `Error: kotoba-be did not go down on :4000` (mobile and desktop).
+- Reproducing test: `kotoba-fe/e2e/sync-status.spec.ts` › sync status: saved, failed while kotoba-be is down, saved again after Thử lại (failed on both projects before the fix).
+- Root cause: `e2e/backend.ts` finds kotoba-be's process with `lsof` and `ps`; without `lsof` the `catch` returns no process, so nothing is stopped (and the teardown would not stop a restarted backend either).
+- Fix: on `win32`, the same lookup with PowerShell (`Get-NetTCPConnection` → `Win32_Process` command line contains `dist?main`). Linux/macOS path unchanged.
+- Status: FIXED
