@@ -84,3 +84,26 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Root cause: the fetch cache lives in `.next/cache`, which `next build` keeps; content is fetched with `revalidate: HOUR`.
 - Fix: Playwright's FE webServer deletes `.next/cache/fetch-cache` before building. Production keeps the hourly revalidate (content ships with kotoba-be; a deploy that changes content should clear that folder too — noted in BACKLOG for phase 35's deploy notes).
 - Status: FIXED (test environment)
+
+## BUG-006: on screens wider than 88rem, capped pages squeeze their text into a thin column
+- Severity: High (the mock test, lesson, grammar, legal and 404 pages become unreadable on a 1920px screen or a zoomed-out laptop)
+- Found: 2026-11-04, responsive check with Chrome DevTools (user report: `/test/[id]` shown as a narrow column)
+- Environment: kotoba-fe, Chromium, viewport ≥ 1408px (worse as it grows)
+- Steps: open `/test/n5-1` at 1920×1080.
+- Expected: the column keeps its designed measure (52rem for the test).
+- Actual: the text area is 223px; `/test` 208, `/lessons/1` and `/grammar/wa-desu` 127, `/legal` 172, the 404 page 16 (from 1440px they are already 42–49% of the screen).
+- Reproducing test: `kotoba-fe/e2e/layout.spec.ts` › <route> keeps a readable column on a wide screen, and › the 404 page keeps a readable column on a wide screen (12 failed before the fix: 127–223px, 16px for the 404).
+- Root cause: `--pad-x` (`globals.css:62`) is `gutter + (100% − 88rem) / 2`, made for full-width blocks. The boxes that also cap their own width (`test.module.css:1` `.app`, `legal.module.css:1` `.legal`, `globals.css:388` `.statusPage`, `lessons.module.css:40` `.lesson`, `grammar.module.css:14` `.detail`) took it as padding: the `100%` is the page width, not the box width, so on wide screens the padding grows with the screen while the box stays capped, and the content collapses.
+- Fix: the centred boxes (test, legal, status page) pad with `--gutter` and add it to the cap (`max-width: calc(<cap> + 2 * var(--gutter))`, the pattern `dashboard.module.css` already used). The left-aligned detail pages (lesson, grammar) keep `--pad-x` so they line up with the site bar and add it to the cap (`calc(46rem + 2 * var(--pad-x))`). The `--pad-x` comment now says so. Scan: every other `var(--pad-x)` is on a box without a max-width.
+- Status: FIXED
+
+## BUG-007: /kana scrolls sideways on desktop browsers with a classic scrollbar
+- Severity: Low (8px horizontal scroll, cosmetic)
+- Found: 2026-11-04, same responsive check
+- Environment: kotoba-fe `/kana`, Chromium on Windows (scrollbar 15px wide), every viewport
+- Steps: open `/kana`.
+- Expected: no horizontal scroll (AGENTS.md §8.2). Actual: `scrollWidth − clientWidth` = 8px.
+- Reproducing test: `kotoba-fe/e2e/layout.spec.ts` › /kana has no horizontal scroll (desktop failed before the fix; the spec turns off headless Chromium's `--hide-scrollbars`, which had hidden the bug from every earlier E2E run).
+- Root cause: the sky behind the page (`kana.module.css:11`, `.app::before`) used `inset: … calc(50% - 50vw)` to bleed to the screen edges; `100vw` includes the scrollbar, so it ran past the page on the right. `.app` is already full width, so the bleed was not needed.
+- Fix: `inset: -6rem 0 auto`.
+- Status: FIXED

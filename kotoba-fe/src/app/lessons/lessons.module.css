@@ -37,7 +37,7 @@
 }
 
 /* ── one lesson ───────────────────────────────── */
-.lesson { max-width: 46rem; }
+.lesson { max-width: calc(46rem + 2 * var(--pad-x)); }
 .back { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: var(--silver); text-decoration: none; }
 .back:hover { color: var(--amber-core); }
 .lesson .heading { margin-top: 1rem; }

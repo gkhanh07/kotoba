@@ -1,4 +1,4 @@
-.legal { max-width: 68ch; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem) var(--pad-x) 2rem; color: var(--silver); line-height: 1.7; }
+.legal { max-width: calc(68ch + 2 * var(--gutter)); margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem) var(--gutter) 2rem; color: var(--silver); line-height: 1.7; }
 .legal h1 { font-size: clamp(2rem, 5vw, 3rem); color: var(--chalk); }
 .toc { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
 .toc a, .legal section a { color: var(--silver); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 3px; }

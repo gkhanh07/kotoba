@@ -1,4 +1,4 @@
-.app { max-width: 52rem; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem) var(--pad-x) 4rem; }
+.app { max-width: calc(52rem + 2 * var(--gutter)); margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem) var(--gutter) 4rem; }
 .heading h1, .title { font-size: clamp(2rem, 5vw, 3.25rem); color: var(--silver); text-shadow: var(--glow-cool); }
 .heading p { margin-top: 1rem; color: var(--silver-dim); max-width: 65ch; }
 .note { margin-top: 1rem; color: var(--silver-dim); max-width: 65ch; }

@@ -8,7 +8,7 @@
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -6rem calc(50% - 50vw) auto;
+  inset: -6rem 0 auto;
   height: 34rem;
   background:
     radial-gradient(50% 70% at 75% 0%, rgb(46 78 170 / 0.28), transparent 70%),

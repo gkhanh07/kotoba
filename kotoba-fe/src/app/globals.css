@@ -58,7 +58,9 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --gutter: clamp(16px, 4vw, 56px);
   /* One content edge for the whole site. Full-bleed blocks use this instead of
-     `max-width: 88rem; margin: 0 auto`, so a banner and a text column line up. */
+     `max-width: 88rem; margin: 0 auto`, so a banner and a text column line up.
+     Its 100% is the box's own containing block: a centred box with a max-width pads with
+     --gutter instead, and a capped box adds the padding to its cap (BUG-006). */
   --pad-x: calc(var(--gutter) + max(0px, (100% - 88rem) / 2));
 
   color-scheme: dark;
@@ -385,7 +387,7 @@ p { text-wrap: pretty; }
 .siteFooter a:hover { color: var(--amber-core); }
 
 /* 404 and error pages: an unlit sign, one line, one way out. Global so the error boundaries add no preloaded sheet. */
-.statusPage { display: grid; justify-items: start; gap: 1.25rem; max-width: 40rem; margin: 0 auto; padding: clamp(3rem, 10vw, 7rem) var(--pad-x) 4rem; }
+.statusPage { display: grid; justify-items: start; gap: 1.25rem; max-width: calc(40rem + 2 * var(--gutter)); margin: 0 auto; padding: clamp(3rem, 10vw, 7rem) var(--gutter) 4rem; }
 .statusPage .statusMark { font-family: var(--font-sign), sans-serif; font-size: clamp(4.5rem, 16vw, 9rem); line-height: 1; color: var(--silver-mute); }
 /* Muted Silver is the 404 numeral only; the outage glyph is a dim unlit sign. */
 .statusPage .statusMark[data-off] { color: var(--silver-dim); }
