@@ -34,7 +34,12 @@ export class ContentController {
     const lesson = numberParam(q.lesson, Number.isInteger, 'lesson');
     const level = levelParam(q.level);
     const page = numberParam(q.page, isPage, 'page');
-    const rows = await this.db.item.findMany({ where: { kind, lesson, level }, orderBy: { sort: 'asc' } });
+    // /kanji shows a page grouped by lesson, so paged kanji go lesson by lesson; kanji.json itself is by frequency (BUG-010).
+    const byLesson = kind === 'kanji' && page !== undefined;
+    const rows = await this.db.item.findMany({
+      where: { kind, lesson, level },
+      orderBy: byLesson ? [{ lesson: 'asc' }, { sort: 'asc' }] : { sort: 'asc' },
+    });
     const items = parse(rows).filter((d) => FILTERS.every((f) => q[f] === undefined || d[f] === q[f]));
     // Without ?page= the bare array, as before phase 22.
     return page === undefined ? items : paginate(items, page, PAGE_SIZE);

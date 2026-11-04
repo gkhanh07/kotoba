@@ -23,8 +23,8 @@ const tabs = (page: Page) => page.getByRole("navigation", { name: "Cấp độ J
 const kanjiTiles = (page: Page) => page.locator('main a[href^="/kanji/"]');
 
 for (const path of PAGES) {
-  // N3 has no content until phase 27, so it is the level that shows the empty state on every page.
-  test(`${path} has level tabs with N5 current and an empty N3`, async ({ page, axe }) => {
+  // N2 has no content until phase 31, so it is the level that shows the empty state on every page.
+  test(`${path} has level tabs with N5 current and an empty N2`, async ({ page, axe }) => {
     const be = watchBackend(page);
     await page.goto(path);
     await expect(tabs(page).getByRole("link")).toHaveText(["N5", "N4", "N3", "N2"]);
@@ -33,49 +33,54 @@ for (const path of PAGES) {
     expect(await hasHorizontalScroll(page)).toBe(false);
     await axe();
 
-    await tabs(page).getByRole("link", { name: "N3" }).click();
-    await expect(page).toHaveURL(`${path}?level=3`);
-    await expect(tabs(page).getByRole("link", { name: "N3" })).toHaveAttribute("aria-current", "page");
-    await expect(page.getByText("Chưa có nội dung N3.")).toBeVisible();
+    await tabs(page).getByRole("link", { name: "N2" }).click();
+    await expect(page).toHaveURL(`${path}?level=2`);
+    await expect(tabs(page).getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
+    await expect(page.getByText("Chưa có nội dung N2.")).toBeVisible();
     expect(await hasHorizontalScroll(page)).toBe(false);
     await axe();
     expect(be).toEqual([]);
   });
 }
 
-// Phase 23: N4 kanji, 100 on page 1 and the rest on page 2, grouped under N4 lessons.
-const N4_KANJI = content("kanji").filter((k) => k.level === 4).length;
+// Phase 23 (N4, 181 kanji: 2 pages) and 27 (N3, 341 kanji: 4 pages): kanji paged by 100 under their lessons,
+// and the level's lesson group with its first lesson.
 type LessonRow = { lesson: number; level: number; title: { vi: string } };
-const n4Lessons = (content("lessons") as LessonRow[]).filter((l) => l.level === 4);
-test("/kanji?level=4 pages the N4 kanji under their lessons", async ({ page, axe }, info) => {
-  await page.goto("/kanji?level=4");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Kanji N4");
-  await expect(kanjiTiles(page)).toHaveCount(Math.min(KANJI_PAGE, N4_KANJI));
-  await expect(page.getByRole("heading", { level: 2 }).first()).toHaveText(`Bài 26 · ${n4Lessons[0].title.vi}`);
-  expect(await hasHorizontalScroll(page)).toBe(false);
-  await axe();
-  await page.screenshot({ path: info.outputPath(`kanji-n4-${info.project.name}.png`), fullPage: true });
-  await page.getByRole("link", { name: "Sau" }).click();
-  await expect(page).toHaveURL(/page=2/);
-  await expect(kanjiTiles(page)).toHaveCount(N4_KANJI - KANJI_PAGE);
-});
+for (const level of [4, 3]) {
+  const total = content("kanji").filter((k) => k.level === level).length;
+  const levelLessons = (content("lessons") as LessonRow[]).filter((l) => l.level === level);
+  const first = levelLessons[0];
 
-test("/lessons lists the N4 lessons under an N4 heading", async ({ page, axe }, info) => {
-  await page.goto("/lessons");
-  const n4 = page.getByRole("region", { name: "N4" });
-  await expect(n4.getByRole("listitem")).toHaveCount(n4Lessons.length);
-  await expect(n4.getByRole("listitem").first()).toContainText(`${n4Lessons[0].lesson}${n4Lessons[0].title.vi}`);
-  await expect(n4.getByRole("listitem").last()).toContainText(`${n4Lessons.at(-1)?.lesson}${n4Lessons.at(-1)?.title.vi}`);
-  await axe();
-  await n4.scrollIntoViewIfNeeded();
-  await page.screenshot({ path: info.outputPath(`lessons-n4-${info.project.name}.png`) });
-  await page.goto("/lessons/26");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(n4Lessons[0].title.vi);
-  await expect(page.getByText(`Bài 26 / ${content("lessons").length} · `)).toBeVisible();
-  expect(await hasHorizontalScroll(page)).toBe(false);
-  await axe();
-  await page.screenshot({ path: info.outputPath(`lesson-26-${info.project.name}.png`), fullPage: true });
-});
+  test(`/kanji?level=${level} pages the N${level} kanji under their lessons`, async ({ page, axe }, info) => {
+    await page.goto(`/kanji?level=${level}`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(`Kanji N${level}`);
+    await expect(kanjiTiles(page)).toHaveCount(KANJI_PAGE);
+    await expect(page.getByText(`Trang 1 / ${Math.ceil(total / KANJI_PAGE)}`)).toBeVisible();
+    await expect(page.getByRole("heading", { level: 2 }).first()).toHaveText(`Bài ${first.lesson} · ${first.title.vi}`);
+    expect(await hasHorizontalScroll(page)).toBe(false);
+    await axe();
+    await page.screenshot({ path: info.outputPath(`kanji-n${level}-${info.project.name}.png`), fullPage: true });
+    await page.goto(`/kanji?level=${level}&page=${Math.ceil(total / KANJI_PAGE)}`);
+    await expect(kanjiTiles(page)).toHaveCount(total % KANJI_PAGE || KANJI_PAGE);
+  });
+
+  test(`/lessons lists the N${level} lessons under an N${level} heading`, async ({ page, axe }, info) => {
+    await page.goto("/lessons");
+    const group = page.getByRole("region", { name: `N${level}` });
+    await expect(group.getByRole("listitem")).toHaveCount(levelLessons.length);
+    await expect(group.getByRole("listitem").first()).toContainText(`${first.lesson}${first.title.vi}`);
+    await expect(group.getByRole("listitem").last()).toContainText(`${levelLessons.at(-1)?.lesson}${levelLessons.at(-1)?.title.vi}`);
+    await axe();
+    await group.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: info.outputPath(`lessons-n${level}-${info.project.name}.png`) });
+    await page.goto(`/lessons/${first.lesson}`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(first.title.vi);
+    await expect(page.getByText(`Bài ${first.lesson} / ${content("lessons").length} · `)).toBeVisible();
+    expect(await hasHorizontalScroll(page)).toBe(false);
+    await axe();
+    await page.screenshot({ path: info.outputPath(`lesson-${first.lesson}-${info.project.name}.png`), fullPage: true });
+  });
+}
 
 // Phase 25: N4 grammar points, every one listed and openable.
 test("/grammar?level=4 lists every N4 grammar point", async ({ page, axe }, info) => {
@@ -179,5 +184,8 @@ test("search results carry a level badge", async ({ page, axe }) => {
 test("/legal names the source of the level lists", async ({ page, axe }) => {
   await page.goto("/legal");
   await expect(page.getByText(/trường JLPT của KANJIDIC2/)).toBeVisible();
+  // ADR 006: the N3/N2 lists are Jonathan Waller's, CC BY, credited with a link to his archived licence page.
+  await expect(page.getByText(/Danh sách kanji N3 và N2 lấy từ danh sách của Jonathan Waller \(tanos\.co\.uk\), dùng theo giấy phép Creative Commons BY\./)).toBeVisible();
+  await expect(page.getByRole("link", { name: "tanos.co.uk" })).toHaveAttribute("href", /web\.archive\.org\/.*tanos\.co\.uk\/jlpt\/sharing\//);
   await axe();
 });

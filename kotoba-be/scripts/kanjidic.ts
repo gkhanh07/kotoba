@@ -6,11 +6,12 @@ import { gunzipSync } from 'node:zlib';
 const URL = 'http://www.edrdg.org/kanjidic/kanjidic2.xml.gz';
 const CACHE = '.cache/kanjidic2.xml.gz';
 const OUT = 'content/kanji.json';
-// KANJIDIC2 has the four pre-2010 JLPT levels. Old 4 = N5, old 3 = N4; old 2 splits into N3/N2
-// and needs its own list (phase 27), so it is not mapped yet.
+const LEVELS = 'scripts/levels.txt';
+// KANJIDIC2 has the four pre-2010 JLPT levels. Old 4 = N5, old 3 = N4. Old 2 is N3 and N2 merged, so those
+// come from Waller's lists in levels.txt, after the old mapping: a kanji already taught at N5/N4 keeps it (ADR 006).
 const OLD_TO_NEW: Record<string, number> = { 4: 5, 3: 4 };
 // New levels written to kanji.json; a level is added here when its content is authored.
-const INCLUDE_LEVELS = [5, 4];
+const INCLUDE_LEVELS = [5, 4, 3];
 // Characters KANJIDIC2 gives no included level that lessons still teach, with the level they are taught at.
 const EXTRA: Record<string, number> = {};
 
@@ -21,9 +22,23 @@ if (!existsSync(CACHE)) {
   writeFileSync(CACHE, Buffer.from(await res.arrayBuffer()));
 }
 
+// "3 政議民…": a level, a space, then its kanji. Lines starting with # are the source credit.
+const listed = new Map(
+  readFileSync(LEVELS, 'utf8')
+    .split('\n')
+    .filter((line) => /^\d /.test(line))
+    .flatMap((line) => [...line.slice(2).trim()].map((char) => [char, Number(line[0])] as const)),
+);
+
 const xml = gunzipSync(readFileSync(CACHE)).toString();
-const all = (s: string, re: RegExp) => [...s.matchAll(re)].map((m) => m[1]);
-const one = (s: string, re: RegExp) => s.match(re)?.[1];
+// The file is XML, so text carries entities ("coming &amp; going", BUG-011). One pass, so "&amp;lt;" stays "&lt;".
+const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" };
+const decode = (s: string) => s.replace(/&(amp|lt|gt|quot|apos);/g, (m, e: string) => ENTITIES[e] ?? m);
+const all = (s: string, re: RegExp) => [...s.matchAll(re)].map((m) => decode(m[1]));
+const one = (s: string, re: RegExp) => {
+  const m = s.match(re)?.[1];
+  return m === undefined ? undefined : decode(m);
+};
 
 type Authored = { vi?: string; lesson?: number | null; reviewed?: boolean; similar?: string[] };
 const old = new Map<string, Authored>(
@@ -36,7 +51,7 @@ const kanji = xml
   .map((c) => {
     const char = one(c, /<literal>(.+?)<\/literal>/)!;
     const jlpt = one(c, /<jlpt>(\d)<\/jlpt>/);
-    return { c, char, level: EXTRA[char] ?? (jlpt === undefined ? undefined : OLD_TO_NEW[jlpt]) };
+    return { c, char, level: EXTRA[char] ?? (jlpt === undefined ? undefined : OLD_TO_NEW[jlpt]) ?? listed.get(char) };
   })
   .filter((k): k is typeof k & { level: number } => k.level !== undefined && INCLUDE_LEVELS.includes(k.level))
   .map(({ c, char, level }) => {

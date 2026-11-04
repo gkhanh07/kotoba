@@ -9,6 +9,8 @@ const vocab = load('vocab');
 const lessons = load('lessons');
 const grammar = load('grammar');
 const all = [...kana, ...kanji, ...vocab, ...lessons, ...grammar];
+// N3 lessons 46–81, the last one "Ôn tập N3" (docs/phases/27-n3-kanji.md).
+const N3_LESSONS = 36;
 
 describe('content', () => {
   it('has unique ids', () => {
@@ -40,19 +42,19 @@ describe('content', () => {
       })
       .map((c) => `${k.char as string}→${c}`));
     expect(bad).toEqual([]);
-    // N5: 11 pairs over 21 kanji (docs/phases/19-vocab-page-similar-kanji.md); N4 adds 23 pairs (docs/phases/23-n4-kanji.md).
-    expect(kanji.filter((k) => similar(k).length).length).toBe(54);
-    expect(kanji.reduce((n, k) => n + similar(k).length, 0)).toBe(68);
+    // N5: 11 pairs over 21 kanji (docs/phases/19-vocab-page-similar-kanji.md); N4 adds 23 pairs (docs/phases/23-n4-kanji.md); N3 adds 40 (docs/phases/27-n3-kanji.md).
+    expect(kanji.filter((k) => similar(k).length).length).toBe(131);
+    expect(kanji.reduce((n, k) => n + similar(k).length, 0)).toBe(148);
   });
 
-  // Phase 23: the 181 N4 kanji are authored and each sits in an N4 lesson.
   // Inventory pinned to exact numbers so a dropped entry fails (AGENTS.md §7.3); update with each content phase.
   it('holds exactly the released content', () => {
     const count = (items: Item[], level: number) => items.filter((d) => d.level === level).length;
     expect(kana).toHaveLength(224);
-    expect([count(kanji, 5), count(kanji, 4)]).toEqual([103, 181]);
-    expect(kanji).toHaveLength(284);
-    expect([count(lessons, 5), count(lessons, 4)]).toEqual([25, 20]);
+    // Phase 23: 181 N4 kanji; phase 27: 341 N3 kanji (docs/phases/27-n3-kanji.md).
+    expect([count(kanji, 5), count(kanji, 4), count(kanji, 3)]).toEqual([103, 181, 341]);
+    expect(kanji).toHaveLength(625);
+    expect([count(lessons, 5), count(lessons, 4), count(lessons, 3)]).toEqual([25, 20, N3_LESSONS]);
     // Phase 24a/24b/24c: N4 vocab lessons 26–44 (docs/phases/24-n4-vocab.md).
     expect([count(vocab, 5), count(vocab, 4)]).toEqual([694, 578]);
     expect(vocab).toHaveLength(1272);
@@ -69,11 +71,32 @@ describe('content', () => {
     expect(lessonsWithout).toEqual([]);
   });
 
-  it('gives every N4 kanji a meaning and an N4 lesson', () => {
+  it.each([4, 3])('gives every N%i kanji a meaning and a lesson of its level', (level) => {
     const levelOf = new Map(lessons.map((l) => [l.lesson, l.level]));
-    const n4 = kanji.filter((k) => k.level === 4);
-    expect(n4.length).toBe(181);
-    expect(n4.filter((k) => typeof k.vi !== 'string' || k.vi.trim() === '' || levelOf.get(k.lesson) !== 4).map((k) => k.id)).toEqual([]);
+    const bad = kanji.filter((k) => k.level === level && (typeof k.vi !== 'string' || k.vi.trim() === '' || levelOf.get(k.lesson) !== level));
+    expect(bad.map((k) => k.id)).toEqual([]);
+  });
+
+  // Phase 27 AC-1: the N3 meanings are authored, not yet checked by a person.
+  it('keeps every N3 kanji marked for review', () => {
+    expect(kanji.filter((k) => k.level === 3 && k.reviewed !== false).map((k) => k.id)).toEqual([]);
+  });
+
+  // BUG-011: KANJIDIC2 text is XML, so entities must be decoded, not shown ("coming &amp; going").
+  it('holds no XML entities in kanji text', () => {
+    expect(kanji.filter((k) => /&(amp|lt|gt|quot|apos);/.test(JSON.stringify(k))).map((k) => k.id)).toEqual([]);
+  });
+
+  // ADR 006: N3 is Waller's N3 list minus the kanji KANJIDIC2 already puts at N5/N4, which keep their level.
+  it('takes the N3 kanji from scripts/levels.txt', () => {
+    const line = readFileSync(new URL('../scripts/levels.txt', import.meta.url), 'utf8').split('\n').find((l) => l.startsWith('3 ')) ?? '';
+    const listed = [...line.slice(2).trim()];
+    const levelOf = new Map(kanji.map((k) => [k.char as string, k.level]));
+    expect(listed).toHaveLength(367);
+    // Every listed kanji is taught, at N3 or earlier; nothing outside the list is N3.
+    expect(listed.filter((c) => ![3, 4, 5].includes(levelOf.get(c) as number))).toEqual([]);
+    expect(kanji.filter((k) => k.level === 3 && !listed.includes(k.char as string)).map((k) => k.id)).toEqual([]);
+    expect(listed.filter((c) => levelOf.get(c) !== 3)).toHaveLength(26);
   });
 
   // JLPT levels 5 (easiest) to 2 (phase 22). Every item and every paper names exactly one.

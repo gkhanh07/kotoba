@@ -2,6 +2,7 @@ import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '../src/app.module.js';
+import { PAGE_SIZE } from '../src/config.js';
 import { Db } from '../src/db.js';
 import kana from '../content/kana.json' with { type: 'json' };
 import kanji from '../content/kanji.json' with { type: 'json' };
@@ -138,6 +139,20 @@ describe('content (e2e)', () => {
       total: hiragana.length,
     });
     expect((await get('/content/kanji?level=2&page=1').expect(200)).body).toEqual({ items: [], page: 1, pages: 1, total: 0 });
+  });
+
+  // BUG-010: /kanji groups each page by lesson, so kanji pages go lesson by lesson, most frequent first within one.
+  it('pages kanji lesson by lesson', async () => {
+    for (const level of [5, 4, 3]) {
+      const byLesson = kanji.filter((k) => k.level === level).sort((x, y) => x.lesson - y.lesson);
+      const pages = Math.ceil(byLesson.length / PAGE_SIZE);
+      const paged: string[] = [];
+      for (let page = 1; page <= pages; page++) {
+        const { body } = await get(`/content/kanji?level=${level}&page=${page}`).expect(200);
+        paged.push(...body.items.map((k: { id: string }) => k.id));
+      }
+      expect(paged, `N${level}`).toEqual(byLesson.map((k) => k.id));
+    }
   });
 
   describe('with 5,000 synthetic level-3 words', () => {
