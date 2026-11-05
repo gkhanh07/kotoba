@@ -176,4 +176,8 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Expected: the broken text stays somewhere it can be recovered from.
 - Actual: the deck is written over it and the text is gone. The same happens to the activity log. Sync data with one bad field loses `owner` and every queued reset. A failed `forget` write still resets the deck, and a failed write inside `applyRemote` leaves a mix of two accounts' keys.
 - Reproducing tests: `kotoba-fe/src/lib/store.test.ts`, `activity.test.ts`, `src/app/SyncStatus.test.tsx`
-- Status: OPEN
+- Root cause: reading treated "cannot parse" the same as "nothing stored", so the next write looked safe; and the writes around a reset or a pull were separate steps whose failures were ignored.
+- Fix: `lib/broken.ts` keeps the first unreadable text in `<key>.broken` before a write replaces it, and a failed copy stops the write. `syncState` keeps the valid fields and sets `lastSync` to 0. `resetDeck` changes nothing if the entry cannot be queued. `applyRemote` restores the old values and returns false (ADR 008).
+- Similar places: `learnedToday` and the daily counter in `review` stay as they are (bookkeeping, ADR 004).
+- Commit: `fix(store): keep stored data that cannot be read or written`
+- Status: FIXED

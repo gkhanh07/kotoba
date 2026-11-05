@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import broken from "../../tests/fixtures/storage.broken.json";
 import oldDeck from "../../tests/fixtures/progress.v1.without-lapses.json";
 
 type Store = typeof import("./store");
@@ -317,5 +318,127 @@ describe("pendingCount and the sync phase (phase 20)", () => {
     act(() => store.setSyncPhase("idle"));
     expect(result.current).toBe("idle");
     expect(renders).toBe(before + 1);
+  });
+});
+
+// BUG-013, ADR 008: what cannot be read is copied before anything replaces it.
+describe("broken stored data", () => {
+  const COPY = (key: string) => `${key}.broken`;
+  const card = { box: 3, due: "2026-11-09", at: 2 };
+  const failWrites = (bad: (key: string) => boolean) => {
+    const real = Storage.prototype.setItem;
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(function (this: Storage, key: string, value: string) {
+      if (bad(key)) throw new Error("quota");
+      real.call(this, key, value);
+    });
+  };
+  beforeEach(() => {
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+  });
+
+  it("copies a broken deck before the first write over it", () => {
+    localStorage.setItem(SRS, broken.srsTruncated);
+    act(() => {
+      store.review("hiragana:a", true);
+    });
+    expect(localStorage.getItem(COPY(SRS))).toBe(broken.srsTruncated);
+    expect(Object.keys(JSON.parse(localStorage.getItem(SRS)!))).toEqual(["hiragana:a"]);
+  });
+  it("keeps a broken deck in place, and warns, when the copy cannot be saved", () => {
+    localStorage.setItem(SRS, broken.srsTruncated);
+    const { result } = renderHook(() => store.useDeck());
+    failWrites((key) => key === COPY(SRS));
+    act(() => {
+      store.review("hiragana:a", true);
+    });
+    expect(localStorage.getItem(SRS)).toBe(broken.srsTruncated);
+    expect(result.current!.ok).toBe(false);
+    expect(Object.keys(result.current!.srs)).toEqual(["hiragana:a"]);
+  });
+  it("keeps the first broken copy", () => {
+    localStorage.setItem(COPY(SRS), "first");
+    localStorage.setItem(SRS, broken.srsTruncated);
+    act(() => {
+      store.review("hiragana:a", true);
+    });
+    expect(localStorage.getItem(COPY(SRS))).toBe("first");
+  });
+  it("makes no copy of a readable deck", () => {
+    localStorage.setItem(SRS, JSON.stringify({ "hiragana:a": card }));
+    act(() => {
+      store.review("hiragana:i", true);
+    });
+    expect(localStorage.getItem(COPY(SRS))).toBeNull();
+  });
+
+  it("copies sync data that does not parse and returns the defaults", () => {
+    localStorage.setItem(SYNC, broken.syncTruncated);
+    expect(store.syncState()).toEqual({ lastSync: 0, forget: [] });
+    expect(localStorage.getItem(COPY(SYNC))).toBe(broken.syncTruncated);
+  });
+  it("keeps the owner and the valid resets of damaged sync data, and resends everything", () => {
+    localStorage.setItem(SYNC, broken.syncBadLastSync);
+    expect(store.syncState()).toEqual({ owner: "a@b.co", lastSync: 0, forget: [{ prefix: "hiragana:", at: 3 }] });
+    expect(localStorage.getItem(COPY(SYNC))).toBe(broken.syncBadLastSync);
+  });
+  it("keeps the owner when forget is damaged", () => {
+    localStorage.setItem(SYNC, broken.syncBadForget);
+    expect(store.syncState()).toEqual({ owner: "a@b.co", lastSync: 0, forget: [] });
+  });
+  it("drops a reset the account would refuse, so it cannot block every later push", () => {
+    localStorage.setItem(SYNC, broken.syncBadForgetTime);
+    expect(store.syncState()).toEqual({ owner: "a@b.co", lastSync: 0, forget: [{ prefix: "katakana:", at: 5 }] });
+  });
+  it("drops an owner that is not a string", () => {
+    localStorage.setItem(SYNC, broken.syncBadOwner);
+    expect(store.syncState()).toEqual({ lastSync: 0, forget: [] });
+  });
+  it("returns the defaults, without a copy, when storage is blocked", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    expect(store.syncState()).toEqual({ lastSync: 0, forget: [] });
+  });
+
+  it("leaves the deck alone, and warns, when a reset cannot be queued for the account", () => {
+    const cards = { "hiragana:a": card };
+    localStorage.setItem(SRS, JSON.stringify(cards));
+    localStorage.setItem(SYNC, JSON.stringify({ owner: "a@b.co", lastSync: 4, forget: [] }));
+    const { result } = renderHook(() => store.useDeck());
+    failWrites((key) => key === SYNC);
+    act(() => store.resetDeck("hiragana:"));
+    expect(JSON.parse(localStorage.getItem(SRS)!)).toEqual(cards);
+    expect(result.current).toEqual({ srs: cards, ok: false });
+  });
+
+  it.each([[ACT], [SYNC]])("restores every key when writing %s fails part way", (failing) => {
+    const old = { [SRS]: JSON.stringify({ "hiragana:a": card }), [ACT]: '{"days":{}}', [SYNC]: JSON.stringify({ owner: "old@b.co", lastSync: 4, forget: [] }) };
+    for (const [key, value] of Object.entries(old)) localStorage.setItem(key, value);
+    failWrites((key) => key === failing);
+    const ok = store.applyRemote({ cards: {}, activity: { days: {} } }, "new@b.co", 99);
+    expect(ok).toBe(false);
+    for (const [key, value] of Object.entries(old)) expect(localStorage.getItem(key)).toBe(value);
+  });
+  it("removes a key that was not there before a failed apply", () => {
+    failWrites((key) => key === ACT);
+    expect(store.applyRemote({ cards: {}, activity: { days: {} } }, "new@b.co", 99)).toBe(false);
+    expect(localStorage.getItem(SRS)).toBeNull();
+  });
+  it("reports a full apply", () => {
+    expect(store.applyRemote({ cards: {}, activity: { days: {} } }, "a@b.co", 1)).toBe(true);
+  });
+  it("copies every broken key before a pull replaces it", () => {
+    localStorage.setItem(SRS, broken.srsTruncated);
+    localStorage.setItem(ACT, broken.activityTruncated);
+    localStorage.setItem(SYNC, broken.syncTruncated);
+    expect(store.applyRemote({ cards: {}, activity: { days: {} } }, "a@b.co", 1)).toBe(true);
+    expect([localStorage.getItem(COPY(SRS)), localStorage.getItem(COPY(ACT)), localStorage.getItem(COPY(SYNC))])
+      .toEqual([broken.srsTruncated, broken.activityTruncated, broken.syncTruncated]);
+  });
+
+  it("removes the broken copies on sign-out", () => {
+    for (const key of [SRS, ACT, SYNC]) localStorage.setItem(COPY(key), "x");
+    act(() => store.clearLocal());
+    expect(Object.keys(localStorage)).toEqual([]);
   });
 });

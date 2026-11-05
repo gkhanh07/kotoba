@@ -1,6 +1,7 @@
 // Study log kept in the browser and synced to kotoba-be. Pure functions + a tiny storage wrapper.
 import { HEAT_LEVELS, HEAT_WEEKS } from "@/config/activity";
 import { STUDY_TIME_ZONE } from "@/config/time";
+import { keepBroken } from "./broken";
 import { addDays } from "./srs";
 
 export const ACTIVITY_KEY = "kotoba.activity.v1";
@@ -58,12 +59,16 @@ export function parseActivity(raw: string | null): Activity | null {
   }
 }
 
-// Corrupt log → start fresh; storage blocked → skip silently (the dashboard shows the warning).
+// Corrupt log → keep a copy, then start fresh (ADR 008).
 export function logActivity(area: Area, ref: string): void {
   try {
-    const a = parseActivity(localStorage.getItem(ACTIVITY_KEY)) ?? { days: {} };
-    localStorage.setItem(ACTIVITY_KEY, JSON.stringify(record(a, area, ref, new Date())));
-  } catch {}
+    const raw = localStorage.getItem(ACTIVITY_KEY);
+    const a = parseActivity(raw);
+    if (a === null && raw !== null) keepBroken(ACTIVITY_KEY, raw);
+    localStorage.setItem(ACTIVITY_KEY, JSON.stringify(record(a ?? { days: {} }, area, ref, new Date())));
+  } catch {
+    // Deliberate: study goes on without this entry, the dashboard shows the warning, and a log that could not be copied stays.
+  }
 }
 
 export type Summary = {

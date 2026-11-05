@@ -11,7 +11,7 @@ let uid: string | null = null;
 let chain = Promise.resolve(true);
 
 // One push at a time. pull: sync even with nothing to send, to bring in other devices' progress.
-// Resolves false when the push failed (BE down); local data is left as it was.
+// Resolves false when the push failed (BE down) or the answer could not be stored; local data is left as it was.
 const flush = (pull = false) => (chain = chain.then(() => {
   setSyncPhase("syncing");
   return push(pull);
@@ -42,7 +42,7 @@ async function push(pull: boolean): Promise<boolean> {
     });
     if (res.failed) return false;
     // Studied while the push was in flight: keep the local copy; that change schedules the next push.
-    if (res.remote && (foreign || snapshot() === before)) applyRemote(res.remote, owner, sentAt);
+    if (res.remote && (foreign || snapshot() === before) && !applyRemote(res.remote, owner, sentAt)) return false;
     return true;
   } catch {
     return false;

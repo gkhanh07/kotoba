@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import broken from "../../tests/fixtures/storage.broken.json";
 import { KEEP_DAYS, continueHref, dayKey, heat, parseActivity, record, summarize } from "./activity";
 import { addDays } from "./srs";
 
@@ -157,6 +158,31 @@ describe("logActivity", () => {
     const { logActivity } = await import("./activity");
     logActivity("kana", "hiragana:a");
     expect(JSON.parse(localStorage.getItem(KEY)!).days["2026-10-16"].kana).toEqual(["hiragana:a"]);
+  });
+  it("copies a corrupt log before starting fresh", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    localStorage.setItem(KEY, broken.activityTruncated);
+    const { logActivity } = await import("./activity");
+    logActivity("kana", "hiragana:a");
+    expect(localStorage.getItem(`${KEY}.broken`)).toBe(broken.activityTruncated);
+  });
+  it("leaves a corrupt log in place when the copy cannot be saved", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    localStorage.setItem(KEY, broken.activityTruncated);
+    const { logActivity } = await import("./activity");
+    const real = Storage.prototype.setItem;
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(function (this: Storage, key: string, value: string) {
+      if (key === `${KEY}.broken`) throw new Error("quota");
+      real.call(this, key, value);
+    });
+    logActivity("kana", "hiragana:a");
+    expect(localStorage.getItem(KEY)).toBe(broken.activityTruncated);
+  });
+  it("makes no copy of a readable log", async () => {
+    localStorage.setItem(KEY, '{"days":{}}');
+    const { logActivity } = await import("./activity");
+    logActivity("kana", "hiragana:a");
+    expect(localStorage.getItem(`${KEY}.broken`)).toBeNull();
   });
   it("stays silent when storage is blocked", async () => {
     const { logActivity } = await import("./activity");

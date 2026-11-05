@@ -62,6 +62,20 @@ describe("SyncStatus", () => {
     expect(await screen.findByText("Đã lưu")).toBeInTheDocument();
   });
 
+  it("turns to Lỗi đồng bộ when the account's data cannot be written here", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const cards = { a: { box: 1, due: "2026-11-03", at: 15, lapses: 0 } };
+    seed(cards, { owner: ME, lastSync: 10, forget: [] });
+    vi.mocked(syncProgress).mockResolvedValueOnce({ failed: false, remote: { cards, activity: { days: {} } } });
+    const real = Storage.prototype.setItem;
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(function (this: Storage, key: string, value: string) {
+      if (key === "kotoba.activity.v1") throw new Error("quota");
+      real.call(this, key, value);
+    });
+    render(<><Sync uid={ME} /><SyncStatus uid={ME} lang="vi" /></>);
+    expect(await screen.findByText(/Lỗi đồng bộ/)).toBeInTheDocument();
+  });
+
   it("shows Đang lưu… while a push with nothing pending is in flight", async () => {
     seed({}, { owner: ME, lastSync: 10, forget: [] });
     render(<SyncStatus uid={ME} lang="vi" />);

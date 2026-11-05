@@ -1,0 +1,9 @@
+{
+  "srsTruncated": "{\"hiragana:a\":{\"box\":3,\"due\":\"2026-11-09\",\"at\":17",
+  "activityTruncated": "{\"days\":{\"2026-10-16\":{\"minutes\":[60],\"kana\":[\"hiragana:a\"",
+  "syncTruncated": "{\"owner\":\"a@b.co\",\"lastSync\":40,\"forget\":[{\"prefix\":\"hira",
+  "syncBadLastSync": "{\"owner\":\"a@b.co\",\"lastSync\":\"40\",\"forget\":[{\"prefix\":\"hiragana:\",\"at\":3},{\"prefix\":\"\",\"at\":4},{\"prefix\":\"katakana:\",\"at\":\"5\"},null]}",
+  "syncBadForget": "{\"owner\":\"a@b.co\",\"lastSync\":40,\"forget\":{}}",
+  "syncBadForgetTime": "{\"owner\":\"a@b.co\",\"lastSync\":40,\"forget\":[{\"prefix\":\"hiragana:\",\"at\":0},{\"prefix\":\"katakana:\",\"at\":5}]}",
+  "syncBadOwner": "{\"owner\":7,\"lastSync\":40,\"forget\":[]}"
+}

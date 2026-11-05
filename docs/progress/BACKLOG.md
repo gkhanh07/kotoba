@@ -4,15 +4,6 @@ Out-of-scope findings (AGENTS.md §2, §13). Not fixed in the task that found th
 
 ## Rule deviations in existing code (found in Task A, 2026-11-03)
 
-### Empty `catch {}` (AGENTS.md §5.4; the ban applies to new code)
-- `kotoba-fe/src/lib/activity.ts:63`
-- `kotoba-fe/src/lib/store.ts:77`
-- `kotoba-fe/src/lib/store.ts:99`
-- `kotoba-fe/src/lib/store.ts:109`
-- `kotoba-fe/src/lib/store.ts:117`
-
-Each should either handle the error (e.g. mark the deck as `ok: false`) or report it, without overwriting stored data.
-
 ### Business constants not yet in `src/config/` (AGENTS.md §5.3)
 - `kotoba-fe/src/lib/srs.ts`: `INTERVALS` (Leitner days 1/3/7/14/30) and `KNOWN_AT`.
 - Other constants found later go here too. New constants go straight to `kotoba-fe/src/config/` or `kotoba-be/src/config.ts`.
@@ -47,3 +38,6 @@ Each should either handle the error (e.g. mark the deck as `ok: false`) or repor
 ## Phase 26 follow-ups
 - Mock test passages: line breaks in `passage` (title, paragraphs) are not kept on screen, so the N4 `text` passage reads as one block. Render `\n` as paragraph breaks in TestApp (and check n5-1's memo passages).
 - N4 content not yet seen by a reviewer pass: grammar (phase 25) and paper n4-1 (phase 26); all `reviewed: false`.
+
+## A reset during a push (found in the store hardening task, 2026-11-05)
+A reset of a set with no local cards, made while a push is in flight, leaves `snapshot()` unchanged, so `applyRemote` writes `forget: []` and drops the entry. The account keeps those cards. Needs a reset of an empty set inside one request; the next reset of that set sends it again.

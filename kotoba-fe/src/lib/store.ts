@@ -1,6 +1,7 @@
 // The SRS deck in localStorage, shared by every page through one external store.
 import { useSyncExternalStore } from "react";
-import { ACTIVITY_KEY, dayKey, type Activity } from "./activity";
+import { ACTIVITY_KEY, dayKey, parseActivity, type Activity } from "./activity";
+import { brokenKey, keepBroken } from "./broken";
 import { DAILY_KEY, newToday, noteNew, parseDaily } from "./daily";
 import { OLD_FLASHCARDS_KEY, OLD_PROGRESS_KEY, SRS_KEY, apply, forget, migrate, parseSrs, type Srs } from "./srs";
 
@@ -31,17 +32,23 @@ function read(): Deck {
   return deck;
 }
 
+function setDeck(next: Deck) {
+  deck = next;
+  listeners.forEach((l) => l());
+}
+
 function write(srs: Srs) {
   const json = JSON.stringify(srs);
   let ok = true;
   try {
+    const stored = localStorage.getItem(SRS_KEY);
+    if (deck?.ok === false && stored !== null && parseSrs(stored) === null) keepBroken(SRS_KEY, stored);
     localStorage.setItem(SRS_KEY, json);
     raw = json;
   } catch {
     ok = false;
   }
-  deck = { srs, ok };
-  listeners.forEach((l) => l());
+  setDeck({ srs, ok });
 }
 
 function subscribe(cb: () => void) {
@@ -87,15 +94,47 @@ export function review(id: string, correct: boolean): Srs {
 // lastSync: when the last applied push started; cards changed after it are what the next push sends.
 // forget: resets not yet sent, so the account drops those cards too.
 const SYNC_KEY = "kotoba.sync.v1";
-export type SyncState = { owner?: string; lastSync: number; forget: { prefix: string; at: number }[] };
+type Forget = { prefix: string; at: number };
+export type SyncState = { owner?: string; lastSync: number; forget: Forget[] };
 export type Progress = { cards: Srs; activity: Activity };
 
-export function syncState(): SyncState {
+const parseJson = (text: string): unknown => {
   try {
-    const o = JSON.parse(localStorage.getItem(SYNC_KEY) ?? "null") as SyncState | null;
-    if (o && typeof o.lastSync === "number" && Array.isArray(o.forget)) return o;
-  } catch {}
-  return { lastSync: 0, forget: [] };
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+};
+// Same rule as the API's isForget: a prefix the account would refuse must not block every later push.
+const isForget = (v: unknown): v is Forget => {
+  const f = v as Partial<Forget> | null;
+  return typeof f?.prefix === "string" && /^[a-z]+:$/.test(f.prefix) && typeof f.at === "number" && Number.isFinite(f.at) && f.at > 0;
+};
+
+// Damaged data keeps what is still valid. lastSync goes to 0: resending too much is safe, too little is not (ADR 008).
+function parseSync(text: string): { state: SyncState; intact: boolean } {
+  const o = parseJson(text) as Partial<SyncState> | null;
+  const owner = typeof o?.owner === "string" ? o.owner : undefined;
+  const stored = Array.isArray(o?.forget) ? o.forget : undefined;
+  const forget = stored?.filter(isForget) ?? [];
+  const lastSync = typeof o?.lastSync === "number" ? o.lastSync : null;
+  const intact = lastSync !== null && forget.length === stored?.length && owner === o?.owner;
+  return { state: { owner, lastSync: intact ? lastSync : 0, forget }, intact };
+}
+
+export function syncState(): SyncState {
+  let state: SyncState = { lastSync: 0, forget: [] };
+  try {
+    const stored = localStorage.getItem(SYNC_KEY);
+    if (stored === null) return state;
+    const parsed = parseSync(stored);
+    state = parsed.state;
+    if (!parsed.intact) keepBroken(SYNC_KEY, stored);
+  } catch {
+    // Deliberate: this runs on every render of the status line. With storage blocked or full the deck warning shows,
+    // and applyRemote tries the copy again before it writes.
+  }
+  return state;
 }
 
 // Cards the next push would send (phase 20 status line): everything on a first sync, cards changed since the
@@ -141,24 +180,61 @@ export function resetDeck(prefix: string) {
   if (st.owner) {
     try {
       localStorage.setItem(SYNC_KEY, JSON.stringify({ ...st, forget: [...st.forget, { prefix, at: Date.now() }] }));
-    } catch {}
+    } catch (e) {
+      // Without the entry the next pull would bring the cards back, so nothing is reset (ADR 008).
+      console.error("Could not queue the reset", e);
+      setDeck({ srs: read().srs, ok: false });
+      return;
+    }
   }
   write(forget(read().srs, prefix));
 }
 
-export function applyRemote(p: Progress, owner: string, lastSync: number) {
+// Latest write first: each step returns to a size that already fitted.
+function restore(written: [string, string | null][]) {
+  for (const [key, old] of written.reverse()) {
+    try {
+      if (old === null) localStorage.removeItem(key);
+      else localStorage.setItem(key, old);
+    } catch (e) {
+      console.error(`Could not restore ${key}`, e);
+    }
+  }
+}
+
+// All or nothing, so one browser never holds the cards of one account and the owner of another (ADR 008).
+// False: nothing changed, and the caller shows the sync as failed.
+export function applyRemote(p: Progress, owner: string, lastSync: number): boolean {
+  const updates: [string, string, (stored: string) => boolean][] = [
+    [SRS_KEY, JSON.stringify(p.cards), (stored) => parseSrs(stored) !== null],
+    [ACTIVITY_KEY, JSON.stringify(p.activity), (stored) => parseActivity(stored) !== null],
+    [SYNC_KEY, JSON.stringify({ owner, lastSync, forget: [] }), (stored) => parseSync(stored).intact],
+  ];
+  const written: [string, string | null][] = [];
+  let ok = true;
   try {
-    localStorage.setItem(SRS_KEY, JSON.stringify(p.cards));
-    localStorage.setItem(ACTIVITY_KEY, JSON.stringify(p.activity));
-    localStorage.setItem(SYNC_KEY, JSON.stringify({ owner, lastSync, forget: [] }));
-  } catch {}
+    for (const [key, json, isReadable] of updates) {
+      const old = localStorage.getItem(key);
+      if (old !== null && !isReadable(old)) keepBroken(key, old);
+      localStorage.setItem(key, json);
+      written.push([key, old]);
+    }
+  } catch (e) {
+    console.error("Could not save the account's data", e);
+    restore(written);
+    ok = false;
+  }
   announce();
+  return ok;
 }
 
 // Sign-out: nothing of this account stays in the browser. The pre-SRS keys go too, or read() re-imports them.
 export function clearLocal() {
+  const stored = [SRS_KEY, ACTIVITY_KEY, SYNC_KEY];
   try {
-    for (const k of [SRS_KEY, ACTIVITY_KEY, SYNC_KEY, DAILY_KEY, OLD_PROGRESS_KEY, OLD_FLASHCARDS_KEY]) localStorage.removeItem(k);
-  } catch {}
+    for (const k of [...stored, ...stored.map(brokenKey), DAILY_KEY, OLD_PROGRESS_KEY, OLD_FLASHCARDS_KEY]) localStorage.removeItem(k);
+  } catch (e) {
+    console.error("Could not clear this browser's data", e);
+  }
   announce();
 }
