@@ -371,6 +371,7 @@ npm run test:e2e          # supertest e2e on test.db
 npm run validate:content  # vitest run content + scripts/jmdict-check.ts
 npm run jmdict            # JMdict reading/example check only
 npm run kanjidic          # regenerate kanji.json from KANJIDIC2 (keeps authored fields)
+npm run sample -- <seed> [out.md]  # seeded review sample of §12; never writes `reviewed`
 npm run build             # nest build
 npm run check             # lint + typecheck + test + test:e2e + validate:content + build
 ```

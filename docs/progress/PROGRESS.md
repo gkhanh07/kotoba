@@ -38,7 +38,7 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 27 N3 kanji: 341 kanji from Waller's list, lessons 46–81, 40 `similar` pairs (spec `docs/phases/27-n3-kanji.md`, ADR 006); BUG-010, BUG-011 | DONE | `8bb6809` |
 | Fix from the `/` critique: dashboard totals per goal level (BUG-012), "learned" copy matches the SRS code (ADR 007), stale landing copy (spec `docs/tasks/critique-home.md`) | DONE | `fix(dashboard): count totals by the goal's scope and correct the landing copy` |
 | Store hardening: stored data that cannot be read is copied to `<key>.broken` before a write, resets and pulls are all-or-nothing, no empty catch left (spec `docs/tasks/store-hardening.md`, ADR 008, BUG-013) | DONE | `fix(store): keep stored data that cannot be read or written` |
-| User sample review of N5, N4 and N3 kanji: seeded samples of 30 per kind, the user sets `reviewed: true` | TODO | before phase 28, see PLAN (AGENTS.md §12) |
+| User sample review of N5, N4 and N3 kanji: seeded samples of 30 per kind, the user sets `reviewed: true` | WAITING for the user | sheet `docs/tasks/sample-review.md`, seed 20261105; before phase 28, see PLAN (AGENTS.md §12) |
 | 28–30 (N3 vocab, grammar, mock test `n3-1`), 35 (finish, incl. trimming level tabs to N5–N3) | TODO | |
 | 31–34 (N2) | DROPPED | user decision 2026-11-04: the roadmap stops at N3 |
 

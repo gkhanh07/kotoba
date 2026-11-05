@@ -27,7 +27,8 @@
     "prestart": "prisma migrate deploy",
     "prestart:prod": "prisma migrate deploy",
     "kanjidic": "node scripts/kanjidic.ts",
-    "jmdict": "node scripts/jmdict-check.ts"
+    "jmdict": "node scripts/jmdict-check.ts",
+    "sample": "node scripts/sample.ts"
   },
   "dependencies": {
     "@nestjs/common": "^12.0.1",
