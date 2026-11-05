@@ -1,0 +1,50 @@
+.app { padding: clamp(1.5rem, 4vw, 3.5rem) var(--pad-x) 4rem; }
+.heading h1 { font-size: clamp(2.6rem, 5vw, 4.25rem); color: var(--silver); text-shadow: var(--glow-cool); }
+.heading p { margin-top: 1rem; color: var(--silver-dim); max-width: 65ch; }
+
+/* ── list ─────────────────────────────────────── */
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.5rem; margin-top: 2rem; color: var(--silver-dim); font-size: .9rem; }
+.filters a { display: inline-flex; align-items: center; min-height: 44px; color: var(--silver); text-decoration: none; border-bottom: 1.5px solid transparent; transition: color 160ms, border-color 160ms; }
+.filters a:hover { color: var(--chalk); border-color: var(--rule); }
+.filters a[aria-current="page"] { color: var(--amber); border-color: var(--amber); }
+.group { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--rule-dim); }
+.group h2 { font-size: 1.1rem; color: var(--chalk); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); gap: 6px; margin: 1rem 0 0; padding: 0; list-style: none; }
+.tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3rem; min-height: 5.5rem; padding: .5rem .25rem; border: 1px solid var(--rule-dim); color: var(--silver); text-decoration: none; transition: background-color 160ms, color 160ms; }
+.tile:hover { border-color: var(--rule); background: var(--wet); color: var(--amber-core); }
+.char { font-family: var(--font-kana); font-size: 2rem; line-height: 1.1; }
+.hv { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--silver-dim); border-bottom: 1px solid transparent; }
+.tile[data-learned] .hv { border-color: var(--amber); }
+.wait, .none { margin-top: 2.5rem; color: var(--silver-dim); }
+
+/* ── detail ───────────────────────────────────── */
+.detailBar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 44px; }
+.back { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: var(--silver); text-decoration: none; }
+.back:hover { color: var(--amber-core); }
+.detail { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: clamp(1.5rem, 5vw, 4rem); margin-top: 1.5rem; }
+.specimen { display: grid; place-items: center; width: 12rem; aspect-ratio: 1; border: 1px solid var(--rule-strong); background: var(--asphalt); font-family: var(--font-kana); font-size: 8rem; font-weight: 400; line-height: 1; color: var(--cool-core); text-shadow: var(--glow-cool); }
+.hvBig { font-family: var(--font-title); font-size: 1.6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--chalk); }
+.facts { display: grid; gap: .6rem; margin: 1.25rem 0 0; }
+.facts div { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; }
+.facts dt { color: var(--silver-dim); font-size: .9rem; }
+.facts dd { margin: 0; color: var(--silver); font-variant-numeric: tabular-nums; }
+.missing { color: var(--silver-dim); }
+.words { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--rule-dim); max-width: 48rem; }
+.words h2 { font-size: 1.1rem; color: var(--chalk); }
+.words ul { margin: 1rem 0 0; padding: 0; list-style: none; }
+.words li { display: grid; grid-template-columns: minmax(6rem, auto) minmax(6rem, auto) 1fr; gap: 1.25rem; padding: .7rem 0; border-bottom: 1px solid var(--rule-dim); color: var(--silver-dim); }
+a.word { display: inline-block; padding-block: .6rem; margin-block: -.6rem; }
+.word { color: var(--chalk); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: .25em; }
+.word:hover { color: var(--amber-core); text-decoration-color: currentColor; }
+.words .similar { display: flex; flex-wrap: wrap; gap: 6px; }
+.words .similar li { display: block; width: 5.5rem; padding: 0; border: 0; }
+.inlineJa { font-family: var(--font-kana); }
+.study { margin-top: 2.5rem; }
+
+@media (max-width: 600px) {
+  .detail { grid-template-columns: 1fr; justify-items: start; }
+  .specimen { width: 9rem; font-size: 6rem; }
+  .facts div { grid-template-columns: 6rem 1fr; }
+  .words li { grid-template-columns: 1fr 1fr; gap: .25rem 1rem; }
+  .words li > :last-child { grid-column: 1 / -1; }
+}

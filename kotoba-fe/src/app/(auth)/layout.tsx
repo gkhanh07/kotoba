@@ -1,4 +1,4 @@
-import { SiteBar } from "../SiteBar";
+import { SiteBar, SiteFooter } from "../SiteBar";
 import s from "./auth.module.css";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -8,6 +8,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <main className={s.auth}>
         <div className={s.panel}>{children}</div>
       </main>
+      <SiteFooter />
     </>
   );
 }

@@ -15,6 +15,11 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Testing
+
+- `npm run check`: lint, typecheck, Vitest with coverage, build.
+- `npm run test:e2e`: Playwright on mobile and desktop. It starts kotoba-be (throwaway `e2e.db`) and this app itself. `e2e/sync-status.spec.ts` stops and restarts kotoba-be to test the sync status during an outage, so it needs `lsof` and a built `kotoba-be/dist` (the first webServer start builds it).
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

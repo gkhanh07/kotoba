@@ -10,7 +10,7 @@
 .check { display: flex; align-items: center; gap: .65rem; min-height: 44px; color: var(--silver); }
 .check input { width: 1.15rem; height: 1.15rem; accent-color: var(--amber); }
 .choice { display: flex; flex-wrap: wrap; gap: .5rem; border: 0; padding: 0; margin: 0; min-width: 0; }
-.choice legend { width: 100%; margin-bottom: .6rem; color: var(--silver); font-size: .9rem; }
+.choice legend:not(:global(.sr-only)) { width: 100%; margin-bottom: .6rem; color: var(--silver); font-size: .9rem; }
 .choice label { position: relative; }
 .choice span { display: inline-flex; align-items: center; justify-content: center; min-width: 3.25rem; min-height: 44px; padding: .55rem 1rem; border: 1px solid var(--rule); border-radius: 2px; cursor: pointer; }
 .choice span:hover { background: var(--wet); }
@@ -20,4 +20,4 @@
 .note { margin-top: 1.25rem; color: var(--silver-dim); font-size: .85rem; }
 .links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; margin-top: .75rem; font-size: .9rem; }
 .links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--silver); }
-.links a:hover { color: var(--chalk); }
+.links a:hover { color: var(--amber-core); }

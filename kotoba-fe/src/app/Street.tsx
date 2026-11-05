@@ -39,10 +39,11 @@ export function Street({ lang, copy, skyline }: { lang: Lang; copy: React.ReactN
             data-tone={g.tone}
             style={{ "--drop": `${g.drop}rem`, "--i": i } as React.CSSProperties}
             aria-pressed={i === active}
-            aria-label={t.signAria(g.word, t.meanings[g.word])}
             onClick={() => setActive(i)}
           >
-            <span lang="ja" className={s.glyphs}><Glyphs sign={g} /></span>
+            {/* The long mark is drawn as a bar, so the glyphs are hidden and the name is spoken from text. */}
+            <span lang="ja" className={s.glyphs} aria-hidden="true"><Glyphs sign={g} /></span>
+            <span className="sr-only"><span lang="ja">{g.word}</span>{t.signMeaning(t.meanings[g.word])}</span>
           </button>
         ))}
       </div>

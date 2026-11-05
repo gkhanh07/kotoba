@@ -58,7 +58,9 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --gutter: clamp(16px, 4vw, 56px);
   /* One content edge for the whole site. Full-bleed blocks use this instead of
-     `max-width: 88rem; margin: 0 auto`, so a banner and a text column line up. */
+     `max-width: 88rem; margin: 0 auto`, so a banner and a text column line up.
+     Its 100% is the box's own containing block: a centred box with a max-width pads with
+     --gutter instead, and a capped box adds the padding to its cap (BUG-006). */
   --pad-x: calc(var(--gutter) + max(0px, (100% - 88rem) / 2));
 
   color-scheme: dark;
@@ -181,8 +183,8 @@ p { text-wrap: pretty; }
   text-shadow: none;
   box-shadow: none;
 }
-.btnGhost:hover,
-.btnGhost:active {
+.btnGhost:hover:not(:disabled),
+.btnGhost:active:not(:disabled) {
   background: var(--wet);
   color: var(--chalk);
   box-shadow: 0 0 0 1px var(--rule-strong);
@@ -205,8 +207,10 @@ p { text-wrap: pretty; }
   justify-content: space-between;
   gap: 16px;
   padding: 18px var(--pad-x);
+  anchor-name: --bar;
 }
 .brand {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: baseline;
   gap: 10px;
@@ -226,12 +230,10 @@ p { text-wrap: pretty; }
   letter-spacing: 0.08em;
   color: var(--chalk);
 }
-.bar nav {
-  display: flex;
-  gap: clamp(14px, 3vw, 32px);
-}
+/* One nav element: a row from 900px up, a popover sheet (opened by .menuBtn) below. */
 .bar nav a,
-.bar nav .logout {
+.bar nav .logout,
+.libraryBtn {
   font-family: var(--font-title), sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
@@ -243,10 +245,114 @@ p { text-wrap: pretty; }
   transition: color 0.2s, border-color 0.2s;
 }
 .bar nav a:hover,
-.bar nav .logout:hover { color: var(--chalk); border-color: var(--rule); }
-.bar nav a[aria-current="page"] { color: var(--amber); border-color: var(--amber); }
+.bar nav .logout:hover,
+.libraryBtn:hover { color: var(--chalk); border-color: var(--rule); }
+.bar nav a[aria-current="page"],
+.libraryBtn[data-current] { color: var(--amber); border-color: var(--amber); }
 .bar nav .logout { background: none; border-width: 0 0 1.5px; cursor: pointer; }
-.bar nav .who { align-self: center; max-width: 16ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.9rem; color: var(--silver-dim); }
+.bar .syncStatus { font-size: 0.85rem; color: var(--silver-dim); white-space: nowrap; }
+.bar .syncStatus:empty { display: none; }
+.bar .syncRetry { min-height: 44px; padding: 0; border: 0; border-bottom: 1.5px solid var(--rule-strong); background: none; color: var(--silver); font: inherit; cursor: pointer; }
+.bar .syncRetry:hover { color: var(--chalk); border-color: currentColor; }
+.bar nav .who { max-width: 16ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.9rem; color: var(--silver-dim); }
+/* Review's due count: a plain number after the label, no pill. */
+.dueCount { margin-left: 0.45em; color: var(--silver-dim); font-weight: 400; font-variant-numeric: tabular-nums; }
+.account { display: flex; align-items: center; gap: clamp(14px, 3vw, 32px); }
+.libraryBtn { display: inline-flex; align-items: center; gap: 8px; anchor-name: --library; }
+
+/* The library sheet, a popover under its trigger. */
+.library {
+  margin: 0;
+  min-width: 12rem;
+  padding: 6px 0;
+  border: 1px solid var(--rule-strong);
+  background: var(--asphalt);
+  color: var(--silver);
+  position: fixed;
+  inset: auto;
+  top: 72px;
+  right: var(--pad-x);
+}
+@supports (top: anchor(bottom)) {
+  .library { position-anchor: --library; top: anchor(bottom); left: anchor(left); right: auto; }
+}
+.bar nav .library a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+}
+.bar nav .library a:hover { background: var(--wet); color: var(--amber-core); }
+
+@media (min-width: 900px) {
+  .menuBtn { display: none; }
+  /* Undo the UA popover box so the nav sits in the bar as a plain row. */
+  .bar nav[popover] {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 3vw, 32px);
+    flex: 1;
+    position: static;
+    inset: auto;
+    margin: 0;
+    width: auto;
+    height: auto;
+    border: 0;
+    padding: 0 0 0 clamp(14px, 3vw, 32px);
+    background: none;
+    color: inherit;
+    overflow: visible;
+  }
+  .account { margin-left: auto; }
+}
+
+@media (max-width: 899.98px) {
+  .menuBtn { min-height: 44px; font-size: 1rem; order: 2; }
+  .bar .syncStatus { order: 1; min-width: 0; margin-left: auto; font-size: 0.8rem; white-space: normal; text-align: right; }
+  .libraryBtn { display: none; }
+  .bar nav:popover-open {
+    position: fixed;
+    inset: auto 0 auto 0;
+    top: 72px;
+    width: 100%;
+    max-height: calc(100dvh - 72px);
+    overflow-y: auto;
+    margin: 0;
+    padding: 8px var(--pad-x) 20px;
+    border: 0;
+    border-block: 1px solid var(--rule-strong);
+    background: var(--asphalt);
+    color: inherit;
+    display: grid;
+  }
+  @supports (top: anchor(bottom)) {
+    .bar nav:popover-open { position-anchor: --bar; top: anchor(bottom); max-height: calc(100dvh - anchor-size(height)); }
+  }
+  .bar nav a,
+  .bar nav .logout { min-height: 44px; display: flex; align-items: center; }
+  .bar nav > a { font-size: 1.25rem; }
+  /* The library lists inline in the sheet, under a rule. */
+  .bar nav .library {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    margin: 8px 0 0;
+    padding: 8px 0 0;
+    border: 0;
+    border-top: 1px solid var(--rule);
+    background: none;
+    overflow: visible;
+  }
+  .bar nav .library a { padding: 0; }
+  .bar nav .library a:hover { background: none; }
+  .account { flex-wrap: wrap; gap: 8px 20px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--rule); }
+  .bar nav .who { max-width: 22ch; }
+}
 
 .langSwitch {
   display: inline-flex;
@@ -271,10 +377,20 @@ p { text-wrap: pretty; }
   background: var(--amber);
 }
 
-@media (max-width: 640px) {
-  .bar { flex-wrap: wrap; }
-  .bar nav { width: 100%; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
-  .bar nav a,
-  .bar nav .logout { min-height: 44px; }
-  .bar nav .who { display: none; }
+.siteFooter {
+  margin-top: 64px;
+  padding: 20px var(--pad-x) 28px;
+  border-top: 1px solid var(--rule-dim);
+  color: var(--silver-dim);
+  font-size: 0.85rem;
 }
+.siteFooter a:hover { color: var(--amber-core); }
+
+/* 404 and error pages: an unlit sign, one line, one way out. Global so the error boundaries add no preloaded sheet. */
+.statusPage { display: grid; justify-items: start; gap: 1.25rem; max-width: calc(40rem + 2 * var(--gutter)); margin: 0 auto; padding: clamp(3rem, 10vw, 7rem) var(--gutter) 4rem; }
+.statusPage .statusMark { font-family: var(--font-sign), sans-serif; font-size: clamp(4.5rem, 16vw, 9rem); line-height: 1; color: var(--silver-mute); }
+/* Muted Silver is the 404 numeral only; the outage glyph is a dim unlit sign. */
+.statusPage .statusMark[data-off] { color: var(--silver-dim); }
+.statusPage [role="alert"] { display: grid; gap: 1.25rem; }
+.statusPage h1 { font-size: clamp(1.6rem, 4vw, 2.25rem); color: var(--chalk); }
+.statusPage p { color: var(--silver-dim); max-width: 34rem; }

@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { Arrow, SiteBar } from "./SiteBar";
+import { Arrow, SiteBar, SiteFooter } from "./SiteBar";
 import { Street } from "./Street";
 import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
-import { getKanaSet } from "@/lib/kana";
-import { flashcards } from "@/lib/flashcards";
+import { getKana, getKanji, getTests, getVocab } from "@/lib/content";
+import { goalScope, stopsOf } from "@/lib/library";
+import { INTERVALS, KNOWN_AT } from "@/lib/srs";
+import { itemLinks } from "@/lib/weak";
 import { Dashboard } from "./Dashboard";
 import s from "./page.module.css";
 
@@ -92,8 +94,8 @@ function Skyline() {
 }
 
 const LAMPS = [
-  { char: "あ", romaji: "a", lit: 3 },
-  { char: "ぬ", romaji: "nu", lit: 1 },
+  { char: "あ", romaji: "a", lit: KNOWN_AT },
+  { char: "ぬ", romaji: "nu", lit: 2 },
   { char: "ヲ", romaji: "wo", lit: 0 },
 ];
 
@@ -101,17 +103,24 @@ export default async function Home() {
   const lang = await getLang();
   const user = await currentUser();
   if (user) {
-    const sets = await Promise.all([getKanaSet("hiragana"), getKanaSet("katakana")]);
+    const [kana, kanji, vocab, tests] = await Promise.all([getKana(), getKanji(), getVocab(), getTests()]);
+    // Fronts and detail links for the "Hay sai" block; the weak ids are only known in the browser.
+    const fronts = itemLinks(kana, kanji, vocab);
+    const goal = user.profile?.goal;
+    const idsOf = (items: { id: string }[]) => items.map((item) => item.id);
     return (
       <>
         <SiteBar />
         <Dashboard
+          fronts={fronts}
+          stops={stopsOf([...kana, ...kanji, ...vocab])}
           lang={lang}
           name={user.profile?.name ?? user.email.split("@")[0]}
           profile={user.profile}
-          kanaTotal={sets.reduce((n, set) => n + set.items.length, 0)}
-          vocabTotal={flashcards.length}
+          scope={{ kana: idsOf(kana), kanji: idsOf(goalScope(kanji, goal)), vocab: idsOf(goalScope(vocab, goal)) }}
+          tests={tests.map((p) => ({ id: p.id, title: p.title[lang], minutes: p.minutes }))}
         />
+        <SiteFooter />
       </>
     );
   }
@@ -154,7 +163,7 @@ export default async function Home() {
             </p>
           </div>
           <ol className={s.line}>
-            <li data-open="true">
+            <li>
               <Link href="/kana?script=hiragana" className={s.station}>
                 <span lang="ja" className={s.stationKana}>ひらがな</span>
                 <span className={s.stationName}>Hiragana <Arrow /></span>
@@ -162,7 +171,7 @@ export default async function Home() {
                 <span className={s.stationMeta}>{t.openMeta}</span>
               </Link>
             </li>
-            <li data-open="true">
+            <li>
               <Link href="/kana?script=katakana" className={s.station}>
                 <span lang="ja" className={s.stationKana}>カタカナ</span>
                 <span className={s.stationName}>Katakana <Arrow /></span>
@@ -170,13 +179,21 @@ export default async function Home() {
                 <span className={s.stationMeta}>{t.openMeta}</span>
               </Link>
             </li>
-            <li data-open="false">
-              <div className={s.station}>
+            <li>
+              <Link href="/kanji" className={s.station}>
                 <span lang="ja" className={s.stationKana}>漢字</span>
-                <span className={s.stationName}>Kanji</span>
+                <span className={s.stationName}>Kanji <Arrow /></span>
                 <span className={s.stationText}>{t.kanjiText}</span>
-                <span className={s.stationMeta}>{t.soonMeta}</span>
-              </div>
+                <span className={s.stationMeta}>{t.kanjiMeta}</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/lessons" className={s.station}>
+                <span lang="ja" className={s.stationKana}>課</span>
+                <span className={s.stationName}>{t.lessonName} <Arrow /></span>
+                <span className={s.stationText}>{t.lessonText}</span>
+                <span className={s.stationMeta}>{t.lessonMeta}</span>
+              </Link>
             </li>
           </ol>
         </section>
@@ -185,7 +202,7 @@ export default async function Home() {
           <div className={s.sectionHead}>
             <h2 id="honest-h">{t.honestH}</h2>
             <p>
-              {t.honestP1}
+              {t.honestP1(KNOWN_AT, INTERVALS.join(", "))}
             </p>
             <p>
               {t.honestP2.a}<kbd>1</kbd>{t.honestP2.b}<kbd>4</kbd>{t.honestP2.c}<kbd>Enter</kbd>{t.honestP2.d}
@@ -195,17 +212,17 @@ export default async function Home() {
           <figure className={s.lamps}>
             <ul>
               {LAMPS.map((l, i) => (
-                <li key={l.char} data-lit={l.lit}>
+                <li key={l.char} data-known={l.lit === KNOWN_AT}>
                   <span lang="ja" className={s.lampChar}>{l.char}</span>
                   <span className={s.lampRomaji}>{l.romaji}</span>
-                  <span className={s.lampRow} role="img" aria-label={t.lampAria(l.lit)}>
-                    {[0, 1, 2].map((n) => <i key={n} data-on={n < l.lit} />)}
+                  <span className={s.lampRow} role="img" aria-label={t.lampAria(l.lit, KNOWN_AT)}>
+                    {Array.from({ length: KNOWN_AT }, (_, n) => <i key={n} data-on={n < l.lit} />)}
                   </span>
                   <span className={s.lampLabel}>{lampLabels[i]}</span>
                 </li>
               ))}
             </ul>
-            <figcaption>{t.lampCaption}</figcaption>
+            <figcaption>{t.lampCaption(KNOWN_AT)}</figcaption>
           </figure>
         </section>
       </main>

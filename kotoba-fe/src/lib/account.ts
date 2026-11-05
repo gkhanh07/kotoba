@@ -10,13 +10,18 @@ export type Goal = (typeof GOALS)[number];
 export type Minutes = (typeof MINUTES)[number];
 export type Profile = { email: string; name?: string; goal?: Goal; exam?: string; minutes?: Minutes };
 
-export type ErrorCode = "email" | "password" | "name" | "goal" | "exam" | "minutes";
+// Field problems caught here, plus refusals only the BE can give.
+export type ErrorCode = "email" | "password" | "name" | "goal" | "exam" | "minutes" | "current" | "credentials" | "rate" | "taken" | "token";
 // What an action hands back to its form. Never carries the password.
 export type FormState = {
   error?: ErrorCode;
   sent?: boolean;
-  values: { email?: string; remember?: boolean; name?: string; goal?: string; exam?: string; minutes?: string };
+  at?: number; // when it saved: keys the fading "Saved" line
+  values: { email?: string; remember?: boolean; token?: string; name?: string; goal?: string; exam?: string; minutes?: string };
 };
+
+// Only same-site paths: "//evil.com" and "/\evil.com" would leave the site.
+export const safePath = (v: unknown) => (typeof v === "string" && /^\/(?![/\\])/.test(v) ? v : "/");
 
 export const isEmail = (v: unknown): v is string =>
   typeof v === "string" && v.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -55,27 +60,13 @@ export function examDate(exam: string): Date | null {
   return d;
 }
 
-// The profile cookie is client-held, so it is checked field by field on every read.
-export function parseProfile(raw: string | null | undefined): Profile | null {
-  if (!raw) return null;
-  let o: unknown;
-  try {
-    o = JSON.parse(raw);
-  } catch {
-    return null;
-  }
-  if (typeof o !== "object" || o === null) return null;
-  const { email, name, goal, exam, minutes } = o as Record<string, unknown>;
-  if (!isEmail(email)) return null;
-  if (name !== undefined && !isName(name)) return null;
-  if (goal !== undefined && !isGoal(goal)) return null;
-  if (exam !== undefined && !isExam(exam)) return null;
-  if (minutes !== undefined && !isMinutes(minutes)) return null;
-  return { email, name, goal, exam, minutes };
+// The exam's calendar day as a day key, so days left can be counted against today() (study days).
+export function examDay(exam: string): string | null {
+  const d = examDate(exam);
+  return d && `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
 const vi = {
-  demo: "Bản thử: tài khoản chỉ lưu trong trình duyệt này, chưa có máy chủ.",
   email: "Email",
   password: "Mật khẩu",
   pending: "Đang xử lý…",
@@ -87,6 +78,11 @@ const vi = {
     goal: "Hãy chọn một mục tiêu.",
     exam: "Kỳ thi chưa hợp lệ.",
     minutes: "Hãy chọn số phút mỗi ngày.",
+    current: "Mật khẩu hiện tại chưa đúng.",
+    credentials: "Email hoặc mật khẩu chưa đúng.",
+    rate: "Thử quá nhiều lần. Hãy đợi một lúc rồi thử lại.",
+    taken: "Email này đã có tài khoản. Hãy đăng nhập.",
+    token: "Link đã hết hạn hoặc đã được dùng. Hãy gửi link mới.",
   } satisfies Record<ErrorCode, string>,
   login: {
     title: "Đăng nhập",
@@ -108,8 +104,17 @@ const vi = {
     lede: "Nhập email, chúng tôi sẽ gửi link đặt lại mật khẩu.",
     submit: "Gửi link",
     sent: "Nếu email này có tài khoản, chúng tôi đã gửi link đặt lại mật khẩu.",
-    sentNote: "Bản thử: chưa gửi email thật.",
+    sentNote: "Link có hạn 30 phút. Bản chạy thử chưa gửi email: link được in ra log của máy chủ.",
     back: "Về đăng nhập",
+  },
+  reset: {
+    title: "Đặt mật khẩu mới",
+    lede: "Mật khẩu mới thay mật khẩu cũ và đăng xuất mọi thiết bị.",
+    password: "Mật khẩu mới",
+    submit: "Lưu mật khẩu",
+    done: "Đã đổi mật khẩu. Hãy đăng nhập lại bằng mật khẩu mới.",
+    login: "Đăng nhập",
+    again: "Gửi link mới",
   },
   onboarding: {
     title: "Vài câu hỏi nhanh",
@@ -123,10 +128,34 @@ const vi = {
     submit: "Lưu",
     skip: "Để sau",
   },
+  settings: {
+    title: "Cài đặt",
+    lede: (email: string) => `Tài khoản ${email}. Mỗi mục lưu riêng.`,
+    profile: "Hồ sơ",
+    name: "Tên hiển thị",
+    save: "Lưu thay đổi",
+    saved: "Đã lưu.",
+    lang: "Ngôn ngữ",
+    langNote: "Đổi ngay khi chọn.",
+    password: "Mật khẩu",
+    current: "Mật khẩu hiện tại",
+    next: "Mật khẩu mới",
+    change: "Đổi mật khẩu",
+    changed: "Đã đổi mật khẩu. Các thiết bị khác đã bị đăng xuất.",
+    data: "Dữ liệu",
+    dataBody: "Tải về hồ sơ, lịch ôn của từng mục và nhật ký học của tài khoản này, dạng JSON. Tệp không chứa mật khẩu.",
+    download: "Tải dữ liệu học (JSON)",
+    remove: "Xóa tài khoản",
+    removeBody: "Xóa vĩnh viễn tài khoản và tiến độ đã đồng bộ. Không hoàn tác được.",
+    removeOpen: "Xóa tài khoản…",
+    removeTitle: "Xóa tài khoản này?",
+    removeAsk: "Nhập mật khẩu để xác nhận. Tiến độ trên máy này cũng bị xóa.",
+    removeConfirm: "Xóa vĩnh viễn",
+    cancel: "Hủy",
+  },
 };
 
 const en: typeof vi = {
-  demo: "Demo: accounts live only in this browser, there is no server yet.",
   email: "Email",
   password: "Password",
   pending: "Working…",
@@ -138,6 +167,11 @@ const en: typeof vi = {
     goal: "Pick a goal.",
     exam: "That exam date isn't valid.",
     minutes: "Pick how many minutes a day.",
+    current: "Your current password is wrong.",
+    credentials: "Wrong email or password.",
+    rate: "Too many attempts. Wait a while and try again.",
+    taken: "This email already has an account. Log in instead.",
+    token: "This link has expired or was already used. Send a new one.",
   },
   login: {
     title: "Log in",
@@ -159,8 +193,17 @@ const en: typeof vi = {
     lede: "Enter your email and we'll send a reset link.",
     submit: "Send link",
     sent: "If this email has an account, we've sent a reset link.",
-    sentNote: "Demo: no email is actually sent.",
+    sentNote: "The link lasts 30 minutes. This test build sends no email: the link is printed to the server log.",
     back: "Back to log in",
+  },
+  reset: {
+    title: "Set a new password",
+    lede: "The new password replaces the old one and logs out every device.",
+    password: "New password",
+    submit: "Save password",
+    done: "Password changed. Log in again with the new one.",
+    login: "Log in",
+    again: "Send a new link",
   },
   onboarding: {
     title: "A few quick questions",
@@ -173,6 +216,31 @@ const en: typeof vi = {
     minutesUnit: (n: number) => `${n} min`,
     submit: "Save",
     skip: "Later",
+  },
+  settings: {
+    title: "Settings",
+    lede: (email: string) => `Account ${email}. Each section saves on its own.`,
+    profile: "Profile",
+    name: "Display name",
+    save: "Save changes",
+    saved: "Saved.",
+    lang: "Language",
+    langNote: "Switches as soon as you pick.",
+    password: "Password",
+    current: "Current password",
+    next: "New password",
+    change: "Change password",
+    changed: "Password changed. Other devices were logged out.",
+    data: "Your data",
+    dataBody: "Download this account's profile, the review schedule of every item and the study log, as JSON. The file holds no password.",
+    download: "Download study data (JSON)",
+    remove: "Delete account",
+    removeBody: "Permanently deletes your account and synced progress. This can't be undone.",
+    removeOpen: "Delete account…",
+    removeTitle: "Delete this account?",
+    removeAsk: "Enter your password to confirm. Progress on this device is deleted too.",
+    removeConfirm: "Delete permanently",
+    cancel: "Cancel",
   },
 };
 

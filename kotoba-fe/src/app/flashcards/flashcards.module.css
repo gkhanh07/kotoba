@@ -15,25 +15,27 @@
 .progress progress::-webkit-progress-bar { background: var(--rule); }
 .progress progress::-webkit-progress-value { background: var(--amber); }
 .progress progress::-moz-progress-bar { background: var(--amber); }
-.card { display: block; width: 100%; perspective: 1200px; text-align: center; border-radius: 2px; }
+.card { position: relative; display: block; width: 100%; perspective: 1200px; text-align: center; border-radius: 2px; }
+.hit { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 2px; background: transparent; cursor: pointer; }
 .inner { display: grid; transform-style: preserve-3d; transition: transform 420ms var(--ease-out); }
 .card[data-flipped="true"] .inner { transform: rotateY(180deg); }
-.face, .back { grid-area: 1 / 1; min-width: 0; min-height: 27rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(1.5rem, 5vw, 3rem); border: 1px solid var(--rule-strong); border-radius: 2px; background: var(--asphalt); backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow-wrap: anywhere; }
+.face, .back { grid-area: 1 / 1; min-width: 0; min-height: 27rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(1.25rem, 3vw, 2.25rem); border: 1px solid var(--rule-strong); border-radius: 2px; background: var(--asphalt); backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow-wrap: anywhere; }
 .card:hover .face, .card:hover .back { border-color: var(--amber); }
 .back { transform: rotateY(180deg); }
 .word { font-size: clamp(2.8rem, 10vw, 5.5rem); line-height: 1.5; color: var(--cool-core); text-shadow: var(--glow-cool); }
+.wordText { font-size: clamp(1.75rem, 6vw, 2.75rem); line-height: 1.3; text-align: center; }
 .hint { display: block; font-size: .8rem; color: var(--silver-dim); margin-top: 2rem; }
 .backWord { font-size: 1.7rem; color: var(--chalk); }
 .label { font-size: .75rem; color: var(--silver-dim); margin-top: 1rem; }
 .romaji, .translation { color: var(--silver-dim); }
 .meaning { font-size: 1.5rem; color: var(--chalk); }
+.meaning::first-letter { text-transform: uppercase; } /* vocab.json keeps meanings lowercase for search and inline use */
 .notes { border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: 1rem; font-size: .85rem; max-width: 55ch; }
-.status { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; border: 0; margin: 1.5rem 0; }
-.status legend { width: 100%; text-align: center; margin-bottom: .65rem; color: var(--silver-dim); font-size: .85rem; }
-.status button { padding: .55rem 1rem; min-height: 44px; border: 1px solid var(--rule); border-radius: 2px; }
-.status button:hover { background: var(--wet); }
-.status button[aria-pressed="true"] { color: var(--amber); border-color: var(--amber); background: var(--spill-amber); }
-.navigation { margin-top: 1.5rem; }
+/* Grading is the one decision after a flip: it sticks to the bottom edge while a long back runs past the fold. */
+.status { position: sticky; bottom: 0; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; border: 0; margin: 1rem -.5rem 0; padding: .75rem .5rem 1rem; border-top: 1px solid var(--rule); background: var(--night); }
+.status legend { float: left; width: 100%; text-align: center; margin-bottom: .5rem; color: var(--silver-dim); font-size: .85rem; }
+.status .btn { min-width: 9rem; justify-content: center; }
+.navigation { margin-top: 1rem; }
 .notice { min-height: 1.8rem; margin-top: 1rem; text-align: center; color: var(--silver); font-size: .85rem; }
 .footnote { text-align: center; color: var(--silver-dim); font-size: .8rem; margin-top: .5rem; }
 .warning { margin-top: 1rem; color: var(--amber); }
@@ -48,3 +50,9 @@
   .inner { transition: none; }
 }
 
+.tools .speak { display: inline-flex; align-items: center; gap: .4rem; color: var(--silver); text-decoration: none; }
+.tools .speak:hover { color: var(--amber-core); }
+
+.keys { display: none; }
+/* Key hints only where there is a keyboard and a mouse to go with it (as in /review). */
+@media (pointer: fine) { .keys { display: inline; } }

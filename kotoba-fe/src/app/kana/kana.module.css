@@ -8,7 +8,7 @@
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -6rem calc(50% - 50vw) auto;
+  inset: -6rem 0 auto;
   height: 34rem;
   background:
     radial-gradient(50% 70% at 75% 0%, rgb(46 78 170 / 0.28), transparent 70%),
@@ -47,6 +47,7 @@
 
 .segment {
   display: flex;
+  flex-wrap: wrap;
   border: 1px solid var(--rule);
   background: var(--asphalt);
 }
@@ -56,6 +57,7 @@
   align-items: center;
   gap: 0.5rem;
   min-height: 44px;
+  white-space: nowrap;
   padding: 0 1rem;
   font-family: var(--font-title);
   font-weight: 600;
@@ -147,6 +149,30 @@
   color: var(--silver);
 }
 
+/* Nothing due or new: say so once above the card, the drill keeps going. */
+.note {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--rule-strong);
+  background: var(--asphalt);
+  color: var(--silver);
+}
+
+.noteLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+}
+
+.noteLinks a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--amber);
+}
+
 /* ── lamps ───────────────────────────────────── */
 .lamps {
   display: inline-flex;
@@ -188,7 +214,14 @@
 
 .chart {
   display: grid;
-  grid-template-columns: 2.25rem repeat(5, minmax(0, 1fr));
+  grid-template-columns: 2.25rem repeat(var(--cols), minmax(0, 1fr));
+  gap: 6px;
+}
+
+/* special words have no sound grid, just a wrap of wider cells */
+.words {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
   gap: 6px;
 }
 
@@ -240,7 +273,8 @@
 }
 
 .cellChar {
-  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-size: min(clamp(1.5rem, 2.6vw, 2.2rem), calc(7.2rem / var(--len, 1)));
+  white-space: nowrap;
   font-weight: 700;
   line-height: 1.15;
 }
@@ -297,7 +331,8 @@
 .detailSign span {
   font-family: var(--font-kana) !important;
   font-weight: 700;
-  font-size: clamp(6rem, 11vw, 9rem);
+  font-size: min(clamp(6rem, 11vw, 9rem), calc(16.5rem / var(--len, 1)));
+  white-space: nowrap;
   line-height: 1;
   color: var(--neon-core);
   text-shadow: 0 0 6px var(--neon), 0 0 22px var(--neon), var(--glow-neon);
@@ -359,7 +394,8 @@
 .cardChar {
   font-family: var(--font-kana) !important;
   font-weight: 700;
-  font-size: clamp(7rem, 17vw, 13rem);
+  font-size: min(clamp(7rem, 17vw, 13rem), calc(min(70vw, 30rem) / var(--len, 1)));
+  white-space: nowrap;
   line-height: 1;
   color: var(--neon-core);
   text-shadow: 0 0 6px var(--neon), 0 0 24px var(--neon), var(--glow-neon);
@@ -493,7 +529,7 @@
 }
 
 .choice:disabled {
-  color: var(--silver-mute);
+  color: var(--silver-dim);
   cursor: default;
 }
 
@@ -547,49 +583,27 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ── empty / status ──────────────────────────── */
-.empty,
+/* ── status ──────────────────────────────────── */
 .status {
   display: grid;
   justify-items: start;
   gap: 1.1rem;
   max-width: 44rem;
+  min-height: 50svh;
+  align-content: center;
   margin: 3rem auto 0;
   padding: 0 var(--gutter);
 }
 
-.empty {
-  padding: 0;
-  margin-left: 0;
-}
-
-.empty p,
 .status p {
   max-width: 62ch;
   color: var(--silver-dim);
 }
 
-.status {
-  min-height: 50svh;
-  align-content: center;
-}
-
-.emptySign,
 .statusSign {
   font-family: var(--font-sign) !important;
   font-size: clamp(3.5rem, 8vw, 5.5rem);
   line-height: 1;
-  color: var(--amber-core);
-  text-shadow: 0 0 6px var(--amber), 0 0 24px var(--amber), var(--glow-amber);
-}
-
-/* Lights once and holds. The sign is dark for the first steps, so the finished
-   screen arrives as a room with a sign in it that then switches on. */
-.emptySign {
-  animation: ignite 900ms steps(1, end) both;
-}
-
-.statusSign {
   color: var(--neon-core);
   text-shadow: 0 0 6px var(--neon), 0 0 24px var(--neon), var(--glow-neon);
   animation: ignite 1.4s steps(1, end) infinite;
@@ -638,12 +652,32 @@
 }
 
 .resetBtn:disabled {
-  color: var(--silver-mute);
+  color: var(--silver-dim);
   text-decoration: none;
-  cursor: default;
+  cursor: not-allowed;
 }
 
 /* ── small screens ───────────────────────────── */
+/* Phones: every segment becomes full-width two-up, so the 4 groups sit 2×2 instead of a ragged wrap. */
+@media (max-width: 560px) {
+  .segment {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    width: 100%;
+    background: var(--rule);
+  }
+
+  .segment a {
+    justify-content: center;
+    background: var(--asphalt);
+  }
+
+  .segment a + a {
+    border-left: 0;
+  }
+}
+
 @media (max-width: 900px) {
   .chartWrap,
   .quiz {
@@ -651,7 +685,7 @@
   }
 
   .chart {
-    grid-template-columns: 1.5rem repeat(5, minmax(0, 1fr));
+    grid-template-columns: 1.5rem repeat(var(--cols), minmax(0, 1fr));
     gap: 4px;
   }
 
@@ -672,7 +706,7 @@
   }
 
   .detailSign span {
-    font-size: 3.6rem;
+    font-size: min(3.6rem, calc(4.6rem / var(--len, 1)));
   }
 
   .detailRomaji {
