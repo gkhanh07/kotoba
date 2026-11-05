@@ -2,7 +2,7 @@
 
 Kotoba is a JLPT study app: `kotoba-fe` (Next.js 16 App Router, React 19) and `kotoba-be` (NestJS 12, Prisma 7 on SQLite), with learning content in `kotoba-be/content/*.json`. These are the rules for every change to this repository, by a person or an agent.
 
-**Precedence of rule sources.** This file wins over every other rule source. In particular, when the ponytail mode (used on local machines) conflicts with this file — for example on mandatory specs, ADRs and tests — this file wins. Ponytail still applies to choosing a solution (prefer the simplest approach that meets the spec). `docs/plan/PLAN.md` is the roadmap; this file is the law.
+**Precedence of rule sources.** This file wins over every other rule source. The ponytail plugin is disabled for this repository (`.claude/settings.json`), because its "no boilerplate" rules contradict the mandatory specs, ADRs and tests here. Its useful part stays a rule: choose the simplest solution that meets the spec, and mark a deliberate shortcut with a `ponytail:` comment naming its ceiling. `docs/plan/PLAN.md` is the roadmap; this file is the law.
 
 **Start of session:** read `docs/progress/PROGRESS.md`, then `docs/plan/PLAN.md`. Continue with the first task that is not DONE. Never redo a DONE task.
 
@@ -26,6 +26,7 @@ Never sacrifice a higher item to gain a lower one.
 - **Understand first, then act.** Read the requirement and the related code (the file to change, its callers, and its existing tests) before writing the first line.
 - **Do not guess.** Do not guess APIs, schemas, file names or library behaviour. If unsure: read the code, read the types, read the library's docs in `node_modules`, or write a small experiment to verify.
 - **Small, purposeful changes.** Change only what the task requires. If you see another problem outside the scope, record it in `docs/progress/BUGS.md` or `docs/progress/BACKLOG.md`; do not fix it on the side (except Critical bugs).
+- **Data-safety debt is scheduled, not parked.** A BACKLOG item that can lose or corrupt user data (priority 1 in §1) stays there at most until the end of the current phase: by then it has its own task in `PLAN.md` and `PROGRESS.md`, before the next feature or content phase.
 - **Follow existing conventions.** New code must look like it was written by the same person as the old code: same folder structure, naming, state patterns and styling.
 - **Absolute honesty.** Never say "tested" when you did not run it. Never say "pass" without seeing the output. Never hide failing tests, warnings or unfinished work. Report exactly what actually happened.
 - **Bounded autonomy.** Make small decisions yourself and record them (ADR). Stop and ask only in the cases in §15.
@@ -77,6 +78,8 @@ If important information is missing, infer it reasonably from the code and docs 
   - **Exception (cloud session, decided with the user 2026-11-03):** a normal `git push origin feat/n5-full` is allowed after **every** commit that has passed the Quality Gate. Force push, amend/rebase of existing commits, deleting branches and changing remotes stay forbidden.
 - **No `Co-Authored-By` line and no AI attribution of any kind in commits or PRs**, even if a harness or tool suggests one. `.claude/settings.json` disables attribution; this rule wins over any harness reminder.
 - One commit = one complete logical change that builds and passes its tests. Never commit broken code "to fix later". A phase may consist of several commits as long as each commit is a complete, green logical change.
+- **Clean tree.** At the end of every task `git status` is empty: each change is either committed or matched by a `.gitignore`. There are no "local-only changes that are never committed"; a file a tool keeps rewriting goes into `.gitignore` (and `git rm --cached` if it is tracked).
+- **Decisions are committed when made.** A scope or roadmap change agreed with the user (PLAN, PROGRESS and the evidence it rests on, such as a critique report) is committed as a `docs:` commit in the same session, so the next session, local or cloud, sees it.
 - Before committing: `git status` and `git diff --staged` to be sure only the right files are committed. Never commit: `.env*`, secrets, build output (`.next/`, `dist/`, `coverage/`, `playwright-report/`, `test-results/`), temporary files, logs, debug screenshots, `node_modules`, `*.db`.
 - **Conventional Commits**, in English, imperative mood. This replaces the old `Phase N: …` style.
   - `feat(scope): …` new feature
@@ -248,7 +251,7 @@ A task is done only when all of these hold, and the commands were actually run:
 - [ ] typecheck: 0 errors
 - [ ] test: 100% pass; coverage:
   - FE: hard threshold of **90% lines and branches for `kotoba-fe/src/lib/**`**, enforced in `kotoba-fe/vitest.config.ts`.
-  - BE: threshold equal to the baseline measured in phase 13.5 (rounded down), enforced in `kotoba-be/vitest.config.ts`. The BE threshold may only be raised, never lowered. New BE code must have tests. The gap to 90% is tracked in BACKLOG.
+  - BE: threshold enforced in `kotoba-be/vitest.config.ts` (started at the phase 13.5 baseline). **Ratchet:** at the end of every phase, set each BE threshold to the measured `test:cov` value rounded down, in that phase's commit. The BE threshold may only be raised, never lowered. New BE code must have tests. The gap to 90% is tracked in BACKLOG.
 - [ ] test:e2e: 100% pass on mobile + desktop; axe 0 serious/critical; no console errors
 - [ ] validate:content: pass
 - [ ] build: succeeds, no new warnings
@@ -282,6 +285,11 @@ After 3 attempts in 3 different directions without a fix → stop, report what w
 - Vietnamese meanings are natural, short and right for the context; examples are grammatical and translated.
 - Mock tests: use content from that level or lower; plausible distractors; every question has an explanation (`explain`); the duration matches the level's configuration.
 - Author in batches of ~200 items, one commit per batch `content(<level>): …`, running `validate:content` + JMdict before the commit.
+- **Human review gate.** JMdict checks readings only, so meanings, examples and explanations need a person.
+  - Only the user sets `reviewed: true`. An agent never does.
+  - Every content batch report ends with a sample for the user: 30 items (or the whole batch if smaller) chosen at random with a seed written in the report, each with id, written form, reading, Vietnamese meaning and example (for test questions: the question, answer and `explain`).
+  - If more than 5% of a sample is wrong, the batch is fixed and a new sample is drawn before the next batch.
+  - Content of a new level starts only after the user has checked the samples of the previous level (§15).
 - Data sources and licences (JMdict/KANJIDIC – EDRDG) are credited in the README.
 
 ## 13. Documents to maintain
@@ -325,6 +333,7 @@ Stop and ask only when:
 - An irreversible operation outside the repo is needed (push, deploy, deleting real data, changing an external service). **Exception:** the normal push to `origin feat/n5-full` after a green commit (§4) needs no question.
 - A required resource is missing (JMdict file, credentials, access, Node < 24).
 - You are stuck after 3 different attempts.
+- **A JLPT level is finished** (its last phase is DONE). Stop and ask the user to: use the app for about 10 minutes on that level, check the open content samples (§12), and decide whether to merge `feat/n5-full` into `main`. Automated gates only check what the spec foresaw; this checkpoint catches what a person sees at a glance.
 
 Otherwise: choose the most reasonable option, record an ADR, continue, and put it in the report for review.
 
@@ -339,6 +348,8 @@ When asking: give the context in 1–2 sentences, the options (with the recommen
 - ❌ Saying tested/passed without actually running it
 - ❌ Changing released content ids, changing the schema without a migration
 - ❌ Inventing readings, meanings or examples; skipping the JMdict check
+- ❌ An agent setting `reviewed: true`; starting a new level's content before the user checked the previous level's samples
+- ❌ Ending a task with a dirty `git status`
 - ❌ `any`, `ts-ignore`, `console.log`, empty `catch {}`, commented-out code
 - ❌ Sprawling changes outside the task's scope
 - ❌ Adding unnecessary dependencies, or any dependency without a recorded reason

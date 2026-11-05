@@ -13,7 +13,7 @@ You write Japanese learning content for Kotoba, with Vietnamese meanings. Wrong 
 
 ## Rules
 - Do not invent readings. Every (word, reading) must pass `npm run jmdict`. If you are unsure of a meaning or nuance, keep `reviewed: false` and list the entry in your report.
-- Every new entry has `reviewed: false`. Once items carry `level` (phase 22), set it to the batch's level; a word belongs to exactly one level.
+- Every new entry has `reviewed: false`, and you never set `reviewed: true` on any entry: only the user does (`AGENTS.md` §12, human review gate). Once items carry `level` (phase 22), set it to the batch's level; a word belongs to exactly one level.
 - Ids are permanent: never rename, reuse or delete an existing id. Ids follow their kind (`vocab:<word>`, `kanji:<char>`, `grammar:<slug>`).
 - Kanji gate: every kanji in `word` must be in `kanji.json` with a `level` ≥ the word's level, i.e. the same level or easier. Otherwise write `word` in kana and put the kanji spelling in the optional `kanji` field (as `vocab:ねこ` does with 猫). There is no `kanaOnly` flag.
 - Vietnamese: natural, short, with full diacritics, and right for the context. Examples are grammatical, use the word itself (a conjugated stem is fine), and stay at the batch's level or below.
@@ -34,3 +34,4 @@ Fix every failure in your own entries. Drop an entry you cannot make pass rather
 - Counts: added, changed, dropped (each dropped entry with its reason).
 - Entries that need a human review, with a short reason each.
 - Command output tails (pass/fail counts).
+- Sample for the user (`AGENTS.md` §12): the seed, then 30 random entries of this batch (all of them if fewer), each with id, written form, reading, Vietnamese meaning and example; for test questions the question, answer and `explain`.

@@ -1,6 +1,6 @@
 ---
 name: fe
-description: Use for any change to the kotoba-fe Next.js app: pages, routes, components, CSS modules, server actions, src/lib helpers, and their unit/component/e2e tests. Give it the phase spec path (docs/phases/NN-*.md) and the AC ids to implement. Not for kotoba-be API code (use `be`) or learning content (use `content`).
+description: "Use for any change to the kotoba-fe Next.js app: pages, routes, components, CSS modules, server actions, src/lib helpers, and their unit/component/e2e tests. Give it the phase spec path (docs/phases/NN-*.md) and the AC ids to implement. Not for kotoba-be API code (use `be`) or learning content (use `content`)."
 tools: Read, Write, Edit, Bash, Glob, Grep
 model: sonnet
 ---

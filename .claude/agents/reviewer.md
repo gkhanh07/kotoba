@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Use before every phase commit to review the uncommitted diff against AGENTS.md and the phase spec: scope, forbidden patterns, tests, migrations, colours, calls to :4000, content rules. Read-only; it returns findings ranked by severity and changes nothing. Give it the phase spec path. For hunting logic bugs in hard phases, also run the built-in /code-review.
+description: "Use before every phase commit to review the uncommitted diff against AGENTS.md and the phase spec: scope, forbidden patterns, tests, migrations, colours, calls to :4000, content rules. Read-only; it returns findings ranked by severity and changes nothing. Give it the phase spec path. For hunting logic bugs in hard phases, also run the built-in /code-review."
 tools: Read, Grep, Glob, Bash
 ---
 

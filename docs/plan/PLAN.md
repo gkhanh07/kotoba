@@ -1,4 +1,6 @@
-# Kotoba: bổ sung chức năng N5 và lộ trình nội dung N5 → N4 → N3 → N2
+# Kotoba: bổ sung chức năng N5 và lộ trình nội dung N5 → N4 → N3
+
+> **Đổi phạm vi (chốt với người dùng 2026-11-04):** lộ trình dừng ở N3. Bỏ các giai đoạn 31–34 (N2). Giai đoạn 35 (hoàn thiện) chạy ngay sau giai đoạn 30. Số giai đoạn giữ nguyên để các tham chiếu cũ (ADR, BACKLOG, spec) vẫn đúng.
 
 ## Bắt đầu ở đây (mỗi phiên, kể cả cloud session)
 1. Nếu có `docs/progress/PROGRESS.md`: đọc trước, làm tiếp task đầu tiên chưa DONE. Không làm lại task đã DONE.
@@ -172,7 +174,7 @@ Mọi giai đoạn từ giờ theo `AGENTS.md`:
   - Trả lời được "mình yếu ở đâu" và "hôm nay học gì".
   - Bù phần từ vựng còn thiếu: mới có 499 từ, plan gốc là ~700.
   - Không thêm hệ thống mới: không listening, không AI, không CMS, không XP, không PWA.
-- Người dùng muốn nội dung tới N2, làm liền một mạch N5 → N4 → N3 → N2. Không dừng chờ duyệt giữa các cấp, nhưng quy tắc dừng sớm vẫn áp dụng.
+- Người dùng muốn nội dung tới N3 (lúc đầu là N2, rút lại ngày 2026-11-04), làm theo thứ tự N5 → N4 → N3. Từ 2026-11-04 có điểm dừng ở cuối mỗi cấp (`AGENTS.md` §15) và cổng duyệt mẫu nội dung (`AGENTS.md` §12). Quy tắc dừng sớm vẫn áp dụng.
   - Hiện chỉ có nội dung N5: 103 kanji, 499 từ, 34 điểm ngữ pháp.
   - `Item` chưa có cột cấp độ. `User.goal` đã có các giá trị `N5…N1`.
   - `scripts/kanjidic.ts` mới lọc `jlpt=4`. KANJIDIC2 dùng thang 4 cấp cũ, trong đó cấp 2 cũ gộp cả N3 và N2.
@@ -344,8 +346,8 @@ Kiểm chung cho mọi giai đoạn UI:
   - e2e pass.
   - Playwright: tải về được file JSON, số card trong file bằng số card trên dashboard (mục 7.3). Khách bị chuyển hướng hoặc nhận 401.
 
-## Lộ trình N4 → N3 → N2 (chạy liền sau giai đoạn 21)
-Thứ tự cố định, không dừng chờ duyệt giữa các cấp. Chỉ commit khi kiểm qua, push sau mỗi commit. Giai đoạn nào kiểm không qua sau 3 hướng thử thì dừng cả lộ trình và báo kết quả thật (quy tắc dừng sớm).
+## Lộ trình N4 → N3 (chạy liền sau giai đoạn 21)
+Thứ tự cố định. Cuối mỗi cấp dừng lại để người dùng dùng thử app và duyệt mẫu nội dung (`AGENTS.md` §12, §15); trong một cấp thì không dừng giữa các đợt. Chỉ commit khi kiểm qua, push sau mỗi commit. Giai đoạn nào kiểm không qua sau 3 hướng thử thì dừng cả lộ trình và báo kết quả thật (quy tắc dừng sớm).
 
 Kiểm chung cho mọi giai đoạn nội dung:
 - `npm run validate:content` pass (gồm `scripts/jmdict-check.ts` và `content.spec.ts`: gate kanji theo cấp, `similar` đối xứng, đề hợp lệ, `explain` không rỗng).
@@ -359,7 +361,7 @@ Kiểm chung cho mọi giai đoạn nội dung:
 |---|---|---|---|---|
 | N4 | ~170 | ~650 | ~40 | 80 phút |
 | N3 | ~370 | ~1.800 | ~60 | 100 phút |
-| N2 | ~370 | ~1.800 | ~90 | 105 phút |
+| N2 | (bỏ) | (bỏ) | (bỏ) | — |
 
 ### 22. Tổng quát hoá cấp độ (làm một lần)
 - **BE:**
@@ -393,20 +395,43 @@ Kiểm chung cho mọi giai đoạn nội dung:
 - **Kiểm thêm:** khách học xong toàn bộ N5 (dùng `page.evaluate` ghi SRS) → `/review` và "Tiếp tục học" chuyển sang bài N4 đầu tiên.
 
 ### 27–30. N3
+- **Trước 28 (từ critique `/` ngày 2026-11-04, người dùng chọn top 3):** một commit `fix:` riêng.
+  - Dashboard đang dùng mẫu số chưa lọc theo cấp: người học N5 thấy Từ vựng 0/1272, Kanji 0/625. Đây là bug High (§11), cần ghi vào BUGS.md và có test hiển thị đúng con số.
+  - Copy "3 lần liên tiếp" ở trang chủ phải sửa theo code: "đã học" là box ≥ 1, "đã thuộc" là `KNOWN_AT`. Ghi ADR cho định nghĩa này.
+  - Copy lỗi thời: Kanji "sắp có", footer "chỉ trong trình duyệt", Ngữ pháp "sắp có".
+  - Làm việc này trước khi thêm từ N3 để mẫu số không lệch thêm.
+- **Trước 28: giữ an toàn dữ liệu lưu (review quy trình 2026-11-04, `AGENTS.md` §2 "data-safety debt").** Một commit `fix(store):` riêng, có spec ngắn.
+  - Các `catch {}` rỗng trong `kotoba-fe/src/lib/store.ts` và `activity.ts` (BACKLOG, Task A): đọc lỗi thì giữ nguyên dữ liệu gốc và báo lỗi, không âm thầm trả về giá trị mặc định rồi ghi đè.
+  - Ví dụ: `syncState()` gặp JSON hỏng thì trả về `forget: []`, nên các lần reset chưa gửi bị mất mà không ai biết.
+  - Có test với fixture dữ liệu hỏng cho từng chỗ.
+- **Trước 28: duyệt mẫu nội dung đã có (`AGENTS.md` §12).** Hiện có 0 mục `reviewed: true`.
+  - Agent rút mẫu ngẫu nhiên có seed: 30 mục cho mỗi loại (từ, kanji, ngữ pháp, câu hỏi đề) ở N5 và N4, cộng 30 kanji N3.
+  - Người dùng duyệt và đánh `reviewed: true` cho mục đúng. Loại nào sai quá 5% thì sửa loại đó và rút mẫu mới.
+  - Giai đoạn 28 chỉ bắt đầu sau bước này.
 - Lặp lại 23–26 cho N3. Từ vựng có khoảng 9 đợt (28a…28i).
 - Đề N3-1 `minutes: 100`. Thêm các loại phần mới nếu N3 có mà N5 không có, ví dụ `usage` (cách dùng từ). `lib/test.ts` không cần biết loại phần, chỉ nhóm theo `part`.
 - Màn hình kết quả hiện câu "không mô phỏng đỗ/trượt".
 
-### 31–34. N2
+### 31–34. N2: BỎ (2026-11-04)
+Không làm. Phần dưới đây chỉ giữ để tham khảo nếu sau này mở lại N2.
 - Lặp lại 23–26 cho N2. Từ vựng có khoảng 9 đợt (32a…32i).
 - Đề N2-1 `minutes: 105`, thêm phần `formation` (cấu tạo từ). Phần đọc có đoạn dài hơn, cần kiểm bố cục ở 360×740 và 768px.
 
-### 35. Hoàn thiện (giai đoạn 15 cũ, làm sau N2)
+### 35. Hoàn thiện (giai đoạn 15 cũ, làm ngay sau giai đoạn 30)
+- **Thu gọn về N3:**
+  - Bỏ `2` khỏi `LEVELS` trong `lib/library.ts`, để tab cấp chỉ còn N5 N4 N3. Sửa `LevelTabs.test.tsx`. Vòng kiểm trạng thái rỗng trong `e2e/levels.spec.ts` đang chạy trên N2, nên spec phải nêu nó đổi thành gì (ví dụ `?level=2` không hợp lệ thì quay về mặc định).
+  - `/legal` (vi và en): chỉ ghi danh sách N3 của Waller.
+  - `scripts/levels.txt` giữ nguyên (ADR 006). `kanjidic.ts` vẫn không có `2` trong `INCLUDE_LEVELS`.
+  - **Không đụng `GOALS`** (`N5…N1` trong `lib/account.ts`): `profile.goal` là dữ liệu người dùng đã lưu. Spec quyết định Dashboard hiển thị gì khi mục tiêu là N2 hoặc N1 mà nội dung chỉ tới N3 (đề xuất: hiện tiến độ của toàn bộ N5–N3 kèm một câu nói rõ chưa có nội dung N2/N1). Không cần migration.
+- **Phần còn lại của critique `/`** (BACKLOG):
+  - distill Dashboard: bỏ streak, CTA lên đầu, gọn trạng thái trống, cảnh báo lưu trữ lên trên. Giữ phong cách trang làm việc yên tĩnh.
+  - quieter: mỗi màn chỉ một nút amber.
+  - adapt: vé ở mobile, vùng chạm ≥ 44px, cỡ chữ ngày của heatmap.
 - Agent `impeccable-finish-reviewer` review toàn site, ghi lại verdict. Nếu plugin không có trong phiên: dùng agent `reviewer` của repo cộng screenshot, ghi rõ vào báo cáo.
 - Lighthouse các trang chính, a11y ≥ 95 (cách chạy ở bảng quyết định).
 - `impeccable-documenter` viết bản `DESIGN.md` cuối (có bảng thuật ngữ, mục 5.6).
 - README hướng dẫn chạy cả 2 app, ghi nguồn và license JMdict/KANJIDIC (EDRDG) và danh sách cấp độ.
-- Cập nhật `PRODUCT.md`, ghi rõ những gì cố ý không làm: listening, AI, CMS, PWA, XP.
+- Cập nhật `PRODUCT.md`, ghi rõ những gì cố ý không làm: listening, AI, CMS, PWA, XP, nội dung N2/N1.
 
 ## File chính
 - **BE:** `content/{tests,vocab,kanji,grammar,lessons}.json`, `content/content.spec.ts`, `scripts/kanjidic.ts`, `scripts/levels.txt` (mới), seed, `prisma/schema.prisma` (+ migration), `src/progress.ts`, `src/progress.controller.ts`, `src/auth.controller.ts` (`/me/export`), `test/*.e2e-spec.ts`.
@@ -423,7 +448,7 @@ Kiểm chung cho mọi giai đoạn nội dung:
 - **Nội dung tự soạn tăng thêm:** khoảng 200 từ, 45 lời giải thích và các cặp kanji dễ nhầm. Tất cả gắn `reviewed:false`. JMdict chỉ kiểm được âm đọc, không kiểm được nghĩa.
 - **Migration `lapses` trên `dev.db` có sẵn:** script `prestart` chạy `migrate deploy`. Nhờ `@default(0)` nên card cũ vẫn hợp lệ.
 - **Trộn hướng card:** câu hỏi nghĩa → từ khó hơn nên người học sẽ sai nhiều hơn, và `lapses` tăng theo. Chấp nhận được, đã ghi `ponytail:`.
-- **Khối lượng nội dung N4–N2:** khoảng 900 kanji, 4.250 từ và 190 điểm ngữ pháp mới, tức gấp khoảng 8–10 lần N5. Tất cả là `reviewed:false`, và JMdict không kiểm được nghĩa tiếng Việt. Đây là phần tốn thời gian nhất và dễ sai nhất của lộ trình, cần nhiều phiên. Cần người duyệt lại trước khi coi là nội dung dùng được.
+- **Khối lượng nội dung N4–N3** (sau khi bỏ N2): khoảng 520 kanji, 2.400 từ và 100 điểm ngữ pháp mới, tức gấp khoảng 3–5 lần N5. Tất cả là `reviewed:false`, và JMdict không kiểm được nghĩa tiếng Việt. Đây là phần tốn thời gian nhất và dễ sai nhất của lộ trình, cần nhiều phiên. Cần người duyệt lại trước khi coi là nội dung dùng được.
 - **Nguồn tách N3/N2:** chưa xác minh license. Nếu phải dùng heuristic `freq` thì việc chia cấp chỉ gần đúng, phải ghi rõ ở `/legal`.
 - **Đề N3/N2 không phản ánh đỗ/trượt thật:** thiếu phần nghe, mà từ N3 trở lên mỗi phần có điểm liệt (19/60). Kết quả chỉ để luyện tập.
 - **Seed khi khởi động:** số mục tăng từ khoảng 1k lên khoảng 10k. Nội dung JSON lớn hơn sẽ làm boot chậm và diff khó review. Xử lý ở giai đoạn 22: đo trước, chỉ chuyển sang seed theo hash khi thật sự chậm.

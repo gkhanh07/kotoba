@@ -1,6 +1,6 @@
 ---
 name: be
-description: Use for any change to the kotoba-be NestJS API: endpoints, guards, Prisma schema and migrations, seeding, scripts, and their unit/e2e tests. Give it the phase spec path (docs/phases/NN-*.md) and the AC ids to implement. Not for writing learning content (use `content`) or anything in kotoba-fe.
+description: "Use for any change to the kotoba-be NestJS API: endpoints, guards, Prisma schema and migrations, seeding, scripts, and their unit/e2e tests. Give it the phase spec path (docs/phases/NN-*.md) and the AC ids to implement. Not for writing learning content (use `content`) or anything in kotoba-fe."
 tools: Read, Write, Edit, Bash, Glob, Grep
 model: opus
 ---
