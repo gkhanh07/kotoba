@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { currentLesson, formatDay, kanjiIn, LEVELS, levelLabel, levelOf, listHref, pageOf, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
+import { currentLesson, formatDay, goalScope, kanjiIn, LEVELS, levelLabel, levelOf, listHref, pageOf, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
 
 const VOCAB: PromptSource = { kind: "vocab", word: "水", reading: "みず", meaning: "nước" };
 const KANA_WORD: PromptSource = { kind: "vocab", word: "ねこ", reading: "ねこ", meaning: "mèo" };
@@ -165,4 +165,16 @@ describe("listHref", () => {
   it("is the bare path with no params", () => {
     expect(listHref("/vocab", {})).toBe("/vocab");
   });
+});
+
+describe("goalScope", () => {
+  const ITEMS = [{ id: "n5", level: 5 as const }, { id: "n4", level: 4 as const }, { id: "n3", level: 3 as const }, { id: "n2", level: 2 as const }];
+  const ids = (goal?: Parameters<typeof goalScope>[1]) => goalScope(ITEMS, goal).map((i) => i.id);
+
+  it("keeps only N5 for an N5 learner", () => expect(ids("N5")).toEqual(["n5"]));
+  it("keeps easier levels for an N4 learner", () => expect(ids("N4")).toEqual(["n5", "n4"]));
+  it("keeps N5 to N3 for an N3 learner", () => expect(ids("N3")).toEqual(["n5", "n4", "n3"]));
+  it("keeps everything for a goal above the content", () => expect(ids("N1")).toEqual(["n5", "n4", "n3", "n2"]));
+  it("keeps everything without a goal", () => expect(ids()).toEqual(["n5", "n4", "n3", "n2"]));
+  it("returns nothing from no items", () => expect(goalScope([], "N5")).toEqual([]));
 });

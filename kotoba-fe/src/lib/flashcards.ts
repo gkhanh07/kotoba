@@ -1,4 +1,6 @@
 // Vocabulary as kotoba-be serves it (content/vocab.json), and the flashcard page's text. Client-safe.
+import type { Level } from "./library";
+
 type Translation = { vi: string; en: string };
 export type Vocab = {
   id: string; // "vocab:水"
@@ -11,6 +13,7 @@ export type Vocab = {
   example: { ja: string } & Translation;
   notes?: Translation;
   lesson: number;
+  level: Level;
 };
 
 export function shuffleCards<T>(items: readonly T[]): T[] {
@@ -35,7 +38,7 @@ const en = {
   gradedEarly: (word: string) => `${word} was not due yet, so its schedule stays.`,
   gradedKnown: (word: string) => `You know ${word} now.`,
   gradedHit: (word: string, days: number) => `${word}: next review ${days === 1 ? "tomorrow" : `in ${days} days`}.`,
-  saved: "Your review schedule is saved in this browser. Restart only changes the order.",
+  saved: "Your review schedule is saved in this browser and syncs when you sign in. Restart only changes the order.",
   warning: "Progress could not be read or saved in this browser. You can still study for this session.",
   lesson: (n: number, title: string) => `Lesson ${n} · ${title}`,
   end: "Last card. Restart or shuffle to practice again.", empty: "No vocabulary in this deck yet.",
@@ -55,7 +58,7 @@ const vi: typeof en = {
   gradedEarly: (word) => `${word} chưa đến hạn nên lịch ôn giữ nguyên.`,
   gradedKnown: (word) => `Bạn đã thuộc ${word}.`,
   gradedHit: (word, days) => `${word}: ôn lại ${days === 1 ? "ngày mai" : `sau ${days} ngày`}.`,
-  saved: "Lịch ôn được lưu trên trình duyệt này. Học lại từ đầu chỉ đổi thứ tự thẻ.",
+  saved: "Lịch ôn được lưu trên trình duyệt này và đồng bộ khi bạn đăng nhập. Học lại từ đầu chỉ đổi thứ tự thẻ.",
   warning: "Không thể đọc hoặc lưu tiến độ trên trình duyệt này. Bạn vẫn có thể học trong phiên này.",
   lesson: (n, title) => `Bài ${n} · ${title}`,
   end: "Đã đến thẻ cuối. Học lại hoặc trộn thẻ để luyện thêm.", empty: "Bộ thẻ này chưa có từ vựng.",

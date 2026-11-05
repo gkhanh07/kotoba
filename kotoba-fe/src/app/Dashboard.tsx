@@ -46,9 +46,9 @@ const isKanji = (id: string) => id.startsWith("kanji:");
 const count = (s: Srs, area: (id: string) => boolean, ok: (id: string) => boolean) =>
   Object.keys(s).filter((id) => area(id) && ok(id)).length;
 
-export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTotal, tests, fronts, stops }: {
+export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: {
   fronts: Record<string, ItemLink>; stops: Stop[];
-  lang: Lang; name: string; profile: Profile | null; kanaTotal: number; kanjiTotal: number; vocabTotal: number;
+  lang: Lang; name: string; profile: Profile | null; scope: { kana: string[]; kanji: string[]; vocab: string[] };
   tests: { id: string; title: string; minutes: number }[];
 }) {
   const t = text[lang];
@@ -73,11 +73,11 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
       bad,
       now,
       day,
-      kanaLearned: count(srs, isKana, learned),
+      kanaLearned: scope.kana.filter(learned).length,
       kanaDue,
-      kanjiLearned: count(srs, isKanji, learned),
+      kanjiLearned: scope.kanji.filter(learned).length,
       kanjiDue,
-      vocabLearned: count(srs, isVocab, learned),
+      vocabLearned: scope.vocab.filter(learned).length,
       vocabDue,
       dueTotal,
       weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
@@ -88,7 +88,7 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
       at: now.getTime(),
       attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
     };
-  }, [deck, activityRaw, fronts, stops]);
+  }, [deck, activityRaw, fronts, stops, scope]);
   const paper = data?.attempt && tests.find((p) => p.id === data.attempt?.id);
   // Past the deadline the attempt is submitted on open, so "continue" would be a false promise.
   const resume = paper && data.attempt && remaining(data.attempt.session.startedAt, paper.minutes, data.at) > 0 ? paper : undefined;
@@ -114,8 +114,8 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
         <>
           <div className={s.stage}>
             <span>{t.stage}</span>
-            <progress aria-label={t.stage} value={data.kanaLearned} max={kanaTotal} />
-            <span>{data.kanaLearned} / {kanaTotal}</span>
+            <progress aria-label={t.stage} value={data.kanaLearned} max={scope.kana.length} />
+            <span>{data.kanaLearned} / {scope.kana.length}</span>
           </div>
 
           <dl className={s.stats}>
@@ -145,12 +145,10 @@ export function Dashboard({ lang, name, profile, kanaTotal, kanjiTotal, vocabTot
               <caption className="sr-only">{t.progress}</caption>
               <thead><tr><th scope="col">{t.area}</th><th scope="col">{t.today}</th><th scope="col">{t.memorized}</th></tr></thead>
               <tbody>
-                <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.kanaLearned} / {kanaTotal}</td></tr>
-                <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.vocabLearned} / {vocabTotal}</td></tr>
-                <tr><th scope="row">Kanji</th><td>{data.summary.today.kanji}</td><td>{data.kanjiLearned} / {kanjiTotal}</td></tr>
-                {t.soonAreas.map((area) => (
-                  <tr key={area}><th scope="row">{area}</th><td colSpan={2} className={s.soon}>{t.soon}</td></tr>
-                ))}
+                <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.kanaLearned} / {scope.kana.length}</td></tr>
+                <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.vocabLearned} / {scope.vocab.length}</td></tr>
+                <tr><th scope="row">Kanji</th><td>{data.summary.today.kanji}</td><td>{data.kanjiLearned} / {scope.kanji.length}</td></tr>
+                <tr><th scope="row">{t.grammar}</th><td colSpan={2}><Link href="/grammar">{t.grammarLink}</Link></td></tr>
               </tbody>
             </table>
           </section>
@@ -219,10 +217,10 @@ const vi = {
   progress: "Tiến độ",
   area: "Phần",
   vocab: "Từ vựng",
-  soonAreas: ["Ngữ pháp", "Đọc hiểu"],
+  grammar: "Ngữ pháp",
+  grammarLink: "Xem ngữ pháp",
   today: "Hôm nay",
   memorized: "Đã học",
-  soon: "Sắp có",
   review: "Đến hạn ôn",
   reviewKana: (n: number) => `${n} chữ kana đến hạn ôn`,
   reviewKanji: (n: number) => `${n} chữ kanji đến hạn ôn`,
@@ -261,10 +259,10 @@ const en: typeof vi = {
   progress: "Progress",
   area: "Area",
   vocab: "Vocabulary",
-  soonAreas: ["Grammar", "Reading"],
+  grammar: "Grammar",
+  grammarLink: "Open grammar",
   today: "Today",
   memorized: "Learnt",
-  soon: "Coming soon",
   review: "Due for review",
   reviewKana: (n) => `${n} kana due`,
   reviewKanji: (n) => `${n} kanji due`,

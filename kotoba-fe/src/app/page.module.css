@@ -400,7 +400,7 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   --rail: 3px;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 3.5rem;
   position: relative;
 }
@@ -429,16 +429,6 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   border: 3px solid var(--amber);
   background: var(--night);
   box-shadow: 0 0 12px rgba(255, 177, 59, 0.6);
-}
-.line li[data-open="true"]:nth-child(2)::before { right: 0; }
-.line li[data-open="false"]::before {
-  background: repeating-linear-gradient(90deg, var(--rule-strong) 0 10px, transparent 10px 18px);
-  box-shadow: none;
-  right: 30%;
-}
-.line li[data-open="false"]::after {
-  border-color: var(--rule-strong);
-  box-shadow: none;
 }
 .station {
   display: grid;
@@ -479,9 +469,6 @@ a.station:hover .stationName svg { transform: translateX(4px); }
   letter-spacing: 0.06em;
   color: var(--amber);
 }
-[data-open="false"] .stationKana,
-[data-open="false"] .stationName { color: var(--silver-dim); }
-[data-open="false"] .stationMeta { color: var(--silver-dim); }
 
 /* Honest progress */
 .honest {
@@ -532,7 +519,7 @@ a.station:hover .stationName svg { transform: translateX(4px); }
   line-height: 1;
   color: var(--chalk);
 }
-[data-lit="3"] .lampChar { text-shadow: var(--glow-cool); }
+[data-known="true"] .lampChar { text-shadow: var(--glow-cool); }
 .lampRomaji { color: var(--silver-dim); }
 .lampRow {
   display: flex;
@@ -574,6 +561,15 @@ a.station:hover .stationName svg { transform: translateX(4px); }
 }
 .footer :global(.brandMark) { font-size: 1.1rem; margin-right: 0.35rem; }
 
+/* A row of six lamps needs about 440px at full size, which the 5fr column only reaches above this width. */
+@media (max-width: 1280px) {
+  .honest { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lamps li { grid-template-columns: 3rem 2rem 1fr auto; gap: 0.5rem; }
+  .lampRow { gap: 5px; }
+  .lampRow i { width: 10px; height: 10px; }
+  .lampLabel { white-space: nowrap; font-size: 1rem; }
+}
+
 /* ───────── Phones: skyline, street and reflection unroll into bands ───────── */
 @media (max-width: 900px) {
   .hero { --signsH: 11.5rem; --groundH: 9rem; min-height: auto; }
@@ -602,12 +598,10 @@ a.station:hover .stationName svg { transform: translateX(4px); }
   .line li { padding-top: 0; }
   .line li::before { top: 0.55rem; bottom: -2.5rem; left: -1.7rem; right: auto; width: var(--rail); height: auto; }
   .line li:last-child::before { bottom: 0; }
-  .line li[data-open="false"]::before { right: auto; background: repeating-linear-gradient(180deg, var(--rule-strong) 0 10px, transparent 10px 18px); }
   .line li::after { left: -2.1rem; top: 0.9rem; }
   .station { padding-right: 0; }
 
-  .honest { grid-template-columns: 1fr; }
-  .lamps li { grid-template-columns: 3.2rem 2.4rem 1fr auto; gap: 0.6rem; }
+  .honest { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {

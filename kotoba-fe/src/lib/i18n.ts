@@ -37,17 +37,20 @@ type Dict = {
     hiraganaText: Split3;
     katakanaText: Split3;
     kanjiText: string;
+    lessonName: string;
+    lessonText: string;
     openMeta: string;
-    soonMeta: string;
+    kanjiMeta: string;
+    lessonMeta: string;
     honestH: string;
-    honestP1: string;
+    honestP1: (known: number, intervals: string) => string;
     honestP2: Split4;
     honestCta: string;
     lampMastered: string;
     lampLearning: string;
     lampUnseen: string;
-    lampAria: (lit: number) => string;
-    lampCaption: string;
+    lampAria: (lit: number, max: number) => string;
+    lampCaption: (known: number) => string;
     footerA: string;
     footerB: string;
   };
@@ -150,24 +153,27 @@ const DICT: Record<Lang, Dict> = {
       lede: "Kotoba dạy tiếng Nhật cho người Việt, bằng tiếng Việt. Bắt đầu từ bảng kana trên mọi biển hiệu, luyện ngay trên trang, không cần đăng ký.",
       ctaQuiz: "Luyện đọc ngay",
       ctaChart: "Xem bảng chữ",
-      routeH: "Hai tuyến đầu tiên đã chạy.",
+      routeH: "Bốn tuyến đã chạy.",
       routeP: "Tiếng Nhật viết bằng ba loại chữ. Người mới bắt đầu từ hai bảng kana: cùng một bộ âm, hai dáng chữ khác nhau. Mỗi bảng có 46 chữ cơ bản, rồi đến âm đục, âm ghép, âm ngắt và trường âm.",
       hiraganaText: { a: "Nét mềm, dùng cho từ thuần Nhật và đuôi ngữ pháp, như ", b: " hay ", c: "." },
       katakanaText: { a: "Nét thẳng, góc cạnh, dùng cho từ mượn và tên nước ngoài, như ", b: " hay ", c: "." },
-      kanjiText: "Chữ Hán, phần lớn nghĩa của từ nằm ở đây. Tuyến này đang được xây.",
+      kanjiText: "Chữ Hán, phần lớn nghĩa của từ nằm ở đây. Mỗi chữ có âm Hán Việt, số nét và các từ dùng chữ đó.",
+      lessonName: "Bài học",
+      lessonText: "Từ vựng, kanji và ngữ pháp xếp thành từng bài. Phiên học mỗi ngày đi theo bài bạn đang học.",
       openMeta: "Đủ 4 nhóm · đang mở",
-      soonMeta: "Sắp có",
-      honestH: "Chỉ tính là nhớ khi bạn nhớ thật.",
-      honestP1: "Mỗi chữ cần trả lời đúng ba lần liên tiếp. Sai một lần, chuỗi đếm lại từ đầu. Không điểm thưởng, không huy hiệu: chỉ những chữ bạn thật sự đọc được.",
-      honestP2: { a: "Làm hoàn toàn bằng bàn phím: phím ", b: "–", c: " để chọn, ", d: " để sang chữ tiếp theo. Tiến độ lưu ngay trong trình duyệt này." },
+      kanjiMeta: "N5 đến N3 · đang mở",
+      lessonMeta: "Đi lên từ N5 · đang mở",
+      honestH: "Chỉ tính là thuộc khi bạn nhớ thật.",
+      honestP1: (known, intervals) => `Một chữ được tính là đã thuộc sau ${known} lần ôn đúng liên tiếp, cách nhau ${intervals} ngày. Sai một lần, chuỗi đếm lại từ đầu. Không điểm thưởng, không huy hiệu: chỉ những chữ bạn thật sự đọc được.`,
+      honestP2: { a: "Làm hoàn toàn bằng bàn phím: phím ", b: "–", c: " để chọn, ", d: " để sang chữ tiếp theo. Tiến độ lưu ngay, và đồng bộ khi bạn đăng nhập." },
       honestCta: "Bắt đầu với hiragana",
-      lampMastered: "Đã nhớ",
+      lampMastered: "Đã thuộc",
       lampLearning: "Đang học",
       lampUnseen: "Chưa gặp",
-      lampAria: (lit) => `${lit} trên 3 lần đúng liên tiếp`,
-      lampCaption: "Ví dụ: ba đèn sáng là một chữ đã nhớ.",
+      lampAria: (lit, max) => `${lit} trên ${max} lần ôn đúng liên tiếp`,
+      lampCaption: (known) => `Ví dụ: đủ ${known} đèn sáng là một chữ đã thuộc.`,
       footerA: "Kotoba: học tiếng Nhật bằng tiếng Việt.",
-      footerB: "Không cần tài khoản để luyện tập. Tiến độ nằm trong trình duyệt của bạn.",
+      footerB: "Không cần tài khoản để luyện tập. Có tài khoản thì tiến độ đồng bộ giữa các thiết bị.",
     },
     street: {
       signsAria: "Biển hiệu, chạm để đọc",
@@ -286,24 +292,27 @@ const DICT: Record<Lang, Dict> = {
       lede: "Kotoba starts you on the kana behind every shop sign in Japan. Practise right here on the page, no sign-up.",
       ctaQuiz: "Start practising",
       ctaChart: "See the chart",
-      routeH: "The first two lines are running.",
+      routeH: "All four lines are running.",
       routeP: "Japanese is written in three scripts. Beginners start with the two kana sets: one set of sounds, two different shapes. Each has 46 basic letters, then voiced, combined, small-tsu and long-vowel sounds.",
       hiraganaText: { a: "Soft strokes, used for native Japanese words and grammar endings, as in ", b: " or ", c: "." },
       katakanaText: { a: "Straight, angular strokes, used for loanwords and foreign names, as in ", b: " or ", c: "." },
-      kanjiText: "Chinese characters, where most of a word's meaning lives. This line is still under construction.",
+      kanjiText: "Chinese characters, where most of a word's meaning lives. Each one comes with its Sino-Vietnamese reading, stroke count and the words that use it.",
+      lessonName: "Lessons",
+      lessonText: "Vocabulary, kanji and grammar, arranged lesson by lesson. Each day's session follows the lesson you are on.",
       openMeta: "All 4 groups · open",
-      soonMeta: "Coming soon",
-      honestH: "It only counts as learnt when you really know it.",
-      honestP1: "Each letter needs three correct answers in a row. One miss and the streak starts over. No points, no badges: just the letters you can actually read.",
-      honestP2: { a: "Fully keyboard-driven: press ", b: "–", c: " to answer, ", d: " for the next letter. Your progress stays in this browser." },
+      kanjiMeta: "N5 to N3 · open",
+      lessonMeta: "Up from N5 · open",
+      honestH: "It only counts as known when you really remember it.",
+      honestP1: (known, intervals) => `An item counts as known after ${known} correct reviews in a row, spaced ${intervals} days apart. One miss and the streak starts over. No points, no badges: just the letters you can actually read.`,
+      honestP2: { a: "Fully keyboard-driven: press ", b: "–", c: " to answer, ", d: " for the next letter. Your progress saves at once and syncs when you sign in." },
       honestCta: "Start with hiragana",
-      lampMastered: "Learnt",
+      lampMastered: "Known",
       lampLearning: "Learning",
       lampUnseen: "Not seen yet",
-      lampAria: (lit) => `${lit} of 3 correct in a row`,
-      lampCaption: "Three lamps lit means the letter is learnt.",
+      lampAria: (lit, max) => `${lit} of ${max} reviews correct in a row`,
+      lampCaption: (known) => `${known} lamps lit means the letter is known.`,
       footerA: "Kotoba: learn to read Japanese, one sign at a time.",
-      footerB: "You don't need an account to practise. Your progress stays in your browser.",
+      footerB: "You don't need an account to practise. With one, your progress syncs across devices.",
     },
     street: {
       signsAria: "Shop signs, tap one to read it",

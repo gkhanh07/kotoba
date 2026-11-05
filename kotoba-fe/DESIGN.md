@@ -417,3 +417,15 @@ The N5 build relies on these interpretations, but **the user has not confirmed t
 - **Don't** carry the hero's 7px sign radius or 4px ticket radius into study UI. Study UI uses the 2px hairline.
 - **Don't** put an eyebrow or kicker above a page `h1`.
 - **Don't** add streaks, XP, badges or pills for progress. Counts are plain tabular text.
+
+## Glossary
+
+Terms the UI uses for study state (ADR 007). Keep each word to its one meaning.
+
+| Vietnamese | English | Meaning | Code |
+|---|---|---|---|
+| Đã học | Learnt | Answered right at least once (box ≥ 1) | `isLearned` |
+| Đã thuộc | Known | 6 spaced reviews right in a row (box ≥ `KNOWN_AT`) | `isKnown` |
+| Đến hạn | Due | The review day has come | `due` |
+
+"Nhớ" does not name a state.

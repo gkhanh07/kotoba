@@ -36,7 +36,7 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 26 N4 mock test `n4-1` (58 questions, 80 min, parts `usage` and `text`), N5 → N4 journey (spec `docs/phases/26-n4-mock-test.md`) | DONE | `424a205` (FE labels, journey e2e), `content(n4): mock test paper n4-1` |
 | Responsive fix: readable column on wide screens, no side scroll on /kana, sync-status e2e on Windows (BUG-006/007/008) | DONE | `7df0a06`, `0cc53fd` |
 | 27 N3 kanji: 341 kanji from Waller's list, lessons 46–81, 40 `similar` pairs (spec `docs/phases/27-n3-kanji.md`, ADR 006); BUG-010, BUG-011 | DONE | `8bb6809` |
-| Fix from the `/` critique: dashboard totals per goal level (High bug), "learned" copy matches the SRS code (ADR), stale landing copy | TODO | before phase 28, see PLAN |
+| Fix from the `/` critique: dashboard totals per goal level (BUG-012), "learned" copy matches the SRS code (ADR 007), stale landing copy (spec `docs/tasks/critique-home.md`) | DONE | `fix(dashboard): count totals by the goal's scope and correct the landing copy` |
 | Store hardening: empty catches in `kotoba-fe/src/lib/store.ts` and `activity.ts` keep the stored data and report errors (e.g. `syncState()` no longer drops `forget`), with broken-data fixtures | TODO | before phase 28, see PLAN (AGENTS.md §2) |
 | User sample review of N5, N4 and N3 kanji: seeded samples of 30 per kind, the user sets `reviewed: true` | TODO | before phase 28, see PLAN (AGENTS.md §12) |
 | 28–30 (N3 vocab, grammar, mock test `n3-1`), 35 (finish, incl. trimming level tabs to N5–N3) | TODO | |
@@ -88,6 +88,8 @@ After phase 23: BE 41 unit + 40 e2e + 19 content; FE E2E 106 passed.
 After phase 26 (N4 complete): BE 45 unit + 40 e2e + 23 content, JMdict 1,272 words; FE Vitest 559 tests, E2E 116 passed. Content: N5 + N4 = 224 kana, 284 kanji, 1,272 words, 78 grammar points, 45 lessons, 2 papers.
 
 After phase 27: BE 49 unit + 41 e2e + 27 content, JMdict 1,272 words; FE Vitest 559 tests (lib lines 98.44%, branches 96.67%), E2E 166 passed. Content: 625 kanji (103/181/341), 81 lessons. All 341 N3 kanji are `reviewed: false`; BUG-009 (doubtful Hán Việt readings) is OPEN and needs the user to choose a source.
+
+After the `/` critique fix: BE 49 unit + 41 e2e + 27 content; FE Vitest 567 tests (lib lines 98.45%, branches 96.68%), E2E 172 passed. Scope per goal, measured on the content: N5 694 words / 103 kanji, N4 1,272 / 284, N3 or no goal 1,272 / 625.
 
 ## Stopped here (2026-11-04, after phase 27, at `aaac7eb`, pushed)
 N3 kanji are done. Process review (2026-11-04) tightened the rules: the human review gate and sample per batch (AGENTS.md §12), a stop at the end of each level (§15), clean tree (§4), data-safety debt scheduled (§2), BE coverage ratchet (§10, threshold now 30/35/33/30), ponytail disabled in `.claude/settings.json`. The root `.gitignore` covers `.codegraph/` (local CodeGraph index; `codegraph sync .` refreshes it) and `kotoba-fe/.impeccable/hook.cache.json`; `kotoba-be/package-lock.json` is committed. Waiting on the user: a Hán Việt source for BUG-009.

@@ -23,7 +23,6 @@
 .table th:first-child { text-align: start; font-weight: inherit; color: var(--chalk); }
 .table thead th { font-size: .8rem; color: var(--silver-dim); }
 .table thead th:first-child { color: var(--silver-dim); }
-.soon { color: var(--silver-dim); }
 .list { display: grid; gap: .25rem; list-style: none; padding: 0; }
 .list li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .25rem 1rem; min-height: 44px; border-bottom: 1px solid var(--rule-dim); }
 .list a { display: inline-flex; align-items: center; min-height: 44px; }

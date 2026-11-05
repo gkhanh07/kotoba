@@ -10,7 +10,7 @@ const SRS = "kotoba.srs.v1";
 const NOW = new Date("2026-11-02T02:00:00Z").getTime();
 
 const word = (id: string, w: string, reading: string, vi: string, en: string): Vocab => ({
-  id: `vocab:${id}`, word: w, reading, romaji: "romaji-" + id, vi, en, lesson: 13,
+  id: `vocab:${id}`, word: w, reading, romaji: "romaji-" + id, vi, en, lesson: 13, level: 5,
   example: { ja: `例文${w}`, vi: `ví dụ ${vi}`, en: `example ${en}` },
 });
 const MIZU = word("水", "水", "みず", "nước", "water");

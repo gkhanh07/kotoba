@@ -1,4 +1,5 @@
 // Kanji, grammar and lesson shapes as kotoba-be serves them, and the text of the library and lesson pages. Client-safe.
+import type { Goal } from "./account";
 import type { Vocab } from "./flashcards";
 import type { Lang } from "./i18n";
 import type { Kana } from "./kana";
@@ -89,6 +90,12 @@ export const formatDay = (day: string): string => {
 
 // A lesson's scheduled items (kana, kanji, words), in lesson order. Grammar is read, not scheduled.
 export type Stop = { lesson: number; ids: string[] };
+
+// What a goal covers: its level and every easier one, since JLPT is cumulative (ADR 007). No goal: everything.
+export function goalScope<T extends { level: number }>(items: readonly T[], goal?: Goal): T[] {
+  const hardest = goal ? Number(goal.slice(1)) : 0;
+  return items.filter((item) => item.level >= hardest);
+}
 
 export function stopsOf(items: { id: string; lesson: number }[]): Stop[] {
   const byLesson = new Map<number, string[]>();
@@ -212,7 +219,7 @@ const en = {
     weakEmpty: "Nothing is often wrong yet",
     empty: "Nothing to review yet. Study a lesson to start a review schedule.",
     waiting: "Nothing is due right now.",
-    saved: "Your review schedule is saved in this browser.",
+    saved: "Your review schedule is saved in this browser and syncs when you sign in.",
     warning: "Progress could not be read or saved in this browser. You can still review for this session.",
     // Card back labels
     romaji: "Romaji", note: "Sound", reading: "Reading", example: "Example",
@@ -344,7 +351,7 @@ const vi: typeof en = {
     weakEmpty: "Chưa có mục nào hay sai",
     empty: "Chưa có gì để ôn. Học một bài để bắt đầu lịch ôn.",
     waiting: "Hiện chưa có mục nào đến hạn.",
-    saved: "Lịch ôn được lưu trên trình duyệt này.",
+    saved: "Lịch ôn được lưu trên trình duyệt này và đồng bộ khi bạn đăng nhập.",
     warning: "Không thể đọc hoặc lưu tiến độ trên trình duyệt này. Bạn vẫn có thể ôn trong phiên này.",
     romaji: "Romaji", note: "Cách phát âm", reading: "Cách đọc", example: "Ví dụ",
   },

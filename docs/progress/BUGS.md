@@ -154,3 +154,26 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Root cause: `kanjidic.ts` reads KANJIDIC2 with regexes and copied the XML text as it is, without decoding entities. The file uses only `&amp;` (22 times), two of them in kanji Kotoba includes. Both are N3, so no released kanji had it.
 - Fix: `all`/`one` decode the five XML entities in one pass. After re-running `npm run kanjidic`, only those two meanings changed, and a second run makes no diff.
 - Status: FIXED
+
+## BUG-012: dashboard totals ignore the learner's goal level
+- Severity: High (wrong figures on the main screen)
+- Found: 2026-11-04, critique of `/`
+- Environment: `kotoba-fe/src/app/page.tsx` passes `kanji.length` and `vocab.length`; `kotoba-fe/src/app/Dashboard.tsx`
+- Steps: sign in with goal N5, open `/`.
+- Expected: Từ vựng 0 / 694, Kanji 0 / 103.
+- Actual: Từ vựng 0 / 1272, Kanji 0 / 625. The total moves away from an N5 learner with every level added.
+- Reproducing test: `kotoba-fe/e2e/home.spec.ts` › an N5 dashboard shows the N5 totals; `kotoba-fe/src/app/Dashboard.test.tsx` › counts only items in the scope.
+- Root cause: `page.tsx` loads every level and passes the raw lengths, written when N5 was the only level; phase 22 added levels and kept them. Numerators count every stored card, so other levels and stale ids could also push them past the total.
+- Fix: `goalScope` keeps the items of the goal's cumulative scope (ADR 007). The dashboard takes the ids in scope, and numerator and denominator both come from them.
+- Status: FIXED
+- Commit: `fix(dashboard): count totals by the goal's scope and correct the landing copy`
+
+## BUG-013: broken stored data is overwritten without a copy
+- Severity: Critical (data loss)
+- Found: 2026-11-05, reading `kotoba-fe/src/lib/store.ts` and `activity.ts` for the store hardening task; PLAN named the `syncState` case
+- Environment: `read`/`write`, `syncState`, `resetDeck`, `applyRemote` in `store.ts`; `logActivity` in `activity.ts`
+- Steps: put text that does not parse in `kotoba.srs.v1`, open `/kana`, answer a question.
+- Expected: the broken text stays somewhere it can be recovered from.
+- Actual: the deck is written over it and the text is gone. The same happens to the activity log. Sync data with one bad field loses `owner` and every queued reset. A failed `forget` write still resets the deck, and a failed write inside `applyRemote` leaves a mix of two accounts' keys.
+- Reproducing tests: `kotoba-fe/src/lib/store.test.ts`, `activity.test.ts`, `src/app/SyncStatus.test.tsx`
+- Status: OPEN
