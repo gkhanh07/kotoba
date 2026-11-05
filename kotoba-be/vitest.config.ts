@@ -13,9 +13,9 @@ export default defineConfig({
       include: ['src/**/*.ts'],
       exclude: ['src/generated/**', 'src/**/*.spec.ts'],
       reporter: ['text', 'text-summary'],
-      // Baseline of the unit suite measured in phase 13.5, rounded down
-      // (AGENTS.md §10). Raise only, never lower. Gap to 90%: BACKLOG.md.
-      thresholds: { statements: 26, branches: 34, functions: 33, lines: 25 },
+      // Unit coverage measured after phase 27, rounded down
+      // (AGENTS.md §10 ratchet). Raise only, never lower. Gap to 90%: BACKLOG.md.
+      thresholds: { statements: 30, branches: 35, functions: 33, lines: 30 },
     },
   },
 });
