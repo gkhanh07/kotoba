@@ -429,3 +429,15 @@ Terms the UI uses for study state (ADR 007). Keep each word to its one meaning.
 | Đến hạn | Due | The review day has come | `due` |
 
 "Nhớ" does not name a state.
+
+## Glossary
+
+Terms the UI uses for study state (ADR 007). Keep each word to its one meaning.
+
+| Vietnamese | English | Meaning | Code |
+|---|---|---|---|
+| Đã học | Learnt | Answered right at least once (box ≥ 1) | `isLearned` |
+| Đã thuộc | Known | 6 spaced reviews right in a row (box ≥ `KNOWN_AT`) | `isKnown` |
+| Đến hạn | Due | The review day has come | `due` |
+
+"Nhớ" does not name a state.
