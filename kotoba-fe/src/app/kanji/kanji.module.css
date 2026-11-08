@@ -29,6 +29,7 @@
 .facts dt { color: var(--silver-dim); font-size: .9rem; }
 .facts dd { margin: 0; color: var(--silver); font-variant-numeric: tabular-nums; }
 .missing { color: var(--silver-dim); }
+.hvBig .missing { font-family: inherit; font-size: 1rem; letter-spacing: 0; text-transform: none; }
 .words { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--rule-dim); max-width: 48rem; }
 .words h2 { font-size: 1.1rem; color: var(--chalk); }
 .words ul { margin: 1rem 0 0; padding: 0; list-style: none; }

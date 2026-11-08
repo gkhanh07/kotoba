@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { currentLesson, formatDay, goalScope, kanjiIn, LEVELS, levelLabel, levelOf, listHref, pageOf, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
+import { currentLesson, formatDay, goalScope, hvRows, kanjiIn, kanjiTitle, LEVELS, levelLabel, levelOf, listHref, pageOf, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
 
 const VOCAB: PromptSource = { kind: "vocab", word: "水", reading: "みず", meaning: "nước" };
 const KANA_WORD: PromptSource = { kind: "vocab", word: "ねこ", reading: "ねこ", meaning: "mèo" };
@@ -177,4 +177,22 @@ describe("goalScope", () => {
   it("keeps everything for a goal above the content", () => expect(ids("N1")).toEqual(["n5", "n4", "n3", "n2"]));
   it("keeps everything without a goal", () => expect(ids()).toEqual(["n5", "n4", "n3", "n2"]));
   it("returns nothing from no items", () => expect(goalScope([], "N5")).toEqual([]));
+});
+
+describe("kanji without a Hán Việt reading", () => {
+  it("titles a kanji with its readings", () => {
+    expect(kanjiTitle({ char: "画", hv: ["Họa", "Hoạch"] })).toBe("画 · Họa, Hoạch · Kotoba");
+  });
+
+  it("leaves the reading out of the title of a Japanese-made kanji", () => {
+    expect(kanjiTitle({ char: "込", hv: [] })).toBe("込 · Kotoba");
+  });
+
+  it("puts the readings on the back of the review card, in order", () => {
+    expect(hvRows(["Họa", "Hoạch"], "Hán Việt")).toEqual([{ label: "Hán Việt", text: "Họa · Hoạch", strong: true }]);
+  });
+
+  it("adds no empty row to the review card of a Japanese-made kanji", () => {
+    expect(hvRows([], "Hán Việt")).toEqual([]);
+  });
 });

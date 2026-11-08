@@ -11,6 +11,8 @@ const grammar = load('grammar');
 const all = [...kana, ...kanji, ...vocab, ...lessons, ...grammar];
 // N3 lessons 46–81, the last one "Ôn tập N3" (docs/phases/27-n3-kanji.md).
 const N3_LESSONS = 36;
+// Japanese-made kanji with no Hán Việt reading (ADR 009).
+const NO_HAN_VIET = ['込'];
 
 describe('content', () => {
   it('has unique ids', () => {
@@ -200,6 +202,44 @@ describe('content', () => {
         .map(({ part }) => `${p.id} ${part}`),
     );
     expect(bad).toEqual([]);
+  });
+
+  it('keeps the Hán Việt readings the review corrected, without Nôm readings (BUG-009, ADR 009)', () => {
+    const hv = (char: string) => kanji.find((k) => k.char === char)?.hv;
+    expect([hv('画'), hv('顔'), hv('県'), hv('変'), hv('断'), hv('横')]).toEqual([
+      ['Họa', 'Hoạch'],
+      ['Nhan'],
+      ['Huyện'],
+      ['Biến'],
+      ['Đoạn', 'Đoán'],
+      ['Hoành', 'Hoạnh', 'Quáng'],
+    ]);
+    expect([hv('戦'), hv('伝'), hv('払'), hv('込')]).toEqual([['Chiến'], ['Truyền', 'Truyện'], ['Phất'], []]);
+  });
+
+  it('stores Hán Việt readings in NFC with the list spelling (ADR 009)', () => {
+    const decomposed = kanji.flatMap((k) => (k.hv as string[]).filter((h) => h !== h.normalize('NFC')).map((h) => `${k.char} ${h}`));
+    expect(decomposed).toEqual([]);
+    expect(kanji.find((k) => k.char === '姉')?.hv).toEqual(['Tỷ']);
+  });
+
+  it('gives every kanji a Hán Việt reading, except the Japanese-made ones', () => {
+    const missing = kanji.filter((k) => (k.hv as string[]).length === 0).map((k) => k.char);
+    expect(missing).toEqual(NO_HAN_VIET);
+  });
+
+  it('gives 中 the on reading ジュウ of 世界中 (BUG-014)', () => {
+    expect(kanji.find((k) => k.char === '中')?.on).toEqual(['チュウ', 'ジュウ']);
+  });
+
+  it('separates the two uses of すく (BUG-015)', () => {
+    expect(vocab.find((w) => w.id === 'vocab:すく')?.vi).toBe('đói (bụng); vắng, bớt đông (tàu xe, chỗ ngồi)');
+  });
+
+  it('marks the causative person with に or を by verb type (BUG-016)', () => {
+    const shieki = grammar.find((g) => g.id === 'grammar:shieki') as Item & { structure: string; examples: { ja: string }[] };
+    expect(shieki.structure).toContain('ngoại động từ: A は B に N を V-(さ)せる; nội động từ: A は B を V-(さ)せる');
+    expect(shieki.examples.map((e) => e.ja)).toContain('先生は 学生を うちへ 帰らせました。');
   });
 
   it('reports what still needs a human review', () => {

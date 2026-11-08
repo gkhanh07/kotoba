@@ -33,7 +33,7 @@ export type Lesson = { id: string; lesson: number; level: Level; title: Translat
 export type Kanji = {
   id: string; // "kanji:日"
   char: string;
-  hv: string[]; // Hán Việt, KANJIDIC2 r_type="vietnam"
+  hv: string[]; // Hán Việt, most common first; empty for a Japanese-made kanji (ADR 009)
   on: string[];
   kun: string[];
   en: string[];
@@ -64,6 +64,8 @@ export const KINDS = ["kana", "kanji", "vocab"] as const;
 export type Kind = (typeof KINDS)[number];
 export type ReviewRow = { label: string; text: string; ja?: boolean; strong?: boolean; sub?: string };
 export type ReviewItem = { id: string; kind: Kind; lesson: number; tag: string; front: string; back: ReviewRow[]; meaning?: string; reading?: string };
+export const hvRows = (hv: string[], label: string): ReviewRow[] => (hv.length ? [{ label, text: hv.join(" · "), strong: true }] : []);
+export const kanjiTitle = (k: Pick<Kanji, "char" | "hv">): string => [k.char, ...(k.hv.length ? [k.hv.join(", ")] : []), "Kotoba"].join(" · ");
 
 // Direction a card is asked in (phase 17). The SRS schedule stays one per item.
 export type Dir = "word-meaning" | "meaning-word" | "word-reading";
@@ -125,6 +127,7 @@ const en = {
     back: "Kanji",
     hv: "Hán Việt", on: "On reading", kun: "Kun reading", meaning: "Meaning", strokes: "Strokes", lessonLabel: "Lesson",
     noVi: "No Vietnamese meaning yet",
+    noHv: "Japanese-made kanji: no Hán Việt reading",
     words: "Words with",
     study: (n: number) => `Study lesson ${n}`,
     speak: "Play",
@@ -257,6 +260,7 @@ const vi: typeof en = {
     back: "Kanji",
     hv: "Hán Việt", on: "Âm On", kun: "Âm Kun", meaning: "Nghĩa", strokes: "Số nét", lessonLabel: "Bài",
     noVi: "Chưa có nghĩa tiếng Việt",
+    noHv: "Chữ do Nhật tạo, không có âm Hán Việt",
     words: "Từ chứa",
     study: (n) => `Học bài ${n}`,
     speak: "Đọc",

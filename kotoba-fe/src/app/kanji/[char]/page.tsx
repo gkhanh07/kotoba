@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getKanji, getKanjiDetail } from "@/lib/content";
-import { libraryText, vocabHref } from "@/lib/library";
+import { kanjiTitle, libraryText, vocabHref } from "@/lib/library";
 import { getLang } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
 import { Speak } from "../../Speak";
@@ -11,7 +11,7 @@ import s from "../kanji.module.css";
 export async function generateMetadata(props: PageProps<"/kanji/[char]">): Promise<Metadata> {
   const [lang, k] = await Promise.all([getLang(), props.params.then((p) => getKanjiDetail(decodeURIComponent(p.char)))]);
   if (!k) return {};
-  return { title: `${k.char} · ${k.hv.join(", ")} · Kotoba`, description: lang === "vi" ? k.vi : k.en.join(", ") };
+  return { title: kanjiTitle(k), description: lang === "vi" ? k.vi : k.en.join(", ") };
 }
 
 export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">) {
@@ -42,7 +42,7 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
         <article className={s.detail}>
           <h1 lang="ja" className={s.specimen}>{k.char}</h1>
           <div>
-            <p className={s.hvBig}>{k.hv.join(" · ")}<span className="sr-only"> ({t.hv})</span></p>
+            <p className={s.hvBig}>{k.hv.length > 0 ? <>{k.hv.join(" · ")}<span className="sr-only"> ({t.hv})</span></> : <em className={s.missing}>{t.noHv}</em>}</p>
             <dl className={s.facts}>
               {rows.map(([label, value]) => (
                 <div key={label}>

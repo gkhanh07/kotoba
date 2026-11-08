@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getKana, getKanji, getLessons, getVocab } from "@/lib/content";
-import { KINDS, libraryText, type Kind, type ReviewItem } from "@/lib/library";
+import { hvRows, KINDS, libraryText, type Kind, type ReviewItem } from "@/lib/library";
 import { getLang } from "../LangSwitch";
 import { SiteBar, SiteFooter } from "../SiteBar";
 import { ReviewApp } from "./ReviewApp";
@@ -30,7 +30,7 @@ export default async function ReviewPage(props: PageProps<"/review">) {
       id: k.id, kind: "kanji" as const, lesson: k.lesson, tag: "Kanji", front: k.char,
       meaning: cap(lang === "vi" ? (k.vi ?? k.en.join(", ")) : k.en.join(", ")),
       back: [
-        { label: t.kanji.hv, text: k.hv.join(" · "), strong: true },
+        ...hvRows(k.hv, t.kanji.hv),
         ...(k.on.length ? [{ label: t.kanji.on, text: k.on.join("、"), ja: true }] : []),
         ...(k.kun.length ? [{ label: t.kanji.kun, text: k.kun.join("、"), ja: true }] : []),
         { label: t.kanji.meaning, text: cap(lang === "vi" ? (k.vi ?? k.en.join(", ")) : k.en.join(", ")) },

@@ -1,6 +1,8 @@
 # Duyệt mẫu nội dung
 
-Seed: 20261105. Chạy lại trong `kotoba-be`: `node scripts/sample.ts 20261105`.
+Seed: 20261105 cho từ vựng, ngữ pháp và câu hỏi đề; 20261108 cho ba phần kanji. Chạy lại trong `kotoba-be`: `node scripts/sample.ts 20261105` và `node scripts/sample.ts 20261108`, rồi lấy phần kanji từ lần chạy thứ hai.
+
+Vòng 1 (2026-11-08): kanji sai từ 2 mục trở lên ở mỗi cấp (âm Hán Việt lấy từ KANJIDIC2, BUG-009), nên cả ba phần kanji được rút lại sau khi sửa (ADR 009). Ba lỗi khác đã sửa, các mục này vẫn có trong mẫu, với nội dung mới: `vocab:すく` (BUG-015), `grammar:shieki` (BUG-016), `kanji:中` thiếu âm ジュウ (BUG-014).
 
 Đánh dấu `[x]` mục đúng; mục sai thì ghi lỗi ngay dưới mục đó. Loại nào sai quá 5% (từ 2 mục sai trên 30) thì sửa loại đó và rút mẫu mới (AGENTS.md §12).
 
@@ -62,7 +64,7 @@ Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `�
   - Ví dụ: のみものは何がいいですか。 → Bạn muốn uống gì?
 - [ ] `vocab:大学生` **大学生** 【だいがくせい】: sinh viên đại học
   - Ví dụ: 大学生になりました。 → Tôi đã thành sinh viên đại học.
-- [ ] `vocab:すく` **すく (空く)** 【すく】: (bụng) đói; vắng người
+- [ ] `vocab:すく` **すく (空く)** 【すく】: đói (bụng); vắng, bớt đông (tàu xe, chỗ ngồi)
   - Ví dụ: おなかがすきました。何か食べたいです。 → Tôi đói bụng rồi. Tôi muốn ăn gì đó.
 - [ ] `vocab:ところ` **ところ (所)** 【ところ】: nơi, chỗ
   - Ví dụ: ここはしずかなところです。 → Đây là một nơi yên tĩnh.
@@ -71,36 +73,36 @@ Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `�
 
 ## Kanji N5 (30 / 103 mục)
 
-- [ ] `kanji:男` **男** Hán Việt: Nam; on: ダン、ナン; kun: おとこ、お; nghĩa: đàn ông, con trai
-- [ ] `kanji:先` **先** Hán Việt: Tiên, Tiến; on: セン; kun: さき、ま.ず; nghĩa: trước, đi trước
-- [ ] `kanji:聞` **聞** Hán Việt: Văn, Vấn, Vặn; on: ブン、モン; kun: き.く、き.こえる; nghĩa: nghe; hỏi
-- [ ] `kanji:下` **下** Hán Việt: Hạ, Há; on: カ、ゲ; kun: した、しも、もと、さ.げる、さ.がる、くだ.る、くだ.り、くだ.す、-くだ.す、くだ.さる、お.ろす、お.りる; nghĩa: dưới
-- [ ] `kanji:読` **読** Hán Việt: Đậu, Độc; on: ドク、トク、トウ; kun: よ.む、-よ.み; nghĩa: đọc
-- [ ] `kanji:土` **土** Hán Việt: Thổ, Độ, Đỗ; on: ド、ト; kun: つち; nghĩa: đất
-- [ ] `kanji:目` **目** Hán Việt: Mục; on: モク、ボク; kun: め、-め、ま-; nghĩa: mắt
-- [ ] `kanji:中` **中** Hán Việt: Trung, Trúng; on: チュウ; kun: なか、うち、あた.る; nghĩa: trong, giữa
-- [ ] `kanji:道` **道** Hán Việt: Đạo, Đáo; on: ドウ、トウ; kun: みち、いう; nghĩa: con đường
-- [ ] `kanji:北` **北** Hán Việt: Bắc; on: ホク; kun: きた; nghĩa: bắc
-- [ ] `kanji:分` **分** Hán Việt: Phân, Phận; on: ブン、フン、ブ; kun: わ.ける、わ.け、わ.かれる、わ.かる、わ.かつ; nghĩa: phút; chia, hiểu
-- [ ] `kanji:買` **買** Hán Việt: Mãi; on: バイ; kun: か.う; nghĩa: mua
-- [ ] `kanji:話` **話** Hán Việt: Thoại; on: ワ; kun: はな.す、はなし; nghĩa: nói chuyện
-- [ ] `kanji:古` **古** Hán Việt: Cổ; on: コ; kun: ふる.い、ふる-、-ふる.す; nghĩa: cũ
-- [ ] `kanji:南` **南** Hán Việt: Nam; on: ナン、ナ; kun: みなみ; nghĩa: nam (hướng)
-- [ ] `kanji:時` **時** Hán Việt: Thì, Thời; on: ジ; kun: とき、-どき; nghĩa: giờ; thời gian
-- [ ] `kanji:書` **書** Hán Việt: Thư; on: ショ; kun: か.く、-が.き、-がき; nghĩa: viết
-- [ ] `kanji:何` **何** Hán Việt: Hà; on: カ; kun: なに、なん、なに-、なん-; nghĩa: cái gì
-- [ ] `kanji:一` **一** Hán Việt: Nhất; on: イチ、イツ; kun: ひと-、ひと.つ; nghĩa: một
-- [ ] `kanji:気` **気** Hán Việt: Khí; on: キ、ケ; kun: いき、き; nghĩa: khí; tinh thần
-- [ ] `kanji:語` **語** Hán Việt: Ngữ, Ngứ; on: ゴ; kun: かた.る、かた.らう; nghĩa: ngôn ngữ, từ
-- [ ] `kanji:店` **店** Hán Việt: Điếm; on: テン; kun: みせ、たな; nghĩa: cửa hàng
-- [ ] `kanji:木` **木** Hán Việt: Mộc; on: ボク、モク; kun: き、こ-; nghĩa: cây, gỗ
-- [ ] `kanji:週` **週** Hán Việt: Chu; on: シュウ; kun: -; nghĩa: tuần
-- [ ] `kanji:入` **入** Hán Việt: Nhập; on: ニュウ、ジュ; kun: い.る、-い.る、-い.り、い.れる、-い.れ、はい.る; nghĩa: vào
-- [ ] `kanji:人` **人** Hán Việt: Nhân; on: ジン、ニン; kun: ひと、-り、-と; nghĩa: người
-- [ ] `kanji:花` **花** Hán Việt: Hoa; on: カ、ケ; kun: はな; nghĩa: hoa
+- [ ] `kanji:時` **時** Hán Việt: Thời; on: ジ; kun: とき、-どき; nghĩa: giờ; thời gian
+- [ ] `kanji:百` **百** Hán Việt: Bách; on: ヒャク、ビャク; kun: もも; nghĩa: trăm
+- [ ] `kanji:食` **食** Hán Việt: Thực, Tự; on: ショク、ジキ; kun: く.う、く.らう、た.べる、は.む; nghĩa: ăn
+- [ ] `kanji:雨` **雨** Hán Việt: Vũ; on: ウ; kun: あめ、あま-、-さめ; nghĩa: mưa
+- [ ] `kanji:千` **千** Hán Việt: Thiên; on: セン; kun: ち; nghĩa: nghìn
+- [ ] `kanji:上` **上** Hán Việt: Thượng, Thướng; on: ジョウ、ショウ、シャン; kun: うえ、-うえ、うわ-、かみ、あ.げる、-あ.げる、あ.がる、-あ.がる、あ.がり、-あ.がり、のぼ.る、のぼ.り、のぼ.せる、のぼ.す、たてまつ.る; nghĩa: trên
+- [ ] `kanji:円` **円** Hán Việt: Viên; on: エン; kun: まる.い、まる、まど、まど.か、まろ.やか; nghĩa: yên (tiền Nhật); hình tròn
+- [ ] `kanji:間` **間** Hán Việt: Gian, Gián; on: カン、ケン; kun: あいだ、ま、あい; nghĩa: khoảng giữa; thời gian
+- [ ] `kanji:八` **八** Hán Việt: Bát; on: ハチ、ハツ; kun: や、や.つ、やっ.つ、よう; nghĩa: tám
 - [ ] `kanji:母` **母** Hán Việt: Mẫu; on: ボ; kun: はは、も; nghĩa: mẹ
-- [ ] `kanji:西` **西** Hán Việt: Tây, Tê; on: セイ、サイ、ス; kun: にし; nghĩa: tây
+- [ ] `kanji:口` **口** Hán Việt: Khẩu; on: コウ、ク; kun: くち; nghĩa: miệng
+- [ ] `kanji:女` **女** Hán Việt: Nữ, Nhữ; on: ジョ、ニョ、ニョウ; kun: おんな、め; nghĩa: phụ nữ, con gái
+- [ ] `kanji:毎` **毎** Hán Việt: Mỗi; on: マイ; kun: ごと、-ごと.に; nghĩa: mỗi
+- [ ] `kanji:道` **道** Hán Việt: Đạo; on: ドウ、トウ; kun: みち、いう; nghĩa: con đường
+- [ ] `kanji:魚` **魚** Hán Việt: Ngư; on: ギョ; kun: うお、さかな、-ざかな; nghĩa: cá
+- [ ] `kanji:後` **後** Hán Việt: Hậu; on: ゴ、コウ; kun: のち、うし.ろ、うしろ、あと、おく.れる; nghĩa: sau
+- [ ] `kanji:男` **男** Hán Việt: Nam; on: ダン、ナン; kun: おとこ、お; nghĩa: đàn ông, con trai
+- [ ] `kanji:空` **空** Hán Việt: Không, Khống; on: クウ; kun: そら、あ.く、あ.き、あ.ける、から、す.く、す.かす、むな.しい; nghĩa: bầu trời; trống
+- [ ] `kanji:子` **子** Hán Việt: Tử, Tý; on: シ、ス、ツ; kun: こ、-こ、ね; nghĩa: con, trẻ em
+- [ ] `kanji:人` **人** Hán Việt: Nhân; on: ジン、ニン; kun: ひと、-り、-と; nghĩa: người
+- [ ] `kanji:日` **日** Hán Việt: Nhật; on: ニチ、ジツ; kun: ひ、-び、-か; nghĩa: mặt trời; ngày
+- [ ] `kanji:中` **中** Hán Việt: Trung, Trúng; on: チュウ、ジュウ; kun: なか、うち、あた.る; nghĩa: trong, giữa
+- [ ] `kanji:行` **行** Hán Việt: Hành, Hạnh, Hàng, Hạng; on: コウ、ギョウ、アン; kun: い.く、ゆ.く、-ゆ.き、-ゆき、-い.き、-いき、おこな.う、おこ.なう; nghĩa: đi
+- [ ] `kanji:駅` **駅** Hán Việt: Dịch; on: エキ; kun: -; nghĩa: nhà ga
+- [ ] `kanji:北` **北** Hán Việt: Bắc; on: ホク; kun: きた; nghĩa: bắc
+- [ ] `kanji:万` **万** Hán Việt: Vạn; on: マン、バン; kun: よろず; nghĩa: vạn, mười nghìn
+- [ ] `kanji:木` **木** Hán Việt: Mộc; on: ボク、モク; kun: き、こ-; nghĩa: cây, gỗ
+- [ ] `kanji:七` **七** Hán Việt: Thất; on: シチ; kun: なな、なな.つ、なの; nghĩa: bảy
 - [ ] `kanji:社` **社** Hán Việt: Xã; on: シャ; kun: やしろ; nghĩa: công ty; đền thờ
+- [ ] `kanji:少` **少** Hán Việt: Thiểu, Thiếu; on: ショウ; kun: すく.ない、すこ.し; nghĩa: ít
 
 ## Ngữ pháp N5 (30 / 34 mục)
 
@@ -456,36 +458,36 @@ Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `�
 
 ## Kanji N4 (30 / 181 mục)
 
+- [ ] `kanji:特` **特** Hán Việt: Đặc; on: トク; kun: -; nghĩa: đặc biệt
+- [ ] `kanji:好` **好** Hán Việt: Hảo, Hiếu; on: コウ; kun: この.む、す.く、よ.い、い.い; nghĩa: thích
+- [ ] `kanji:室` **室** Hán Việt: Thất; on: シツ; kun: むろ; nghĩa: phòng
 - [ ] `kanji:銀` **銀** Hán Việt: Ngân; on: ギン; kun: しろがね; nghĩa: bạc
-- [ ] `kanji:題` **題** Hán Việt: Đề; on: ダイ; kun: -; nghĩa: đề, chủ đề
-- [ ] `kanji:漢` **漢** Hán Việt: Hán; on: カン; kun: -; nghĩa: Hán, Trung Quốc
-- [ ] `kanji:有` **有** Hán Việt: Hữu, Dựu; on: ユウ、ウ; kun: あ.る; nghĩa: có
-- [ ] `kanji:暗` **暗** Hán Việt: Ám; on: アン; kun: くら.い、くら.む、くれ.る; nghĩa: tối
-- [ ] `kanji:開` **開** Hán Việt: Khai; on: カイ; kun: ひら.く、ひら.き、-びら.き、ひら.ける、あ.く、あ.ける; nghĩa: mở
-- [ ] `kanji:遠` **遠** Hán Việt: Viễn, Viển; on: エン、オン; kun: とお.い; nghĩa: xa
-- [ ] `kanji:画` **画** Hán Việt: Hoạch; on: ガ、カク、エ、カイ; kun: えが.く、かく.する、かぎ.る、はかりごと、はか.る; nghĩa: tranh, hình vẽ; nét chữ
-- [ ] `kanji:用` **用** Hán Việt: Dụng; on: ヨウ; kun: もち.いる; nghĩa: dùng; việc cần làm
-- [ ] `kanji:真` **真** Hán Việt: Chân; on: シン; kun: ま、ま-、まこと; nghĩa: thật, chân thật
-- [ ] `kanji:明` **明** Hán Việt: Minh; on: メイ、ミョウ、ミン; kun: あ.かり、あか.るい、あか.るむ、あか.らむ、あき.らか、あ.ける、-あ.け、あ.く、あ.くる、あ.かす; nghĩa: sáng, rõ
-- [ ] `kanji:方` **方** Hán Việt: Phương; on: ホウ; kun: かた、-かた、-がた; nghĩa: phương hướng; cách làm; vị (lịch sự)
-- [ ] `kanji:借` **借** Hán Việt: Tá; on: シャク; kun: か.りる; nghĩa: mượn
-- [ ] `kanji:親` **親** Hán Việt: Thân, Thấn; on: シン; kun: おや、おや-、した.しい、した.しむ; nghĩa: cha mẹ; thân thiết
-- [ ] `kanji:顔` **顔** Hán Việt: Nhan, Nhăn; on: ガン; kun: かお; nghĩa: mặt, khuôn mặt
-- [ ] `kanji:昼` **昼** Hán Việt: Trú; on: チュウ; kun: ひる; nghĩa: ban ngày; buổi trưa
-- [ ] `kanji:赤` **赤** Hán Việt: Xích, Thích; on: セキ、シャク; kun: あか、あか-、あか.い、あか.らむ、あか.らめる; nghĩa: đỏ
-- [ ] `kanji:県` **県** Hán Việt: Huyền; on: ケン; kun: か.ける; nghĩa: tỉnh
-- [ ] `kanji:回` **回** Hán Việt: Hồi, Hối; on: カイ、エ; kun: まわ.る、-まわ.る、-まわ.り、まわ.す、-まわ.す、まわ.し-、-まわ.し、もとお.る、か.える; nghĩa: lần; quay vòng
-- [ ] `kanji:病` **病** Hán Việt: Bệnh; on: ビョウ、ヘイ; kun: や.む、-や.み、やまい; nghĩa: bệnh
-- [ ] `kanji:洋` **洋** Hán Việt: Dương; on: ヨウ; kun: -; nghĩa: đại dương; phương Tây
-- [ ] `kanji:貸` **貸** Hán Việt: Thải, Thắc; on: タイ; kun: か.す、か.し-、かし-; nghĩa: cho mượn
+- [ ] `kanji:朝` **朝** Hán Việt: Triêu, Triều; on: チョウ; kun: あさ; nghĩa: buổi sáng; triều đại
+- [ ] `kanji:答` **答** Hán Việt: Đáp; on: トウ; kun: こた.える、こた.え; nghĩa: trả lời; đáp án
+- [ ] `kanji:飯` **飯** Hán Việt: Phạn; on: ハン; kun: めし; nghĩa: cơm, bữa ăn
 - [ ] `kanji:世` **世** Hán Việt: Thế; on: セイ、セ、ソウ; kun: よ; nghĩa: đời; thế gian
-- [ ] `kanji:軽` **軽** Hán Việt: Khinh; on: ケイ、キョウ、キン; kun: かる.い、かろ.やか、かろ.んじる; nghĩa: nhẹ
-- [ ] `kanji:堂` **堂** Hán Việt: Đường; on: ドウ; kun: -; nghĩa: gian phòng lớn, hội trường
-- [ ] `kanji:進` **進** Hán Việt: Tiến; on: シン; kun: すす.む、すす.める; nghĩa: tiến lên
-- [ ] `kanji:住` **住** Hán Việt: Trụ; on: ジュウ、ヂュウ、チュウ; kun: す.む、す.まう、-ず.まい; nghĩa: sống, cư trú
-- [ ] `kanji:館` **館** Hán Việt: Quán; on: カン; kun: やかた、たて; nghĩa: tòa nhà lớn, quán
-- [ ] `kanji:自` **自** Hán Việt: Tự; on: ジ、シ; kun: みずか.ら、おの.ずから、おの.ずと; nghĩa: tự mình, bản thân
-- [ ] `kanji:町` **町** Hán Việt: Đinh; on: チョウ; kun: まち; nghĩa: thị trấn; khu phố
+- [ ] `kanji:春` **春** Hán Việt: Xuân; on: シュン; kun: はる; nghĩa: mùa xuân
+- [ ] `kanji:乗` **乗** Hán Việt: Thừa, Thặng; on: ジョウ、ショウ; kun: の.る、-の.り、の.せる; nghĩa: lên (xe), đi (tàu xe)
+- [ ] `kanji:県` **県** Hán Việt: Huyện; on: ケン; kun: か.ける; nghĩa: tỉnh
+- [ ] `kanji:服` **服** Hán Việt: Phục; on: フク; kun: -; nghĩa: quần áo
+- [ ] `kanji:歌` **歌** Hán Việt: Ca; on: カ; kun: うた、うた.う; nghĩa: bài hát; hát
+- [ ] `kanji:理` **理** Hán Việt: Lý; on: リ; kun: ことわり; nghĩa: lý lẽ, lý do
+- [ ] `kanji:図` **図** Hán Việt: Đồ; on: ズ、ト; kun: え、はか.る; nghĩa: bản đồ, hình vẽ
+- [ ] `kanji:遠` **遠** Hán Việt: Viễn; on: エン、オン; kun: とお.い; nghĩa: xa
+- [ ] `kanji:発` **発** Hán Việt: Phát; on: ハツ、ホツ; kun: た.つ、あば.く、おこ.る、つか.わす、はな.つ; nghĩa: xuất phát; phát ra
+- [ ] `kanji:頭` **頭** Hán Việt: Đầu; on: トウ、ズ、ト; kun: あたま、かしら、-がしら、かぶり; nghĩa: đầu
+- [ ] `kanji:回` **回** Hán Việt: Hồi; on: カイ、エ; kun: まわ.る、-まわ.る、-まわ.り、まわ.す、-まわ.す、まわ.し-、-まわ.し、もとお.る、か.える; nghĩa: lần; quay vòng
+- [ ] `kanji:姉` **姉** Hán Việt: Tỷ; on: シ; kun: あね、はは; nghĩa: chị gái
+- [ ] `kanji:計` **計** Hán Việt: Kế; on: ケイ; kun: はか.る、はか.らう; nghĩa: đo, tính; kế hoạch
+- [ ] `kanji:私` **私** Hán Việt: Tư; on: シ; kun: わたくし、わたし; nghĩa: tôi; riêng tư
+- [ ] `kanji:風` **風** Hán Việt: Phong; on: フウ、フ; kun: かぜ、かざ-; nghĩa: gió; kiểu, phong cách
+- [ ] `kanji:送` **送** Hán Việt: Tống; on: ソウ; kun: おく.る; nghĩa: gửi; tiễn
+- [ ] `kanji:夕` **夕** Hán Việt: Tịch; on: セキ; kun: ゆう; nghĩa: chiều tối
+- [ ] `kanji:正` **正** Hán Việt: Chính, Chánh; on: セイ、ショウ; kun: ただ.しい、ただ.す、まさ、まさ.に; nghĩa: đúng; chính
+- [ ] `kanji:早` **早** Hán Việt: Tảo; on: ソウ、サッ; kun: はや.い、はや、はや-、はや.まる、はや.める、さ-; nghĩa: sớm, nhanh
+- [ ] `kanji:文` **文** Hán Việt: Văn; on: ブン、モン; kun: ふみ、あや; nghĩa: câu văn; văn chương
+- [ ] `kanji:林` **林** Hán Việt: Lâm; on: リン; kun: はやし; nghĩa: rừng thưa, lùm cây
+- [ ] `kanji:写` **写** Hán Việt: Tả; on: シャ、ジャ; kun: うつ.す、うつ.る、うつ-、うつ.し; nghĩa: chép; chụp (ảnh)
 
 ## Ngữ pháp N4 (30 / 44 mục)
 
@@ -558,10 +560,11 @@ Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `�
   - Ví dụ: 来月から 新しい 会社で 働く ことに なりました。 → Từ tháng sau tôi sẽ làm việc ở công ty mới.
   - Ví dụ: かいぎは 金曜日に する ことに なりました。 → Cuộc họp đã được quyết định tổ chức vào thứ Sáu.
 - [ ] `grammar:shieki` **V-せる・V-させる (sai khiến)**: Bắt ~, cho phép ~
-  - Cấu trúc: nhóm 1: 読む→読ませる; nhóm 2: 食べる→食べさせる; する→させる, 来る→こさせる; A は B に V-(さ)せる
+  - Cấu trúc: nhóm 1: 読む→読ませる; nhóm 2: 食べる→食べさせる; する→させる, 来る→こさせる; ngoại động từ: A は B に N を V-(さ)せる; nội động từ: A は B を V-(さ)せる
   - Giải thích: Người ở vị trí trên bắt hoặc cho phép người khác làm một việc. V-(さ)せて ください là cách xin phép lịch sự.
   - Ví dụ: 母は 子どもに 野菜を 食べさせます。 → Mẹ bắt con ăn rau.
   - Ví dụ: 先生は 学生に 本を 読ませました。 → Thầy giáo bắt học sinh đọc sách.
+  - Ví dụ: 先生は 学生を うちへ 帰らせました。 → Thầy giáo cho học sinh về nhà.
   - Ví dụ: すみませんが、少し 休ませて ください。 → Xin lỗi, cho tôi nghỉ một chút.
 - [ ] `grammar:te-mo-ii` **〜ても いい・〜ては いけない**: Được phép ~, không được ~
   - Cấu trúc: V-て も いいです; V-て は いけません
@@ -803,33 +806,33 @@ Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `�
 
 ## Kanji N3 (30 / 341 mục)
 
-- [ ] `kanji:増` **増** Hán Việt: Tăng; on: ゾウ; kun: ま.す、ま.し、ふ.える、ふ.やす; nghĩa: tăng, tăng thêm
-- [ ] `kanji:変` **変** Hán Việt: Biến, Bén, Biếng; on: ヘン; kun: か.わる、か.わり、か.える; nghĩa: thay đổi; lạ, kỳ quặc
-- [ ] `kanji:静` **静** Hán Việt: Tĩnh, Tịnh; on: セイ、ジョウ; kun: しず-、しず.か、しず.まる、しず.める; nghĩa: yên tĩnh, tĩnh lặng
-- [ ] `kanji:娘` **娘** Hán Việt: Nương; on: ジョウ; kun: むすめ、こ; nghĩa: con gái; cô gái
-- [ ] `kanji:断` **断** Hán Việt: Đoán, Đoạn, Đón; on: ダン; kun: た.つ、ことわ.る、さだ.める; nghĩa: cắt đứt; từ chối; quyết đoán
-- [ ] `kanji:忘` **忘** Hán Việt: Vong; on: ボウ; kun: わす.れる; nghĩa: quên
-- [ ] `kanji:靴` **靴** Hán Việt: Ngoa; on: カ; kun: くつ; nghĩa: giày
-- [ ] `kanji:球` **球** Hán Việt: Cầu; on: キュウ; kun: たま; nghĩa: quả bóng; hình cầu
-- [ ] `kanji:失` **失** Hán Việt: Thất; on: シツ; kun: うしな.う、う.せる; nghĩa: mất, đánh mất; lỗi
-- [ ] `kanji:努` **努** Hán Việt: Nỗ; on: ド; kun: つと.める; nghĩa: cố gắng, nỗ lực
-- [ ] `kanji:決` **決** Hán Việt: Quyết; on: ケツ; kun: き.める、-ぎ.め、き.まる、さ.く; nghĩa: quyết định
-- [ ] `kanji:原` **原** Hán Việt: Nguyên; on: ゲン; kun: はら; nghĩa: gốc, ban đầu; cánh đồng
-- [ ] `kanji:掛` **掛** Hán Việt: Quải; on: カイ、ケイ; kun: か.ける、-か.ける、か.け、-か.け、-が.け、か.かる、-か.かる、-が.かる、か.かり、-が.かり、かかり、-がかり; nghĩa: treo, móc; tốn (thời gian, tiền)
-- [ ] `kanji:険` **険** Hán Việt: Hiểm; on: ケン; kun: けわ.しい; nghĩa: hiểm trở; nguy hiểm
-- [ ] `kanji:横` **横** Hán Việt: Hoành, Hoạnh, Quáng, Vàng; on: オウ; kun: よこ; nghĩa: bên cạnh; chiều ngang
-- [ ] `kanji:加` **加** Hán Việt: Gia; on: カ; kun: くわ.える、くわ.わる; nghĩa: thêm vào, cộng; tham gia
+- [ ] `kanji:渡` **渡** Hán Việt: Độ; on: ト; kun: わた.る、-わた.る、わた.す; nghĩa: băng qua; trao, đưa
 - [ ] `kanji:互` **互** Hán Việt: Hỗ; on: ゴ; kun: たが.い、かたみ.に; nghĩa: lẫn nhau, qua lại
-- [ ] `kanji:愛` **愛** Hán Việt: Ái; on: アイ; kun: いと.しい、かな.しい、め.でる、お.しむ、まな; nghĩa: yêu, tình yêu
-- [ ] `kanji:適` **適** Hán Việt: Thích, Đích; on: テキ; kun: かな.う; nghĩa: thích hợp, phù hợp
-- [ ] `kanji:亡` **亡** Hán Việt: Vong, Vô; on: ボウ、モウ; kun: な.い、な.き-、ほろ.びる、ほろ.ぶ、ほろ.ぼす; nghĩa: chết, mất; diệt vong
-- [ ] `kanji:期` **期** Hán Việt: Kỳ, Ky; on: キ、ゴ; kun: -; nghĩa: thời kỳ, khoảng thời gian; kỳ hạn
-- [ ] `kanji:泳` **泳** Hán Việt: Vịnh; on: エイ; kun: およ.ぐ; nghĩa: bơi
-- [ ] `kanji:番` **番** Hán Việt: Phiên, Phan, Ba, Bà; on: バン; kun: つが.い; nghĩa: lượt, số thứ tự; canh gác
-- [ ] `kanji:際` **際** Hán Việt: Tế; on: サイ; kun: きわ、-ぎわ; nghĩa: lúc, khi; mép, bên cạnh
-- [ ] `kanji:権` **権** Hán Việt: Quyền; on: ケン、ゴン; kun: おもり、かり、はか.る; nghĩa: quyền, quyền lực
-- [ ] `kanji:位` **位** Hán Việt: Vị; on: イ; kun: くらい、ぐらい; nghĩa: vị trí, thứ hạng; khoảng (chừng)
-- [ ] `kanji:差` **差** Hán Việt: Soa, Si, Sai, Sái; on: サ; kun: さ.す、さ.し; nghĩa: chênh lệch, khác biệt; giương (ô)
-- [ ] `kanji:信` **信** Hán Việt: Tín; on: シン; kun: -; nghĩa: tin, tin tưởng; tin tức, liên lạc
-- [ ] `kanji:否` **否** Hán Việt: Phủ, Bĩ; on: ヒ; kun: いな、いや; nghĩa: không, phủ định; từ chối
-- [ ] `kanji:杯` **杯** Hán Việt: Bôi; on: ハイ; kun: さかずき; nghĩa: chén, ly; cốc (đếm)
+- [ ] `kanji:違` **違** Hán Việt: Vi; on: イ; kun: ちが.う、ちが.い、ちが.える、-ちが.える、たが.う、たが.える; nghĩa: khác, sai
+- [ ] `kanji:命` **命** Hán Việt: Mệnh; on: メイ、ミョウ; kun: いのち; nghĩa: sinh mạng; mệnh lệnh; số mệnh
+- [ ] `kanji:件` **件** Hán Việt: Kiện; on: ケン; kun: くだん; nghĩa: việc, vụ việc
+- [ ] `kanji:突` **突** Hán Việt: Đột; on: トツ、カ; kun: つ.く; nghĩa: đâm, chọc; đột ngột
+- [ ] `kanji:折` **折** Hán Việt: Chiết; on: セツ、シャク; kun: お.る、おり、お.り、-お.り、お.れる; nghĩa: gấp, bẻ; gãy
+- [ ] `kanji:婚` **婚** Hán Việt: Hôn; on: コン; kun: -; nghĩa: hôn nhân, cưới
+- [ ] `kanji:完` **完** Hán Việt: Hoàn; on: カン; kun: -; nghĩa: hoàn thành, trọn vẹn
+- [ ] `kanji:草` **草** Hán Việt: Thảo; on: ソウ; kun: くさ、くさ-、-ぐさ; nghĩa: cỏ
+- [ ] `kanji:絵` **絵** Hán Việt: Hội; on: カイ、エ; kun: -; nghĩa: tranh, bức vẽ
+- [ ] `kanji:勤` **勤** Hán Việt: Cần; on: キン、ゴン; kun: つと.める、-づと.め、つと.まる、いそ.しむ; nghĩa: làm việc, đi làm; siêng năng
+- [ ] `kanji:盗` **盗** Hán Việt: Đạo; on: トウ; kun: ぬす.む、ぬす.み; nghĩa: trộm, ăn cắp
+- [ ] `kanji:負` **負** Hán Việt: Phụ; on: フ; kun: ま.ける、ま.かす、お.う; nghĩa: thua; gánh vác, chịu
+- [ ] `kanji:込` **込** Hán Việt: -; on: -; kun: -こ.む、こ.む、こ.み、-こ.み、こ.める; nghĩa: đông, chật; cho vào, bao gồm
+- [ ] `kanji:数` **数** Hán Việt: Số, Sổ, Sác; on: スウ、ス、サク、ソク、シュ; kun: かず、かぞ.える、しばしば、せ.める、わずらわ.しい; nghĩa: số, con số; đếm
+- [ ] `kanji:治` **治** Hán Việt: Trị; on: ジ、チ; kun: おさ.める、おさ.まる、なお.る、なお.す; nghĩa: cai trị; chữa bệnh, khỏi bệnh
+- [ ] `kanji:状` **状** Hán Việt: Trạng; on: ジョウ; kun: -; nghĩa: tình trạng, trạng thái; thư, giấy tờ
+- [ ] `kanji:望` **望** Hán Việt: Vọng; on: ボウ、モウ; kun: のぞ.む、もち; nghĩa: mong muốn, hy vọng; nhìn xa
+- [ ] `kanji:眠` **眠** Hán Việt: Miên; on: ミン; kun: ねむ.る、ねむ.い; nghĩa: ngủ; buồn ngủ
+- [ ] `kanji:然` **然** Hán Việt: Nhiên; on: ゼン、ネン; kun: しか、しか.り、しか.し、さ; nghĩa: như thế, như vậy
+- [ ] `kanji:務` **務** Hán Việt: Vụ; on: ム; kun: つと.める; nghĩa: nhiệm vụ, công việc
+- [ ] `kanji:機` **機** Hán Việt: Cơ; on: キ; kun: はた; nghĩa: máy móc; máy bay; cơ hội
+- [ ] `kanji:港` **港** Hán Việt: Cảng; on: コウ; kun: みなと; nghĩa: cảng, bến cảng
+- [ ] `kanji:御` **御** Hán Việt: Ngự; on: ギョ、ゴ; kun: おん-、お-、み-; nghĩa: tiền tố kính ngữ; điều khiển
+- [ ] `kanji:米` **米** Hán Việt: Mễ; on: ベイ、マイ、メエトル; kun: こめ、よね; nghĩa: gạo; nước Mỹ
+- [ ] `kanji:宿` **宿** Hán Việt: Túc, Tú; on: シュク; kun: やど、やど.る、やど.す; nghĩa: nhà trọ, chỗ ở
+- [ ] `kanji:捕` **捕** Hán Việt: Bộ; on: ホ; kun: と.らえる、と.らわれる、と.る、とら.える、とら.われる、つか.まえる、つか.まる; nghĩa: bắt, bắt giữ
+- [ ] `kanji:局` **局** Hán Việt: Cục; on: キョク; kun: つぼね; nghĩa: cơ quan, sở (bưu điện, đài); tình thế
+- [ ] `kanji:決` **決** Hán Việt: Quyết; on: ケツ; kun: き.める、-ぎ.め、き.まる、さ.く; nghĩa: quyết định

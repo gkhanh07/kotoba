@@ -87,3 +87,17 @@ test("a kanji page lists its look-alike kanji, and one without any shows none", 
   await page.goto("/kanji/" + encodeURIComponent("食"));
   await expect(page.getByRole("heading", { name: "Dễ nhầm với" })).toHaveCount(0);
 });
+
+test("a Japanese-made kanji says it has no Hán Việt reading (BUG-009)", async ({ page, axe }, info) => {
+  await page.goto("/kanji/" + encodeURIComponent("込"));
+  await expect(page).toHaveTitle("込 · Kotoba");
+  await expect(page.getByText("Chữ do Nhật tạo, không có âm Hán Việt")).toBeVisible();
+  await axe();
+  await page.screenshot({ path: info.outputPath(`kanji-no-hv-${info.project.name}.png`), fullPage: true });
+});
+
+test("a corrected kanji shows the Hán Việt reading from the review (BUG-009)", async ({ page }) => {
+  await page.goto("/kanji/" + encodeURIComponent("画"));
+  await expect(page).toHaveTitle("画 · Họa, Hoạch · Kotoba");
+  await expect(page.getByText("Họa · Hoạch", { exact: false })).toBeVisible();
+});

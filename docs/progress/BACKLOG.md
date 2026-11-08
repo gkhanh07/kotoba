@@ -41,3 +41,9 @@ Out-of-scope findings (AGENTS.md §2, §13). Not fixed in the task that found th
 
 ## A reset during a push (found in the store hardening task, 2026-11-05)
 A reset of a set with no local cards, made while a push is in flight, leaves `snapshot()` unchanged, so `applyRemote` writes `forget: []` and drops the entry. The account keeps those cards. Needs a reset of an empty set inside one request; the next reset of that set sends it again.
+
+## Hán Việt source task follow-ups (2026-11-08)
+- AC-1 of `docs/tasks/hanviet-fix.md` (every `hv` is in hanviet-pinyin-wordlist) was checked by a scratchpad script, not a repo test, because the list and Unihan variants are not vendored. Vendor a trimmed list (MIT allows it) and turn the check into a `validate:content` step before N2 kanji are added.
+- A kanji with no `hv` (only 込 today) renders an empty `hv` span in kanji tiles: `kanji/[char]/page.tsx` (look-alikes), `vocab/[word]/page.tsx`, `KanjiGrid.tsx`, `lessons/[n]/page.tsx`. Invisible, but an empty node; render the span only when there is a reading.
+- A kanji with no on reading (込) shows an empty "Âm On" row on its page; show a dash or leave the row out.
+- The site footer credits "Dữ liệu kanji: KANJIDIC2" only; since ADR 009 the Hán Việt readings come from hanviet-pinyin-wordlist, which only the legal page credits.

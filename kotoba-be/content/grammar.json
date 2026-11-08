@@ -971,7 +971,7 @@
   {
     "id": "grammar:shieki", "slug": "shieki", "lesson": 40, "level": 4, "pattern": "V-せる・V-させる (sai khiến)",
     "title": { "vi": "Bắt ~, cho phép ~", "en": "Causative: make or let ~" },
-    "structure": "nhóm 1: 読む→読ませる; nhóm 2: 食べる→食べさせる; する→させる, 来る→こさせる; A は B に V-(さ)せる",
+    "structure": "nhóm 1: 読む→読ませる; nhóm 2: 食べる→食べさせる; する→させる, 来る→こさせる; ngoại động từ: A は B に N を V-(さ)せる; nội động từ: A は B を V-(さ)せる",
     "explain": {
       "vi": "Người ở vị trí trên bắt hoặc cho phép người khác làm một việc. V-(さ)せて ください là cách xin phép lịch sự.",
       "en": "Someone in a higher position makes or lets another person do something. V-(さ)せて ください politely asks to be allowed to do it."
@@ -979,6 +979,7 @@
     "examples": [
       { "ja": "母は 子どもに 野菜を 食べさせます。", "vi": "Mẹ bắt con ăn rau.", "en": "The mother makes her child eat vegetables." },
       { "ja": "先生は 学生に 本を 読ませました。", "vi": "Thầy giáo bắt học sinh đọc sách.", "en": "The teacher had the students read a book." },
+      { "ja": "先生は 学生を うちへ 帰らせました。", "vi": "Thầy giáo cho học sinh về nhà.", "en": "The teacher let the students go home." },
       { "ja": "すみませんが、少し 休ませて ください。", "vi": "Xin lỗi, cho tôi nghỉ một chút.", "en": "Excuse me, please let me rest a little." }
     ],
     "reviewed": false

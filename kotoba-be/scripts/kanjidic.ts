@@ -1,5 +1,5 @@
 // Builds content/kanji.json from KANJIDIC2. Run: node scripts/kanjidic.ts
-// Keeps the hand-written fields (vi, lesson, reviewed, similar) already in kanji.json. Delete .cache/ to refetch.
+// Keeps the hand-written fields (hv, vi, lesson, reviewed, similar) already in kanji.json. Delete .cache/ to refetch.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 
@@ -14,6 +14,8 @@ const OLD_TO_NEW: Record<string, number> = { 4: 5, 3: 4 };
 const INCLUDE_LEVELS = [5, 4, 3];
 // Characters KANJIDIC2 gives no included level that lessons still teach, with the level they are taught at.
 const EXTRA: Record<string, number> = {};
+// On readings KANJIDIC2 omits (BUG-014): ジュウ is the reading of 世界中 and 連中.
+const EXTRA_ON: Record<string, string[]> = { 中: ['ジュウ'] };
 
 if (!existsSync(CACHE)) {
   mkdirSync('.cache', { recursive: true });
@@ -40,7 +42,7 @@ const one = (s: string, re: RegExp) => {
   return m === undefined ? undefined : decode(m);
 };
 
-type Authored = { vi?: string; lesson?: number | null; reviewed?: boolean; similar?: string[] };
+type Authored = { hv?: string[]; vi?: string; lesson?: number | null; reviewed?: boolean; similar?: string[] };
 const old = new Map<string, Authored>(
   existsSync(OUT) ? (JSON.parse(readFileSync(OUT, 'utf8')) as ({ char: string } & Authored)[]).map((k) => [k.char, k]) : [],
 );
@@ -59,8 +61,9 @@ const kanji = xml
     return {
       id: `kanji:${char}`,
       char,
-      hv: all(c, /<reading r_type="vietnam">(.+?)<\/reading>/g),
-      on: all(c, /<reading r_type="ja_on">(.+?)<\/reading>/g),
+      // Authored, not read from KANJIDIC2: its Vietnamese readings mix in Nôm and wrong readings (BUG-009, ADR 009).
+      hv: a.hv ?? [],
+      on: [...new Set([...all(c, /<reading r_type="ja_on">(.+?)<\/reading>/g), ...(EXTRA_ON[char] ?? [])])],
       kun: all(c, /<reading r_type="ja_kun">(.+?)<\/reading>/g),
       en: all(c, /<meaning>(.+?)<\/meaning>/g),
       strokes: Number(one(c, /<stroke_count>(\d+)<\/stroke_count>/)),
