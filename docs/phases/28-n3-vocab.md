@@ -79,3 +79,11 @@ Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanin
 - Unsure, maybe N4: チーム 給料 相手 参加 係 がっき むりょう 曲 現金 店長. Maybe N2 (18, ~8.7%): えんぎ てんじ 主役 かぶき ぎゃくてん 本番 有利 不利 支出 景気 りょうしゅうしょ おうぼ きかく しんぱん 寄付 職人 赤字 黒字. Meanings to check: かんとく (director; head coach), 対, 得, 働き, パート.
 - Screenshots `/vocab?level=3` and `/lessons/60` at 360 and 1440: "11 kanji · 55 từ" matches, no horizontal scroll.
 - Sample: seed 2814, 30 items, in the batch report.
+
+### 28e (lessons 62–65)
+- 193 words (62: 52, 63: 46, 64: 46, 65: 49); N3 total 1,018, file 2,290. Short of ~200 by 7: the remaining theme words exist already (売り場 注文 貿易 市民 意見 賛成 反対 交番 規則 禁煙 断る 遠慮 免許 中止 利用…), are taken homophones, or look N2. Not padded.
+- Fixed while authoring: 19 examples used kanji outside N5–N3 (弁 届 卵 的 訳 結 従 公 党 義 減 布 虫 故 寮 符 絡) and were moved to kana or rewritten; romaji 安売り `yasuuri`, 手に入れる `te ni ireru`, 世の中 `yo no naka`; お断り example made grammatical (ペットはお断りしています); 真実 example rewritten (was redundant). Dropped (no JMdict pair): 盗まれる, 違法 read いはん, 許される, お客.
+- Skipped homophones (id taken): 駐車 (注射), 無効 (向こう), 延ばす (伸ばす), 捜す (探す), 包装 (放送), 意志 (石), 証人/商人 (しょうにん). Same reading, different spelling, added: 開店/回転, 支持/指示, 見方/味方, 法/ほう. New kana ids that block future homophones: こうかん (好感), ほしょう (保障, 補償), けいじ (掲示), しょうめい (照明), ゆうこう (友好), たいしょう (対照, 大将), plus かんり せいふ こうほ ばつ とどけ いっぱん こうきょう ふせぐ かくす さわぐ しじ ひはん ていあん けつろん.
+- Unsure, maybe N4: 申し込む 市場 売れる 平和 キャンセル 解決 世の中. Maybe N2 (17, ~8.8%): 消費者 安売り ひはん 対立 首相 ていあん 意識 すり ねらう あばれる 事情 たちいりきんし けいじばん 未成年 責任者 たいしょう 貸し出し. Meanings to check: 知事, おまけ, お断り, たいおう, いっぱん and 関係者 (example translations), 法 (ほう, next to 方 in L5).
+- Screenshots `/vocab?level=3` and `/lessons/63` at 360 and 1440: "Bài 63 / 81 · 10 kanji · 46 từ" matches, no horizontal scroll.
+- Sample: seed 2815, 30 items, in the batch report.
