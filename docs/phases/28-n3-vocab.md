@@ -71,3 +71,11 @@ Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanin
 - Unsure, maybe N4 (9): 客 あいさつ ようこそ 夕食 飛ぶ 速い 付ける 分ける 存じる. Maybe N2 (17, ~8%): 訪れる 出迎える 招待状 お越し 立ち寄る 不在 見舞う 逃がす 横切る 引き返す しゃがむ 起き上がる なでる しぼる 学問 論文 ふるさと. Near-synonym pairs kept: ふりかえる/ふりむく, 学費/じゅぎょうりょう, 出会う/出会い, 抜く/抜ける.
 - Screenshots `/vocab?level=3` and `/lessons/57` at 360 and 1440: "Bài 57 / 81 · 9 kanji · 57 từ" matches the data, no horizontal scroll.
 - Sample: seed 2813, 30 items, in the batch report.
+
+### 28d (lessons 58–61)
+- 206 words (58: 45, 59: 52, 60: 55, 61: 54); N3 total 825, file 2,097. Lesson 58 (arts) is short: its core words already exist at N5/N4 (美術, 作家, 画家, はいゆう, 小説, まんが, 感動, 感想, 見物).
+- Fixed while authoring: dropped 経済的 (的 is not in N5–N3, a kana spelling would be odd); examples of でんとう, 本番, じょうし, 報告 rewritten to keep to N5–N3 kanji. Dropped to keep the N2 share down: 上映 地位 出世 求人 財産 落語 一等 ステージ 勤務 円高 円安 消費 手数料 支払い 家計 不景気 敗れる.
+- Skipped homophones: 公演 (`vocab:こうえん` is 公園), 詩 (`vocab:し` is 市); 体操 already exists. New kana ids that block future homophones include かし (歌詞; blocks 菓子, 貸し), でんとう (blocks 電灯), ためる (blocks 溜める), そうぞう (blocks 創造), きょうそう (blocks 競走), えんぎ (blocks 縁起), plus about 70 other kana ids (list in the batch report).
+- Unsure, maybe N4: チーム 給料 相手 参加 係 がっき むりょう 曲 現金 店長. Maybe N2 (18, ~8.7%): えんぎ てんじ 主役 かぶき ぎゃくてん 本番 有利 不利 支出 景気 りょうしゅうしょ おうぼ きかく しんぱん 寄付 職人 赤字 黒字. Meanings to check: かんとく (director; head coach), 対, 得, 働き, パート.
+- Screenshots `/vocab?level=3` and `/lessons/60` at 360 and 1440: "11 kanji · 55 từ" matches, no horizontal scroll.
+- Sample: seed 2814, 30 items, in the batch report.
