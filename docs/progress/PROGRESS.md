@@ -40,7 +40,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | Store hardening: stored data that cannot be read is copied to `<key>.broken` before a write, resets and pulls are all-or-nothing, no empty catch left (spec `docs/tasks/store-hardening.md`, ADR 008, BUG-013) | DONE | `fix(store): keep stored data that cannot be read or written` |
 | Hán Việt from a checked source and the round-1 sample errors: authored `hv` for 625 kanji (ADR 009, BUG-009), 中 ジュウ (BUG-014), すく (BUG-015), causative に/を (BUG-016); kanji samples redrawn (spec `docs/tasks/hanviet-fix.md`) | DONE | `fix(content): author Hán Việt readings from a checked source` |
 | User sample review of N5, N4 and N3 kanji: seeded samples of 30 per kind | DONE (2026-11-09): 270/270 correct, 0/30 errors per kind. The review was drafted by an AI tool outside the repo; the user read it and accepted it. Risk: meanings, examples and explanations had no fully independent human check. `reviewed: true` is still unset: only the user sets it (AGENTS.md §12) | sheet `docs/tasks/sample-review.md`, seed 20261105 (kanji: 20261108 after ADR 009); before phase 28, see PLAN (AGENTS.md §12) |
-| 28–30 (N3 vocab, grammar, mock test `n3-1`), 35 (finish, incl. trimming level tabs to N5–N3) | TODO | |
+| 28 N3 vocab (spec `docs/phases/28-n3-vocab.md`): 28a lessons 46–49, 222 words | IN PROGRESS (28a done) | `content(n3): vocab batch 28a` |
+| 29–30 (N3 grammar, mock test `n3-1`), 35 (finish, incl. trimming level tabs to N5–N3) | TODO | |
 | 31–34 (N2) | DROPPED | user decision 2026-11-04: the roadmap stops at N3 |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
@@ -98,5 +99,5 @@ After store hardening: BE 49 unit + 41 e2e + 27 content; FE Vitest 588 tests (al
 The `/` critique fix and store hardening are done. Waiting for the user: the sample review (AGENTS.md §12) and the Hán Việt source for BUG-009 (OPEN).
 
 ## Next step
-Phase 28 (N3 vocab) in lessons 46–80, batches of ~200 words. The sample review is done (2026-11-09).
+Phase 28 batch 28b (lessons 50–53), then 28c–28i. After 28a: BE 55 unit + 41 e2e + 33 content, JMdict 1,494 words; FE Vitest 592, E2E 176 passed.
 Note: kill stray `next-server` / `kotoba-be/dist/main` / `nest start --watch` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`; it finds the process with `lsof`, or PowerShell on Windows, BUG-008), so it needs a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).

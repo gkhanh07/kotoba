@@ -46,3 +46,12 @@ Out: grammar (29), mock test (30), the same-kana id scheme (BACKLOG).
 Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanings in decks and the word page), large data (the file passes ~3,000 items: seed time and `/vocab?level=3` paging). Others N/A: no runtime code changes.
 
 ## Self-review notes
+### 28a (lessons 46–49)
+- 222 words (46: 58, 47: 52, 48: 52, 49: 60); N3 total 222, file 1,494. Slightly above ~200; nothing was padded.
+- Skipped homophones (id taken): 掃く, 拭く, 揚げる, 煮る, 風邪, 咳, 肩, 恋. New ids that block future homophones: なか, した, かわ, かん, よう, こい, うつる.
+- Unsure, maybe N4: 夫 妻 男性 女性 人生 親子 父親 母親 一生 和食 洋食 食品 自宅 昼寝 背中 痛み 計る マンション エアコン ダイエット 内科 外科.
+- Unsure, maybe N2 (48 words, ~22% of the batch; there is no official list since 2010, so this follows the old unofficial lists): 婦人 末っ子 次男 次女 そうしき なかよし あまえる たんじょう 夜更かし 居眠り てつや 散らかす 覚ます 冷ます 住民 大家 かんりにん 和室 洋室 カーペット ソファー ベランダ いためる むく ゆでる しんせん 一口 飲み会 ワイン アルコール にわとり ぶた えさ かむ よぼう かいふく こっせつ 腹痛 白髪 くちびる つめ ひざ 手首 しんさつ かんじゃ 呼吸 体力 顔色.
+- Near-synonym pairs kept: 親類/しんせき, 食品/食料. 腹 is marked as casual.
+- Test change: the 5,000-row paging e2e test used synthetic level-3 rows; real N3 words now sort before them, so the synthetic rows moved to level 2 (no real N2 content). Same intent: paging and timing on 5,000 rows of one level, other levels untouched. Seen failing with level 3 before the change.
+- Screenshots `/vocab?level=3` and `/lessons/47` at 360 and 1440: counts match the data, no horizontal scroll.
+- Sample: seed 2811, 30 items, in the batch report.

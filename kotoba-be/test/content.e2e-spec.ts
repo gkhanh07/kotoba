@@ -155,7 +155,7 @@ describe('content (e2e)', () => {
     }
   });
 
-  describe('with 5,000 synthetic level-3 words', () => {
+  describe('with 5,000 synthetic level-2 words (N2 has no real words; N3 has)', () => {
     const N = 5000;
     const id = (n: number) => `vocab:__synthetic_${n}`;
 
@@ -164,10 +164,10 @@ describe('content (e2e)', () => {
         data: Array.from({ length: N }, (_, n) => ({
           id: id(n),
           kind: 'vocab',
-          level: 3,
+          level: 2,
           sort: 100000 + n,
           search: '',
-          data: JSON.stringify({ id: id(n), level: 3 }),
+          data: JSON.stringify({ id: id(n), level: 2 }),
         })),
       });
     });
@@ -177,10 +177,10 @@ describe('content (e2e)', () => {
     it('pages them correctly and quickly without touching the N5 lists', async () => {
       for (let page = 1; page <= 51; page++) {
         const started = performance.now();
-        const res = await get(`/content/vocab?level=3&page=${page}`).expect(200);
+        const res = await get(`/content/vocab?level=2&page=${page}`).expect(200);
         expect(performance.now() - started, `page ${page}`).toBeLessThan(200);
         const ids = Array.from({ length: page <= 50 ? 100 : 0 }, (_, i) => id((page - 1) * 100 + i));
-        expect(res.body).toEqual({ items: ids.map((i) => ({ id: i, level: 3 })), page, pages: 50, total: N });
+        expect(res.body).toEqual({ items: ids.map((i) => ({ id: i, level: 2 })), page, pages: 50, total: N });
       }
       expect((await get('/content/vocab?level=5&page=1').expect(200)).body.total).toBe(vocab.filter((v) => v.level === 5).length);
       expect((await get('/content/vocab?page=1').expect(200)).body.total).toBe(vocab.length + N);
