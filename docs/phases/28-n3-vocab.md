@@ -63,3 +63,11 @@ Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanin
 - Checked: every N3 word written in kana has a kanji outside N5–N3 (none could have been written with kanji).
 - Screenshots `/vocab?level=3` and `/lessons/50` at 360 and 1440: counts match, no horizontal scroll.
 - Sample: seed 2812, 30 items, in the batch report.
+
+### 28c (lessons 54–57)
+- 206 words (54: 50, 55: 49, 56: 50, 57: 57); N3 total 619, file 1,891. Lesson 55 (movement) ran out of N3 words that are not already in the data.
+- Fixed while authoring: the examples of 暗記 (used 個) and 部活 (used 授) were rewritten to keep to N5–N3 kanji; romaji of さそう/追う follow the existing `-ou` spelling (sasou, ou).
+- Skipped homophones (id or spelling+reading taken): 贈る, 泊める, 留める, 振る, 貼る, 張る, 駆ける, 包装, 開く (ひらく; `vocab:開く` is あく), 移る (exists as うつる); 下りる, 上る, 下ろす share a JMdict entry with existing words. 取る and 切る are missing at every level (BACKLOG). New ids that block future homophones: まく (巻く; blocks 撒く, 蒔く), とく (解く; blocks 溶く), はなす (離す), うつす, つめる, ほる, ぬる, ふれる, むすぶ, のばす, つかむ, にぎる; `vocab:すすめる` (勧める) sits beside `vocab:進める`.
+- Unsure, maybe N4 (9): 客 あいさつ ようこそ 夕食 飛ぶ 速い 付ける 分ける 存じる. Maybe N2 (17, ~8%): 訪れる 出迎える 招待状 お越し 立ち寄る 不在 見舞う 逃がす 横切る 引き返す しゃがむ 起き上がる なでる しぼる 学問 論文 ふるさと. Near-synonym pairs kept: ふりかえる/ふりむく, 学費/じゅぎょうりょう, 出会う/出会い, 抜く/抜ける.
+- Screenshots `/vocab?level=3` and `/lessons/57` at 360 and 1440: "Bài 57 / 81 · 9 kanji · 57 từ" matches the data, no horizontal scroll.
+- Sample: seed 2813, 30 items, in the batch report.
