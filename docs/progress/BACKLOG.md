@@ -47,3 +47,9 @@ A reset of a set with no local cards, made while a push is in flight, leaves `sn
 - A kanji with no `hv` (only 込 today) renders an empty `hv` span in kanji tiles: `kanji/[char]/page.tsx` (look-alikes), `vocab/[word]/page.tsx`, `KanjiGrid.tsx`, `lessons/[n]/page.tsx`. Invisible, but an empty node; render the span only when there is a reading.
 - A kanji with no on reading (込) shows an empty "Âm On" row on its page; show a dash or leave the row out.
 - The site footer credits "Dữ liệu kanji: KANJIDIC2" only; since ADR 009 the Hán Việt readings come from hanviet-pinyin-wordlist, which only the legal page credits.
+
+## Sample review round 2 notes (2026-11-09, not errors)
+- `grammar:baai-wa`: add the adjective forms `A-い + 場合は` and `A-な + な場合は`.
+- `grammar:you-ni-naru`: add the negative `V-ない + ようになる` (たばこを吸わないようになりました).
+- `n4-1` question 5.4 (usage): the explanation would read more naturally as `パン作りに失敗した` than `パン作りが失敗した`; the answer is unaffected.
+- Kanji cards list every on/kun and Hán Việt reading from the sources, including rare ones (米 メエトル, 数 サク・ソク・シュ). Show the common readings first and fold the rare ones away.

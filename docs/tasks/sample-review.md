@@ -4,263 +4,265 @@ Seed: 20261105 cho từ vựng, ngữ pháp và câu hỏi đề; 20261108 cho b
 
 Vòng 1 (2026-11-08): kanji sai từ 2 mục trở lên ở mỗi cấp (âm Hán Việt lấy từ KANJIDIC2, BUG-009), nên cả ba phần kanji được rút lại sau khi sửa (ADR 009). Ba lỗi khác đã sửa, các mục này vẫn có trong mẫu, với nội dung mới: `vocab:すく` (BUG-015), `grammar:shieki` (BUG-016), `kanji:中` thiếu âm ジュウ (BUG-014).
 
+Vòng 2 (2026-11-09): 270/270 mục đúng, 0/30 lỗi ở mọi phần, nên không phần nào phải rút lại. Bản duyệt do một công cụ AI lập, không chạy trên repo; người dùng đã đọc lại và chấp nhận nó ngày 2026-11-09 (ghi trong PROGRESS). Các ghi chú không tính lỗi của bản duyệt nằm trong BACKLOG.
+
 Đánh dấu `[x]` mục đúng; mục sai thì ghi lỗi ngay dưới mục đó. Loại nào sai quá 5% (từ 2 mục sai trên 30) thì sửa loại đó và rút mẫu mới (AGENTS.md §12).
 
 Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `★` là ô đáp án, `✓` là đáp án đúng.
 
 ## Từ vựng N5 (30 / 694 mục)
 
-- [ ] `vocab:あさごはん` **あさごはん (朝ご飯)** 【あさごはん】: bữa sáng
+- [x] `vocab:あさごはん` **あさごはん (朝ご飯)** 【あさごはん】: bữa sáng
   - Ví dụ: あさごはんを食べましたか。 → Bạn ăn sáng chưa?
-- [ ] `vocab:あまり` **あまり** 【あまり】: không ... lắm
+- [x] `vocab:あまり` **あまり** 【あまり】: không ... lắm
   - Ví dụ: あまりテレビを見ません。 → Tôi không xem tivi mấy.
-- [ ] `vocab:クラス` **クラス** 【クラス】: lớp học
+- [x] `vocab:クラス` **クラス** 【クラス】: lớp học
   - Ví dụ: わたしのクラスは二十人です。 → Lớp tôi có hai mươi người.
-- [ ] `vocab:ホテル` **ホテル** 【ホテル】: khách sạn
+- [x] `vocab:ホテル` **ホテル** 【ホテル】: khách sạn
   - Ví dụ: ホテルにとまります。 → Tôi ở khách sạn.
-- [ ] `vocab:六つ` **六つ** 【むっつ】: sáu cái
+- [x] `vocab:六つ` **六つ** 【むっつ】: sáu cái
   - Ví dụ: いすが六つあります。 → Có sáu cái ghế.
-- [ ] `vocab:おにいさん` **おにいさん (お兄さん)** 【おにいさん】: anh trai (người khác)
+- [x] `vocab:おにいさん` **おにいさん (お兄さん)** 【おにいさん】: anh trai (người khác)
   - Ví dụ: おにいさんはやさしいですね。 → Anh trai bạn hiền nhỉ.
-- [ ] `vocab:ちがう` **ちがう (違う)** 【ちがう】: khác; sai
+- [x] `vocab:ちがう` **ちがう (違う)** 【ちがう】: khác; sai
   - Ví dụ: これはわたしのとちがいます。 → Cái này khác cái của tôi.
-- [ ] `vocab:ねる` **ねる (寝る)** 【ねる】: ngủ; đi ngủ
+- [x] `vocab:ねる` **ねる (寝る)** 【ねる】: ngủ; đi ngủ
   - Ví dụ: 十一時にねます。 → Tôi đi ngủ lúc mười một giờ.
-- [ ] `vocab:まるい` **まるい (丸い)** 【まるい】: tròn
+- [x] `vocab:まるい` **まるい (丸い)** 【まるい】: tròn
   - Ví dụ: どちらのテーブルがまるいですか。 → Cái bàn nào tròn?
-- [ ] `vocab:かえる` **かえる (帰る)** 【かえる】: về (nhà, nước)
+- [x] `vocab:かえる` **かえる (帰る)** 【かえる】: về (nhà, nước)
   - Ví dụ: 七時にうちへかえります。 → Bảy giờ tôi về nhà.
-- [ ] `vocab:午前` **午前** 【ごぜん】: buổi sáng (trước 12 giờ trưa)
+- [x] `vocab:午前` **午前** 【ごぜん】: buổi sáng (trước 12 giờ trưa)
   - Ví dụ: 午前十時に来てください。 → Hãy đến lúc mười giờ sáng.
-- [ ] `vocab:かいしゃいん` **かいしゃいん (会社員)** 【かいしゃいん】: nhân viên công ty
+- [x] `vocab:かいしゃいん` **かいしゃいん (会社員)** 【かいしゃいん】: nhân viên công ty
   - Ví dụ: あにはかいしゃいんです。 → Anh trai tôi là nhân viên công ty.
-- [ ] `vocab:下` **下** 【した】: dưới
+- [x] `vocab:下` **下** 【した】: dưới
   - Ví dụ: いすの下にねこがいます。 → Dưới ghế có con mèo.
-- [ ] `vocab:出口` **出口** 【でぐち】: lối ra
+- [x] `vocab:出口` **出口** 【でぐち】: lối ra
   - Ví dụ: 出口はどこですか。 → Lối ra ở đâu?
-- [ ] `vocab:こんばん` **こんばん (今晩)** 【こんばん】: tối nay
+- [x] `vocab:こんばん` **こんばん (今晩)** 【こんばん】: tối nay
   - Ví dụ: こんばん、えいがを見ませんか。 → Tối nay đi xem phim không?
-- [ ] `vocab:飲む` **飲む** 【のむ】: uống
+- [x] `vocab:飲む` **飲む** 【のむ】: uống
   - Ví dụ: おちゃを飲みます。 → Tôi uống trà.
-- [ ] `vocab:前` **前** 【まえ】: trước
+- [x] `vocab:前` **前** 【まえ】: trước
   - Ví dụ: 駅の前で会いましょう。 → Gặp nhau trước ga nhé.
-- [ ] `vocab:ベッド` **ベッド** 【ベッド】: giường
+- [x] `vocab:ベッド` **ベッド** 【ベッド】: giường
   - Ví dụ: へやにベッドがあります。 → Trong phòng có giường.
-- [ ] `vocab:だれか` **だれか (誰か)** 【だれか】: ai đó
+- [x] `vocab:だれか` **だれか (誰か)** 【だれか】: ai đó
   - Ví dụ: だれかいますか。 → Có ai ở đây không?
-- [ ] `vocab:きる` **きる (着る)** 【きる】: mặc (áo)
+- [x] `vocab:きる` **きる (着る)** 【きる】: mặc (áo)
   - Ví dụ: セーターをきます。 → Tôi mặc áo len.
-- [ ] `vocab:せっけん` **せっけん (石鹸)** 【せっけん】: xà phòng
+- [x] `vocab:せっけん` **せっけん (石鹸)** 【せっけん】: xà phòng
   - Ví dụ: せっけんで手をあらいます。 → Tôi rửa tay bằng xà phòng.
-- [ ] `vocab:は` **は (歯)** 【は】: răng
+- [x] `vocab:は` **は (歯)** 【は】: răng
   - Ví dụ: はがいたいです。 → Tôi bị đau răng.
-- [ ] `vocab:いたい` **いたい (痛い)** 【いたい】: đau
+- [x] `vocab:いたい` **いたい (痛い)** 【いたい】: đau
   - Ví dụ: おなかがいたいです。 → Tôi bị đau bụng.
-- [ ] `vocab:こんな` **こんな** 【こんな】: như thế này
+- [x] `vocab:こんな` **こんな** 【こんな】: như thế này
   - Ví dụ: こんなかばんがほしいです。 → Tôi muốn một cái cặp như thế này.
-- [ ] `vocab:パーティー` **パーティー** 【パーティー】: bữa tiệc
+- [x] `vocab:パーティー` **パーティー** 【パーティー】: bữa tiệc
   - Ví dụ: きのうパーティーがありました。 → Hôm qua có bữa tiệc.
-- [ ] `vocab:のみもの` **のみもの (飲み物)** 【のみもの】: đồ uống
+- [x] `vocab:のみもの` **のみもの (飲み物)** 【のみもの】: đồ uống
   - Ví dụ: のみものは何がいいですか。 → Bạn muốn uống gì?
-- [ ] `vocab:大学生` **大学生** 【だいがくせい】: sinh viên đại học
+- [x] `vocab:大学生` **大学生** 【だいがくせい】: sinh viên đại học
   - Ví dụ: 大学生になりました。 → Tôi đã thành sinh viên đại học.
-- [ ] `vocab:すく` **すく (空く)** 【すく】: đói (bụng); vắng, bớt đông (tàu xe, chỗ ngồi)
+- [x] `vocab:すく` **すく (空く)** 【すく】: đói (bụng); vắng, bớt đông (tàu xe, chỗ ngồi)
   - Ví dụ: おなかがすきました。何か食べたいです。 → Tôi đói bụng rồi. Tôi muốn ăn gì đó.
-- [ ] `vocab:ところ` **ところ (所)** 【ところ】: nơi, chỗ
+- [x] `vocab:ところ` **ところ (所)** 【ところ】: nơi, chỗ
   - Ví dụ: ここはしずかなところです。 → Đây là một nơi yên tĩnh.
-- [ ] `vocab:つかれる` **つかれる (疲れる)** 【つかれる】: mệt
+- [x] `vocab:つかれる` **つかれる (疲れる)** 【つかれる】: mệt
   - Ví dụ: きょうはつかれました。 → Hôm nay tôi mệt rồi.
 
 ## Kanji N5 (30 / 103 mục)
 
-- [ ] `kanji:時` **時** Hán Việt: Thời; on: ジ; kun: とき、-どき; nghĩa: giờ; thời gian
-- [ ] `kanji:百` **百** Hán Việt: Bách; on: ヒャク、ビャク; kun: もも; nghĩa: trăm
-- [ ] `kanji:食` **食** Hán Việt: Thực, Tự; on: ショク、ジキ; kun: く.う、く.らう、た.べる、は.む; nghĩa: ăn
-- [ ] `kanji:雨` **雨** Hán Việt: Vũ; on: ウ; kun: あめ、あま-、-さめ; nghĩa: mưa
-- [ ] `kanji:千` **千** Hán Việt: Thiên; on: セン; kun: ち; nghĩa: nghìn
-- [ ] `kanji:上` **上** Hán Việt: Thượng, Thướng; on: ジョウ、ショウ、シャン; kun: うえ、-うえ、うわ-、かみ、あ.げる、-あ.げる、あ.がる、-あ.がる、あ.がり、-あ.がり、のぼ.る、のぼ.り、のぼ.せる、のぼ.す、たてまつ.る; nghĩa: trên
-- [ ] `kanji:円` **円** Hán Việt: Viên; on: エン; kun: まる.い、まる、まど、まど.か、まろ.やか; nghĩa: yên (tiền Nhật); hình tròn
-- [ ] `kanji:間` **間** Hán Việt: Gian, Gián; on: カン、ケン; kun: あいだ、ま、あい; nghĩa: khoảng giữa; thời gian
-- [ ] `kanji:八` **八** Hán Việt: Bát; on: ハチ、ハツ; kun: や、や.つ、やっ.つ、よう; nghĩa: tám
-- [ ] `kanji:母` **母** Hán Việt: Mẫu; on: ボ; kun: はは、も; nghĩa: mẹ
-- [ ] `kanji:口` **口** Hán Việt: Khẩu; on: コウ、ク; kun: くち; nghĩa: miệng
-- [ ] `kanji:女` **女** Hán Việt: Nữ, Nhữ; on: ジョ、ニョ、ニョウ; kun: おんな、め; nghĩa: phụ nữ, con gái
-- [ ] `kanji:毎` **毎** Hán Việt: Mỗi; on: マイ; kun: ごと、-ごと.に; nghĩa: mỗi
-- [ ] `kanji:道` **道** Hán Việt: Đạo; on: ドウ、トウ; kun: みち、いう; nghĩa: con đường
-- [ ] `kanji:魚` **魚** Hán Việt: Ngư; on: ギョ; kun: うお、さかな、-ざかな; nghĩa: cá
-- [ ] `kanji:後` **後** Hán Việt: Hậu; on: ゴ、コウ; kun: のち、うし.ろ、うしろ、あと、おく.れる; nghĩa: sau
-- [ ] `kanji:男` **男** Hán Việt: Nam; on: ダン、ナン; kun: おとこ、お; nghĩa: đàn ông, con trai
-- [ ] `kanji:空` **空** Hán Việt: Không, Khống; on: クウ; kun: そら、あ.く、あ.き、あ.ける、から、す.く、す.かす、むな.しい; nghĩa: bầu trời; trống
-- [ ] `kanji:子` **子** Hán Việt: Tử, Tý; on: シ、ス、ツ; kun: こ、-こ、ね; nghĩa: con, trẻ em
-- [ ] `kanji:人` **人** Hán Việt: Nhân; on: ジン、ニン; kun: ひと、-り、-と; nghĩa: người
-- [ ] `kanji:日` **日** Hán Việt: Nhật; on: ニチ、ジツ; kun: ひ、-び、-か; nghĩa: mặt trời; ngày
-- [ ] `kanji:中` **中** Hán Việt: Trung, Trúng; on: チュウ、ジュウ; kun: なか、うち、あた.る; nghĩa: trong, giữa
-- [ ] `kanji:行` **行** Hán Việt: Hành, Hạnh, Hàng, Hạng; on: コウ、ギョウ、アン; kun: い.く、ゆ.く、-ゆ.き、-ゆき、-い.き、-いき、おこな.う、おこ.なう; nghĩa: đi
-- [ ] `kanji:駅` **駅** Hán Việt: Dịch; on: エキ; kun: -; nghĩa: nhà ga
-- [ ] `kanji:北` **北** Hán Việt: Bắc; on: ホク; kun: きた; nghĩa: bắc
-- [ ] `kanji:万` **万** Hán Việt: Vạn; on: マン、バン; kun: よろず; nghĩa: vạn, mười nghìn
-- [ ] `kanji:木` **木** Hán Việt: Mộc; on: ボク、モク; kun: き、こ-; nghĩa: cây, gỗ
-- [ ] `kanji:七` **七** Hán Việt: Thất; on: シチ; kun: なな、なな.つ、なの; nghĩa: bảy
-- [ ] `kanji:社` **社** Hán Việt: Xã; on: シャ; kun: やしろ; nghĩa: công ty; đền thờ
-- [ ] `kanji:少` **少** Hán Việt: Thiểu, Thiếu; on: ショウ; kun: すく.ない、すこ.し; nghĩa: ít
+- [x] `kanji:時` **時** Hán Việt: Thời; on: ジ; kun: とき、-どき; nghĩa: giờ; thời gian
+- [x] `kanji:百` **百** Hán Việt: Bách; on: ヒャク、ビャク; kun: もも; nghĩa: trăm
+- [x] `kanji:食` **食** Hán Việt: Thực, Tự; on: ショク、ジキ; kun: く.う、く.らう、た.べる、は.む; nghĩa: ăn
+- [x] `kanji:雨` **雨** Hán Việt: Vũ; on: ウ; kun: あめ、あま-、-さめ; nghĩa: mưa
+- [x] `kanji:千` **千** Hán Việt: Thiên; on: セン; kun: ち; nghĩa: nghìn
+- [x] `kanji:上` **上** Hán Việt: Thượng, Thướng; on: ジョウ、ショウ、シャン; kun: うえ、-うえ、うわ-、かみ、あ.げる、-あ.げる、あ.がる、-あ.がる、あ.がり、-あ.がり、のぼ.る、のぼ.り、のぼ.せる、のぼ.す、たてまつ.る; nghĩa: trên
+- [x] `kanji:円` **円** Hán Việt: Viên; on: エン; kun: まる.い、まる、まど、まど.か、まろ.やか; nghĩa: yên (tiền Nhật); hình tròn
+- [x] `kanji:間` **間** Hán Việt: Gian, Gián; on: カン、ケン; kun: あいだ、ま、あい; nghĩa: khoảng giữa; thời gian
+- [x] `kanji:八` **八** Hán Việt: Bát; on: ハチ、ハツ; kun: や、や.つ、やっ.つ、よう; nghĩa: tám
+- [x] `kanji:母` **母** Hán Việt: Mẫu; on: ボ; kun: はは、も; nghĩa: mẹ
+- [x] `kanji:口` **口** Hán Việt: Khẩu; on: コウ、ク; kun: くち; nghĩa: miệng
+- [x] `kanji:女` **女** Hán Việt: Nữ, Nhữ; on: ジョ、ニョ、ニョウ; kun: おんな、め; nghĩa: phụ nữ, con gái
+- [x] `kanji:毎` **毎** Hán Việt: Mỗi; on: マイ; kun: ごと、-ごと.に; nghĩa: mỗi
+- [x] `kanji:道` **道** Hán Việt: Đạo; on: ドウ、トウ; kun: みち、いう; nghĩa: con đường
+- [x] `kanji:魚` **魚** Hán Việt: Ngư; on: ギョ; kun: うお、さかな、-ざかな; nghĩa: cá
+- [x] `kanji:後` **後** Hán Việt: Hậu; on: ゴ、コウ; kun: のち、うし.ろ、うしろ、あと、おく.れる; nghĩa: sau
+- [x] `kanji:男` **男** Hán Việt: Nam; on: ダン、ナン; kun: おとこ、お; nghĩa: đàn ông, con trai
+- [x] `kanji:空` **空** Hán Việt: Không, Khống; on: クウ; kun: そら、あ.く、あ.き、あ.ける、から、す.く、す.かす、むな.しい; nghĩa: bầu trời; trống
+- [x] `kanji:子` **子** Hán Việt: Tử, Tý; on: シ、ス、ツ; kun: こ、-こ、ね; nghĩa: con, trẻ em
+- [x] `kanji:人` **人** Hán Việt: Nhân; on: ジン、ニン; kun: ひと、-り、-と; nghĩa: người
+- [x] `kanji:日` **日** Hán Việt: Nhật; on: ニチ、ジツ; kun: ひ、-び、-か; nghĩa: mặt trời; ngày
+- [x] `kanji:中` **中** Hán Việt: Trung, Trúng; on: チュウ、ジュウ; kun: なか、うち、あた.る; nghĩa: trong, giữa
+- [x] `kanji:行` **行** Hán Việt: Hành, Hạnh, Hàng, Hạng; on: コウ、ギョウ、アン; kun: い.く、ゆ.く、-ゆ.き、-ゆき、-い.き、-いき、おこな.う、おこ.なう; nghĩa: đi
+- [x] `kanji:駅` **駅** Hán Việt: Dịch; on: エキ; kun: -; nghĩa: nhà ga
+- [x] `kanji:北` **北** Hán Việt: Bắc; on: ホク; kun: きた; nghĩa: bắc
+- [x] `kanji:万` **万** Hán Việt: Vạn; on: マン、バン; kun: よろず; nghĩa: vạn, mười nghìn
+- [x] `kanji:木` **木** Hán Việt: Mộc; on: ボク、モク; kun: き、こ-; nghĩa: cây, gỗ
+- [x] `kanji:七` **七** Hán Việt: Thất; on: シチ; kun: なな、なな.つ、なの; nghĩa: bảy
+- [x] `kanji:社` **社** Hán Việt: Xã; on: シャ; kun: やしろ; nghĩa: công ty; đền thờ
+- [x] `kanji:少` **少** Hán Việt: Thiểu, Thiếu; on: ショウ; kun: すく.ない、すこ.し; nghĩa: ít
 
 ## Ngữ pháp N5 (30 / 34 mục)
 
-- [ ] `grammar:ka` **〜か**: Câu hỏi có hoặc không
+- [x] `grammar:ka` **〜か**: Câu hỏi có hoặc không
   - Cấu trúc: câu + か
   - Giải thích: Thêm か vào cuối câu để biến nó thành câu hỏi. Trật tự từ giữ nguyên, khi nói thì lên giọng ở cuối.
   - Ví dụ: あなたは 学生ですか。 → Bạn là học sinh phải không?
   - Ví dụ: はい、学生です。 → Vâng, tôi là học sinh.
   - Lưu ý: Tiếng Nhật thường không dùng dấu ? sau か.
-- [ ] `grammar:doko` **〜は どこですか**: ~ ở đâu?
+- [x] `grammar:doko` **〜は どこですか**: ~ ở đâu?
   - Cấu trúc: N は どこ ですか / ここ・そこ・あそこ です
   - Giải thích: Hỏi vị trí bằng どこ. Trả lời bằng ここ (chỗ này), そこ (chỗ đó), あそこ (chỗ kia) hoặc tên nơi chốn.
   - Ví dụ: トイレは どこですか。 → Nhà vệ sinh ở đâu?
   - Ví dụ: あそこです。 → Ở đằng kia.
-- [ ] `grammar:masu` **V-ます・V-ません**: Động từ thể lịch sự
+- [x] `grammar:masu` **V-ます・V-ません**: Động từ thể lịch sự
   - Cấu trúc: V-ます / V-ません
   - Giải thích: ます là thể lịch sự cho hiện tại và tương lai, ません là phủ định. Động từ luôn đứng cuối câu.
   - Ví dụ: まいにち 日本語を べんきょうします。 → Hằng ngày tôi học tiếng Nhật.
   - Ví dụ: おさけを 飲みません。 → Tôi không uống rượu.
-- [ ] `grammar:i-adj` **い形容詞**: Tính từ đuôi い
+- [x] `grammar:i-adj` **い形容詞**: Tính từ đuôi い
   - Cấu trúc: adj-い + N / adj-い です / adj-くない です
   - Giải thích: Tính từ đuôi い đứng thẳng trước danh từ. Phủ định: bỏ い, thêm くないです.
   - Ví dụ: たかい 山です。 → Đó là ngọn núi cao.
   - Ví dụ: この へやは ひろくないです。 → Căn phòng này không rộng.
   - Lưu ý: いい là ngoại lệ: phủ định là よくないです.
-- [ ] `grammar:tai` **V-たいです**: Muốn làm ~
+- [x] `grammar:tai` **V-たいです**: Muốn làm ~
   - Cấu trúc: V (bỏ ます) + たいです
   - Giải thích: Bỏ ます rồi thêm たいです để nói điều mình muốn làm. Thường chỉ dùng cho chính người nói.
   - Ví dụ: 日本へ 行きたいです。 → Tôi muốn đi Nhật.
   - Ví dụ: すしを 食べたいです。 → Tôi muốn ăn sushi.
-- [ ] `grammar:wo-kudasai` **〜を ください**: Cho tôi ~
+- [x] `grammar:wo-kudasai` **〜を ください**: Cho tôi ~
   - Cấu trúc: N を ください
   - Giải thích: Dùng khi gọi món hay mua hàng để xin một thứ gì đó. Số lượng đặt sau を.
   - Ví dụ: コーヒーを ください。 → Cho tôi cà phê.
   - Ví dụ: りんごを 三つ ください。 → Cho tôi ba quả táo.
-- [ ] `grammar:kore-sore-are` **これ・それ・あれ**: Cái này, cái đó, cái kia
+- [x] `grammar:kore-sore-are` **これ・それ・あれ**: Cái này, cái đó, cái kia
   - Cấu trúc: これ / それ / あれ は N です
   - Giải thích: これ là vật gần người nói, それ gần người nghe, あれ xa cả hai. Hỏi "cái nào" dùng どれ.
   - Ví dụ: これは なんですか。 → Đây là cái gì?
   - Ví dụ: それは わたしの かばんです。 → Đó là cặp của tôi.
-- [ ] `grammar:na-adj` **な形容詞**: Tính từ đuôi な
+- [x] `grammar:na-adj` **な形容詞**: Tính từ đuôi な
   - Cấu trúc: adj + な + N / adj です / adj じゃ ありません
   - Giải thích: Tính từ đuôi な cần な khi đứng trước danh từ. Cuối câu thì dùng です và phủ định như danh từ.
   - Ví dụ: しずかな まちです。 → Đó là một thị trấn yên tĩnh.
   - Ví dụ: この 店は きれいじゃ ありません。 → Cửa hàng này không sạch.
   - Lưu ý: きれい tuy tận cùng bằng い nhưng là tính từ đuôi な.
-- [ ] `grammar:ni-time` **時間 + に**: Vào lúc (thời điểm)
+- [x] `grammar:ni-time` **時間 + に**: Vào lúc (thời điểm)
   - Cấu trúc: giờ / ngày + に + V
   - Giải thích: に đứng sau một thời điểm có số cụ thể để nói hành động xảy ra lúc đó.
   - Ví dụ: 七時に おきます。 → Tôi dậy lúc bảy giờ.
   - Ví dụ: 十時半に ねます。 → Tôi ngủ lúc mười giờ rưỡi.
   - Lưu ý: Không dùng に với từ chỉ thời gian tương đối như きょう, あした, まいにち, いま.
-- [ ] `grammar:arimasu-imasu` **〜が あります・います**: Có; ở
+- [x] `grammar:arimasu-imasu` **〜が あります・います**: Có; ở
   - Cấu trúc: nơi chốn に N が あります / います
   - Giải thích: あります dùng cho đồ vật, cây cối. います dùng cho người và con vật.
   - Ví dụ: へやに テレビが あります。 → Trong phòng có cái tivi.
   - Ví dụ: こうえんに 子どもが います。 → Có trẻ con ở công viên.
-- [ ] `grammar:wa-desu` **〜は 〜です**: A là B
+- [x] `grammar:wa-desu` **〜は 〜です**: A là B
   - Cấu trúc: N1 は N2 です
   - Giải thích: は (đọc là わ) đánh dấu chủ đề câu. です đứng cuối câu, khẳng định một cách lịch sự rằng chủ đề là N2.
   - Ví dụ: わたしは 学生です。 → Tôi là học sinh.
   - Ví dụ: たなかさんは 先生です。 → Anh Tanaka là giáo viên.
   - Lưu ý: Không dùng さん cho chính mình.
-- [ ] `grammar:sai` **〜さい**: Nói tuổi
+- [x] `grammar:sai` **〜さい**: Nói tuổi
   - Cấu trúc: số + さい / なんさい ですか
   - Giải thích: さい đếm tuổi. Hỏi tuổi dùng なんさいですか, lịch sự hơn là おいくつですか.
   - Ví dụ: なんさいですか。 → Bạn bao nhiêu tuổi?
   - Ví dụ: 十九さいです。 → Tôi mười chín tuổi.
   - Lưu ý: Hai mươi tuổi đọc riêng là はたち.
-- [ ] `grammar:masenka` **V-ませんか・V-ましょう**: Rủ rê: cùng ~ nhé
+- [x] `grammar:masenka` **V-ませんか・V-ましょう**: Rủ rê: cùng ~ nhé
   - Cấu trúc: V-ませんか / V-ましょう
   - Giải thích: ませんか là lời mời nhẹ nhàng (bạn có muốn ~ không). ましょう là đề nghị cùng làm (hãy cùng ~).
   - Ví dụ: いっしょに 昼ごはんを 食べませんか。 → Cùng ăn trưa không?
   - Ví dụ: ええ、食べましょう。 → Ừ, cùng ăn nào.
-- [ ] `grammar:te-kudasai` **V-て ください**: Hãy làm ~
+- [x] `grammar:te-kudasai` **V-て ください**: Hãy làm ~
   - Cấu trúc: V-て + ください
   - Giải thích: Thể て cộng ください là lời nhờ hay chỉ dẫn lịch sự.
   - Ví dụ: ここに 名前を 書いて ください。 → Hãy viết tên vào đây.
   - Ví dụ: ゆっくり 話して ください。 → Xin hãy nói chậm.
-- [ ] `grammar:ja-arimasen` **〜じゃ ありません**: A không phải là B
+- [x] `grammar:ja-arimasen` **〜じゃ ありません**: A không phải là B
   - Cấu trúc: N1 は N2 じゃ ありません
   - Giải thích: Dạng phủ định của です. じゃ ありません dùng khi nói; では ありません trang trọng hơn, hay gặp khi viết.
   - Ví dụ: わたしは 先生じゃ ありません。 → Tôi không phải là giáo viên.
   - Ví dụ: これは 水じゃ ありません。 → Đây không phải là nước.
-- [ ] `grammar:kara-made` **〜から 〜まで**: Từ ~ đến ~
+- [x] `grammar:kara-made` **〜から 〜まで**: Từ ~ đến ~
   - Cấu trúc: N1 から N2 まで
   - Giải thích: から chỉ điểm bắt đầu, まで chỉ điểm kết thúc, dùng cho cả thời gian lẫn nơi chốn. Có thể dùng riêng từng từ.
   - Ví dụ: 九時から 五時まで はたらきます。 → Tôi làm việc từ chín giờ đến năm giờ.
   - Ví dụ: うちから 駅まで あるきます。 → Tôi đi bộ từ nhà đến ga.
-- [ ] `grammar:ichiban` **〜の 中で 〜が いちばん**: Nhất trong ~
+- [x] `grammar:ichiban` **〜の 中で 〜が いちばん**: Nhất trong ~
   - Cấu trúc: N1 の 中で N2 が いちばん adj です
   - Giải thích: いちばん (nhất) đứng trước tính từ. の 中で cho biết phạm vi so sánh.
   - Ví dụ: くだものの 中で りんごが いちばん すきです。 → Trong các loại hoa quả, tôi thích táo nhất.
   - Ví dụ: クラスで だれが いちばん 高いですか。 → Trong lớp ai cao nhất?
-- [ ] `grammar:no` **N1 の N2**: N2 của N1
+- [x] `grammar:no` **N1 の N2**: N2 của N1
   - Cấu trúc: N1 の N2
   - Giải thích: の nối hai danh từ: N1 bổ nghĩa cho N2, có thể là sở hữu, xuất xứ hay lĩnh vực. Thứ tự ngược với tiếng Việt.
   - Ví dụ: わたしの 本です。 → Đây là sách của tôi.
   - Ví dụ: 日本語の 先生 → giáo viên tiếng Nhật
-- [ ] `grammar:wo` **N を V**: Tân ngữ của động từ
+- [x] `grammar:wo` **N を V**: Tân ngữ của động từ
   - Cấu trúc: N を V
   - Giải thích: を (đọc là お) đánh dấu đối tượng chịu tác động của động từ: ăn cái gì, uống cái gì.
   - Ví dụ: パンを 食べます。 → Tôi ăn bánh mì.
   - Ví dụ: おちゃを 飲みます。 → Tôi uống trà.
-- [ ] `grammar:he-iku` **場所 + へ 行きます**: Đi đến (nơi nào)
+- [x] `grammar:he-iku` **場所 + へ 行きます**: Đi đến (nơi nào)
   - Cấu trúc: nơi chốn + へ + 行きます / 来ます / かえります
   - Giải thích: へ (đọc là え) chỉ hướng di chuyển, đi cùng 行きます (đi), 来ます (đến), かえります (về).
   - Ví dụ: あした 東京へ 行きます。 → Ngày mai tôi đi Tokyo.
   - Ví dụ: 七時に うちへ かえります。 → Tôi về nhà lúc bảy giờ.
   - Lưu ý: Có thể thay へ bằng に mà nghĩa gần như không đổi.
-- [ ] `grammar:ga-suki` **〜が すきです**: Thích ~
+- [x] `grammar:ga-suki` **〜が すきです**: Thích ~
   - Cấu trúc: N が すき / きらい です
   - Giải thích: すき (thích) và きらい (ghét) là tính từ đuôi な. Thứ được thích đứng trước が.
   - Ví dụ: ねこが すきです。 → Tôi thích mèo.
   - Ví dụ: にくが きらいです。 → Tôi ghét thịt.
   - Lưu ý: Với すき, đối tượng dùng が, không dùng を.
-- [ ] `grammar:te-imasu` **V-て います**: Đang làm ~
+- [x] `grammar:te-imasu` **V-て います**: Đang làm ~
   - Cấu trúc: V-て + います
   - Giải thích: Thể て cộng います diễn tả hành động đang diễn ra, hoặc một trạng thái kéo dài.
   - Ví dụ: いま 雨が ふって います。 → Bây giờ trời đang mưa.
   - Ví dụ: ちちは 会社で はたらいて います。 → Bố tôi làm việc ở công ty.
-- [ ] `grammar:yori` **〜は 〜より adj**: A hơn B
+- [x] `grammar:yori` **〜は 〜より adj**: A hơn B
   - Cấu trúc: N1 は N2 より adj です
   - Giải thích: より đứng sau vật được đem ra so sánh. Tính từ giữ nguyên, không cần thêm từ "hơn".
   - Ví dụ: 東京は 大阪より 大きいです。 → Tokyo lớn hơn Osaka.
   - Ví dụ: きょうは きのうより さむいです。 → Hôm nay lạnh hơn hôm qua.
-- [ ] `grammar:ikura` **〜は いくらですか**: ~ bao nhiêu tiền?
+- [x] `grammar:ikura` **〜は いくらですか**: ~ bao nhiêu tiền?
   - Cấu trúc: N は いくら ですか
   - Giải thích: いくら hỏi giá. Trả lời bằng số + 円 (えん).
   - Ví dụ: この 本は いくらですか。 → Quyển sách này bao nhiêu tiền?
   - Ví dụ: 三百円です。 → Ba trăm yên.
   - Lưu ý: 三百 đọc là さんびゃく, không phải さんひゃく.
-- [ ] `grammar:wa-ga` **〜は 〜が adj**: ~ thì (bộ phận) ~
+- [x] `grammar:wa-ga` **〜は 〜が adj**: ~ thì (bộ phận) ~
   - Cấu trúc: N1 は N2 が adj です
   - Giải thích: N1 là chủ đề, N2 là bộ phận hay khía cạnh của N1 được miêu tả bằng tính từ.
   - Ví dụ: ぞうは はなが ながいです。 → Voi có vòi dài.
   - Ví dụ: わたしは あたまが いたいです。 → Tôi bị đau đầu.
-- [ ] `grammar:to` **〜と**: Và; cùng với
+- [x] `grammar:to` **〜と**: Và; cùng với
   - Cấu trúc: N1 と N2 / N と V
   - Giải thích: と nối các danh từ khi kể hết một danh sách. Trước động từ, と nghĩa là làm việc đó cùng với ai.
   - Ví dụ: 父と 母 → bố và mẹ
   - Ví dụ: 友だちと 日本へ 行きます。 → Tôi đi Nhật cùng bạn.
-- [ ] `grammar:no-ue` **N の 上・下・中**: Trên, dưới, trong N
+- [x] `grammar:no-ue` **N の 上・下・中**: Trên, dưới, trong N
   - Cấu trúc: N の 上 / 下 / 中 / 前 / 後ろ
   - Giải thích: Từ chỉ vị trí đứng sau N の. Khác tiếng Việt: vật mốc nói trước, vị trí nói sau.
   - Ví dụ: つくえの 上に 本が あります。 → Trên bàn có quyển sách.
   - Ví dụ: 駅の 前で まって います。 → Tôi đang đợi trước nhà ga.
-- [ ] `grammar:de-place` **場所 + で**: Ở (nơi làm việc gì)
+- [x] `grammar:de-place` **場所 + で**: Ở (nơi làm việc gì)
   - Cấu trúc: nơi chốn + で + V
   - Giải thích: で đánh dấu nơi diễn ra hành động. Nơi một vật tồn tại thì dùng に, không dùng で.
   - Ví dụ: 学校で 日本語を べんきょうします。 → Tôi học tiếng Nhật ở trường.
   - Ví dụ: 会社で はたらきます。 → Tôi làm việc ở công ty.
-- [ ] `grammar:de-means` **乗り物 + で**: Bằng (phương tiện)
+- [x] `grammar:de-means` **乗り物 + で**: Bằng (phương tiện)
   - Cấu trúc: phương tiện + で + V
   - Giải thích: で chỉ phương tiện hay cách thức: đi bằng gì, viết bằng gì. Đi bộ thì nói あるいて, không dùng で.
   - Ví dụ: 電車で 学校へ 行きます。 → Tôi đi học bằng tàu điện.
   - Ví dụ: 日本語で 話します。 → Tôi nói bằng tiếng Nhật.
-- [ ] `grammar:mo` **〜も**: Cũng
+- [x] `grammar:mo` **〜も**: Cũng
   - Cấu trúc: N + も
   - Giải thích: も thay cho は (hoặc が, を) khi điều được nói giống với điều vừa nói trước đó.
   - Ví dụ: きょうは 休みです。あしたも 休みです。 → Hôm nay là ngày nghỉ. Ngày mai cũng nghỉ.
@@ -268,126 +270,126 @@ Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `�
 
 ## Câu hỏi đề N5 (30 / 45 mục)
 
-- [ ] `n5-1#5.6-grammar`
+- [x] `n5-1#5.6-grammar`
   - Câu hỏi: A「いっしょに こうえんへ（　）か。」B「ええ、いきましょう。」
   - Lựa chọn: いきました / いって / **いきません** ✓ / いきたい
   - Giải thích: 〜ませんか dùng để rủ rê: いきませんか (đi cùng không?). B trả lời いきましょう nên đây là lời mời.
-- [ ] `n5-1#5.2-grammar`
+- [x] `n5-1#5.2-grammar`
   - Câu hỏi: としょかん（　）べんきょうします。
   - Lựa chọn: に / **で** ✓ / を / へ
   - Giải thích: で chỉ nơi diễn ra hành động: としょかんで べんきょうします. に chỉ nơi tồn tại hoặc đích đến, không dùng với hành động học.
-- [ ] `n5-1#3.2-context`
+- [x] `n5-1#3.2-context`
   - Câu hỏi: のどが かわきました。みずが（　）。
   - Lựa chọn: たべたいです / ねたいです / **のみたいです** ✓ / よみたいです
   - Giải thích: Khát nước thì muốn uống: みずが のみたいです. Nước đi với động từ のむ (uống), không đi với たべる (ăn).
-- [ ] `n5-1#10.1-reading`
+- [x] `n5-1#10.1-reading`
   - Bài đọc: さくら としょかん ・あいて いる 時間：火よう日〜金よう日 9:00〜19:00、土よう日・日よう日 10:00〜17:00 ・月よう日は やすみです。 ・本は 一人 5さつまで かりて いいです。2しゅうかんで かえして ください。
   - Câu hỏi: 日よう日の 4時に としょかんへ 行きました。としょかんは どうでしたか。
   - Lựa chọn: やすみでした。 / しまって いました。 / **あいて いました。** ✓ / 9時に しまりました。
   - Giải thích: Chủ nhật thư viện mở từ 10:00 đến 17:00, nên lúc 4 giờ chiều thư viện đang mở. Ngày nghỉ là thứ hai.
-- [ ] `n5-1#5.7-grammar`
+- [x] `n5-1#5.7-grammar`
   - Câu hỏi: すみません、ここに なまえを かいて（　）。
   - Lựa chọn: います / **ください** ✓ / あります / おきます
   - Giải thích: 〜て ください dùng để nhờ ai làm gì: かいて ください (xin hãy viết).
-- [ ] `n5-1#3.8-context`
+- [x] `n5-1#3.8-context`
   - Câu hỏi: まいあさ 6じに（　）、シャワーを あびます。
   - Lựa chọn: ねて / **おきて** ✓ / やすんで / かえって
   - Giải thích: Mỗi sáng 6 giờ dậy rồi tắm: おきて (thức dậy). ねて là ngủ, không hợp với buổi sáng trước khi tắm.
-- [ ] `n5-1#6.3-order`
+- [x] `n5-1#6.3-order`
   - Câu hỏi: わたしは まいばん ＿＿ ＿＿ ★ ＿＿ ねます。
   - Lựa chọn: から / シャワー / **あびて** ✓ / を
   - Giải thích: Câu đúng: まいばん シャワー を あびて から ねます (tắm xong rồi mới ngủ). Từ ở vị trí ★ là あびて.
-- [ ] `n5-1#3.5-context`
+- [x] `n5-1#3.5-context`
   - Câu hỏi: えきまで タクシーで 10（　）ぐらいです。
   - Lựa chọn: まい / ばん / **ぷん** ✓ / さつ
   - Giải thích: Đơn vị đếm phút là ふん/ぷん; 10分 đọc là じゅっぷん. まい đếm vật mỏng, さつ đếm sách.
-- [ ] `n5-1#2.3-writing`
+- [x] `n5-1#2.3-writing`
   - Câu hỏi: この {みせ}は やすいです。
   - Lựa chọn: **店** ✓ / 広 / 庄 / 応
   - Giải thích: みせ (cửa hàng) là 店. 広 (rộng) có hình dạng gần giống nhưng bên trong là 厶, không phải 占.
-- [ ] `n5-1#2.1-writing`
+- [x] `n5-1#2.1-writing`
   - Câu hỏi: {やすみ}の 日は うちで ほんを よみます。
   - Lựa chọn: 体み / **休み** ✓ / 伏み / 付み
   - Giải thích: やすみ (nghỉ) viết là 休み, bộ nhân 亻 cạnh chữ 木. 体 (cơ thể) trông giống nhưng là chữ khác.
-- [ ] `n5-1#3.7-context`
+- [x] `n5-1#3.7-context`
   - Câu hỏi: （　）を ひいて、ねて います。
   - Lựa chọn: かさ / **かぜ** ✓ / かぎ / かお
   - Giải thích: Bị cảm là かぜを ひく. かさ (ô), かぎ (chìa khóa), かお (mặt) không đi với ひく trong nghĩa này.
-- [ ] `n5-1#5.4-grammar`
+- [x] `n5-1#5.4-grammar`
   - Câu hỏi: A「コーヒー（　）こうちゃ、どちらが すきですか。」B「コーヒーの ほうが すきです。」
   - Lựa chọn: **と** ✓ / や / も / に
   - Giải thích: Mẫu so sánh hai thứ: Aと Bと どちらが すきですか. Ở đây dùng と để nối hai lựa chọn コーヒー và こうちゃ.
-- [ ] `n5-1#2.6-writing`
+- [x] `n5-1#2.6-writing`
   - Câu hỏi: この ほんを {よんで} ください。
   - Lựa chọn: 語んで / **読んで** ✓ / 話んで / 続んで
   - Giải thích: よんで (đọc) là 読んで, từ động từ 読む. 語 (ngôn ngữ) và 話 (nói) cũng có bộ 言 nhưng là chữ khác.
-- [ ] `n5-1#6.2-order`
+- [x] `n5-1#6.2-order`
   - Câu hỏi: この ＿＿ ＿＿ ★ ＿＿ ですか。
   - Lựa chọn: **だれ** ✓ / の / かばん / は
   - Giải thích: Câu đúng: この かばん は だれ の ですか (cái cặp này là của ai?). Từ ở vị trí ★ là だれ.
-- [ ] `n5-1#5.3-grammar`
+- [x] `n5-1#5.3-grammar`
   - Câu hỏi: あした ともだち（　）えいがを みます。
   - Lựa chọn: を / へ / **と** ✓ / の
   - Giải thích: と nghĩa là "cùng với": ともだちと えいがを みます (xem phim cùng bạn).
-- [ ] `n5-1#3.6-context`
+- [x] `n5-1#3.6-context`
   - Câu hỏi: きのうは あたまが（　）、がっこうを やすみました。
   - Lựa chọn: たかくて / ながくて / わるくて / **いたくて** ✓
   - Giải thích: Đau đầu là あたまが いたい; thể て いたくて nêu lý do nghỉ học. あたまが わるい nghĩa là kém thông minh.
-- [ ] `n5-1#3.4-context`
+- [x] `n5-1#3.4-context`
   - Câu hỏi: この へやは（　）ですね。でんきを つけましょう。
   - Lựa chọn: あかるい / **くらい** ✓ / ひろい / あつい
   - Giải thích: Câu sau bảo bật đèn, nên căn phòng tối: くらい. あかるい (sáng) thì không cần bật đèn.
-- [ ] `n5-1#10.2-reading`
+- [x] `n5-1#10.2-reading`
   - Bài đọc: さくら としょかん ・あいて いる 時間：火よう日〜金よう日 9:00〜19:00、土よう日・日よう日 10:00〜17:00 ・月よう日は やすみです。 ・本は 一人 5さつまで かりて いいです。2しゅうかんで かえして ください。
   - Câu hỏi: 本は 何さつまで かりて いいですか。
   - Lựa chọn: 2さつ / **5さつ** ✓ / 9さつ / 10さつ
   - Giải thích: Bài viết ghi 一人 5さつまで かりて いいです, nên mỗi người được mượn tối đa 5 cuốn. 2 là số tuần phải trả.
-- [ ] `n5-1#7.1-reading`
+- [x] `n5-1#7.1-reading`
   - Bài đọc: マリアさん わたしは 3時に かいものに 行きます。5時ごろ かえります。れいぞうこに ケーキが あります。たべて ください。 ゆき
   - Câu hỏi: マリアさんは なにを しますか。
   - Lựa chọn: かいものに 行きます。 / **ケーキを たべます。** ✓ / ケーキを かいます。 / 5時に かえります。
   - Giải thích: Yuki viết ケーキが あります。たべて ください, tức là nhờ Maria ăn bánh. Đi mua sắm và về lúc 5 giờ là việc của Yuki.
-- [ ] `n5-1#3.1-context`
+- [x] `n5-1#3.1-context`
   - Câu hỏi: さむいですから、まどを（　）ください。
   - Lựa chọn: **しめて** ✓ / あけて / つけて / はいて
   - Giải thích: Trời lạnh nên nhờ đóng cửa sổ: しめて (đóng). あけて là mở, ngược nghĩa với ngữ cảnh.
-- [ ] `n5-1#4.3-paraphrase`
+- [x] `n5-1#4.3-paraphrase`
   - Câu hỏi: {おととい デパートへ いきました。}
   - Lựa chọn: きのう デパートへ いきました。 / **ふつか まえに デパートへ いきました。** ✓ / あした デパートへ いきます。 / あさって デパートへ いきます。
   - Giải thích: おととい là hôm kia, tức là ふつか まえ (hai ngày trước). きのう là hôm qua, chỉ một ngày trước.
-- [ ] `n5-1#5.8-grammar`
+- [x] `n5-1#5.8-grammar`
   - Câu hỏi: つくえの 上に ねこが（　）。
   - Lựa chọn: あります / です / **います** ✓ / します
   - Giải thích: Con mèo là vật sống nên dùng います. あります chỉ dùng cho đồ vật, cây cối.
-- [ ] `n5-1#2.4-writing`
+- [x] `n5-1#2.4-writing`
   - Câu hỏi: つぎの かどを {ひだり}に まがって ください。
   - Lựa chọn: 右 / **左** ✓ / 石 / 在
   - Giải thích: ひだり (bên trái) là 左. 右 là みぎ (bên phải); hai chữ dễ nhầm vì chỉ khác phần dưới (工 và 口).
-- [ ] `n5-1#5.1-grammar`
+- [x] `n5-1#5.1-grammar`
   - Câu hỏi: わたしは まいあさ パン（　）たべます。
   - Lựa chọn: **を** ✓ / が / に / で
   - Giải thích: を đánh dấu tân ngữ của động từ たべます: パンを たべます (ăn bánh mì).
-- [ ] `n5-1#1.3-kanji`
+- [x] `n5-1#1.3-kanji`
   - Câu hỏi: {学校}まで あるいて いきます。
   - Lựa chọn: がこう / がっこ / **がっこう** ✓ / かっこう
   - Giải thích: 学校 đọc là がっこう, có âm ngắt っ và trường âm う. がっこ thiếu trường âm, かっこう sai âm đầu.
-- [ ] `n5-1#5.5-grammar`
+- [x] `n5-1#5.5-grammar`
   - Câu hỏi: きのうは あまり（　）。
   - Lựa chọn: さむかったです / さむいです / さむくないです / **さむくなかったです** ✓
   - Giải thích: あまり đi với thể phủ định; きのう là quá khứ, nên dùng さむくなかったです (không lạnh lắm).
-- [ ] `n5-1#1.4-kanji`
+- [x] `n5-1#1.4-kanji`
   - Câu hỏi: {毎週} 日よう日に テニスを します。
   - Lựa chọn: まいしゅ / まいにち / まいつき / **まいしゅう** ✓
   - Giải thích: 毎週 đọc là まいしゅう (hằng tuần), có trường âm う. まいしゅ thiếu trường âm; まいにち là 毎日.
-- [ ] `n5-1#1.6-kanji`
+- [x] `n5-1#1.6-kanji`
   - Câu hỏi: {先月} ともだちと うみへ いきました。
   - Lựa chọn: **せんげつ** ✓ / せんがつ / さきげつ / せいげつ
   - Giải thích: 先月 đọc là せんげつ (tháng trước). 月 ở đây đọc げつ, không phải がつ như trong しがつ.
-- [ ] `n5-1#3.3-context`
+- [x] `n5-1#3.3-context`
   - Câu hỏi: としょかんで ほんを 3さつ（　）。
   - Lựa chọn: **かりました** ✓ / かしました / かえりました / かかりました
   - Giải thích: Ở thư viện thì mượn sách: かりました (mượn). かしました là cho mượn, ngược hướng.
-- [ ] `n5-1#9.1-reading`
+- [x] `n5-1#9.1-reading`
   - Bài đọc: わたしは 先週の 土よう日に、ともだちの けんさんと 山へ 行きました。あさ 7時に 駅で あって、電車で 2時間ぐらい 行きました。山は とても きれいでしたが、さむかったです。山の 上で おべんとうを 食べました。かえりの 電車の 中で、二人とも ねました。
   - Câu hỏi: ふたりは どこで あいましたか。
   - Lựa chọn: 山の 上 / **駅** ✓ / 電車の 中 / けんさんの うち
@@ -395,281 +397,281 @@ Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `�
 
 ## Từ vựng N4 (30 / 578 mục)
 
-- [ ] `vocab:さかん` **さかん (盛ん)** 【さかん】: thịnh hành, phổ biến
+- [x] `vocab:さかん` **さかん (盛ん)** 【さかん】: thịnh hành, phổ biến
   - Ví dụ: この町はサッカーがさかんです。 → Ở thị trấn này bóng đá rất phổ biến.
-- [ ] `vocab:運動場` **運動場** 【うんどうじょう】: sân thể thao
+- [x] `vocab:運動場` **運動場** 【うんどうじょう】: sân thể thao
   - Ví dụ: 子どもたちが運動場であそんでいます。 → Bọn trẻ đang chơi ở sân thể thao.
-- [ ] `vocab:ねむい` **ねむい (眠い)** 【ねむい】: buồn ngủ
+- [x] `vocab:ねむい` **ねむい (眠い)** 【ねむい】: buồn ngủ
   - Ví dụ: きのうおそくねたので、ねむいです。 → Hôm qua ngủ muộn nên tôi buồn ngủ.
-- [ ] `vocab:さびしい` **さびしい (寂しい)** 【さびしい】: buồn, cô đơn
+- [x] `vocab:さびしい` **さびしい (寂しい)** 【さびしい】: buồn, cô đơn
   - Ví dụ: 家族に会えなくて、さびしいです。 → Không gặp được gia đình nên tôi thấy buồn.
-- [ ] `vocab:大事` **大事** 【だいじ】: quan trọng; quý
+- [x] `vocab:大事` **大事** 【だいじ】: quan trọng; quý
   - Ví dụ: 体を大事にしてください。 → Hãy giữ gìn sức khỏe nhé.
-- [ ] `vocab:地下` **地下** 【ちか】: tầng hầm, dưới mặt đất
+- [x] `vocab:地下` **地下** 【ちか】: tầng hầm, dưới mặt đất
   - Ví dụ: このデパートの地下で食料品を売っています。 → Tầng hầm của cửa hàng bách hóa này bán thực phẩm.
-- [ ] `vocab:気持ち` **気持ち** 【きもち】: cảm giác, tâm trạng
+- [x] `vocab:気持ち` **気持ち** 【きもち】: cảm giác, tâm trạng
   - Ví dụ: 朝のさんぽは気持ちがいいです。 → Đi dạo buổi sáng thật dễ chịu.
-- [ ] `vocab:うえる` **うえる (植える)** 【うえる】: trồng (cây)
+- [x] `vocab:うえる` **うえる (植える)** 【うえる】: trồng (cây)
   - Ví dụ: にわに木をうえました。 → Tôi đã trồng cây trong vườn.
-- [ ] `vocab:きょうみ` **きょうみ (興味)** 【きょうみ】: sự quan tâm, hứng thú
+- [x] `vocab:きょうみ` **きょうみ (興味)** 【きょうみ】: sự quan tâm, hứng thú
   - Ví dụ: わたしは日本の歌にきょうみがあります。 → Tôi có hứng thú với bài hát Nhật.
-- [ ] `vocab:社員` **社員** 【しゃいん】: nhân viên công ty
+- [x] `vocab:社員` **社員** 【しゃいん】: nhân viên công ty
   - Ví dụ: この会社には社員が百人います。 → Công ty này có 100 nhân viên.
-- [ ] `vocab:いと` **いと (糸)** 【いと】: chỉ, sợi
+- [x] `vocab:いと` **いと (糸)** 【いと】: chỉ, sợi
   - Ví dụ: ボタンがとれたので、いとでつけました。 → Cúc áo bị tuột nên tôi khâu lại bằng chỉ.
-- [ ] `vocab:にがて` **にがて (苦手)** 【にがて】: kém, không giỏi; ngại
+- [x] `vocab:にがて` **にがて (苦手)** 【にがて】: kém, không giỏi; ngại
   - Ví dụ: わたしはすうがくがにがてです。 → Tôi kém môn toán.
-- [ ] `vocab:だいきらい` **だいきらい (大嫌い)** 【だいきらい】: rất ghét
+- [x] `vocab:だいきらい` **だいきらい (大嫌い)** 【だいきらい】: rất ghét
   - Ví dụ: わたしはむしがだいきらいです。 → Tôi rất ghét côn trùng.
-- [ ] `vocab:金持ち` **金持ち** 【かねもち】: người giàu
+- [x] `vocab:金持ち` **金持ち** 【かねもち】: người giàu
   - Ví dụ: あの人は金持ちで、車を三台持っています。 → Người đó giàu, có ba chiếc ô tô.
-- [ ] `vocab:レジ` **レジ** 【レジ】: quầy thu ngân
+- [x] `vocab:レジ` **レジ** 【レジ】: quầy thu ngân
   - Ví dụ: レジの前に人がならんでいます。 → Mọi người đang xếp hàng trước quầy thu ngân.
-- [ ] `vocab:止む` **止む** 【やむ】: tạnh, ngừng
+- [x] `vocab:止む` **止む** 【やむ】: tạnh, ngừng
   - Ví dụ: 雨が止んだら、出かけましょう。 → Khi mưa tạnh thì mình ra ngoài nhé.
-- [ ] `vocab:食料品` **食料品** 【しょくりょうひん】: thực phẩm
+- [x] `vocab:食料品` **食料品** 【しょくりょうひん】: thực phẩm
   - Ví dụ: スーパーで食料品を買います。 → Tôi mua thực phẩm ở siêu thị.
-- [ ] `vocab:きめる` **きめる (決める)** 【きめる】: quyết định
+- [x] `vocab:きめる` **きめる (決める)** 【きめる】: quyết định
   - Ví dụ: 旅行の日をきめました。 → Tôi đã quyết định ngày đi du lịch.
-- [ ] `vocab:さがす` **さがす (探す)** 【さがす】: tìm kiếm
+- [x] `vocab:さがす` **さがす (探す)** 【さがす】: tìm kiếm
   - Ví dụ: なくしたかぎをさがしています。 → Tôi đang tìm chiếc chìa khóa bị mất.
-- [ ] `vocab:京都` **京都** 【きょうと】: Kyoto
+- [x] `vocab:京都` **京都** 【きょうと】: Kyoto
   - Ví dụ: 京都には古いおてらがたくさんあります。 → Ở Kyoto có rất nhiều chùa cổ.
-- [ ] `vocab:ずいぶん` **ずいぶん (随分)** 【ずいぶん】: khá là, rất
+- [x] `vocab:ずいぶん` **ずいぶん (随分)** 【ずいぶん】: khá là, rất
   - Ví dụ: この町はずいぶんかわりました。 → Thị trấn này đã thay đổi nhiều.
-- [ ] `vocab:こうぎ` **こうぎ (講義)** 【こうぎ】: bài giảng (đại học)
+- [x] `vocab:こうぎ` **こうぎ (講義)** 【こうぎ】: bài giảng (đại học)
   - Ví dụ: 月曜日の朝は、こうぎが二つあります。 → Sáng thứ hai có hai buổi giảng.
-- [ ] `vocab:ごらんになる` **ごらんになる (ご覧になる)** 【ごらんになる】: (kính ngữ) xem
+- [x] `vocab:ごらんになる` **ごらんになる (ご覧になる)** 【ごらんになる】: (kính ngữ) xem
   - Ví dụ: この写真をごらんになりましたか。 → Anh đã xem bức ảnh này chưa ạ?
-- [ ] `vocab:じゅんび` **じゅんび (準備)** 【じゅんび】: chuẩn bị
+- [x] `vocab:じゅんび` **じゅんび (準備)** 【じゅんび】: chuẩn bị
   - Ví dụ: かいぎのじゅんびはもうできました。 → Việc chuẩn bị cho cuộc họp đã xong.
-- [ ] `vocab:かなしい` **かなしい (悲しい)** 【かなしい】: buồn
+- [x] `vocab:かなしい` **かなしい (悲しい)** 【かなしい】: buồn
   - Ví dụ: 犬が死んで、かなしかったです。 → Con chó chết, tôi đã rất buồn.
-- [ ] `vocab:かんごし` **かんごし (看護師)** 【かんごし】: y tá, điều dưỡng
+- [x] `vocab:かんごし` **かんごし (看護師)** 【かんごし】: y tá, điều dưỡng
   - Ví dụ: 姉は病院でかんごしとして働いています。 → Chị tôi làm y tá ở bệnh viện.
-- [ ] `vocab:アジア` **アジア** 【アジア】: châu Á
+- [x] `vocab:アジア` **アジア** 【アジア】: châu Á
   - Ví dụ: ベトナムはアジアの国です。 → Việt Nam là một nước ở châu Á.
-- [ ] `vocab:よろしい` **よろしい** 【よろしい】: được, tốt (lịch sự)
+- [x] `vocab:よろしい` **よろしい** 【よろしい】: được, tốt (lịch sự)
   - Ví dụ: このペンを使ってもよろしいですか。 → Tôi dùng cây bút này có được không ạ?
-- [ ] `vocab:持って来る` **持って来る** 【もってくる】: mang đến
+- [x] `vocab:持って来る` **持って来る** 【もってくる】: mang đến
   - Ví dụ: かさを持って来るのをわすれました。 → Tôi quên mang ô đến.
-- [ ] `vocab:あんぜん` **あんぜん (安全)** 【あんぜん】: an toàn
+- [x] `vocab:あんぜん` **あんぜん (安全)** 【あんぜん】: an toàn
   - Ví dụ: 夜でもこの町はあんぜんです。 → Thị trấn này an toàn kể cả vào ban đêm.
 
 ## Kanji N4 (30 / 181 mục)
 
-- [ ] `kanji:特` **特** Hán Việt: Đặc; on: トク; kun: -; nghĩa: đặc biệt
-- [ ] `kanji:好` **好** Hán Việt: Hảo, Hiếu; on: コウ; kun: この.む、す.く、よ.い、い.い; nghĩa: thích
-- [ ] `kanji:室` **室** Hán Việt: Thất; on: シツ; kun: むろ; nghĩa: phòng
-- [ ] `kanji:銀` **銀** Hán Việt: Ngân; on: ギン; kun: しろがね; nghĩa: bạc
-- [ ] `kanji:朝` **朝** Hán Việt: Triêu, Triều; on: チョウ; kun: あさ; nghĩa: buổi sáng; triều đại
-- [ ] `kanji:答` **答** Hán Việt: Đáp; on: トウ; kun: こた.える、こた.え; nghĩa: trả lời; đáp án
-- [ ] `kanji:飯` **飯** Hán Việt: Phạn; on: ハン; kun: めし; nghĩa: cơm, bữa ăn
-- [ ] `kanji:世` **世** Hán Việt: Thế; on: セイ、セ、ソウ; kun: よ; nghĩa: đời; thế gian
-- [ ] `kanji:春` **春** Hán Việt: Xuân; on: シュン; kun: はる; nghĩa: mùa xuân
-- [ ] `kanji:乗` **乗** Hán Việt: Thừa, Thặng; on: ジョウ、ショウ; kun: の.る、-の.り、の.せる; nghĩa: lên (xe), đi (tàu xe)
-- [ ] `kanji:県` **県** Hán Việt: Huyện; on: ケン; kun: か.ける; nghĩa: tỉnh
-- [ ] `kanji:服` **服** Hán Việt: Phục; on: フク; kun: -; nghĩa: quần áo
-- [ ] `kanji:歌` **歌** Hán Việt: Ca; on: カ; kun: うた、うた.う; nghĩa: bài hát; hát
-- [ ] `kanji:理` **理** Hán Việt: Lý; on: リ; kun: ことわり; nghĩa: lý lẽ, lý do
-- [ ] `kanji:図` **図** Hán Việt: Đồ; on: ズ、ト; kun: え、はか.る; nghĩa: bản đồ, hình vẽ
-- [ ] `kanji:遠` **遠** Hán Việt: Viễn; on: エン、オン; kun: とお.い; nghĩa: xa
-- [ ] `kanji:発` **発** Hán Việt: Phát; on: ハツ、ホツ; kun: た.つ、あば.く、おこ.る、つか.わす、はな.つ; nghĩa: xuất phát; phát ra
-- [ ] `kanji:頭` **頭** Hán Việt: Đầu; on: トウ、ズ、ト; kun: あたま、かしら、-がしら、かぶり; nghĩa: đầu
-- [ ] `kanji:回` **回** Hán Việt: Hồi; on: カイ、エ; kun: まわ.る、-まわ.る、-まわ.り、まわ.す、-まわ.す、まわ.し-、-まわ.し、もとお.る、か.える; nghĩa: lần; quay vòng
-- [ ] `kanji:姉` **姉** Hán Việt: Tỷ; on: シ; kun: あね、はは; nghĩa: chị gái
-- [ ] `kanji:計` **計** Hán Việt: Kế; on: ケイ; kun: はか.る、はか.らう; nghĩa: đo, tính; kế hoạch
-- [ ] `kanji:私` **私** Hán Việt: Tư; on: シ; kun: わたくし、わたし; nghĩa: tôi; riêng tư
-- [ ] `kanji:風` **風** Hán Việt: Phong; on: フウ、フ; kun: かぜ、かざ-; nghĩa: gió; kiểu, phong cách
-- [ ] `kanji:送` **送** Hán Việt: Tống; on: ソウ; kun: おく.る; nghĩa: gửi; tiễn
-- [ ] `kanji:夕` **夕** Hán Việt: Tịch; on: セキ; kun: ゆう; nghĩa: chiều tối
-- [ ] `kanji:正` **正** Hán Việt: Chính, Chánh; on: セイ、ショウ; kun: ただ.しい、ただ.す、まさ、まさ.に; nghĩa: đúng; chính
-- [ ] `kanji:早` **早** Hán Việt: Tảo; on: ソウ、サッ; kun: はや.い、はや、はや-、はや.まる、はや.める、さ-; nghĩa: sớm, nhanh
-- [ ] `kanji:文` **文** Hán Việt: Văn; on: ブン、モン; kun: ふみ、あや; nghĩa: câu văn; văn chương
-- [ ] `kanji:林` **林** Hán Việt: Lâm; on: リン; kun: はやし; nghĩa: rừng thưa, lùm cây
-- [ ] `kanji:写` **写** Hán Việt: Tả; on: シャ、ジャ; kun: うつ.す、うつ.る、うつ-、うつ.し; nghĩa: chép; chụp (ảnh)
+- [x] `kanji:特` **特** Hán Việt: Đặc; on: トク; kun: -; nghĩa: đặc biệt
+- [x] `kanji:好` **好** Hán Việt: Hảo, Hiếu; on: コウ; kun: この.む、す.く、よ.い、い.い; nghĩa: thích
+- [x] `kanji:室` **室** Hán Việt: Thất; on: シツ; kun: むろ; nghĩa: phòng
+- [x] `kanji:銀` **銀** Hán Việt: Ngân; on: ギン; kun: しろがね; nghĩa: bạc
+- [x] `kanji:朝` **朝** Hán Việt: Triêu, Triều; on: チョウ; kun: あさ; nghĩa: buổi sáng; triều đại
+- [x] `kanji:答` **答** Hán Việt: Đáp; on: トウ; kun: こた.える、こた.え; nghĩa: trả lời; đáp án
+- [x] `kanji:飯` **飯** Hán Việt: Phạn; on: ハン; kun: めし; nghĩa: cơm, bữa ăn
+- [x] `kanji:世` **世** Hán Việt: Thế; on: セイ、セ、ソウ; kun: よ; nghĩa: đời; thế gian
+- [x] `kanji:春` **春** Hán Việt: Xuân; on: シュン; kun: はる; nghĩa: mùa xuân
+- [x] `kanji:乗` **乗** Hán Việt: Thừa, Thặng; on: ジョウ、ショウ; kun: の.る、-の.り、の.せる; nghĩa: lên (xe), đi (tàu xe)
+- [x] `kanji:県` **県** Hán Việt: Huyện; on: ケン; kun: か.ける; nghĩa: tỉnh
+- [x] `kanji:服` **服** Hán Việt: Phục; on: フク; kun: -; nghĩa: quần áo
+- [x] `kanji:歌` **歌** Hán Việt: Ca; on: カ; kun: うた、うた.う; nghĩa: bài hát; hát
+- [x] `kanji:理` **理** Hán Việt: Lý; on: リ; kun: ことわり; nghĩa: lý lẽ, lý do
+- [x] `kanji:図` **図** Hán Việt: Đồ; on: ズ、ト; kun: え、はか.る; nghĩa: bản đồ, hình vẽ
+- [x] `kanji:遠` **遠** Hán Việt: Viễn; on: エン、オン; kun: とお.い; nghĩa: xa
+- [x] `kanji:発` **発** Hán Việt: Phát; on: ハツ、ホツ; kun: た.つ、あば.く、おこ.る、つか.わす、はな.つ; nghĩa: xuất phát; phát ra
+- [x] `kanji:頭` **頭** Hán Việt: Đầu; on: トウ、ズ、ト; kun: あたま、かしら、-がしら、かぶり; nghĩa: đầu
+- [x] `kanji:回` **回** Hán Việt: Hồi; on: カイ、エ; kun: まわ.る、-まわ.る、-まわ.り、まわ.す、-まわ.す、まわ.し-、-まわ.し、もとお.る、か.える; nghĩa: lần; quay vòng
+- [x] `kanji:姉` **姉** Hán Việt: Tỷ; on: シ; kun: あね、はは; nghĩa: chị gái
+- [x] `kanji:計` **計** Hán Việt: Kế; on: ケイ; kun: はか.る、はか.らう; nghĩa: đo, tính; kế hoạch
+- [x] `kanji:私` **私** Hán Việt: Tư; on: シ; kun: わたくし、わたし; nghĩa: tôi; riêng tư
+- [x] `kanji:風` **風** Hán Việt: Phong; on: フウ、フ; kun: かぜ、かざ-; nghĩa: gió; kiểu, phong cách
+- [x] `kanji:送` **送** Hán Việt: Tống; on: ソウ; kun: おく.る; nghĩa: gửi; tiễn
+- [x] `kanji:夕` **夕** Hán Việt: Tịch; on: セキ; kun: ゆう; nghĩa: chiều tối
+- [x] `kanji:正` **正** Hán Việt: Chính, Chánh; on: セイ、ショウ; kun: ただ.しい、ただ.す、まさ、まさ.に; nghĩa: đúng; chính
+- [x] `kanji:早` **早** Hán Việt: Tảo; on: ソウ、サッ; kun: はや.い、はや、はや-、はや.まる、はや.める、さ-; nghĩa: sớm, nhanh
+- [x] `kanji:文` **文** Hán Việt: Văn; on: ブン、モン; kun: ふみ、あや; nghĩa: câu văn; văn chương
+- [x] `kanji:林` **林** Hán Việt: Lâm; on: リン; kun: はやし; nghĩa: rừng thưa, lùm cây
+- [x] `kanji:写` **写** Hán Việt: Tả; on: シャ、ジャ; kun: うつ.す、うつ.る、うつ-、うつ.し; nghĩa: chép; chụp (ảnh)
 
 ## Ngữ pháp N4 (30 / 44 mục)
 
-- [ ] `grammar:te-miru` **V-て みる**: Thử làm ~
+- [x] `grammar:te-miru` **V-て みる**: Thử làm ~
   - Cấu trúc: V-て みます
   - Giải thích: Làm thử một việc để xem kết quả hay cảm giác thế nào.
   - Ví dụ: この 肉を 食べて みて ください。 → Bạn ăn thử miếng thịt này xem.
   - Ví dụ: 日本の 料理を 作って みました。 → Tôi đã thử nấu món ăn Nhật.
   - Ví dụ: あの どうぶつえんへ 行って みたいです。 → Tôi muốn thử đến sở thú đó.
-- [ ] `grammar:hazu` **〜はずだ**: Chắc chắn là ~, lẽ ra ~
+- [x] `grammar:hazu` **〜はずだ**: Chắc chắn là ~, lẽ ra ~
   - Cấu trúc: thể thường + はずです (A-な + な, N + の)
   - Giải thích: Người nói tin chắc dựa trên một căn cứ hợp lý. Không dùng cho ý định của chính mình.
   - Ví dụ: 田中さんは もう 家に 着いた はずです。 → Chắc chắn anh Tanaka đã về đến nhà rồi.
   - Ví dụ: あの 店は 日曜日も 開いて いる はずです。 → Cửa hàng đó chắc là Chủ nhật cũng mở cửa.
   - Ví dụ: かぎは かばんの 中に ある はずです。 → Chìa khóa chắc chắn là ở trong cặp.
-- [ ] `grammar:nakereba-naranai` **〜なければ ならない・〜なくても いい**: Phải ~, không cần ~
+- [x] `grammar:nakereba-naranai` **〜なければ ならない・〜なくても いい**: Phải ~, không cần ~
   - Cấu trúc: V-ない (bỏ い) + ければ なりません; V-ない (bỏ い) + くても いいです
   - Giải thích: なければ ならない: bắt buộc phải làm. なくても いい: không làm cũng được, không bắt buộc.
   - Ví dụ: 明日までに レポートを 出さなければ なりません。 → Tôi phải nộp báo cáo trước ngày mai.
   - Ví dụ: 土曜日は 会社へ 行かなくても いいです。 → Thứ Bảy không cần đến công ty.
   - Ví dụ: 毎日 早く 起きなければ なりません。 → Ngày nào tôi cũng phải dậy sớm.
   - Lưu ý: Khi nói thân mật hay rút gọn thành なきゃ.
-- [ ] `grammar:baai-wa` **〜場合は**: Trường hợp ~, nếu ~
+- [x] `grammar:baai-wa` **〜場合は**: Trường hợp ~, nếu ~
   - Cấu trúc: V-る / V-た / V-ない / N の + 場合は
   - Giải thích: Nói cách xử lý trong một tình huống có thể xảy ra, hay gặp trong hướng dẫn và quy định.
   - Ví dụ: 雨の 場合は、試合は 中止です。 → Trường hợp trời mưa, trận đấu sẽ bị hủy.
   - Ví dụ: おくれる 場合は、れんらくして ください。 → Nếu đến muộn thì hãy liên lạc.
   - Ví dụ: 火事の 場合は、エレベーターを 使わないで ください。 → Trường hợp hỏa hoạn, đừng dùng thang máy.
-- [ ] `grammar:tame-ni` **〜ために**: Để ~, vì ~
+- [x] `grammar:tame-ni` **〜ために**: Để ~, vì ~
   - Cấu trúc: V-る / N の + ために
   - Giải thích: Chỉ mục đích của hành động phía sau. V trước ために là việc mình chủ động làm được. N の ために còn có nghĩa vì lợi ích của N.
   - Ví dụ: 日本の 大学に 入る ために、日本語を 勉強して います。 → Tôi đang học tiếng Nhật để vào đại học ở Nhật.
   - Ví dụ: 家族の ために 働いて います。 → Tôi làm việc vì gia đình.
   - Ví dụ: 体の ために、毎朝 歩いて います。 → Vì sức khỏe, sáng nào tôi cũng đi bộ.
-- [ ] `grammar:sugiru` **〜すぎる**: Quá ~
+- [x] `grammar:sugiru` **〜すぎる**: Quá ~
   - Cấu trúc: V (bỏ ます) / A-い (bỏ い) / A-な + すぎます
   - Giải thích: Diễn tả mức độ vượt quá bình thường, thường mang ý không tốt.
   - Ví dụ: きのう 飲みすぎて、頭が いたいです。 → Hôm qua tôi uống quá nhiều nên đau đầu.
   - Ví dụ: この くつは 大きすぎます。 → Đôi giày này to quá.
   - Ví dụ: この へやは 暑すぎます。 → Căn phòng này nóng quá.
   - Lưu ý: いい → よすぎる. Khác với động từ すぎる (đi qua).
-- [ ] `grammar:sou-da-yousu` **〜そうだ (trông có vẻ)**: Trông có vẻ ~, sắp ~
+- [x] `grammar:sou-da-yousu` **〜そうだ (trông có vẻ)**: Trông có vẻ ~, sắp ~
   - Cấu trúc: V (bỏ ます) / A-い (bỏ い) / A-な + そうです
   - Giải thích: Nói điều mình đoán từ những gì nhìn thấy ngay trước mắt: trông có vẻ như thế nào, hoặc sắp xảy ra việc gì.
   - Ví dụ: 雨が ふりそうです。 → Trời sắp mưa rồi.
   - Ví dụ: この パンは おいしそうですね。 → Cái bánh mì này trông ngon nhỉ.
   - Ví dụ: 台風が 来そうです。 → Có vẻ bão sắp đến.
   - Lưu ý: いい → よさそう, ない → なさそう. Khác với そうだ nghe nói (bài 41).
-- [ ] `grammar:noni` **〜のに**: Vậy mà ~, thế mà ~
+- [x] `grammar:noni` **〜のに**: Vậy mà ~, thế mà ~
   - Cấu trúc: thể thường + のに (A-な, N + なのに)
   - Giải thích: Kết quả trái với điều mong đợi, thường kèm cảm giác bất mãn hoặc tiếc nuối.
   - Ví dụ: 一時間 待ったのに、かれは 来ませんでした。 → Tôi đã đợi một tiếng thế mà anh ấy không đến.
   - Ví dụ: 薬を 飲んだのに、まだ ねつが あります。 → Đã uống thuốc rồi vậy mà vẫn còn sốt.
   - Ví dụ: 日曜日なのに、会社へ 行かなければ なりません。 → Chủ nhật mà vẫn phải đi làm.
-- [ ] `grammar:te-morau` **V-て もらう**: Được ai đó làm ~ cho
+- [x] `grammar:te-morau` **V-て もらう**: Được ai đó làm ~ cho
   - Cấu trúc: A は B に V-て もらいます
   - Giải thích: Người nhận (thường là người nói) là chủ ngữ, người làm đi với に. Cùng một việc với てくれる nhưng nhìn từ phía người nhận, có khi mang ý mình nhờ người ta làm.
   - Ví dụ: わたしは 姉に しゅくだいを 見て もらいました。 → Tôi đã nhờ chị gái xem bài tập giúp.
   - Ví dụ: 友だちに 写真を とって もらいました。 → Tôi đã được bạn chụp ảnh cho.
-- [ ] `grammar:you-ni-naru` **〜ように なる・〜ように する**: Trở nên ~, cố gắng ~
+- [x] `grammar:you-ni-naru` **〜ように なる・〜ように する**: Trở nên ~, cố gắng ~
   - Cấu trúc: V-る / V (khả năng) + ように なります; V-る / V-ない + ように します
   - Giải thích: ように なる: dần dần thay đổi đến mức làm được hoặc thành thói quen. ように する: cố gắng để làm (hoặc không làm) một việc thường xuyên.
   - Ví dụ: 日本語の 新聞が 読めるように なりました。 → Tôi đã đọc được báo tiếng Nhật.
   - Ví dụ: 毎日 野菜を 食べるように して います。 → Tôi cố gắng ăn rau mỗi ngày.
   - Ví dụ: 子どもが 一人で 自転車に 乗れるように なりました。 → Con tôi đã tự đi được xe đạp.
-- [ ] `grammar:koto-ni-suru` **〜ことに する・〜ことに なる**: Quyết định ~, được quyết định là ~
+- [x] `grammar:koto-ni-suru` **〜ことに する・〜ことに なる**: Quyết định ~, được quyết định là ~
   - Cấu trúc: V-る / V-ない + ことに します / ことに なりました
   - Giải thích: ことに する: chính mình quyết định. ことに なる: việc được quyết định bởi người khác hoặc hoàn cảnh, không phải do mình.
   - Ví dụ: 毎朝 六時に 起きる ことに しました。 → Tôi đã quyết định mỗi sáng dậy lúc 6 giờ.
   - Ví dụ: 来月から 新しい 会社で 働く ことに なりました。 → Từ tháng sau tôi sẽ làm việc ở công ty mới.
   - Ví dụ: かいぎは 金曜日に する ことに なりました。 → Cuộc họp đã được quyết định tổ chức vào thứ Sáu.
-- [ ] `grammar:shieki` **V-せる・V-させる (sai khiến)**: Bắt ~, cho phép ~
+- [x] `grammar:shieki` **V-せる・V-させる (sai khiến)**: Bắt ~, cho phép ~
   - Cấu trúc: nhóm 1: 読む→読ませる; nhóm 2: 食べる→食べさせる; する→させる, 来る→こさせる; ngoại động từ: A は B に N を V-(さ)せる; nội động từ: A は B を V-(さ)せる
   - Giải thích: Người ở vị trí trên bắt hoặc cho phép người khác làm một việc. V-(さ)せて ください là cách xin phép lịch sự.
   - Ví dụ: 母は 子どもに 野菜を 食べさせます。 → Mẹ bắt con ăn rau.
   - Ví dụ: 先生は 学生に 本を 読ませました。 → Thầy giáo bắt học sinh đọc sách.
   - Ví dụ: 先生は 学生を うちへ 帰らせました。 → Thầy giáo cho học sinh về nhà.
   - Ví dụ: すみませんが、少し 休ませて ください。 → Xin lỗi, cho tôi nghỉ một chút.
-- [ ] `grammar:te-mo-ii` **〜ても いい・〜ては いけない**: Được phép ~, không được ~
+- [x] `grammar:te-mo-ii` **〜ても いい・〜ては いけない**: Được phép ~, không được ~
   - Cấu trúc: V-て も いいです; V-て は いけません
   - Giải thích: ても いい: cho phép, hoặc xin phép khi dùng ở câu hỏi. ては いけない: cấm, không được làm.
   - Ví dụ: この ペンを 借りても いいですか。 → Tôi mượn cây bút này được không?
   - Ví dụ: ここで 写真を とっては いけません。 → Không được chụp ảnh ở đây.
   - Ví dụ: ここに 車を 止めては いけません。 → Không được đỗ xe ở đây.
-- [ ] `grammar:ukemi` **V-れる・V-られる (bị động)**: Bị ~, được ~
+- [x] `grammar:ukemi` **V-れる・V-られる (bị động)**: Bị ~, được ~
   - Cấu trúc: nhóm 1: 読む→読まれる; nhóm 2: 食べる→食べられる; する→される, 来る→こられる; A は B に V-(ら)れる
   - Giải thích: Câu bị động lấy người hoặc vật chịu tác động làm chủ ngữ, người làm đi với に. Có thể chỉ việc bị làm phiền, được khen, hoặc nói khách quan về đồ vật.
   - Ví dụ: わたしは 先生に ほめられました。 → Tôi được thầy khen.
   - Ví dụ: 弟に おかしを 食べられました。 → Tôi bị em trai ăn mất bánh kẹo.
   - Ví dụ: この 車は 日本で 作られました。 → Chiếc xe này được sản xuất ở Nhật.
-- [ ] `grammar:sou-da-denbun` **〜そうだ (nghe nói)**: Nghe nói ~
+- [x] `grammar:sou-da-denbun` **〜そうだ (nghe nói)**: Nghe nói ~
   - Cấu trúc: thể thường + そうです; nguồn tin: N に よると
   - Giải thích: Truyền lại thông tin nghe hoặc đọc được từ người khác, không phải ý kiến của mình. Đứng sau thể thường đầy đủ, khác với そうだ trông có vẻ (bài 27).
   - Ví dụ: てんきよほうに よると、明日は 雨が ふるそうです。 → Theo dự báo thời tiết, nghe nói ngày mai trời mưa.
   - Ví dụ: あの 店の パンは とても おいしいそうです。 → Nghe nói bánh mì ở tiệm đó rất ngon.
   - Ví dụ: かれは 来年 けっこんするそうです。 → Nghe nói năm sau anh ấy sẽ kết hôn.
   - Lưu ý: A-な, N + だ そうです: しずかだ そうです, 学生だ そうです.
-- [ ] `grammar:ba` **〜ば**: Nếu ~ thì ~
+- [x] `grammar:ba` **〜ば**: Nếu ~ thì ~
   - Cấu trúc: nhóm 1: 行く→行けば; nhóm 2: 食べる→食べれば; A-い→A-ければ; A-な・N→なら
   - Giải thích: Nêu điều kiện cần để có kết quả phía sau. Hay dùng khi khuyên hoặc khi kết quả là điều tốt.
   - Ví dụ: 安ければ、買います。 → Nếu rẻ thì tôi mua.
   - Ví dụ: この 薬を 飲めば、すぐ なおりますよ。 → Uống thuốc này thì sẽ khỏi ngay đấy.
   - Ví dụ: 天気が よければ、山が 見えます。 → Nếu trời đẹp thì có thể nhìn thấy núi.
   - Lưu ý: いい → よければ, ない → なければ.
-- [ ] `grammar:tsumori` **〜つもりだ**: Định ~, có ý định ~
+- [x] `grammar:tsumori` **〜つもりだ**: Định ~, có ý định ~
   - Cấu trúc: V-る / V-ない + つもりです
   - Giải thích: Nói về dự định mà người nói đã quyết định từ trước. V-ない つもり là định không làm.
   - Ví dụ: 夏休みに 京都へ 行く つもりです。 → Tôi định đi Kyoto vào kỳ nghỉ hè.
   - Ví dụ: 今度の 日曜日は どこへも 出かけない つもりです。 → Chủ nhật tới tôi định không đi đâu cả.
-- [ ] `grammar:yasui-nikui` **V-やすい・V-にくい**: Dễ ~, khó ~
+- [x] `grammar:yasui-nikui` **V-やすい・V-にくい**: Dễ ~, khó ~
   - Cấu trúc: V (bỏ ます) + やすい / にくい
   - Giải thích: Nói một việc dễ làm hay khó làm. Từ ghép chia như tính từ đuôi い.
   - Ví dụ: この 本は 字が 大きくて、読みやすいです。 → Cuốn sách này chữ to nên dễ đọc.
   - Ví dụ: この ペンは 書きにくいです。 → Cây bút này khó viết.
   - Ví dụ: 先生の 説明は わかりやすいです。 → Lời giải thích của thầy dễ hiểu.
-- [ ] `grammar:temo` **〜ても**: Dù ~ cũng ~
+- [x] `grammar:temo` **〜ても**: Dù ~ cũng ~
   - Cấu trúc: V-て も / A-くても / A-な・N + でも
   - Giải thích: Dù điều kiện phía trước xảy ra thì kết quả phía sau vẫn không đổi. Đi với いくら hay どんなに để nhấn mạnh.
   - Ví dụ: 高くても、この 本を 買います。 → Dù đắt tôi cũng sẽ mua cuốn sách này.
   - Ví dụ: 雨が ふっても、試合は 中止に なりません。 → Dù trời mưa trận đấu cũng không bị hủy.
   - Ví dụ: いくら 考えても、わかりません。 → Nghĩ mãi mà vẫn không hiểu.
-- [ ] `grammar:o-ni-naru` **お V に なる (tôn kính ngữ)**: Tôn kính ngữ お〜に なる
+- [x] `grammar:o-ni-naru` **お V に なる (tôn kính ngữ)**: Tôn kính ngữ お〜に なる
   - Cấu trúc: お + V (bỏ ます) + に なります
   - Giải thích: Dùng để nói về hành động của người bề trên hoặc khách, nâng người đó lên. Một số động từ có dạng riêng: いらっしゃる, めしあがる, おっしゃる, ごらんに なる.
   - Ví dụ: 先生は もう お帰りに なりました。 → Thầy đã về rồi ạ.
   - Ví dụ: 社長は 何時に お着きに なりますか。 → Giám đốc mấy giờ sẽ đến ạ?
   - Ví dụ: この 本を お読みに なりましたか。 → Ngài đã đọc cuốn sách này chưa ạ?
   - Lưu ý: Không dùng cho hành động của chính mình.
-- [ ] `grammar:o-suru` **お V する (khiêm nhường ngữ)**: Khiêm nhường ngữ お〜する
+- [x] `grammar:o-suru` **お V する (khiêm nhường ngữ)**: Khiêm nhường ngữ お〜する
   - Cấu trúc: お + V (bỏ ます) + します
   - Giải thích: Dùng cho hành động của chính mình làm cho người bề trên, hạ mình xuống để tỏ lòng kính trọng. Một số động từ có dạng riêng: まいる, いたす, もうす, うかがう, いただく.
   - Ví dụ: かばんを お持ちします。 → Để tôi xách túi giúp ạ.
   - Ví dụ: 駅まで お送りします。 → Tôi xin tiễn ngài ra ga.
   - Ví dụ: 先生に 本を おかえししました。 → Tôi đã trả sách cho thầy.
-- [ ] `grammar:te-ageru` **V-て あげる**: Làm ~ cho người khác
+- [x] `grammar:te-ageru` **V-て あげる**: Làm ~ cho người khác
   - Cấu trúc: A は B に V-て あげます
   - Giải thích: Người nói (hoặc người phía mình) làm một việc vì lợi ích của người khác. Người làm là chủ ngữ, người nhận đi với に.
   - Ví dụ: わたしは 妹に 本を 読んで あげました。 → Tôi đã đọc sách cho em gái.
   - Ví dụ: おばあさんの かばんを 持って あげました。 → Tôi đã xách túi giúp bà cụ.
   - Lưu ý: Với người bề trên, tránh てあげる vì nghe như ban ơn.
-- [ ] `grammar:shi` **〜し、〜し**: Vừa ~ lại ~, nào là ~
+- [x] `grammar:shi` **〜し、〜し**: Vừa ~ lại ~, nào là ~
   - Cấu trúc: thể thường + し (A-な, N + だし)
   - Giải thích: Liệt kê nhiều lý do hoặc đặc điểm, ngầm ý là còn nữa. Thường dẫn tới một kết luận ở cuối câu.
   - Ví dụ: この 町は しずかだし、駅も 近いし、とても いい 所です。 → Thị trấn này vừa yên tĩnh, ga lại gần, là một nơi rất tốt.
   - Ví dụ: きょうは 雨だし、寒いし、どこへも 行きたくないです。 → Hôm nay vừa mưa vừa lạnh, tôi chẳng muốn đi đâu.
-- [ ] `grammar:node` **〜ので**: Vì ~ nên ~
+- [x] `grammar:node` **〜ので**: Vì ~ nên ~
   - Cấu trúc: thể thường + ので (A-な, N + なので)
   - Giải thích: Nêu lý do một cách khách quan và nhẹ nhàng hơn から, hợp với khi xin lỗi hay xin phép.
   - Ví dụ: 電車が おくれたので、ちこくしました。 → Vì tàu đến muộn nên tôi bị trễ.
   - Ví dụ: かいぎが 始まるので、そろそろ 行きます。 → Vì cuộc họp sắp bắt đầu nên tôi đi đây.
   - Ví dụ: 今日は 日曜日なので、店は 休みです。 → Hôm nay là Chủ nhật nên cửa hàng nghỉ.
-- [ ] `grammar:tari-tari` **V-たり V-たり する**: Lúc thì ~ lúc thì ~, nào là ~ nào là ~
+- [x] `grammar:tari-tari` **V-たり V-たり する**: Lúc thì ~ lúc thì ~, nào là ~ nào là ~
   - Cấu trúc: V1-たり V2-たり します
   - Giải thích: Liệt kê vài hành động tiêu biểu trong số nhiều việc, không theo thứ tự. Thì của câu nằm ở する cuối câu.
   - Ví dụ: 日曜日は 本を 読んだり、そうじを したり します。 → Chủ nhật tôi đọc sách, dọn dẹp nhà cửa.
   - Ví dụ: パーティーで 食べたり 飲んだり しました。 → Ở bữa tiệc chúng tôi ăn uống vui vẻ.
-- [ ] `grammar:ka-douka` **〜か どうか**: Có ~ hay không
+- [x] `grammar:ka-douka` **〜か どうか**: Có ~ hay không
   - Cấu trúc: thể thường + か どうか (A-な, N bỏ だ)
   - Giải thích: Đưa một câu hỏi có/không vào trong câu lớn, đi với các động từ như 知る, わかる, 聞く.
   - Ví dụ: 田中さんが るすか どうか、電話で 聞いて みます。 → Tôi sẽ gọi điện hỏi xem anh Tanaka có vắng nhà không.
   - Ví dụ: この 建物に エレベーターが あるか どうか わかりません。 → Tôi không biết tòa nhà này có thang máy hay không.
   - Lưu ý: Nếu có từ để hỏi thì chỉ dùng か: いつ 来るか わかりません.
-- [ ] `grammar:kata` **V-方**: Cách ~
+- [x] `grammar:kata` **V-方**: Cách ~
   - Cấu trúc: V (bỏ ます) + 方 (かた)
   - Giải thích: Ghép thân động từ với 方 tạo thành danh từ chỉ cách làm. Đối tượng đi với の thay cho を.
   - Ví dụ: この 漢字の 読み方を 教えて ください。 → Hãy chỉ tôi cách đọc chữ Hán này.
   - Ví dụ: 駅への 行き方が わかりません。 → Tôi không biết đường đến ga.
   - Ví dụ: この きかいの 使い方は かんたんです。 → Cách dùng cái máy này đơn giản.
-- [ ] `grammar:ta-koto-ga-aru` **V-た ことが ある**: Đã từng ~
+- [x] `grammar:ta-koto-ga-aru` **V-た ことが ある**: Đã từng ~
   - Cấu trúc: V-た ことが あります
   - Giải thích: Nói về kinh nghiệm đã từng làm một việc trong quá khứ. Phủ định ことが ありません là chưa từng.
   - Ví dụ: 京都へ 行った ことが あります。 → Tôi đã từng đến Kyoto.
   - Ví dụ: アメリカの 小説を 読んだ ことが ありますか。 → Bạn đã từng đọc tiểu thuyết Mỹ chưa?
   - Ví dụ: その 村には 一度も 行った ことが ありません。 → Tôi chưa từng đến ngôi làng đó lần nào.
-- [ ] `grammar:te-shimau` **V-て しまう**: Lỡ ~, ~ mất rồi, ~ xong hết
+- [x] `grammar:te-shimau` **V-て しまう**: Lỡ ~, ~ mất rồi, ~ xong hết
   - Cấu trúc: V-て しまいます
   - Giải thích: Có hai nghĩa: làm xong hoàn toàn một việc, hoặc lỡ làm một việc đáng tiếc ngoài ý muốn.
   - Ví dụ: 電車の 中に かさを わすれて しまいました。 → Tôi lỡ để quên ô trên tàu mất rồi.
   - Ví dụ: 友だちに 借りた カメラを こわして しまいました。 → Tôi lỡ làm hỏng chiếc máy ảnh mượn của bạn.
   - Ví dụ: おかしを ぜんぶ 食べて しまいました。 → Tôi đã ăn hết sạch bánh kẹo rồi.
   - Lưu ý: Khi nói thân mật: 〜て しまった → 〜ちゃった.
-- [ ] `grammar:nagara` **V-ながら**: Vừa ~ vừa ~
+- [x] `grammar:nagara` **V-ながら**: Vừa ~ vừa ~
   - Cấu trúc: V1 (bỏ ます) + ながら V2
   - Giải thích: Một người làm hai việc cùng lúc. Hành động chính là V2, V1 là việc làm kèm theo.
   - Ví dụ: 音楽を 聞きながら、勉強します。 → Tôi vừa nghe nhạc vừa học bài.
@@ -677,162 +679,162 @@ Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `�
 
 ## Câu hỏi đề N4 (30 / 58 mục)
 
-- [ ] `n4-1#4.4-paraphrase`
+- [x] `n4-1#4.4-paraphrase`
   - Câu hỏi: {この 道は あぶないです。}
   - Lựa chọn: **この 道は きけんです。** ✓ / この 道は あんぜんです。 / この 道は しずかです。 / この 道は せまいです。
   - Giải thích: あぶない (nguy hiểm) đồng nghĩa với きけん. あんぜん (an toàn) thì ngược nghĩa.
-- [ ] `n4-1#7.2-order`
+- [x] `n4-1#7.2-order`
   - Câu hỏi: 毎日 れんしゅうした ＿＿ ★ ＿＿ ＿＿ なりました。
   - Lựa chọn: 話せる / ように / ので / **日本語が** ✓
   - Giải thích: Câu đúng: 毎日 れんしゅうした ので 日本語が 話せる ように なりました. Từ ở vị trí ★ là 日本語が.
-- [ ] `n4-1#6.12-grammar`
+- [x] `n4-1#6.12-grammar`
   - Câu hỏi: 天気よほうに よると、あしたは ゆきが ふる（　）。
   - Lựa chọn: つもりです / ことです / **そうです** ✓ / ほうです
   - Giải thích: 〜に よると + thể thường + そうです: nghe nói, truyền đạt thông tin. ふる そうです (nghe nói sẽ có tuyết). つもり chỉ dự định của người, không dùng cho thời tiết.
-- [ ] `n4-1#1.3-kanji`
+- [x] `n4-1#1.3-kanji`
   - Câu hỏi: {地図}を 見ながら 歩きました。
   - Lựa chọn: ちと / じず / **ちず** ✓ / じと
   - Giải thích: 地図 đọc là ちず (bản đồ). 地 đọc ち, 図 đọc ず. じ là cách đọc của 地 trong 地しん, không dùng ở đây.
-- [ ] `n4-1#5.4-usage`
+- [x] `n4-1#5.4-usage`
   - Câu hỏi: {しっぱい}
   - Lựa chọn: **はじめて パンを 作りましたが、しっぱいして かたく なって しまいました。** ✓ / しけんの 前に よく しっぱいしたので、100てんでした。 / あしたの パーティーは 雨で しっぱいに なりました。 / さいふを しっぱいして、こまりました。
   - Giải thích: しっぱい là làm hỏng, thất bại: パン作りが しっぱいした. Sự kiện bị hủy là 中止に なる; mất ví là さいふを おとす/なくす; câu 100てん cần ôn kỹ (ふくしゅう), không phải thất bại.
-- [ ] `n4-1#6.11-grammar`
+- [x] `n4-1#6.11-grammar`
   - Câu hỏi: 先生、重そうですね。その かばん、わたしが お持ち（　）。
   - Lựa chọn: なります / ください / **します** ✓ / です
   - Giải thích: Khiêm nhường ngữ cho hành động của mình: お V-ます bỏ ます する → わたしが お持ちします (để em xách giúp). お持ちに なる là tôn kính, dùng cho thầy, không dùng cho わたし.
-- [ ] `n4-1#6.4-grammar`
+- [x] `n4-1#6.4-grammar`
   - Câu hỏi: たくさん 勉強した（　）、しけんに おちて しまいました。
   - Lựa chọn: ので / **のに** ✓ / から / ために
   - Giải thích: 〜のに: vậy mà, trái với mong đợi. Học nhiều vậy mà vẫn thi trượt. ので/から chỉ nguyên nhân, không hợp với kết quả ngược.
-- [ ] `n4-1#8.4-text`
+- [x] `n4-1#8.4-text`
   - Bài đọc: わたしと 料理 わたしは 去年の 春、日本へ 来ました。日本へ 来る 前は、料理を した ことが ありませんでした。（１）、日本では 毎日 自分で ごはんを 作らなければ なりません。 さいしょは 何を 作っても おいしく ありませんでした。でも、となりの 田中さんが 料理の 作り方を 教えて（２）。今では いろいろな 料理が 作れる（３）。 来月、国から 母が 来ます。母に わたしの 料理を 食べて（４）と 思って います。
   - Câu hỏi: （４）
   - Lựa chọn: あげよう / くれよう / みよう / **もらおう** ✓
   - Giải thích: Muốn mẹ ăn thử món mình nấu: 母に 食べて もらおうと 思って います (Vて もらう + thể ý chí). 食べて あげよう/みよう là chính mình ăn, không hợp với 母に.
-- [ ] `n4-1#2.4-writing`
+- [x] `n4-1#2.4-writing`
   - Câu hỏi: 毎日 {あるいて} 学校へ 行きます。
   - Lựa chọn: 走いて / 少いて / 止いて / **歩いて** ✓
   - Giải thích: あるいて (đi bộ) là 歩いて, từ 歩く. 歩 gồm 止 ở trên và phần giống 少 ở dưới. 走 là はしる (chạy).
-- [ ] `n4-1#3.2-context`
+- [x] `n4-1#3.2-context`
   - Câu hỏi: かぜを ひいて、（　）が 38度 あります。
   - Lựa chọn: ち / ちから / **ねつ** ✓ / こえ
   - Giải thích: Bị cảm, sốt 38 độ: ねつが 38度 あります. ち (máu), ちから (sức lực), こえ (giọng) không đo bằng độ.
-- [ ] `n4-1#8.1-text`
+- [x] `n4-1#8.1-text`
   - Bài đọc: わたしと 料理 わたしは 去年の 春、日本へ 来ました。日本へ 来る 前は、料理を した ことが ありませんでした。（１）、日本では 毎日 自分で ごはんを 作らなければ なりません。 さいしょは 何を 作っても おいしく ありませんでした。でも、となりの 田中さんが 料理の 作り方を 教えて（２）。今では いろいろな 料理が 作れる（３）。 来月、国から 母が 来ます。母に わたしの 料理を 食べて（４）と 思って います。
   - Câu hỏi: （１）
   - Lựa chọn: だから / それに / **しかし** ✓ / それで
   - Giải thích: Trước đây chưa từng nấu ăn, nhưng ở Nhật phải tự nấu mỗi ngày: hai câu trái ý nhau nên dùng しかし (nhưng). だから/それで chỉ kết quả, それに là thêm vào.
-- [ ] `n4-1#9.1-reading`
+- [x] `n4-1#9.1-reading`
   - Bài đọc: 山田さんへ きょうの 午後の かいぎは、社長の 都合で 3時から 4時に なりました。かいぎの 前に、つくえの 上の レポートを 10まい コピーして おいて ください。 田中
   - Câu hỏi: 山田さんは かいぎの 前に 何を しなければ なりませんか。
   - Lựa chọn: 社長に れんらくする。 / 3時に かいぎしつへ 行く。 / 田中さんに レポートを 10まい わたす。 / **レポートを 10まい コピーする。** ✓
   - Giải thích: Lời nhắn ghi かいぎの 前に、レポートを 10まい コピーして おいて ください: Yamada phải photo sẵn 10 bản báo cáo. Cuộc họp dời sang 4 giờ, không phải 3 giờ.
-- [ ] `n4-1#4.3-paraphrase`
+- [x] `n4-1#4.3-paraphrase`
   - Câu hỏi: {わたしは 山田さんに 英語を 教えて もらいました。}
   - Lựa chọn: わたしは 山田さんに 英語を 教えました。 / 山田さんは わたしに 英語を ならいました。 / わたしは 山田さんと 英語を ならいました。 / **山田さんは わたしに 英語を 教えました。** ✓
   - Giải thích: AにVて もらう: A làm V cho mình. Ở đây 山田さん dạy tiếng Anh cho tôi, tức là 山田さんは わたしに 英語を 教えました.
-- [ ] `n4-1#1.4-kanji`
+- [x] `n4-1#1.4-kanji`
   - Câu hỏi: 毎朝 こうえんで {運動}を して います。
   - Lựa chọn: うんど / うんとう / うどう / **うんどう** ✓
   - Giải thích: 運動 đọc là うんどう (vận động), có âm đục ど và trường âm う. うんど thiếu trường âm, うんとう sai âm đục.
-- [ ] `n4-1#6.7-grammar`
+- [x] `n4-1#6.7-grammar`
   - Câu hỏi: パーティーの 前に、飲み物を 買って（　）ください。
   - Lựa chọn: いて / あって / いる / **おいて** ✓
   - Giải thích: 〜て おく: làm sẵn trước để chuẩn bị. 買って おいて ください (hãy mua sẵn). いる không nối trực tiếp với ください; 〜て ある không dùng với ください.
-- [ ] `n4-1#12.1-reading`
+- [x] `n4-1#12.1-reading`
   - Bài đọc: リンさん、お元気ですか。わたしは 先週から 入院して います。足の けがは だいぶ よく なりましたが、まだ 一人で 歩く ことが できません。病院の ごはんは あまり おいしくないので、早く 家に 帰りたいです。来週の 土曜日に たいいんする よていです。
   - Câu hỏi: この 人に ついて 正しい ものは どれですか。
   - Lựa chọn: **今 病院に いる。** ✓ / 足の けがは もう なおった。 / 病院の ごはんが おいしい。 / 来週から 入院する。
   - Giải thích: Người viết đã nhập viện từ tuần trước và tuần sau mới xuất viện, nên bây giờ đang ở bệnh viện. Vết thương mới đỡ nhiều, chưa khỏi; cơm bệnh viện không ngon lắm.
-- [ ] `n4-1#2.3-writing`
+- [x] `n4-1#2.3-writing`
   - Câu hỏi: {としょかん}で 本を かりました。
   - Lựa chọn: 国書館 / **図書館** ✓ / 図所館 / 図書飯
   - Giải thích: としょかん (thư viện) viết là 図書館. 国 trông giống 図 nhưng bên trong là 玉; 飯 có chung bộ 飠 bên trái với 館 nhưng là chữ めし (cơm).
-- [ ] `n4-1#3.3-context`
+- [x] `n4-1#3.3-context`
   - Câu hỏi: 先生に しゅくだいを わすれた（　）を 聞かれました。
   - Lựa chọn: いけん / **りゆう** ✓ / ようじ / へんじ
   - Giải thích: Bị thầy hỏi lý do quên bài tập: わすれた りゆう. いけん là ý kiến, ようじ là việc bận, へんじ là câu trả lời/hồi âm.
-- [ ] `n4-1#3.5-context`
+- [x] `n4-1#3.5-context`
   - Câu hỏi: いもうとは 先生に ほめられて、とても（　）そうでした。
   - Lựa chọn: かなし / **うれし** ✓ / いた / にが
   - Giải thích: Được thầy khen thì vui: うれしそうでした (trông rất vui). かなしそう là trông buồn, ngược với ngữ cảnh.
-- [ ] `n4-1#2.1-writing`
+- [x] `n4-1#2.1-writing`
   - Câu hỏi: きのうは とても {さむかった}です。
   - Lựa chọn: 暑かった / **寒かった** ✓ / 悪かった / 軽かった
   - Giải thích: さむかった (lạnh) viết là 寒かった. 暑かった là あつかった (nóng), 悪かった là わるかった (xấu), 軽かった là かるかった (nhẹ).
-- [ ] `n4-1#13.3-reading`
+- [x] `n4-1#13.3-reading`
   - Bài đọc: 　わたしは 去年から 駅の 前の パン屋で アルバイトを して います。朝 6時から 9時までです。朝は 早くて たいへんですが、店の 人たちが とても 親切なので、楽しく 働いて います。 この 店の パンは 朝 7時に 店に ならびます。7時ごろには 会社へ 行く 人や 学生が たくさん 来て、店の 中は いつも こんで います。みんなが いちばん よく 買うのは クリームパンです。やわらかくて あまいので、子どもも 大好きです。 先週、店の 人に「新しい パンを 考えて みませんか。」と 言われました。わたしは 国の 料理を 使った パンを 作って みたいと 思って います。来月、店の 人に 食べて もらう つもりです。
   - Câu hỏi: この 人は 来月 何を しますか。
   - Lựa chọn: **自分が 考えた パンを 店の 人に 食べて もらう。** ✓ / 国へ 帰って 料理を 作る。 / 新しい パン屋で 働く。 / クリームパンの 作り方を ならう。
   - Giải thích: Đoạn cuối: người này muốn làm bánh dùng món ăn của nước mình và 来月、店の 人に 食べて もらう つもりです: tháng sau sẽ nhờ người ở tiệm ăn thử.
-- [ ] `n4-1#3.7-context`
+- [x] `n4-1#3.7-context`
   - Câu hỏi: コーヒーが にがかったので、さとうを（　）。
   - Lựa chọn: **入れました** ✓ / 出しました / おとしました / ひろいました
   - Giải thích: Cà phê đắng nên cho thêm đường: さとうを 入れました. おとしました (đánh rơi) và ひろいました (nhặt) không hợp ngữ cảnh.
-- [ ] `n4-1#6.3-grammar`
+- [x] `n4-1#6.3-grammar`
   - Câu hỏi: 日本語が 話せる（　）、毎日 れんしゅうして います。
   - Lựa chọn: ために / のに / ことに / **ように** ✓
   - Giải thích: Sau thể khả năng (話せる) chỉ mục đích dùng 〜ように. 〜ために đi với động từ ý chí (話す ために), không đi với thể khả năng.
-- [ ] `n4-1#1.6-kanji`
+- [x] `n4-1#1.6-kanji`
   - Câu hỏi: 外が {暗く} なったので、電気を つけました。
   - Lựa chọn: **くらく** ✓ / あかく / くろく / かるく
   - Giải thích: 暗く đọc là くらく, từ 暗い (tối). あかく là 赤く (đỏ), くろく là 黒く (đen), かるく là 軽く (nhẹ).
-- [ ] `n4-1#14.1-reading`
+- [x] `n4-1#14.1-reading`
   - Bài đọc: さくら市 スポーツセンター 【プール】 ・月〜金 10:00〜21:00、土・日 9:00〜18:00 ・休み：毎週 水曜日 ・お金：大人 400円、子ども（中学生まで）200円 65さい以上の 方は 300円です。 【テニスコート】 ・1時間 1,000円です。 ・使う 日の 3日前までに 電話で よやくして ください。
   - Câu hỏi: 70さいの おじいさんと 10さいの 男の子が 土曜日に プールへ 行きます。二人で いくら はらいますか。
   - Lựa chọn: 400円 / **500円** ✓ / 600円 / 800円
   - Giải thích: Người từ 65 tuổi trở lên trả 300円, trẻ em đến hết cấp hai trả 200円: 300 + 200 = 500円. 600円 là tính ông theo giá người lớn 400円.
-- [ ] `n4-1#3.8-context`
+- [x] `n4-1#3.8-context`
   - Câu hỏi: あの 二人は 兄弟なので、顔が よく（　）います。
   - Lựa chọn: にあって / **にて** ✓ / あって / かわって
   - Giải thích: Anh em nên mặt giống nhau: 顔が にて いる (từ にる). にあう là hợp (quần áo hợp với ai), không dùng để nói hai người giống nhau.
-- [ ] `n4-1#4.1-paraphrase`
+- [x] `n4-1#4.1-paraphrase`
   - Câu hỏi: {この 仕事は かんたんです。}
   - Lựa chọn: この 仕事は たいへんです。 / この 仕事は つまらないです。 / **この 仕事は むずかしくないです。** ✓ / この 仕事は おもしろくないです。
   - Giải thích: かんたん nghĩa là đơn giản, dễ, tức là むずかしくない (không khó). たいへん (vất vả) thì ngược nghĩa.
-- [ ] `n4-1#2.5-writing`
+- [x] `n4-1#2.5-writing`
   - Câu hỏi: この 店は 夜 10時まで {あいて} います。
   - Lựa chọn: 間いて / 問いて / **開いて** ✓ / 聞いて
   - Giải thích: あいて (đang mở cửa) là 開いて, từ 開く. 間, 問, 聞 cũng có bộ 門 nhưng là chữ khác: あいだ, もん(だい), きく.
-- [ ] `n4-1#3.6-context`
+- [x] `n4-1#3.6-context`
   - Câu hỏi: 雨に ふられて、くつが（　）しまいました。
   - Lựa chọn: われて / おれて / **ぬれて** ✓ / きえて
   - Giải thích: Gặp mưa thì giày bị ướt: くつが ぬれる. われる (vỡ) dùng cho kính, đĩa; おれる (gãy) dùng cho cành cây, xương.
-- [ ] `n4-1#1.5-kanji`
+- [x] `n4-1#1.5-kanji`
   - Câu hỏi: 駅の {近所}に スーパーが あります。
   - Lựa chọn: きんしょ / **きんじょ** ✓ / ちかじょ / きんじょう
   - Giải thích: 近所 đọc là きんじょ (khu lân cận, hàng xóm). 所 ở đây đọc じょ (âm đục, không có trường âm). ちか là âm Kun của 近.
 
 ## Kanji N3 (30 / 341 mục)
 
-- [ ] `kanji:渡` **渡** Hán Việt: Độ; on: ト; kun: わた.る、-わた.る、わた.す; nghĩa: băng qua; trao, đưa
-- [ ] `kanji:互` **互** Hán Việt: Hỗ; on: ゴ; kun: たが.い、かたみ.に; nghĩa: lẫn nhau, qua lại
-- [ ] `kanji:違` **違** Hán Việt: Vi; on: イ; kun: ちが.う、ちが.い、ちが.える、-ちが.える、たが.う、たが.える; nghĩa: khác, sai
-- [ ] `kanji:命` **命** Hán Việt: Mệnh; on: メイ、ミョウ; kun: いのち; nghĩa: sinh mạng; mệnh lệnh; số mệnh
-- [ ] `kanji:件` **件** Hán Việt: Kiện; on: ケン; kun: くだん; nghĩa: việc, vụ việc
-- [ ] `kanji:突` **突** Hán Việt: Đột; on: トツ、カ; kun: つ.く; nghĩa: đâm, chọc; đột ngột
-- [ ] `kanji:折` **折** Hán Việt: Chiết; on: セツ、シャク; kun: お.る、おり、お.り、-お.り、お.れる; nghĩa: gấp, bẻ; gãy
-- [ ] `kanji:婚` **婚** Hán Việt: Hôn; on: コン; kun: -; nghĩa: hôn nhân, cưới
-- [ ] `kanji:完` **完** Hán Việt: Hoàn; on: カン; kun: -; nghĩa: hoàn thành, trọn vẹn
-- [ ] `kanji:草` **草** Hán Việt: Thảo; on: ソウ; kun: くさ、くさ-、-ぐさ; nghĩa: cỏ
-- [ ] `kanji:絵` **絵** Hán Việt: Hội; on: カイ、エ; kun: -; nghĩa: tranh, bức vẽ
-- [ ] `kanji:勤` **勤** Hán Việt: Cần; on: キン、ゴン; kun: つと.める、-づと.め、つと.まる、いそ.しむ; nghĩa: làm việc, đi làm; siêng năng
-- [ ] `kanji:盗` **盗** Hán Việt: Đạo; on: トウ; kun: ぬす.む、ぬす.み; nghĩa: trộm, ăn cắp
-- [ ] `kanji:負` **負** Hán Việt: Phụ; on: フ; kun: ま.ける、ま.かす、お.う; nghĩa: thua; gánh vác, chịu
-- [ ] `kanji:込` **込** Hán Việt: -; on: -; kun: -こ.む、こ.む、こ.み、-こ.み、こ.める; nghĩa: đông, chật; cho vào, bao gồm
-- [ ] `kanji:数` **数** Hán Việt: Số, Sổ, Sác; on: スウ、ス、サク、ソク、シュ; kun: かず、かぞ.える、しばしば、せ.める、わずらわ.しい; nghĩa: số, con số; đếm
-- [ ] `kanji:治` **治** Hán Việt: Trị; on: ジ、チ; kun: おさ.める、おさ.まる、なお.る、なお.す; nghĩa: cai trị; chữa bệnh, khỏi bệnh
-- [ ] `kanji:状` **状** Hán Việt: Trạng; on: ジョウ; kun: -; nghĩa: tình trạng, trạng thái; thư, giấy tờ
-- [ ] `kanji:望` **望** Hán Việt: Vọng; on: ボウ、モウ; kun: のぞ.む、もち; nghĩa: mong muốn, hy vọng; nhìn xa
-- [ ] `kanji:眠` **眠** Hán Việt: Miên; on: ミン; kun: ねむ.る、ねむ.い; nghĩa: ngủ; buồn ngủ
-- [ ] `kanji:然` **然** Hán Việt: Nhiên; on: ゼン、ネン; kun: しか、しか.り、しか.し、さ; nghĩa: như thế, như vậy
-- [ ] `kanji:務` **務** Hán Việt: Vụ; on: ム; kun: つと.める; nghĩa: nhiệm vụ, công việc
-- [ ] `kanji:機` **機** Hán Việt: Cơ; on: キ; kun: はた; nghĩa: máy móc; máy bay; cơ hội
-- [ ] `kanji:港` **港** Hán Việt: Cảng; on: コウ; kun: みなと; nghĩa: cảng, bến cảng
-- [ ] `kanji:御` **御** Hán Việt: Ngự; on: ギョ、ゴ; kun: おん-、お-、み-; nghĩa: tiền tố kính ngữ; điều khiển
-- [ ] `kanji:米` **米** Hán Việt: Mễ; on: ベイ、マイ、メエトル; kun: こめ、よね; nghĩa: gạo; nước Mỹ
-- [ ] `kanji:宿` **宿** Hán Việt: Túc, Tú; on: シュク; kun: やど、やど.る、やど.す; nghĩa: nhà trọ, chỗ ở
-- [ ] `kanji:捕` **捕** Hán Việt: Bộ; on: ホ; kun: と.らえる、と.らわれる、と.る、とら.える、とら.われる、つか.まえる、つか.まる; nghĩa: bắt, bắt giữ
-- [ ] `kanji:局` **局** Hán Việt: Cục; on: キョク; kun: つぼね; nghĩa: cơ quan, sở (bưu điện, đài); tình thế
-- [ ] `kanji:決` **決** Hán Việt: Quyết; on: ケツ; kun: き.める、-ぎ.め、き.まる、さ.く; nghĩa: quyết định
+- [x] `kanji:渡` **渡** Hán Việt: Độ; on: ト; kun: わた.る、-わた.る、わた.す; nghĩa: băng qua; trao, đưa
+- [x] `kanji:互` **互** Hán Việt: Hỗ; on: ゴ; kun: たが.い、かたみ.に; nghĩa: lẫn nhau, qua lại
+- [x] `kanji:違` **違** Hán Việt: Vi; on: イ; kun: ちが.う、ちが.い、ちが.える、-ちが.える、たが.う、たが.える; nghĩa: khác, sai
+- [x] `kanji:命` **命** Hán Việt: Mệnh; on: メイ、ミョウ; kun: いのち; nghĩa: sinh mạng; mệnh lệnh; số mệnh
+- [x] `kanji:件` **件** Hán Việt: Kiện; on: ケン; kun: くだん; nghĩa: việc, vụ việc
+- [x] `kanji:突` **突** Hán Việt: Đột; on: トツ、カ; kun: つ.く; nghĩa: đâm, chọc; đột ngột
+- [x] `kanji:折` **折** Hán Việt: Chiết; on: セツ、シャク; kun: お.る、おり、お.り、-お.り、お.れる; nghĩa: gấp, bẻ; gãy
+- [x] `kanji:婚` **婚** Hán Việt: Hôn; on: コン; kun: -; nghĩa: hôn nhân, cưới
+- [x] `kanji:完` **完** Hán Việt: Hoàn; on: カン; kun: -; nghĩa: hoàn thành, trọn vẹn
+- [x] `kanji:草` **草** Hán Việt: Thảo; on: ソウ; kun: くさ、くさ-、-ぐさ; nghĩa: cỏ
+- [x] `kanji:絵` **絵** Hán Việt: Hội; on: カイ、エ; kun: -; nghĩa: tranh, bức vẽ
+- [x] `kanji:勤` **勤** Hán Việt: Cần; on: キン、ゴン; kun: つと.める、-づと.め、つと.まる、いそ.しむ; nghĩa: làm việc, đi làm; siêng năng
+- [x] `kanji:盗` **盗** Hán Việt: Đạo; on: トウ; kun: ぬす.む、ぬす.み; nghĩa: trộm, ăn cắp
+- [x] `kanji:負` **負** Hán Việt: Phụ; on: フ; kun: ま.ける、ま.かす、お.う; nghĩa: thua; gánh vác, chịu
+- [x] `kanji:込` **込** Hán Việt: -; on: -; kun: -こ.む、こ.む、こ.み、-こ.み、こ.める; nghĩa: đông, chật; cho vào, bao gồm
+- [x] `kanji:数` **数** Hán Việt: Số, Sổ, Sác; on: スウ、ス、サク、ソク、シュ; kun: かず、かぞ.える、しばしば、せ.める、わずらわ.しい; nghĩa: số, con số; đếm
+- [x] `kanji:治` **治** Hán Việt: Trị; on: ジ、チ; kun: おさ.める、おさ.まる、なお.る、なお.す; nghĩa: cai trị; chữa bệnh, khỏi bệnh
+- [x] `kanji:状` **状** Hán Việt: Trạng; on: ジョウ; kun: -; nghĩa: tình trạng, trạng thái; thư, giấy tờ
+- [x] `kanji:望` **望** Hán Việt: Vọng; on: ボウ、モウ; kun: のぞ.む、もち; nghĩa: mong muốn, hy vọng; nhìn xa
+- [x] `kanji:眠` **眠** Hán Việt: Miên; on: ミン; kun: ねむ.る、ねむ.い; nghĩa: ngủ; buồn ngủ
+- [x] `kanji:然` **然** Hán Việt: Nhiên; on: ゼン、ネン; kun: しか、しか.り、しか.し、さ; nghĩa: như thế, như vậy
+- [x] `kanji:務` **務** Hán Việt: Vụ; on: ム; kun: つと.める; nghĩa: nhiệm vụ, công việc
+- [x] `kanji:機` **機** Hán Việt: Cơ; on: キ; kun: はた; nghĩa: máy móc; máy bay; cơ hội
+- [x] `kanji:港` **港** Hán Việt: Cảng; on: コウ; kun: みなと; nghĩa: cảng, bến cảng
+- [x] `kanji:御` **御** Hán Việt: Ngự; on: ギョ、ゴ; kun: おん-、お-、み-; nghĩa: tiền tố kính ngữ; điều khiển
+- [x] `kanji:米` **米** Hán Việt: Mễ; on: ベイ、マイ、メエトル; kun: こめ、よね; nghĩa: gạo; nước Mỹ
+- [x] `kanji:宿` **宿** Hán Việt: Túc, Tú; on: シュク; kun: やど、やど.る、やど.す; nghĩa: nhà trọ, chỗ ở
+- [x] `kanji:捕` **捕** Hán Việt: Bộ; on: ホ; kun: と.らえる、と.らわれる、と.る、とら.える、とら.われる、つか.まえる、つか.まる; nghĩa: bắt, bắt giữ
+- [x] `kanji:局` **局** Hán Việt: Cục; on: キョク; kun: つぼね; nghĩa: cơ quan, sở (bưu điện, đài); tình thế
+- [x] `kanji:決` **決** Hán Việt: Quyết; on: ケツ; kun: き.める、-ぎ.め、き.まる、さ.く; nghĩa: quyết định
