@@ -55,3 +55,11 @@ Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanin
 - Test change: the 5,000-row paging e2e test used synthetic level-3 rows; real N3 words now sort before them, so the synthetic rows moved to level 2 (no real N2 content). Same intent: paging and timing on 5,000 rows of one level, other levels untouched. Seen failing with level 3 before the change.
 - Screenshots `/vocab?level=3` and `/lessons/47` at 360 and 1440: counts match the data, no horizontal scroll.
 - Sample: seed 2811, 30 items, in the batch report.
+
+### 28b (lessons 50–53)
+- 191 words (50: 37, 51: 52, 52: 46, 53: 56); N3 total 413, file 1,685. Short of ~200: lesson 50 (nature and weather) ran out of real N3 words; the rest are N4 already or N2. Dropped as N2-ish: 霧 虹 嵐 宇宙 青空 必死 身に付ける 通行 通り過ぎる.
+- Skipped homophones: none. New ids that block future homophones: とける (解ける), こうかい (公開, 航海), きげん (期限, 起源), つゆ (露, 汁), なみ, かのう, せいこう, きろく, かれる, いわ, たに, えだ, おんど, きょり, きそく, おうふく, かんしゃ.
+- Unsure, maybe N4: さくら 幸せ 留学 守る けっか もくてき 料金. Maybe N2 (16 words, ~8%): 実力 才能 実現 上達 資格 やる気 終電 ため息 わくわく かれる まぶしい つゆ 山登り 大雨 大雪 こうかい.
+- Checked: every N3 word written in kana has a kanji outside N5–N3 (none could have been written with kanji).
+- Screenshots `/vocab?level=3` and `/lessons/50` at 360 and 1440: counts match, no horizontal scroll.
+- Sample: seed 2812, 30 items, in the batch report.

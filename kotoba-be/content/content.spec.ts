@@ -57,9 +57,9 @@ describe('content', () => {
     expect([count(kanji, 5), count(kanji, 4), count(kanji, 3)]).toEqual([103, 181, 341]);
     expect(kanji).toHaveLength(625);
     expect([count(lessons, 5), count(lessons, 4), count(lessons, 3)]).toEqual([25, 20, N3_LESSONS]);
-    // Phase 24a/24b/24c: N4 vocab lessons 26–44 (docs/phases/24-n4-vocab.md); phase 28a: N3 lessons 46–49 (docs/phases/28-n3-vocab.md).
-    expect([count(vocab, 5), count(vocab, 4), count(vocab, 3)]).toEqual([694, 578, 222]);
-    expect(vocab).toHaveLength(1494);
+    // Phase 24a/24b/24c: N4 vocab lessons 26–44 (docs/phases/24-n4-vocab.md); phase 28a/28b: N3 lessons 46–53 (docs/phases/28-n3-vocab.md).
+    expect([count(vocab, 5), count(vocab, 4), count(vocab, 3)]).toEqual([694, 578, 413]);
+    expect(vocab).toHaveLength(1685);
     // Phase 25: N4 grammar in lessons 26–44 (docs/phases/25-n4-grammar.md).
     expect([count(grammar, 5), count(grammar, 4)]).toEqual([34, 44]);
     expect(grammar).toHaveLength(78);
