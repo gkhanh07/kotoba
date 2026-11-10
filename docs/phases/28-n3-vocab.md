@@ -104,3 +104,12 @@ Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanin
 - E2E: two timing flakes in two full runs (`sync-status.spec.ts:15` desktop, `n4-path.spec.ts:36` mobile with /register stuck on "Đang xử lý…"); each spec alone passed 4/4 and the third full run passed 176/176. Recorded in BACKLOG.
 - Screenshots `/vocab?level=3` and `/lessons/71` at 360 and 1440: "Bài 71 / 81 · 8 kanji · 58 từ" matches, no horizontal scroll.
 - Sample: seed 2817, 30 items of this batch (lessons 70–73), in the batch report.
+
+### 28h (lessons 74–77)
+- 189 words (74: 45, 75: 45, 76: 47, 77: 52); N3 total 1,625, file 2,897. Includes the words deferred from 28g (くずれる; 信用 信頼 頼る; じょうたい 様子). Dropped at selection as N2 or rare: 外部 しゅうへん 地区 都心 屋外 パートナー 関わる 恩 共有 きずな 助言 孤独 共働き 同期 弟子. Deferred to 79: 長所 短所. N4 words missing from the file not added: 助ける 戦争.
+- Examples rewritten to pass the kanji gate: ちゅうおう, 地上, 不十分. Fixed in review: example translation of 付き合い ("Vì quan hệ công việc, tuần nào tôi cũng phải đi nhậu.").
+- Skipped homophones: 空 read から (`vocab:空` is そら), 奥 (おく), 底 (そこ), 端 (はし), 沿う (そう), 硬い/堅い (かたい), 濃い (こい), 湿る (しめる), 異常 (いじょう), 意外 (いがい), 傷む (いたむ is 痛む), 誤る (あやまる), 厚い (あつい), 縁 (えん). Same reading, different id, added: 頼り/便り, 空き/あき, かんそう/感想. New kana ids that block future homophones include さける (裂ける), たて (盾, 建て), けんか (献花), こじん (故人), けいこう (携行).
+- Unsure, maybe N2 (13, ~7%): ひなん ばくはつ あせる みだれる ゆだん うらぎる 交流 内部 前方 じょうきょう するどい おだやか かんそう. Maybe N4: 助かる 中心 右側 左側 手伝い つらい しっかり きちんと そのまま お世話になる. Meanings to check: 交際 ("giao thiệp; hẹn hò", example shows dating), 向き (example shows only "hướng"), 目下 read めした only, 主 (おも), 東西南北 example.
+- E2E 176/176 on the first full run.
+- Screenshots `/vocab?level=3` and `/lessons/77` at 360 and 1440: "Bài 77 / 81 · 11 kanji · 52 từ" matches, no horizontal scroll.
+- Sample: seed 2818, 30 items of this batch (lessons 74–77), in the batch report.
