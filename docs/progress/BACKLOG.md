@@ -20,13 +20,14 @@ Out-of-scope findings (AGENTS.md §2, §13). Not fixed in the task that found th
 - `e2e/test.spec.ts` uses non-null `!` in four places (test-only).
 
 ## Content (phase 15)
-- Vocab ids are `vocab:<word>` with `word` in kana when the kanji is above the level, so homophones collide and could not be added: 紙/髪 (かみ), 風邪/風 (かぜ), 橋/箸 (はし), 吹く/服 (ふく), 取る/撮る (とる), 切る/着る (きる), 厚い/暑い (あつい), 弾く/引く (ひく), 十 read とお; N3 batch 28a also skipped 掃く, 拭く, 揚げる, 煮る, 風邪, 咳, 肩, 恋; 28c skipped 贈る, 泊める, 留める, 振る, 貼る, 張る, 駆ける, 包装 and 開く read ひらく (its id is taken by あく), and 取る/切る still exist at no level; 28d skipped 公演 (こうえん is 公園), 詩 (し is 市); 28e skipped 駐車, 無効, 延ばす, 捜す, 包装, 意志, 証人, 商人; 28f skipped 選択 (せんたく is 洗濯), 億 (おく is 置く). Needs an id scheme for same-kana words (decision + `be` change; existing ids must stay).
+- Vocab ids are `vocab:<word>` with `word` in kana when the kanji is above the level, so homophones collide and could not be added: 紙/髪 (かみ), 風邪/風 (かぜ), 橋/箸 (はし), 吹く/服 (ふく), 取る/撮る (とる), 切る/着る (きる), 厚い/暑い (あつい), 弾く/引く (ひく), 十 read とお; N3 batch 28a also skipped 掃く, 拭く, 揚げる, 煮る, 風邪, 咳, 肩, 恋; 28c skipped 贈る, 泊める, 留める, 振る, 貼る, 張る, 駆ける, 包装 and 開く read ひらく (its id is taken by あく), and 取る/切る still exist at no level; 28d skipped 公演 (こうえん is 公園), 詩 (し is 市); 28e skipped 駐車, 無効, 延ばす, 捜す, 包装, 意志, 証人, 商人; 28f skipped 選択 (せんたく is 洗濯), 億 (おく is 置く); 28g skipped 現象 (げんしょう is 減少), 低下 (ていか is 定価), 温まる (あたたまる is 暖まる), 公開 (こうかい taken). Needs an id scheme for same-kana words (decision + `be` change; existing ids must stay).
 - Batch 15a words to confirm as N5 (not N4): ごしゅじん, いや, りっぱ, なく (鳴く), だれか, どこか, おおぜい, さらいしゅう, さらいねん, ペット, せっけん, おしいれ, ストーブ, ごろ. Also review `vocab:すく` (written in kana), `vocab:そば` (側 vs 蕎麦), `vocab:七つ` (example uses "seven years old").
 
 ## Phase 18 follow-ups
 - `kotoba-fe/src/lib/auth.ts:21-25` forwards the client's own `x-forwarded-for` to kotoba-be's rate limiter, so a client facing Next directly can pick its IP (already flagged "ponytail"). `e2e/daily.spec.ts` relies on it to get its own sign-up allowance.
 - Dashboard due counts every card in the stored deck; `/review` only items that exist in content. A leftover card id would show "1 đến hạn" with an empty queue (predates phase 18; now also decides where "Tiếp tục học" goes).
 - Possible flake: `e2e/test.spec.ts:109` (full n5-1 run, desktop) hit the 30 s test timeout inside `axe()` once on a slow run (3.4 min suite); the rerun passed 52/52. Watch it; if it recurs, give that test a longer timeout or split its axe scans.
+- More timing flakes in batch 28g (2026-11-10), each passing alone 4/4 and in the next full run: `e2e/sync-status.spec.ts:15` (desktop) and `e2e/n4-path.spec.ts:36` (mobile: /register stuck on "Đang xử lý…" past the 5 s `toHaveURL` wait while kotoba-be was slow). If either recurs, raise that wait or look at sign-up latency under parallel workers.
 
 ## Phase 22 follow-ups
 - `GET /content/:kind?page=` pages in memory after the field filters (reads the whole kind + level each call, ~12 ms at 5,000 rows). Use `skip/take` in SQL when no field filter is set if lists grow further.

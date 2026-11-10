@@ -95,3 +95,12 @@ Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanin
 - Unsure, maybe N4 (10): 数 多く 全て 残す 過ごす 以前 今回 チェック 重さ 長さ. Maybe N2 (14, ~6.5%): 日程 ちょうせい 用心 記号 単位 定員 通過 じょじょに 達する はぶく えんき 定期 いっそう 満ちる. Meanings to check: 非常 (only "khẩn cấp"), 番, 段, 定期, 件, 相当, 互い, 年間, 過ぎ, 当番, 単位, プラス/マイナス; いちおう and 念のため both use an umbrella example; romaji of に-adverbs is spaced (`tashika ni`, `sude ni`) while older data is mixed.
 - Screenshots `/vocab?level=3` and `/lessons/68` at 360 and 1440: "Bài 68 / 81 · 10 kanji · 54 từ" matches, no horizontal scroll.
 - Sample: seed 2816, 30 items of this batch (mulberry32 + Fisher-Yates of `scripts/sample.ts`, over lessons 66–69), in the batch report.
+
+### 28g (lessons 70–73)
+- 203 words (70: 49, 71: 58, 72: 50, 73: 46); N3 total 1,436, file 2,708. Deferred to their themed lessons: 状態 様子 (77), 違い 比較 評価 さすが (79), 信用 信頼 頼る (76), 結局 効果 (80), くずれる (74). N4 words missing from the file were not added here (変える 人気 人間 頼む つもり なぜ メール 郵便 できる 無くなる).
+- Fixed in review: example translations of 流行る ("đang lây lan"), ちえ ("góp trí khôn"), スピーチ ("phát biểu"); 思い meaning widened to "suy nghĩ, tâm tư, tình cảm".
+- Skipped homophones: 現象 (`vocab:げんしょう` is 減少), 低下 (`vocab:ていか` is 定価), 温まる (`vocab:あたたまる` is 暖まる), 公開 (`vocab:こうかい` taken). New kana ids that block future homophones: つうやく しょうち ちょうさ.
+- Unsure, maybe N2 (~14%, higher than earlier batches): 報道 解説 読者 世間 通信 発行 発言 説得 怒鳴る 語る 本音 理論 精神 思い込む 進化 悪化 向上 人類 生命 物事 膨らむ 話し手 聞き手 世代 強まる 弱まる. Maybe N4: 形 不思議 どんどん インターネット 文字 言い方 話し中 ホームページ. Meanings to check: けいたい, 一時, 元, しょうち, りょうかい, 思い, 話し中, 流行る, ちえ.
+- E2E: two timing flakes in two full runs (`sync-status.spec.ts:15` desktop, `n4-path.spec.ts:36` mobile with /register stuck on "Đang xử lý…"); each spec alone passed 4/4 and the third full run passed 176/176. Recorded in BACKLOG.
+- Screenshots `/vocab?level=3` and `/lessons/71` at 360 and 1440: "Bài 71 / 81 · 8 kanji · 58 từ" matches, no horizontal scroll.
+- Sample: seed 2817, 30 items of this batch (lessons 70–73), in the batch report.
