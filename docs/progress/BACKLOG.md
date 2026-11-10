@@ -20,7 +20,7 @@ Out-of-scope findings (AGENTS.md §2, §13). Not fixed in the task that found th
 - `e2e/test.spec.ts` uses non-null `!` in four places (test-only).
 
 ## Content (phase 15)
-- Vocab ids are `vocab:<word>` with `word` in kana when the kanji is above the level, so homophones collide and could not be added: 紙/髪 (かみ), 風邪/風 (かぜ), 橋/箸 (はし), 吹く/服 (ふく), 取る/撮る (とる), 切る/着る (きる), 厚い/暑い (あつい), 弾く/引く (ひく), 十 read とお; N3 batch 28a also skipped 掃く, 拭く, 揚げる, 煮る, 風邪, 咳, 肩, 恋; 28c skipped 贈る, 泊める, 留める, 振る, 貼る, 張る, 駆ける, 包装 and 開く read ひらく (its id is taken by あく), and 取る/切る still exist at no level; 28d skipped 公演 (こうえん is 公園), 詩 (し is 市); 28e skipped 駐車, 無効, 延ばす, 捜す, 包装, 意志, 証人, 商人. Needs an id scheme for same-kana words (decision + `be` change; existing ids must stay).
+- Vocab ids are `vocab:<word>` with `word` in kana when the kanji is above the level, so homophones collide and could not be added: 紙/髪 (かみ), 風邪/風 (かぜ), 橋/箸 (はし), 吹く/服 (ふく), 取る/撮る (とる), 切る/着る (きる), 厚い/暑い (あつい), 弾く/引く (ひく), 十 read とお; N3 batch 28a also skipped 掃く, 拭く, 揚げる, 煮る, 風邪, 咳, 肩, 恋; 28c skipped 贈る, 泊める, 留める, 振る, 貼る, 張る, 駆ける, 包装 and 開く read ひらく (its id is taken by あく), and 取る/切る still exist at no level; 28d skipped 公演 (こうえん is 公園), 詩 (し is 市); 28e skipped 駐車, 無効, 延ばす, 捜す, 包装, 意志, 証人, 商人; 28f skipped 選択 (せんたく is 洗濯), 億 (おく is 置く). Needs an id scheme for same-kana words (decision + `be` change; existing ids must stay).
 - Batch 15a words to confirm as N5 (not N4): ごしゅじん, いや, りっぱ, なく (鳴く), だれか, どこか, おおぜい, さらいしゅう, さらいねん, ペット, せっけん, おしいれ, ストーブ, ごろ. Also review `vocab:すく` (written in kana), `vocab:そば` (側 vs 蕎麦), `vocab:七つ` (example uses "seven years old").
 
 ## Phase 18 follow-ups

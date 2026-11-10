@@ -87,3 +87,11 @@ Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanin
 - Unsure, maybe N4: 申し込む 市場 売れる 平和 キャンセル 解決 世の中. Maybe N2 (17, ~8.8%): 消費者 安売り ひはん 対立 首相 ていあん 意識 すり ねらう あばれる 事情 たちいりきんし けいじばん 未成年 責任者 たいしょう 貸し出し. Meanings to check: 知事, おまけ, お断り, たいおう, いっぱん and 関係者 (example translations), 法 (ほう, next to 方 in L5).
 - Screenshots `/vocab?level=3` and `/lessons/63` at 360 and 1440: "Bài 63 / 81 · 10 kanji · 46 từ" matches, no horizontal scroll.
 - Sample: seed 2815, 30 items, in the batch report.
+
+### 28f (lessons 66–69)
+- 215 words (66: 50, 67: 58, 68: 54, 69: 53); N3 total 1,233, file 2,505. Dropped: 花束 (off-theme), 追い付く (exists as 追いつく), 初め (exists as 始め), 太さ and 一段と (no JMdict pair), 超える (same entry as 越える), about 34 marginal or N2 words. N4/N5 words missing from the file were not added here (結構 メートル キロ グラム 決して 構う 以内 割合 程 倍 秒 軒 無くす).
+- Fixed while authoring: examples of 間もなく, 重なる, 達する, しゅうりょう, りょう; 一定 meaning narrowed to "cố định, không đổi" (dropped the ambiguous "nhất định").
+- Skipped homophones: 選択 (`vocab:せんたく` is 洗濯), 億 (`vocab:おく` is 置く). Same reading, different spelling, added: 正確/性格, 済む/すむ, 期限/きげん, 経つ/立つ, 番/ばん, 約/やく/役, 件/県, 欠ける/かける. New kana ids that block future homophones: えんき しめきり よゆう ちょうせい いちおう ぶじ よくじつ ちかごろ しゅんかん せいき しゅくじつ じゅんばん すでに ふたたび ついに しゅうりょう ふだん ふくすう たんじゅん りょう (blocks 寮) たいりょう けいさん へいきん だいいち わずか へらす げんしょう (blocks 現象) のびる ちぢむ かくだい はんい しだいに じょじょに いっそう はってん はぶく たまる.
+- Unsure, maybe N4 (10): 数 多く 全て 残す 過ごす 以前 今回 チェック 重さ 長さ. Maybe N2 (14, ~6.5%): 日程 ちょうせい 用心 記号 単位 定員 通過 じょじょに 達する はぶく えんき 定期 いっそう 満ちる. Meanings to check: 非常 (only "khẩn cấp"), 番, 段, 定期, 件, 相当, 互い, 年間, 過ぎ, 当番, 単位, プラス/マイナス; いちおう and 念のため both use an umbrella example; romaji of に-adverbs is spaced (`tashika ni`, `sude ni`) while older data is mixed.
+- Screenshots `/vocab?level=3` and `/lessons/68` at 360 and 1440: "Bài 68 / 81 · 10 kanji · 54 từ" matches, no horizontal scroll.
+- Sample: seed 2816, 30 items of this batch (mulberry32 + Fisher-Yates of `scripts/sample.ts`, over lessons 66–69), in the batch report.
