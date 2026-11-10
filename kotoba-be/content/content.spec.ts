@@ -60,9 +60,9 @@ describe('content', () => {
     // Phase 24a/24b/24c: N4 vocab lessons 26–44 (docs/phases/24-n4-vocab.md); phase 28a/…/28i: N3 lessons 46–80 (docs/phases/28-n3-vocab.md).
     expect([count(vocab, 5), count(vocab, 4), count(vocab, 3)]).toEqual([694, 578, 1774]);
     expect(vocab).toHaveLength(3046);
-    // Phase 25: N4 grammar in lessons 26–44 (docs/phases/25-n4-grammar.md).
-    expect([count(grammar, 5), count(grammar, 4)]).toEqual([34, 44]);
-    expect(grammar).toHaveLength(78);
+    // Phase 25: N4 grammar in lessons 26–44 (docs/phases/25-n4-grammar.md); phase 29a: N3 grammar in lessons 46–63 (docs/phases/29-n3-grammar.md).
+    expect([count(grammar, 5), count(grammar, 4), count(grammar, 3)]).toEqual([34, 44, 32]);
+    expect(grammar).toHaveLength(78 + 32);
   });
 
   it('gives every N4 lesson 26–44 at least one grammar point', () => {
@@ -71,6 +71,24 @@ describe('content', () => {
       .filter((l) => l.level === 4 && (l.lesson as number) >= 26 && (l.lesson as number) <= 44 && !withGrammar.has(l.lesson))
       .map((l) => l.id);
     expect(lessonsWithout).toEqual([]);
+  });
+
+  // Phase 29 (docs/phases/29-n3-grammar.md): 29a covers lessons 46–63, 29b extends the range to 80.
+  it('gives every N3 lesson 46–63 at least one grammar point', () => {
+    const withGrammar = new Set(grammar.filter((g) => g.level === 3).map((g) => g.lesson));
+    const lessonsWithout = lessons
+      .filter((l) => l.level === 3 && (l.lesson as number) >= 46 && (l.lesson as number) <= 63 && !withGrammar.has(l.lesson))
+      .map((l) => l.id);
+    expect(lessonsWithout).toEqual([]);
+  });
+
+  it('writes N3 grammar examples only with kanji that are in kanji.json', () => {
+    const known = new Set(kanji.map((k) => k.char as string));
+    const examples = grammar
+      .filter((g) => g.level === 3)
+      .flatMap((g) => (g.examples as { ja: string }[]).map((e) => ({ id: g.id, ja: e.ja })));
+    const bad = examples.filter((e) => [...e.ja.matchAll(/[一-鿿]/g)].some(([c]) => !known.has(c)));
+    expect(bad).toEqual([]);
   });
 
   it.each([4, 3])('gives every N%i kanji a meaning and a lesson of its level', (level) => {

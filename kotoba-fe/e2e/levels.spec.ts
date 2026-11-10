@@ -82,20 +82,22 @@ for (const level of [4, 3]) {
   });
 }
 
-// Phase 25: N4 grammar points, every one listed and openable.
-test("/grammar?level=4 lists every N4 grammar point", async ({ page, axe }, info) => {
-  const n4Grammar = (content("grammar") as { slug?: string; level: number }[]).filter((g) => g.level === 4);
-  await page.goto("/grammar?level=4");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Ngữ pháp N4");
-  await expect(page.locator('main a[href^="/grammar/"]')).toHaveCount(n4Grammar.length);
-  expect(await hasHorizontalScroll(page)).toBe(false);
-  await axe();
-  await page.goto(`/grammar/${n4Grammar[0].slug}`);
-  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  expect(await hasHorizontalScroll(page)).toBe(false);
-  await axe();
-  await page.screenshot({ path: info.outputPath(`grammar-n4-${info.project.name}.png`), fullPage: true });
-});
+// Phase 25 (N4) and 29 (N3): grammar points of the level, every one listed and the first openable.
+for (const level of [4, 3]) {
+  test(`/grammar?level=${level} lists every N${level} grammar point`, async ({ page, axe }, info) => {
+    const levelGrammar = (content("grammar") as { slug?: string; level: number }[]).filter((g) => g.level === level);
+    await page.goto(`/grammar?level=${level}`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(`Ngữ pháp N${level}`);
+    await expect(page.locator('main a[href^="/grammar/"]')).toHaveCount(levelGrammar.length);
+    expect(await hasHorizontalScroll(page)).toBe(false);
+    await axe();
+    await page.goto(`/grammar/${levelGrammar[0].slug}`);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(await hasHorizontalScroll(page)).toBe(false);
+    await axe();
+    await page.screenshot({ path: info.outputPath(`grammar-n${level}-${info.project.name}.png`), fullPage: true });
+  });
+}
 
 test("a level that is not known shows N5", async ({ page }) => {
   await page.goto("/grammar?level=9");

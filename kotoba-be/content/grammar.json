@@ -1151,5 +1151,498 @@
       { "ja": "火事の 場合は、エレベーターを 使わないで ください。", "vi": "Trường hợp hỏa hoạn, đừng dùng thang máy.", "en": "In case of fire, do not use the lift." }
     ],
     "reviewed": false
+  },
+  {
+    "id": "grammar:you-to-suru", "slug": "you-to-suru", "lesson": 46, "level": 3, "pattern": "V-(よ)う と する",
+    "title": { "vi": "Định ~, sắp ~; cố ~", "en": "Try to ~; be about to ~" },
+    "structure": "V-(よ)う + と する",
+    "explain": {
+      "vi": "Diễn tả lúc ngay trước khi một hành động bắt đầu, hoặc sự cố gắng làm việc đó. Hay đi kèm vế cho thấy việc chưa thành: 〜ようと したが / 〜ようと した とき.",
+      "en": "The moment just before an action starts, or an attempt at it. Often followed by something showing it did not happen: 〜ようと したが / 〜ようと した とき."
+    },
+    "examples": [
+      { "ja": "出かけようと した とき、電話が 鳴った。", "vi": "Lúc tôi định ra ngoài thì điện thoại reo.", "en": "Just as I was about to go out, the phone rang." },
+      { "ja": "赤ちゃんが 立とうと して います。", "vi": "Em bé đang cố đứng dậy.", "en": "The baby is trying to stand up." },
+      { "ja": "両親に 本当の ことを 話そうと したが、なかなか 言えなかった。", "vi": "Tôi định nói thật với bố mẹ nhưng mãi không nói ra được.", "en": "I tried to tell my parents the truth, but I just could not say it." }
+    ],
+    "note": { "vi": "V-(よ)う と 思う (N4) là dự định trong đầu; ようと する là đang cố làm hoặc ngay sắp làm.", "en": "V-(よ)う と 思う (N4) is a plan in mind; ようと する is an actual attempt or the moment just before acting." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:tabi-ni", "slug": "tabi-ni", "lesson": 46, "level": 3, "pattern": "〜たびに",
+    "title": { "vi": "Mỗi lần ~ thì đều ~", "en": "Every time ~" },
+    "structure": "V-る / N の + たびに",
+    "explain": {
+      "vi": "Mỗi khi việc ở vế trước xảy ra thì việc ở vế sau cũng xảy ra theo. N の たびに dùng với danh từ chỉ việc lặp lại (旅行, 試験…).",
+      "en": "Every time the first thing happens, the second happens too. N の たびに takes nouns for repeated events (旅行, 試験…)."
+    },
+    "examples": [
+      { "ja": "この 写真を 見る たびに、祖母を 思い出す。", "vi": "Mỗi lần xem bức ảnh này, tôi lại nhớ đến bà.", "en": "Every time I look at this photo, I remember my grandmother." },
+      { "ja": "兄は 帰って くる たびに、おみやげを 買って きて くれる。", "vi": "Mỗi lần về nhà, anh trai tôi đều mua quà cho tôi.", "en": "Every time my brother comes home, he brings me a present." },
+      { "ja": "旅行の たびに、家族に 手紙を 書きます。", "vi": "Mỗi chuyến du lịch, tôi đều viết thư cho gia đình.", "en": "Every time I travel, I write a letter to my family." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:uchi-ni", "slug": "uchi-ni", "lesson": 47, "level": 3, "pattern": "〜うちに",
+    "title": { "vi": "Trong lúc còn ~; trước khi ~", "en": "While ~ (still); before ~" },
+    "structure": "V-る / V-ている / V-ない / A-い / A-な / N の + うちに",
+    "explain": {
+      "vi": "Làm việc gì trong khi trạng thái còn kéo dài, trước khi nó thay đổi; V-ない うちに là trước khi ~. Với V-ている うちに, vế sau là thay đổi xảy ra tự nhiên, không chủ ý.",
+      "en": "Do something while a state lasts, before it changes; V-ない うちに means before ~. With V-ている うちに, the second part is a change that happens by itself."
+    },
+    "examples": [
+      { "ja": "あたたかい うちに 食べて ください。", "vi": "Hãy ăn khi còn nóng.", "en": "Please eat it while it is warm." },
+      { "ja": "暗く ならない うちに 家に 帰りましょう。", "vi": "Về nhà trước khi trời tối thôi.", "en": "Let's go home before it gets dark." },
+      { "ja": "本を 読んで いる うちに、寝て しまった。", "vi": "Đang đọc sách thì tôi ngủ thiếp đi lúc nào không hay.", "en": "I fell asleep while reading." }
+    ],
+    "note": { "vi": "Khác 〜間に: うちに nhấn mạnh tranh thủ làm trước khi tình trạng thay đổi.", "en": "Unlike 〜間に, うちに stresses acting before the situation changes." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:aida-ni", "slug": "aida-ni", "lesson": 47, "level": 3, "pattern": "〜間・〜間に",
+    "title": { "vi": "Trong suốt ~; trong lúc ~", "en": "During ~; while ~" },
+    "structure": "V-る / V-ている / N の + 間 (に)",
+    "explain": {
+      "vi": "間: việc kéo dài suốt cả khoảng thời gian đó. 間に: việc xảy ra (một lần) vào một lúc nào đó trong khoảng thời gian ấy.",
+      "en": "間: something lasts the whole period. 間に: something happens once at some point within it."
+    },
+    "examples": [
+      { "ja": "夏休みの 間、祖父の 家に いました。", "vi": "Suốt kỳ nghỉ hè, tôi ở nhà ông.", "en": "I stayed at my grandfather's house during the summer holidays." },
+      { "ja": "母が 寝て いる 間に、部屋を そうじしました。", "vi": "Trong lúc mẹ ngủ, tôi đã dọn phòng.", "en": "While my mother was asleep, I cleaned the room." },
+      { "ja": "留守の 間に、だれか 来た ようです。", "vi": "Trong lúc tôi vắng nhà, hình như có ai đó đến.", "en": "It seems someone came while I was out." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ppoi", "slug": "ppoi", "lesson": 48, "level": 3, "pattern": "〜っぽい",
+    "title": { "vi": "Có vẻ ~, hơi giống ~; hay ~", "en": "-ish, like ~; tends to ~" },
+    "structure": "N / V-ます (bỏ ます) / A-い (bỏ い) + っぽい",
+    "explain": {
+      "vi": "Văn nói. Sau danh từ hoặc tính từ: mang tính chất giống ~ (子どもっぽい, 白っぽい). Sau gốc động từ: hay, dễ ~ (忘れっぽい). Thường có sắc thái chê nhẹ.",
+      "en": "Casual. After a noun or adjective: having a quality like ~ (子どもっぽい, 白っぽい). After a verb stem: tending to ~ (忘れっぽい). Often mildly negative."
+    },
+    "examples": [
+      { "ja": "この スープは 水っぽくて、あまり おいしくない。", "vi": "Món súp này loãng như nước, không ngon lắm.", "en": "This soup is watery and not very tasty." },
+      { "ja": "父は 年を とって、忘れっぽく なった。", "vi": "Bố tôi có tuổi rồi nên hay quên.", "en": "My father has got older and become forgetful." },
+      { "ja": "うちの 犬は 白っぽい 色を して います。", "vi": "Con chó nhà tôi có màu trăng trắng.", "en": "Our dog is a whitish colour." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:tsuide-ni", "slug": "tsuide-ni", "lesson": 48, "level": 3, "pattern": "〜ついでに",
+    "title": { "vi": "Nhân tiện ~, tiện thể ~", "en": "While ~, on the way" },
+    "structure": "V-る / V-た / N の + ついでに",
+    "explain": {
+      "vi": "Nhân lúc làm việc chính ở vế trước thì làm thêm việc ở vế sau.",
+      "en": "Taking the chance of the main action to do something extra."
+    },
+    "examples": [
+      { "ja": "買い物に 行く ついでに、この 手紙を 出して きて くれませんか。", "vi": "Tiện đi mua sắm, bạn gửi giúp tôi lá thư này được không?", "en": "Since you are going shopping, could you post this letter for me?" },
+      { "ja": "散歩の ついでに、犬の えさを 買って 帰った。", "vi": "Tiện đi dạo, tôi mua thức ăn cho chó rồi về.", "en": "On my walk, I bought dog food on the way home." },
+      { "ja": "駅前の 店で 夕飯を 食べた ついでに、おべんとうも 買いました。", "vi": "Nhân tiện ăn tối ở quán trước ga, tôi mua luôn hộp cơm.", "en": "While having dinner at a shop by the station, I also bought a boxed lunch." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:okage-de", "slug": "okage-de", "lesson": 49, "level": 3, "pattern": "〜おかげで",
+    "title": { "vi": "Nhờ ~ (nên kết quả tốt)", "en": "Thanks to ~" },
+    "structure": "thể thường + おかげで (A-な な, N の)",
+    "explain": {
+      "vi": "Nêu nguyên nhân đưa đến kết quả tốt, kèm lòng biết ơn. おかげさまで là câu lịch sự khi đáp lời hỏi thăm.",
+      "en": "Gives the cause of a good result, with gratitude. おかげさまで is the polite reply when someone asks after you."
+    },
+    "examples": [
+      { "ja": "薬を 飲んだ おかげで、熱が 下がりました。", "vi": "Nhờ uống thuốc mà tôi đã hạ sốt.", "en": "Thanks to the medicine, my fever went down." },
+      { "ja": "先生の おかげで、試験に 合格できました。", "vi": "Nhờ thầy mà em đã đỗ kỳ thi.", "en": "Thanks to my teacher, I passed the exam." },
+      { "ja": "毎日 歩いて いる おかげで、体が 軽く なった。", "vi": "Nhờ ngày nào cũng đi bộ mà người tôi nhẹ nhõm hơn.", "en": "Thanks to walking every day, my body feels lighter." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:sei-de", "slug": "sei-de", "lesson": 49, "level": 3, "pattern": "〜せいで・〜せいだ",
+    "title": { "vi": "Tại ~, do ~ (nên kết quả xấu)", "en": "Because of ~ (bad result)" },
+    "structure": "thể thường + せいで / せいだ (A-な な, N の)",
+    "explain": {
+      "vi": "Nêu nguyên nhân dẫn đến kết quả xấu, thường mang ý đổ lỗi.",
+      "en": "Gives the cause of a bad result, often with a sense of blame."
+    },
+    "examples": [
+      { "ja": "かぜの せいで、頭が 痛い。", "vi": "Tại bị cảm nên tôi đau đầu.", "en": "I have a headache because of my cold." },
+      { "ja": "昨日 飲みすぎた せいで、今朝は 気分が 悪い。", "vi": "Do hôm qua uống quá nhiều nên sáng nay tôi thấy khó chịu.", "en": "I feel sick this morning because I drank too much yesterday." },
+      { "ja": "遅れたのは 私の せいです。", "vi": "Chúng ta bị muộn là tại tôi.", "en": "It is my fault that we were late." }
+    ],
+    "note": { "vi": "おかげで dùng cho kết quả tốt, せいで cho kết quả xấu.", "en": "おかげで is for good results, せいで for bad ones." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:you-na-ki-ga-suru", "slug": "you-na-ki-ga-suru", "lesson": 50, "level": 3, "pattern": "〜ような 気が する",
+    "title": { "vi": "Tôi có cảm giác ~", "en": "I have a feeling that ~" },
+    "structure": "thể thường + ような 気が する (A-な な, N の); thể thường + 気が する",
+    "explain": {
+      "vi": "Nói cảm giác, ấn tượng mơ hồ của người nói, không có căn cứ chắc chắn. Có thể bỏ ような: 〜気が する.",
+      "en": "The speaker's vague feeling or impression, without firm grounds. ような can be dropped: 〜気が する."
+    },
+    "examples": [
+      { "ja": "明日は 雨が 降る ような 気が します。", "vi": "Tôi có cảm giác mai trời sẽ mưa.", "en": "I have a feeling it will rain tomorrow." },
+      { "ja": "この 景色は 前にも 見た ような 気が する。", "vi": "Tôi có cảm giác đã từng thấy phong cảnh này.", "en": "I feel as if I have seen this view before." },
+      { "ja": "今年の 夏は 去年より 暑い 気が します。", "vi": "Tôi có cảm giác hè năm nay nóng hơn năm ngoái.", "en": "I feel this summer is hotter than last year." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ba-hodo", "slug": "ba-hodo", "lesson": 50, "level": 3, "pattern": "〜ば 〜ほど",
+    "title": { "vi": "Càng ~ càng ~", "en": "The more ~, the more ~" },
+    "structure": "V-ば V-る ほど; A-ければ A-い ほど; A-なら A-な ほど",
+    "explain": {
+      "vi": "Khi mức độ ở vế trước tăng thì vế sau cũng thay đổi theo. Lặp lại cùng một từ: lần đầu ở thể ば, lần sau ở thể từ điển.",
+      "en": "As the first grows, the second changes with it. The same word is repeated: first in the ば form, then in the dictionary form."
+    },
+    "examples": [
+      { "ja": "山は 高ければ 高い ほど、空気が うすく なる。", "vi": "Núi càng cao thì không khí càng loãng.", "en": "The higher the mountain, the thinner the air." },
+      { "ja": "日本語は 勉強すれば する ほど、おもしろく なる。", "vi": "Tiếng Nhật càng học càng thấy thú vị.", "en": "The more you study Japanese, the more interesting it gets." },
+      { "ja": "魚は 新しければ 新しい ほど おいしい。", "vi": "Cá càng tươi càng ngon.", "en": "The fresher the fish, the better it tastes." }
+    ],
+    "note": { "vi": "Dựa trên thể ば (N4).", "en": "Builds on the ば form (N4)." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:te-tamaranai", "slug": "te-tamaranai", "lesson": 51, "level": 3, "pattern": "〜て たまらない",
+    "title": { "vi": "~ không chịu nổi, ~ vô cùng", "en": "Unbearably ~, dying to ~" },
+    "structure": "V-て / A-くて / A-な で + たまらない",
+    "explain": {
+      "vi": "Cảm xúc hoặc cảm giác cơ thể mạnh đến mức không kìm được. Chủ ngữ thường là người nói.",
+      "en": "A feeling or bodily sensation so strong it cannot be held back. The subject is usually the speaker."
+    },
+    "examples": [
+      { "ja": "国の 家族に 会いたくて たまらない。", "vi": "Tôi muốn gặp gia đình ở quê đến không chịu nổi.", "en": "I am dying to see my family back home." },
+      { "ja": "試験に 合格して、うれしくて たまりません。", "vi": "Đỗ kỳ thi rồi, tôi vui không tả xiết.", "en": "I passed the exam and I am overjoyed." },
+      { "ja": "歯が 痛くて たまらない。", "vi": "Răng tôi đau không chịu nổi.", "en": "My tooth hurts unbearably." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:kurai-teido", "slug": "kurai-teido", "lesson": 51, "level": 3, "pattern": "〜くらい・〜ぐらい (mức độ)",
+    "title": { "vi": "Đến mức ~", "en": "So ~ that, to the point of ~" },
+    "structure": "thể thường + くらい / ぐらい (A-な な, N)",
+    "explain": {
+      "vi": "Dùng một ví dụ cụ thể để nói mức độ của cảm xúc hay trạng thái.",
+      "en": "Uses a concrete example to show the degree of a feeling or state."
+    },
+    "examples": [
+      { "ja": "なきたい くらい うれしかった。", "vi": "Tôi vui đến mức muốn khóc.", "en": "I was so happy I wanted to cry." },
+      { "ja": "声が 出ない くらい おどろいた。", "vi": "Tôi ngạc nhiên đến mức không thốt nên lời.", "en": "I was so surprised I could not make a sound." },
+      { "ja": "足が 動かなく なる くらい 疲れた。", "vi": "Tôi mệt đến mức chân không nhấc nổi.", "en": "I was so tired my legs would not move." }
+    ],
+    "note": { "vi": "Với số lượng (三十分ぐらい), くらい・ぐらい nghĩa là khoảng.", "en": "With amounts (三十分ぐらい), くらい・ぐらい means about." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:you-ni-mokuteki", "slug": "you-ni-mokuteki", "lesson": 52, "level": 3, "pattern": "〜ように (mục đích)",
+    "title": { "vi": "Để (có thể) ~, để không ~", "en": "So that ~" },
+    "structure": "V-る / V-ない / V (thể khả năng) + ように",
+    "explain": {
+      "vi": "Nêu mục tiêu hướng tới. Vế trước thường là động từ không ý chí, thể khả năng hoặc thể phủ định (聞こえる, できる, 忘れない).",
+      "en": "States the aim. The first part is usually a non-volitional verb, a potential form or a negative (聞こえる, できる, 忘れない)."
+    },
+    "examples": [
+      { "ja": "忘れない ように、メモして おきます。", "vi": "Để không quên, tôi ghi chú lại.", "en": "I will write it down so I do not forget." },
+      { "ja": "夢が かなう ように、毎日 努力して います。", "vi": "Tôi nỗ lực mỗi ngày để ước mơ thành hiện thực.", "en": "I make an effort every day so that my dream comes true." },
+      { "ja": "後ろの 人にも 聞こえる ように、大きな 声で 話して ください。", "vi": "Hãy nói to để người ở phía sau cũng nghe được.", "en": "Please speak loudly so the people at the back can hear too." }
+    ],
+    "note": { "vi": "ために (N4) đi với động từ ý chí, cùng chủ ngữ (留学する ために); ように đi với động từ không ý chí, thể khả năng hoặc phủ định.", "en": "ために (N4) takes a volitional verb with the same subject (留学する ために); ように takes non-volitional verbs, potentials or negatives." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:sae-ba", "slug": "sae-ba", "lesson": 52, "level": 3, "pattern": "〜さえ 〜ば",
+    "title": { "vi": "Chỉ cần ~ là ~", "en": "If only ~, as long as ~" },
+    "structure": "N + さえ + V-ば / A-ければ; V-ます (bỏ ます) + さえ すれば",
+    "explain": {
+      "vi": "Chỉ cần điều kiện tối thiểu này được thỏa mãn là đủ để có kết quả, không cần gì thêm.",
+      "en": "As long as this one minimum condition is met, the result follows; nothing more is needed."
+    },
+    "examples": [
+      { "ja": "道さえ わかれば、一人で 行けます。", "vi": "Chỉ cần biết đường là tôi đi một mình được.", "en": "As long as I know the way, I can go alone." },
+      { "ja": "この 薬を 飲みさえ すれば、すぐ 治りますよ。", "vi": "Chỉ cần uống thuốc này là sẽ khỏi ngay.", "en": "Just take this medicine and you will soon get better." },
+      { "ja": "あきらめさえ しなければ、夢は かなうと 思う。", "vi": "Tôi nghĩ chỉ cần không bỏ cuộc thì ước mơ sẽ thành hiện thực.", "en": "I think your dream will come true as long as you do not give up." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ni-yotte", "slug": "ni-yotte", "lesson": 53, "level": 3, "pattern": "〜によって (tùy theo)",
+    "title": { "vi": "Tùy theo ~ (mà khác nhau)", "en": "Depending on ~" },
+    "structure": "N + に よって / に よっては",
+    "explain": {
+      "vi": "Kết quả thay đổi tùy theo N; vế sau thường có ちがう, 変わる. に よっては: tùy trường hợp, có khi ~.",
+      "en": "The result varies with N; the second part often has ちがう or 変わる. に よっては: in some cases ~."
+    },
+    "examples": [
+      { "ja": "曜日に よって、電車の 時間が 変わります。", "vi": "Tùy thứ trong tuần mà giờ tàu thay đổi.", "en": "Train times change depending on the day of the week." },
+      { "ja": "国に よって、車が 走る 側が ちがう。", "vi": "Tùy từng nước mà phía đường xe chạy khác nhau.", "en": "Which side cars drive on differs from country to country." },
+      { "ja": "天気に よっては、バスが 止まる ことも あります。", "vi": "Tùy thời tiết, có khi xe buýt cũng ngừng chạy.", "en": "Depending on the weather, the buses sometimes stop." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:toori-ni", "slug": "toori-ni", "lesson": 53, "level": 3, "pattern": "〜とおりに",
+    "title": { "vi": "Đúng như ~, theo đúng ~", "en": "Just as ~, according to ~" },
+    "structure": "V-る / V-た / N の + とおりに; N + どおりに",
+    "explain": {
+      "vi": "Làm đúng theo cách đã được nói, viết hoặc nhìn thấy. Gắn liền sau danh từ thì đọc là どおり (予定どおり).",
+      "en": "Doing exactly as said, written or seen. Attached directly to a noun it is read どおり (予定どおり)."
+    },
+    "examples": [
+      { "ja": "地図の とおりに 行けば、駅に 着きます。", "vi": "Nếu đi đúng theo bản đồ thì sẽ tới ga.", "en": "If you follow the map, you will reach the station." },
+      { "ja": "先生が 言った とおりに、もう 一度 書いて ください。", "vi": "Hãy viết lại một lần nữa đúng như thầy đã nói.", "en": "Please write it once more, just as the teacher said." },
+      { "ja": "バスは 予定どおりに 着いた。", "vi": "Xe buýt đã đến đúng như dự kiến.", "en": "The bus arrived on schedule." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:te-hoshii", "slug": "te-hoshii", "lesson": 54, "level": 3, "pattern": "〜て ほしい",
+    "title": { "vi": "Muốn (người khác) ~", "en": "Want someone to ~" },
+    "structure": "N に + V-て ほしい; V-ないで ほしい",
+    "explain": {
+      "vi": "Nói mong muốn người khác làm (hoặc không làm) một việc. Người được mong muốn đi với に.",
+      "en": "Says you want someone else to do (or not do) something. That person takes に."
+    },
+    "examples": [
+      { "ja": "友だちに 遊びに 来て ほしい。", "vi": "Tôi muốn bạn đến nhà chơi.", "en": "I want my friend to come and visit." },
+      { "ja": "子どもには 元気に 育って ほしい。", "vi": "Tôi mong con lớn lên khỏe mạnh.", "en": "I want my children to grow up healthy." },
+      { "ja": "大事な 話なので、だれにも 言わないで ほしい。", "vi": "Chuyện quan trọng nên tôi không muốn cậu nói với ai.", "en": "It is important, so I do not want you to tell anyone." }
+    ],
+    "note": { "vi": "V-たい (N5) là mong muốn của chính mình; て ほしい là mong muốn người khác làm.", "en": "V-たい (N5) is your own wish; て ほしい is wanting someone else to act." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:you-ni-iu", "slug": "you-ni-iu", "lesson": 54, "level": 3, "pattern": "〜ように 言う",
+    "title": { "vi": "Bảo (ai đó) hãy ~ / đừng ~", "en": "Tell someone to ~" },
+    "structure": "V-る / V-ない + ように 言う (たのむ, 伝える, 注意する)",
+    "explain": {
+      "vi": "Thuật lại gián tiếp một yêu cầu hay lời dặn. 言う có thể thay bằng たのむ, 伝える, 注意する.",
+      "en": "Reports a request or instruction indirectly. 言う can be replaced by たのむ, 伝える or 注意する."
+    },
+    "examples": [
+      { "ja": "母に 早く 帰る ように 言われた。", "vi": "Tôi bị mẹ bảo phải về sớm.", "en": "My mother told me to come home early." },
+      { "ja": "お客さんが 来たら、こちらで 待つ ように 伝えて ください。", "vi": "Nếu khách đến thì nhắn họ chờ ở đây giúp tôi.", "en": "When the guest arrives, please tell them to wait here." },
+      { "ja": "医者に お酒を 飲まない ように 言われました。", "vi": "Tôi bị bác sĩ dặn không được uống rượu.", "en": "The doctor told me not to drink alcohol." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:mama", "slug": "mama", "lesson": 55, "level": 3, "pattern": "〜まま",
+    "title": { "vi": "Để nguyên ~, vẫn cứ ~", "en": "As it is, leaving ~" },
+    "structure": "V-た / V-ない / A-い / A-な / N の + まま",
+    "explain": {
+      "vi": "Trạng thái vẫn giữ nguyên trong khi một việc khác xảy ra; thường là điều không bình thường.",
+      "en": "A state stays unchanged while something else happens, usually something unusual."
+    },
+    "examples": [
+      { "ja": "靴を はいた まま、部屋に 入らないで ください。", "vi": "Đừng đi nguyên giày vào phòng.", "en": "Please do not come into the room with your shoes on." },
+      { "ja": "電気を つけた まま、寝て しまった。", "vi": "Tôi lỡ ngủ quên mà vẫn để đèn sáng.", "en": "I fell asleep with the light on." },
+      { "ja": "窓を 開けた まま、出かけた。", "vi": "Tôi để nguyên cửa sổ mở rồi đi ra ngoài.", "en": "I went out leaving the window open." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:kakeru", "slug": "kakeru", "lesson": 55, "level": 3, "pattern": "V-かける・V-かけの N",
+    "title": { "vi": "Đang ~ dở; suýt ~", "en": "Half-done; nearly ~" },
+    "structure": "V-ます (bỏ ます) + かける / かけの N / かけだ",
+    "explain": {
+      "vi": "Hành động đã bắt đầu nhưng chưa xong, hoặc sắp xảy ra thì dừng lại.",
+      "en": "An action has started but is not finished, or nearly happens and stops."
+    },
+    "examples": [
+      { "ja": "読みかけの 本が つくえの 上に ある。", "vi": "Cuốn sách đọc dở đang ở trên bàn.", "en": "There is a half-read book on the desk." },
+      { "ja": "何か 言いかけて、彼は 口を 閉じた。", "vi": "Anh ấy định nói gì đó rồi lại ngậm miệng.", "en": "He started to say something, then closed his mouth." },
+      { "ja": "駅の かいだんで 転びかけた。", "vi": "Tôi suýt ngã ở cầu thang nhà ga.", "en": "I nearly fell on the station stairs." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:te-bakari-iru", "slug": "te-bakari-iru", "lesson": 56, "level": 3, "pattern": "〜て ばかり いる",
+    "title": { "vi": "Chỉ toàn ~, suốt ngày ~", "en": "Do nothing but ~" },
+    "structure": "V-て + ばかり いる; N + ばかり + V",
+    "explain": {
+      "vi": "Chỉ làm đi làm lại một việc mà không làm việc khác, thường mang ý phê phán.",
+      "en": "Doing one thing over and over and nothing else; usually critical."
+    },
+    "examples": [
+      { "ja": "スマホを さわって ばかり いないで、手伝って。", "vi": "Đừng có chỉ nghịch điện thoại mãi, phụ một tay đi.", "en": "Stop just fiddling with your phone and help out." },
+      { "ja": "彼女は 何を 聞いても 笑って ばかり いる。", "vi": "Hỏi gì cô ấy cũng chỉ cười.", "en": "Whatever you ask her, she just laughs." },
+      { "ja": "肉ばかり 食べないで、野菜も 食べなさい。", "vi": "Đừng chỉ ăn thịt, ăn cả rau nữa.", "en": "Do not eat only meat; eat vegetables too." }
+    ],
+    "note": { "vi": "V-た ばかり là vừa mới ~, nghĩa khác hẳn.", "en": "V-た ばかり means have just ~, a different meaning." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:toshite", "slug": "toshite", "lesson": 57, "level": 3, "pattern": "〜として",
+    "title": { "vi": "Với tư cách là ~, như là ~", "en": "As ~" },
+    "structure": "N + として (は / も)",
+    "explain": {
+      "vi": "Nêu tư cách, vai trò hoặc danh nghĩa của người hay vật.",
+      "en": "States the role, capacity or status of a person or thing."
+    },
+    "examples": [
+      { "ja": "彼は 留学生として 日本に 来ました。", "vi": "Anh ấy đến Nhật với tư cách du học sinh.", "en": "He came to Japan as an exchange student." },
+      { "ja": "姉は 英語の 先生として 働いて います。", "vi": "Chị tôi làm giáo viên tiếng Anh.", "en": "My sister works as an English teacher." },
+      { "ja": "この 部屋は 教室として 使われて いる。", "vi": "Căn phòng này được dùng làm phòng học.", "en": "This room is used as a classroom." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ni-totte", "slug": "ni-totte", "lesson": 57, "level": 3, "pattern": "〜にとって",
+    "title": { "vi": "Đối với ~ (theo góc nhìn của ~)", "en": "For ~, to ~" },
+    "structure": "N + に とって (は / も)",
+    "explain": {
+      "vi": "Đánh giá một việc từ góc nhìn, lập trường của N. Vế sau là nhận xét (大切だ, むずかしい…), không phải hành động.",
+      "en": "Judges something from N's point of view. The second part is an evaluation (大切だ, むずかしい…), not an action."
+    },
+    "examples": [
+      { "ja": "私に とって、家族が いちばん 大切です。", "vi": "Đối với tôi, gia đình là quan trọng nhất.", "en": "To me, family is the most important thing." },
+      { "ja": "この 問題は 子どもに とって むずかしすぎる。", "vi": "Bài này quá khó đối với trẻ con.", "en": "This problem is too hard for children." },
+      { "ja": "学生に とって、試験は 大切な ものだ。", "vi": "Đối với học sinh, kỳ thi là điều quan trọng.", "en": "For students, exams are important." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:dake-de-naku", "slug": "dake-de-naku", "lesson": 58, "level": 3, "pattern": "〜だけでなく",
+    "title": { "vi": "Không chỉ ~ mà còn ~", "en": "Not only ~ but also ~" },
+    "structure": "thể thường + だけでなく (A-な な, N) ... も",
+    "explain": {
+      "vi": "Thêm một điều nữa vào điều vừa nêu; vế sau thường có も. Văn nói: だけじゃなく.",
+      "en": "Adds one more thing to what was said; the second part usually has も. Spoken: だけじゃなく."
+    },
+    "examples": [
+      { "ja": "この 映画は 子どもだけでなく、大人も 楽しめる。", "vi": "Bộ phim này không chỉ trẻ em mà người lớn cũng xem vui.", "en": "Not only children but adults too can enjoy this film." },
+      { "ja": "彼女は 歌が 上手な だけでなく、ダンスも できる。", "vi": "Cô ấy không chỉ hát hay mà còn biết nhảy.", "en": "She not only sings well but can also dance." },
+      { "ja": "音楽は 聞く だけでなく、自分で えんそうするのも 好きです。", "vi": "Âm nhạc thì tôi không chỉ thích nghe mà còn thích tự chơi.", "en": "I like not only listening to music but also playing it myself." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:hazu-ga-nai", "slug": "hazu-ga-nai", "lesson": 59, "level": 3, "pattern": "〜はずが ない",
+    "title": { "vi": "Không thể nào ~, lẽ nào lại ~", "en": "There is no way ~" },
+    "structure": "thể thường + はずが ない (A-な な, N の)",
+    "explain": {
+      "vi": "Người nói tin chắc, dựa trên lý lẽ, rằng việc đó không thể xảy ra.",
+      "en": "The speaker is sure, on reasonable grounds, that it cannot be so."
+    },
+    "examples": [
+      { "ja": "あの 強い チームが 負ける はずが ない。", "vi": "Đội mạnh như thế không thể nào thua được.", "en": "There is no way that strong team will lose." },
+      { "ja": "れんしゅうしなかったのだから、勝てる はずが ない。", "vi": "Không luyện tập thì làm sao thắng được.", "en": "We did not practise, so there is no way we can win." },
+      { "ja": "彼が うそを つく はずが ない。", "vi": "Anh ấy không lẽ nào lại nói dối.", "en": "There is no way he would lie." }
+    ],
+    "note": { "vi": "はずだ (N4): chắc là ~; はずが ない phủ định mạnh khả năng đó.", "en": "はずだ (N4): should be ~; はずが ない firmly denies the possibility." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:tame-genin", "slug": "tame-genin", "lesson": 60, "level": 3, "pattern": "〜ため (に) (nguyên nhân)",
+    "title": { "vi": "Vì ~, do ~ (trang trọng)", "en": "Because of ~ (formal)" },
+    "structure": "thể thường + ため (に) (A-な な, N の)",
+    "explain": {
+      "vi": "Nêu nguyên nhân một cách trang trọng, hay gặp trong tin tức và thông báo. Vế sau là kết quả.",
+      "en": "A formal way to give a cause, common in news and notices. The second part is the result."
+    },
+    "examples": [
+      { "ja": "物の 値段が 上がった ため、生活が 苦しく なった。", "vi": "Do giá cả tăng nên cuộc sống trở nên khó khăn.", "en": "Because prices went up, life became hard." },
+      { "ja": "大雪の ため、電車が 遅れて います。", "vi": "Do tuyết rơi dày nên tàu đang bị trễ.", "en": "Trains are delayed because of heavy snow." },
+      { "ja": "円が 安く なった ため、外国からの 客が 増えた。", "vi": "Do đồng yên mất giá nên khách nước ngoài tăng lên.", "en": "Because the yen got weaker, visitors from abroad increased." }
+    ],
+    "note": { "vi": "ために (N4) với động từ ý chí là mục đích; ở đây là nguyên nhân, vế sau là kết quả.", "en": "ために (N4) with a volitional verb is a purpose; here it is a cause and the second part is the result." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:kawari-ni", "slug": "kawari-ni", "lesson": 60, "level": 3, "pattern": "〜かわりに",
+    "title": { "vi": "Thay cho ~; bù lại ~", "en": "Instead of ~; in exchange for ~" },
+    "structure": "V-る / V-た / A-い / A-な / N の + かわりに",
+    "explain": {
+      "vi": "1) Thay thế: dùng cái khác, hay người khác làm thay. 2) Đổi lại: có mặt tốt thì có mặt xấu, hoặc trao đổi lấy một việc khác.",
+      "en": "1) Replacement: something or someone else instead. 2) Trade-off: a good side comes with a bad one, or one thing in return for another."
+    },
+    "examples": [
+      { "ja": "現金の かわりに、カードで 払えます。", "vi": "Có thể trả bằng thẻ thay cho tiền mặt.", "en": "You can pay by card instead of cash." },
+      { "ja": "この 店は 安い かわりに、サービスが よくない。", "vi": "Cửa hàng này rẻ nhưng bù lại phục vụ không tốt.", "en": "This shop is cheap, but in return the service is poor." },
+      { "ja": "宿題を 手伝って もらう かわりに、昼ご飯を おごった。", "vi": "Đổi lại việc được giúp làm bài tập, tôi đã khao bữa trưa.", "en": "In return for help with my homework, I treated them to lunch." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:koto-ni-natte-iru", "slug": "koto-ni-natte-iru", "lesson": 61, "level": 3, "pattern": "〜ことに なって いる",
+    "title": { "vi": "Theo quy định thì ~; đã được định là ~", "en": "It is the rule that ~; it is arranged that ~" },
+    "structure": "V-る / V-ない + ことに なって いる",
+    "explain": {
+      "vi": "Nói một quy định, lệ thường hoặc kế hoạch đã được quyết định, không phải do người nói tự quyết.",
+      "en": "States a rule, custom or arrangement already decided, not by the speaker alone."
+    },
+    "examples": [
+      { "ja": "この 会社では、毎朝 九時に 会議を する ことに なって いる。", "vi": "Ở công ty này, theo quy định mỗi sáng họp lúc chín giờ.", "en": "At this company, there is a meeting at nine every morning." },
+      { "ja": "休む ときは、部長に れんらくする ことに なって います。", "vi": "Theo quy định, khi nghỉ thì phải báo cho trưởng phòng.", "en": "When you take a day off, you are supposed to contact the department head." },
+      { "ja": "来月から 東京の 本社で 働く ことに なって います。", "vi": "Theo kế hoạch đã định, từ tháng sau tôi sẽ làm ở trụ sở chính tại Tokyo.", "en": "From next month I am to work at the head office in Tokyo." }
+    ],
+    "note": { "vi": "ことに なる (N4) là một việc được quyết định; ことに なって いる là quy định hay kế hoạch đã có sẵn.", "en": "ことに なる (N4) is that something gets decided; ことに なって いる is a rule or plan already in place." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:sasete-morau", "slug": "sasete-morau", "lesson": 61, "level": 3, "pattern": "〜させて もらう・〜させて いただく",
+    "title": { "vi": "Được (cho phép) ~; xin phép được ~", "en": "Be allowed to ~; let me ~" },
+    "structure": "V (thể sai khiến) -て + もらう / いただく",
+    "explain": {
+      "vi": "Người nói được người khác cho phép làm việc gì và biết ơn điều đó. させて いただきます là cách nói khiêm tốn khi thông báo việc mình sẽ làm.",
+      "en": "The speaker is allowed by someone to do something and is grateful. させて いただきます humbly announces what the speaker will do."
+    },
+    "examples": [
+      { "ja": "体調が 悪いので、今日は 早く 帰らせて いただけませんか。", "vi": "Tôi không khỏe nên hôm nay cho tôi về sớm được không ạ?", "en": "I am not feeling well; may I go home early today?" },
+      { "ja": "部長に 会議で 発表させて もらいました。", "vi": "Tôi được trưởng phòng cho phát biểu trong cuộc họp.", "en": "The department head let me give a presentation at the meeting." },
+      { "ja": "では、説明させて いただきます。", "vi": "Vậy xin phép tôi được trình bày.", "en": "Now, allow me to explain." }
+    ],
+    "note": { "vi": "Ghép thể sai khiến (N4) với て もらう (N4).", "en": "Combines the causative (N4) with て もらう (N4)." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ni-kanshite", "slug": "ni-kanshite", "lesson": 62, "level": 3, "pattern": "〜に関して・〜に関する",
+    "title": { "vi": "Về ~, liên quan đến ~", "en": "About ~, concerning ~" },
+    "structure": "N + に関して (は / も); N1 + に関する + N2",
+    "explain": {
+      "vi": "Nêu đề tài hay đối tượng của lời nói, câu hỏi, tài liệu. Trang trọng hơn について.",
+      "en": "Names the topic of speech, questions or documents. More formal than について."
+    },
+    "examples": [
+      { "ja": "商品に 関する 質問は、こちらで 受け付けて います。", "vi": "Câu hỏi liên quan đến sản phẩm được tiếp nhận ở đây.", "en": "Questions about our products are handled here." },
+      { "ja": "料金に 関して、お客さまから 問い合わせが ありました。", "vi": "Có khách hàng hỏi về giá tiền.", "en": "A customer made an enquiry about the price." },
+      { "ja": "新しい 店の 計画に 関して、意見を 聞かせて ください。", "vi": "Hãy cho tôi nghe ý kiến về kế hoạch cửa hàng mới.", "en": "Please tell me your opinion about the plan for the new shop." }
+    ],
+    "reviewed": false
+  },
+  {
+    "id": "grammar:ni-taishite", "slug": "ni-taishite", "lesson": 63, "level": 3, "pattern": "〜に対して",
+    "title": { "vi": "Đối với ~, hướng tới ~; trái với ~", "en": "Towards ~; in contrast to ~" },
+    "structure": "N + に対して (は); N1 + に対する + N2; thể thường + の に対して",
+    "explain": {
+      "vi": "1) Nêu đối tượng mà hành động, thái độ, cảm xúc hướng tới. 2) So sánh đối lập hai sự việc (〜のに対して).",
+      "en": "1) Names the target of an action, attitude or feeling. 2) Contrasts two facts (〜のに対して)."
+    },
+    "examples": [
+      { "ja": "国の 決定に 対して、反対の 意見が 多い。", "vi": "Có nhiều ý kiến phản đối quyết định của nhà nước.", "en": "There are many opinions against the government decision." },
+      { "ja": "先生に 対して、そんな 言い方を しては いけません。", "vi": "Không được ăn nói như thế với thầy giáo.", "en": "You must not speak to your teacher like that." },
+      { "ja": "兄が 外で 遊ぶのが 好きなのに 対して、弟は 家で 本を 読むのが 好きだ。", "vi": "Trái với anh trai thích chơi ngoài trời, em trai lại thích ở nhà đọc sách.", "en": "While the older brother likes playing outside, the younger one likes reading at home." }
+    ],
+    "note": { "vi": "Khác にとって (bài 57): にとって là theo góc nhìn của N; に対して là hành động, thái độ hướng tới N.", "en": "Unlike にとって (lesson 57), which is from N's point of view, に対して is an action or attitude aimed at N." },
+    "reviewed": false
+  },
+  {
+    "id": "grammar:wake-da", "slug": "wake-da", "lesson": 63, "level": 3, "pattern": "〜わけだ・〜わけでは ない",
+    "title": { "vi": "Thảo nào ~, tức là ~ / Không hẳn là ~", "en": "No wonder ~; that means ~ / It is not that ~" },
+    "structure": "thể thường + わけだ / わけでは ない (A-な な, N の・な)",
+    "explain": {
+      "vi": "わけだ: rút ra kết luận hợp lý từ điều đã biết (thảo nào, hèn chi, tức là). わけでは ない: phủ định một phần (không phải là ~, không hẳn ~), hay dùng để nêu ý kiến mềm mỏng.",
+      "en": "わけだ: a natural conclusion from known facts (no wonder, that means). わけでは ない: a partial denial (it is not that ~), often used to soften an opinion."
+    },
+    "examples": [
+      { "ja": "毎日 三時間も れんしゅうして いるのか。上手な わけだ。", "vi": "Ngày nào cũng luyện tận ba tiếng à. Thảo nào giỏi thế.", "en": "You practise three hours every day? No wonder you are good." },
+      { "ja": "その 意見に 反対して いる わけでは ありません。もう 少し 考えたい だけです。", "vi": "Tôi không phải là phản đối ý kiến đó. Tôi chỉ muốn suy nghĩ thêm một chút.", "en": "It is not that I oppose that view. I just want to think a little more." },
+      { "ja": "高い 物が いつも いい わけでは ない。", "vi": "Đồ đắt không phải lúc nào cũng tốt.", "en": "Expensive things are not always good." }
+    ],
+    "reviewed": false
   }
 ]
