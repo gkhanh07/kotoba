@@ -113,3 +113,13 @@ Content: happy path, wrong data (gate, duplicates, JMdict), display (long meanin
 - E2E 176/176 on the first full run.
 - Screenshots `/vocab?level=3` and `/lessons/77` at 360 and 1440: "Bài 77 / 81 · 11 kanji · 52 từ" matches, no horizontal scroll.
 - Sample: seed 2818, 30 items of this batch (lessons 74–77), in the batch report.
+
+### 28i (lessons 78–80, last batch)
+- 149 words (78: 52, 79: 47, 80: 50); N3 total 1,774, file 3,046. Lesson 81 "Ôn tập N3" has no words. Includes the deferred 違い ひかく ひょうか さすが 長所 短所 (79) and けっきょく こうか (80). Dropped: 皆 (same JMdict entry as `vocab:みんな`). N4/N5 words missing from the file not added: 正月 お客様 おかげさまで おじゃまします 直る せっかく.
+- Examples rewritten to pass the kanji gate: 先祖 (おぼん), 幸運 (じこ), 成果 (れんしゅう), 達成 (もくひょう), 仕組み (きかい), けんじょうご (まいる).
+- Skipped homophones: 高価 (`vocab:こうか` is 効果, created in this batch), 努める (`vocab:つとめる` is 勤める). New kana ids that block future homophones include こうか (高価, 校歌), きく (利く, 菊), ひかく (皮革), さいかい (再会), こうきゅう (高給), かんりょう (官僚), こうりつ (公立).
+- Unsure, maybe N2 (13, ~9%): 恐れ入る けんじょうご ていねいご じごく ねらい 処理 開発 進行 上等 みりょく どくとく 性能 実る. Maybe N4: 慣れる すてき 習慣 神様 記念. Meanings to check: 出来 (でき), いまいち, 礼, おぼん ("lễ Vu Lan của Nhật": お盆 is 盂蘭盆, Vu Lan Bồn, so kept).
+- BE coverage at phase end 30.57/35.59/33.96/30.06 (statements/branches/functions/lines) = the thresholds rounded down; no ratchet change.
+- E2E 176/176 on the first full run.
+- Screenshots `/vocab?level=3` and `/lessons/78` at 360 and 1440: "Bài 78 / 81 · 8 kanji · 52 từ" matches, no horizontal scroll.
+- Sample: seed 2819, 30 items of this batch (lessons 78–80), in the batch report.
