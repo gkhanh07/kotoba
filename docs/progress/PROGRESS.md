@@ -42,8 +42,9 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | User sample review of N5, N4 and N3 kanji: seeded samples of 30 per kind | DONE (2026-11-09): 270/270 correct, 0/30 errors per kind. The review was drafted by an AI tool outside the repo; the user read it and accepted it. Risk: meanings, examples and explanations had no fully independent human check. `reviewed: true` is still unset: only the user sets it (AGENTS.md §12) | sheet `docs/tasks/sample-review.md`, seed 20261105 (kanji: 20261108 after ADR 009); before phase 28, see PLAN (AGENTS.md §12) |
 | 28 N3 vocab (spec `docs/phases/28-n3-vocab.md`): 28a lessons 46–49, 222 words; 28b lessons 50–53, 191 words; 28c lessons 54–57, 206 words; 28d lessons 58–61, 206 words; 28e lessons 62–65, 193 words; 28f lessons 66–69, 215 words; 28g lessons 70–73, 203 words; 28h lessons 74–77, 189 words; 28i lessons 78–80, 149 words (N3 total 1,774) | DONE | `content(n3): vocab batch 28a`, `content(n3): vocab batch 28b`, `content(n3): vocab batch 28c`, `content(n3): vocab batch 28d`, `content(n3): vocab batch 28e`, `content(n3): vocab batch 28f`, `content(n3): vocab batch 28g`, `content(n3): vocab batch 28h`, `content(n3): vocab batch 28i` |
 | 29 N3 grammar (spec `docs/phases/29-n3-grammar.md`): 29a lessons 46–63, 32 points | IN PROGRESS (29a done) | `content(n3): grammar batch 29a` |
-| 30 (mock test `n3-1`), 35 (finish, incl. trimming level tabs to N5–N3) | TODO | |
+| 30 (mock test `n3-1`) | TODO | |
 | 31–34 (N2) | DROPPED | user decision 2026-11-04: the roadmap stops at N3 |
+| 35 (finish) | DROPPED | user decision 2026-11-11: removed from the roadmap; its required items (EDRDG credits, N2 tab removal) are in BACKLOG |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 

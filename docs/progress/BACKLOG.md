@@ -9,7 +9,13 @@ Out-of-scope findings (AGENTS.md §2, §13). Not fixed in the task that found th
 - Other constants found later go here too. New constants go straight to `kotoba-fe/src/config/` or `kotoba-be/src/config.ts`.
 
 ### Docs
-- README does not yet credit the JMdict/KANJIDIC2 sources and the EDRDG licence (AGENTS.md §12). `kotoba-be/README.md` is still the Nest starter text. Planned for phase 35.
+- README does not yet credit the JMdict/KANJIDIC2 sources and the EDRDG licence (AGENTS.md §12). `kotoba-be/README.md` is still the Nest starter text. Unscheduled since phase 35 was dropped (2026-11-11).
+
+### Items left over from the dropped phase 35 (2026-11-11)
+- Level tabs still show N2 although the roadmap stops at N3: remove `2` from `LEVELS` in `kotoba-fe/src/lib/library.ts`, update `LevelTabs.test.tsx`, and move the empty-state loop of `e2e/levels.spec.ts` off N2. Do not touch `GOALS` in `lib/account.ts` (stored user data); decide what the Dashboard shows for a goal of N2/N1.
+- `/legal` (vi, en) should list only Waller's N3 source.
+- `PRODUCT.md` should state the deliberate non-goals: listening, AI, CMS, PWA, XP, N2/N1 content.
+- Unfinished design work: rest of the `/` critique (`kotoba-fe/.impeccable/critique/2026-11-04T13-37-44Z__src-app-page-tsx.md`), site-wide finish review, Lighthouse a11y ≥ 95, final `DESIGN.md` (duplicate `## Glossary` headings).
 
 ### BE coverage below 90%
 - See PROGRESS.md "Baseline" for the measured BE unit coverage. Controllers, `validate.ts`, `db.ts`, `mailer.ts` and `main.ts` are only exercised by the supertest e2e suite, which is not counted. Raising unit coverage of `src/` to 90% is backlog; the threshold in `kotoba-be/vitest.config.ts` may only be raised.
@@ -33,7 +39,7 @@ Out-of-scope findings (AGENTS.md §2, §13). Not fixed in the task that found th
 - `GET /content/:kind?page=` pages in memory after the field filters (reads the whole kind + level each call, ~12 ms at 5,000 rows). Use `skip/take` in SQL when no field filter is set if lists grow further.
 - `/vocab` "Ôn n từ đến hạn" counts due words of the selected level, but the link `/review?kind=vocab` reviews every level, so the numbers differ once N4 words exist. Decide in phase 23/24: pass `level` to the review queue or count all levels.
 - The kanji page builds `filter&level` for tabs and `level&filter&page` for the pager: two URL spellings of the same state (cosmetic).
-- Deploy notes (phase 35): after a kotoba-be content change, clear kotoba-fe's `.next/cache/fetch-cache` (or wait an hour) — see BUG-005.
+- Deploy notes: after a kotoba-be content change, clear kotoba-fe's `.next/cache/fetch-cache` (or wait an hour) — see BUG-005.
 - Kanji Hán Việt from KANJIDIC2 that look off and are kept as the source has them: 県 "Huyền" (usually "Huyện"), 着 "Khán" (usually "Trước/Trứ"). Decide whether an authored `hvFix` field is worth it.
 
 ## Phase 26 follow-ups

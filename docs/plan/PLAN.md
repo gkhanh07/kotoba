@@ -1,12 +1,12 @@
 # Kotoba: bổ sung chức năng N5 và lộ trình nội dung N5 → N4 → N3
 
-> **Đổi phạm vi (chốt với người dùng 2026-11-04):** lộ trình dừng ở N3. Bỏ các giai đoạn 31–34 (N2). Giai đoạn 35 (hoàn thiện) chạy ngay sau giai đoạn 30. Số giai đoạn giữ nguyên để các tham chiếu cũ (ADR, BACKLOG, spec) vẫn đúng.
+> **Đổi phạm vi (chốt với người dùng 2026-11-04):** lộ trình dừng ở N3. Bỏ các giai đoạn 31–34 (N2). Giai đoạn 35 (hoàn thiện) cũng bỏ khỏi lộ trình (2026-11-11); việc bắt buộc của nó nằm trong BACKLOG. Số giai đoạn giữ nguyên để các tham chiếu cũ (ADR, BACKLOG, spec) vẫn đúng.
 
 ## Bắt đầu ở đây (mỗi phiên, kể cả cloud session)
 1. Nếu có `docs/progress/PROGRESS.md`: đọc trước, làm tiếp task đầu tiên chưa DONE. Không làm lại task đã DONE.
 2. Nếu chưa có: bắt đầu từ Task A.
 3. Tài liệu đi kèm:
-   - `docs/plan/original-n5.md`: plan gốc (kiến trúc, quyết định đã chốt, giai đoạn 0–13 đã xong). Đọc để hiểu kiến trúc. Bảng giai đoạn 14–15 trong file đó đã bị thay bằng các giai đoạn 14–35 bên dưới.
+   - `docs/plan/original-n5.md`: plan gốc (kiến trúc, quyết định đã chốt, giai đoạn 0–13 đã xong). Đọc để hiểu kiến trúc. Bảng giai đoạn 14–15 trong file đó đã bị thay bằng các giai đoạn 14–30 bên dưới.
 4. Sau khi có `AGENTS.md`, `AGENTS.md` là luật. File này là lộ trình.
 5. Làm liền một mạch, không chờ người dùng duyệt giữa các giai đoạn. Chỉ dừng trong các trường hợp ở mục 15 của quy tắc (đã điều chỉnh bên dưới).
 6. Khi phiên sắp hết (ngữ cảnh hoặc thời gian): commit phần đã xanh, cập nhật PROGRESS.md (task đang dở, bước tiếp theo, giả thuyết hiện tại), push, rồi báo cáo theo mẫu mục 14. Phiên sau người dùng chỉ gõ "Tiếp tục theo docs/progress/PROGRESS.md".
@@ -26,7 +26,7 @@
 | Coverage | FE: ngưỡng cứng 90% lines và branches cho `src/lib/**` trong `vitest.config.ts`. BE: ngưỡng bằng baseline đo ở 13.5 (làm tròn xuống), ghi vào `vitest.config.ts`. Ngưỡng BE chỉ được nâng, không được hạ. Code BE mới phải có test. Phần thiếu so với 90% ghi BACKLOG |
 | Ngày học | Sửa ở giai đoạn 18, trước khi `NEW_PER_DAY` dùng "hôm nay": một hàm `dayKey` duy nhất theo `Asia/Ho_Chi_Minh` (`Intl.DateTimeFormat`), test ranh giới nửa đêm (16:59:59Z và 17:00:00Z). Không đưa vào BACKLOG |
 | `lapses` và schemaVersion | Không tăng `kotoba.srs.v1`. Ghi ADR `002-additive-progress-fields.md`: chỉ tăng version khi đổi nghĩa, đổi tên hoặc xoá trường. Trường mới tuỳ chọn có mặc định thì không tăng, nhưng bắt buộc có test với fixture card cũ không có trường đó |
-| Plugin | Chỉ impeccable (cho giai đoạn 35). Không có ponytail trong cloud. Dòng ưu tiên giữa quy tắc repo và ponytail ở A1 vẫn viết, để dùng khi chạy ở máy local |
+| Plugin | Chỉ impeccable. Không có ponytail trong cloud. Dòng ưu tiên giữa quy tắc repo và ponytail ở A1 vẫn viết, để dùng khi chạy ở máy local |
 | Kiểm bằng trình duyệt | Mọi chỗ trong plan gốc ghi "DevTools", `evaluate_script`, `emulate` → làm bằng Playwright: `page.evaluate`, `page.clock`, `page.emulateMedia({ reducedMotion })`, `page.route` để giả BE sập, screenshot rồi mở ảnh ra xem |
 | Lighthouse | Chạy `npx lighthouse` với Chromium của Playwright (`CHROME_PATH`), headless. Không chạy được thì ghi lý do vào báo cáo, axe vẫn là gate bắt buộc |
 | Test FE | Từ 13.5 trở đi, mọi chỗ ghi `*.check.mjs` hay `npm run check` cho logic FE nghĩa là Vitest `src/lib/*.test.ts`. Không tạo `.check.mjs` mới |
@@ -125,7 +125,7 @@ Mỗi file gồm frontmatter `name`, `description` (nói rõ khi nào gọi) và
 
 **Đã có sẵn:** cả năm file `.claude/agents/{be,fe,test,content,reviewer}.md` đã được viết và commit trước, theo đúng code thật của `kotoba-be` và `kotoba-fe`. Ở A4 không tạo lại, chỉ đối chiếu với `AGENTS.md` vừa viết và sửa chỗ lệch: lệnh, đường dẫn (ví dụ thư mục fixture), số mục `§` được trích, `npm run check` sau phase 13.5. Nếu không lệch thì A4 chỉ còn phần "Kiểm" bên dưới.
 
-Không thêm agent thiết kế: đã có `impeccable-finish-reviewer` và `impeccable-documenter` (plugin impeccable), dùng ở giai đoạn 35. Không thêm agent lập kế hoạch: đã có `Plan` sẵn.
+Không thêm agent thiết kế: đã có `impeccable-finish-reviewer` và `impeccable-documenter` (plugin impeccable). Không thêm agent lập kế hoạch: đã có `Plan` sẵn.
 
 Quy tắc phối hợp, ghi thành một mục "Agents" trong `AGENTS.md`:
 - Chỉ agent chính được commit, push và cập nhật `PROGRESS.md`. Subagent không commit, không push.
@@ -147,7 +147,7 @@ Kiểm:
 - Các file `.claude/agents/*.md` có frontmatter hợp lệ (`name`, `description`, `tools`). Trong cùng phiên, gọi thử được bằng Agent tool. Nếu agent mới chưa được nạp trong phiên hiện tại thì ghi vào báo cáo, không coi là lỗi.
 - Thử gọi `reviewer` trên diff của A1–A3: không sửa file nào và trả về danh sách lỗi.
 
-### Ảnh hưởng lên các giai đoạn 14–35 bên dưới
+### Ảnh hưởng lên các giai đoạn 14–30 bên dưới
 Mọi giai đoạn từ giờ theo `AGENTS.md`:
 - Có spec ở `docs/phases/NN-<tên>.md`, gồm AC-n và ma trận test, viết trước khi code.
 - Logic có unit test bằng Vitest. Component có test RTL cho các trạng thái rỗng và lỗi. Luồng chính có E2E Playwright kèm axe.
@@ -410,22 +410,6 @@ Kiểm chung cho mọi giai đoạn nội dung:
 - Lặp lại 23–26 cho N3. Từ vựng có khoảng 9 đợt (28a…28i).
 - Đề N3-1 `minutes: 100`. Thêm các loại phần mới nếu N3 có mà N5 không có, ví dụ `usage` (cách dùng từ). `lib/test.ts` không cần biết loại phần, chỉ nhóm theo `part`.
 - Màn hình kết quả hiện câu "không mô phỏng đỗ/trượt".
-
-### 35. Hoàn thiện (giai đoạn 15 cũ, làm ngay sau giai đoạn 30)
-- **Thu gọn về N3:**
-  - Bỏ `2` khỏi `LEVELS` trong `lib/library.ts`, để tab cấp chỉ còn N5 N4 N3. Sửa `LevelTabs.test.tsx`. Vòng kiểm trạng thái rỗng trong `e2e/levels.spec.ts` đang chạy trên N2, nên spec phải nêu nó đổi thành gì (ví dụ `?level=2` không hợp lệ thì quay về mặc định).
-  - `/legal` (vi và en): chỉ ghi danh sách N3 của Waller.
-  - `scripts/levels.txt` giữ nguyên (ADR 006). `kanjidic.ts` vẫn không có `2` trong `INCLUDE_LEVELS`.
-  - **Không đụng `GOALS`** (`N5…N1` trong `lib/account.ts`): `profile.goal` là dữ liệu người dùng đã lưu. Spec quyết định Dashboard hiển thị gì khi mục tiêu là N2 hoặc N1 mà nội dung chỉ tới N3 (đề xuất: hiện tiến độ của toàn bộ N5–N3 kèm một câu nói rõ chưa có nội dung N2/N1). Không cần migration.
-- **Phần còn lại của critique `/`** (BACKLOG):
-  - distill Dashboard: bỏ streak, CTA lên đầu, gọn trạng thái trống, cảnh báo lưu trữ lên trên. Giữ phong cách trang làm việc yên tĩnh.
-  - quieter: mỗi màn chỉ một nút amber.
-  - adapt: vé ở mobile, vùng chạm ≥ 44px, cỡ chữ ngày của heatmap.
-- Agent `impeccable-finish-reviewer` review toàn site, ghi lại verdict. Nếu plugin không có trong phiên: dùng agent `reviewer` của repo cộng screenshot, ghi rõ vào báo cáo.
-- Lighthouse các trang chính, a11y ≥ 95 (cách chạy ở bảng quyết định).
-- `impeccable-documenter` viết bản `DESIGN.md` cuối (có bảng thuật ngữ, mục 5.6).
-- README hướng dẫn chạy cả 2 app, ghi nguồn và license JMdict/KANJIDIC (EDRDG) và danh sách cấp độ.
-- Cập nhật `PRODUCT.md`, ghi rõ những gì cố ý không làm: listening, AI, CMS, PWA, XP, nội dung N2/N1.
 
 ## File chính
 - **BE:** `content/{tests,vocab,kanji,grammar,lessons}.json`, `content/content.spec.ts`, `scripts/kanjidic.ts`, `scripts/levels.txt` (mới), seed, `prisma/schema.prisma` (+ migration), `src/progress.ts`, `src/progress.controller.ts`, `src/auth.controller.ts` (`/me/export`), `test/*.e2e-spec.ts`.
