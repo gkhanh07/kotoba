@@ -6,7 +6,6 @@
 1. Nếu có `docs/progress/PROGRESS.md`: đọc trước, làm tiếp task đầu tiên chưa DONE. Không làm lại task đã DONE.
 2. Nếu chưa có: bắt đầu từ Task A.
 3. Tài liệu đi kèm:
-   - `docs/plan/rules-vi.md`: 17 mục quy tắc gốc tiếng Việt. Đây là nguồn để dịch sang `AGENTS.md` ở Task A1.
    - `docs/plan/original-n5.md`: plan gốc (kiến trúc, quyết định đã chốt, giai đoạn 0–13 đã xong). Đọc để hiểu kiến trúc. Bảng giai đoạn 14–15 trong file đó đã bị thay bằng các giai đoạn 14–35 bên dưới.
 4. Sau khi có `AGENTS.md`, `AGENTS.md` là luật. File này là lộ trình.
 5. Làm liền một mạch, không chờ người dùng duyệt giữa các giai đoạn. Chỉ dừng trong các trường hợp ở mục 15 của quy tắc (đã điều chỉnh bên dưới).
@@ -42,7 +41,7 @@
 
 ## Task A (làm trước giai đoạn 14): quy trình làm việc bằng tiếng Anh
 
-Người dùng đưa 17 mục quy tắc bằng tiếng Việt (`docs/plan/rules-vi.md`). Việc cần làm:
+Người dùng đưa 17 mục quy tắc bằng tiếng Việt (đã dịch thành `AGENTS.md`; bản gốc `docs/plan/rules-vi.md` xoá ngày 2026-11-11, còn trong lịch sử git). Việc cần làm:
 - Dịch sang tiếng Anh và đưa vào quy trình làm việc của repo.
 - Chốt "dùng đúng như viết" cho phần test, tức là thêm Vitest, RTL, Playwright và axe cho FE.
 

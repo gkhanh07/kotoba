@@ -387,12 +387,6 @@ One GET form (`role="search"`), rendered on the server: the query lives in the U
 ### Street hero (signature, `/` for guests only)
 Rain over a skyline SVG drawn in three depth planes, a train on the elevated line, and hanging signs in pink, blue or silver. An unlit sign sits at 62% brightness. Hover lifts it 4px and warms it, and tapping lights it and splits it into kana with Vietnamese meaning. It has one amber action and a ghost secondary.
 
-### Planned (not yet built)
-These exist only in `.impeccable/mocks/n5-ia.md` and are not shipped components. Do not treat them as established:
-- The primary nav item Thi thử. It joins the shipped nav when /test ships.
-- /test sitting, result and review.
-- Chevron and clock icons drawn to match the Arrow.
-
 ### Builder amendments (unratified)
 The N5 build relies on these interpretations, but **the user has not confirmed them**, so they are provisional:
 - Secondary actions are ghost buttons so each view keeps one amber action. The shipped code already follows this.

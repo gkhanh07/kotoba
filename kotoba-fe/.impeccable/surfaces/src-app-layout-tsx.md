@@ -21,6 +21,3 @@ Interpretations the N5 build leans on. They are not part of the contract until t
 - Secondary actions are ghost buttons (`.btn btnGhost`), so each view keeps exactly one amber action.
 - The lesson path is drawn as a train line: lessons are stations on the elevated line from the hero.
 - Study routes refuse the course-catalogue grid of cards and badges; they use rows, tables and specimens.
-
-## Information architecture
-Full N5 IA, site bar, and wireframes for every remaining screen: `.impeccable/mocks/n5-ia.md`.

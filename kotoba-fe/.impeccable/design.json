@@ -491,8 +491,7 @@
     ],
     "status": {
       "productMd": "stale: predates the N5 course scope",
-      "builderAmendments": "unratified by the user",
-      "plannedOnly": "screens in .impeccable/mocks/n5-ia.md are planned, not built"
+      "builderAmendments": "unratified by the user"
     }
   },
   "components": [
