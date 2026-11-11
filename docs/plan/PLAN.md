@@ -139,7 +139,7 @@ Quy tắc phối hợp, ghi thành một mục "Agents" trong `AGENTS.md`:
   4. `reviewer` duyệt.
   5. Agent chính chạy Quality Gate, commit, push, rồi cập nhật PROGRESS.
 - Giai đoạn nhỏ (sửa một hai file) thì agent chính tự làm, không tách agent.
-- Giai đoạn nội dung (15, 23–34) thì giao `content` theo từng đợt, mỗi đợt một lần gọi.
+- Giai đoạn nội dung (15, 23–30) thì giao `content` theo từng đợt, mỗi đợt một lần gọi.
 
 Commit: `chore: add claude subagents for be, fe, test, content and review`.
 
@@ -410,11 +410,6 @@ Kiểm chung cho mọi giai đoạn nội dung:
 - Lặp lại 23–26 cho N3. Từ vựng có khoảng 9 đợt (28a…28i).
 - Đề N3-1 `minutes: 100`. Thêm các loại phần mới nếu N3 có mà N5 không có, ví dụ `usage` (cách dùng từ). `lib/test.ts` không cần biết loại phần, chỉ nhóm theo `part`.
 - Màn hình kết quả hiện câu "không mô phỏng đỗ/trượt".
-
-### 31–34. N2: BỎ (2026-11-04)
-Không làm. Phần dưới đây chỉ giữ để tham khảo nếu sau này mở lại N2.
-- Lặp lại 23–26 cho N2. Từ vựng có khoảng 9 đợt (32a…32i).
-- Đề N2-1 `minutes: 105`, thêm phần `formation` (cấu tạo từ). Phần đọc có đoạn dài hơn, cần kiểm bố cục ở 360×740 và 768px.
 
 ### 35. Hoàn thiện (giai đoạn 15 cũ, làm ngay sau giai đoạn 30)
 - **Thu gọn về N3:**
