@@ -6,6 +6,7 @@ import { kanjiTitle, libraryText, vocabHref } from "@/lib/library";
 import { getLang } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
 import { Speak } from "../../Speak";
+import { KanjiMemory } from "./KanjiMemory";
 import s from "../kanji.module.css";
 
 export async function generateMetadata(props: PageProps<"/kanji/[char]">): Promise<Metadata> {
@@ -39,6 +40,7 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
           </Link>
           <Speak text={k.char} label={t.speak} />
         </div>
+        <div className={s.top}>
         <article className={s.detail}>
           <h1 lang="ja" className={s.specimen}>{k.char}</h1>
           <div>
@@ -53,6 +55,8 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
             </dl>
           </div>
         </article>
+        <KanjiMemory id={k.id} lesson={k.lesson} lang={lang} />
+        </div>
         {similar.length > 0 && (
           <section className={s.words} aria-labelledby="kanji-similar">
             <h2 id="kanji-similar">{t.similar}</h2>
@@ -82,7 +86,6 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
             </ul>
           </section>
         )}
-        <Link href={`/lessons/${k.lesson}`} className={`btn ${s.study}`}>{t.study(k.lesson)} <Arrow /></Link>
       </main>
       <SiteFooter />
     </>

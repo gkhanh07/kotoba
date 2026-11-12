@@ -125,5 +125,49 @@
   - "A heading with other content inside `<summary>`." The HTML spec allows phrasing content mixed with heading content, and axe passes.
   - "The test leaves grammar out." The page does too (grammar is read, not scheduled), and the test mirrors it.
 
+**Group 4: kana and kanji**
+- `/kana`:
+  - The script switch had an amber fill beside the amber quiz button. The selected script is now a raised step with an amber underline, so the page keeps one amber `.btn` (the e2e counts it).
+  - The selected cell is marked by a corner notch (`::after`) as well as the amber ring.
+  - The memory state, which was a bare sentence, is now a `.tag` with a word: "Chưa luyện", "Đến hạn ôn", "Đã thuộc", or "Đang học, ôn lại sau N ngày".
+  - The remaining raw `rgb()` values in `kana.module.css` are `color-mix()` over tokens.
+- Found by screenshot at 360px: the longest kana label ("…ôn lại sau N ngày") is a nowrap tag in a `1fr` column, and it widened the bottom sheet past the screen. The column is now `minmax(0, 1fr)` and that tag wraps.
+  - `globals.css` clips sideways overflow, so `scrollWidth` cannot see this. The test compares the tag's box with the sheet's box instead.
+  - Seen failing with the fix reverted (mobile: 373 > 344), then restored.
+- `/kanji`:
+  - Fresh kanji carry no label, which is the default; only kanji that have moved show "Đang học", "Đã học" or "Đã thuộc", so they stand out.
+  - The quick-look pane is shown only at ≥1200px, where there is room beside the grid. It is `aria-hidden`: it adds the meaning and On/Kun to what the card link says, and those are on the detail page the link opens. Codex flagged this (Medium). It stays hidden, because adding them to 100 link names would make the grid slow to scan with a screen reader.
+  - Found by screenshot at 1440: the pane stretched to the full grid height, so `sticky` did nothing and its content scrolled away. It now has `align-self: start`. The e2e hovers 南 far down the page and asserts that the pane is fully in the viewport. Seen failing without the fix, then restored.
+  - Level tabs and the kanji filter use the global `.seg` track. Pager links are raised buttons, with no amber fill.
+- `/kanji/[char]`:
+  - The memory panel (`KanjiMemory`) sits beside the character from 1024px and after it on a phone.
+  - It shows the exact box, the due text and the state, and has the single amber action, "Học bài N".
+  - An overdue card reads "Đến hạn ôn hôm nay".
+- Stroke order is not shown: only the stroke count exists (BACKLOG, UI redesign follow-ups).
+- Mutation checks, each seen failing and then restored:
+  - Swapping the "learned" and "started" states fails both kanji tests.
+  - Removing the 1024px two-column rule fails the desktop `/kanji/[char]` test (x 72, expected > 264).
+- The blank count in a `/kana` screenshot is the pre-existing strike animation caught mid-frame, not a bug.
+- Codex review:
+  - Codex found that `.filters .seg`, `.card .tag`, `.peek .tag` and `.memory .meter` never matched, because CSS Modules scope the global class. They now use `:global()`.
+  - Codex found that the notch test only checked `content`. It now asserts `10px solid`, and fails with 9px.
+- `/lessons` (follow-up to group 3, separate commit): the impeccable detector flagged the current lesson row's 2px amber side border as a side-tab. Fixed by removing the border; the row keeps the raised tone and `aria-current`.
+- Screenshots of `/kana`, `/kanji` and `/kanji/日` at 360, 768 and 1440 were looked at. At 768 the kana sheet sits sticky at the bottom, as it did before.
+
 ## 5. Performance
-(The `/vocab` and `/kanji` measurements go here.)
+Production build (`next start`), 1440×900, median of 5 loads after one warm-up. Times are in ms.
+
+| Route | HTML bytes | DOM nodes | TTFB | FCP | DCL | Load |
+|---|---|---|---|---|---|---|
+| `/kanji` before | 48293 | 530 | 16 | 172 | 62 | 199 |
+| `/kanji` after | 58467 | 546 | 16 | 232 | 115 | 225 |
+| `/kanji/日` before | 49492 | 311 | 15 | 204 | 71 | 211 |
+| `/kanji/日` after | 49563 | 315 | 15 | 216 | 61 | 237 |
+| `/kana` before | 54827 | 707 | 11 | 216 | 58 | 219 |
+| `/kana` after | 54854 | 707 | 11 | n/a | 56 | 109 |
+
+- `/kanji` grew by +10 KB of HTML. The meaning and On/Kun of 100 kanji now travel to the client for the quick-look pane.
+  - That is the cost of a preview without a fetch, and it is far below any budget.
+  - The FCP and DCL differences are run-to-run noise on a local server: TTFB and DOM size barely moved.
+- `/kana` after: Chromium did not report an FCP entry in that run.
+- `/vocab` is unchanged so far (group 5).

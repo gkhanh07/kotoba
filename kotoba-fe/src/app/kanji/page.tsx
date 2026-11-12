@@ -30,7 +30,10 @@ export default async function KanjiPage(props: PageProps<"/kanji">) {
   const groups = lessons
     .map((l) => ({
       title: t.lesson(l.lesson, l.title[lang]),
-      items: kanji.filter((k) => k.lesson === l.lesson).map((k) => ({ id: k.id, char: k.char, hv: k.hv[0] ?? "" })),
+      items: kanji.filter((k) => k.lesson === l.lesson).map((k) => ({
+        id: k.id, char: k.char, hv: k.hv[0] ?? "",
+        meaning: (lang === "en" ? k.en.join(", ") : k.vi) ?? "", on: k.on.join("、"), kun: k.kun.join("、"),
+      })),
     }))
     .filter((g) => g.items.length);
   return (
@@ -45,14 +48,16 @@ export default async function KanjiPage(props: PageProps<"/kanji">) {
         {data.total === 0 ? <p className={lv.note}>{libraryText[lang].levels.empty(levelLabel(level))}</p> : (
           <>
         <nav className={s.filters} aria-label={t.filter}>
-          <span>{t.filter}:</span>
+          <span>{t.filter}</span>
+          <div className="seg">
           {FILTERS.map((f) => (
             <Link key={f} href={listHref("/kanji", { level, filter: f === "all" ? undefined : f })} aria-current={f === filter ? "page" : undefined}>
               {t.filters[f]}
             </Link>
           ))}
+          </div>
         </nav>
-        <KanjiGrid groups={groups} filter={filter} none={t.none} learnedLabel={t.filters.learned} />
+        <KanjiGrid groups={groups} filter={filter} none={t.none} lang={lang} />
         <Pager path="/kanji" params={{ level, filter: filter === "all" ? undefined : filter }} page={page} pages={data.pages} lang={lang} />
           </>
         )}

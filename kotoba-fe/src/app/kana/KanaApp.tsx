@@ -177,17 +177,9 @@ function Chart({ set, progress, quizHref, lang, t }: { set: KanaSet; progress: S
           )}
           <div>
             <dt>{t.levelLabel}</dt>
-            <dd>
-              <Lamps box={card?.box ?? 0} t={t} />{" "}
-              {progress === null
-                ? "…"
-                : !card
-                  ? t.levelNone
-                  : isDue(card, today())
-                    ? t.levelDue
-                    : isKnown(progress, selected.id)
-                      ? t.levelDone
-                      : t.levelLearning(daysUntil(card.due, today()))}
+            <dd className={s.memory}>
+              <Lamps box={card?.box ?? 0} t={t} />
+              {progress === null ? "…" : <MemoryTag card={card} known={isKnown(progress, selected.id)} t={t} />}
             </dd>
           </div>
         </dl>
@@ -195,6 +187,15 @@ function Chart({ set, progress, quizHref, lang, t }: { set: KanaSet; progress: S
       </aside>
     </div>
   );
+}
+
+// The state reads as a word on a tag (ADR 010): due is a warning, known the hot core, a card on the
+// schedule learned once it has climbed a box, started before that.
+function MemoryTag({ card, known, t }: { card: Srs[string] | undefined; known: boolean; t: T }) {
+  if (!card) return <span className="tag" data-state="fresh">{t.levelNone}</span>;
+  if (isDue(card, today())) return <span className="tag" data-state="warn">{t.levelDue}</span>;
+  if (known) return <span className="tag" data-state="known">{t.levelDone}</span>;
+  return <span className="tag" data-state={card.box > 0 ? "learned" : "started"}>{t.levelLearning(daysUntil(card.due, today()))}</span>;
 }
 
 // moved = false: a right answer before the card was due, which leaves the schedule alone.

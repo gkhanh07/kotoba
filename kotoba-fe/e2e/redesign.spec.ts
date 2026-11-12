@@ -142,3 +142,98 @@ test("/lessons/[n] selects a tile, previews it and sets the study panel beside t
   await expect(page.locator("main a.btn:not(.btnGhost), main button.btn:not(.btnGhost)")).toHaveCount(1);
   await axe();
 });
+
+// Group 4 (AC-4.1–4.3). Seeded schedules: overdue and box 1 → due, box 6 → known.
+const seed = (srs: Record<string, { box: number; due: string; at: number }>) => (page: import("@playwright/test").Page) =>
+  page.evaluate((v) => localStorage.setItem("kotoba.srs.v1", v), JSON.stringify(srs));
+const AMBER = "main a.btn:not(.btnGhost), main button.btn:not(.btnGhost)";
+
+test("/kana marks the chosen cell by more than colour and reads its memory state as text", async ({ page, axe }) => {
+  await page.goto("/kana");
+  await seed({ "hiragana:a": { box: 1, due: "2020-01-01", at: 1 }, "hiragana:i": { box: 6, due: "2099-01-01", at: 1 }, "hiragana:o": { box: 2, due: "2099-01-01", at: 1 } })(page);
+  await page.reload();
+  const detail = page.getByRole("complementary");
+
+  // AC-4.1: the pressed cell carries a corner notch, not only a colour.
+  const cell = page.getByRole("button", { name: /^あ\s?, đọc là a$/ });
+  await cell.click();
+  await expect(cell).toHaveAttribute("aria-pressed", "true");
+  const notch = await cell.evaluate((el) => {
+    const after = getComputedStyle(el, "::after");
+    return { content: after.content, width: after.borderTopWidth, style: after.borderTopStyle };
+  });
+  expect(notch).toEqual({ content: "\"\"", width: "10px", style: "solid" });
+  await expect(detail.getByText("Đến hạn ôn", { exact: true })).toBeVisible();
+
+  await page.getByRole("button", { name: /^い\s?, đọc là i$/ }).click();
+  await expect(detail.getByText("Đã thuộc", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: /^う\s?, đọc là u$/ }).click();
+  await expect(detail.getByText("Chưa luyện", { exact: true })).toBeVisible();
+
+  // The longest label, a far due date, wraps inside the phone sheet instead of widening the page.
+  await page.getByRole("button", { name: /^お\s?, đọc là o$/ }).click();
+  const longTag = detail.getByText(/^Đang học, ôn lại sau \d+ ngày$/);
+  await expect(longTag).toBeVisible();
+  // The page clips sideways overflow, so compare boxes rather than scrollWidth.
+  const [tagBox, sheetBox] = [await longTag.boundingBox(), await detail.boundingBox()];
+  expect(tagBox!.x + tagBox!.width).toBeLessThanOrEqual(sheetBox!.x + sheetBox!.width);
+
+  await expect(page.locator(AMBER)).toHaveCount(1);
+  await axe();
+});
+
+test("/kanji cards put the character first, label moved ones and preview the hovered one on desktop", async ({ page, axe }) => {
+  await page.goto("/kanji");
+  await seed({ "kanji:日": { box: 1, due: "2099-01-01", at: 1 }, "kanji:一": { box: 0, due: "2099-01-01", at: 1 }, "kanji:国": { box: 6, due: "2099-01-01", at: 1 } })(page);
+  await page.reload();
+
+  // AC-4.2: character, then Hán Việt, then the state as text; fresh cards carry no label.
+  const card = (char: string) => page.locator(`main a[href="/kanji/${encodeURIComponent(char)}"]`);
+  await expect(card("日")).toHaveText("日Nhật, Đã học");
+  await expect(card("一")).toHaveText("一Nhất, Đang học");
+  await expect(card("国")).toHaveText("国Quốc, Đã thuộc");
+  await expect(card("人")).toHaveText("人Nhân");
+  await expect(page.locator('main a[href^="/kanji/"]')).toHaveCount(100); // one link per kanji
+
+  const peek = page.locator('aside[aria-hidden="true"]');
+  if (page.viewportSize()!.width >= DESKTOP_SIDE_BY_SIDE) {
+    await card("国").hover();
+    await expect(peek).toContainText("国Quốc");
+    await expect(peek).toContainText("Đã thuộc");
+    // The pane rides beside the grid: a card far down the page still shows its preview on screen.
+    await card("南").hover();
+    await expect(peek).toContainText("南Nam");
+    await expect(peek).toBeInViewport({ ratio: 1 });
+  } else {
+    await expect(peek).toBeHidden(); // no room beside the grid
+  }
+  await axe();
+});
+
+test("/kanji/[char] sets this browser's memory beside the character with one action", async ({ page, axe }) => {
+  await page.goto("/kanji/%E6%97%A5");
+  await seed({ "kanji:日": { box: 2, due: "2020-01-01", at: 1 } })(page);
+  await page.reload();
+
+  // AC-4.3: exact box, due text and state label from the seeded card.
+  const memory = page.getByRole("complementary", { name: "Mức nhớ của bạn" });
+  await expect(memory.getByRole("progressbar", { name: "Mức nhớ của bạn" })).toHaveJSProperty("value", 2);
+  await expect(memory.getByText("Hộp 2/6 · Đến hạn ôn hôm nay")).toBeVisible();
+  await expect(memory.getByText("Đã học", { exact: true })).toBeVisible();
+  const amber = page.locator(AMBER);
+  await expect(amber).toHaveCount(1);
+  await expect(amber).toHaveText(/Học bài/);
+
+  const specimen = await page.getByRole("heading", { level: 1 }).boundingBox();
+  const side = await memory.boundingBox();
+  if (page.viewportSize()!.width >= DESKTOP_SIDE_BY_SIDE) {
+    expect(side!.x).toBeGreaterThan(specimen!.x + specimen!.width); // beside, not below
+    expect(side!.y).toBeLessThan(specimen!.y + specimen!.height);
+  } else {
+    expect(side!.y).toBeGreaterThan(specimen!.y + specimen!.height);
+  }
+  await axe();
+
+  await page.goto("/kanji/%E4%B8%80"); // 一 has no card yet
+  await expect(page.getByRole("complementary", { name: "Mức nhớ của bạn" })).toContainText("Chưa học. Chữ này vào lịch ôn khi bạn học bài của nó.");
+});
