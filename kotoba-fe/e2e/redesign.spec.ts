@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { startBackend, stopBackend } from "./backend";
 import { expect, test } from "./fixtures";
 
 // docs/tasks/ui-redesign.md, groups 2 and 3 (AC-2.1–3.3). Every count is read from the content the page renders.
@@ -403,4 +404,67 @@ test("reduced motion swaps the faces in place instead of turning the card", asyn
   // AC-6.3: no rotation at all, and the back is the face that shows.
   expect(await card(page).locator("> span").evaluate((el) => getComputedStyle(el).transform)).toBe("none");
   await expect(card(page).locator("> span > span").last()).toBeVisible();
+});
+
+// Group 7 (AC-7.1, AC-7.2).
+test("/search: a raised input at least 56px tall, a ghost submit and example chips", async ({ page, axe }) => {
+  await page.goto("/search");
+  const input = page.getByRole("searchbox", { name: "Tra cứu trong khoá học" });
+  expect((await input.boundingBox())!.height).toBeGreaterThanOrEqual(56);
+  await expect(page.getByRole("button", { name: "Tra", exact: true })).toHaveClass(/btnGhost/);
+  await expect(page.locator(AMBER)).toHaveCount(0);
+  const chips = page.getByRole("list", { name: "Thử:" }).getByRole("link");
+  await expect(chips).toHaveText(["たべ", "taberu", "hoc", "日", "は"]);
+  for (const box of await chips.evaluateAll((els) => els.map((el) => el.getBoundingClientRect().height))) expect(box).toBeGreaterThanOrEqual(44);
+  await axe();
+});
+
+test("/search?q=taberu: each kind is a panel, matches are marked, and the summary shows the exact counts", async ({ page, axe }, info) => {
+  await page.goto("/search?q=taberu");
+  const groups = page.locator("main section[aria-labelledby^='g-']");
+  await expect(groups.first()).toHaveClass(/panel/);
+  await expect(groups.first().locator("mark").first()).toBeVisible();
+  // Known content: "taberu" matches one word, 食べる, and nothing else.
+  await expect(groups).toHaveCount(1);
+  await expect(groups.getByRole("heading", { level: 2 })).toHaveText("Từ vựng 1");
+  await expect(groups.locator("li")).toHaveCount(1);
+  await expect(groups.locator("li")).toContainText("食べる");
+  await expect(page.getByRole("status")).toHaveText("1 kết quả cho “taberu”");
+  const jump = page.getByRole("navigation", { name: "Đi tới nhóm" });
+  if (info.project.name === "desktop") {
+    await expect(jump.getByRole("link")).toHaveText(["Từ vựng1"]);
+    const [side, main] = [await page.locator("main aside").boundingBox(), await groups.first().boundingBox()];
+    expect(side!.x).toBeGreaterThan(main!.x + main!.width);
+    await jump.getByRole("link").first().click();
+    await expect(page).toHaveURL(/#g-vocab$/);
+  } else await expect(jump).toBeHidden();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);
+  await axe();
+});
+
+test("/search with no match shows a styled block with the query and examples to try", async ({ page, axe }) => {
+  await page.goto("/search?q=zzzqqq");
+  await expect(page.getByRole("heading", { name: "Không tìm thấy" })).toBeVisible();
+  await expect(page.getByRole("status")).toHaveText("Không có kết quả cho “zzzqqq”. Thử gõ ngắn hơn, hoặc gõ romaji.");
+  await expect(page.getByRole("list", { name: "Thử:" }).getByRole("link")).toHaveCount(5);
+  await axe();
+});
+
+test("/search keeps the page and the query when kotoba-be is down, and Thử lại searches again", async ({ page, axe }, info) => {
+  test.setTimeout(60_000);
+  // A query no earlier run has cached (search results are cached for an hour).
+  const q = `taberu-${info.project.name}-${Date.now()}`.slice(0, 50);
+  try {
+    await stopBackend();
+    await page.goto(`/search?q=${q}`);
+    const alert = page.getByRole("alert");
+    await expect(alert.getByRole("heading", { name: "Chưa tra được" })).toBeVisible();
+    await expect(page.getByRole("searchbox")).toHaveValue(q);
+    await expect(page.locator(AMBER)).toHaveCount(1);
+    await axe();
+  } finally {
+    await startBackend();
+  }
+  await page.getByRole("link", { name: "Thử lại" }).click();
+  await expect(page.getByRole("heading", { name: "Không tìm thấy" })).toBeVisible();
 });

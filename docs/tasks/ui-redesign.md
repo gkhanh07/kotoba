@@ -203,6 +203,28 @@
   - Seen failing against the stashed old code: 6 of 10 runs (overlap ×3, the tag ×2, the help rows). The reduced-motion test guards behaviour that already existed; it was seen failing with the emulation removed (`matrix3d(…)` instead of `none`).
 - Codex review (read-only), 1 finding, rejected: "the sticky row covers the end of a back taller than the viewport". That is the Sticky Decision Rule itself. The row is sticky, not fixed, so it stays in flow, and scrolling to the end leaves the whole card above it. The answer itself is asserted to be clear of the row.
 
+### Group 7: search
+- The form is one raised container (`--surface-2`, `--edge-hi`) whose border turns amber on `:focus-within`. The input is 56px at 1.25rem. The submit is `btn btnGhost`, so a search page with no results has no amber at all, and the one amber is kept for the error state's "Thử lại".
+- Every state is a styled `.panel` block:
+  - Empty: what search covers, then the example chips (44px links in a labelled list).
+  - No match: the sign 無, a heading, the `none(q)` status and the same chips.
+  - Error: see below.
+  - Results: one panel per kind, with hairline rows, a hover surface, the level `.badge` and the existing `<mark>`.
+- The "covers" copy says "every level", not "N5 to N3": `LEVELS` includes N2.
+- At ≥64rem the results take the width: groups on the left, and a sticky summary panel on the right with the total and a jump nav (`#g-<kind>`), each link 44px with a tabular count. Below that width only the total stays visible. It is the `role="status"`, so the live result count is never hidden.
+- Error handling: a failed lookup used to throw to the root `error.tsx`, which lost the form and the query (and logged a 500 in the console). It is now caught in the page and shown as an inline `role="alert"` block that keeps the form and the query, with "Thử lại" linking to the same query.
+  - A rejected fetch is never cached: Next caches fetch responses only when `res.status === 200` (`patch-fetch.js:696`). The e2e clicks "Thử lại" after the backend is back and gets a fresh answer.
+- Tests (`e2e/redesign.spec.ts`, 4 new, on both projects):
+  - the input height, the ghost submit, zero amber and the exact chips
+  - the exact results for `taberu` (1 group, "Từ vựng 1", 食べる, "1 kết quả cho “taberu”"), the summary on the right on desktop and hidden on mobile, no horizontal scroll
+  - the exact no-match text
+  - the backend-down alert, its one amber, the kept query, and the retry
+  - Seen failing on the old code: 8 of 8 runs.
+- Codex review (read-only), 3 findings:
+  - #1 rejected: "Thử lại may reuse the cached error". A rejected fetch is not cached (above), and the e2e test proves that the retry refetches.
+  - #2 rejected: "stopping the backend breaks parallel tests". `playwright.config.ts` runs `workers: 1`.
+  - #3 fixed: the results test took its expected counts from the DOM. It now asserts the exact values from the content.
+
 ## 5. Performance
 Production build (`next start`), 1440×900, median of 5 loads after one warm-up. Times are in ms.
 
@@ -233,3 +255,10 @@ Production build (`next start`), 1440×900, median of 5 loads after one warm-up.
 
 - Group 6 has no before rows: these routes were not measured before the group started. The group adds about ten DOM nodes per route: the side column, the meter and the key help.
 - `/review` HTML is 1.8 MB. This predates the group: the page serialises every review item for the client, whatever the filter. That cost is upstream of this redesign (FE data loading), so it is logged in BACKLOG and not changed here.
+
+| Route | HTML bytes | DOM nodes | TTFB | FCP | DCL | Load |
+|---|---|---|---|---|---|---|
+| `/search` after | 20732 | 92 | 12 | 172 | 62 | 179 |
+| `/search?q=taberu` after | 22887 | 105 | 11 | 168 | 53 | 194 |
+
+- Group 7 has no before rows: these routes were not measured before the group started. The results add one summary panel (about a dozen nodes per kind).

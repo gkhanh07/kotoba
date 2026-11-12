@@ -26,7 +26,10 @@ export default async function SearchPage(props: PageProps<"/search">) {
   const q = (typeof raw === "string" ? raw : "").trim().slice(0, 50); // the BE takes at most 50 characters
   const lang = await getLang();
   const t = libraryText[lang].search;
-  const hits = q ? await search(q) : [];
+  // A failed lookup keeps the page, the form and the query: the learner retries from here, not from the root error screen.
+  const result = q ? await search(q).then((hits) => ({ hits }), () => ({ hits: [], failed: true })) : { hits: [] };
+  const { hits } = result;
+  const failed = "failed" in result;
 
   const row = (h: Hit): Row => ({ ...rowOf(h), level: h.level });
   const rowOf = (h: Hit): Omit<Row, "level"> => {
@@ -54,6 +57,14 @@ export default async function SearchPage(props: PageProps<"/search">) {
     return m === undefined ? text : <>{a}<mark>{m}</mark>{b}</>;
   };
 
+  const examples = (
+    <ul className={s.chips} aria-label={t.try}>
+      {EXAMPLES.map((x) => (
+        <li key={x}><Link href={`/search?q=${encodeURIComponent(x)}`} lang={/[a-z]/.test(x) ? undefined : "ja"}>{x}</Link></li>
+      ))}
+    </ul>
+  );
+
   return (
     <>
       <SiteBar current="search" />
@@ -65,45 +76,70 @@ export default async function SearchPage(props: PageProps<"/search">) {
         <form role="search" action="/search" className={s.form}>
           <label htmlFor="q" className="sr-only">{t.label}</label>
           <input id="q" type="search" name="q" defaultValue={q} maxLength={50} autoFocus={!q} autoComplete="off" spellCheck={false} />
-          <button type="submit" className="btn">{t.submit}</button>
+          <button type="submit" className="btn btnGhost">{t.submit}</button>
         </form>
 
         {!q ? (
-          <p className={s.examples}>
-            {t.try}{" "}
-            {EXAMPLES.map((x, i) => (
-              <span key={x}>{i > 0 && " · "}<Link href={`/search?q=${encodeURIComponent(x)}`} lang={/[a-z]/.test(x) ? undefined : "ja"}>{x}</Link></span>
-            ))}
-          </p>
+          <div className={`panel ${s.block}`}>
+            <p>{t.covers}</p>
+            <p className={s.blockLabel}>{t.try}</p>
+            {examples}
+          </div>
+        ) : failed ? (
+          <div className={`panel ${s.block}`} role="alert">
+            <span lang="ja" className={s.sign} aria-hidden="true">休</span>
+            <h2>{t.errorTitle}</h2>
+            <p>{t.errorBody}</p>
+            <Link href={`/search?q=${encodeURIComponent(q)}`} className="btn">{t.retry}</Link>
+          </div>
         ) : groups.length === 0 ? (
-          <p className={s.none} role="status">{t.none(q)}</p>
+          <div className={`panel ${s.block}`}>
+            <span lang="ja" className={s.sign} aria-hidden="true">無</span>
+            <h2>{t.noneTitle}</h2>
+            <p role="status">{t.none(q)}</p>
+            <p className={s.blockLabel}>{t.try}</p>
+            {examples}
+          </div>
         ) : (
-          <>
-            <p className="sr-only" role="status">{t.found(hits.length, q)}</p>
-            {groups.map((g) => (
-              <section key={g.kind} className={s.group} aria-labelledby={`g-${g.kind}`}>
-                <h2 id={`g-${g.kind}`}>{t.kinds[g.kind]} <small>({g.rows.length})</small></h2>
-                <ul className={s.list}>
-                  {g.rows.map((r) => (
-                    <li key={r.href + r.head}>
-                      <Link href={r.href} className={s.row}>
-                        <span lang={r.ja ? "ja" : undefined} className={r.ja ? s.head : s.headText}>{marked(r.head)}</span>
-                        <span className={s.parts}>
-                          {r.parts.map((p, i) => <span key={i} lang={p.ja ? "ja" : undefined} className={i === r.parts.length - 1 ? s.meaning : undefined}>{marked(p.text)}</span>)}
-                        </span>
-                        <span className={s.lesson}>
-                          <span className={s.badge}>{levelLabel(r.level)}</span>
-                          {r.lesson !== undefined && ` · ${t.lesson(r.lesson)}`}
-                        </span>
-                        <Arrow />
-                      </Link>
-                    </li>
+          <div className={s.results}>
+            {/* Wide screens: the count per kind sits beside the results and jumps to each group. */}
+            <aside className={s.summary} aria-labelledby="search-summary">
+              <h2 id="search-summary">{t.summary}</h2>
+              <p className={s.total} role="status">{t.found(hits.length, q)}</p>
+              <nav aria-label={t.jump}>
+                <ul>
+                  {groups.map((g) => (
+                    <li key={g.kind}><a href={`#g-${g.kind}`}><span>{t.kinds[g.kind]}</span><span className={s.count}>{g.rows.length}</span></a></li>
                   ))}
                 </ul>
-              </section>
-            ))}
-            {groups.some((g) => g.rows.length >= 20) && <p className={s.more}>{t.more}</p>}
-          </>
+              </nav>
+            </aside>
+            <div className={s.groups}>
+              {groups.map((g) => (
+                <section key={g.kind} className={`panel ${s.group}`} aria-labelledby={`g-${g.kind}`}>
+                  <h2 id={`g-${g.kind}`}>{t.kinds[g.kind]} <small>{g.rows.length}</small></h2>
+                  <ul className={s.list}>
+                    {g.rows.map((r) => (
+                      <li key={r.href + r.head}>
+                        <Link href={r.href} className={s.row}>
+                          <span lang={r.ja ? "ja" : undefined} className={r.ja ? s.head : s.headText}>{marked(r.head)}</span>
+                          <span className={s.parts}>
+                            {r.parts.map((p, i) => <span key={i} lang={p.ja ? "ja" : undefined} className={i === r.parts.length - 1 ? s.meaning : undefined}>{marked(p.text)}</span>)}
+                          </span>
+                          <span className={s.lesson}>
+                            <span className={s.badge}>{levelLabel(r.level)}</span>
+                            {r.lesson !== undefined && ` · ${t.lesson(r.lesson)}`}
+                          </span>
+                          <Arrow />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+              {groups.some((g) => g.rows.length >= 20) && <p className={s.more}>{t.more}</p>}
+            </div>
+          </div>
         )}
       </main>
       <SiteFooter />
