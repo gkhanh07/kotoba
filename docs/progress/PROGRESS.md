@@ -41,11 +41,11 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | Hán Việt from a checked source and the round-1 sample errors: authored `hv` for 625 kanji (ADR 009, BUG-009), 中 ジュウ (BUG-014), すく (BUG-015), causative に/を (BUG-016); kanji samples redrawn (spec `docs/tasks/hanviet-fix.md`) | DONE | `fix(content): author Hán Việt readings from a checked source` |
 | User sample review of N5, N4 and N3 kanji: seeded samples of 30 per kind | DONE (2026-11-09): 270/270 correct, 0/30 errors per kind. The review was drafted by an AI tool outside the repo; the user read it and accepted it. Risk: meanings, examples and explanations had no fully independent human check. `reviewed: true` is still unset: only the user sets it (AGENTS.md §12) | sheet `docs/tasks/sample-review.md`, seed 20261105 (kanji: 20261108 after ADR 009); before phase 28, see PLAN (AGENTS.md §12) |
 | 28 N3 vocab (spec `docs/phases/28-n3-vocab.md`): 28a lessons 46–49, 222 words; 28b lessons 50–53, 191 words; 28c lessons 54–57, 206 words; 28d lessons 58–61, 206 words; 28e lessons 62–65, 193 words; 28f lessons 66–69, 215 words; 28g lessons 70–73, 203 words; 28h lessons 74–77, 189 words; 28i lessons 78–80, 149 words (N3 total 1,774) | DONE | `content(n3): vocab batch 28a`, `content(n3): vocab batch 28b`, `content(n3): vocab batch 28c`, `content(n3): vocab batch 28d`, `content(n3): vocab batch 28e`, `content(n3): vocab batch 28f`, `content(n3): vocab batch 28g`, `content(n3): vocab batch 28h`, `content(n3): vocab batch 28i` |
-| 29 N3 grammar (spec `docs/phases/29-n3-grammar.md`): 29a lessons 46–63, 32 points | IN PROGRESS (29a done) | `content(n3): grammar batch 29a` |
-| 30 (mock test `n3-1`) | TODO | |
+| 29 N3 grammar (spec `docs/phases/29-n3-grammar.md`): 29a lessons 46–63, 32 points; 29b lessons 64–80, 28 points (N3 total 60) | DONE | `content(n3): grammar batch 29a`, `3f53292` |
+| 30 N3 mock test `n3-1` (74 questions, 100 min, 8 reading passages), paper kanji gate (spec `docs/phases/30-n3-mock-test.md`); N3 review sheet `docs/tasks/sample-review-n3.md`, seed 20261113. Paper drafted by Codex on its own file, grammar by the `content` subagent; Codex review fixed 3 content bugs | DONE | `f104218` |
 | 31–34 (N2) | DROPPED | user decision 2026-11-04: the roadmap stops at N3 |
 | 35 (finish) | DROPPED | user decision 2026-11-11: removed from the roadmap; its required items (EDRDG credits, N2 tab removal) are in BACKLOG |
-| UI redesign: one visual language from the hero to every study screen, 10 page groups (spec `docs/tasks/ui-redesign.md`, ADR 010). The user's uncommitted 29b test in `kotoba-be/content/content.spec.ts` is in `git stash` (`stash@{0}`) until the 29b content lands | DONE | 731f6ef, 97669e2, 2c02360, d55f2b0, 22f2e58, 6c017bb, 3fe5337, 72e5758, 2a34916, 68b1217, f32f62f (one `feat(ui): …` per group); last gate: FE 658 tests, lib coverage 98.23%, e2e 240 passed |
+| UI redesign: one visual language from the hero to every study screen, 10 page groups (spec `docs/tasks/ui-redesign.md`, ADR 010). The user's 29b test that was stashed here landed with 29b (`3f53292`); no stash is left | DONE | 731f6ef, 97669e2, 2c02360, d55f2b0, 22f2e58, 6c017bb, 3fe5337, 72e5758, 2a34916, 68b1217, f32f62f (one `feat(ui): …` per group); last gate: FE 658 tests, lib coverage 98.23%, e2e 240 passed |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -98,11 +98,13 @@ After the `/` critique fix: BE 49 unit + 41 e2e + 27 content; FE Vitest 567 test
 
 After store hardening: BE 49 unit + 41 e2e + 27 content; FE Vitest 588 tests (all files lines 98.42%, branches 96.9%; the 90% threshold on `src/lib/**` passed), E2E 172 passed.
 
-## Stopped here (2026-11-05, after store hardening)
-The `/` critique fix and store hardening are done. Waiting for the user: the sample review (AGENTS.md §12) and the Hán Việt source for BUG-009 (OPEN).
+After phase 30 (N3 complete, 2026-11-12): BE 58 unit + 41 e2e + 36 content, JMdict 3,046 words, unit coverage 30.57/35.59/33.96/30.06 (thresholds unchanged at 30/35/33/30); FE Vitest 665 tests (lib lines 98.23%, branches 96.98%), E2E 244 passed. Content: N3 = 341 kanji, 1,774 words, 60 grammar points, paper `n3-1`; all `reviewed: false`.
+
+## Stopped here (2026-11-12, after phase 30)
+N3, the last level of the roadmap, is complete (AGENTS.md §15 checkpoint). Waiting for the user to: use the app for about 10 minutes on N3, check the N3 samples in `docs/tasks/sample-review-n3.md` (vocab, grammar, paper; seed 20261113) and the copy sample `docs/tasks/vietnamese-copy-content-sample.md`, and decide whether to merge `feat/n5-full` into `main`. `kotoba-fe/src/lib/i18n.ts` holds the user's uncommitted hero edit: leave it alone.
 
 ## Next step
-Phase 29 batch 29b (N3 grammar, lessons 64–80; widen the lesson coverage test to 80, BE coverage ratchet at phase end), then phase 30 (mock test `n3-1`). After 29a: BE npm test 57 + 41 e2e + 35 content, JMdict 3,046 words; FE Vitest 592, E2E 178 passed.
+None planned in `PLAN.md` after phase 30: wait for the checkpoint above. Fixes from the N3 sample review come first if more than 5% of a kind is wrong.
 Note: kill stray `next-server` / `kotoba-be/dist/main` / `nest start --watch` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`; it finds the process with `lsof`, or PowerShell on Windows, BUG-008), so it needs a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).
 
 ## Vietnamese copy review (2026-11-12)
@@ -110,4 +112,4 @@ DONE — direct user request; spec/report: `docs/tasks/vietnamese-copy-review.md
 
 Quality Gate: FE check green (665 tests, +7; lines 98.49%, branches 96.98%); BE check green with RUST_LOG=info (57 unit, 41 E2E, 35 content, JMdict 3,046 words, build). Content validation rerun after the final 2 explanation edits: green. Full Playwright: 238/240; both failures used one old text expectation. After updating it, all 14 vocab-page tests passed on mobile/desktop, confirming all 240 distinct cases; no product change between runs. FE lint/typecheck rerun green. Axe 0 serious/critical; screenshots at 360/768/1440 inspected. Existing Vite loader warning and Windows server logs documented in spec. Reviewer PASS. Not pushed from this local session.
 
-Content review sample: `docs/tasks/vietnamese-copy-content-sample.md`, 30 items from the 44 edited entries, seed 20261112; `reviewed: false` remains unchanged and needs the user's review. Phase 29b remains pending; its stashed test was not touched.
+Content review sample: `docs/tasks/vietnamese-copy-content-sample.md`, 30 items from the 44 edited entries, seed 20261112; `reviewed: false` remains unchanged and needs the user's review. Phase 29b was pending at that time; it is now DONE (see Status).
