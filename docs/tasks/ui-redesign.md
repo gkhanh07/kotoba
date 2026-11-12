@@ -154,6 +154,38 @@
 - `/lessons` (follow-up to group 3, separate commit): the impeccable detector flagged the current lesson row's 2px amber side border as a side-tab. Fixed by removing the border; the row keeps the raised tone and `aria-current`.
 - Screenshots of `/kana`, `/kanji` and `/kanji/日` at 360, 768 and 1440 were looked at. At 768 the kana sheet sits sticky at the bottom, as it did before.
 
+**Group 5: vocab and grammar**
+- `/vocab`:
+  - A progress panel sums the level: a meter, "N/M từ đã học", "N từ đến hạn hôm nay", and the one amber action. The action is "Ôn N từ đến hạn" when something is due, otherwise "học bộ tiếp theo".
+  - At ≥1200px the panel rides beside the decks, sticky; below that it sits above them.
+  - Each deck row carries a state `.tag` ("Chưa học", "Đang học", "Đã học") and a 2px learned-share hairline. The hairline repeats the text beside it, so it is `aria-hidden`.
+  - The level tabs are the page's filter. No other filter was added: a deck is a lesson, and the lessons already are the grouping.
+- `/vocab/[word]`:
+  - The word is the specimen. Reading, romaji and meaning each get a cell.
+  - The example is a panel with its note.
+  - The side panel holds the lesson, this browser's schedule and the amber "Học bài N". Related kanji follow below.
+- `/grammar`:
+  - Points are grouped by lesson, under "Bài N · title".
+  - Each tile shows the pattern in the kana face over its meaning.
+- `/grammar/[slug]`:
+  - The explanation column is held to 46rem.
+  - The side panel lists the other points of the same lesson and "Học bài N".
+  - There is no "related grammar" field, so same-lesson points stand in for it (BACKLOG). The prev/next pager stays.
+- Found by screenshot:
+  - At 1440, the side "Lịch ôn" value wrapped into a narrow second column. The side `dl` now stacks each label over its value.
+  - At 1440, `/grammar/[slug]` had its own 76rem cap, so its right edge stopped 80px short of every other page. The cap is gone and the page uses the shared frame.
+  - At 360, the three reading cells left an empty fourth cell. The grid is now two columns with the meaning across the row, and three columns from 640px.
+- Test-writing issues found along the way:
+  - The row regex `^Bài ${n}(?!\d)` lost its backslash in a heredoc. It is now written with the Edit tool.
+  - The side-link locator `filter({ hasNot: .btn })` still matched the `.btn` link itself. It now reads `side.getByRole("list").getByRole("link")`.
+  - The global `[lang="ja"]` rule already gives every Japanese span the kana face. So removing `font-kana` from `.pattern` did not fail the font test; it proves nothing about the pattern. The test was instead seen failing by giving `.meaning` the kana face.
+- Mutation checks, each seen failing and then restored: the deck state swap, the progress count, the review vs next-deck action, the side-panel position, and the same-lesson list order.
+- Codex review (read-only), 3 findings:
+  - #1 rejected: "the same-lesson list can mix levels". Lesson numbers are global (81 lessons, 81 unique numbers in `lessons.json`), so the same lesson number cannot belong to two levels.
+  - #2 rejected: "`max={total}` is 0 for an empty level". `Decks` only renders when the level has non-empty decks (`vocab/page.tsx`), so `total > 0`.
+  - #3 fixed: the word-page test asserted only the `dt` labels. It now also asserts the `dd` values from the fixture.
+- Design hook: the deck hairline animated `width`, a layout property. The fill is now `transform: scaleX(share)` from the left edge, transitioning `transform`.
+
 ## 5. Performance
 Production build (`next start`), 1440×900, median of 5 loads after one warm-up. Times are in ms.
 
@@ -170,4 +202,9 @@ Production build (`next start`), 1440×900, median of 5 loads after one warm-up.
   - That is the cost of a preview without a fetch, and it is far below any budget.
   - The FCP and DCL differences are run-to-run noise on a local server: TTFB and DOM size barely moved.
 - `/kana` after: Chromium did not report an FCP entry in that run.
-- `/vocab` is unchanged so far (group 5).
+| `/vocab` before | 44385 | 245 | 14 | 136 | 117 | 165 |
+| `/vocab` after | 44642 | 312 | 16 | 172 | 58 | 210 |
+| `/grammar` after | 70606 | 362 | 14 | 204 | 62 | 232 |
+
+- `/vocab` after: +257 bytes, +67 DOM nodes. These are the progress panel, the state tags and the deck hairlines. TTFB did not move, so the FCP and Load differences are within the local run-to-run noise seen above.
+- `/grammar` has no before row: it was not measured before the group started.

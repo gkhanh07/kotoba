@@ -160,6 +160,10 @@ const en = {
     dueToday: "due today",
     due: (day: string) => `due ${day}`,
     lapses: (n: number) => `wrong ${n} ${n === 1 ? "time" : "times"}`,
+    progress: "Progress",
+    learnedOf: (x: number, y: number) => `${x}/${y} words learned`,
+    dueNow: (n: number) => `${n} ${n === 1 ? "word" : "words"} due today`,
+    side: "Study this word",
   },
   grammar: {
     title: (l: string) => `${l} grammar`,
@@ -174,6 +178,8 @@ const en = {
     prev: "Previous",
     next: "Next",
     speak: "Play",
+    sameLesson: (n: number) => `Also in lesson ${n}`,
+    side: "Study this point",
   },
   lessons: {
     title: "Lessons",
@@ -306,6 +312,10 @@ const vi: typeof en = {
     dueToday: "đến hạn hôm nay",
     due: (day) => `đến hạn ${day}`,
     lapses: (n) => `sai ${n} lần`,
+    progress: "Tiến độ",
+    learnedOf: (x, y) => `${x}/${y} từ đã học`,
+    dueNow: (n) => `${n} từ đến hạn hôm nay`,
+    side: "Học từ này",
   },
   grammar: {
     title: (l) => `Ngữ pháp ${l}`,
@@ -320,6 +330,8 @@ const vi: typeof en = {
     prev: "Trước",
     next: "Sau",
     speak: "Đọc",
+    sameLesson: (n) => `Cũng trong bài ${n}`,
+    side: "Học điểm ngữ pháp này",
   },
   lessons: {
     title: "Bài học",

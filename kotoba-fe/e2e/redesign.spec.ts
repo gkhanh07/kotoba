@@ -237,3 +237,106 @@ test("/kanji/[char] sets this browser's memory beside the character with one act
   await page.goto("/kanji/%E4%B8%80"); // 一 has no card yet
   await expect(page.getByRole("complementary", { name: "Mức nhớ của bạn" })).toContainText("Chưa học. Chữ này vào lịch ôn khi bạn học bài của nó.");
 });
+
+test("/vocab sums the level's progress in one panel and marks each deck's state in words", async ({ page, axe }) => {
+  const vocab = load("vocab").filter((v) => v.level === 5);
+  const first = Math.min(...vocab.map((v) => v.lesson));
+  const deck = vocab.filter((v) => v.lesson === first);
+  await page.goto("/vocab");
+  await seed({ [deck[0].id]: { box: 2, due: "2020-01-01", at: 1 } })(page);
+  await page.reload();
+
+  // AC-5.3: exact learned and due counts over every N5 word, and the one action they lead to.
+  const summary = page.getByRole("region", { name: "Tiến độ" });
+  await expect(summary.getByRole("progressbar", { name: "Tiến độ" })).toHaveJSProperty("value", 1);
+  await expect(summary.getByRole("progressbar", { name: "Tiến độ" })).toHaveJSProperty("max", vocab.length);
+  await expect(summary.getByText(`1/${vocab.length} từ đã học`)).toBeVisible();
+  await expect(summary.getByText("1 từ đến hạn hôm nay")).toBeVisible();
+  const amber = page.locator(AMBER);
+  await expect(amber).toHaveCount(1);
+  await expect(amber).toHaveAttribute("href", "/review?kind=vocab");
+
+  // AC-5.3: the state is a word on the row, not only the bar's colour.
+  const row = (lesson: number) => page.getByRole("link", { name: new RegExp(`^Bài ${lesson}(?!\\d)`) });
+  await expect(row(first).getByText("Đang học", { exact: true })).toBeVisible();
+  const second = Math.min(...vocab.filter((v) => v.lesson > first).map((v) => v.lesson));
+  await expect(row(second).getByText("Chưa học", { exact: true })).toBeVisible();
+
+  const panel = await summary.boundingBox();
+  const list = await page.getByRole("list").first().boundingBox();
+  if (page.viewportSize()!.width >= DESKTOP_SIDE_BY_SIDE) expect(panel!.x).toBeGreaterThan(list!.x + list!.width);
+  else expect(panel!.y + panel!.height).toBeLessThanOrEqual(list!.y);
+  await axe();
+});
+
+test("/vocab/[word] puts the word first, its example in a card and the study facts beside it", async ({ page, axe }) => {
+  await page.goto("/vocab/%E9%A3%9F%E3%81%B9%E3%82%8B");
+
+  // AC-5.1: reading, romaji and meaning are separate cells under the word; lesson and schedule sit in the side panel.
+  const word = page.getByRole("heading", { level: 1, name: "食べる" });
+  const side = page.getByRole("complementary", { name: "Học từ này" });
+  await expect(side.locator("dt")).toHaveText(["Bài", "Lịch ôn"]);
+  await expect(side.locator("dd").first()).toHaveText("13");
+  await expect(page.locator("article dt")).toHaveText(["Cách đọc", "Romaji", "Nghĩa"]);
+  await expect(page.locator("article dd")).toHaveText(["たべる", "taberu", "Ăn"]);
+  await expect(side.getByRole("link", { name: /Học bài 13/ })).toHaveAttribute("href", "/lessons/13");
+  await expect(page.locator(AMBER)).toHaveCount(1);
+
+  const example = page.getByRole("region", { name: "Ví dụ" });
+  await expect(example.locator(".panel")).toContainText("パンを食べます。");
+  await expect(example.locator(".panel")).toContainText("Tôi ăn bánh mì.");
+
+  const head = await word.boundingBox();
+  const aside = await side.boundingBox();
+  if (page.viewportSize()!.width >= DESKTOP_SIDE_BY_SIDE) {
+    expect(aside!.x).toBeGreaterThan(head!.x + head!.width);
+    expect(aside!.y).toBeLessThan(head!.y + head!.height);
+  } else {
+    expect(aside!.y).toBeGreaterThan(head!.y + head!.height);
+  }
+  await axe();
+});
+
+test("/grammar groups the points by lesson with each pattern in the kana face", async ({ page, axe }) => {
+  type Point = { slug: string; level: number; lesson: number; pattern: string; title: { vi: string } };
+  const grammar = load<Point>("grammar").filter((g) => g.level === 5);
+  const lessons = load<Lesson>("lessons");
+  await page.goto("/grammar");
+
+  // AC-5.2: one heading per lesson that has grammar, in order, each with its points as links.
+  const numbers = [...new Set(grammar.map((g) => g.lesson))];
+  const groups = page.locator("main section");
+  await expect(groups).toHaveCount(numbers.length);
+  const n = numbers[0];
+  const group = page.getByRole("region", { name: new RegExp(`^Bài ${n}(?!\\d)`) });
+  await expect(group.getByRole("heading", { level: 2 })).toHaveText(`Bài ${n} · ${lessons.find((l) => l.lesson === n)!.title.vi}`);
+  const points = grammar.filter((g) => g.lesson === n);
+  await expect(group.getByRole("link")).toHaveCount(points.length);
+
+  // AC-5.2: the pattern is set in the kana face, distinct from the meaning beneath it.
+  const link = group.getByRole("link").first();
+  const pattern = link.locator('[lang="ja"]');
+  await expect(pattern).toHaveText(points[0].pattern);
+  await expect(link).toContainText(points[0].title.vi);
+  const face = (l: import("@playwright/test").Locator) => l.evaluate((el) => getComputedStyle(el).fontFamily);
+  expect(await face(pattern)).not.toBe(await face(link.getByText(points[0].title.vi, { exact: true })));
+  await axe();
+});
+
+test("/grammar/[slug] lists the other points of its lesson beside the explanation", async ({ page, axe }) => {
+  type Point = { slug: string; lesson: number; pattern: string };
+  const grammar = load<Point>("grammar");
+  const g = grammar.find((x) => x.slug === "wa-desu")!;
+  const others = grammar.filter((x) => x.lesson === g.lesson && x.slug !== g.slug);
+  await page.goto("/grammar/wa-desu");
+
+  // AC-5.4: the side panel links exactly the other points of the same lesson, in content order, plus the one action.
+  const side = page.getByRole("complementary", { name: "Học điểm ngữ pháp này" });
+  await expect(side.getByRole("heading", { level: 2 })).toHaveText(`Cũng trong bài ${g.lesson}`);
+  const links = side.getByRole("list").getByRole("link");
+  await expect(links).toHaveCount(others.length);
+  for (const [i, x] of others.entries()) await expect(links.nth(i)).toHaveAttribute("href", `/grammar/${x.slug}`);
+  await expect(page.locator(AMBER)).toHaveCount(1);
+  await expect(side.locator(".btn")).toHaveAttribute("href", `/lessons/${g.lesson}`);
+  await axe();
+});

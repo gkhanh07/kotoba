@@ -334,7 +334,9 @@ a.tile:active, button.tile:active:not(:disabled) { transform: translateY(1px); }
   height: 100%;
   border-radius: inherit;
   background: var(--state-learned);
-  transition: width var(--dur) var(--ease-out);
+  /* Scaled, not resized, so the fill animates on the compositor. */
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease-out);
 }
 .meter::-webkit-progress-bar { background: var(--rule-dim); }
 .meter::-webkit-progress-value { background: var(--state-learned); border-radius: 3px; }
