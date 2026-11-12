@@ -43,3 +43,11 @@ Content: happy path, wrong data (spec checks: counts, lesson coverage, kanji in 
 - E2E: the N4 grammar test became a loop over N4 and N3. 178/178 on the first full run.
 - Screenshots `/grammar?level=3` (32 links), `/grammar/you-to-suru` and `/lessons/63` ("Bài 63 / 81 · 10 kanji · 46 từ · 2 điểm ngữ pháp") at 360 and 1440: no horizontal scroll.
 - Sample: the whole batch (32 items, no seed), in the batch report.
+
+### 29b (lessons 64–80)
+- 28 points: 2 per lesson, 1 in lessons 66, 68, 71, 73, 75 and 80. N3 grammar 60, file 138. Every lesson 64–80 has ≥ 1; lesson 81 none. Themes: わけには いかない and に違いない (64 law and crime), てからでないと and ことは ない (65 rules), としたら (66 plans), たとたん and 最中に (67 time), おきに・ごとに (68 numbers), 一方だ and につれて (69 increase), によると and と いう ことだ (70 news), って (71 speaking), っけ and とは 限らない (72 thinking), だらけ (73), おそれが ある and ようが ない (74 danger), を中心に (75 positions), V-合う and を はじめ (76 cooperation), 気味 and がち (77 condition), ものだ and べきだ (78 manners), に くらべて and にしては (79 comparing), たところ (80 results).
+- Prerequisites: within a lesson the basic point comes first (によると before と いう ことだ, whose first example uses によると; ものだ before べきだ, whose note contrasts them; 気味 before がち). No example uses a later point.
+- Checked against N5/N4/29a patterns: no repeats (ことに する/なる, らしい, ようだ・みたいだ, そうだ, について-type points already exist and were not added). Near pairs in `note`: わけには いかない vs potential form and わけだ; に違いない vs はずだ; てからでないと vs てから; ことは ない vs なくても いい; によると vs によって; と いう ことだ vs そうだ; とは 限らない vs わけでは ない; 一方だ vs ように なる; につれて vs ば〜ほど; 気味 vs がち; ものだ vs べきだ; に くらべて vs より; にしては vs のに; たところ vs た ところだ.
+- Kanji outside `kanji.json` written in kana in examples: へる (減), はし (橋), れんらく (絡), けっこん (結), おてら (寺), いなか (田舎), ていねい (丁寧), かぜ (風邪); patterns に くらべて (比) and を はじめ (始 is in the list, but the kana form is the usual one) in kana with the kanji form in `explain`/`note`.
+- Left out: ずに, にかわって (near かわりに, lesson 60), ほど〜ない (often N4), ばかりか, こそ, ないことは ない, に従って, までに; any of them can go into a later fix if wanted.
+- Unsure: level of って, っけ, ことは ない, おきに (N4 in some lists); combined entries おきに・ごとに, としたら・とすれば, と いう ことだ (hearsay + "that means"), って (three uses), ものだ (norm + recollection); naturalness of the examples of 最中に (口を 出す), 気味 (遅れ気味), V-合う (知り合う is lexicalised); the "not after adjectives" rule in にしては and "not for legal duties" in べきだ.

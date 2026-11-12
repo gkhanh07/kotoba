@@ -60,9 +60,9 @@ describe('content', () => {
     // Phase 24a/24b/24c: N4 vocab lessons 26–44 (docs/phases/24-n4-vocab.md); phase 28a/…/28i: N3 lessons 46–80 (docs/phases/28-n3-vocab.md).
     expect([count(vocab, 5), count(vocab, 4), count(vocab, 3)]).toEqual([694, 578, 1774]);
     expect(vocab).toHaveLength(3046);
-    // Phase 25: N4 grammar in lessons 26–44 (docs/phases/25-n4-grammar.md); phase 29a: N3 grammar in lessons 46–63 (docs/phases/29-n3-grammar.md).
-    expect([count(grammar, 5), count(grammar, 4), count(grammar, 3)]).toEqual([34, 44, 32]);
-    expect(grammar).toHaveLength(78 + 32);
+    // Phase 25: N4 grammar in lessons 26–44 (docs/phases/25-n4-grammar.md); phase 29: N3 grammar in lessons 46–80 (docs/phases/29-n3-grammar.md).
+    expect([count(grammar, 5), count(grammar, 4), count(grammar, 3)]).toEqual([34, 44, 60]);
+    expect(grammar).toHaveLength(78 + 60);
   });
 
   it('gives every N4 lesson 26–44 at least one grammar point', () => {
@@ -73,11 +73,11 @@ describe('content', () => {
     expect(lessonsWithout).toEqual([]);
   });
 
-  // Phase 29 (docs/phases/29-n3-grammar.md): 29a covers lessons 46–63, 29b extends the range to 80.
-  it('gives every N3 lesson 46–63 at least one grammar point', () => {
+  // Phase 29 (docs/phases/29-n3-grammar.md): 29a covered lessons 46–63, 29b extends the range to 80.
+  it('gives every N3 lesson 46–80 at least one grammar point', () => {
     const withGrammar = new Set(grammar.filter((g) => g.level === 3).map((g) => g.lesson));
     const lessonsWithout = lessons
-      .filter((l) => l.level === 3 && (l.lesson as number) >= 46 && (l.lesson as number) <= 63 && !withGrammar.has(l.lesson))
+      .filter((l) => l.level === 3 && (l.lesson as number) >= 46 && (l.lesson as number) <= 80 && !withGrammar.has(l.lesson))
       .map((l) => l.id);
     expect(lessonsWithout).toEqual([]);
   });
