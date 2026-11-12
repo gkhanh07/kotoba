@@ -9,6 +9,7 @@ import { getLang } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
 import { Speak } from "../../Speak";
 import { LessonFooter } from "../LessonFooter";
+import { LessonTiles } from "../LessonTiles";
 import s from "../lessons.module.css";
 
 async function find(n: string) {
@@ -54,6 +55,8 @@ export default async function LessonPage(props: PageProps<"/lessons/[n]">) {
           <p>{[t.of(num, total), ...(Object.entries({ kana, kanji, vocab, grammar }) as [keyof typeof t.units, unknown[]][]).filter(([, a]) => a.length).map(([k, a]) => t.units[k](a.length))].join(" · ")}</p>
         </header>
 
+        <div className={s.body}>
+        <div className={s.content}>
         {[...kanaGroups.values()].map((g) => {
           const { script, group } = g[0];
           const id = `kana-${script}-${group}`;
@@ -63,14 +66,7 @@ export default async function LessonPage(props: PageProps<"/lessons/[n]">) {
                 <span>{script === "katakana" ? "Katakana" : "Hiragana"} · {groupName[group]} <small>({g.length})</small></span>
                 <Link href={`/kana?script=${script}&group=${group}`}>{t.chart}</Link>
               </h2>
-              <ul className={s.tiles}>
-                {g.map((k) => (
-                  <li key={k.id} className={s.tile}>
-                    <span lang="ja" className={s.char}>{k.char}</span>
-                    <span className={s.sub}>{k.romaji}</span>
-                  </li>
-                ))}
-              </ul>
+              <LessonTiles kind="kana" items={g} lang={lang} />
             </section>
           );
         })}
@@ -78,16 +74,7 @@ export default async function LessonPage(props: PageProps<"/lessons/[n]">) {
         {kanji.length > 0 && (
           <section className={s.section} aria-labelledby="l-kanji">
             <h2 id="l-kanji"><span>{t.kanji} <small>({kanji.length})</small></span></h2>
-            <ul className={s.tiles}>
-              {kanji.map((k) => (
-                <li key={k.id}>
-                  <Link href={`/kanji/${encodeURIComponent(k.char)}`} className={s.tile}>
-                    <span lang="ja" className={s.char}>{k.char}</span>
-                    <span className={s.sub}>{k.hv[0] ?? ""}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <LessonTiles kind="kanji" items={kanji} lang={lang} />
           </section>
         )}
 
@@ -123,14 +110,16 @@ export default async function LessonPage(props: PageProps<"/lessons/[n]">) {
           </section>
         )}
 
+        </div>
         {hasItems ? (
           <LessonFooter steps={steps} lang={lang} next={next && { href: `/lessons/${next.lesson}`, label: t.next(next.lesson, next.title[lang]) }} />
         ) : (
-          <>
-            <p className={s.empty}>{t.reviewBody}</p>
-            <div className={s.foot}><Link href="/review" className="btn">{t.review} <Arrow /></Link></div>
-          </>
+          <aside className={`panel ${s.side}`} data-raised="">
+            <p className={s.scheduled}>{t.reviewBody}</p>
+            <div className={s.actions}><Link href="/review" className="btn">{t.review} <Arrow /></Link></div>
+          </aside>
         )}
+        </div>
       </main>
       <SiteFooter />
     </>

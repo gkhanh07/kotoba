@@ -67,6 +67,8 @@ for (const level of [4, 3]) {
   test(`/lessons lists the N${level} lessons under an N${level} heading`, async ({ page, axe }, info) => {
     await page.goto("/lessons");
     const group = page.getByRole("region", { name: `N${level}` });
+    await group.locator("summary").click(); // a guest's open group is N5; the others open on demand (ADR 010)
+    await expect(group.locator("details")).toHaveAttribute("open", "");
     await expect(group.getByRole("listitem")).toHaveCount(levelLessons.length);
     await expect(group.getByRole("listitem").first()).toContainText(`${first.lesson}${first.title.vi}`);
     await expect(group.getByRole("listitem").last()).toContainText(`${levelLessons.at(-1)?.lesson}${levelLessons.at(-1)?.title.vi}`);

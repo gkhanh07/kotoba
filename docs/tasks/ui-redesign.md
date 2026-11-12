@@ -111,5 +111,19 @@
 - Codex review: the preview test only checked the first word. It now checks every listed word (written form, reading and meaning in order), the flashcard, and the lesson's kanji and grammar point against the content files. Seen failing with the word order swapped and with a wrong kanji text, then restored.
 - Codex review, not changed: the dashboard test uses one fixed client IP per project. It follows the convention of `home.spec.ts` and `daily.spec.ts` (one sign-up per project per run, under the limit of 10 per hour).
 
+**Group 3: lessons**
+- A level's "x/y bài xong" counts only lessons with items (kana, kanji, words). Review lessons have nothing to learn, so counting them would leave a fully learned level reading short of y. N5 has 24 of 25, N4 19 of 20, N3 35 of 36.
+- Only the current lesson's level is open (N5 for a guest). `levels.spec.ts` now opens the closed N4/N3 group before reading its rows. That is a structural change: the assertions (count, first and last row) are unchanged.
+- The amber "Bắt đầu" on row 1 became a single panel link ("Học tiếp" or "Bắt đầu") to the current lesson, so the list has one amber at most however far the learner is.
+- Lesson tiles are now buttons with `aria-pressed` that drive a preview (`aria-live="polite"`). The link to `/kanji/[char]` moved into the kanji preview. Kana hints show only in vi, as on `/kana`.
+- The module `.tile` sets no padding or border, so the global `.tile` states (hover, pressed, focus) stay intact.
+- `LessonFooter` became a side panel with a meter: sticky beside the lesson from 1100px, and after the lesson on a phone, as the footer was before.
+- The new tests failed with the tile click turned into a no-op and with `openLevel` set to the wrong level, then passed after restoring.
+- Screenshots of `/lessons`, `/lessons/1` and `/lessons/7` at 360, 768 and 1440 were looked at: no overflow, the current lesson stands out, the tiles show their pressed state.
+- Codex review, not changed:
+  - "Zero amber buttons once every lesson is learned." The rule is one amber at most, and that state predates this group.
+  - "A heading with other content inside `<summary>`." The HTML spec allows phrasing content mixed with heading content, and axe passes.
+  - "The test leaves grammar out." The page does too (grammar is read, not scheduled), and the test mirrors it.
+
 ## 5. Performance
 (The `/vocab` and `/kanji` measurements go here.)
