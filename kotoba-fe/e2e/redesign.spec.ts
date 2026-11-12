@@ -578,3 +578,97 @@ test("/settings sets the account sections in a second column on desktop",async (
   else expect(b!.y).toBeGreaterThan(a!.y + a!.height);
   await axe();
 });
+
+// Group 10 (AC-10.1): the frame.
+const shadowOf = (l: import("@playwright/test").Locator) => l.evaluate((el) => getComputedStyle(el).boxShadow);
+const groundOf = (l: import("@playwright/test").Locator) => l.evaluate((el) => getComputedStyle(el).backgroundColor);
+// Resolves a colour token through a probe element, so the assertion follows globals.css instead of a copied rgb().
+const tokenColor = (page: import("@playwright/test").Page, token: string) =>
+  page.evaluate((name) => {
+    const probe = document.createElement("div");
+    probe.style.background = `var(${name})`;
+    document.body.append(probe);
+    const color = getComputedStyle(probe).backgroundColor;
+    probe.remove();
+    return color;
+  }, token);
+
+test("the site bar's floating layer casts the float shadow and marks the current page by more than colour", async ({ page, axe }, info) => {
+  await page.goto("/kanji");
+  const surface2 = await tokenColor(page, "--surface-2");
+  if (info.project.name === "desktop") {
+    await page.getByRole("button", { name: "Thư viện" }).click();
+    const library = page.locator("#site-library");
+    await expect(library).toBeVisible();
+    expect(await shadowOf(library)).toContain("48px");
+    expect(await groundOf(library)).toBe(surface2);
+    const here = library.getByRole("link", { name: "Kanji" });
+    await expect(here).toHaveAttribute("aria-current", "page");
+    // The current row carries an inset bar, not only the amber text.
+    expect(await shadowOf(here)).toContain("inset");
+    expect(await shadowOf(library.getByRole("link", { name: "Bảng chữ cái" }))).toBe("none");
+  } else {
+    await page.getByRole("button", { name: "Menu" }).click();
+    const sheet = page.getByRole("navigation", { name: "Chính" });
+    await expect(sheet).toBeVisible();
+    expect(await shadowOf(sheet)).toContain("48px");
+    expect(await groundOf(sheet)).toBe(surface2);
+    // Inline in the sheet the library links are plain links; the current one is underlined, not only amber.
+    const here = sheet.getByRole("link", { name: "Kanji" });
+    await expect(here).toBeVisible();
+    await expect(here).toHaveAttribute("aria-current", "page");
+    expect(await here.evaluate((el) => getComputedStyle(el).borderBottomStyle)).toBe("solid");
+    expect(await shadowOf(here)).toBe("none");
+  }
+  await axe();
+});
+
+test("the outage page hangs 停電 on the same unlit board, with one way to retry and a title (BUG-017)", async ({ page, axe, pageErrors, baseURL }) => {
+  test.setTimeout(60_000);
+  try {
+    // Content is fetch-cached for an hour, so an earlier /kanji visit would hide the outage. A session cookie
+    // makes currentUser call /me uncached on every request; with kotoba-be down that throws to error.tsx.
+    await page.context().addCookies([{ name: "kotoba.session", value: "outage-probe", url: baseURL }]);
+    await stopBackend();
+    await page.goto("/kanji");
+    await expect(page.getByRole("alert").getByRole("heading", { level: 1 })).toHaveText("Mất điện một lúc");
+    await expect(page).toHaveTitle("Mất điện một lúc");
+    const mark = page.locator(".statusMark");
+    await expect(mark).toHaveText("停電");
+    expect(await shadowOf(mark)).toContain("inset");
+    expect(await groundOf(mark)).toBe(await tokenColor(page, "--surface-1"));
+    await expect(page.getByRole("main").locator(".btn")).toHaveCount(1);
+    await expect(page.getByRole("button", { name: "Thử lại" })).toBeVisible();
+    await axe();
+    // The 500 document and React's production log of the server render error (#441) are the outage itself; nothing else may appear.
+    expect(pageErrors).toEqual([
+      "console.error: Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "console.error: Error: Minified React error #441; visit https://react.dev/errors/441 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+    ]);
+    pageErrors.length = 0;
+  } finally {
+    await startBackend();
+  }
+});
+
+test("study pages set the bar on its own ground while the hero's bar stays clear", async ({ page }) => {
+  await page.goto("/kanji");
+  expect(await groundOf(page.locator("header.bar"))).not.toBe("rgba(0, 0, 0, 0)");
+  await page.goto("/");
+  expect(await groundOf(page.locator("header.bar"))).toBe("rgba(0, 0, 0, 0)");
+});
+
+test("the 404 page hangs 404 on an unlit board with one way home, above the footer's credits", async ({ page, axe, pageErrors }) => {
+  const res = await page.goto("/no-such-page");
+  expect(res?.status()).toBe(404);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("404");
+  const main = page.getByRole("main");
+  await expect(main.locator("a.btn")).toHaveCount(1);
+  await expect(main.locator("a.btn")).toHaveAttribute("href", "/");
+  expect(await shadowOf(page.locator(".statusMark"))).toContain("inset");
+  await expect(page.getByRole("contentinfo").getByRole("link", { name: "Điều khoản và quyền riêng tư" })).toHaveAttribute("href", "/legal");
+  await axe();
+  // Chromium logs every 404 document as a console error; it must be exactly that one entry, nothing else.
+  expect(pageErrors).toEqual(["console.error: Failed to load resource: the server responded with a status of 404 (Not Found)"]);
+  pageErrors.length = 0;
+});

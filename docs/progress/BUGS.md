@@ -222,3 +222,16 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Similar places: no other grammar point states a causative structure.
 - Commit: `fix(content): author Hán Việt readings from a checked source`
 - Status: FIXED
+
+## BUG-017: the outage page has no document title
+- Severity: Medium (a11y; axe "serious" document-title, no data impact)
+- Found: 2026-11-12, UI redesign group 10, new outage e2e
+- Environment: `kotoba-fe/src/app/error.tsx`, production build, BE stopped
+- Expected: the tab and screen readers name the page "Mất điện một lúc", like `global-error.tsx` does.
+- Actual: no title when the page's own metadata also needed kotoba-be (axe: document-title, serious); otherwise the failed page's title ("Kanji N5 · Kotoba") over an outage message.
+- Reproducing test: `e2e/redesign.spec.ts` "the outage page hangs 停電 on the same unlit board, with one way to retry and a title (BUG-017)"
+- Root cause: an error boundary is a client component and cannot export `metadata`; the segment's title came from the page that failed to render, so nothing set one.
+- Fix: render `<title>{t.title}</title>` in `error.tsx` (React hoists it into `<head>`), as Next 16's docs recommend.
+- Similar places: `global-error.tsx` already renders its title; `not-found.tsx` exports metadata. No other error boundary exists.
+- Commit: `feat(ui): redesign the site frame`
+- Status: FIXED

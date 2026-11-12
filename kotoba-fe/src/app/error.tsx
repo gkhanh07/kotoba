@@ -6,6 +6,8 @@ export default function AppError({ retry }: { error: Error & { digest?: string }
   const t = dict(clientLang()).down;
   return (
     <main className="statusPage">
+      {/* An error boundary can't export metadata (Next 16); React hoists this into <head>. BUG-017. */}
+      <title>{t.title}</title>
       <span lang="ja" className="statusMark" data-off="" aria-hidden="true">停電</span>
       <div role="alert">
         <h1>{t.title}</h1>

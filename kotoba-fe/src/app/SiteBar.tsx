@@ -33,7 +33,7 @@ export async function SiteBar({ current }: { current?: Current }) {
           {t.library}
           <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3.5 5 7.5 9 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>
         </button>
-        <div id="site-library" popover="auto" className="library">
+        <div id="site-library" popover="auto" className="library float">
           <Link href="/kana" aria-current={here("kana")}>{t.kana}</Link>
           <Link href="/kanji" aria-current={here("kanji")}>{t.kanji}</Link>
           <Link href="/vocab" aria-current={here("vocab")}>{t.vocab}</Link>

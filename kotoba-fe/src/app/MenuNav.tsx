@@ -8,6 +8,7 @@ export function MenuNav({ id, label, children }: { id: string; label: string; ch
     <nav
       id={id}
       popover="auto"
+      className="float"
       aria-label={label}
       onClick={(e) => {
         if (!(e.target as Element).closest("a")) return;

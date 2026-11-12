@@ -269,6 +269,32 @@
 - Codex review (read-only), 1 finding:
   - P2 fixed: goal and minutes errors had no programmatic link to their group. Fixed with `describedBy` on `Choice` at all five call sites, and covered by the goal e2e test.
 
+### Group 10: frame
+- Floating layers (AC-10.1):
+  - The menu sheet (`MenuNav`) and the library popover take the global `.float` class, so they get `--surface-2`, `--edge-hi` and `--shadow-float` from the single rule that uses the token. `designSystem.test.ts` is unchanged.
+  - From 900px up the nav is an inline row again: it drops `.float`'s radius and shadow. Below 900px the library is inline inside the sheet and drops them too.
+  - The current library page carries an inset 3px amber bar as well as amber text. Inline in the mobile sheet it is underlined like the other nav links. Either way colour is not the only channel.
+- The site bar on study pages (`body > .bar`) stands on `--surface-1` with a `--rule-dim` hairline. The hero's bar sits inside `section.hero` and stays over the sky.
+- The footer is on `--surface-1`. The `html` canvas is `--surface-1` too, so a short page's footer ground runs to the bottom of the window. `body` stays `--night`. The first screenshot showed a night strip below the footer on the 404 page.
+- Status pages: the 404 numeral and the outage glyph 停電 hang on an unlit board (`--surface-1`, `--rule` border, `--radius`, `--edge-hi`), with no glow.
+- BUG-017 (Medium, a11y): the new outage test found that `error.tsx` set no document title. Axe reported a serious document-title violation, or the tab kept the failed page's title. Fixed with a React `<title>` in the boundary, which Next 16 recommends because an error boundary cannot export metadata.
+- The outage test sets a dead session cookie. Content fetches are cached for an hour, so a `/kanji` visit earlier in the run would otherwise serve the page without calling kotoba-be. `currentUser` calls `/me` uncached when a cookie exists, so the outage reaches `error.tsx` whatever the run order. The test pins the two console entries the outage itself produces: the 500 document and React #441.
+- Tests: 4 new e2e tests, each run on both projects:
+  - the floating layer
+  - the bar ground
+  - the 404 board
+  - the outage board
+
+  Each was seen failing:
+  - the floating layer, with `.float` removed from the library
+  - the bar ground, with the `body > .bar` rule removed
+  - the 404 board, with the board's ground and edge removed
+  - the outage board, before the fix and again with the `<title>` removed, where the received title was "Kanji N5 · Kotoba"
+- Codex review (read-only). Its sandbox could not read the repo, so it reviewed the diff only. All 3 findings were accepted:
+  - P2: the mobile library was untested. The test now checks the sheet's Kanji link: visible, `aria-current`, underline, no inset shadow.
+  - P2: the error page was untested. Fixed with the outage test, which found BUG-017.
+  - P3: the elevation test only matched `48px`. It now also asserts the `--surface-2` ground on both the desktop popover and the mobile sheet.
+
 ## 5. Performance
 Production build (`next start`), 1440×900, median of 5 loads after one warm-up. Times are in ms.
 
@@ -323,3 +349,11 @@ Production build (`next start`), 1440×900, median of 5 loads after one warm-up.
 
 - Group 9 has no before rows: these routes were not measured before the group started. The motif board is about a dozen static nodes, `aria-hidden`.
 - `/settings` was measured as a guest, so it is the redirect to `/login?next=/settings`, not the settings page itself. The perf script does not sign in.
+
+| Route | HTML bytes | DOM nodes | TTFB | FCP | DCL | Load |
+|---|---|---|---|---|---|---|
+| `/kanji` after group 4 | 58467 | 546 | 16 | 232 | 115 | 225 |
+| `/kanji` after group 10 | 58499 | 546 | 16 | 224 | 58 | 247 |
+| `/no-such-page` after | 16967 | 64 | 9 | 144 | 174 | 185 |
+
+- Group 10 changes classes and CSS only. `/kanji` gained 32 bytes (the `float` class names) and no DOM nodes. The 404 page has no before row: it was not measured before the group started.
