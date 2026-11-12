@@ -55,6 +55,48 @@
   --sky-glow: rgba(46, 78, 170, 0.35);
   --drizzle: rgba(120, 150, 220, 0.035);
 
+  /* Design system (ADR 010). Everything below is derived from the primitives above:
+     no new hex. */
+
+  /* Elevation: a surface is a tone step plus a top-edge highlight, never a lift. */
+  --surface-0: var(--night);
+  --surface-1: var(--asphalt);
+  --surface-2: var(--wet);
+  --surface-3: color-mix(in srgb, var(--wet) 78%, var(--rule));
+  --edge-hi: inset 0 1px 0 color-mix(in srgb, var(--rule-strong) 70%, var(--chalk));
+  /* The one shadow: floating layers only (popover, sheet, dialog). */
+  --shadow-float: 0 18px 48px -12px color-mix(in srgb, var(--night) 90%, transparent),
+    0 2px 8px color-mix(in srgb, var(--night) 60%, transparent);
+
+  /* Learning states (ADR 007 words, ADR 010 colours). Always paired with text or a shape. */
+  --state-fresh: var(--silver-dim);
+  --state-started: var(--cool);
+  --state-learned: var(--amber);
+  --state-known: var(--amber-core);
+  /* Feedback. Green is not in the palette, so success is the cool tube. */
+  --ok: var(--cool);
+  --warn: var(--amber);
+  --err: var(--neon-soft);
+
+  /* Type scale. Nothing readable goes below --fs-meta. */
+  --fs-page: clamp(2.1rem, 1.4rem + 2.6vw, 3.25rem);
+  --fs-section: clamp(1.3rem, 1.05rem + 0.9vw, 1.65rem);
+  --fs-card: 1.2rem;
+  --fs-body: 1.0625rem;
+  --fs-caption: 0.9375rem;
+  --fs-meta: 0.8125rem;
+  --fs-specimen: clamp(2.25rem, 1.6rem + 2.4vw, 3rem);
+  --fs-specimen-lg: clamp(6rem, 3rem + 10vw, 10rem);
+
+  /* Shape and spacing. The hero's sign and ticket radii stay in page.module.css. */
+  --radius: 6px;
+  --radius-sm: 4px;
+  --space-panel: clamp(1.1rem, 0.8rem + 1.2vw, 1.75rem);
+
+  /* Motion: hover and selection are quick; nothing decorative loops on study pages. */
+  --dur-fast: 150ms;
+  --dur: 220ms;
+
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --gutter: clamp(16px, 4vw, 56px);
   /* One content edge for the whole site. Full-bleed blocks use this instead of
@@ -150,16 +192,18 @@ p { text-wrap: pretty; }
   min-height: 48px;
   padding: 0 1.4em;
   border: 1.5px solid var(--amber);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   color: var(--amber);
   font-family: var(--font-title), sans-serif;
   font-weight: 700;
   font-size: 1.15rem;
   letter-spacing: 0.02em;
   text-decoration: none;
-  text-shadow: 0 0 12px rgba(255, 177, 59, 0.45);
-  box-shadow: inset 0 0 18px rgba(255, 177, 59, 0.12), 0 8px 30px -12px rgba(255, 177, 59, 0.5);
-  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--amber) 45%, transparent);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--amber) 12%, transparent),
+    0 8px 30px -12px color-mix(in srgb, var(--amber) 50%, transparent);
+  transition: background-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
 .btn:hover,
 .btn:active,
@@ -167,8 +211,9 @@ p { text-wrap: pretty; }
   background: var(--amber);
   color: var(--night);
   text-shadow: none;
-  box-shadow: 0 0 0 1px var(--amber), 0 10px 40px -8px rgba(255, 177, 59, 0.65);
+  box-shadow: 0 0 0 1px var(--amber), 0 10px 40px -8px color-mix(in srgb, var(--amber) 65%, transparent);
 }
+.btn:active:not(:disabled) { transform: translateY(1px); }
 .btn:disabled {
   border-color: var(--rule);
   color: var(--silver-dim);
@@ -190,12 +235,202 @@ p { text-wrap: pretty; }
   box-shadow: 0 0 0 1px var(--rule-strong);
 }
 
+/* Shared study-page classes (ADR 010). Modules compose them through `className`;
+   every interactive one has hover, focus-visible, active, disabled and selected states. */
+
+/* A region of the page: one tone step up from the ground, lit along its top edge. */
+.panel {
+  padding: var(--space-panel);
+  border: 1px solid var(--rule-dim);
+  border-radius: var(--radius);
+  background: var(--surface-1);
+  box-shadow: var(--edge-hi);
+}
+.panel[data-raised] { background: var(--surface-3); border-color: var(--rule); }
+
+/* A scanned grid cell (kana, kanji, papers, lessons). Selection is a border and a tone, never colour alone:
+   the selected tile also gets a heavier border. */
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface-1);
+  box-shadow: var(--edge-hi);
+  color: var(--silver);
+  text-align: left;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+a.tile:hover, button.tile:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--rule-strong);
+  color: var(--chalk);
+}
+a.tile:active, button.tile:active:not(:disabled) { transform: translateY(1px); }
+.tile[aria-pressed="true"], .tile[aria-current], .tile[aria-selected="true"], .tile[data-selected] {
+  background: var(--surface-3);
+  border: 2px solid var(--amber);
+  padding: calc(0.85rem - 1px) calc(1rem - 1px);
+  color: var(--chalk);
+}
+.tile:disabled, .tile[aria-disabled="true"] { color: var(--silver-dim); border-style: dashed; cursor: not-allowed; }
+
+/* A status label: names a state in words; the dot is the second channel, the colour the third. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 1.6rem;
+  padding: 0 0.55em;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface-0);
+  color: var(--silver);
+  font-size: var(--fs-meta);
+  line-height: 1.2;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.tag::before {
+  content: "";
+  width: 0.5em;
+  height: 0.5em;
+  flex-shrink: 0;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+.tag[data-state="fresh"] { color: var(--state-fresh); }
+.tag[data-state="started"] { color: var(--state-started); border-color: color-mix(in srgb, var(--state-started) 45%, var(--night)); }
+.tag[data-state="learned"] { color: var(--state-learned); border-color: color-mix(in srgb, var(--state-learned) 45%, var(--night)); }
+.tag[data-state="known"] { color: var(--state-known); border-color: color-mix(in srgb, var(--state-learned) 70%, var(--night)); }
+.tag[data-state="started"]::before { background: linear-gradient(90deg, currentColor 50%, transparent 50%); }
+.tag[data-state="learned"]::before, .tag[data-state="known"]::before { background: currentColor; }
+.tag[data-state="ok"] { color: var(--ok); }
+.tag[data-state="warn"] { color: var(--warn); }
+.tag[data-state="err"] { color: var(--err); }
+.tag[data-state="ok"]::before, .tag[data-state="warn"]::before, .tag[data-state="err"]::before { border-radius: 1px; }
+
+/* A progress bar. Wraps a native <progress> or a <span> whose width is set inline. */
+.meter {
+  display: block;
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 3px;
+  background: var(--rule-dim);
+  appearance: none;
+  accent-color: var(--state-learned);
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--state-learned);
+  transition: width var(--dur) var(--ease-out);
+}
+.meter::-webkit-progress-bar { background: var(--rule-dim); }
+.meter::-webkit-progress-value { background: var(--state-learned); border-radius: 3px; }
+.meter::-moz-progress-bar { background: var(--state-learned); border-radius: 3px; }
+
+/* A text input or select. */
+.field {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 0.9rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface-0);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--night) 80%, transparent);
+  color: var(--chalk);
+  font: inherit;
+  transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.field::placeholder { color: var(--silver-dim); }
+.field:hover:not(:disabled) { border-color: var(--rule-strong); }
+.field:focus-visible { outline-offset: 1px; border-color: var(--amber); background: var(--surface-1); }
+.field[aria-invalid="true"] { border-color: var(--err); }
+.field:disabled { color: var(--silver-dim); border-style: dashed; cursor: not-allowed; }
+
+/* Segmented tabs: a row of mutually exclusive choices on one track. */
+.seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--rule-dim);
+  border-radius: var(--radius);
+  background: var(--surface-0);
+}
+.seg > a, .seg > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--silver);
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.seg > a:hover, .seg > button:hover:not(:disabled) { background: var(--surface-2); color: var(--chalk); }
+.seg > [aria-pressed="true"], .seg > [aria-current], .seg > [aria-selected="true"] {
+  background: var(--surface-3);
+  border-color: var(--rule-strong);
+  box-shadow: var(--edge-hi), inset 0 -2px 0 var(--amber);
+  color: var(--chalk);
+}
+.seg > button:disabled { color: var(--silver-mute); cursor: not-allowed; }
+
+/* Empty, loading-failed and inline notices. The tone sits on the edge and in the words, not in a fill. */
+.empty, .notice {
+  padding: var(--space-panel);
+  border: 1px dashed var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface-1);
+  color: var(--silver);
+  max-width: 70ch;
+}
+.notice { border-style: solid; padding-block: 0.85rem; }
+.notice[data-tone="ok"] { border-color: color-mix(in srgb, var(--ok) 55%, var(--night)); }
+.notice[data-tone="warn"] { border-color: color-mix(in srgb, var(--warn) 55%, var(--night)); }
+.notice[data-tone="err"] { border-color: color-mix(in srgb, var(--err) 55%, var(--night)); }
+
+/* A loading placeholder: a quiet tone, pulsing slowly unless motion is reduced. */
+.skeleton {
+  display: block;
+  min-height: 1em;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  animation: skeleton-pulse 1.6s ease-in-out infinite;
+}
+@keyframes skeleton-pulse { 50% { background: var(--surface-1); } }
+
+/* A floating layer (popover, sheet, dialog): the only place --shadow-float is used. */
+.float {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  box-shadow: var(--edge-hi), var(--shadow-float);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+  .btn:active, a.tile:active, button.tile:active { transform: none; }
+  .skeleton { animation: none; }
 }
 
 /* Site bar */

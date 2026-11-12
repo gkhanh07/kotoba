@@ -247,12 +247,23 @@ Study surfaces are flat. Depth comes from tonal steps (Night to Asphalt to Wet) 
 - **Button halo** (`.btn`: inset 0 0 18px amber 12% plus 0 8px 30px -12px amber 50%): the resting amber action. On hover it becomes a 1px amber ring plus 0 10px 40px -8px amber 65%.
 - **Sheet lift** (0 -12px 30px night 80%): only the sticky kana detail panel on phones.
 
+- **Float shadow** (`--shadow-float`): popovers, sheets and dialogs only (ADR 010).
+
+### Elevation scale (ADR 010)
+Four surface levels, each a tone step and never a drop shadow:
+- `--surface-0` Night is the page.
+- `--surface-1` Asphalt holds panels and tiles.
+- `--surface-2` Wet is hover and the selected or inner level.
+- `--surface-3` raised is Wet mixed toward Rule, for at most one raised element per view, such as the current lesson or the open detail panel.
+
+A raised surface gets the 1px top-edge highlight (`--edge-hi`, an inset shadow, not a lift) and inner hairlines. Only floating layers (the library popover, the phone sheet, `<dialog>`) carry `--shadow-float`.
+
 ### Named Rules
-**The Light-Not-Lift Rule.** Study UI never floats on drop shadows. Something matters because it glows, and something is a surface because it is a tone step.
+**The Tone-Not-Lift Rule** (supersedes Light-Not-Lift, ADR 010). Study UI sits on the elevation scale: a surface is a tone step plus an edge highlight. Something matters because it glows. Shadows are for things that float above the page.
 
 ## Shapes
 
-Shapes are hairline and squared. Buttons, cards, inputs and choice chips use a 2px radius (`hairline`). Borders are 1px for structure and 1.5px for controls (`.btn`, `.langSwitch`, nav underline). Circles appear only as small lamps and dots (kana progress lamps, hero lamps) and as the 14px lesson station marks. Hanging hero signs use the 7px `sign` radius, and hero ticket panels use 4px. Those softer corners belong to street objects and do not carry over to study UI. Icons are 18px SVGs with a 1.75 currentColor stroke: the Arrow (square caps; its `back` variant points left on back links and the pager's previous link) and Play (an outlined triangle with miter joins, used by Speak).
+Shapes are hairline and nearly squared. Surfaces (panels, tiles, cards, dialogs) use `--radius` (6px), and controls (buttons, inputs, chips, segments, tags) use `--radius-sm` (4px) (ADR 010; the old 2px hairline is retired). Borders are 1px for structure and 1.5px for controls (`.btn`, `.langSwitch`, nav underline). Circles appear only as small lamps and dots (kana progress lamps, hero lamps) and as the 14px lesson station marks. Hanging hero signs use the 7px `sign` radius, and hero ticket panels use 4px. Those softer corners belong to street objects and do not carry over to study UI. Icons are 18px SVGs with a 1.75 currentColor stroke: the Arrow (square caps; its `back` variant points left on back links and the pager's previous link) and Play (an outlined triangle with miter joins, used by Speak).
 
 ## Components
 
@@ -275,7 +286,18 @@ Buttons are framed tubes that light up when touched.
 - **Study card (flashcard):** Asphalt with a 1px Strong Rule border and a 2px radius, at least 27rem tall. It flips 420ms on Y, and reduced motion removes the rotation. Hover turns the border amber. The front word is Blue Hot Core with blue glow.
 - **Kana cell:** Asphalt with a 1px Rule border. Hover gives Wet and a Dim Silver border. Selected gets an amber border plus an inset amber ring and glow. When mastered, the character turns amber with glow.
 - **Kanji tile:** a link in a `repeat(auto-fill, minmax(4.5rem, 1fr))` grid with a 6px gap. It has a 1px Faint Rule border, no fill and at least 5.5rem height, and holds the character in the kana face at 2rem over its Hán Việt in Dim Silver 0.75rem uppercase tracked 0.06em. Hover gives Wet, a Rule border and Amber Hot Core text. A learned tile (`[data-learned]`) gets a 1px amber underline under the Hán Việt plus sr-only text; there is no badge.
-- There are no nested cards. Study routes use rows, tables and specimens.
+- There are no nested cards. Reading lists stay rows and tables; grids that are scanned (kanji, kana, test papers, lessons in a level) may use tiles (ADR 010).
+
+### Shared classes (globals.css, ADR 010)
+Every study page builds from these before writing module CSS. Each class has hover, `:focus-visible`, active, disabled and selected states (`[aria-pressed="true"]`, `[aria-current]`, `[aria-selected="true"]`, `[data-selected]`).
+- **`.panel`:** a `--surface-1` block with a Faint Rule border, `--radius`, the `--edge-hi` top highlight and `--space-panel` padding. `.panel[data-raised]` is `--surface-3`.
+- **`.tile`:** a grid cell or link on `--surface-1`. Hover goes to `--surface-2` with a Rule border; selected gets an amber border and an inset amber ring.
+- **`.tag`:** a small status label: Title 600 at `--fs-meta`, a 1px border in the state's colour, `--radius-sm`, always with text. Its variants are `data-state="fresh|started|learned|known|ok|warn|err"`. A tag names a state or a level; it never carries a count, streak or XP.
+- **`.meter`:** a 6px progress track on `--surface-2` with a `--state-learned` value. It goes with a tabular count in text and animates width over `--dur` (static under reduced motion).
+- **`.field`:** a 48px input on `--surface-1` with a Rule border; focus gives the amber outline, invalid (`[aria-invalid="true"]`) gives an `--err` border.
+- **`.seg`:** a segmented control: a Rule frame on `--surface-1` with 44px items; the current item (`aria-current`, `aria-pressed`, `aria-selected`) is solid amber with Night text.
+- **`.empty` / `.notice`:** an empty state (`--surface-1`, dashed Rule border, Chalk title, Silver text, one way out) and an inline notice (`data-tone="ok|warn|err"` with a coloured left edge and a text label).
+- **`.skeleton`:** a `--surface-2` placeholder block that pulses opacity; it is static under reduced motion.
 
 ### Inputs / Fields
 - **Style:** Asphalt fill, 1px Rule border, 2px radius, 48px height and Chalk text at 1rem. Hover changes the border to Strong Rule.
@@ -391,7 +413,7 @@ Rain over a skyline SVG drawn in three depth planes, a train on the elevated lin
 The N5 build relies on these interpretations, but **the user has not confirmed them**, so they are provisional:
 - Secondary actions are ghost buttons so each view keeps one amber action. The shipped code already follows this.
 - The lesson path is drawn as a train line. Shipped in Phase 11.
-- Study routes avoid catalogue grids of cards and badges, and use rows, tables and specimens instead. The shipped code already follows this.
+- Study routes avoid catalogue grids of cards and badges, and use rows, tables and specimens instead. Superseded by ADR 010: tiles and state tags are allowed where scanning a grid is better.
 
 ## Do's and Don'ts
 
@@ -407,22 +429,11 @@ The N5 build relies on these interpretations, but **the user has not confirmed t
 ### Don't:
 - **Don't** add a second amber action, or a new action hue, to a view.
 - **Don't** use Muted Silver for readable text, disabled controls or "coming soon" labels. It is reserved for the 404 numeral.
-- **Don't** put drop shadows on study surfaces. Depth is tonal, and emphasis is glow.
-- **Don't** carry the hero's 7px sign radius or 4px ticket radius into study UI. Study UI uses the 2px hairline.
+- **Don't** put drop shadows on study surfaces. Depth is the elevation scale, and emphasis is glow. `--shadow-float` is for popovers, sheets and dialogs only.
+- **Don't** carry the hero's 7px sign radius or 4px ticket radius shapes into study UI. Study UI uses `--radius` and `--radius-sm`.
 - **Don't** put an eyebrow or kicker above a page `h1`.
-- **Don't** add streaks, XP, badges or pills for progress. Counts are plain tabular text.
-
-## Glossary
-
-Terms the UI uses for study state (ADR 007). Keep each word to its one meaning.
-
-| Vietnamese | English | Meaning | Code |
-|---|---|---|---|
-| Đã học | Learnt | Answered right at least once (box ≥ 1) | `isLearned` |
-| Đã thuộc | Known | 6 spaced reviews right in a row (box ≥ `KNOWN_AT`) | `isKnown` |
-| Đến hạn | Due | The review day has come | `due` |
-
-"Nhớ" does not name a state.
+- **Don't** add streaks, XP or count badges for progress. Counts are plain tabular text; a `.tag` names a state or a level only.
+- **Don't** let colour be the only channel of a state: every state tag and station mark carries text or a shape too.
 
 ## Glossary
 

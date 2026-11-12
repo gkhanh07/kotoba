@@ -46,8 +46,12 @@
   .face, .back { min-height: 25rem; padding: 1.25rem; }
   .navigation button { padding-inline: 1rem; }
 }
+/* Reduced motion (ADR 010): no rotation at all; the faces swap in place. */
 @media (prefers-reduced-motion: reduce) {
   .inner { transition: none; }
+  .card[data-flipped="true"] .inner, .back { transform: none; }
+  .back, .card[data-flipped="true"] .face { visibility: hidden; }
+  .card[data-flipped="true"] .back { visibility: visible; }
 }
 
 .tools .speak { display: inline-flex; align-items: center; gap: .4rem; color: var(--silver); text-decoration: none; }
