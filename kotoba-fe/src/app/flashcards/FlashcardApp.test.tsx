@@ -21,8 +21,13 @@ const CARDS = [MIZU, NEKO, TABERU];
 beforeEach(() => {
   vi.useFakeTimers({ toFake: ["Date"], now: NOW });
   Element.prototype.scrollIntoView = vi.fn();
+  // jsdom has no matchMedia; the flip asks it whether to scroll smoothly.
+  vi.stubGlobal("matchMedia", () => ({ matches: true }));
 });
-afterEach(() => vi.useRealTimers());
+afterEach(() => {
+  vi.useRealTimers();
+  vi.unstubAllGlobals();
+});
 
 const stored = () => JSON.parse(localStorage.getItem(SRS) ?? "{}");
 const rand = (...values: number[]) => {

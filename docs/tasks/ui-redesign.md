@@ -186,6 +186,23 @@
   - #3 fixed: the word-page test asserted only the `dt` labels. It now also asserts the `dd` values from the fixture.
 - Design hook: the deck hairline animated `width`, a layout property. The fill is now `transform: scaleX(share)` from the left edge, transitioning `transform`.
 
+### Group 6: flashcards and review
+- The card is the one raised surface (`--surface-3`, `--edge-hi`, `--radius`). Hover moves its border to amber.
+- AC-6.1, read as "the grade row never covers the card's front, nor the answer once flipped":
+  - The row is sticky only after a flip (`.card[data-flipped="true"] ~ .status`). Before the flip its buttons are disabled, so it stays in flow below the card. This refines the Sticky Decision Rule: the decision sticks once there is a decision to make.
+  - Until it is flipped the card is as tall as its front: the back is `position: absolute` and clipped, so a long back no longer pushes the front past the fold.
+  - The flip scrolls the card into view with a bottom `scroll-margin` the height of the row, as `/review` already did. `/flashcards` now does the same.
+  - Below 40rem the flashcards lede is hidden (as `/review` drops it while a card is up), and the toolbar and progress padding are tighter, with 15rem faces.
+  - Measured at 360×740 (boxes are [top, bottom]): before, the card was [451, 851] and the sticky row was [621, 740], covering it. After, on load the card is [364, 604] and the row is [620, 742]; flipped, the card is [226, 604], the answer [396, 436] and the row [618, 740].
+- `/review` lost its `max-height: 760px` hack, which shrank the card to 18rem to make room for the always-sticky row. It is no longer needed.
+- At ≥64rem both screens split: the card on the left, and a raised side column on the right. The column holds the scope, the count with a native `<progress class="meter">`, the flashcards memory-state `.tag`, and, with a mouse, a "Phím tắt" `dl` built from the `{ vi, en }` dictionary.
+  - The inline key hint on the card stays: `directions.spec.ts` reads it as the card's description, and it is what touch-less keyboard users without the side column see.
+- `.status .btn` never matched before: `.btn` is global, but the module hashed it. It is now `:global(.btn)`, so the grade buttons get their intended 9rem minimum width.
+- Unit tests: `FlashcardApp`'s flip now reads `matchMedia` for reduced motion, which jsdom lacks. `FlashcardApp.test.tsx` stubs it as `ReviewApp.test.tsx` already did. No assertion changed.
+- Tests (`e2e/redesign.spec.ts`): the front/flip overlap on both routes, the exact `Còn N mục · Từ vựng N` count and the meter before and after a grade, the help rows and their position (desktop) or absence (mobile), the fresh state tag, and reduced motion.
+  - Seen failing against the stashed old code: 6 of 10 runs (overlap ×3, the tag ×2, the help rows). The reduced-motion test guards behaviour that already existed; it was seen failing with the emulation removed (`matrix3d(…)` instead of `none`).
+- Codex review (read-only), 1 finding, rejected: "the sticky row covers the end of a back taller than the viewport". That is the Sticky Decision Rule itself. The row is sticky, not fixed, so it stays in flow, and scrolling to the end leaves the whole card above it. The answer itself is asserted to be clear of the row.
+
 ## 5. Performance
 Production build (`next start`), 1440×900, median of 5 loads after one warm-up. Times are in ms.
 
@@ -208,3 +225,11 @@ Production build (`next start`), 1440×900, median of 5 loads after one warm-up.
 
 - `/vocab` after: +257 bytes, +67 DOM nodes. These are the progress panel, the state tags and the deck hairlines. TTFB did not move, so the FCP and Load differences are within the local run-to-run noise seen above.
 - `/grammar` has no before row: it was not measured before the group started.
+
+| Route | HTML bytes | DOM nodes | TTFB | FCP | DCL | Load |
+|---|---|---|---|---|---|---|
+| `/flashcards?deck=13` after | 37470 | 132 | 15 | 196 | 69 | 202 |
+| `/review?lesson=13&kind=vocab` after | 1827852 | 126 | 115 | 312 | 303 | 327 |
+
+- Group 6 has no before rows: these routes were not measured before the group started. The group adds about ten DOM nodes per route: the side column, the meter and the key help.
+- `/review` HTML is 1.8 MB. This predates the group: the page serialises every review item for the client, whatever the filter. That cost is upstream of this redesign (FE data loading), so it is logged in BACKLOG and not changed here.

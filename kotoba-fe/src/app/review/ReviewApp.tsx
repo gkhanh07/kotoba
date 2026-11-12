@@ -11,6 +11,7 @@ import { daysUntil, isDue, isKnown, isLearned, nextDue, weakest } from "@/lib/sr
 import { learnedToday, review, today, useDeck } from "@/lib/store";
 import { Arrow } from "../Arrow";
 import { useCardPrompt } from "../useCardPrompt";
+import { KeyHelp } from "../flashcards/KeyHelp";
 import f from "../flashcards/flashcards.module.css";
 import s from "./review.module.css";
 
@@ -119,23 +120,31 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
     <main className={f.app}>
       {/* While a card is up the page is the card: a small title, no lede. */}
       <header className={item ? s.compact : f.heading}><h1>{t.title}</h1>{!item && <p>{t.lede}</p>}</header>
-      <section className={f.study} aria-label={scope}>
-        <div className={f.toolbar}>
-          <p>{scope}</p>
-          {(kind || lesson) && <div className={f.tools}><Link href="/review" className={s.textLink}>{t.all}</Link></div>}
+      {/* With a card up, the queue facts move beside it on wide screens (the split grid in flashcards.module.css). */}
+      <section className={item ? `${f.study} ${f.split}` : f.study} aria-label={scope}>
+        <div className={f.side}>
+          <div className={f.toolbar}>
+            <p>{scope}</p>
+            {(kind || lesson) && <div className={f.tools}><Link href="/review" className={s.textLink}>{t.all}</Link></div>}
+          </div>
+          {item && order && (
+            <>
+              <div className={f.progress}>
+                <span aria-live="polite" aria-atomic="true">{t.left(left.length, parts)}</span>
+                <progress className="meter" aria-label={t.progress} value={index} max={order.length} />
+              </div>
+              <KeyHelp title={t.shortcuts} keys={t.shortcutKeys} />
+            </>
+          )}
         </div>
         {!deck || !order ? <p className={f.notice} role="status">…</p>
           : !order.length ? (weak ? panel(t.weakEmpty) : soon ? panel(t.waiting, t.next(daysUntil(soon.day, today()), soon.n)) : panel(t.empty))
           : !item ? <>{notice && <p className={f.notice}>{notice}</p>}{panel(t.done, soon ? t.next(daysUntil(soon.day, today()), soon.n) : undefined, stats)}</>
           : (
             <>
-              <div className={f.progress}>
-                <span aria-live="polite" aria-atomic="true">{t.left(left.length, parts)}</span>
-                <progress aria-label={t.progress} value={index} max={order.length} />
-              </div>
               <div
                 key={item.id + index}
-                className={`${f.card} ${s.card}`}
+                className={f.card}
                 data-flipped={flipped}
               >
                 <span className={f.inner}>

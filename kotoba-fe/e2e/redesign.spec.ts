@@ -340,3 +340,67 @@ test("/grammar/[slug] lists the other points of its lesson beside the explanatio
   await expect(side.locator(".btn")).toHaveAttribute("href", `/lessons/${g.lesson}`);
   await axe();
 });
+
+// Group 6 (AC-6.1–6.3). Lesson 13 starts fresh, so its review queue is every vocab item of the lesson.
+const card = (page: import("@playwright/test").Page) => page.locator("main [data-flipped]");
+const box = async (page: import("@playwright/test").Page, selector: string) => (await page.locator(selector).boundingBox())!;
+
+for (const route of ["/flashcards?deck=13", "/review?lesson=13&kind=vocab"]) {
+  test(`${route} keeps the grade row clear of the card before and after the flip`, async ({ page }) => {
+    await page.goto(route);
+    await card(page).waitFor();
+    // AC-6.1: before the flip the row sits in flow below the card, never over it.
+    const [front, row] = [await box(page, "main [data-flipped]"), await box(page, "main fieldset")];
+    expect(row.y).toBeGreaterThanOrEqual(front.y + front.height);
+
+    await card(page).locator("> button").click();
+    await expect(card(page)).toHaveAttribute("data-flipped", "true");
+    // After the flip the row sticks to the bottom edge and the scrolled card's answer stays above it.
+    await expect.poll(async () => {
+      const [answer, sticky] = [await box(page, "main [data-flipped] strong"), await box(page, "main fieldset")];
+      return answer.y + answer.height <= sticky.y && sticky.y + sticky.height <= page.viewportSize()!.height + 1;
+    }).toBe(true);
+  });
+}
+
+test("/review counts what is left exactly and lists its keys beside the card on desktop", async ({ page, axe }, info) => {
+  const n = load("vocab").filter((v) => v.lesson === 13).length;
+  await page.goto("/review?lesson=13&kind=vocab");
+  // AC-6.2: the count names every kind left, and the meter moves with each grade.
+  await expect(page.getByText(`Còn ${n} mục · Từ vựng ${n}`, { exact: true })).toBeVisible();
+  const meter = page.getByRole("progressbar", { name: "Tiến độ" });
+  await expect(meter).toHaveJSProperty("value", 0);
+  await expect(meter).toHaveJSProperty("max", n);
+  await card(page).locator("> button").click();
+  await page.getByRole("button", { name: /^Nhớ rồi/ }).click();
+  await expect(page.getByText(`Còn ${n - 1} mục · Từ vựng ${n - 1}`, { exact: true })).toBeVisible();
+  await expect(meter).toHaveJSProperty("value", 1);
+
+  // The key list is only for a keyboard and a mouse with room beside the card.
+  const help = page.getByText("Phím tắt", { exact: true }).locator("..");
+  if (info.project.name === "desktop") {
+    const rows = await help.locator("dl > div").evaluateAll((els) => els.map((el) => el.textContent));
+    expect(rows).toEqual(["Phím cáchLật thẻ", "1Chưa nhớ", "2Nhớ rồi"]);
+    const [side, cardBox] = [await help.boundingBox(), await card(page).boundingBox()];
+    expect(side!.x).toBeGreaterThan(cardBox!.x + cardBox!.width);
+  } else await expect(help).toBeHidden();
+  await expect(page.locator(AMBER)).toHaveCount(1);
+  await axe();
+});
+
+test("/flashcards names the card's memory state in words", async ({ page }) => {
+  await page.goto("/flashcards?deck=13");
+  const tag = page.locator("main .tag");
+  await expect(tag).toHaveText("Chưa học");
+  await expect(tag).toHaveAttribute("data-state", "fresh");
+});
+
+test("reduced motion swaps the faces in place instead of turning the card", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/flashcards?deck=13");
+  await card(page).locator("> button").click();
+  await expect(card(page)).toHaveAttribute("data-flipped", "true");
+  // AC-6.3: no rotation at all, and the back is the face that shows.
+  expect(await card(page).locator("> span").evaluate((el) => getComputedStyle(el).transform)).toBe("none");
+  await expect(card(page).locator("> span > span").last()).toBeVisible();
+});

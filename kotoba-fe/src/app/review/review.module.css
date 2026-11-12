@@ -1,19 +1,15 @@
 /* The review queue reuses the flashcard layout (flashcards.module.css); these are its additions. */
-.compact h1 { font-size: 1.75rem; color: var(--silver); }
-/* Room for the sticky grade bar when a flip scrolls the card into view. */
-.card, .card > button { scroll-margin: 1rem 0 8.5rem; }
+.compact h1 { font-size: var(--fs-section); color: var(--silver); }
 .compact + section { margin-top: 1.25rem; }
-/* Short laptop screens: the front must sit above the sticky grade bar without scrolling. */
-@media (max-height: 760px) { .card > span > span { min-height: 18rem; } }
 .row { display: flex; flex-direction: column; align-items: center; max-width: 55ch; }
 .answer { font-size: 1.5rem; color: var(--chalk); }
 .keys { display: none; }
 /* Key hints only where there is a keyboard and a mouse to go with it. */
 @media (pointer: fine) { .keys { display: inline; } }
-.textLink { display: inline-flex; align-items: center; min-height: 44px; color: var(--amber); text-decoration: underline; text-underline-offset: .25em; font-size: .9rem; }
+.textLink { display: inline-flex; align-items: center; min-height: 44px; color: var(--amber); text-decoration: underline; text-underline-offset: .25em; font-size: var(--fs-caption); }
 .textLink:hover { color: var(--amber-core); }
 
-.panel { margin-top: 1.5rem; padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--rule); background: var(--wet); color: var(--silver); }
-.panelTitle { font-size: 1.4rem; color: var(--chalk); }
+.panel { margin-top: 1.5rem; padding: clamp(1.5rem, 4vw, 2.5rem); border-radius: var(--radius); background: var(--surface-1); box-shadow: var(--edge-hi); color: var(--silver); }
+.panelTitle { font-size: var(--fs-card); color: var(--chalk); }
 .panel p + p { margin-top: .5rem; font-variant-numeric: tabular-nums; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin-top: 1.75rem; }

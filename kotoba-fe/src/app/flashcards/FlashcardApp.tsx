@@ -9,6 +9,7 @@ import { daysUntil, isDue, isKnown } from "@/lib/srs";
 import { review, today, useDeck } from "@/lib/store";
 import { Speak } from "../Speak";
 import { useCardPrompt } from "../useCardPrompt";
+import { KeyHelp } from "./KeyHelp";
 import s from "./flashcards.module.css";
 
 // `tabs` is the server-rendered level switcher; `empty` replaces the generic empty line when a level has no words.
@@ -50,7 +51,12 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty }: { cards: 
 
   function flip() {
     if (!card) return;
-    if (!flipped) logActivity("vocab", card.id);
+    if (!flipped) {
+      logActivity("vocab", card.id);
+      // Once flipped the grade bar sticks to the bottom edge; bring the answer clear of it (scroll-margin on the overlay button).
+      const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      requestAnimationFrame(() => cardRef.current?.scrollIntoView({ block: "nearest", behavior: still ? "auto" : "smooth" }));
+    }
     setFlipped((value) => !value);
   }
 
@@ -72,22 +78,27 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty }: { cards: 
       <header className={s.heading}><h1>{t.title}</h1><p>{t.lede}</p></header>
       {tabs}
       {!card ? <p className={s.empty}>{empty ?? t.empty}</p> : (
-        <section className={s.study} aria-label={name}>
-          <div className={s.toolbar}>
-            <p>{name}</p>
-            <div className={s.tools}>
-              <Speak text={card.word} label={t.speak} className={s.speak} />
-              <button type="button" onClick={() => restart(true)} disabled={cards.length < 2}>{t.shuffle}</button>
-              <button type="button" onClick={() => restart(false)}>{t.restart}</button>
+        <section className={`${s.study} ${s.split}`} aria-label={name}>
+          <div className={s.side}>
+            <div className={s.toolbar}>
+              <p>{name}</p>
+              <div className={s.tools}>
+                <Speak text={card.word} label={t.speak} className={s.speak} />
+                <button type="button" onClick={() => restart(true)} disabled={cards.length < 2}>{t.shuffle}</button>
+                <button type="button" onClick={() => restart(false)}>{t.restart}</button>
+              </div>
             </div>
-          </div>
-          <div className={s.progress}>
-            <span aria-live="polite" aria-atomic="true">{index + 1} / {order.length}</span>
-            <progress aria-label={t.progress} value={index + 1} max={order.length} />
-            <span>
-              {!deck ? "…" : !state ? t.stateNone : isDue(state, today()) ? t.stateDue
-                : isKnown(deck.srs, card.id) ? t.stateKnown : t.stateLater(daysUntil(state.due, today()))}
-            </span>
+            <div className={s.progress}>
+              <span aria-live="polite" aria-atomic="true">{index + 1} / {order.length}</span>
+              {!deck ? <span>…</span> : (
+                <span className="tag" data-state={!state ? "fresh" : isDue(state, today()) ? "warn" : isKnown(deck.srs, card.id) ? "known" : "learned"}>
+                  {!state ? t.stateNone : isDue(state, today()) ? t.stateDue
+                    : isKnown(deck.srs, card.id) ? t.stateKnown : t.stateLater(daysUntil(state.due, today()))}
+                </span>
+              )}
+              <progress className="meter" aria-label={t.progress} value={index + 1} max={order.length} />
+            </div>
+            <KeyHelp title={r.shortcuts} keys={r.shortcutKeys} />
           </div>
           <div
             key={card.id + index}
