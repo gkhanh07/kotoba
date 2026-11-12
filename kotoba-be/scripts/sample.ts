@@ -83,6 +83,9 @@ const sections = [
   section('Ngữ pháp N4', atLevel(grammar, 4), grammarLine, random),
   section('Câu hỏi đề N4', paperAt(4), questionLine, random),
   section('Kanji N3', atLevel(kanji, 3), kanjiLine, random),
+  section('Từ vựng N3', atLevel(vocab, 3), wordLine, random),
+  section('Ngữ pháp N3', atLevel(grammar, 3), grammarLine, random),
+  section('Câu hỏi đề N3', paperAt(3), questionLine, random),
 ];
 
 const header = `# Duyệt mẫu nội dung

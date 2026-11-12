@@ -1,0 +1,404 @@
+# Duyệt mẫu nội dung N3
+
+Seed: 20261113. Chạy lại trong `kotoba-be`: `node scripts/sample.ts 20261113`.
+
+Đánh dấu `[x]` mục đúng; mục sai thì ghi lỗi ngay dưới mục đó. Loại nào sai quá 5% (từ 2 mục sai trên 30) thì sửa loại đó và rút mẫu mới (AGENTS.md §12).
+
+Với câu hỏi đề: `{...}` là phần được gạch chân trên đề, `★` là ô đáp án, `✓` là đáp án đúng.
+
+Chỉ giữ ba phần N3 (từ vựng, ngữ pháp, câu hỏi đề); lệnh trên in cả các phần khác cùng seed.
+
+## Từ vựng N3 (30 / 1774 mục)
+
+- [ ] `vocab:合わせる` **合わせる** 【あわせる】: gộp lại, cộng lại; làm cho khớp
+  - Ví dụ: 二人のお金を合わせても、足りません。 → Gộp tiền của cả hai người lại cũng không đủ.
+- [ ] `vocab:代わる` **代わる** 【かわる】: thay, thay thế
+  - Ví dụ: 部長に代わって、私がごあいさつします。 → Tôi xin thay mặt trưởng phòng gửi lời chào.
+- [ ] `vocab:あやしい` **あやしい (怪しい)** 【あやしい】: đáng ngờ, khả nghi
+  - Ví dụ: 家の前にあやしい男が立っています。 → Có một người đàn ông khả nghi đứng trước nhà.
+- [ ] `vocab:問い` **問い** 【とい】: câu hỏi
+  - Ví dụ: 次の問いに答えなさい。 → Hãy trả lời các câu hỏi sau.
+- [ ] `vocab:未成年` **未成年** 【みせいねん】: vị thành niên, chưa thành niên
+  - Ví dụ: 未成年はお酒を飲んではいけません。 → Người chưa thành niên không được uống rượu.
+- [ ] `vocab:思い通り` **思い通り** 【おもいどおり】: như mong muốn
+  - Ví dụ: 何でも思い通りになるわけではありません。 → Không phải mọi việc đều diễn ra như mong muốn.
+- [ ] `vocab:作曲` **作曲** 【さっきょく】: sáng tác nhạc
+  - Ví dụ: この歌は父が作曲しました。 → Bài hát này do bố tôi sáng tác.
+- [ ] `vocab:最大` **最大** 【さいだい】: lớn nhất, tối đa
+  - Ví dụ: この部屋には最大で五十人入れます。 → Phòng này chứa được tối đa 50 người.
+- [ ] `vocab:走り出す` **走り出す** 【はしりだす】: bắt đầu chạy
+  - Ví dụ: 信号が青になって、車が走り出しました。 → Đèn chuyển xanh, xe bắt đầu chạy.
+- [ ] `vocab:おうぼ` **おうぼ (応募)** 【おうぼ】: ứng tuyển, đăng ký dự tuyển
+  - Ví dụ: インターネットで見た仕事におうぼしました。 → Tôi đã ứng tuyển một công việc thấy trên mạng.
+- [ ] `vocab:理論` **理論** 【りろん】: lý thuyết
+  - Ví dụ: 理論は分かっても、実際にやるのは難しいです。 → Hiểu lý thuyết nhưng làm thực tế thì khó.
+- [ ] `vocab:広める` **広める** 【ひろめる】: truyền bá, làm lan rộng
+  - Ví dụ: 日本の文化を世界に広めたいです。 → Tôi muốn truyền bá văn hóa Nhật ra thế giới.
+- [ ] `vocab:老人` **老人** 【ろうじん】: người già
+  - Ví dụ: この町には老人が多いです。 → Thị trấn này có nhiều người già.
+- [ ] `vocab:手渡す` **手渡す** 【てわたす】: trao tận tay
+  - Ví dụ: 先生は学生一人一人にテストを手渡しました。 → Thầy trao bài kiểm tra tận tay cho từng sinh viên.
+- [ ] `vocab:マラソン` **マラソン** 【マラソン】: chạy marathon
+  - Ví dụ: 毎年、町のマラソン大会に出ています。 → Năm nào tôi cũng tham gia giải marathon của thị trấn.
+- [ ] `vocab:性質` **性質** 【せいしつ】: tính chất; bản tính
+  - Ví dụ: この木は水に強い性質があります。 → Loại gỗ này có tính chất chịu nước tốt.
+- [ ] `vocab:そろう` **そろう (揃う)** 【そろう】: đủ, tập trung đủ
+  - Ví dụ: 家族全員がそろって、食事をしました。 → Cả gia đình đông đủ cùng ăn cơm.
+- [ ] `vocab:当たる` **当たる** 【あたる】: trúng, va trúng
+  - Ví dụ: ボールが窓に当たって、ガラスが割れました。 → Quả bóng trúng cửa sổ làm vỡ kính.
+- [ ] `vocab:どうやら` **どうやら** 【どうやら】: có vẻ như
+  - Ví dụ: どうやら道を間違えたようです。 → Có vẻ như chúng ta đi nhầm đường rồi.
+- [ ] `vocab:生放送` **生放送** 【なまほうそう】: phát sóng trực tiếp
+  - Ví dụ: この番組は生放送です。 → Chương trình này được phát sóng trực tiếp.
+- [ ] `vocab:広まる` **広まる** 【ひろまる】: lan rộng, được biết rộng rãi
+  - Ví dụ: そのうわさはすぐに学校中に広まりました。 → Tin đồn đó nhanh chóng lan ra khắp trường.
+- [ ] `vocab:付ける` **付ける** 【つける】: gắn, đính
+  - Ví dụ: かばんに名前を書いたカードを付けました。 → Tôi gắn thẻ ghi tên vào túi.
+- [ ] `vocab:行き先` **行き先** 【いきさき】: điểm đến
+  - Ví dụ: バスに乗る前に、行き先を確かめてください。 → Trước khi lên xe buýt, hãy kiểm tra điểm đến.
+- [ ] `vocab:作業` **作業** 【さぎょう】: công việc, thao tác
+  - Ví dụ: この作業は二時間ぐらいで終わります。 → Công việc này khoảng hai tiếng là xong.
+- [ ] `vocab:外す` **外す** 【はずす】: tháo ra, bỏ ra
+  - Ví dụ: めがねを外して、顔を洗いました。 → Tôi tháo kính rồi rửa mặt.
+- [ ] `vocab:理解` **理解** 【りかい】: hiểu, lý giải
+  - Ví dụ: 先生の説明でやっと理解できました。 → Nhờ lời giải thích của thầy, cuối cùng tôi đã hiểu.
+- [ ] `vocab:資料` **資料** 【しりょう】: tài liệu
+  - Ví dụ: 会議の資料をコピーしておきました。 → Tôi đã photo sẵn tài liệu cho cuộc họp.
+- [ ] `vocab:例える` **例える** 【たとえる】: ví như, so sánh
+  - Ví dụ: 人生はよく旅に例えられます。 → Cuộc đời thường được ví như một chuyến đi.
+- [ ] `vocab:支持` **支持** 【しじ】: ủng hộ
+  - Ví dụ: 多くの若者がその政治家を支持しています。 → Nhiều người trẻ ủng hộ chính trị gia đó.
+- [ ] `vocab:出来事` **出来事** 【できごと】: sự việc, chuyện xảy ra
+  - Ví dụ: 今日の出来事を日記に書きました。 → Tôi đã ghi lại những chuyện xảy ra hôm nay vào nhật ký.
+
+## Ngữ pháp N3 (30 / 60 mục)
+
+- [ ] `grammar:ta-tokoro` **〜たところ (kết quả)**: (Thử) ~ thì thấy ~
+  - Cấu trúc: V-た + ところ, + kết quả (thể quá khứ)
+  - Giải thích: Sau khi làm một việc thì biết được kết quả, phát hiện ra điều gì đó. Vế sau ở thể quá khứ và không do ý chí người nói. Trang trọng hơn 〜たら.
+  - Ví dụ: 先生に 相談した ところ、いい 方法を 教えて くれた。 → Tôi hỏi ý kiến thầy thì thầy chỉ cho một cách hay.
+  - Ví dụ: 店に 電話して みた ところ、もう 閉まって いた。 → Tôi thử gọi điện đến cửa hàng thì đã đóng cửa rồi.
+  - Ví dụ: 新しい やり方で 試した ところ、前より 早く 終わった。 → Thử làm theo cách mới thì xong nhanh hơn trước.
+  - Lưu ý: Khác 〜た ところだ (vừa mới ~). Gần たら (bài 34) khi phát hiện điều gì.
+- [ ] `grammar:oki-ni` **〜おきに・〜ごとに**: Cứ cách ~; mỗi ~
+  - Cấu trúc: Số + đơn vị + おきに; Số + đơn vị / N + ごとに
+  - Giải thích: Nêu khoảng cách lặp lại đều đặn. Với ngày: 一日おきに là cách một ngày (ngày có ngày không), 一日ごとに là mỗi ngày. Với giờ hay khoảng cách, 二時間おきに và 二時間ごとに thường cùng nghĩa. ごとに còn đi với danh từ: 駅ごとに (mỗi ga).
+  - Ví dụ: この 薬は 六時間おきに 飲んで ください。 → Thuốc này hãy uống cách sáu tiếng một lần.
+  - Ví dụ: 一日おきに プールで 泳いで います。 → Tôi đi bơi ở bể bơi cách một ngày một lần.
+  - Ví dụ: この 電車は 駅ごとに 止まります。 → Chuyến tàu này dừng ở mọi ga.
+- [ ] `grammar:koto-wa-nai` **〜ことは ない**: Không cần phải ~
+  - Cấu trúc: V-る + ことは ない
+  - Giải thích: Khuyên hoặc trấn an người nghe rằng không cần làm ~. Dùng với người ngang hàng hoặc người dưới.
+  - Ví dụ: まだ 時間が あるから、急ぐ ことは ないよ。 → Vẫn còn thời gian nên không cần vội đâu.
+  - Ví dụ: 小さな ミスだから、そんなに 心配する ことは ない。 → Chỉ là lỗi nhỏ nên không cần lo lắng đến vậy.
+  - Ví dụ: ルールが 変わったので、もう この 書類を 出す ことは ありません。 → Quy định đã thay đổi nên không cần nộp giấy tờ này nữa.
+  - Lưu ý: Gần nghĩa なくても いい (bài 37) nhưng mang sắc thái khuyên nhủ, trấn an. Khác 〜ことが ある (đôi khi ~).
+- [ ] `grammar:dake-de-naku` **〜だけでなく**: Không chỉ ~ mà còn ~
+  - Cấu trúc: thể thường + だけでなく (A-な な, N) ... も
+  - Giải thích: Thêm một điều nữa vào điều vừa nêu; vế sau thường có も. Văn nói: だけじゃなく.
+  - Ví dụ: この 映画は 子どもだけでなく、大人も 楽しめる。 → Không chỉ trẻ em mà người lớn cũng có thể thấy thích thú khi xem bộ phim này.
+  - Ví dụ: 彼女は 歌が 上手な だけでなく、ダンスも できる。 → Cô ấy không chỉ hát hay mà còn biết nhảy.
+  - Ví dụ: 音楽は 聞く だけでなく、自分で えんそうするのも 好きです。 → Với âm nhạc, tôi không chỉ thích nghe mà còn thích tự chơi nhạc.
+- [ ] `grammar:ni-yoru-to` **〜によると・〜によれば**: Theo ~ (nguồn tin)
+  - Cấu trúc: N + に よると / に よれば
+  - Giải thích: Nêu nguồn của thông tin. Cuối câu thường là そうだ, らしい hoặc と いう ことだ.
+  - Ví dụ: 天気予報に よると、明日は 雨が 降るそうです。 → Theo dự báo thời tiết thì ngày mai trời mưa.
+  - Ví dụ: 新聞に よれば、この 町に 新しい 駅が できるらしい。 → Theo báo thì hình như thị trấn này sắp có ga mới.
+  - Ví dụ: 警察の 発表に よると、犯人は まだ 見つかって いないそうです。 → Theo thông báo của cảnh sát thì vẫn chưa tìm ra hung thủ.
+  - Lưu ý: Khác によって (bài 53, tùy theo). Hay đi cùng そうだ (bài 41).
+- [ ] `grammar:you-ga-nai` **〜ようが ない**: Không có cách nào ~
+  - Cấu trúc: V-ます (bỏ ます) + ようが ない
+  - Giải thích: Muốn làm nhưng không có cách, phương tiện nào để làm được.
+  - Ví dụ: 電話番号も 住所も わからないので、れんらくしようが ない。 → Không biết cả số điện thoại lẫn địa chỉ nên không có cách nào liên lạc.
+  - Ví dụ: こんなに こわれて いては、直しようが ない。 → Hỏng đến mức này thì không có cách nào sửa được.
+  - Ví dụ: 答えを 知らないのだから、教えようが ない。 → Tôi không biết đáp án thì làm sao chỉ cho được.
+  - Lưu ý: Khác thể khả năng (bài 35): ようが ない nhấn mạnh không có phương pháp nào.
+- [ ] `grammar:wo-hajime` **〜を はじめ**: Tiêu biểu là ~; từ ~ cho đến
+  - Cấu trúc: N + を はじめ (と して); N1 + を はじめと する + N2
+  - Giải thích: Nêu N là ví dụ tiêu biểu nhất, rồi bao gồm cả những người, những thứ khác cùng loại. Vế sau thường có みんな, 多くの, いろいろな.
+  - Ví dụ: 社長を はじめ、会社の みんなが 手伝って くれた。 → Từ giám đốc cho đến mọi người trong công ty đều đã giúp tôi.
+  - Ví dụ: この 町には 古い おてらを はじめ、見る 所が たくさん ある。 → Thị trấn này có nhiều chỗ để tham quan, tiêu biểu là ngôi chùa cổ.
+  - Ví dụ: 両親を はじめ、多くの 人に 助けて もらった。 → Tôi đã được nhiều người giúp đỡ, trước hết là bố mẹ.
+  - Lưu ý: Chữ Hán: を 始め. Khác だけで なく (bài 58): を はじめ nêu một ví dụ tiêu biểu trong cả nhóm.
+- [ ] `grammar:te-hoshii` **〜て ほしい**: Muốn (người khác) ~
+  - Cấu trúc: N に + V-て ほしい; V-ないで ほしい
+  - Giải thích: Nói mong muốn người khác làm (hoặc không làm) một việc. Người thực hiện hành động được đánh dấu bằng に.
+  - Ví dụ: 友だちに 遊びに 来て ほしい。 → Tôi muốn bạn đến nhà chơi.
+  - Ví dụ: 子どもには 元気に 育って ほしい。 → Tôi mong con lớn lên khỏe mạnh.
+  - Ví dụ: 大事な 話なので、だれにも 言わないで ほしい。 → Chuyện quan trọng nên tôi không muốn cậu nói với ai.
+  - Lưu ý: V-たい (N5) là mong muốn của chính mình; て ほしい là mong muốn người khác làm.
+- [ ] `grammar:hazu-ga-nai` **〜はずが ない**: Không thể nào ~, lẽ nào lại ~
+  - Cấu trúc: thể thường + はずが ない (A-な な, N の)
+  - Giải thích: Người nói tin chắc, dựa trên lý lẽ, rằng việc đó không thể xảy ra.
+  - Ví dụ: あの 強い チームが 負ける はずが ない。 → Đội mạnh như thế không thể nào thua được.
+  - Ví dụ: れんしゅうしなかったのだから、勝てる はずが ない。 → Không luyện tập thì làm sao thắng được.
+  - Ví dụ: 彼が うそを つく はずが ない。 → Anh ấy không lẽ nào lại nói dối.
+  - Lưu ý: はずだ (N4): chắc là ~; はずが ない phủ định mạnh khả năng đó.
+- [ ] `grammar:darake` **〜だらけ**: Đầy ~, toàn là ~
+  - Cấu trúc: N + だらけ; N1 + だらけの + N2
+  - Giải thích: Có rất nhiều thứ (thường là không hay) phủ khắp, ở khắp nơi: どろ, ゴミ, まちがい, きず.
+  - Ví dụ: 子どもが どろだらけに なって 帰って きた。 → Con tôi về nhà người lấm lem toàn bùn.
+  - Ví dụ: この 作文は まちがいだらけだ。 → Bài văn này toàn lỗi sai.
+  - Ví dụ: 部屋が ゴミだらけで、座る 所も ない。 → Căn phòng đầy rác, đến chỗ ngồi cũng không có.
+  - Lưu ý: Khác っぽい (bài 48): っぽい là có vẻ giống; だらけ là có thật và rất nhiều.
+- [ ] `grammar:ni-shite-wa` **〜にしては**: ~ vậy mà (khác với dự đoán)
+  - Cấu trúc: N / V thể thường + に しては
+  - Giải thích: Kết quả khác với điều người ta thường nghĩ khi biết N (tốt hơn hoặc kém hơn). Không dùng sau tính từ.
+  - Ví dụ: 初めて 作ったに しては、よく できて いる。 → Lần đầu làm mà được như vậy là khá lắm.
+  - Ví dụ: この かばんは ブランド品に しては 安い。 → Cái túi này là hàng hiệu mà rẻ.
+  - Ví dụ: 彼は 日本に 十年 住んで いるに しては、日本語が あまり 上手では ない。 → Anh ấy sống ở Nhật mười năm rồi mà tiếng Nhật không giỏi lắm.
+  - Lưu ý: Gần のに (bài 39); にしては nêu căn cứ (N) để so với kết quả thực tế.
+- [ ] `grammar:ni-kanshite` **〜に関して・〜に関する**: Về ~, liên quan đến ~
+  - Cấu trúc: N + に関して (は / も); N1 + に関する + N2
+  - Giải thích: Nêu đề tài hay đối tượng của lời nói, câu hỏi, tài liệu. Trang trọng hơn について.
+  - Ví dụ: 商品に 関する 質問は、こちらで 受け付けて います。 → Chúng tôi tiếp nhận câu hỏi về sản phẩm tại đây.
+  - Ví dụ: 料金に 関して、お客さまから 問い合わせが ありました。 → Có khách hàng hỏi về giá tiền.
+  - Ví dụ: 新しい 店の 計画に 関して、意見を 聞かせて ください。 → Hãy cho tôi biết ý kiến về kế hoạch cho cửa hàng mới.
+- [ ] `grammar:wo-chuushin-ni` **〜を中心に**: Lấy ~ làm trung tâm; chủ yếu là ~
+  - Cấu trúc: N + を 中心に (して) / を 中心と して; N1 + を 中心と した + N2
+  - Giải thích: N là trung tâm về vị trí, hoặc là phần chính, trọng tâm của một hoạt động, hiện tượng.
+  - Ví dụ: この 町は 駅を 中心に 広がって いる。 → Thị trấn này trải rộng ra xung quanh nhà ga.
+  - Ví dụ: 雨は 関東を 中心に 降るでしょう。 → Mưa sẽ rơi chủ yếu ở vùng Kanto.
+  - Ví dụ: この クラスでは 会話を 中心に 勉強します。 → Lớp này học chủ yếu về hội thoại.
+- [ ] `grammar:to-shitara` **〜としたら・〜とすれば**: Nếu giả sử ~ thì
+  - Cấu trúc: thể thường + としたら / とすれば
+  - Giải thích: Giả định một điều chưa xảy ra hoặc chưa chắc là thật, rồi nêu suy nghĩ, dự định nếu điều đó đúng. Vế sau hay có だろう, か, つもり.
+  - Ví dụ: もし 一か月 休みが あるとしたら、何を したいですか。 → Giả sử có một tháng nghỉ thì bạn muốn làm gì?
+  - Ví dụ: 旅行に 行くと すれば、いつ ごろが いいでしょうか。 → Nếu đi du lịch thì khoảng khi nào là hợp lý nhỉ?
+  - Ví dụ: その 話が 本当だと したら、計画を 変えなければ ならない。 → Nếu chuyện đó là thật thì phải thay đổi kế hoạch.
+  - Lưu ý: Gần たら, ば (bài 34, 42) nhưng nhấn mạnh đây chỉ là giả định.
+- [ ] `grammar:wake-da` **〜わけだ・〜わけでは ない**: Thảo nào ~, tức là ~ / Không hẳn là ~
+  - Cấu trúc: thể thường + わけだ / わけでは ない (A-な な, N の・な)
+  - Giải thích: わけだ: rút ra kết luận hợp lý từ điều đã biết (thảo nào, hèn chi, tức là). わけでは ない: phủ định một phần (không phải là ~, không hẳn ~), hay dùng để nêu ý kiến mềm mỏng.
+  - Ví dụ: 毎日 三時間も れんしゅうして いるのか。上手な わけだ。 → Ngày nào cũng luyện tận ba tiếng à. Thảo nào giỏi thế.
+  - Ví dụ: その 意見に 反対して いる わけでは ありません。もう 少し 考えたい だけです。 → Tôi không phải là phản đối ý kiến đó. Tôi chỉ muốn suy nghĩ thêm một chút.
+  - Ví dụ: 高い 物が いつも いい わけでは ない。 → Đồ đắt không phải lúc nào cũng tốt.
+- [ ] `grammar:you-ni-mokuteki` **〜ように (mục đích)**: Để (có thể) ~, để không ~
+  - Cấu trúc: V-る / V-ない / V (thể khả năng) + ように
+  - Giải thích: Nêu mục tiêu hướng tới. Vế trước thường là động từ không ý chí, thể khả năng hoặc thể phủ định (聞こえる, できる, 忘れない).
+  - Ví dụ: 忘れない ように、メモして おきます。 → Để không quên, tôi ghi chú lại.
+  - Ví dụ: 夢が かなう ように、毎日 努力して います。 → Tôi nỗ lực mỗi ngày để ước mơ thành hiện thực.
+  - Ví dụ: 後ろの 人にも 聞こえる ように、大きな 声で 話して ください。 → Hãy nói to để người ở phía sau cũng nghe được.
+  - Lưu ý: ために (N4) đi với động từ ý chí, cùng chủ ngữ (留学する ために); ように đi với động từ không ý chí, thể khả năng hoặc phủ định.
+- [ ] `grammar:ni-chigainai` **〜に違いない**: Chắc chắn là ~
+  - Cấu trúc: thể thường + に違いない (A-な, N: bỏ だ)
+  - Giải thích: Người nói tin chắc điều mình suy đoán dựa trên căn cứ nào đó. Chắc chắn hơn だろう, かもしれない; hay dùng trong văn viết.
+  - Ví dụ: 窓が 開いて いる。犯人は ここから 入ったに 違いない。 → Cửa sổ đang mở. Chắc chắn hung thủ đã vào từ đây.
+  - Ví dụ: あの 人が 犯人に 違いない。 → Người đó chắc chắn là thủ phạm.
+  - Ví dụ: 彼女は 毎日 図書館で 勉強して いるから、試験に 合格するに 違いない。 → Cô ấy ngày nào cũng học ở thư viện nên chắc chắn sẽ đỗ.
+  - Lưu ý: Khác はずだ (bài 43): はずだ dựa trên lý lẽ, căn cứ khách quan; に違いない là niềm tin chắc của người nói.
+- [ ] `grammar:ni-totte` **〜にとって**: Đối với ~ (theo góc nhìn của ~)
+  - Cấu trúc: N + に とって (は / も)
+  - Giải thích: Đánh giá một việc từ góc nhìn, lập trường của N. Vế sau là nhận xét (大切だ, むずかしい…), không phải hành động.
+  - Ví dụ: 私に とって、家族が いちばん 大切です。 → Đối với tôi, gia đình là quan trọng nhất.
+  - Ví dụ: この 問題は 子どもに とって むずかしすぎる。 → Bài này quá khó đối với trẻ con.
+  - Ví dụ: 学生に とって、試験は 大切な ものだ。 → Đối với học sinh, kỳ thi là điều quan trọng.
+- [ ] `grammar:tsuide-ni` **〜ついでに**: Nhân tiện ~, tiện thể ~
+  - Cấu trúc: V-る / V-た / N の + ついでに
+  - Giải thích: Nhân lúc làm việc chính ở vế trước thì làm thêm việc ở vế sau.
+  - Ví dụ: 買い物に 行く ついでに、この 手紙を 出して きて くれませんか。 → Tiện đi mua sắm, bạn gửi giúp tôi lá thư này được không?
+  - Ví dụ: 散歩の ついでに、犬の えさを 買って 帰った。 → Tiện đi dạo, tôi mua thức ăn cho chó rồi về.
+  - Ví dụ: 駅前の 店で 夕飯を 食べた ついでに、おべんとうも 買いました。 → Nhân tiện ăn tối ở quán trước ga, tôi mua luôn hộp cơm.
+- [ ] `grammar:toori-ni` **〜とおりに**: Đúng như ~, theo đúng ~
+  - Cấu trúc: V-る / V-た / N の + とおりに; N + どおりに
+  - Giải thích: Làm đúng theo cách đã được nói, viết hoặc nhìn thấy. Gắn liền sau danh từ thì đọc là どおり (予定どおり).
+  - Ví dụ: 地図の とおりに 行けば、駅に 着きます。 → Nếu đi đúng theo bản đồ thì sẽ tới ga.
+  - Ví dụ: 先生が 言った とおりに、もう 一度 書いて ください。 → Hãy viết lại một lần nữa đúng như thầy đã nói.
+  - Ví dụ: バスは 予定どおりに 着いた。 → Xe buýt đã đến đúng như dự kiến.
+- [ ] `grammar:koto-ni-natte-iru` **〜ことに なって いる**: Theo quy định thì ~; đã được định là ~
+  - Cấu trúc: V-る / V-ない + ことに なって いる
+  - Giải thích: Nói một quy định, lệ thường hoặc kế hoạch đã được quyết định, không phải do người nói tự quyết.
+  - Ví dụ: この 会社では、毎朝 九時に 会議を する ことに なって いる。 → Ở công ty này, theo quy định mỗi sáng họp lúc chín giờ.
+  - Ví dụ: 休む ときは、部長に れんらくする ことに なって います。 → Theo quy định, khi nghỉ thì phải báo cho trưởng phòng.
+  - Ví dụ: 来月から 東京の 本社で 働く ことに なって います。 → Theo kế hoạch đã định, từ tháng sau tôi sẽ làm ở trụ sở chính tại Tokyo.
+  - Lưu ý: ことに なる (N4) là một việc được quyết định; ことに なって いる là quy định hay kế hoạch đã có sẵn.
+- [ ] `grammar:you-to-suru` **V-(よ)う と する**: Định ~, sắp ~; cố ~
+  - Cấu trúc: V-(よ)う + と する
+  - Giải thích: Diễn tả lúc ngay trước khi một hành động bắt đầu, hoặc sự cố gắng làm việc đó. Hay đi kèm vế cho thấy việc chưa thành: 〜ようと したが / 〜ようと した とき.
+  - Ví dụ: 出かけようと した とき、電話が 鳴った。 → Lúc tôi định ra ngoài thì điện thoại reo.
+  - Ví dụ: 赤ちゃんが 立とうと して います。 → Em bé đang cố đứng dậy.
+  - Ví dụ: 両親に 本当の ことを 話そうと したが、なかなか 言えなかった。 → Tôi định nói thật với bố mẹ nhưng mãi không nói ra được.
+  - Lưu ý: V-(よ)う と 思う (N4) là dự định trong đầu; ようと する là đang cố làm hoặc ngay sắp làm.
+- [ ] `grammar:kakeru` **V-かける・V-かけの N**: Đang ~ dở; suýt ~
+  - Cấu trúc: V-ます (bỏ ます) + かける / かけの N / かけだ
+  - Giải thích: Hành động đã bắt đầu nhưng chưa xong, hoặc sắp xảy ra thì dừng lại.
+  - Ví dụ: 読みかけの 本が つくえの 上に ある。 → Cuốn sách đọc dở đang ở trên bàn.
+  - Ví dụ: 何か 言いかけて、彼は 口を 閉じた。 → Anh ấy định nói gì đó rồi lại ngậm miệng.
+  - Ví dụ: 駅の かいだんで 転びかけた。 → Tôi suýt ngã ở cầu thang nhà ga.
+- [ ] `grammar:aida-ni` **〜間・〜間に**: Trong suốt ~; trong lúc ~
+  - Cấu trúc: V-る / V-ている / N の + 間 (に)
+  - Giải thích: 間: việc kéo dài suốt cả khoảng thời gian đó. 間に: việc xảy ra (một lần) vào một lúc nào đó trong khoảng thời gian ấy.
+  - Ví dụ: 夏休みの 間、祖父の 家に いました。 → Suốt kỳ nghỉ hè, tôi ở nhà ông.
+  - Ví dụ: 母が 寝て いる 間に、部屋を そうじしました。 → Trong lúc mẹ ngủ, tôi đã dọn phòng.
+  - Ví dụ: 留守の 間に、だれか 来た ようです。 → Trong lúc tôi vắng nhà, hình như có ai đó đến.
+- [ ] `grammar:saichuu-ni` **〜最中に**: Đang lúc ~ thì
+  - Cấu trúc: V-て いる + 最中 (に); N の + 最中 (に)
+  - Giải thích: Đúng lúc một việc đang diễn ra thì một việc khác (thường bất ngờ, gây cản trở) xảy ra.
+  - Ví dụ: 会議の 最中に、電話が 鳴った。 → Đang họp thì điện thoại reo.
+  - Ví dụ: 試験の 最中に、急に 気分が 悪く なった。 → Đang làm bài thi thì tôi đột nhiên thấy khó chịu.
+  - Ví dụ: 話して いる 最中に、口を 出さないで ください。 → Đang lúc người khác nói thì xin đừng chen vào.
+  - Lưu ý: Khác 間に (bài 47): 最中に nhấn mạnh đúng lúc việc đang diễn ra sôi nổi nhất.
+- [ ] `grammar:sae-ba` **〜さえ 〜ば**: Chỉ cần ~ là ~
+  - Cấu trúc: N + さえ + V-ば / A-ければ; V-ます (bỏ ます) + さえ すれば
+  - Giải thích: Chỉ cần điều kiện tối thiểu này được thỏa mãn là đủ để có kết quả, không cần gì thêm.
+  - Ví dụ: 道さえ わかれば、一人で 行けます。 → Chỉ cần biết đường là tôi đi một mình được.
+  - Ví dụ: この 薬を 飲みさえ すれば、すぐ 治りますよ。 → Chỉ cần uống thuốc này là sẽ khỏi ngay.
+  - Ví dụ: あきらめさえ しなければ、夢は かなうと 思う。 → Tôi nghĩ chỉ cần không bỏ cuộc thì ước mơ sẽ thành hiện thực.
+- [ ] `grammar:sasete-morau` **〜させて もらう・〜させて いただく**: Được (cho phép) ~; xin phép được ~
+  - Cấu trúc: V (thể sai khiến) -て + もらう / いただく
+  - Giải thích: Người nói được người khác cho phép làm việc gì và biết ơn điều đó. させて いただきます là cách nói khiêm tốn khi thông báo việc mình sẽ làm.
+  - Ví dụ: 体調が 悪いので、今日は 早く 帰らせて いただけませんか。 → Tôi không khỏe nên hôm nay cho tôi về sớm được không ạ?
+  - Ví dụ: 部長に 会議で 発表させて もらいました。 → Tôi được trưởng phòng cho phát biểu trong cuộc họp.
+  - Ví dụ: では、説明させて いただきます。 → Vậy tôi xin phép được trình bày.
+  - Lưu ý: Ghép thể sai khiến (N4) với て もらう (N4).
+- [ ] `grammar:ni-kurabete` **〜に くらべて**: So với ~
+  - Cấu trúc: N + に くらべて / と くらべて; V-る の + に くらべて
+  - Giải thích: Đặt N cạnh một sự vật khác để nêu sự khác biệt về mức độ. Chữ Hán: 比べて.
+  - Ví dụ: 去年に くらべて、今年の 夏は 暑い。 → So với năm ngoái, mùa hè năm nay nóng hơn.
+  - Ví dụ: 都会に くらべて、いなかは 物の 値段が 安い。 → So với thành phố, ở quê giá cả rẻ hơn.
+  - Ví dụ: 兄に くらべて、弟は 背が 高い。 → So với anh trai thì em trai cao hơn.
+  - Lưu ý: Gần より (bài 24) nhưng trang trọng hơn và nhấn mạnh việc đặt hai bên cạnh nhau để so sánh.
+- [ ] `grammar:te-kara-de-nai-to` **〜てからでないと**: Phải ~ rồi mới ~
+  - Cấu trúc: V-て + からでないと / からでなければ + (vế phủ định)
+  - Giải thích: Nếu chưa làm xong việc trước thì không thể (hoặc không được) làm việc sau. Vế sau mang nghĩa phủ định hay khó khăn: できない, いけない, わからない.
+  - Ví dụ: 先生に 聞いてからでないと、この 部屋は 使えません。 → Phải hỏi thầy giáo rồi mới được dùng phòng này.
+  - Ví dụ: お金を 払ってからでないと、中に 入る ことは できません。 → Phải trả tiền rồi mới được vào trong.
+  - Ví dụ: 実際に 見てからでないと、買うか どうか 決められない。 → Phải xem tận mắt rồi tôi mới quyết định được có mua hay không.
+  - Lưu ý: Khác てから (bài 28): てから chỉ nêu thứ tự; てからでないと nhấn mạnh việc trước là điều kiện bắt buộc.
+- [ ] `grammar:tte` **〜って**: (Văn nói) nói là ~; nghe nói ~; ~ là
+  - Cấu trúc: thể thường + って (= と / そうだ); N + って (= は / と いうのは)
+  - Giải thích: Cách nói thân mật trong hội thoại. 1) Thay と khi dẫn lời: 〜って 言った. 2) Cuối câu: nghe nói (= そうだ). 3) Sau danh từ: nêu chủ đề hay hỏi nghĩa (= と いうのは).
+  - Ví dụ: 田中さんは 明日 来られないって 言って いたよ。 → Anh Tanaka bảo là mai không đến được đấy.
+  - Ví dụ: あの 店の ケーキ、すごく おいしいって。 → Nghe nói bánh ngọt ở tiệm đó ngon lắm.
+  - Ví dụ: 「伝言」って、どういう 意味ですか。 → "Dengon" nghĩa là gì vậy?
+  - Lưu ý: Chỉ dùng trong hội thoại thân mật, không dùng trong văn viết trang trọng.
+
+## Câu hỏi đề N3 (30 / 74 mục)
+
+- [ ] `n3-1#13.3-reading`
+  - Bài đọc: 　わたしが 働く 会社では、去年から 週に 一度、昼休みに 社員が 自分の 得意な ことを 教える 会を 開いて いる。参加は 自由で、毎回 二十分ほどだ。仕事に 関係が なくても よく、これまで 写真の とり方や かんたんな たいそうなどを 習った。 最初は、昼休みくらい 一人で 静かに 過ごしたいと 思って、参加しなかった。しかし、別の 部の 人が 旅行の 写真を 見せると 聞いて、行って みる ことに した。わたしも 旅行が 好きだからだ。写真を 見ながら 話して いる うちに、その 人と 気が 合う ことが 分かった。 その後、仕事で その 部に 相談する 必要が あった とき、前より 気軽に 話しかける ことが できた。会で 習った ことを ちょくせつ 仕事に 使う わけでは ないが、人との つながりが できる。それが この 会の 良さだと 思う。来月は わたしも、休日に 作って いる 料理に ついて 話す 予定だ。
+  - Câu hỏi: この 人が 考える、この 会の いちばんの 良さは 何ですか。
+  - Lựa chọn: 昼休みを 今までより 長く 取れる こと。 / 習った 料理を 仕事で 必ず 使える こと。 / 会社の 外へ 旅行に 行ける こと。 / **ほかの 社員と 知り合い、話しやすく なる こと。** ✓
+  - Giải thích: Kết luận của người viết là 人との つながりが できる: tạo kết nối, từ đó dễ trò chuyện và trao đổi công việc với người khác hơn.
+- [ ] `n3-1#7.2-order`
+  - Câu hỏi: この 町は ＿＿ ★ ＿＿ ＿＿ なった。
+  - Lựa chọn: 場所に / **にとって** ✓ / 大切な / わたし
+  - Giải thích: Câu đúng: この 町は わたし にとって 大切な 場所に なった (thị trấn này trở thành nơi quan trọng đối với tôi). Vị trí ★ thứ hai là にとって.
+- [ ] `n3-1#6.4-grammar`
+  - Câu hỏi: この 町は、住めば（　）好きに なります。
+  - Lựa chọn: **住むほど** ✓ / 住んだまま / 住むかわりに / 住んだばかり
+  - Giải thích: 〜ば 〜ほど diễn tả càng… càng…: 住めば 住むほど 好きに なる (càng sống càng yêu thích).
+- [ ] `n3-1#4.2-paraphrase`
+  - Câu hỏi: 山田さんは 来週の 試験の ことを {気にして いる}。
+  - Lựa chọn: **試験が 心配で、その ことを よく 考えて いる。** ✓ / 試験の ことを すっかり 忘れて いる。 / 試験を 受けないと 決めて いる。 / 試験が 終わって 安心して いる。
+  - Giải thích: 気にする trong ngữ cảnh này là bận tâm, lo lắng về kỳ thi. Không có nghĩa quên, quyết định bỏ thi hay đã yên tâm sau kỳ thi.
+- [ ] `n3-1#6.10-grammar`
+  - Câu hỏi: 弟は 電気を つけた（　）寝て しまいました。
+  - Lựa chọn: **まま** ✓ / たび / ほど / ついで
+  - Giải thích: V quá khứ + まま chỉ để nguyên trạng thái: ngủ quên trong khi đèn vẫn bật.
+- [ ] `n3-1#6.9-grammar`
+  - Câu hỏi: 説明書に 書いて ある（　）、ボタンを 押して ください。
+  - Lựa chọn: ばかりに / うちに / かわりに / **とおりに** ✓
+  - Giải thích: 〜とおりに: làm đúng theo điều đã ghi hoặc đã nói. Hãy bấm nút đúng như sách hướng dẫn.
+- [ ] `n3-1#8.3-text`
+  - Bài đọc: 町の 図書館で わたしは 先月から、町の 図書館で 子どもに 本を 読む 活動に 参加して います。子どもの ころは 人前で 話すのが 苦手で、こんな 活動を するとは 思って いませんでした。（１）、友人に さそわれて、一度だけ やって みる ことに しました。 初めての 日は、声が 小さく なって しまいました。後ろに 座って いる 子にも 聞こえる（２）、もう 少し 大きな 声で 読んで ほしいと 係の 人に 言われました。そこで、家で 何度も 声に 出して れんしゅうしました。 れんしゅうした（３）、次の 回には 最後まで 落ち着いて 読めました。今では、子どもたちに 会う（４）、次は どんな 本を 選ぼうかと 考えます。 活動を 始めてから、図書館は わたし（５）特別な 場所に なりました。来月も また 参加したいです。
+  - Câu hỏi: （３）
+  - Lựa chọn: **おかげで** ✓ / せいで / かわりに / ついでに
+  - Giải thích: Nhờ luyện tập mà lần sau đọc bình tĩnh đến cuối, nên dùng おかげで cho nguyên nhân tạo kết quả tốt.
+- [ ] `n3-1#3.9-context`
+  - Câu hỏi: この 説明では 意味が 分かりにくいので、もっと（　）例を 出して ください。
+  - Lựa chọn: しょうきょくてきな / **ぐたいてきな** ✓ / じどうてきな / ていきてきな
+  - Giải thích: Giải thích khó hiểu thì cần ví dụ cụ thể: 具体的な 例. 消極的 là thụ động, 自動的 là tự động, 定期的 là định kỳ.
+- [ ] `n3-1#10.1-reading`
+  - Bài đọc: 　駅前に できた 店では、パンを 買った 人に 紙の ふくろを むりょうで わたして いる。でも、わたしは いつも 家から ふくろを 持って いく。最初は ごみを へらす ためだった。最近は、旅行先で 買った 好きな ふくろを 使えるのが 楽しい。小さな 習慣だが、かんきょうの ために なる だけでなく、毎日の 買い物も 楽しく なった。
+  - Câu hỏi: この 人が 最近、自分の ふくろを 使うのを 楽しいと 思うのは なぜですか。
+  - Lựa chọn: 店で ふくろの 代金を 払わなくて いいから。 / 店から 新しい ふくろを もらえるから。 / パンを 安く 買えるように なったから。 / **好きな ふくろを 使って 買い物が できるから。** ✓
+  - Giải thích: Gần đây người viết thấy vui vì dùng được chiếc túi yêu thích mua khi đi du lịch. Giảm rác là động cơ ban đầu; túi giấy ở cửa hàng vốn đã miễn phí.
+- [ ] `n3-1#2.1-writing`
+  - Câu hỏi: 映画の 最後の 場面に {かんどう}しました。
+  - Lựa chọn: **感動** ✓ / 活動 / 行動 / 感想
+  - Giải thích: かんどう viết là 感動 (cảm động). 活動 đọc かつどう, 行動 đọc こうどう, 感想 đọc かんそう.
+- [ ] `n3-1#2.5-writing`
+  - Câu hỏi: この きかいの {しよう}方法を 教えて ください。
+  - Lựa chọn: 用意 / 信用 / **使用** ✓ / 利用
+  - Giải thích: しよう viết là 使用 (sử dụng). 用意 đọc ようい, 信用 đọc しんよう, 利用 đọc りよう.
+- [ ] `n3-1#5.2-usage`
+  - Câu hỏi: {断る}
+  - Lựa chọn: 紙を 二つに 断って、半分を 友人に わたした。 / **都合が 悪かったので、食事の さそいを 断った。** ✓ / 使わない 電気を 断ってから、家を 出た。 / 駅で 電車を 断って、会社へ 歩いて 行った。
+  - Giải thích: 断る là từ chối lời mời hoặc yêu cầu: さそいを 断る. Cắt giấy dùng 切る; tắt đèn dùng 消す; xuống tàu dùng 降りる. 断る không dùng như 断つ (cắt, ngắt).
+- [ ] `n3-1#6.13-grammar`
+  - Câu hỏi: 一度も 習って いないのだから、こんな 難しい 曲が ひける（　）。
+  - Lựa chọn: ことに する / ように する / **はずが ない** ✓ / ばかりだ
+  - Giải thích: 〜はずが ない diễn tả phủ định mạnh dựa vào lý do: chưa từng học thì không thể chơi được bản nhạc khó thế này.
+- [ ] `n3-1#1.2-kanji`
+  - Câu hỏi: 来月の パーティーに 友人を {招待}しました。
+  - Lựa chọn: しょうだい / しょたい / **しょうたい** ✓ / そうたい
+  - Giải thích: 招待 đọc là しょうたい, nghĩa là mời. 招 đọc しょう, 待 đọc たい, không đọc đục thành だい.
+- [ ] `n3-1#5.5-usage`
+  - Câu hỏi: {目立つ}
+  - Lựa chọn: 朝に なったので、目が 目立って 起きた。 / **白い 服の 人が 多い 中で、赤い 服の 彼は よく 目立って いた。** ✓ / 試験に 合格したので、もくひょうが 目立った。 / 暗い 部屋で 電気を 目立って、本を 読んだ。
+  - Giải thích: 目立つ là nổi bật, dễ được chú ý: áo đỏ nổi bật giữa nhiều áo trắng. Không có nghĩa mở mắt, đạt mục tiêu hay bật đèn; cũng không phải động từ nhận tân ngữ với を.
+- [ ] `n3-1#16.1-reading`
+  - Bài đọc: さくら市民センター　秋の 写真教室 スマホでも カメラでも 参加できます。どの コースも 定員は 十人です。参加費には 資料代を ふくみます。 【Ａコース】初めての 写真 ・十月五日（土）10:00〜12:00 ・初めて 写真を 習う 人向け。室内で きほんを れんしゅうします。 ・参加費：1,000円 【Ｂコース】町を 歩いて 写真を とろう ・十月六日（日）9:00〜12:00 ・きほんを 習った ことが ある 人向け。こうえんなどで 写真を とります。 ・参加費：1,500円 ・雨の 場合は 十月十三日（日）の 同じ 時間に 変更します。 【Ｃコース】夜の 写真 ・十月十二日（土）18:00〜20:00 ・きほんを 習った ことが ある 人向け。駅前で 夜の 町を とります。 ・参加費：2,000円 【申し込み】 ・九月二十日から 三十日までに、センターの ホームページか 窓口で 申し込んで ください。電話では 受け付けません。 ・市内に 住む 学生は、参加費が 500円 安く なります。窓口で 申し込む とき、または 教室の 当日に、がくせいしょうを 見せて ください。 ・参加費は 教室の 当日に 払って ください。道具の 貸し出しは ないので、スマホか カメラを 必ず 持って きて ください。
+  - Câu hỏi: 市内に 住む 学生の リンさんは 写真の きほんを 習った ことが あります。昼間に 外で 写真を とる コースに 参加したいです。参加費は いくらですか。
+  - Lựa chọn: 500円 / **1,000円** ✓ / 1,500円 / 2,000円
+  - Giải thích: Ban ngày chụp ngoài trời và đã học cơ bản nên chọn B: 1.500 yên. Học sinh/sinh viên cư trú trong thành phố được giảm 500 yên, còn 1.000 yên.
+- [ ] `n3-1#11.1-reading`
+  - Bài đọc: お知らせ 市の 体育館は、来月 一日から 十日まで ゆかの 工事を 行います。この 間、体育館は 利用できませんが、外の テニスコートは 通常どおり 利用できます。ただし、工事の 車が 通る ため、正面の 入口は 閉めます。テニスコートを 利用する 方は、こうえん側の 入口から 入って ください。予約の 方法や 料金は 変わりません。
+  - Câu hỏi: 来月 五日に テニスコートを 利用する 人は、どう しなければ なりませんか。
+  - Lựa chọn: **こうえん側の 入口を 使う。** ✓ / 体育館の 工事が 終わるまで 待つ。 / いつもより 高い 料金を 払う。 / 正面の 入口で 新しく 予約する。
+  - Giải thích: Ngày 5 vẫn trong thời gian thi công nhưng sân tennis hoạt động bình thường. Cửa chính đóng nên người dùng phải vào từ phía công viên; giá và cách đặt chỗ không đổi.
+- [ ] `n3-1#14.1-reading`
+  - Bài đọc: 　町の 図書館で、本を 家まで とどける サービスが 始まった。病気や けがなどで 図書館へ 来るのが 難しい 人が 利用できる。電話で 読みたい 本を 伝えると、係の 人が 本を 選び、ボランティアが 週に 一度 とどける。利用者は 配達の お金を 払う 必要が ない。 わたしは 土曜日に 本を とどける ボランティアを して いる。始める 前は、本を わたせば それで 終わりだと 思って いた。ところが、ある 利用者に「この 前の 本は おもしろかったけれど、字が 小さくて 読みにくかった」と 言われた。その ことを 図書館の 人に 伝えると、次は 同じ 作者の、字が 大きい 本を 用意して くれた。利用者は とても 喜んだ。 それからは、本を わたす ときに、前の 本は どうだったかを 聞くように して いる。利用者の 声を 図書館に 伝えるのも 大事な 役目なのだ。ただし、ほかにも 配達を 待って いる 人が いるので、長く 話しすぎないように 気を つけて いる。
+  - Câu hỏi: この サービスを 利用できるのは、どのような 人ですか。
+  - Lựa chọn: 読みたい 本の 名前を 知らない 人 すべて。 / 土曜日だけ 図書館で 働く 人。 / 配達の 料金を 先に 払った 人だけ。 / **病気や けがなどで 図書館へ 来にくい 人。** ✓
+  - Giải thích: Dịch vụ dành cho người khó đến thư viện vì bệnh, chấn thương hoặc lý do tương tự. Không yêu cầu trả phí giao sách.
+- [ ] `n3-1#6.3-grammar`
+  - Câu hỏi: 先生が ていねいに 教えて くださった（　）、試験に 合格できました。
+  - Lựa chọn: せいで / **おかげで** ✓ / かわりに / ためには
+  - Giải thích: Kết quả tích cực nhờ sự giúp đỡ của thầy cô dùng 〜おかげで. せいで thường chỉ nguyên nhân gây kết quả xấu; ためには chỉ mục đích.
+- [ ] `n3-1#3.8-context`
+  - Câu hỏi: 店に ある 品物を すべて 売って しまい、たなが（　）に なった。
+  - Lựa chọn: 満員 / しんせん / 上品 / **空っぽ** ✓
+  - Giải thích: Bán hết hàng thì kệ trống rỗng: 空っぽに なる. 満員 dùng cho nơi đầy người; 新鮮 và 上品 không chỉ trạng thái trống.
+- [ ] `n3-1#4.5-paraphrase`
+  - Câu hỏi: 新しい 仕事にも {ようやく 慣れた}。
+  - Lựa chọn: 始める 前から すっかり 慣れて いた。 / まだ 少しも 慣れて いない。 / 慣れる 必要が なくなった。 / **時間が かかったが、やっと 慣れた。** ✓
+  - Giải thích: ようやく là cuối cùng cũng, sau một thời gian hoặc nỗ lực. Ở đây là mất một thời gian nhưng cuối cùng đã quen việc.
+- [ ] `n3-1#5.4-usage`
+  - Câu hỏi: {あずかる}
+  - Lựa chọn: 図書館で 読みたい 本を あずかって、家で 読んだ。 / **友人が 旅行して いる 間、友人の 犬を あずかった。** ✓ / 会議で 自分の 意見を あずかって、みんなに 説明した。 / レストランで メニューを 見て、食べたい 料理を あずかった。
+  - Giải thích: あずかる là nhận giữ, trông giúp thứ thuộc về người khác, như trông chó khi bạn đi du lịch. Mượn sách để đọc dùng 借りる; nêu ý kiến dùng 言う/述べる; gọi món dùng 注文する.
+- [ ] `n3-1#5.1-usage`
+  - Câu hỏi: {せつやく}
+  - Lựa chọn: **電気代を せつやくする ために、使わない 部屋の 電気を 消した。** ✓ / 旅行の 日を 来月に せつやくして、ホテルに れんらくした。 / 重い にもつを となりの 部屋に せつやくして、車を 取りに 行った。 / 仕事を どうりょうに せつやくして、一週間 休みを 取った。
+  - Giải thích: せつやく là tiết kiệm tiền, điện, thời gian: 電気代を せつやくする. Đổi ngày dùng 変更する, dời hành lý dùng 移す, nhờ đồng nghiệp làm thay dùng 頼む.
+- [ ] `n3-1#1.3-kanji`
+  - Câu hỏi: この 書類の 内容を {確認}して ください。
+  - Lựa chọn: かくねん / かっにん / **かくにん** ✓ / がくにん
+  - Giải thích: 確認 đọc là かくにん, nghĩa là xác nhận, kiểm tra lại. 確 đọc かく, 認 đọc にん.
+- [ ] `n3-1#2.2-writing`
+  - Câu hỏi: 読んだ 本の {かんそう}を 書いて ください。
+  - Lựa chọn: 感動 / **感想** ✓ / 感心 / 感情
+  - Giải thích: かんそう viết là 感想 (cảm tưởng). 感動 đọc かんどう, 感心 đọc かんしん, 感情 đọc かんじょう.
+- [ ] `n3-1#3.2-context`
+  - Câu hỏi: パソコンが こわれたので、店に（　）を 頼んだ。
+  - Lựa chọn: よやく / 招待 / **しゅうり** ✓ / つうやく
+  - Giải thích: Máy tính hỏng thì nhờ cửa hàng sửa chữa: しゅうりを 頼む. Đặt chỗ, mời hay phiên dịch không giải quyết chiếc máy hỏng.
+- [ ] `n3-1#7.1-order`
+  - Câu hỏi: 先生が 説明した ＿＿ ＿＿ ★ ＿＿ 解いて みた。
+  - Lựa chọn: とおりに / **問題** ✓ / を / 難しい
+  - Giải thích: Câu đúng: 先生が 説明した とおりに 難しい 問題 を 解いて みた (tôi thử giải bài khó đúng như thầy đã giải thích). V-た とおりに đứng ngay sau động từ; 難しい bổ nghĩa cho 問題. Vị trí ★ thứ ba là 問題.
+- [ ] `n3-1#3.10-context`
+  - Câu hỏi: 二人の 意見は（　）で、一人は 賛成、もう 一人は 反対だった。
+  - Lựa chọn: 共通 / **正反対** ✓ / 同様 / 平等
+  - Giải thích: Một người tán thành, người kia phản đối, tức ý kiến hoàn toàn trái ngược: 正反対. 共通 và 同様 diễn tả sự giống nhau; 平等 là bình đẳng.
+- [ ] `n3-1#8.1-text`
+  - Bài đọc: 町の 図書館で わたしは 先月から、町の 図書館で 子どもに 本を 読む 活動に 参加して います。子どもの ころは 人前で 話すのが 苦手で、こんな 活動を するとは 思って いませんでした。（１）、友人に さそわれて、一度だけ やって みる ことに しました。 初めての 日は、声が 小さく なって しまいました。後ろに 座って いる 子にも 聞こえる（２）、もう 少し 大きな 声で 読んで ほしいと 係の 人に 言われました。そこで、家で 何度も 声に 出して れんしゅうしました。 れんしゅうした（３）、次の 回には 最後まで 落ち着いて 読めました。今では、子どもたちに 会う（４）、次は どんな 本を 選ぼうかと 考えます。 活動を 始めてから、図書館は わたし（５）特別な 場所に なりました。来月も また 参加したいです。
+  - Câu hỏi: （１）
+  - Lựa chọn: そのため / それに / つまり / **ところが** ✓
+  - Giải thích: Trước đó không nghĩ sẽ tham gia hoạt động đọc sách, nhưng thực tế được bạn rủ và đã thử. ところが nối diễn biến trái với suy nghĩ ban đầu; các từ còn lại chỉ kết quả, bổ sung hoặc diễn giải.
+- [ ] `n3-1#1.6-kanji`
+  - Câu hỏi: 彼は 毎日 {努力}を 続け、試験に 合格しました。
+  - Lựa chọn: どりょう / とうりょく / **どりょく** ✓ / どりく
+  - Giải thích: 努力 đọc là どりょく, nghĩa là nỗ lực. 努 đọc ど, 力 đọc りょく trong từ này.

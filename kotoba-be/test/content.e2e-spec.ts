@@ -66,6 +66,7 @@ describe('content (e2e)', () => {
     expect(list.body).toEqual([
       { id: 'n5-1', title: { vi: 'Đề 1', en: 'Paper 1' }, minutes: 60, questions: 45 },
       { id: 'n4-1', title: { vi: 'Đề thi thử N4 số 1', en: 'N4 mock test 1' }, minutes: 80, questions: 58 },
+      { id: 'n3-1', title: { vi: 'Đề thi thử N3 số 1', en: 'N3 mock test 1' }, minutes: 100, questions: 74 },
     ]);
     const paper = await get('/tests/n5-1').expect(200);
     expect(paper.body.parts[0].questions[0].choices).toHaveLength(4);

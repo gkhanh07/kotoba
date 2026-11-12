@@ -184,6 +184,11 @@ describe('content', () => {
       parts: { kanji: 7, writing: 5, context: 8, paraphrase: 4, usage: 4, grammar: 13, order: 4, text: 4, reading: 9 },
       passages: 6,
     },
+    3: {
+      minutes: 100,
+      parts: { kanji: 8, writing: 6, context: 11, paraphrase: 5, usage: 5, grammar: 13, order: 5, text: 5, reading: 16 },
+      passages: 8,
+    },
   };
   it('builds every paper to its level blueprint', () => {
     type P = { id: string; level: number; minutes: number; parts: { part: string; passage?: string; questions: unknown[] }[] };
@@ -201,7 +206,25 @@ describe('content', () => {
         order: Object.keys(BLUEPRINT[p.level]?.parts ?? {}),
       });
     }
-    expect(papers.map((p) => p.level).sort()).toEqual([4, 5]);
+    expect(papers.map((p) => p.level).sort()).toEqual([3, 4, 5]);
+  });
+
+  // Phase 30: the kanji gate for papers. Every kanji in a question, choice or passage is in kanji.json
+  // at the paper's level or easier; anything harder is written in kana. Exception: the wrong choices of a
+  // `writing` question are look-alike kanji on purpose (体み for 休み), as in the real exam; its answer is checked.
+  it("writes mock test papers only with kanji at the paper's level or easier", () => {
+    type Q = { q: string; choices: string[]; answer: number };
+    type P = { id: string; level: number; parts: { part: string; passage?: string; questions: Q[] }[] };
+    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as P[];
+    const kanjiLevel = new Map(kanji.map((k) => [k.char as string, k.level as number]));
+    const checked = (part: string, { q, choices, answer }: Q) => [q, ...(part === 'writing' ? [choices[answer]] : choices)];
+    const bad = papers.flatMap((p) => {
+      const text = p.parts.flatMap((x) => [x.passage ?? '', ...x.questions.flatMap((question) => checked(x.part, question))]).join('');
+      return [...new Set([...text.matchAll(/[一-鿿]/g)].map(([c]) => c))]
+        .filter((c) => (kanjiLevel.get(c) ?? 0) < p.level)
+        .map((c) => `${p.id} ${c}`);
+    });
+    expect(bad).toEqual([]);
   });
 
   // Reading and text parts carry their passage; a text passage has one numbered blank （１）… per question.
