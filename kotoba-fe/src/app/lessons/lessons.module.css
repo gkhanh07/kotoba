@@ -25,9 +25,9 @@ details[open] > .summary::after { transform: rotate(45deg); }
 details[open] > .summary { border-bottom: 1px solid var(--rule-dim); border-radius: var(--radius) var(--radius) 0 0; }
 
 .path { margin: 0; padding: .5rem 0; list-style: none; }
-.row { display: grid; grid-template-columns: 2rem 2.5rem minmax(0, 1fr) 7.5rem 6rem; align-items: center; gap: 0 1rem; min-height: 56px; padding: 0 var(--space-panel) 0 .75rem; border-inline: 2px solid transparent; color: var(--silver); text-decoration: none; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.row { display: grid; grid-template-columns: 2rem 2.5rem minmax(0, 1fr) 7.5rem 6rem; align-items: center; gap: 0 1rem; min-height: 56px; padding: 0 var(--space-panel) 0 .75rem; color: var(--silver); text-decoration: none; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
 .row:hover { background: var(--surface-2); color: var(--chalk); }
-.row[aria-current] { background: var(--surface-3); border-left-color: var(--amber); color: var(--chalk); }
+.row[aria-current] { background: var(--surface-3); color: var(--chalk); }
 .title { min-width: 0; overflow-wrap: anywhere; }
 .here { display: block; margin-top: .15rem; color: var(--amber-core); font-size: var(--fs-meta); font-weight: 600; }
 .state { justify-self: start; }
