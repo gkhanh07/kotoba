@@ -1,6 +1,6 @@
 # Phase 28: N3 vocabulary (batches 28a–28i)
 
-Roadmap: `docs/plan/PLAN.md` "27–30. N3" (repeat of "24. Từ vựng N4") and the shared content checks. Rules: `AGENTS.md` §12. Starts after the sample review of 2026-11-09 (`docs/tasks/sample-review.md`).
+Roadmap: `docs/plan/PLAN.md` "27–30. N3" (repeat of "24. Từ vựng N4") and the shared content checks. Rules: `AGENTS.md` §12. Starts after the sample review of 2026-11-09.
 
 ## Goal
 N3 words in lessons 46–80, in batches of ~200, one commit per batch, each batch through the full gate. Target about 1,500–1,800 words; a batch may come out shorter when the lessons' themes run out of real N3 words (as 24a did), and the shortfall is reported, not padded.

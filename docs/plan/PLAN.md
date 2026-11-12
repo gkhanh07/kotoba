@@ -5,11 +5,9 @@
 ## Bắt đầu ở đây (mỗi phiên, kể cả cloud session)
 1. Nếu có `docs/progress/PROGRESS.md`: đọc trước, làm tiếp task đầu tiên chưa DONE. Không làm lại task đã DONE.
 2. Nếu chưa có: bắt đầu từ Task A.
-3. Tài liệu đi kèm:
-   - `docs/plan/original-n5.md`: plan gốc (kiến trúc, quyết định đã chốt, giai đoạn 0–13 đã xong). Đọc để hiểu kiến trúc. Bảng giai đoạn 14–15 trong file đó đã bị thay bằng các giai đoạn 14–30 bên dưới.
-4. Sau khi có `AGENTS.md`, `AGENTS.md` là luật. File này là lộ trình.
-5. Làm liền một mạch, không chờ người dùng duyệt giữa các giai đoạn. Chỉ dừng trong các trường hợp ở mục 15 của quy tắc (đã điều chỉnh bên dưới).
-6. Khi phiên sắp hết (ngữ cảnh hoặc thời gian): commit phần đã xanh, cập nhật PROGRESS.md (task đang dở, bước tiếp theo, giả thuyết hiện tại), push, rồi báo cáo theo mẫu mục 14. Phiên sau người dùng chỉ gõ "Tiếp tục theo docs/progress/PROGRESS.md".
+3. Sau khi có `AGENTS.md`, `AGENTS.md` là luật. File này là lộ trình.
+4. Làm liền một mạch, không chờ người dùng duyệt giữa các giai đoạn. Chỉ dừng trong các trường hợp ở mục 15 của quy tắc (đã điều chỉnh bên dưới).
+5. Khi phiên sắp hết (ngữ cảnh hoặc thời gian): commit phần đã xanh, cập nhật PROGRESS.md (task đang dở, bước tiếp theo, giả thuyết hiện tại), push, rồi báo cáo theo mẫu mục 14. Phiên sau người dùng chỉ gõ "Tiếp tục theo docs/progress/PROGRESS.md".
 
 ### Môi trường
 - Node ≥ 24 (script dùng type stripping). Kiểm `node -v` trước. Thấp hơn thì dừng, báo (thiếu tài nguyên).
@@ -167,7 +165,7 @@ Mọi giai đoạn từ giờ theo `AGENTS.md`:
   - `npm run check` ở BE pass.
 
 ## Context
-- Plan gốc là `docs/plan/original-n5.md`. Các giai đoạn 0–13 đã commit trên `feat/n5-full`.
+- Plan gốc đã bỏ khỏi repo (xem lịch sử git). Các giai đoạn 0–13 đã commit trên `feat/n5-full`.
 - Người dùng đã rà danh sách 64 đề xuất. Chốt lại: giữ nhóm "nên làm" và nhóm "làm bản rút gọn". Bỏ phần thứ tự nét chữ (KanjiVG).
 - Mục tiêu của bổ sung này:
   - Trả lời được "mình yếu ở đâu" và "hôm nay học gì".

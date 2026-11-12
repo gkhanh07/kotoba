@@ -31,7 +31,7 @@ Source: BUG-009 (open since phase 27) and the first content sample sheet (seed 2
 | AC-6 | `library.test.ts` `kanjiTitle`; `e2e/vocab-page.spec.ts` /kanji/画 | unit, e2e |
 | AC-7 | `content.spec.ts` BUG-014, BUG-015, BUG-016 | content |
 | AC-8 | Read in the diff (static text) | review |
-| AC-9 | `docs/tasks/sample-review.md`, reproducible with `scripts/sample.ts` | review |
+| AC-9 | `npm run sample`, reproducible with `scripts/sample.ts` | review |
 
 §7.2 groups: empty (込 with no `hv`) covered; boundaries, time, concurrency, persistence and storage are N/A (static content, no state).
 
