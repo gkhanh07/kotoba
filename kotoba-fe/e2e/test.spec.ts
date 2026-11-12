@@ -60,7 +60,7 @@ async function submitAll(page: Page) {
   await page.getByRole("dialog").getByRole("button", { name: "Nộp bài" }).click();
 }
 async function openMenu(page: Page) {
-  const menu = page.getByRole("button", { name: "Menu" });
+  const menu = page.getByRole("button", { name: "Danh mục" });
   if (await menu.isVisible()) await menu.click();
 }
 

@@ -18,12 +18,12 @@ describe("VocabSchedule", () => {
   it("shows the box, the due date and the wrong answers", () => {
     seed({ [ID]: { box: 2, due: "2026-11-05", at: 1, lapses: 3 } });
     render(<VocabSchedule id={ID} lang="vi" />);
-    expect(screen.getByText("Hộp 2/6 · đến hạn 5/11/2026 · sai 3 lần")).toBeInTheDocument();
+    expect(screen.getByText("Hộp 2/6 · đến hạn ôn ngày 5/11/2026 · sai 3 lần")).toBeInTheDocument();
   });
   it("says due today for a card due today or earlier, and 0 wrong for a card saved before lapses existed", () => {
     seed({ [ID]: { box: 0, due: "2026-11-01", at: 1 } });
     render(<VocabSchedule id={ID} lang="vi" />);
-    expect(screen.getByText("Hộp 0/6 · đến hạn hôm nay · sai 0 lần")).toBeInTheDocument();
+    expect(screen.getByText("Hộp 0/6 · đến hạn ôn hôm nay · sai 0 lần")).toBeInTheDocument();
   });
   it("marks a known card and stops the box at the last one", () => {
     seed({ [ID]: { box: 8, due: "2026-12-02", at: 1, lapses: 1 } });

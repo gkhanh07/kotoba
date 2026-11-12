@@ -75,6 +75,9 @@ describe('auth (e2e)', () => {
     await http.post('/auth/forgot').send({ email }).expect(204);
     expect(outbox).toHaveLength(1);
     const token = /token=([\w-]+)/.exec(outbox[0].text)![1];
+    expect(outbox[0].text).toBe(
+      `Mở liên kết dưới đây trong vòng 30 phút để đặt mật khẩu mới:\n${process.env.APP_URL ?? 'http://localhost:3000'}/reset-password?token=${token}\n\nNếu bạn không yêu cầu đặt lại mật khẩu, hãy bỏ qua email này.`,
+    );
 
     await http.post('/auth/reset').send({ token: 'bogus', password: 'password-2' }).expect(400);
     await http.post('/auth/reset').send({ token, password: 'password-2' }).expect(204);

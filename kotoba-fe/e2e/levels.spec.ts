@@ -120,19 +120,19 @@ test("/kanji pages N5 by 100 and Trước/Sau walk the pages", async ({ page, ax
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Kanji N5");
   await expect(kanjiTiles(page)).toHaveCount(Math.min(KANJI_PAGE, KANJI_TOTAL));
   await expect(page.getByText("Trang 1 / 2")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Trước" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Trang trước" })).toHaveCount(0);
   expect(await hasHorizontalScroll(page)).toBe(false);
   await axe();
   await page.screenshot({ path: info.outputPath(`kanji-${info.project.name}.png`), fullPage: true });
 
-  await page.getByRole("link", { name: "Sau" }).click();
+  await page.getByRole("link", { name: "Trang sau" }).click();
   await expect(page).toHaveURL("/kanji?level=5&page=2");
   await expect(kanjiTiles(page)).toHaveCount(KANJI_TOTAL - KANJI_PAGE);
   await expect(page.getByText("Trang 2 / 2")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Sau" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Trang sau" })).toHaveCount(0);
   await axe();
 
-  await page.getByRole("link", { name: "Trước" }).click();
+  await page.getByRole("link", { name: "Trang trước" }).click();
   await expect(page).toHaveURL("/kanji?level=5&page=1");
   await expect(kanjiTiles(page)).toHaveCount(KANJI_PAGE);
   expect(be).toEqual([]);
@@ -140,7 +140,7 @@ test("/kanji pages N5 by 100 and Trước/Sau walk the pages", async ({ page, ax
 
 test("/kanji keeps ?filter when changing level and page", async ({ page }) => {
   await page.goto("/kanji?filter=new");
-  await expect(page.getByRole("link", { name: "Sau" })).toHaveAttribute("href", "/kanji?level=5&filter=new&page=2");
+  await expect(page.getByRole("link", { name: "Trang sau" })).toHaveAttribute("href", "/kanji?level=5&filter=new&page=2");
   await expect(tabs(page).getByRole("link", { name: "N4" })).toHaveAttribute("href", "/kanji?filter=new&level=4");
 });
 

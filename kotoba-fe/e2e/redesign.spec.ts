@@ -36,7 +36,7 @@ test("the guest home shows the three scripts, the line and a real lesson, with o
 
   // AC-2.1: the preview is the first lesson with words, a kanji and a grammar point.
   const first = lessons.find((l) => vocab.some((v) => v.lesson === l.lesson) && kanji.some((k) => k.lesson === l.lesson) && grammar.some((g) => g.lesson === l.lesson))!;
-  const preview = page.getByRole("region", { name: "Một bài học thật, đúng như trong app." });
+  const preview = page.getByRole("region", { name: "Xem trước một bài học." });
   await expect(preview.getByText(`Bài ${first.lesson}: ${first.title.vi}.`, { exact: false })).toBeVisible();
   const words = vocab.filter((v) => v.lesson === first.lesson).slice(0, 4);
   await expect(preview.getByRole("listitem")).toHaveCount(words.length);
@@ -99,14 +99,14 @@ test("/lessons opens the current level, counts finished lessons exactly and mark
   // AC-3.1: one group per level; the current level is open and counts only lessons with items.
   const n5 = page.getByRole("region", { name: "N5" });
   const withItems = lessons.filter((l) => l.level === 5 && idsOf(l.lesson).length > 0).length;
-  await expect(n5.getByText(`1/${withItems} bài xong`)).toBeVisible();
-  await expect(n5.getByRole("progressbar", { name: "Số bài N5 đã xong" })).toHaveJSProperty("value", 1);
+  await expect(n5.getByText(`1/${withItems} bài đã hoàn thành`)).toBeVisible();
+  await expect(n5.getByRole("progressbar", { name: "Số bài N5 đã hoàn thành" })).toHaveJSProperty("value", 1);
   await expect(n5.locator("details")).toHaveAttribute("open", "");
   for (const level of [4, 3]) await expect(page.getByRole("region", { name: `N${level}` }).locator("details")).not.toHaveAttribute("open", "");
 
   // AC-3.2: state as text, and the current lesson marked.
   const rows = n5.getByRole("listitem");
-  await expect(rows.nth(0).getByText("Đã xong", { exact: true })).toBeVisible();
+  await expect(rows.nth(0).getByText("Hoàn thành", { exact: true })).toBeVisible();
   await expect(rows.nth(0)).toContainText(`${idsOf(1).length}/${idsOf(1).length}`);
   await expect(rows.nth(1).getByText("Đang học", { exact: true })).toBeVisible();
   await expect(rows.nth(1)).toContainText(`1/${idsOf(2).length}`);
@@ -136,7 +136,7 @@ test("/lessons/[n] selects a tile, previews it and sets the study panel beside t
   await expect(preview).toContainText(`Đang chọn${kana[1].char}${kana[1].romaji}`);
 
   const content = await page.getByRole("heading", { level: 2 }).first().boundingBox();
-  const side = await page.getByRole("progressbar", { name: "Tiến độ bài" }).boundingBox();
+  const side = await page.getByRole("progressbar", { name: "Tiến độ bài học" }).boundingBox();
   if (page.viewportSize()!.width >= DESKTOP_SIDE_BY_SIDE) {
     expect(side!.x).toBeGreaterThan(content!.x + content!.width); // beside, not below
   } else {
@@ -219,8 +219,8 @@ test("/kanji/[char] sets this browser's memory beside the character with one act
   await page.reload();
 
   // AC-4.3: exact box, due text and state label from the seeded card.
-  const memory = page.getByRole("complementary", { name: "Mức nhớ của bạn" });
-  await expect(memory.getByRole("progressbar", { name: "Mức nhớ của bạn" })).toHaveJSProperty("value", 2);
+  const memory = page.getByRole("complementary", { name: "Mức độ ghi nhớ" });
+  await expect(memory.getByRole("progressbar", { name: "Mức độ ghi nhớ" })).toHaveJSProperty("value", 2);
   await expect(memory.getByText("Hộp 2/6 · Đến hạn ôn hôm nay")).toBeVisible();
   await expect(memory.getByText("Đã học", { exact: true })).toBeVisible();
   const amber = page.locator(AMBER);
@@ -238,7 +238,7 @@ test("/kanji/[char] sets this browser's memory beside the character with one act
   await axe();
 
   await page.goto("/kanji/%E4%B8%80"); // 一 has no card yet
-  await expect(page.getByRole("complementary", { name: "Mức nhớ của bạn" })).toContainText("Chưa học. Chữ này vào lịch ôn khi bạn học bài của nó.");
+  await expect(page.getByRole("complementary", { name: "Mức độ ghi nhớ" })).toContainText("Chưa học. Chữ này sẽ được thêm vào lịch ôn khi bạn học bài có chữ đó.");
 });
 
 test("/vocab sums the level's progress in one panel and marks each deck's state in words", async ({ page, axe }) => {
@@ -254,7 +254,7 @@ test("/vocab sums the level's progress in one panel and marks each deck's state 
   await expect(summary.getByRole("progressbar", { name: "Tiến độ" })).toHaveJSProperty("value", 1);
   await expect(summary.getByRole("progressbar", { name: "Tiến độ" })).toHaveJSProperty("max", vocab.length);
   await expect(summary.getByText(`1/${vocab.length} từ đã học`)).toBeVisible();
-  await expect(summary.getByText("1 từ đến hạn hôm nay")).toBeVisible();
+  await expect(summary.getByText("1 từ đến hạn ôn hôm nay")).toBeVisible();
   const amber = page.locator(AMBER);
   await expect(amber).toHaveCount(1);
   await expect(amber).toHaveAttribute("href", "/review?kind=vocab");
@@ -335,7 +335,7 @@ test("/grammar/[slug] lists the other points of its lesson beside the explanatio
 
   // AC-5.4: the side panel links exactly the other points of the same lesson, in content order, plus the one action.
   const side = page.getByRole("complementary", { name: "Học điểm ngữ pháp này" });
-  await expect(side.getByRole("heading", { level: 2 })).toHaveText(`Cũng trong bài ${g.lesson}`);
+  await expect(side.getByRole("heading", { level: 2 })).toHaveText(`Cùng bài ${g.lesson}`);
   const links = side.getByRole("list").getByRole("link");
   await expect(links).toHaveCount(others.length);
   for (const [i, x] of others.entries()) await expect(links.nth(i)).toHaveAttribute("href", `/grammar/${x.slug}`);
@@ -411,9 +411,9 @@ test("reduced motion swaps the faces in place instead of turning the card", asyn
 // Group 7 (AC-7.1, AC-7.2).
 test("/search: a raised input at least 56px tall, a ghost submit and example chips", async ({ page, axe }) => {
   await page.goto("/search");
-  const input = page.getByRole("searchbox", { name: "Tra cứu trong khoá học" });
+  const input = page.getByRole("searchbox", { name: "Tra cứu trong khóa học" });
   expect((await input.boundingBox())!.height).toBeGreaterThanOrEqual(56);
-  await expect(page.getByRole("button", { name: "Tra", exact: true })).toHaveClass(/btnGhost/);
+  await expect(page.getByRole("button", { name: "Tra cứu", exact: true })).toHaveClass(/btnGhost/);
   await expect(page.locator(AMBER)).toHaveCount(0);
   const chips = page.getByRole("list", { name: "Thử:" }).getByRole("link");
   await expect(chips).toHaveText(["たべ", "taberu", "hoc", "日", "は"]);
@@ -447,7 +447,7 @@ test("/search?q=taberu: each kind is a panel, matches are marked, and the summar
 test("/search with no match shows a styled block with the query and examples to try", async ({ page, axe }) => {
   await page.goto("/search?q=zzzqqq");
   await expect(page.getByRole("heading", { name: "Không tìm thấy" })).toBeVisible();
-  await expect(page.getByRole("status")).toHaveText("Không có kết quả cho “zzzqqq”. Thử gõ ngắn hơn, hoặc gõ romaji.");
+  await expect(page.getByRole("status")).toHaveText("Không có kết quả cho “zzzqqq”. Thử nhập từ khóa ngắn hơn hoặc dùng romaji.");
   await expect(page.getByRole("list", { name: "Thử:" }).getByRole("link")).toHaveCount(5);
   await axe();
 });
@@ -460,7 +460,7 @@ test("/search keeps the page and the query when kotoba-be is down, and Thử l�
     await stopBackend();
     await page.goto(`/search?q=${q}`);
     const alert = page.getByRole("alert");
-    await expect(alert.getByRole("heading", { name: "Chưa tra được" })).toBeVisible();
+    await expect(alert.getByRole("heading", { name: "Không thể tra cứu" })).toBeVisible();
     await expect(page.getByRole("searchbox")).toHaveValue(q);
     await expect(page.locator(AMBER)).toHaveCount(1);
     await axe();
@@ -608,8 +608,8 @@ test("the site bar's floating layer casts the float shadow and marks the current
     expect(await shadowOf(here)).toContain("inset");
     expect(await shadowOf(library.getByRole("link", { name: "Bảng chữ cái" }))).toBe("none");
   } else {
-    await page.getByRole("button", { name: "Menu" }).click();
-    const sheet = page.getByRole("navigation", { name: "Chính" });
+    await page.getByRole("button", { name: "Danh mục" }).click();
+    const sheet = page.getByRole("navigation", { name: "Điều hướng chính" });
     await expect(sheet).toBeVisible();
     expect(await shadowOf(sheet)).toContain("48px");
     expect(await groundOf(sheet)).toBe(surface2);
@@ -631,8 +631,8 @@ test("the outage page hangs 停電 on the same unlit board, with one way to retr
     await page.context().addCookies([{ name: "kotoba.session", value: "outage-probe", url: baseURL }]);
     await stopBackend();
     await page.goto("/kanji");
-    await expect(page.getByRole("alert").getByRole("heading", { level: 1 })).toHaveText("Mất điện một lúc");
-    await expect(page).toHaveTitle("Mất điện một lúc");
+    await expect(page.getByRole("alert").getByRole("heading", { level: 1 })).toHaveText("Không thể kết nối máy chủ");
+    await expect(page).toHaveTitle("Không thể kết nối máy chủ");
     const mark = page.locator(".statusMark");
     await expect(mark).toHaveText("停電");
     expect(await shadowOf(mark)).toContain("inset");

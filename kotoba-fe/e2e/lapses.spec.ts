@@ -48,14 +48,14 @@ test("a guest who misses a word twice sees it under Hay sai after sign-up and ca
   await expect(page.getByText(`Còn ${LESSON_SIZE} mục · Từ vựng ${LESSON_SIZE}`)).toBeVisible();
   await axe();
   await missCurrentCard(page);
-  await expect(page.getByText(`${TARGET.word}: quay lại cuối hàng đợi hôm nay.`)).toBeVisible();
+  await expect(page.getByText(`${TARGET.word}: được đưa về cuối danh sách ôn tập hôm nay.`)).toBeVisible();
   await expect.poll(() => lapsesOf(page, TARGET.id)).toBe(1);
 
   // Second miss: the word is due again, so after a reload it leads the queue.
   await page.goto(review);
   await expect(page.getByText(`Còn ${LESSON_SIZE} mục · Từ vựng ${LESSON_SIZE}`)).toBeVisible();
   await missCurrentCard(page);
-  await expect(page.getByText(`${TARGET.word}: quay lại cuối hàng đợi hôm nay.`)).toBeVisible();
+  await expect(page.getByText(`${TARGET.word}: được đưa về cuối danh sách ôn tập hôm nay.`)).toBeVisible();
   await expect.poll(() => lapsesOf(page, TARGET.id)).toBe(2);
 
   // Signing up pushes the guest deck; lapses must survive the round trip through the account.
@@ -105,13 +105,13 @@ test("a signed-in learner with no weak items has no Hay sai block", async ({ pag
 test("/review?weak=1 on an empty deck shows the empty text, and other weak values are ignored", async ({ page, axe }) => {
   const be = watchBackend(page);
   await page.goto("/review?weak=1");
-  await expect(page.getByText("Chưa có mục nào hay sai")).toBeVisible();
+  await expect(page.getByText("Chưa có mục nào bạn thường trả lời sai")).toBeVisible();
   await expect(page.getByRole("button", { name: "Xem đáp án" })).toHaveCount(0);
   await axe();
 
   // Phase 18: an ignored weak value is plain /review, today's session with the new items of lesson 1.
   await page.goto("/review?weak=0");
   await expect(page.getByText("Còn 10 mục · Kana 10")).toBeVisible();
-  await expect(page.getByText("Chưa có mục nào hay sai")).toHaveCount(0);
+  await expect(page.getByText("Chưa có mục nào bạn thường trả lời sai")).toHaveCount(0);
   expect(be).toEqual([]);
 });

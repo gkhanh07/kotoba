@@ -12,11 +12,11 @@ const MAX_ONE_LINE_PX = 40;
 test("the landing page states the real rule for known items", async ({ page, axe }, info) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Chỉ tính là thuộc khi bạn nhớ thật." })).toBeVisible();
-  await expect(page.getByText("sau 6 lần ôn đúng liên tiếp, cách nhau 1, 3, 7, 14, 30 ngày")).toBeVisible();
+  await expect(page.getByText("sau 6 lần ôn đúng liên tiếp, với các khoảng cách ôn là 1, 3, 7, 14, 30 ngày")).toBeVisible();
   const known = page.getByRole("img", { name: "6 trên 6 lần ôn đúng liên tiếp" });
   await expect(known).toBeVisible();
   await expect(known.locator("i")).toHaveCount(6);
-  await expect(page.getByText("Ví dụ: đủ 6 đèn sáng là một chữ đã thuộc.")).toBeVisible();
+  await expect(page.getByText("Khi đủ 6 đèn sáng, chữ đó được tính là đã thuộc.")).toBeVisible();
   await page.screenshot({ path: info.outputPath(`landing-${info.project.name}.png`), fullPage: true });
   // Six lamps must not eat the right margin, at either side of the 900px layout change. The heading marks the margin.
   const width = info.project.name === "mobile" ? 360 : 1440;
@@ -35,11 +35,11 @@ test("the landing page states the real rule for known items", async ({ page, axe
 
 test("the landing page opens every line and says an account is optional", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Ba loại chữ trên mỗi biển hiệu." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Ba loại chữ trong tiếng Nhật." })).toBeVisible();
   await expect(page.getByRole("link", { name: /^漢字 Kanji/ })).toHaveAttribute("href", "/kanji");
   await expect(page.getByRole("link", { name: /^N5 / })).toHaveAttribute("href", "/lessons");
   await expect(page.getByText("Sắp có")).toHaveCount(0);
-  await expect(page.getByText("Không cần tài khoản để luyện tập. Có tài khoản thì tiến độ đồng bộ giữa các thiết bị.")).toBeVisible();
+  await expect(page.getByText("Không cần tài khoản để luyện tập. Đăng nhập để đồng bộ tiến độ giữa các thiết bị.")).toBeVisible();
 });
 
 test("an N5 dashboard shows the N5 totals", async ({ page, axe }, info) => {

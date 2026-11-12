@@ -67,7 +67,7 @@ describe("/review?weak=1", () => {
     expect(screen.getByText("あ: ôn lại sau 3 ngày.")).toBeInTheDocument();
     await answer(user, true);
     expect(screen.getByText("い: ôn lại sau 8 ngày.")).toBeInTheDocument();
-    expect(screen.getByText("Xong hàng đợi hôm nay.")).toBeInTheDocument();
+    expect(screen.getByText("Đã ôn xong các mục hôm nay.")).toBeInTheDocument();
   });
 
   it("does not ask the due item that has only one lapse or the item with no card", async () => {
@@ -84,7 +84,7 @@ describe("/review?weak=1", () => {
     const { user } = mount({ weak: true });
     await screen.findByText("Còn 4 mục · Kana 2 · Kanji 1 · Từ vựng 1");
     await answer(user, false);
-    expect(screen.getByText("日: quay lại cuối hàng đợi hôm nay.")).toBeInTheDocument();
+    expect(screen.getByText("日: được đưa về cuối danh sách ôn tập hôm nay.")).toBeInTheDocument();
     expect(screen.getByText("Còn 4 mục · Kana 2 · Kanji 1 · Từ vựng 1")).toBeInTheDocument();
     expect(stored()["kanji:日"]).toEqual({ box: 0, due: "2026-11-02", at: NOW, lapses: 5 });
   });
@@ -95,32 +95,32 @@ describe("/review?weak=1", () => {
     expect(await screen.findByText("Còn 1 mục · Từ vựng 1")).toBeInTheDocument();
     await answer(user, true);
     expect(screen.getByText("水: ôn lại sau 7 ngày.")).toBeInTheDocument();
-    expect(screen.getByText("Xong hàng đợi hôm nay.")).toBeInTheDocument();
+    expect(screen.getByText("Đã ôn xong các mục hôm nay.")).toBeInTheDocument();
   });
 
   it("shows the empty panel when nothing reached 2 lapses, even if items are due", async () => {
     seed({ "vocab:本": { box: 0, due: "2026-11-02", at: 1, lapses: 1 }, "kanji:日": { box: 0, due: "2026-11-02", at: 1 } });
     mount({ weak: true });
-    expect(await screen.findByText("Chưa có mục nào hay sai")).toBeInTheDocument();
+    expect(await screen.findByText("Chưa có mục nào bạn thường trả lời sai")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Xem đáp án" })).not.toBeInTheDocument();
   });
 
   it("shows the empty panel for a deck with no cards at all", async () => {
     seed({});
     mount({ weak: true });
-    expect(await screen.findByText("Chưa có mục nào hay sai")).toBeInTheDocument();
+    expect(await screen.findByText("Chưa có mục nào bạn thường trả lời sai")).toBeInTheDocument();
   });
 
   it("shows the empty panel when the chosen kind has no weak item", async () => {
     seed({ "hiragana:a": WEAK_DECK["hiragana:a"], "vocab:本": WEAK_DECK["vocab:本"] });
     mount({ weak: true, kind: "vocab" });
-    expect(await screen.findByText("Chưa có mục nào hay sai")).toBeInTheDocument();
+    expect(await screen.findByText("Chưa có mục nào bạn thường trả lời sai")).toBeInTheDocument();
   });
 
   it("shows the empty panel for a deck saved before lapses existed", async () => {
     seed({ "vocab:水": { box: 1, due: "2026-11-09", at: 1 }, "kanji:日": { box: 0, due: "2026-11-02", at: 1 } });
     mount({ weak: true });
-    expect(await screen.findByText("Chưa có mục nào hay sai")).toBeInTheDocument();
+    expect(await screen.findByText("Chưa có mục nào bạn thường trả lời sai")).toBeInTheDocument();
   });
 });
 
@@ -129,7 +129,7 @@ describe("/review without weak", () => {
     seed(WEAK_DECK);
     mount();
     expect(await screen.findByText("Còn 2 mục · Kanji 1 · Từ vựng 1")).toBeInTheDocument();
-    expect(screen.queryByText("Chưa có mục nào hay sai")).not.toBeInTheDocument();
+    expect(screen.queryByText("Chưa có mục nào bạn thường trả lời sai")).not.toBeInTheDocument();
   });
 });
 
@@ -250,7 +250,7 @@ describe("/review card directions", () => {
     await screen.findByText("Còn 2 mục · Từ vựng 2");
     await answer(user, false);
     expect(stored()).toEqual({ "vocab:水": { box: 0, due: "2026-11-02", at: NOW, lapses: 1 } });
-    expect(screen.getByText("水: quay lại cuối hàng đợi hôm nay.")).toBeInTheDocument();
+    expect(screen.getByText("水: được đưa về cuối danh sách ôn tập hôm nay.")).toBeInTheDocument();
   });
 
   it("does not call Math.random while rendering on the server", () => {
@@ -263,7 +263,7 @@ describe("/review card directions", () => {
     const spy = rand(0.5);
     seed({ "vocab:水": { box: 1, due: "2026-11-09", at: 1 } });
     render(<ReviewApp items={DIR_ITEMS.slice(0, 1)} lang="vi" kind="vocab" />);
-    expect(await screen.findByText("Hiện chưa có mục nào đến hạn.")).toBeInTheDocument();
+    expect(await screen.findByText("Hiện chưa có mục nào đến hạn ôn.")).toBeInTheDocument();
     expect(spy).not.toHaveBeenCalled();
   });
 });
@@ -282,7 +282,7 @@ describe("/review daily session", () => {
   it("gives a new learner the first 10 new items of lesson 1", async () => {
     open();
     expect(await screen.findByText("Còn 10 mục · Kana 10")).toBeInTheDocument();
-    expect(screen.getAllByText("Mục đến hạn và mục mới của bài 1").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Mục đến hạn ôn và mục mới của bài 1").length).toBeGreaterThan(0);
     expect(frontText()).toBe("k0");
   });
 
@@ -316,15 +316,15 @@ describe("/review daily session", () => {
     localStorage.setItem(DAILY, JSON.stringify({ day: "2026-11-02", ids: done }));
     open();
     expect(await screen.findByText("Còn 1 mục · Từ vựng 1")).toBeInTheDocument();
-    expect(screen.getAllByText("Mọi mục đến hạn").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Tất cả các mục đến hạn ôn").length).toBeGreaterThan(0);
   });
 
   it("keeps filtered queues as they were: kind and weak bring no new items", async () => {
     const { unmount } = open({ kind: "kana" });
-    expect(await screen.findByText("Chưa có gì để ôn. Học một bài để bắt đầu lịch ôn.")).toBeInTheDocument();
+    expect(await screen.findByText("Chưa có nội dung để ôn. Hãy học một bài để bắt đầu lịch ôn tập.")).toBeInTheDocument();
     unmount();
     open({ weak: true });
-    expect(await screen.findByText("Chưa có mục nào hay sai")).toBeInTheDocument();
+    expect(await screen.findByText("Chưa có mục nào bạn thường trả lời sai")).toBeInTheDocument();
   });
 
   it("ends with the items, first-time accuracy and minutes, and has nothing left once the miss was answered right", async () => {
@@ -338,25 +338,25 @@ describe("/review daily session", () => {
     vi.setSystemTime(NOW + 60_000);
     await answer(user, true); // k9
     await answer(user, true); // k8 again
-    expect(screen.getByText("Xong hàng đợi hôm nay.")).toBeInTheDocument();
-    expect(screen.getByText("3 mục · đúng 67% ngay lần đầu · 2 phút")).toBeInTheDocument();
+    expect(screen.getByText("Đã ôn xong các mục hôm nay.")).toBeInTheDocument();
+    expect(screen.getByText("3 mục · 67% đúng ở lần trả lời đầu tiên · 2 phút")).toBeInTheDocument();
     expect(JSON.parse(localStorage.getItem(DAILY)!)).toEqual({ day: "2026-11-02", ids: [...done, "hiragana:k7", "hiragana:k8", "hiragana:k9"] });
     unmount();
 
     // k8 was missed (box 0, due today) then right (box 1, due tomorrow): nothing due, allowance used.
     open();
-    expect(await screen.findByText("Hiện chưa có mục nào đến hạn.")).toBeInTheDocument();
+    expect(await screen.findByText("Hiện chưa có mục nào đến hạn ôn.")).toBeInTheDocument();
   });
 
   it("keeps a lesson queue as it was: only that lesson, no daily new items", async () => {
     render(<ReviewApp items={DAY_ITEMS} lang="vi" lesson={{ n: 2, title: "Bài 2" }} />);
     expect(await screen.findByText("Còn 1 mục · Từ vựng 1")).toBeInTheDocument();
-    expect(screen.queryByText("Mục đến hạn và mục mới của bài 1")).not.toBeInTheDocument();
+    expect(screen.queryByText("Mục đến hạn ôn và mục mới của bài 1")).not.toBeInTheDocument();
   });
 
   it("shows no stats line when the queue was empty from the start", async () => {
     open({ kind: "kanji" });
-    expect(await screen.findByText("Chưa có gì để ôn. Học một bài để bắt đầu lịch ôn.")).toBeInTheDocument();
-    expect(screen.queryByText(/ngay lần đầu/)).not.toBeInTheDocument();
+    expect(await screen.findByText("Chưa có nội dung để ôn. Hãy học một bài để bắt đầu lịch ôn tập.")).toBeInTheDocument();
+    expect(screen.queryByText(/đúng ở lần trả lời đầu tiên/)).not.toBeInTheDocument();
   });
 });

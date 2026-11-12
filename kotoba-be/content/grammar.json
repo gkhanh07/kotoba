@@ -322,7 +322,7 @@
     "title": { "vi": "Tính từ đuôi い", "en": "い-adjectives" },
     "structure": "adj-い + N / adj-い です / adj-くない です",
     "explain": {
-      "vi": "Tính từ đuôi い đứng thẳng trước danh từ. Phủ định: bỏ い, thêm くないです.",
+      "vi": "Tính từ đuôi い đứng trực tiếp trước danh từ. Phủ định: bỏ い, thêm くないです.",
       "en": "An い-adjective goes straight before a noun. Negative: drop い and add くないです."
     },
     "examples": [
@@ -523,7 +523,7 @@
     "title": { "vi": "Được ai đó làm ~ cho", "en": "Have someone do ~ for you" },
     "structure": "A は B に V-て もらいます",
     "explain": {
-      "vi": "Người nhận (thường là người nói) là chủ ngữ, người làm đi với に. Cùng một việc với てくれる nhưng nhìn từ phía người nhận, có khi mang ý mình nhờ người ta làm.",
+      "vi": "Người nhận (thường là người nói) là chủ ngữ, người làm đi với に. Mẫu này diễn tả cùng sự việc như てくれる nhưng từ góc nhìn của người nhận, đôi khi hàm ý người nhận đã nhờ người kia làm giúp.",
       "en": "The receiver (usually the speaker) is the subject and the doer takes に. It is the same event as てくれる seen from the receiver's side, sometimes with the sense that you asked for it."
     },
     "examples": [
@@ -702,7 +702,7 @@
     "title": { "vi": "Có ~ hay không", "en": "Whether or not ~" },
     "structure": "thể thường + か どうか (A-な, N bỏ だ)",
     "explain": {
-      "vi": "Đưa một câu hỏi có/không vào trong câu lớn, đi với các động từ như 知る, わかる, 聞く.",
+      "vi": "Lồng một câu hỏi có/không vào một câu khác, đi với các động từ như 知る, わかる, 聞く.",
       "en": "Puts a yes-or-no question inside a larger sentence, with verbs such as 知る, わかる and 聞く."
     },
     "examples": [
@@ -736,7 +736,7 @@
       "en": "Lists several reasons or features, hinting that there are more. It usually leads to a conclusion at the end."
     },
     "examples": [
-      { "ja": "この 町は しずかだし、駅も 近いし、とても いい 所です。", "vi": "Thị trấn này vừa yên tĩnh, ga lại gần, là một nơi rất tốt.", "en": "This town is quiet and close to the station; it is a very nice place." },
+      { "ja": "この 町は しずかだし、駅も 近いし、とても いい 所です。", "vi": "Thị trấn này vừa yên tĩnh vừa gần ga, là một nơi rất tốt.", "en": "This town is quiet and close to the station; it is a very nice place." },
       { "ja": "きょうは 雨だし、寒いし、どこへも 行きたくないです。", "vi": "Hôm nay vừa mưa vừa lạnh, tôi chẳng muốn đi đâu.", "en": "It's raining and cold today, so I don't want to go anywhere." }
     ],
     "reviewed": false
@@ -989,7 +989,7 @@
     "title": { "vi": "Tôn kính ngữ お〜に なる", "en": "Honorific お〜に なる" },
     "structure": "お + V (bỏ ます) + に なります",
     "explain": {
-      "vi": "Dùng để nói về hành động của người bề trên hoặc khách, nâng người đó lên. Một số động từ có dạng riêng: いらっしゃる, めしあがる, おっしゃる, ごらんに なる.",
+      "vi": "Dùng để nói về hành động của người bề trên hoặc khách nhằm thể hiện sự tôn kính. Một số động từ có dạng riêng: いらっしゃる, めしあがる, おっしゃる, ごらんに なる.",
       "en": "Used for the actions of a superior or a customer, to raise that person. Some verbs have their own forms: いらっしゃる, めしあがる, おっしゃる, ごらんに なる."
     },
     "examples": [
@@ -1005,7 +1005,7 @@
     "title": { "vi": "Khiêm nhường ngữ お〜する", "en": "Humble お〜する" },
     "structure": "お + V (bỏ ます) + します",
     "explain": {
-      "vi": "Dùng cho hành động của chính mình làm cho người bề trên, hạ mình xuống để tỏ lòng kính trọng. Một số động từ có dạng riêng: まいる, いたす, もうす, うかがう, いただく.",
+      "vi": "Dùng khi nói khiêm nhường về hành động mình làm cho người bề trên để tỏ lòng kính trọng. Một số động từ có dạng riêng: まいる, いたす, もうす, うかがう, いただく.",
       "en": "Used for your own actions done for a superior, lowering yourself to show respect. Some verbs have their own forms: まいる, いたす, もうす, うかがう, いただく."
     },
     "examples": [
@@ -1146,9 +1146,9 @@
       "en": "Says what to do in a situation that may arise; common in instructions and rules."
     },
     "examples": [
-      { "ja": "雨の 場合は、試合は 中止です。", "vi": "Trường hợp trời mưa, trận đấu sẽ bị hủy.", "en": "In case of rain, the match is cancelled." },
+      { "ja": "雨の 場合は、試合は 中止です。", "vi": "Nếu trời mưa, trận đấu sẽ bị hủy.", "en": "In case of rain, the match is cancelled." },
       { "ja": "おくれる 場合は、れんらくして ください。", "vi": "Nếu đến muộn thì hãy liên lạc.", "en": "If you are going to be late, please let us know." },
-      { "ja": "火事の 場合は、エレベーターを 使わないで ください。", "vi": "Trường hợp hỏa hoạn, đừng dùng thang máy.", "en": "In case of fire, do not use the lift." }
+      { "ja": "火事の 場合は、エレベーターを 使わないで ください。", "vi": "Khi có hỏa hoạn, đừng dùng thang máy.", "en": "In case of fire, do not use the lift." }
     ],
     "reviewed": false
   },
@@ -1377,8 +1377,8 @@
       "en": "The result varies with N; the second part often has ちがう or 変わる. に よっては: in some cases ~."
     },
     "examples": [
-      { "ja": "曜日に よって、電車の 時間が 変わります。", "vi": "Tùy thứ trong tuần mà giờ tàu thay đổi.", "en": "Train times change depending on the day of the week." },
-      { "ja": "国に よって、車が 走る 側が ちがう。", "vi": "Tùy từng nước mà phía đường xe chạy khác nhau.", "en": "Which side cars drive on differs from country to country." },
+      { "ja": "曜日に よって、電車の 時間が 変わります。", "vi": "Giờ tàu thay đổi tùy theo ngày trong tuần.", "en": "Train times change depending on the day of the week." },
+      { "ja": "国に よって、車が 走る 側が ちがう。", "vi": "Xe chạy bên nào của đường là tùy từng nước.", "en": "Which side cars drive on differs from country to country." },
       { "ja": "天気に よっては、バスが 止まる ことも あります。", "vi": "Tùy thời tiết, có khi xe buýt cũng ngừng chạy.", "en": "Depending on the weather, the buses sometimes stop." }
     ],
     "reviewed": false
@@ -1403,7 +1403,7 @@
     "title": { "vi": "Muốn (người khác) ~", "en": "Want someone to ~" },
     "structure": "N に + V-て ほしい; V-ないで ほしい",
     "explain": {
-      "vi": "Nói mong muốn người khác làm (hoặc không làm) một việc. Người được mong muốn đi với に.",
+      "vi": "Nói mong muốn người khác làm (hoặc không làm) một việc. Người thực hiện hành động được đánh dấu bằng に.",
       "en": "Says you want someone else to do (or not do) something. That person takes に."
     },
     "examples": [
@@ -1423,9 +1423,9 @@
       "en": "Reports a request or instruction indirectly. 言う can be replaced by たのむ, 伝える or 注意する."
     },
     "examples": [
-      { "ja": "母に 早く 帰る ように 言われた。", "vi": "Tôi bị mẹ bảo phải về sớm.", "en": "My mother told me to come home early." },
+      { "ja": "母に 早く 帰る ように 言われた。", "vi": "Mẹ bảo tôi phải về sớm.", "en": "My mother told me to come home early." },
       { "ja": "お客さんが 来たら、こちらで 待つ ように 伝えて ください。", "vi": "Nếu khách đến thì nhắn họ chờ ở đây giúp tôi.", "en": "When the guest arrives, please tell them to wait here." },
-      { "ja": "医者に お酒を 飲まない ように 言われました。", "vi": "Tôi bị bác sĩ dặn không được uống rượu.", "en": "The doctor told me not to drink alcohol." }
+      { "ja": "医者に お酒を 飲まない ように 言われました。", "vi": "Bác sĩ dặn tôi không được uống rượu.", "en": "The doctor told me not to drink alcohol." }
     ],
     "reviewed": false
   },
@@ -1514,9 +1514,9 @@
       "en": "Adds one more thing to what was said; the second part usually has も. Spoken: だけじゃなく."
     },
     "examples": [
-      { "ja": "この 映画は 子どもだけでなく、大人も 楽しめる。", "vi": "Bộ phim này không chỉ trẻ em mà người lớn cũng xem vui.", "en": "Not only children but adults too can enjoy this film." },
+      { "ja": "この 映画は 子どもだけでなく、大人も 楽しめる。", "vi": "Không chỉ trẻ em mà người lớn cũng có thể thấy thích thú khi xem bộ phim này.", "en": "Not only children but adults too can enjoy this film." },
       { "ja": "彼女は 歌が 上手な だけでなく、ダンスも できる。", "vi": "Cô ấy không chỉ hát hay mà còn biết nhảy.", "en": "She not only sings well but can also dance." },
-      { "ja": "音楽は 聞く だけでなく、自分で えんそうするのも 好きです。", "vi": "Âm nhạc thì tôi không chỉ thích nghe mà còn thích tự chơi.", "en": "I like not only listening to music but also playing it myself." }
+      { "ja": "音楽は 聞く だけでなく、自分で えんそうするのも 好きです。", "vi": "Với âm nhạc, tôi không chỉ thích nghe mà còn thích tự chơi nhạc.", "en": "I like not only listening to music but also playing it myself." }
     ],
     "reviewed": false
   },
@@ -1594,7 +1594,7 @@
     "examples": [
       { "ja": "体調が 悪いので、今日は 早く 帰らせて いただけませんか。", "vi": "Tôi không khỏe nên hôm nay cho tôi về sớm được không ạ?", "en": "I am not feeling well; may I go home early today?" },
       { "ja": "部長に 会議で 発表させて もらいました。", "vi": "Tôi được trưởng phòng cho phát biểu trong cuộc họp.", "en": "The department head let me give a presentation at the meeting." },
-      { "ja": "では、説明させて いただきます。", "vi": "Vậy xin phép tôi được trình bày.", "en": "Now, allow me to explain." }
+      { "ja": "では、説明させて いただきます。", "vi": "Vậy tôi xin phép được trình bày.", "en": "Now, allow me to explain." }
     ],
     "note": { "vi": "Ghép thể sai khiến (N4) với て もらう (N4).", "en": "Combines the causative (N4) with て もらう (N4)." },
     "reviewed": false
@@ -1608,9 +1608,9 @@
       "en": "Names the topic of speech, questions or documents. More formal than について."
     },
     "examples": [
-      { "ja": "商品に 関する 質問は、こちらで 受け付けて います。", "vi": "Câu hỏi liên quan đến sản phẩm được tiếp nhận ở đây.", "en": "Questions about our products are handled here." },
+      { "ja": "商品に 関する 質問は、こちらで 受け付けて います。", "vi": "Chúng tôi tiếp nhận câu hỏi về sản phẩm tại đây.", "en": "Questions about our products are handled here." },
       { "ja": "料金に 関して、お客さまから 問い合わせが ありました。", "vi": "Có khách hàng hỏi về giá tiền.", "en": "A customer made an enquiry about the price." },
-      { "ja": "新しい 店の 計画に 関して、意見を 聞かせて ください。", "vi": "Hãy cho tôi nghe ý kiến về kế hoạch cửa hàng mới.", "en": "Please tell me your opinion about the plan for the new shop." }
+      { "ja": "新しい 店の 計画に 関して、意見を 聞かせて ください。", "vi": "Hãy cho tôi biết ý kiến về kế hoạch cho cửa hàng mới.", "en": "Please tell me your opinion about the plan for the new shop." }
     ],
     "reviewed": false
   },
@@ -1625,7 +1625,7 @@
     "examples": [
       { "ja": "国の 決定に 対して、反対の 意見が 多い。", "vi": "Có nhiều ý kiến phản đối quyết định của nhà nước.", "en": "There are many opinions against the government decision." },
       { "ja": "先生に 対して、そんな 言い方を しては いけません。", "vi": "Không được ăn nói như thế với thầy giáo.", "en": "You must not speak to your teacher like that." },
-      { "ja": "兄が 外で 遊ぶのが 好きなのに 対して、弟は 家で 本を 読むのが 好きだ。", "vi": "Trái với anh trai thích chơi ngoài trời, em trai lại thích ở nhà đọc sách.", "en": "While the older brother likes playing outside, the younger one likes reading at home." }
+      { "ja": "兄が 外で 遊ぶのが 好きなのに 対して、弟は 家で 本を 読むのが 好きだ。", "vi": "Anh trai thích chơi ngoài trời, còn em trai lại thích ở nhà đọc sách.", "en": "While the older brother likes playing outside, the younger one likes reading at home." }
     ],
     "note": { "vi": "Khác にとって (bài 57): にとって là theo góc nhìn của N; に対して là hành động, thái độ hướng tới N.", "en": "Unlike にとって (lesson 57), which is from N's point of view, に対して is an action or attitude aimed at N." },
     "reviewed": false

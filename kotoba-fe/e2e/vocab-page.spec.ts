@@ -68,7 +68,7 @@ test("the word page shows this browser's schedule for the word", async ({ page }
   await page.clock.setFixedTime(new Date("2026-11-02T02:00:00Z"));
   await page.addInitScript(() => localStorage.setItem("kotoba.srs.v1", JSON.stringify({ "vocab:食べる": { box: 2, due: "2026-11-05", at: 1, lapses: 3 } })));
   await page.goto(TABERU);
-  await expect(fact(page, "Lịch ôn")).toHaveText("Hộp 2/6 · đến hạn 5/11/2026 · sai 3 lần");
+  await expect(fact(page, "Lịch ôn")).toHaveText("Hộp 2/6 · đến hạn ôn ngày 5/11/2026 · sai 3 lần");
 });
 
 test("a kanji page lists its look-alike kanji, and one without any shows none", async ({ page, axe }, info) => {
@@ -91,7 +91,7 @@ test("a kanji page lists its look-alike kanji, and one without any shows none", 
 test("a Japanese-made kanji says it has no Hán Việt reading (BUG-009)", async ({ page, axe }, info) => {
   await page.goto("/kanji/" + encodeURIComponent("込"));
   await expect(page).toHaveTitle("込 · Kotoba");
-  await expect(page.getByText("Chữ do Nhật tạo, không có âm Hán Việt")).toBeVisible();
+  await expect(page.getByText("Chữ do người Nhật tạo ra, không có âm Hán Việt")).toBeVisible();
   await axe();
   await page.screenshot({ path: info.outputPath(`kanji-no-hv-${info.project.name}.png`), fullPage: true });
 });

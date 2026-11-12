@@ -46,10 +46,10 @@ const en = {
 };
 
 const vi: typeof en = {
-  title: "Thẻ từ vựng", lede: "Mỗi lần một từ. Nhớ lại nghĩa, lật thẻ để kiểm tra, rồi tự chấm thật lòng.",
+  title: "Thẻ từ vựng", lede: "Học từng từ: nhớ lại nghĩa, lật thẻ để kiểm tra, rồi tự đánh giá mức độ ghi nhớ.",
   deck: (l) => `Tất cả từ ${l}`, speak: "Đọc", flip: "Lật thẻ", front: "Xem từ vựng",
   reading: "Cách đọc", meaning: "Nghĩa",
-  example: "Ví dụ", notes: "Ghi chú", grade: "Bạn nhớ từ này chưa?", gradeHint: "Lật thẻ trước, rồi tự chấm.",
+  example: "Ví dụ", notes: "Ghi chú", grade: "Bạn nhớ từ này chưa?", gradeHint: "Lật thẻ để xem đáp án, rồi đánh giá mức độ ghi nhớ.",
   missed: "Chưa nhớ", knew: "Nhớ rồi", previous: "Thẻ trước",
   next: "Thẻ sau", shuffle: "Trộn thẻ", restart: "Học lại từ đầu", progress: "Tiến độ thẻ",
   stateNone: "Chưa học", stateDue: "Đến hạn ôn", stateKnown: "Đã thuộc",
@@ -58,7 +58,7 @@ const vi: typeof en = {
   gradedEarly: (word) => `${word} chưa đến hạn nên lịch ôn giữ nguyên.`,
   gradedKnown: (word) => `Bạn đã thuộc ${word}.`,
   gradedHit: (word, days) => `${word}: ôn lại ${days === 1 ? "ngày mai" : `sau ${days} ngày`}.`,
-  saved: "Lịch ôn được lưu trên trình duyệt này và đồng bộ khi bạn đăng nhập. Học lại từ đầu chỉ đổi thứ tự thẻ.",
+  saved: "Lịch ôn được lưu trên trình duyệt này và đồng bộ khi bạn đăng nhập. Học lại từ đầu chỉ thay đổi thứ tự thẻ.",
   warning: "Không thể đọc hoặc lưu tiến độ trên trình duyệt này. Bạn vẫn có thể học trong phiên này.",
   lesson: (n, title) => `Bài ${n} · ${title}`,
   end: "Đã đến thẻ cuối. Học lại hoặc trộn thẻ để luyện thêm.", empty: "Bộ thẻ này chưa có từ vựng.",

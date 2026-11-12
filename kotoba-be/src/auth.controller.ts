@@ -108,7 +108,7 @@ export class AuthController {
     await this.mailer.send(
       user.email,
       'Đặt lại mật khẩu Kotoba',
-      `Mở link sau trong 30 phút để đặt mật khẩu mới:\n${link}\n\nNếu bạn không yêu cầu, hãy bỏ qua email này.`,
+      `Mở liên kết dưới đây trong vòng 30 phút để đặt mật khẩu mới:\n${link}\n\nNếu bạn không yêu cầu đặt lại mật khẩu, hãy bỏ qua email này.`,
     );
   }
 

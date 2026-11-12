@@ -4,6 +4,7 @@ import { accountText } from "./account";
 import { flashcardText } from "./flashcards";
 import { clientLang, dict, isLang, LANG_COOKIE } from "./i18n";
 import { FILTERS, KINDS, libraryText } from "./library";
+import { testText } from "./testText";
 
 const ARGS = [[0, 0, 0], [1, 1, 1], [2, 2, 2], ["w", 1, 2]];
 
@@ -91,5 +92,36 @@ describe("accountText exact strings", () => {
   it("formats minutes in both languages", () => {
     expect(accountText.en.onboarding.minutesUnit(15)).toBe("15 min");
     expect(accountText.vi.onboarding.minutesUnit(15)).toBe("15 phút");
+  });
+});
+
+describe("Vietnamese guidance and warnings", () => {
+  it("describes missing pages and connection failures directly", () => {
+    expect(dict("vi").notFound.body).toBe("Trang bạn tìm không tồn tại.");
+    expect(dict("vi").down.title).toBe("Không thể kết nối máy chủ");
+  });
+
+  it("names the content being loaded", () => {
+    expect(dict("vi").status.loading).toBe("Đang tải bảng chữ…");
+  });
+
+  it("explains why a reset link cannot be used and how to continue", () => {
+    expect(accountText.vi.errors.token).toBe("Liên kết đã hết hạn hoặc đã được sử dụng. Hãy yêu cầu liên kết mới.");
+  });
+
+  it("explains onboarding preferences can be changed later", () => {
+    expect(accountText.vi.onboarding.lede).toBe("Chọn mục tiêu và thời lượng học phù hợp với bạn. Bạn có thể thay đổi sau.");
+  });
+
+  it("explains the review scope and self-assessment sequence", () => {
+    expect(libraryText.vi.review.lede).toBe("Ôn kana, kanji và từ vựng đến hạn hôm nay. Nhớ lại đáp án, lật thẻ để kiểm tra, rồi tự đánh giá mức độ ghi nhớ.");
+  });
+
+  it("warns that submitted answers cannot be changed", () => {
+    expect(testText.vi.confirmBody).toBe("Bạn không thể sửa đáp án sau khi nộp bài.");
+  });
+
+  it("warns that an unsaved attempt is lost on reload or tab close", () => {
+    expect(testText.vi.storageWarn).toBe("Trình duyệt không cho phép lưu bài làm. Bạn vẫn có thể làm bài, nhưng bài làm sẽ mất nếu tải lại trang hoặc đóng tab.");
   });
 });

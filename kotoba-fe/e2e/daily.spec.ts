@@ -33,7 +33,7 @@ test("a new guest gets 10 new kana of lesson 1, and after one pass only the miss
   await page.clock.setFixedTime(NOW);
   await page.goto("/review");
   await expect(page.getByText(`Còn ${NEW_PER_DAY} mục · Kana ${NEW_PER_DAY}`)).toBeVisible();
-  await expect(page.getByText("Mục đến hạn và mục mới của bài 1").first()).toBeVisible();
+  await expect(page.getByText("Mục đến hạn ôn và mục mới của bài 1").first()).toBeVisible();
   await axe();
 
   // One pass over the 10 new items, missing the 1st and the 3rd.
@@ -47,13 +47,13 @@ test("a new guest gets 10 new kana of lesson 1, and after one pass only the miss
   // Reopen: the allowance is used, so only the two misses (due today) are asked.
   await page.goto("/review");
   await expect(page.getByText("Còn 2 mục · Kana 2")).toBeVisible();
-  await expect(page.getByText("Mọi mục đến hạn").first()).toBeVisible();
+  await expect(page.getByText("Tất cả các mục đến hạn ôn").first()).toBeVisible();
   for (const k of missed) {
     await expect(front(page)).toHaveText(k.char);
     await grade(page, true);
   }
-  await expect(page.getByText("Xong hàng đợi hôm nay.")).toBeVisible();
-  await expect(page.getByText("2 mục · đúng 100% ngay lần đầu · 1 phút")).toBeVisible();
+  await expect(page.getByText("Đã ôn xong các mục hôm nay.")).toBeVisible();
+  await expect(page.getByText("2 mục · 100% đúng ở lần trả lời đầu tiên · 1 phút")).toBeVisible();
   expect(await hasHorizontalScroll(page)).toBe(false);
   await axe();
   expect(be).toEqual([]);

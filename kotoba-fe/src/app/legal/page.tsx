@@ -23,17 +23,17 @@ const TEXT: Record<Lang, { title: string; updated: string; sections: { id: strin
         title: "Quyền riêng tư",
         body: (
           <>
-            <p>Bạn không cần tài khoản để học. Khi chưa đăng nhập, tiến độ chỉ nằm trong trình duyệt của bạn (localStorage) và không gửi đi đâu.</p>
+            <p>Bạn không cần tài khoản để học. Khi chưa đăng nhập, tiến độ chỉ được lưu trong trình duyệt của bạn (localStorage) và không được gửi đi.</p>
             <p>Nếu bạn tạo tài khoản, Kotoba lưu:</p>
             <ul>
-              <li>email, dùng để đăng nhập và gửi link đặt lại mật khẩu;</li>
+              <li>email, dùng để đăng nhập và gửi liên kết đặt lại mật khẩu;</li>
               <li>mật khẩu đã băm bằng scrypt, không bao giờ lưu bản gốc;</li>
-              <li>hồ sơ bạn tự điền: tên, cấp độ mục tiêu, kỳ thi, số phút mỗi ngày;</li>
-              <li>tiến độ học: thẻ nào ở hộp nào, đến hạn ôn ngày nào, và những ngày bạn có học.</li>
+              <li>hồ sơ bạn tự điền: tên, cấp độ mục tiêu, kỳ thi, số phút học mỗi ngày;</li>
+              <li>tiến độ học: hộp ôn tập của từng thẻ, ngày đến hạn ôn và những ngày bạn đã học.</li>
             </ul>
-            <p>Có hai cookie: một cookie phiên đăng nhập (httpOnly, trang không đọc được bằng script) và một cookie nhớ ngôn ngữ. Không có quảng cáo, không có công cụ theo dõi của bên thứ ba.</p>
+            <p>Kotoba dùng hai cookie: một cookie lưu phiên đăng nhập (httpOnly, mã chạy trên trang không thể đọc được) và một cookie ghi nhớ ngôn ngữ. Không có quảng cáo hay công cụ theo dõi của bên thứ ba.</p>
             <p>Bạn có thể tải toàn bộ dữ liệu học của tài khoản (hồ sơ, lịch ôn, nhật ký học) dưới dạng tệp JSON ở mục Dữ liệu trong Cài đặt. Tệp không chứa mật khẩu hay phiên đăng nhập.</p>
-            <p>Xoá tài khoản trong Cài đặt sẽ xoá email, hồ sơ và toàn bộ tiến độ trên máy chủ, và xoá tiến độ trên thiết bị đang dùng.</p>
+            <p>Xóa tài khoản trong Cài đặt sẽ xóa email, hồ sơ và toàn bộ tiến độ trên máy chủ, đồng thời xóa tiến độ trên thiết bị đang dùng.</p>
           </>
         ),
       },
@@ -42,9 +42,9 @@ const TEXT: Record<Lang, { title: string; updated: string; sections: { id: strin
         title: "Điều khoản sử dụng",
         body: (
           <>
-            <p>Kotoba là công cụ tự học miễn phí. Bạn dùng nó như hiện có, không kèm bảo đảm nào về kết quả thi.</p>
-            <p>Phần lớn nghĩa tiếng Việt, câu ví dụ, bài ngữ pháp và đề thi thử do Kotoba tự soạn và chưa được người rà soát hết, nên có thể còn sai. Đề thi thử không có phần nghe và không phải đề JLPT chính thức.</p>
-            <p>Mỗi người một tài khoản. Đừng dùng Kotoba để làm quá tải hay phá hoại hệ thống.</p>
+            <p>Kotoba là công cụ tự học miễn phí, được cung cấp với các chức năng hiện có và không bảo đảm kết quả thi.</p>
+            <p>Phần lớn nghĩa tiếng Việt, câu ví dụ, bài ngữ pháp và đề thi thử do Kotoba biên soạn và chưa được con người rà soát đầy đủ, nên có thể còn sai sót. Đề thi thử không có phần nghe và không phải đề JLPT chính thức.</p>
+            <p>Mỗi người chỉ sử dụng một tài khoản. Không dùng Kotoba để làm quá tải hay phá hoại hệ thống.</p>
           </>
         ),
       },

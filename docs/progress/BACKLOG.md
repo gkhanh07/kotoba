@@ -67,3 +67,7 @@ A reset of a set with no local cards, made while a push is in flight, leaves `sn
 - "Related grammar": there is no such field. The grammar page uses same-lesson points and the prev/next pager instead.
 - The guest hero in `page.module.css` still writes 16 raw `rgba()` values (skyline glow, sign halos, card ground). The redesign keeps the hero as is, so they were not converted; move them to `color-mix()` over tokens when the hero is next touched.
 - `/review` serialises every review item into the page (1.8 MB of HTML for `/review?lesson=13&kind=vocab`), whatever the filter. Filter on the server, or load items by scope.
+
+## Vietnamese copy review follow-ups (2026-11-12)
+- The lesson-list description in library.ts still says lessons end at N5 review although the list includes N4/N3. The mock-test metadata in testText.ts similarly mentions N5 only. Updating level scope is a factual copy correction requiring agreement with the intended catalogue, outside this wording-only task.
+- GET /settings/export returns English-only plain text on a 503 (Export unavailable, try again later.). Localising it requires adding language selection to the route and its tests; left unchanged to preserve the current handler behavior in this wording-only task.

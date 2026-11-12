@@ -3,18 +3,18 @@ import type { Lang } from "./i18n";
 
 const vi = {
   title: "Thi thử",
-  lede: "Làm cả đề trong thời gian thật, nộp bài rồi xem điểm từng phần. Kết quả chỉ lưu trên máy này.",
+  lede: "Làm trọn đề trong thời gian quy định, nộp bài rồi xem điểm từng phần. Kết quả chỉ được lưu trên thiết bị này.",
   metaDesc: "Đề thi thử JLPT N5 có đồng hồ đếm ngược, chấm điểm từng phần và giải thích từng câu.",
   minutes: (n: number) => `${n} phút`,
   count: (n: number) => `${n} câu`,
   noListening: "Không có phần nghe",
   last: "Lần gần nhất",
-  open: "Vào làm",
+  open: "Làm bài",
   back: "Danh sách đề",
   loading: "Đang tải đề…",
   partsHeading: "Các phần của đề",
   start: "Bắt đầu",
-  startNote: "Đồng hồ chạy ngay khi bạn bấm Bắt đầu và không dừng nếu bạn đóng trang.",
+  startNote: "Thời gian được tính ngay khi bạn chọn Bắt đầu và vẫn tiếp tục nếu bạn đóng trang.",
   parts: {
     kanji: "Cách đọc kanji",
     writing: "Cách viết kanji",
@@ -43,13 +43,13 @@ const vi = {
   keys: [
     ["1 – 4", "chọn đáp án"],
     ["← →", "câu trước, câu sau"],
-    ["F", "đánh dấu hoặc bỏ dấu câu này"],
+    ["F", "đánh dấu hoặc bỏ đánh dấu câu này"],
   ] as [string, string][],
   confirmTitle: "Nộp bài?",
   unanswered: (n: number) => `${n} câu chưa làm`,
-  confirmBody: "Nộp rồi thì không sửa được nữa.",
+  confirmBody: "Bạn không thể sửa đáp án sau khi nộp bài.",
   keepGoing: "Làm tiếp",
-  storageWarn: "Trình duyệt không cho lưu. Bài làm vẫn chạy nhưng sẽ mất nếu bạn tải lại trang hoặc đóng tab.",
+  storageWarn: "Trình duyệt không cho phép lưu bài làm. Bạn vẫn có thể làm bài, nhưng bài làm sẽ mất nếu tải lại trang hoặc đóng tab.",
   resultKicker: "Kết quả",
   retryKicker: "Kết quả làm lại câu sai",
   timeUp: "Hết giờ, bài đã được nộp tự động.",
@@ -66,7 +66,7 @@ const vi = {
   notAnswered: "Chưa trả lời",
   rightAnswer: "Đáp án đúng",
   explain: "Giải thích",
-  retryNote: "Làm lại: chỉ các câu sai, không tính giờ, không đổi kết quả đã lưu.",
+  retryNote: "Chỉ làm lại các câu sai, không tính giờ và không thay đổi kết quả đã lưu.",
   resume: (title: string, k: number, n: number) => `Làm tiếp ${title} · câu ${k}/${n}`,
 };
 

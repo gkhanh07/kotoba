@@ -450,6 +450,8 @@ Terms the UI uses for study state (ADR 007). Keep each word to its one meaning.
 |---|---|---|---|
 | Đã học | Learnt | Answered right at least once (box ≥ 1) | `isLearned` |
 | Đã thuộc | Known | 6 spaced reviews right in a row (box ≥ `KNOWN_AT`) | `isKnown` |
-| Đến hạn | Due | The review day has come | `due` |
+| Đến hạn ôn | Due | The review day has come | `due` |
 
 "Nhớ" does not name a state.
+
+Vietnamese UI copy uses “bạn” and direct, concise instructions. Use “chọn” for actions available with mouse, touch or keyboard; “liên kết” instead of “link”; “thiết bị” instead of “máy”; and the spellings “xóa”, “khóa học”. Use “bộ thẻ”, “danh sách ôn tập” and “mức độ ghi nhớ” consistently. Loading and error messages name the actual state rather than using the street-light metaphor. Keep warnings explicit about lost data, irreversible deletion, deadlines and where progress is saved.
