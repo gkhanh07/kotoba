@@ -21,7 +21,7 @@ export default async function TestListPage(props: PageProps<"/test">) {
   return (
     <>
       <SiteBar current="test" />
-      <main className={s.app}>
+      <main className={`${s.app} ${s.wide}`}>
         <header className={s.heading}>
           <h1>{t.title}</h1>
           <p>{t.lede}</p>
@@ -31,9 +31,12 @@ export default async function TestListPage(props: PageProps<"/test">) {
           <ul className={s.papers}>
             {tests.map((p) => (
               <li key={p.id}>
-                <Link href={`/test/${p.id}`} className={s.paper}>
-                  <span className={s.paperTitle}>{p.title[lang]}</span>
-                  <span className={s.meta}>{t.minutes(p.minutes)} · {t.count(p.questions)}</span>
+                <Link href={`/test/${p.id}`} className={`tile ${s.paper}`}>
+                  <span className={s.paperHead}>
+                    <span className={s.level}>{levelLabel(level)}</span>
+                    <span className={s.paperTitle}>{p.title[lang]}</span>
+                  </span>
+                  <span className={s.paperFacts}>{t.minutes(p.minutes)} · {t.count(p.questions)}</span>
                   <span className={s.meta}>{t.noListening}</span>
                   <Last id={p.id} total={p.questions} lang={lang} />
                   <span className={s.go}>{t.open} <Arrow /></span>

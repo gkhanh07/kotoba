@@ -160,20 +160,25 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
   if (stage === "intro") {
     const parts = score(paper, []).parts;
     return (
-      <main className={s.app}>
+      <main className={`${s.app} ${s.wide}`}>
         <Link href="/test" className={s.back}><Arrow back />{t.back}</Link>
         {header}
-        <p className={s.facts}><span>{t.count(total)}</span> · <span>{t.minutes(paper.minutes)}</span></p>
-        <p className={s.note}>{t.noListening}</p>
-        <section className={s.section} aria-labelledby="test-parts">
-          <h2 id="test-parts">{t.partsHeading}</h2>
-          <ul className={s.partList}>
-            {parts.map((p) => <li key={p.part}>{partName(p.part)} · {t.count(p.total)}</li>)}
-          </ul>
-        </section>
-        <p className={s.note}>{t.startNote}</p>
-        {warning}
-        <button type="button" className="btn" onClick={start} disabled={total === 0}>{t.start} <Arrow /></button>
+        {/* Wide screens: the parts on the left, the one decision (start) in a raised panel beside them. */}
+        <div className={s.intro}>
+          <section className={`panel ${s.partsPanel}`} aria-labelledby="test-parts">
+            <p className={s.facts}><span>{t.count(total)}</span> · <span>{t.minutes(paper.minutes)}</span></p>
+            <p className={s.note}>{t.noListening}</p>
+            <h2 id="test-parts">{t.partsHeading}</h2>
+            <ul className={s.partList}>
+              {parts.map((p) => <li key={p.part}><span>{partName(p.part)}</span> <span className={s.partCount}>{t.count(p.total)}</span></li>)}
+            </ul>
+          </section>
+          <div className={`panel ${s.startPanel}`} data-raised="">
+            <p>{t.startNote}</p>
+            {warning}
+            <button type="button" className="btn" onClick={start} disabled={total === 0}>{t.start} <Arrow /></button>
+          </div>
+        </div>
       </main>
     );
   }
@@ -186,7 +191,7 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
       <main className={s.app}>
         {header}
         <section className={s.section} aria-labelledby="test-score">
-          <p className={s.kicker}>{retry ? t.retryKicker : t.resultKicker}</p>
+          <p className={s.scoreLabel}>{retry ? t.retryKicker : t.resultKicker}</p>
           <h2 id="test-score" ref={resultRef} tabIndex={-1} className={s.score}>{headline(result.right, result.total)}</h2>
           {run.timeUp && <p role="status" className={s.note}>{t.timeUp}</p>}
           {warning}

@@ -1,5 +1,7 @@
 .app { max-width: calc(52rem + 2 * var(--gutter)); margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem) var(--gutter) 4rem; }
-.heading h1, .title { font-size: clamp(2rem, 5vw, 3.25rem); color: var(--silver); text-shadow: var(--glow-cool); }
+/* The paper list and the intro use the width for side-by-side panels; taking, result and review stay one readable column. */
+.wide { max-width: calc(72rem + 2 * var(--gutter)); }
+.heading h1, .title { font-size: var(--fs-page); color: var(--silver); text-shadow: var(--glow-cool); }
 .heading p { margin-top: 1rem; color: var(--silver-dim); max-width: 65ch; }
 .note { margin-top: 1rem; color: var(--silver-dim); max-width: 65ch; }
 .back { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin-bottom: .5rem; color: var(--silver); text-decoration: none; }
@@ -10,20 +12,35 @@
 .section h2 { font-size: 1.1rem; color: var(--chalk); }
 
 /* ── list ─────────────────────────────────────── */
-.papers { display: grid; gap: 1rem; margin: 2.5rem 0 0; padding: 0; list-style: none; }
-.paper { display: grid; gap: .4rem; padding: 1.25rem 1.5rem; border: 1px solid var(--rule-strong); background: var(--asphalt); color: var(--silver); text-decoration: none; transition: border-color 160ms, background-color 160ms; }
-.paper:hover { border-color: var(--amber); background: var(--wet); }
-.paperTitle { font-family: var(--font-title), sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--chalk); }
-.meta { color: var(--silver-dim); font-size: .9rem; }
-.last { color: var(--silver); font-size: .9rem; font-variant-numeric: tabular-nums; }
+/* Papers are a grid of cards (ADR 010 lifts rows-not-cards here): one paper is one thing to pick. */
+.papers { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 1rem; margin: 2rem 0 0; padding: 0; list-style: none; }
+.papers > li { display: grid; }
+.paper { display: grid; align-content: start; gap: .5rem; padding: var(--space-panel); color: var(--silver); text-decoration: none; }
+.paperHead { display: flex; align-items: center; gap: .75rem; }
+.level { padding: .1rem .5rem; border: 1px solid var(--cool); border-radius: var(--radius-sm); color: var(--cool-core); font-family: var(--font-title), sans-serif; font-weight: 700; font-size: var(--fs-caption); letter-spacing: .04em; }
+.paperTitle { font-family: var(--font-title), sans-serif; font-weight: 700; font-size: var(--fs-section); color: var(--chalk); }
+.paperFacts { margin-top: .25rem; color: var(--chalk); font-variant-numeric: tabular-nums; }
+.meta { color: var(--silver-dim); font-size: var(--fs-caption); }
+.last { padding-top: .5rem; border-top: 1px solid var(--rule-dim); color: var(--silver); font-size: var(--fs-caption); font-variant-numeric: tabular-nums; }
 .last strong { color: var(--cool-core); }
 .go { display: inline-flex; align-items: center; gap: .5rem; margin-top: .5rem; color: var(--amber); }
+.paper:hover .go { color: var(--amber-core); }
 
 /* ── intro ────────────────────────────────────── */
-.facts { margin-top: 1rem; font-size: 1.15rem; color: var(--chalk); }
+.intro { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.facts { font-size: var(--fs-card); color: var(--chalk); font-variant-numeric: tabular-nums; }
+.partsPanel .note { margin-top: .4rem; }
+.partsPanel h2 { margin-top: 1.5rem; font-size: var(--fs-card); color: var(--chalk); }
 .partList { margin: .75rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--rule-dim); }
-.partList li { padding: .6rem 0; border-bottom: 1px solid var(--rule-dim); color: var(--silver); }
-.app > .btn { margin-top: 1.5rem; }
+.partList li { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid var(--rule-dim); color: var(--silver); }
+.partCount { color: var(--chalk); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.startPanel { display: grid; justify-items: start; gap: 1rem; align-self: start; }
+.startPanel p { color: var(--silver); }
+.startPanel .warning { margin-top: 0; }
+@media (min-width: 64rem) {
+  .intro { grid-template-columns: minmax(0, 1fr) 22rem; gap: clamp(1.5rem, 3vw, 3rem); }
+  .startPanel { position: sticky; top: 1.5rem; }
+}
 
 /* ── taking ───────────────────────────────────── */
 .top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; }
@@ -40,7 +57,7 @@
 .dot[data-state="flagged"]::after { content: ""; position: absolute; top: 0; right: 0; border-style: solid; border-width: 0 12px 12px 0; border-color: transparent var(--amber) transparent transparent; }
 .dot[aria-current="step"] { outline: 2px solid var(--chalk); outline-offset: 2px; font-weight: 700; }
 .card { margin-top: 1.5rem; }
-.passage { padding: 1rem 1.25rem; border-left: 3px solid var(--rule-strong); background: var(--asphalt); color: var(--silver); font-size: 1.1rem; line-height: 1.9; overflow-wrap: anywhere; }
+.passage { padding: 1rem 1.25rem; border: 1px solid var(--rule-dim); border-radius: var(--radius); background: var(--surface-1); box-shadow: var(--edge-hi); color: var(--silver); font-size: 1.1rem; line-height: 1.9; overflow-wrap: anywhere; }
 .choices { min-width: 0; margin: 1rem 0 0; padding: 0; border: 0; }
 .choices legend { padding: 0; color: var(--silver-dim); font-size: .9rem; }
 .qtext { margin: .5rem 0 1rem; font-size: 1.35rem; line-height: 1.8; color: var(--chalk); overflow-wrap: anywhere; }
@@ -72,7 +89,7 @@
 .unanswered { color: var(--chalk); font-variant-numeric: tabular-nums; }
 
 /* ── result and review ────────────────────────── */
-.kicker { color: var(--silver-dim); font-size: .9rem; }
+.scoreLabel { color: var(--silver); font-size: var(--fs-card); }
 .score { margin-top: .25rem; font-size: clamp(2.2rem, 7vw, 3.5rem) !important; color: var(--cool-core); text-shadow: var(--glow-cool); font-variant-numeric: tabular-nums; }
 .table { width: 100%; max-width: 36rem; margin-top: 1.5rem; border-collapse: collapse; }
 .table th, .table td { padding: .7rem .5rem; border-bottom: 1px solid var(--rule-dim); text-align: left; font-weight: 400; }
@@ -88,7 +105,7 @@
 .review .qtext { margin: .75rem 0; }
 .answerRow { margin-top: .4rem; overflow-wrap: anywhere; }
 .label { display: inline-block; min-width: 7rem; color: var(--silver-dim); font-size: .85rem; }
-.explain { margin-top: .75rem; padding: .75rem 1rem; border-left: 3px solid var(--rule-strong); color: var(--silver); }
+.explain { margin-top: .75rem; padding: .75rem 1rem; border: 1px solid var(--rule-dim); border-radius: var(--radius); background: var(--surface-1); box-shadow: var(--edge-hi); color: var(--silver); }
 
 /* ── loading and error ────────────────────────── */
 .status { display: grid; justify-items: start; gap: 1.1rem; max-width: 44rem; min-height: 50svh; align-content: center; margin: 3rem auto 0; padding: 0 var(--gutter); }

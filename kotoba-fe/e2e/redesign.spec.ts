@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { testText } from "../src/lib/testText";
 import { startBackend, stopBackend } from "./backend";
 import { expect, test } from "./fixtures";
 
@@ -467,4 +468,47 @@ test("/search keeps the page and the query when kotoba-be is down, and Thử l�
   }
   await page.getByRole("link", { name: "Thử lại" }).click();
   await expect(page.getByRole("heading", { name: "Không tìm thấy" })).toBeVisible();
+});
+
+// Group 8 (AC-8.1, AC-8.2): paper cards and the test intro. Every figure comes from tests.json.
+type Paper = { id: string; level: number; minutes: number; title: { vi: string }; parts: { part: string; questions: unknown[] }[] };
+const papers = load<Paper>("tests");
+const questionsOf = (p: Paper) => p.parts.reduce((n, part) => n + part.questions.length, 0);
+
+for (const level of [5, 4]) {
+  test(`/test?level=${level} shows each paper as a card with its level, minutes and question count`, async ({ page, axe }) => {
+    const own = papers.filter((p) => p.level === level);
+    await page.goto(`/test?level=${level}`);
+    const cards = page.locator("main ul li a");
+    await expect(cards).toHaveCount(own.length);
+    for (const [i, p] of own.entries()) {
+      const card = cards.nth(i);
+      await expect(card).toHaveAttribute("href", `/test/${p.id}`);
+      await expect(card.locator("span").first()).toHaveText(`N${level}${p.title.vi}`);
+      await expect(card).toContainText(`${p.minutes} phút · ${questionsOf(p)} câu`);
+      // A card has depth: the shared tile surface, not a bare bordered block.
+      expect(await card.evaluate((el) => getComputedStyle(el).boxShadow)).not.toBe("none");
+    }
+    await axe();
+  });
+}
+
+test("/test/n5-1 intro: one panel of parts, one raised start panel beside it on desktop, no kicker or 3px rule", async ({ page, axe }, info) => {
+  const paper = papers.find((p) => p.id === "n5-1")!;
+  await page.goto("/test/n5-1");
+  const parts = page.getByRole("region", { name: "Các phần của đề" });
+  await expect(parts).toContainText(`${questionsOf(paper)} câu · ${paper.minutes} phút`);
+  // One row per part kind, in first-seen order: the content splits reading into one entry per passage, the page sums them.
+  const perKind = new Map<string, number>();
+  for (const p of paper.parts) perKind.set(p.part, (perKind.get(p.part) ?? 0) + p.questions.length);
+  await expect(parts.getByRole("listitem")).toHaveText([...perKind].map(([kind, n]) => `${testText.vi.parts[kind]} ${n} câu`));
+  await expect(page.locator(AMBER)).toHaveCount(1);
+  const start = page.getByRole("button", { name: "Bắt đầu" });
+  if (info.project.name === "desktop") {
+    const [side, main] = [await start.boundingBox(), await parts.boundingBox()];
+    expect(side!.x).toBeGreaterThan(main!.x + main!.width);
+  }
+  const borders = await page.locator("main *").evaluateAll((els) => els.filter((el) => getComputedStyle(el).borderLeftWidth === "3px").length);
+  expect(borders).toBe(0);
+  await axe();
 });

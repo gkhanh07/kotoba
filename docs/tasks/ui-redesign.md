@@ -225,6 +225,28 @@
   - #2 rejected: "stopping the backend breaks parallel tests". `playwright.config.ts` runs `workers: 1`.
   - #3 fixed: the results test took its expected counts from the DOM. It now asserts the exact values from the content.
 
+### Group 8: mock tests
+- `/test` and `/test/[id]` before the paper starts use a wide frame (`.wide`, 72rem). Taking, result and review keep the 52rem reading column.
+- `/test`: each paper is a `.tile` card in an auto-fill grid. A card holds:
+  - a level label (cool hairline, Saira)
+  - the title at `--fs-section`
+  - "60 phút · 45 câu" in tabular figures
+  - the no-listening note
+  - the last result above a hairline
+  - "Vào làm"
+  - `TestSummary` has no level, so the label uses the page's level tab, and every paper on a tab belongs to that level.
+- Intro:
+  - The facts, the note and the parts list are one `.panel`. Each part is a hairline row with its name on the left and its count on the right.
+  - The start note and the one amber "Bắt đầu" sit in a raised panel. At ≥64rem it is a sticky side column, per the Sticky Decision Rule; below that it follows the parts.
+  - The old `.kicker` is gone. On the result page it became `.scoreLabel`, the same text at `--fs-card`.
+- Review stage: `.passage` and `.explain` lost the 3px left rule and became bordered `--surface-1` blocks with `--edge-hi`. The 3px check in e2e only covers the intro page. The review-stage change is checked by eye and covered by the existing `test.spec.ts` review flow, not by a dedicated border assertion.
+- Tests (`e2e/redesign.spec.ts`, 3 new, on both projects):
+  - for N5 and N4, the exact card count, hrefs, label + title, "{min} phút · {n} câu", depth and axe
+  - the intro: the exact facts line; one row per part kind with its exact name and count, computed in the test from `tests.json`; one amber; the start panel to the right on desktop; no 3px left rule; and axe
+  - Seen failing on the old code: 6 of 6 runs. The tightened intro assertion was also seen failing with the expected order reversed.
+- Codex review (read-only), 1 finding:
+  - #1 fixed: the intro test only checked that the part counts summed to the total. It now asserts each row's name and count. Writing it showed that the content splits `reading` into one entry per passage, which the page sums; the test sums them independently instead of calling `score()`.
+
 ## 5. Performance
 Production build (`next start`), 1440×900, median of 5 loads after one warm-up. Times are in ms.
 
@@ -262,3 +284,10 @@ Production build (`next start`), 1440×900, median of 5 loads after one warm-up.
 | `/search?q=taberu` after | 22887 | 105 | 11 | 168 | 53 | 194 |
 
 - Group 7 has no before rows: these routes were not measured before the group started. The results add one summary panel (about a dozen nodes per kind).
+
+| Route | HTML bytes | DOM nodes | TTFB | FCP | DCL | Load |
+|---|---|---|---|---|---|---|
+| `/test` after | 21428 | 90 | 12 | 144 | 62 | 173 |
+| `/test/n5-1` after | 34294 | 111 | 12 | 128 | 58 | 171 |
+
+- Group 8 has no before rows: these routes were not measured before the group started. The change is markup and CSS only, with no new data sent to the client.
