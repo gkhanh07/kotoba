@@ -45,7 +45,7 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 30 (mock test `n3-1`) | TODO | |
 | 31–34 (N2) | DROPPED | user decision 2026-11-04: the roadmap stops at N3 |
 | 35 (finish) | DROPPED | user decision 2026-11-11: removed from the roadmap; its required items (EDRDG credits, N2 tab removal) are in BACKLOG |
-| UI redesign: one visual language from the hero to every study screen, 10 page groups (spec `docs/tasks/ui-redesign.md`, ADR 010). The user's uncommitted 29b test in `kotoba-be/content/content.spec.ts` is in `git stash` (`stash@{0}`) until the 29b content lands | IN PROGRESS | one `feat(ui): …` commit per group |
+| UI redesign: one visual language from the hero to every study screen, 10 page groups (spec `docs/tasks/ui-redesign.md`, ADR 010). The user's uncommitted 29b test in `kotoba-be/content/content.spec.ts` is in `git stash` (`stash@{0}`) until the 29b content lands | DONE | 731f6ef, 97669e2, 2c02360, d55f2b0, 22f2e58, 6c017bb, 3fe5337, 72e5758, 2a34916, 68b1217, f32f62f (one `feat(ui): …` per group); last gate: FE 658 tests, lib coverage 98.23%, e2e 240 passed |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 

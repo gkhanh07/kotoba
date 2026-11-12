@@ -157,7 +157,7 @@ Product context: PRODUCT.md is stale. It describes a kana-only first release and
 - Dark only (`color-scheme: dark`). Every colour is a `:root` custom property in `globals.css`. Components use `var(--token)` only, and new shades come from `color-mix()` over existing tokens.
 - One amber action per view. Secondary actions are ghost buttons or underlined text links.
 - Neon light is emitted by text (`text-shadow` glows), not painted on as fills.
-- Hairline geometry: a 2px radius, 1px to 1.5px rules, and no cards inside cards.
+- Hairline geometry: the `--radius` (6px) and `--radius-sm` (4px) steps (ADR 010), 1px to 1.5px rules, and no cards inside cards.
 - Japanese is always the real script, set in its own kana face with `lang="ja"`.
 
 ## Colors
@@ -234,7 +234,7 @@ Study structure is rows and rules. Study sections are separated by 1px Rule bord
 
 Breakpoints are 900px (the site nav becomes the Menu popover sheet, kana chart and quiz go to one column, and the kana detail panel becomes a sticky bottom sheet), 560px (segments become 2-up grids) and 480px (tighter card and table sizes). Route rows fold at 700px (lesson path, grammar list, vocab decks), and the lesson's two-column word list goes to one column at 640px.
 
-**The Sticky Decision Rule.** On a long graded surface the one decision stays reachable. The flashcard grade row is `position: sticky; bottom: 0` with an opaque Night background and a Rule top edge, so the card back can scroll past without hiding Chưa nhớ / Nhớ rồi. The kana detail panel does the same on phones.
+**The Sticky Decision Rule.** On a long graded surface the one decision stays reachable. The flashcard grade row is `position: sticky; bottom: 0` with an opaque Night background and a Rule top edge, so the card back can scroll past without hiding Chưa nhớ / Nhớ rồi. The kana detail panel does the same on phones. Refined in the UI redesign (ADR 010): the decision sticks only once there is one to make. Before the flip the grade buttons are disabled and the row stays in flow under the card (`.card[data-flipped="true"] ~ .status` makes it sticky), the unflipped card is only as tall as its front, and the flip scrolls the card into view with a bottom `scroll-margin` the height of the row, so at 360×740 the row never covers the front or the answer. The mock test intro's start panel follows the same rule as a sticky side column from 64rem.
 
 ## Elevation & Depth
 
@@ -269,7 +269,7 @@ Shapes are hairline and nearly squared. Surfaces (panels, tiles, cards, dialogs)
 
 ### Buttons
 Buttons are framed tubes that light up when touched.
-- **Shape:** squared, with a hairline 2px radius and a 1.5px border. Minimum height 48px, padding 0 1.4em, set in the Title face.
+- **Shape:** squared, with `--radius-sm` and a 1.5px border. Minimum height 48px, padding 0 1.4em, set in the Title face.
 - **Primary (`.btn`):** an amber outline with amber text, a faint amber text-shadow and an inset halo at rest.
 - **Hover / Active / Pressed:** fills solid amber with Night text and a stronger halo, over 0.25s `--ease-out`. Focus is the global 2px amber outline at a 3px offset.
 - **Ghost (`.btn btnGhost`):** a Rule border and Silver text with no glow. On hover it gets a Wet fill, Chalk text and a Strong Rule ring.
@@ -283,7 +283,8 @@ Buttons are framed tubes that light up when touched.
 - **Kana group segments:** a 1px Rule frame on Asphalt with 44px links. The current link is solid amber with Night text, and hover gives a Wet fill. Below 560px it becomes a 2-up grid.
 
 ### Cards / Containers
-- **Study card (flashcard):** Asphalt with a 1px Strong Rule border and a 2px radius, at least 27rem tall. It flips 420ms on Y, and reduced motion removes the rotation. Hover turns the border amber. The front word is Blue Hot Core with blue glow.
+- **Study card (flashcard, review):** the view's one raised surface: `--surface-3` with `--edge-hi`, a 1px Strong Rule border and `--radius`. It flips 420ms on Y; under reduced motion the faces swap with `visibility` and never rotate. Hover turns the border amber. The front word is Blue Hot Core with blue glow. From 64rem the card sits left of a raised side column holding the scope, the count with a `progress.meter`, the memory-state `.tag` and, under `pointer: fine`, a "Phím tắt" `dl`.
+- **Mock test paper card (/test):** a `.tile` in an auto-fill grid inside the 72rem `.wide` frame: a level label (cool hairline, Title face), the title at `--fs-section`, "60 phút · 45 câu" in tabular figures, the no-listening note, and the last result above a hairline. The intro groups its facts and parts (hairline rows, name left, count right) in one `.panel`; the start note and the one amber "Bắt đầu" sit in a raised panel. Review-stage `.passage` and `.explain` are bordered `--surface-1` blocks with `--edge-hi`; there is no 3px left rule and no `.kicker`.
 - **Kana cell:** Asphalt with a 1px Rule border. Hover gives Wet and a Dim Silver border. Selected gets an amber border plus an inset amber ring and glow. When mastered, the character turns amber with glow.
 - **Kanji tile:** a link in a `repeat(auto-fill, minmax(4.5rem, 1fr))` grid with a 6px gap. It has a 1px Faint Rule border, no fill and at least 5.5rem height, and holds the character in the kana face at 2rem over its Hán Việt in Dim Silver 0.75rem uppercase tracked 0.06em. Hover gives Wet, a Rule border and Amber Hot Core text. A learned tile (`[data-learned]`) gets a 1px amber underline under the Hán Việt plus sr-only text; there is no badge.
 - There are no nested cards. Reading lists stay rows and tables; grids that are scanned (kanji, kana, test papers, lessons in a level) may use tiles (ADR 010).
@@ -300,27 +301,31 @@ Every study page builds from these before writing module CSS. Each class has hov
 - **`.skeleton`:** a `--surface-2` placeholder block that pulses opacity; it is static under reduced motion.
 
 ### Inputs / Fields
-- **Style:** Asphalt fill, 1px Rule border, 2px radius, 48px height and Chalk text at 1rem. Hover changes the border to Strong Rule.
+- **Style:** Asphalt fill, 1px Rule border, `--radius-sm`, 48px height and Chalk text at 1rem. Hover changes the border to Strong Rule.
 - **Focus:** the global amber outline.
 - **Choice chips:** a 1px Rule frame with 44px targets. Checked chips get amber text and border on `--spill-amber`.
 - **Error:** inline Sign Pink Soft text.
+- **Invalid field (auth, settings):** `isInvalidField(error, field)` (`src/lib/account.ts`) names the inputs an error code blames (`credentials` → email and password, `taken` → email, `current` → the current password). Those inputs get `aria-invalid="true"`, a neon border, and `aria-describedby` pointing at the `role="alert"` problem line, so the text, not colour alone, says what is wrong. Radio groups take no `aria-invalid` (deprecated on a plain group in ARIA 1.2); their `<fieldset>` gets the `aria-describedby` instead.
+
+### Auth (/login, /register)
+From 64rem the form sits beside a decorative, `aria-hidden` motif: the vertical sign 言葉 with ことば beside it on a cool hairline board (`.board`) over a quiet radial ground. No rain, no skyline. Below 64rem the motif is `display: none`, so a phone gets the form alone.
 
 ### Destructive action
 - **Danger ghost (`.btn btnGhost` plus `.danger`, settings.module.css):** the ghost button with Sign Pink Soft text. On hover it gets Sign Pink Core text, a Sign Pink Tube border and a `--spill-neon` fill. It stays a ghost, so it never competes with the view's one amber action. Account deletion uses it twice: once to open the confirm dialog and once inside it to confirm.
 
 ### Dialog
-- **Modal (`<dialog>` opened with `showModal()`):** Asphalt with a 1px Strong Rule border, a 2px radius, 1.75rem padding and Silver text, at most 28rem wide. The `::backdrop` is Night at 80% (`color-mix` over transparent). The actions sit in one row: the danger ghost first, then a plain ghost Cancel that closes the dialog.
+- **Modal (`<dialog>` opened with `showModal()`):** `--surface-2` with `--shadow-float` (a floating layer), a 1px Strong Rule border, `--radius`, 1.75rem padding and Silver text, at most 28rem wide. The `::backdrop` is Night at 80% (`color-mix` over transparent). The actions sit in one row: the danger ghost first, then a plain ghost Cancel that closes the dialog.
 
 ### Status lines
 - **Saved (`.saved`, `role="status"`):** a Dim Silver 0.9rem line beside the submit button. The text holds for 4s, then fades to 0 over 0.4s. It is re-keyed on each save so it shows again. Reduced motion makes the fade instant. The line keeps a 1.5em minimum height so the row does not jump.
 
 ### Settings (/settings)
-There are five sections (profile, language, password, data, delete account), each its own form with its own result line. They sit in a 40rem column, separated by Faint Rule top borders with 2rem padding. Section `h2`s are Chalk at 1.25rem. The profile save is the view's amber action and stays disabled until a field changes. Changing the password uses a ghost button.
+There are five sections (profile, language, password, data, delete account), each its own form with its own result line and its own `--surface-1` panel with `--edge-hi`. Below 64rem they stack in one column; from 64rem the page widens to 72rem with Profile and Language on the left and Password, Data and Delete on the right. Delete carries `data-danger`, a neon-tinted border. Section `h2`s are Chalk at 1.25rem. The profile save is the view's amber action and stays disabled until a field changes. Changing the password uses a ghost button.
 
 - **Dữ liệu (phase 21):** between Mật khẩu and Xóa tài khoản: the Dim Silver lede says what the file holds, then a ghost `.btn` link "Tải dữ liệu học (JSON)" to `/settings/export` (1.25rem above, like the delete button). The route answers with the `kotoba-export.json` attachment, so the page does not move.
 
 ### Status pages (`.statusPage`: not-found, error, global-error)
-Each is an unlit sign, one line and one way out. The layout is a left-aligned grid in a 40rem column with 1.25rem gaps. The mark above the heading is `.statusMark`, set in the sign face at clamp(4.5rem, 16vw, 9rem) with no glow:
+Each is an unlit sign, one line and one way out. The layout is a left-aligned grid in a 40rem column with 1.25rem gaps. The mark above the heading is `.statusMark`, set in the sign face at clamp(4.5rem, 16vw, 9rem) with no glow, hung on an unlit board: `--surface-1`, a `--rule` border, `--radius` and `--edge-hi`. `error.tsx` renders a React `<title>` (the outage heading), because an error boundary cannot export metadata in Next 16 (BUG-017):
 - **404:** the numeral is the `h1`, in Muted Silver. This is the only use of Muted Silver.
 - **Outage (`error.tsx`):** the mark is 停電, a sign that has gone dark. It carries `lang="ja"`, `aria-hidden` and `[data-off]`, and is Dim Silver. `global-error.tsx` replaces the root layout, so it has no mark and its fonts fall back.
 - The heading is Chalk at clamp(1.6rem, 4vw, 2.25rem), and the body is Dim Silver at most 34rem wide. On the error pages `role="alert"` wraps only the heading and body, not the mark or the button. The single action is the amber `.btn`: home on the 404, retry on the error pages.
@@ -383,21 +388,23 @@ One shared Leitner queue for kana, kanji and vocab, built on the flashcard layou
 
 ### Search (/search)
 One GET form (`role="search"`), rendered on the server: the query lives in the URL as `?q=`, trimmed and cut to 50 characters, so results can be shared and the back button works. Styles are in `search.module.css`; the heading is the standard Silver `h1` with blue glow over a Dim Silver lede.
-- **Form:** a 48rem row. The input is 52px tall on Asphalt with a 1px Strong Rule border, a 2px radius and Chalk text at 1.15rem; hover moves the border to Muted Silver, and focus is the amber outline with an amber border. Beside it is the view's one amber `.btn` ("Tra"), also 52px. Under 700px the two stack and the button runs full width with its label centred.
-- **Empty:** with no query, a Dim Silver "try" line of example queries (たべ, taberu, hoc, 日, は) as amber underlined text links, 44px tall, turning Amber Hot Core on hover; the Japanese ones are in the kana face.
-- **None:** a Dim Silver `role="status"` line naming the query.
-- **Results:** groups in a fixed order (vocab, kanji, grammar, kana, lesson), each a 60rem section with a Chalk 1.1rem `h2` and a tabular Dim Silver "(n)". An sr-only `role="status"` line gives the total. Rows sit on Faint Rule hairlines, each one link at least 56px tall in a four-column grid: the head (kana face, 1.35rem, Chalk; a lesson head is Chalk body text), the Dim Silver parts ending in the meaning in Silver, the Dim Silver label (a level badge "N5" in a 1px Strong Rule box, then " · Bài n"), and the Arrow. The level is always text, never colour alone. Hover is a Wet fill with everything in Amber Hot Core. Under 700px the row collapses to one text column with the Arrow on the right. A vocab row also shows the kanji written form when a kana word matched through it (日曜日 for にちようび), so the hit makes sense.
+- **Form:** one raised container (`--surface-2`, `--edge-hi`) whose border turns amber on `:focus-within`. The input is 56px at 1.25rem. The submit ("Tra") is a ghost `btn btnGhost`, so a search page with no results has no amber; the one amber belongs to the error state's "Thử lại". Under 700px the two stack.
+- **Empty:** a `.panel` saying what search covers (every level), then the example queries (たべ, taberu, hoc, 日, は) as 44px chips in a labelled list; the Japanese ones are in the kana face.
+- **None:** a `.panel` with the sign 無, a heading, the `role="status"` line naming the query, and the same chips.
+- **Error:** a failed lookup is caught in the page, not thrown to `error.tsx`: an inline `role="alert"` panel that keeps the form and the query, with the amber "Thử lại" linking to the same query.
+- **Results:** groups in a fixed order (vocab, kanji, grammar, kana, lesson), one `.panel` per kind with hairline rows and a hover surface, a Chalk `h2` and a tabular "(n)". From 64rem a sticky summary panel on the right holds the total and a jump nav (`#g-<kind>`, 44px links with tabular counts); below that only the total shows. The total is the `role="status"`, so the live count is never hidden. Rows sit on Faint Rule hairlines, each one link at least 56px tall in a four-column grid: the head (kana face, 1.35rem, Chalk; a lesson head is Chalk body text), the Dim Silver parts ending in the meaning in Silver, the Dim Silver label (a level badge "N5" in a 1px Strong Rule box, then " · Bài n"), and the Arrow. The level is always text, never colour alone. Hover is a Wet fill with everything in Amber Hot Core. Under 700px the row collapses to one text column with the Arrow on the right. A vocab row also shows the kanji written form when a kana word matched through it (日曜日 for にちようび), so the hit makes sense.
 - **Match mark:** the matched span is a `<mark>` with no fill, Chalk text on a 1.5px Silver underline. It is never amber, because an amber underline means "learned" on kanji tiles and amber text reads as a link.
 - **Cap note:** when any group holds 20 rows, a Dim Silver line under the results says only the first 20 per kind are shown.
 
 ### Navigation
 - **Site bar (`.bar`):** the brand link sits on the left: 言葉 in the sign face with pink glow, then "Kotoba" in Chalk Title tracked 0.08em, plus an sr-only "trang chủ". One `<nav>` follows. Its items are Bài học (/lessons), Ôn tập (/review, with the due-count badge) and Tra cứu (/search), all plain nav links; Thi thử joins them when /test ships. Nav items are Title 600 at 1.1rem in Silver. Hover goes to Chalk with a Rule underline, and the current item is amber text with a 1.5px amber underline.
   - **From 900px up** the nav is a plain row: the Thư viện button, then the account group pushed to the right.
-  - **Below 900px** the nav is a `popover="auto"` sheet opened by the `.menuBtn` ghost button (44px). The sheet is full width under the bar, Asphalt with Strong Rule top and bottom borders, and its items are 44px rows. Clicking any link inside closes the sheet and the library popover.
-  - **Thư viện (`.libraryBtn`):** a button with a small chevron that opens the `#site-library` popover (Bảng chữ cái, Kanji, Từ vựng, Ngữ pháp; /flashcards counts as Từ vựng). It turns amber through `data-current` when the current page is in the library. The popover is Asphalt with a 1px Strong Rule border, anchored under the button. Its rows are 44px and hover to a Wet fill with Amber Hot Core text. In the phone sheet the button is hidden, the primary links are 1.25rem, and the library links are listed inline below a Rule top border.
+  - **Frame grounds (UI redesign):** on study pages the bar (`body > .bar`) stands on `--surface-1` over a `--rule-dim` hairline; the hero's bar sits inside `section.hero` and stays over the sky. The footer and the `html` canvas are `--surface-1` too, so a short page's footer ground runs to the bottom of the window; `body` stays `--night`.
+  - **Below 900px** the nav is a `popover="auto"` sheet opened by the `.menuBtn` ghost button (44px). It takes the global `.float` class (`--surface-2`, `--edge-hi`, `--shadow-float`) but is full width under the bar with 1px top and bottom borders and no radius, and its items are 44px rows. From 900px up the nav drops `.float`'s radius and shadow and is an inline row. Clicking any link inside closes the sheet and the library popover.
+  - **Thư viện (`.libraryBtn`):** a button with a small chevron that opens the `#site-library` popover (Bảng chữ cái, Kanji, Từ vựng, Ngữ pháp; /flashcards counts as Từ vựng). It turns amber through `data-current` when the current page is in the library. The popover is a `.float` layer (`--surface-2`, `--edge-hi`, `--shadow-float`), anchored under the button. Its rows are 44px and hover to `--surface-3` with Amber Hot Core text; the current page carries amber text plus an inset 3px amber bar (`box-shadow: inset 3px 0 0`), so colour is not the only channel. In the phone sheet the button is hidden, the primary links are 1.25rem, and the library links are listed inline below a Rule top border with no shadow or radius; there the current link is underlined in amber like the other nav links.
   - **Account group (`.account`):** when signed in, it shows the email (Dim Silver, 0.9rem, truncated) as a link to /settings, then Đăng xuất, then VI|EN. When signed out, Đăng nhập replaces the email and Đăng xuất. In the phone sheet the group sits below a Rule top border.
 - **Sync status (`.syncStatus`, signed in only, phase 20):** a Dim Silver line in the bar itself, outside the nav, so a failure stays in sight when the phone menu is closed: after the account group from 900px up, between the brand and Menu below (0.8rem, wraps, right-aligned; the brand never shrinks). "Đã lưu", "Chờ lưu n thay đổi" (cards the next push would send) or "Lỗi đồng bộ · Thử lại", where Thử lại is a 44px text button with a Strong Rule underline. `aria-live="polite"`; empty until the deck loads.
-- **Site footer (`.siteFooter`):** one Dim Silver 0.85rem line above a Faint Rule top border. It holds the KANJIDIC2 / JMdict / CC BY-SA 4.0 credits and a link to /legal that turns Amber Hot Core on hover.
+- **Site footer (`.siteFooter`):** one Dim Silver 0.85rem line on `--surface-1` above a Faint Rule top border. It holds the KANJIDIC2 / JMdict / CC BY-SA 4.0 credits and a link to /legal that turns Amber Hot Core on hover.
 
 ### Study heatmap (dashboard, phase 20)
 "Hoạt động 13 tuần" between the review blocks and "Gần đây". A visible summary line ("x ngày có học · y phút trong 13 tuần", Silver, tabular), then 13 Monday-first week columns of 14px cells with 3px gaps and T2/T4/T6 labels in Dim Silver 0.65rem; days after today are not drawn. One hue on the Night surface, dark to bright: level 0 is Wet with a Faint Rule inset ring, levels 1–4 are amber mixed into Night at 40/62/82/100% (validated with the dataviz ordinal check against Night and Wet). Thresholds live in `src/config/activity.ts` (1, 10, 20, 40 minutes). Every cell is `role="img"` with `aria-label` and `title` "d/m: n phút"; the legend names each level's range in text ("Ít · 0 phút · 1–9 phút · … · 40+ phút · Nhiều", the end caps hidden from screen readers). "Gần đây" stays the table view.
