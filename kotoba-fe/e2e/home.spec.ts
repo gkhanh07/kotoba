@@ -35,9 +35,9 @@ test("the landing page states the real rule for known items", async ({ page, axe
 
 test("the landing page opens every line and says an account is optional", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Bốn tuyến đã chạy." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Ba loại chữ trên mỗi biển hiệu." })).toBeVisible();
   await expect(page.getByRole("link", { name: /^漢字 Kanji/ })).toHaveAttribute("href", "/kanji");
-  await expect(page.getByRole("link", { name: /^課 Bài học/ })).toHaveAttribute("href", "/lessons");
+  await expect(page.getByRole("link", { name: /^N5 / })).toHaveAttribute("href", "/lessons");
   await expect(page.getByText("Sắp có")).toHaveCount(0);
   await expect(page.getByText("Không cần tài khoản để luyện tập. Có tài khoản thì tiến độ đồng bộ giữa các thiết bị.")).toBeVisible();
 });

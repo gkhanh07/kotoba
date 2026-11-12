@@ -37,11 +37,26 @@ type Dict = {
     hiraganaText: Split3;
     katakanaText: Split3;
     kanjiText: string;
-    lessonName: string;
-    lessonText: string;
-    openMeta: string;
-    kanjiMeta: string;
-    lessonMeta: string;
+    kanaCount: (total: number, basic: number) => string;
+    kanjiCount: (total: number, levels: string) => string;
+    lineH: string;
+    lineP: string;
+    lineStation: (lessons: number) => string;
+    lineWords: string;
+    lineGrammar: string;
+    ladderLabel: string;
+    ladderHit: (n: number) => string;
+    ladderWait: (days: number) => string;
+    ladderMiss: string;
+    stateFresh: string;
+    stateLearned: string;
+    stateKnown: string;
+    previewH: string;
+    previewP: (lesson: number, title: string) => string;
+    previewCard: string;
+    previewOpen: (lesson: number) => string;
+    closingH: string;
+    closingP: string;
     honestH: string;
     honestP1: (known: number, intervals: string) => string;
     honestP2: Split4;
@@ -153,16 +168,31 @@ const DICT: Record<Lang, Dict> = {
       lede: "Kotoba dạy tiếng Nhật cho người Việt, bằng tiếng Việt. Bắt đầu từ bảng kana trên mọi biển hiệu, luyện ngay trên trang, không cần đăng ký.",
       ctaQuiz: "Luyện đọc ngay",
       ctaChart: "Xem bảng chữ",
-      routeH: "Bốn tuyến đã chạy.",
-      routeP: "Tiếng Nhật viết bằng ba loại chữ. Người mới bắt đầu từ hai bảng kana: cùng một bộ âm, hai dáng chữ khác nhau. Mỗi bảng có 46 chữ cơ bản, rồi đến âm đục, âm ghép, âm ngắt và trường âm.",
+      routeH: "Ba loại chữ trên mỗi biển hiệu.",
+      routeP: "Tiếng Nhật viết bằng ba loại chữ. Người mới bắt đầu từ hai bảng kana: cùng một bộ âm, hai dáng chữ khác nhau. Mỗi bảng đi từ chữ cơ bản đến âm đục, âm ghép, âm ngắt và trường âm.",
       hiraganaText: { a: "Nét mềm, dùng cho từ thuần Nhật và đuôi ngữ pháp, như ", b: " hay ", c: "." },
       katakanaText: { a: "Nét thẳng, góc cạnh, dùng cho từ mượn và tên nước ngoài, như ", b: " hay ", c: "." },
       kanjiText: "Chữ Hán, phần lớn nghĩa của từ nằm ở đây. Mỗi chữ có âm Hán Việt, số nét và các từ dùng chữ đó.",
-      lessonName: "Bài học",
-      lessonText: "Từ vựng, kanji và ngữ pháp xếp thành từng bài. Phiên học mỗi ngày đi theo bài bạn đang học.",
-      openMeta: "Đủ 4 nhóm · đang mở",
-      kanjiMeta: "N5 đến N3 · đang mở",
-      lessonMeta: "Đi lên từ N5 · đang mở",
+      kanaCount: (total, basic) => `${total} chữ · ${basic} chữ cơ bản`,
+      kanjiCount: (total, levels) => `${total} chữ · ${levels}`,
+      lineH: "Một tuyến, đi lên từ N5.",
+      lineP: "Từ vựng, kanji và ngữ pháp xếp thành từng bài, mỗi cấp JLPT là một ga. Phiên học mỗi ngày đi theo bài bạn đang học.",
+      lineStation: (lessons) => `${lessons} bài`,
+      lineWords: "Từ vựng",
+      lineGrammar: "Ngữ pháp",
+      ladderLabel: "Các lần ôn đúng liên tiếp của một chữ",
+      ladderHit: (n) => `Lần ${n}`,
+      ladderWait: (days) => `ôn lại sau ${days} ngày`,
+      ladderMiss: "Sai một lần: chữ quay về đầu thang và được ôn lại ngay trong ngày.",
+      stateFresh: "Chưa học",
+      stateLearned: "Đã học",
+      stateKnown: "Đã thuộc",
+      previewH: "Một bài học thật, đúng như trong app.",
+      previewP: (lesson, title) => `Bài ${lesson}: ${title}. Từ vựng, chữ kanji và mẫu ngữ pháp của bài, cùng một tấm thẻ ôn.`,
+      previewCard: "Thẻ ôn, mặt sau",
+      previewOpen: (lesson) => `Mở bài ${lesson}`,
+      closingH: "Bắt đầu từ chữ đầu tiên.",
+      closingP: "Không cần tài khoản. Chọn đáp án bằng bàn phím hoặc chạm, tiến độ lưu ngay trên máy này.",
       honestH: "Chỉ tính là thuộc khi bạn nhớ thật.",
       honestP1: (known, intervals) => `Một chữ được tính là đã thuộc sau ${known} lần ôn đúng liên tiếp, cách nhau ${intervals} ngày. Sai một lần, chuỗi đếm lại từ đầu. Không điểm thưởng, không huy hiệu: chỉ những chữ bạn thật sự đọc được.`,
       honestP2: { a: "Làm hoàn toàn bằng bàn phím: phím ", b: "–", c: " để chọn, ", d: " để sang chữ tiếp theo. Tiến độ lưu ngay, và đồng bộ khi bạn đăng nhập." },
@@ -292,16 +322,31 @@ const DICT: Record<Lang, Dict> = {
       lede: "Kotoba starts you on the kana behind every shop sign in Japan. Practise right here on the page, no sign-up.",
       ctaQuiz: "Start practising",
       ctaChart: "See the chart",
-      routeH: "All four lines are running.",
-      routeP: "Japanese is written in three scripts. Beginners start with the two kana sets: one set of sounds, two different shapes. Each has 46 basic letters, then voiced, combined, small-tsu and long-vowel sounds.",
+      routeH: "Three scripts on every shop sign.",
+      routeP: "Japanese is written in three scripts. Beginners start with the two kana sets: one set of sounds, two different shapes. Each goes from the basic letters to voiced, combined, small-tsu and long-vowel sounds.",
       hiraganaText: { a: "Soft strokes, used for native Japanese words and grammar endings, as in ", b: " or ", c: "." },
       katakanaText: { a: "Straight, angular strokes, used for loanwords and foreign names, as in ", b: " or ", c: "." },
       kanjiText: "Chinese characters, where most of a word's meaning lives. Each one comes with its Sino-Vietnamese reading, stroke count and the words that use it.",
-      lessonName: "Lessons",
-      lessonText: "Vocabulary, kanji and grammar, arranged lesson by lesson. Each day's session follows the lesson you are on.",
-      openMeta: "All 4 groups · open",
-      kanjiMeta: "N5 to N3 · open",
-      lessonMeta: "Up from N5 · open",
+      kanaCount: (total, basic) => `${total} letters · ${basic} basic`,
+      kanjiCount: (total, levels) => `${total} characters · ${levels}`,
+      lineH: "One line, up from N5.",
+      lineP: "Vocabulary, kanji and grammar, arranged lesson by lesson, with each JLPT level a station. Each day's session follows the lesson you are on.",
+      lineStation: (lessons) => `${lessons} lessons`,
+      lineWords: "Words",
+      lineGrammar: "Grammar",
+      ladderLabel: "Correct reviews in a row for one item",
+      ladderHit: (n) => `Review ${n}`,
+      ladderWait: (days) => `next in ${days} ${days === 1 ? "day" : "days"}`,
+      ladderMiss: "One miss and the item drops back to the start, due again the same day.",
+      stateFresh: "New",
+      stateLearned: "Learnt",
+      stateKnown: "Known",
+      previewH: "A real lesson, exactly as in the app.",
+      previewP: (lesson, title) => `Lesson ${lesson}: ${title}. Its words, a kanji and a grammar pattern, with one review card.`,
+      previewCard: "Review card, back",
+      previewOpen: (lesson) => `Open lesson ${lesson}`,
+      closingH: "Start with the first letter.",
+      closingP: "No account needed. Answer by keyboard or by tap; your progress saves on this device at once.",
       honestH: "It only counts as known when you really remember it.",
       honestP1: (known, intervals) => `An item counts as known after ${known} correct reviews in a row, spaced ${intervals} days apart. One miss and the streak starts over. No points, no badges: just the letters you can actually read.`,
       honestP2: { a: "Fully keyboard-driven: press ", b: "–", c: " to answer, ", d: " for the next letter. Your progress saves at once and syncs when you sign in." },

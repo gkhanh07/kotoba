@@ -100,98 +100,109 @@ export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: 
 
   return (
     <main className={s.app}>
-      <header className={s.heading}>
-        <h1>{data && <><span lang="ja">{greet(data.now.getHours())}</span>, </>}{name}</h1>
-        <p>
-          {!goal ? <Link href="/onboarding">{t.setGoal}</Link>
-            : days !== null && days > 0 ? t.goal(goal, days)
-            : days === 0 ? t.goalToday(goal)
-            : t.goalOnly(goal)}
-        </p>
-      </header>
+      <section className={`panel ${s.hero}`} data-raised="" aria-labelledby="dash-title">
+        <header className={s.heading}>
+          <h1 id="dash-title">{data && <><span lang="ja">{greet(data.now.getHours())}</span>, </>}{name}</h1>
+          <p>
+            {!goal ? <Link href="/onboarding">{t.setGoal}</Link>
+              : days !== null && days > 0 ? t.goal(goal, days)
+              : days === 0 ? t.goalToday(goal)
+              : t.goalOnly(goal)}
+          </p>
+        </header>
 
-      {!data ? <p role="status" className={s.note}>{t.loading}</p> : (
-        <>
+        {!data ? <p role="status" className={s.note}>{t.loading}</p> : (
+          <div className={s.next}>
+            <p className={s.nextWhat}>{data.next.daily ? t.continueDaily(data.dueTotal, data.fresh) : t.continueWhat(data.summary.last)}</p>
+            <Link className="btn" href={data.next.href}>{t.continue} <Arrow /></Link>
+            {resume && data.attempt && (
+              <p className={s.resume}>
+                <Link href={`/test/${resume.id}`}>{testText[lang].resume(resume.title, data.attempt.session.current + 1, data.attempt.session.answers.length)}</Link>
+              </p>
+            )}
+          </div>
+        )}
+
+        {data && (
           <div className={s.stage}>
             <span>{t.stage}</span>
-            <progress aria-label={t.stage} value={data.kanaLearned} max={scope.kana.length} />
+            <progress className="meter" aria-label={t.stage} value={data.kanaLearned} max={scope.kana.length} />
             <span>{data.kanaLearned} / {scope.kana.length}</span>
           </div>
+        )}
+      </section>
 
+      {data && (
+        <>
           <dl className={s.stats}>
-            <div><dt>{t.streakLabel}</dt><dd>{t.streak(data.summary.streak)}</dd></div>
-            <div>
+            <div className="panel"><dt>{t.streakLabel}</dt><dd>{t.streak(data.summary.streak)}</dd></div>
+            <div className="panel">
               <dt>{t.minutesLabel}</dt>
               <dd>{t.minutes(data.summary.minutesToday, profile?.minutes)}</dd>
-              {profile?.minutes && <progress aria-label={t.minutesLabel} value={Math.min(data.summary.minutesToday, profile.minutes)} max={profile.minutes} />}
+              {profile?.minutes && <progress className="meter" aria-label={t.minutesLabel} value={Math.min(data.summary.minutesToday, profile.minutes)} max={profile.minutes} />}
             </div>
-            <div><dt>{t.review}</dt><dd>{data.dueTotal}</dd></div>
+            <div className="panel"><dt>{t.review}</dt><dd>{data.dueTotal}</dd></div>
           </dl>
 
-          <div className={s.continue}>
-            <Link className="btn" href={data.next.href}>{t.continue} <Arrow /></Link>
-            <p>{data.next.daily ? t.continueDaily(data.dueTotal, data.fresh) : t.continueWhat(data.summary.last)}</p>
+          <div className={s.layout}>
+            <div className={s.column}>
+              <section className={`panel ${s.section}`} aria-labelledby="dash-progress">
+                <h2 id="dash-progress">{t.progress}</h2>
+                <table className={s.table}>
+                  <caption className="sr-only">{t.progress}</caption>
+                  <thead><tr><th scope="col">{t.area}</th><th scope="col">{t.today}</th><th scope="col">{t.memorized}</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.kanaLearned} / {scope.kana.length}</td></tr>
+                    <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.vocabLearned} / {scope.vocab.length}</td></tr>
+                    <tr><th scope="row">Kanji</th><td>{data.summary.today.kanji}</td><td>{data.kanjiLearned} / {scope.kanji.length}</td></tr>
+                    <tr><th scope="row">{t.grammar}</th><td colSpan={2}><Link href="/grammar">{t.grammarLink}</Link></td></tr>
+                  </tbody>
+                </table>
+              </section>
+
+              <section className={`panel ${s.section}`} aria-labelledby="dash-review">
+                <h2 id="dash-review">{t.review}</h2>
+                {data.dueTotal === 0 ? <p>{t.reviewNone}</p> : (
+                  <ul className={s.list}>
+                    {data.kanaDue > 0 && <li><span>{t.reviewKana(data.kanaDue)}</span><Link href="/review?kind=kana">{t.practise}</Link></li>}
+                    {data.kanjiDue > 0 && <li><span>{t.reviewKanji(data.kanjiDue)}</span><Link href="/review?kind=kanji">{t.practise}</Link></li>}
+                    {data.vocabDue > 0 && <li><span>{t.reviewVocab(data.vocabDue)}</span><Link href="/review?kind=vocab">{t.practise}</Link></li>}
+                  </ul>
+                )}
+                <p className={s.note}>{t.reviewNote(INTERVALS)}</p>
+              </section>
+
+              <WeakList items={data.weak} lang={lang} />
+            </div>
+
+            <div className={s.column}>
+              <section className={`panel ${s.section}`} aria-labelledby="dash-upcoming">
+                <h2 id="dash-upcoming">{t.upcoming}</h2>
+                {exam && days !== null && days >= 0 ? (
+                  <p>{t.exam(goal)} · {new Intl.DateTimeFormat(lang === "vi" ? "vi-VN" : "en-GB", { weekday: "long", day: "numeric", month: "numeric", year: "numeric" }).format(exam)}</p>
+                ) : (
+                  <p className={s.list}><span>{exam ? t.examPast : t.examNone}</span> <Link href="/onboarding">{t.pick}</Link></p>
+                )}
+              </section>
+
+              <Heatmap heat={data.heat} lang={lang} />
+
+              <section className={`panel ${s.section}`} aria-labelledby="dash-history">
+                <h2 id="dash-history">{t.history}</h2>
+                {data.summary.recent.length === 0 ? <p>{t.empty}</p> : (
+                  <ol className={s.list}>
+                    {data.summary.recent.map((r) => {
+                      const ago = daysUntil(data.day, r.day);
+                      const label = ago === 0 ? t.todayLabel : ago === 1 ? t.yesterday : `${r.day.slice(8)}/${r.day.slice(5, 7)}`;
+                      return <li key={r.day}><span>{label}</span><span>{t.dayLine(r.minutes, r.kana, r.kanji, r.vocab)}</span></li>;
+                    })}
+                  </ol>
+                )}
+              </section>
+            </div>
           </div>
 
-          {resume && data.attempt && (
-            <p className={s.resume}>
-              <Link href={`/test/${resume.id}`}>{testText[lang].resume(resume.title, data.attempt.session.current + 1, data.attempt.session.answers.length)}</Link>
-            </p>
-          )}
-
-          <section className={s.section} aria-labelledby="dash-progress">
-            <h2 id="dash-progress">{t.progress}</h2>
-            <table className={s.table}>
-              <caption className="sr-only">{t.progress}</caption>
-              <thead><tr><th scope="col">{t.area}</th><th scope="col">{t.today}</th><th scope="col">{t.memorized}</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.kanaLearned} / {scope.kana.length}</td></tr>
-                <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.vocabLearned} / {scope.vocab.length}</td></tr>
-                <tr><th scope="row">Kanji</th><td>{data.summary.today.kanji}</td><td>{data.kanjiLearned} / {scope.kanji.length}</td></tr>
-                <tr><th scope="row">{t.grammar}</th><td colSpan={2}><Link href="/grammar">{t.grammarLink}</Link></td></tr>
-              </tbody>
-            </table>
-          </section>
-
-          <section className={s.section} aria-labelledby="dash-review">
-            <h2 id="dash-review">{t.review}</h2>
-            {data.dueTotal === 0 ? <p>{t.reviewNone}</p> : (
-              <ul className={s.list}>
-                {data.kanaDue > 0 && <li><span>{t.reviewKana(data.kanaDue)}</span><Link href="/review?kind=kana">{t.practise}</Link></li>}
-                {data.kanjiDue > 0 && <li><span>{t.reviewKanji(data.kanjiDue)}</span><Link href="/review?kind=kanji">{t.practise}</Link></li>}
-                {data.vocabDue > 0 && <li><span>{t.reviewVocab(data.vocabDue)}</span><Link href="/review?kind=vocab">{t.practise}</Link></li>}
-              </ul>
-            )}
-            <p className={s.note}>{t.reviewNote(INTERVALS)}</p>
-          </section>
-
-          <WeakList items={data.weak} lang={lang} />
-
-          <section className={s.section} aria-labelledby="dash-upcoming">
-            <h2 id="dash-upcoming">{t.upcoming}</h2>
-            {exam && days !== null && days >= 0 ? (
-              <p>{t.exam(goal)} · {new Intl.DateTimeFormat(lang === "vi" ? "vi-VN" : "en-GB", { weekday: "long", day: "numeric", month: "numeric", year: "numeric" }).format(exam)}</p>
-            ) : (
-              <p className={s.list}><span>{exam ? t.examPast : t.examNone}</span> <Link href="/onboarding">{t.pick}</Link></p>
-            )}
-          </section>
-
-          <Heatmap heat={data.heat} lang={lang} />
-
-          <section className={s.section} aria-labelledby="dash-history">
-            <h2 id="dash-history">{t.history}</h2>
-            {data.summary.recent.length === 0 ? <p>{t.empty}</p> : (
-              <ol className={s.list}>
-                {data.summary.recent.map((r) => {
-                  const ago = daysUntil(data.day, r.day);
-                  const label = ago === 0 ? t.todayLabel : ago === 1 ? t.yesterday : `${r.day.slice(8)}/${r.day.slice(5, 7)}`;
-                  return <li key={r.day}><span>{label}</span><span>{t.dayLine(r.minutes, r.kana, r.kanji, r.vocab)}</span></li>;
-                })}
-              </ol>
-            )}
-          </section>
-
-          {data.bad && <p role="alert" className={s.warning}>{t.warning}</p>}
+          {data.bad && <p role="alert" className={`notice ${s.warning}`} data-tone="warn">{t.warning}</p>}
         </>
       )}
     </main>

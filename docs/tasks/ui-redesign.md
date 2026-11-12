@@ -100,5 +100,16 @@
 - Codex review: `.panel[data-raised]` used `--surface-2`, the same tone as a plain panel's wet ground, so the ADR's raised level never appeared. It now uses `--surface-3`.
 - Codex review: the no-hex test scanned only `globals.css`. It now scans every `*.module.css`; the only allowed hex values are the hero's pre-existing ones in `page.module.css` (four `#000` mask stencils, one `#fff` sign core). Seen failing with a planted hex in `kana.module.css`. Raw `rgb()`/`rgba()` in `kana.module.css` and `page.module.css` are converted with their page groups (4 and 2).
 
+**Group 2: home and dashboard**
+- The sections below the hero were rewritten (scripts, line, ladder, preview, closing). Their amber glows were raw `rgba(255, 177, 59, …)` and are now `color-mix()` over `--amber`. The hero's own 16 `rgba()` values stay, because the hero is kept as is (BACKLOG, UI redesign follow-ups).
+- The dashboard had two amber buttons: "Tiếp tục học" and the WeakList practice button. WeakList's button is now `btn btnGhost` (One Amber Rule); the e2e counts exactly one non-ghost `.btn` in `main`.
+- `WeakList.module.css` and `heatmap.module.css` drew bare blocks with their own heading sizes. They now use the same panel ground, edge highlight and `--fs-card` title as the dashboard panels, and the heatmap legend moved from `.75rem` to `--fs-meta` (Readable Floor).
+- i18n keys that only the old route list used (`lessonName`, `lessonText`, `openMeta`, `kanjiMeta`, `lessonMeta`) were removed in both languages; grep found no other use.
+- `e2e/home.spec.ts` test 2 asserted the old heading "Bốn tuyến đã chạy." and the link `/^課 Bài học/`, which the new home no longer has. It now asserts the new heading, the Kanji tile and the N5 station, each with its href. The assertion count is unchanged, and the "Sắp có" and account-optional checks are kept.
+- `e2e/redesign.spec.ts` reads every count from `kotoba-be/content/*.json`. Seen failing with the amber count inverted to 2 (both tests, desktop), then restored.
+- Screenshots at 360, 768 and 1440 (landing) and on mobile and desktop (dashboard) were looked at: no overflow; the dashboard goes to two columns at ≥1100px and stacks on a phone.
+- Codex review: the preview test only checked the first word. It now checks every listed word (written form, reading and meaning in order), the flashcard, and the lesson's kanji and grammar point against the content files. Seen failing with the word order swapped and with a wrong kanji text, then restored.
+- Codex review, not changed: the dashboard test uses one fixed client IP per project. It follows the convention of `home.spec.ts` and `daily.spec.ts` (one sign-up per project per run, under the limit of 10 per hour).
+
 ## 5. Performance
 (The `/vocab` and `/kanji` measurements go here.)

@@ -4,8 +4,9 @@ import { Street } from "./Street";
 import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
 import { currentUser } from "@/lib/auth";
-import { getKana, getKanji, getTests, getVocab } from "@/lib/content";
-import { goalScope, stopsOf } from "@/lib/library";
+import type { CSSProperties } from "react";
+import { getGrammar, getKana, getKanji, getLessons, getTests, getVocab } from "@/lib/content";
+import { goalScope, LEVELS, levelLabel, stopsOf } from "@/lib/library";
 import { INTERVALS, KNOWN_AT } from "@/lib/srs";
 import { itemLinks } from "@/lib/weak";
 import { Dashboard } from "./Dashboard";
@@ -99,6 +100,13 @@ const LAMPS = [
   { char: "ヲ", romaji: "wo", lit: 0 },
 ];
 
+const KANA_SCRIPTS = [
+  { script: "hiragana", name: "Hiragana", specimen: "ひらがな", examples: ["すし", "くすり"], textKey: "hiraganaText" },
+  { script: "katakana", name: "Katakana", specimen: "カタカナ", examples: ["ラーメン", "ホテル"], textKey: "katakanaText" },
+] as const;
+/** Rows of the guest preview: enough to read as a lesson without turning the home into a word list. */
+const PREVIEW_WORDS = 4;
+
 export default async function Home() {
   const lang = await getLang();
   const user = await currentUser();
@@ -126,6 +134,31 @@ export default async function Home() {
   }
   const t = dict(lang).home;
   const lampLabels = [t.lampMastered, t.lampLearning, t.lampUnseen];
+  const [kana, kanji, vocab, grammar, lessons] = await Promise.all([getKana(), getKanji(), getVocab(), getGrammar(), getLessons()]);
+  const kanaScripts = KANA_SCRIPTS.map((k) => {
+    const items = kana.filter((x) => x.script === k.script);
+    return { ...k, text: t[k.textKey], total: items.length, basic: items.filter((x) => x.group === "basic").length };
+  });
+  // Only levels that have lessons become stations, so the line never shows an empty N2.
+  const journey = LEVELS.map((level) => ({
+    level,
+    lessons: lessons.filter((l) => l.level === level).length,
+    words: vocab.filter((v) => v.level === level).length,
+    kanji: kanji.filter((k) => k.level === level).length,
+    grammar: grammar.filter((g) => g.level === level).length,
+  })).filter((stop) => stop.lessons > 0);
+  const kanjiLevels = journey.filter((stop) => stop.kanji > 0).map((stop) => levelLabel(stop.level));
+  const levelSpan = kanjiLevels.length > 1 ? `${kanjiLevels[0]}–${kanjiLevels.at(-1)}` : (kanjiLevels[0] ?? "");
+  // The first lesson that has words, a kanji and a grammar point: the preview is a real lesson, not a mock.
+  const preview = lessons
+    .map((lesson) => ({
+      lesson,
+      words: vocab.filter((v) => v.lesson === lesson.lesson),
+      kanji: kanji.find((k) => k.lesson === lesson.lesson),
+      grammar: grammar.find((g) => g.lesson === lesson.lesson),
+    }))
+    .flatMap(({ lesson, words, kanji: k, grammar: g }) =>
+      words.length > 0 && k && g ? [{ lesson, words: words.slice(0, PREVIEW_WORDS), card: words[0], kanji: k, grammar: g }] : [])[0];
 
   return (
     <>
@@ -155,46 +188,52 @@ export default async function Home() {
       </section>
 
       <main className={s.body}>
-        <section className={s.route} aria-labelledby="route-h">
+        <section className={s.scripts} aria-labelledby="route-h">
           <div className={s.sectionHead}>
             <h2 id="route-h">{t.routeH}</h2>
-            <p>
-              {t.routeP}
-            </p>
+            <p>{t.routeP}</p>
           </div>
-          <ol className={s.line}>
+          <ul className={s.scriptGrid}>
+            {kanaScripts.map((k) => (
+              <li key={k.script}>
+                <Link href={`/kana?script=${k.script}`} className={`tile ${s.script}`}>
+                  <span lang="ja" className={s.scriptSpecimen}>{k.specimen}</span>
+                  <span className={s.scriptName}>{k.name} <Arrow /></span>
+                  <span className={s.scriptText}>{k.text.a}<span lang="ja">{k.examples[0]}</span>{k.text.b}<span lang="ja">{k.examples[1]}</span>{k.text.c}</span>
+                  <span className={s.scriptMeta}>{t.kanaCount(k.total, k.basic)}</span>
+                </Link>
+              </li>
+            ))}
             <li>
-              <Link href="/kana?script=hiragana" className={s.station}>
-                <span lang="ja" className={s.stationKana}>ひらがな</span>
-                <span className={s.stationName}>Hiragana <Arrow /></span>
-                <span className={s.stationText}>{t.hiraganaText.a}<span lang="ja">すし</span>{t.hiraganaText.b}<span lang="ja">くすり</span>{t.hiraganaText.c}</span>
-                <span className={s.stationMeta}>{t.openMeta}</span>
+              <Link href="/kanji" className={`tile ${s.script}`}>
+                <span lang="ja" className={s.scriptSpecimen}>漢字</span>
+                <span className={s.scriptName}>Kanji <Arrow /></span>
+                <span className={s.scriptText}>{t.kanjiText}</span>
+                <span className={s.scriptMeta}>{t.kanjiCount(kanji.length, levelSpan)}</span>
               </Link>
             </li>
-            <li>
-              <Link href="/kana?script=katakana" className={s.station}>
-                <span lang="ja" className={s.stationKana}>カタカナ</span>
-                <span className={s.stationName}>Katakana <Arrow /></span>
-                <span className={s.stationText}>{t.katakanaText.a}<span lang="ja">ラーメン</span>{t.katakanaText.b}<span lang="ja">ホテル</span>{t.katakanaText.c}</span>
-                <span className={s.stationMeta}>{t.openMeta}</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/kanji" className={s.station}>
-                <span lang="ja" className={s.stationKana}>漢字</span>
-                <span className={s.stationName}>Kanji <Arrow /></span>
-                <span className={s.stationText}>{t.kanjiText}</span>
-                <span className={s.stationMeta}>{t.kanjiMeta}</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/lessons" className={s.station}>
-                <span lang="ja" className={s.stationKana}>課</span>
-                <span className={s.stationName}>{t.lessonName} <Arrow /></span>
-                <span className={s.stationText}>{t.lessonText}</span>
-                <span className={s.stationMeta}>{t.lessonMeta}</span>
-              </Link>
-            </li>
+          </ul>
+        </section>
+
+        <section className={s.route} aria-labelledby="line-h">
+          <div className={s.sectionHead}>
+            <h2 id="line-h">{t.lineH}</h2>
+            <p>{t.lineP}</p>
+          </div>
+          <ol className={s.line} style={{ "--stops": journey.length } as CSSProperties}>
+            {journey.map((stop) => (
+              <li key={stop.level}>
+                <Link href="/lessons" className={s.station}>
+                  <span className={s.stationKana}>{levelLabel(stop.level)}</span>
+                  <span className={s.stationName}>{t.lineStation(stop.lessons)} <Arrow /></span>
+                  <dl className={s.stationStats}>
+                    <div><dt>{t.lineWords}</dt><dd>{stop.words}</dd></div>
+                    <div><dt>Kanji</dt><dd>{stop.kanji}</dd></div>
+                    <div><dt>{t.lineGrammar}</dt><dd>{stop.grammar}</dd></div>
+                  </dl>
+                </Link>
+              </li>
+            ))}
           </ol>
         </section>
 
@@ -207,7 +246,19 @@ export default async function Home() {
             <p>
               {t.honestP2.a}<kbd>1</kbd>{t.honestP2.b}<kbd>4</kbd>{t.honestP2.c}<kbd>Enter</kbd>{t.honestP2.d}
             </p>
-            <Link href="/kana?mode=quiz" className="btn">{t.honestCta} <Arrow /></Link>
+            <ol className={s.ladder} aria-label={t.ladderLabel}>
+              <li><span className="tag" data-state="fresh">{t.stateFresh}</span></li>
+              {Array.from({ length: KNOWN_AT }, (_, n) => (
+                <li key={n}>
+                  <span className={s.ladderHit}>{t.ladderHit(n + 1)}</span>
+                  {n === 0 && <span className="tag" data-state="learned">{t.stateLearned}</span>}
+                  {n + 1 === KNOWN_AT
+                    ? <span className="tag" data-state="known">{t.stateKnown}</span>
+                    : <span className={s.ladderWait}>{t.ladderWait(INTERVALS[n])}</span>}
+                </li>
+              ))}
+            </ol>
+            <p className={s.ladderMiss}>{t.ladderMiss}</p>
           </div>
           <figure className={s.lamps}>
             <ul>
@@ -224,6 +275,57 @@ export default async function Home() {
             </ul>
             <figcaption>{t.lampCaption(KNOWN_AT)}</figcaption>
           </figure>
+        </section>
+
+        {preview && (
+          <section className={s.preview} aria-labelledby="preview-h">
+            <div className={s.sectionHead}>
+              <h2 id="preview-h">{t.previewH}</h2>
+              <p>{t.previewP(preview.lesson.lesson, preview.lesson.title[lang])}</p>
+            </div>
+            <div className={s.previewGrid}>
+              <div className={`panel ${s.previewWords}`}>
+                <h3>{t.lineWords}</h3>
+                <ul>
+                  {preview.words.map((v) => (
+                    <li key={v.id}>
+                      <span lang="ja" className={s.previewWord}>{v.word}</span>
+                      <span lang="ja" className={s.previewReading}>{v.reading}</span>
+                      <span className={s.previewMeaning}>{v[lang]}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className={s.previewSide}>
+                <figure className={`panel ${s.previewCard}`} data-raised="">
+                  <figcaption>{t.previewCard}</figcaption>
+                  <span lang="ja" className={s.previewFront}>{preview.card.word}</span>
+                  <span lang="ja" className={s.previewReading}>{preview.card.reading}</span>
+                  <span className={s.previewMeaning}>{preview.card[lang]}</span>
+                </figure>
+                <div className={`panel ${s.previewKanji}`}>
+                  <h3>Kanji</h3>
+                  <span lang="ja" className={s.previewKanjiChar}>{preview.kanji.char}</span>
+                  <span className={s.previewHv}>{preview.kanji.hv.join(", ")}</span>
+                  <span className={s.previewMeaning}>{lang === "vi" && preview.kanji.vi ? preview.kanji.vi : preview.kanji.en.join(", ")}</span>
+                </div>
+                <div className={`panel ${s.previewGrammar}`}>
+                  <h3>{t.lineGrammar}</h3>
+                  <span lang="ja" className={s.previewPattern}>{preview.grammar.pattern}</span>
+                  <span className={s.previewMeaning}>{preview.grammar.title[lang]}</span>
+                </div>
+              </div>
+            </div>
+            <Link href={`/lessons/${preview.lesson.lesson}`} className={`btn btnGhost ${s.previewLink}`}>
+              {t.previewOpen(preview.lesson.lesson)} <Arrow />
+            </Link>
+          </section>
+        )}
+
+        <section className={s.closing} aria-labelledby="closing-h">
+          <h2 id="closing-h">{t.closingH}</h2>
+          <p>{t.closingP}</p>
+          <Link href="/kana?mode=quiz" className="btn">{t.honestCta} <Arrow /></Link>
         </section>
       </main>
 

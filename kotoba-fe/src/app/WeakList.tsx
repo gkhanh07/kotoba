@@ -20,7 +20,7 @@ export function WeakList({ items, lang }: { items: WeakItem[]; lang: Lang }) {
           </li>
         ))}
       </ul>
-      <Link href="/review?weak=1" className="btn">{t.review}</Link>
+      <Link href="/review?weak=1" className="btn btnGhost">{t.review}</Link>
     </section>
   );
 }

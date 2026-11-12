@@ -60,3 +60,9 @@ A reset of a set with no local cards, made while a push is in flight, leaves `sn
 - `grammar:you-ni-naru`: add the negative `V-ない + ようになる` (たばこを吸わないようになりました).
 - `n4-1` question 5.4 (usage): the explanation would read more naturally as `パン作りに失敗した` than `パン作りが失敗した`; the answer is unaffected.
 - Kanji cards list every on/kun and Hán Việt reading from the sources, including rare ones (米 メエトル, 数 サク・ソク・シュ). Show the common readings first and fold the rare ones away.
+
+## UI redesign follow-ups (2026-11-12, docs/tasks/ui-redesign.md)
+- Kanji stroke order: the content has only `strokes` (a count), so `/kanji/[char]` cannot show the order. Needs a licensed stroke source (KanjiVG, CC BY-SA 3.0) and an ADR.
+- Grammar sentence-part colouring: `examples` are plain strings, so a sentence cannot be split into its parts. Needs a segmented example field in `grammar.json` and a content migration.
+- "Related grammar": there is no such field. The grammar page uses same-lesson points and the prev/next pager instead.
+- The guest hero in `page.module.css` still writes 16 raw `rgba()` values (skyline glow, sign halos, card ground). The redesign keeps the hero as is, so they were not converted; move them to `color-mix()` over tokens when the hero is next touched.
