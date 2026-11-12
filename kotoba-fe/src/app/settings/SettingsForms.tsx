@@ -1,11 +1,11 @@
 "use client";
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { accountText, MINUTES, type FormState } from "@/lib/account";
 import type { Lang } from "@/lib/i18n";
 import { clearLocal } from "@/lib/store";
 import { newPassword, removeAccount, saveSettings, setLang } from "../(auth)/actions";
-import { Choice, empty, goalOptions, Heading, Password, Problem } from "../(auth)/forms";
+import { Choice, empty, flag, goalOptions, Heading, Password, Problem } from "../(auth)/forms";
 import a from "../(auth)/auth.module.css";
 import s from "./settings.module.css";
 
@@ -18,11 +18,18 @@ export function SettingsForms({ lang, email, sessions, initial }: Props) {
     <main className={a.auth}>
       <div className={`${a.panel} ${s.panel}`}>
         <Heading title={t.settings.title} lede={t.settings.lede(email)} />
-        <Profile lang={lang} sessions={sessions} initial={initial} />
-        <Language lang={lang} />
-        <NewPassword lang={lang} email={email} />
-        <Data lang={lang} />
-        <Remove lang={lang} />
+        {/* Two columns on desktop: what you study on the left, the account on the right. */}
+        <div className={s.columns}>
+          <div className={s.column}>
+            <Profile lang={lang} sessions={sessions} initial={initial} />
+            <Language lang={lang} />
+          </div>
+          <div className={s.column}>
+            <NewPassword lang={lang} email={email} />
+            <Data lang={lang} />
+            <Remove lang={lang} />
+          </div>
+        </div>
       </div>
     </main>
   );
@@ -32,6 +39,7 @@ function Profile({ lang, sessions, initial }: Omit<Props, "email">) {
   const t = accountText[lang];
   const o = t.onboarding;
   const [state, action, pending] = useActionState(saveSettings, { values: initial });
+  const problem = useId();
   // The save stays off until something changes; a submit settles it again, unless it failed.
   const [dirty, setDirty] = useState(false);
   return (
@@ -40,12 +48,12 @@ function Profile({ lang, sessions, initial }: Omit<Props, "email">) {
       <form action={action} className={a.form} onInput={() => setDirty(true)} onSubmit={() => setDirty(false)}>
         <label className={a.field}>
           <span>{t.settings.name}</span>
-          <input type="text" name="name" maxLength={40} autoComplete="given-name" defaultValue={state.values.name} />
+          <input type="text" name="name" maxLength={40} autoComplete="given-name" defaultValue={state.values.name} {...flag(state.error, "name", problem)} />
         </label>
-        <Choice name="goal" legend={o.goal} options={goalOptions} value={state.values.goal} />
+        <Choice name="goal" legend={o.goal} options={goalOptions} value={state.values.goal} describedBy={state.error === "goal" ? problem : undefined} />
         <label className={a.field}>
           <span>{o.exam}</span>
-          <select name="exam" defaultValue={state.values.exam ?? "unknown"}>
+          <select name="exam" defaultValue={state.values.exam ?? "unknown"} {...flag(state.error, "exam", problem)}>
             {sessions.map((x) => (
               <option key={x.value} value={x.value}>{x.label}</option>
             ))}
@@ -57,8 +65,9 @@ function Profile({ lang, sessions, initial }: Omit<Props, "email">) {
           legend={o.minutes}
           options={MINUTES.map((m) => ({ value: String(m), label: o.minutesUnit(m) }))}
           value={state.values.minutes}
+          describedBy={state.error === "minutes" ? problem : undefined}
         />
-        <Problem message={state.error && t.errors[state.error]} />
+        <Problem id={problem} message={state.error && t.errors[state.error]} />
         <div className={s.row}>
           <button type="submit" className="btn" disabled={pending || (!dirty && !state.error)}>{pending ? t.pending : t.settings.save}</button>
           <Saved at={state.at} text={t.settings.saved} />
@@ -110,15 +119,16 @@ function Language({ lang }: { lang: Lang }) {
 function NewPassword({ lang, email }: { lang: Lang; email: string }) {
   const t = accountText[lang];
   const [state, action, pending] = useActionState(newPassword, empty);
+  const problem = useId();
   return (
     <section className={s.section} aria-labelledby="set-password">
       <h2 id="set-password">{t.settings.password}</h2>
       <form action={action} className={a.form}>
         {/* Lets password managers file the change under the right account. */}
         <input type="email" name="username" autoComplete="username" value={email} hidden readOnly />
-        <Password name="current" label={t.settings.current} current />
-        <Password label={t.settings.next} />
-        <Problem message={state.error && t.errors[state.error]} />
+        <Password name="current" label={t.settings.current} current invalid={flag(state.error, "current", problem)} />
+        <Password label={t.settings.next} invalid={flag(state.error, "password", problem)} />
+        <Problem id={problem} message={state.error && t.errors[state.error]} />
         <div className={s.row}>
           <button type="submit" className="btn btnGhost" disabled={pending}>{pending ? t.pending : t.settings.change}</button>
           <p role="status" className={a.note}>{state.sent && t.settings.changed}</p>
@@ -153,8 +163,9 @@ function Remove({ lang }: { lang: Lang }) {
     return r;
   }, empty);
   const dialog = useRef<HTMLDialogElement>(null);
+  const problem = useId();
   return (
-    <section className={s.section} aria-labelledby="set-remove">
+    <section className={s.section} data-danger aria-labelledby="set-remove">
       <h2 id="set-remove">{t.settings.remove}</h2>
       <p className={a.lede}>{t.settings.removeBody}</p>
       <button type="button" className={`btn btnGhost ${s.danger}`} onClick={() => dialog.current?.showModal()}>
@@ -164,8 +175,8 @@ function Remove({ lang }: { lang: Lang }) {
         <h2 id="remove-title">{t.settings.removeTitle}</h2>
         <p className={a.lede}>{t.settings.removeAsk}</p>
         <form action={action} className={a.form}>
-          <Password label={t.password} current />
-          <Problem message={state.error && t.errors[state.error]} />
+          <Password label={t.password} current invalid={flag(state.error, "current", problem)} />
+          <Problem id={problem} message={state.error && t.errors[state.error]} />
           <div className={s.row}>
             <button type="submit" className={`btn btnGhost ${s.danger}`} disabled={pending || state.sent}>
               {pending ? t.pending : t.settings.removeConfirm}

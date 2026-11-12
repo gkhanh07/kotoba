@@ -1,23 +1,40 @@
 .auth { padding: clamp(1.5rem, 4vw, 3.5rem) var(--pad-x) 4rem; }
 .panel { max-width: 26rem; margin: 0 auto; }
-.panel h1 { font-size: clamp(2.2rem, 5vw, 3.25rem); color: var(--silver); text-shadow: var(--glow-cool); }
+.panel h1 { font-size: var(--fs-page); color: var(--silver); text-shadow: var(--glow-cool); }
 .lede { margin-top: .75rem; color: var(--silver-dim); }
 .form { display: grid; gap: 1.25rem; margin-top: 2rem; }
 .form button { justify-content: center; }
-.field { display: grid; gap: .4rem; color: var(--silver); font-size: .9rem; }
-.field input, .field select { min-height: 48px; padding: 0 .9rem; background: var(--asphalt); border: 1px solid var(--rule); border-radius: 2px; color: var(--chalk); font: inherit; font-size: 1rem; }
+.field { display: grid; gap: .4rem; color: var(--silver); font-size: var(--fs-caption); }
+.field input, .field select { min-height: 48px; padding: 0 .9rem; background: var(--surface-0); border: 1px solid var(--rule); border-radius: var(--radius-sm); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--night) 70%, transparent); color: var(--chalk); font: inherit; font-size: 1rem; transition: border-color .15s, background-color .15s; }
 .field input:hover, .field select:hover { border-color: var(--rule-strong); }
+.field input:focus-visible, .field select:focus-visible { border-color: var(--amber); background: var(--surface-1); }
+/* Invalid: a neon border plus an inner bar, and aria-describedby reads the error line below (AC-9.2). */
+.field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: var(--neon); box-shadow: inset 3px 0 0 var(--neon); }
 .check { display: flex; align-items: center; gap: .65rem; min-height: 44px; color: var(--silver); }
 .check input { width: 1.15rem; height: 1.15rem; accent-color: var(--amber); }
 .choice { display: flex; flex-wrap: wrap; gap: .5rem; border: 0; padding: 0; margin: 0; min-width: 0; }
-.choice legend:not(:global(.sr-only)) { width: 100%; margin-bottom: .6rem; color: var(--silver); font-size: .9rem; }
+.choice legend:not(:global(.sr-only)) { width: 100%; margin-bottom: .6rem; color: var(--silver); font-size: var(--fs-caption); }
 .choice label { position: relative; }
-.choice span { display: inline-flex; align-items: center; justify-content: center; min-width: 3.25rem; min-height: 44px; padding: .55rem 1rem; border: 1px solid var(--rule); border-radius: 2px; cursor: pointer; }
-.choice span:hover { background: var(--wet); }
+.choice span { display: inline-flex; align-items: center; justify-content: center; min-width: 3.25rem; min-height: 44px; padding: .55rem 1rem; border: 1px solid var(--rule); border-radius: var(--radius-sm); background: var(--surface-1); box-shadow: var(--edge-hi); cursor: pointer; transition: border-color .15s, background-color .15s, color .15s; }
+.choice span:hover { background: var(--surface-2); border-color: var(--rule-strong); }
 .choice input:checked + span { color: var(--amber); border-color: var(--amber); background: var(--spill-amber); }
 .choice input:focus-visible + span { outline: 2px solid var(--amber); outline-offset: 3px; }
-.error { color: var(--neon-soft); }
-.note { margin-top: 1.25rem; color: var(--silver-dim); font-size: .85rem; }
-.links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; margin-top: .75rem; font-size: .9rem; }
+/* The "!" mark gives the error a shape as well as a colour. */
+.error { display: flex; align-items: flex-start; gap: .65rem; padding: .65rem .85rem; border: 1px solid color-mix(in srgb, var(--neon) 55%, transparent); border-radius: var(--radius-sm); background: var(--spill-neon); color: var(--neon-soft); }
+.error::before { content: "!"; flex: none; display: inline-grid; place-items: center; width: 1.3rem; height: 1.3rem; margin-top: .1rem; border: 1.5px solid currentColor; border-radius: 50%; font-size: var(--fs-meta); font-weight: 700; line-height: 1; }
+.note { margin-top: 1.25rem; color: var(--silver-dim); font-size: var(--fs-caption); }
+.links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; margin-top: .75rem; font-size: var(--fs-caption); }
 .links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--silver); }
 .links a:hover { color: var(--amber-core); }
+
+/* ── desktop: the form beside the sign ─────────── */
+.motif { display: none; }
+@media (min-width: 64rem) {
+  .stage { display: grid; grid-template-columns: minmax(0, 28rem) minmax(0, 1fr); gap: clamp(2rem, 4vw, 4rem); max-width: 68rem; margin: 0 auto; }
+  .stage > .panel { max-width: none; margin: 0; padding: var(--space-panel); border: 1px solid var(--rule-dim); border-radius: var(--radius); background: var(--surface-1); box-shadow: var(--edge-hi); }
+  .motif { display: grid; place-items: center; min-height: 34rem; border: 1px solid var(--rule-dim); border-radius: var(--radius); background: radial-gradient(ellipse at 50% 40%, color-mix(in srgb, var(--cool) 12%, var(--night)), var(--night) 70%); overflow: hidden; }
+  /* The board of the sign: a hairline frame the characters hang inside. */
+  .board { display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem); padding: 3rem 2.5rem; border: 1px solid color-mix(in srgb, var(--cool) 35%, transparent); border-radius: var(--radius-sm); }
+}
+.sign { position: relative; writing-mode: vertical-rl; font-size: var(--fs-specimen-lg); line-height: 1.1; color: var(--cool-core); text-shadow: var(--glow-cool); }
+.reading { position: relative; writing-mode: vertical-rl; font-size: var(--fs-section); letter-spacing: .6em; color: var(--silver-dim); }

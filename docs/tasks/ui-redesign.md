@@ -247,6 +247,28 @@
 - Codex review (read-only), 1 finding:
   - #1 fixed: the intro test only checked that the part counts summed to the total. It now asserts each row's name and count. Writing it showed that the content splits `reading` into one entry per passage, which the page sums; the test sums them independently instead of calling `score()`.
 
+### Group 9: auth and settings
+- Auth layout: at ≥64rem the form sits beside a decorative, `aria-hidden` motif. The motif is the vertical sign 言葉 with ことば beside it, in a cool hairline board on a quiet radial ground. There is no rain and no skyline. Below 64rem the motif is not rendered (`display: none`), so phones get the form alone.
+  - The first draft framed the sign with a `::before` box that overlapped ことば in the 1440 screenshot. A `.board` wrapper replaced it.
+- Invalid state (AC-9.2):
+  - `isInvalidField(error, field)` in `src/lib/account.ts` maps each error code to the text inputs it blames. For example, `credentials` → email + password, `taken` → email, and `current` → the current password.
+  - The form gives those inputs `aria-invalid="true"` and `aria-describedby` pointing at the `role="alert"` problem line.
+  - The CSS draws a neon border; the alert text says what is wrong, so colour is not the only channel.
+- Radio groups (goal, minutes) take no `aria-invalid`, which ARIA 1.2 deprecates on a plain group. When the error is theirs, the `<fieldset>` gets `aria-describedby` → the alert.
+- Settings:
+  - At ≥64rem the panel widens to 72rem and splits into two columns: Profile + Language on the left; Password, Data and Delete on the right. Below 64rem it is one column.
+  - Each section is a `--surface-1` panel with `--edge-hi`. Delete carries `data-danger`, a neon-tinted border, and its title says what it does.
+  - The confirm dialog is `--surface-2` with `--shadow-float`, the floating-layer token.
+- Server actions, auth logic and the BE are unchanged.
+- Tests: +5 unit (`isInvalidField`) and 4 new e2e tests, each run on both projects:
+  - the `/login` motif shows on desktop only, beside the form
+  - a refused login marks both fields invalid and points them at the alert, whose text is the exact credentials error
+  - a register refused for a missing goal points the goal group at the alert. The form is set to `novalidate` to stand in for a browser that does no constraint validation.
+  - the settings columns
+  - Each was seen failing: the first three before the code existed, and the goal test with the fieldset's `aria-describedby` removed.
+- Codex review (read-only), 1 finding:
+  - P2 fixed: goal and minutes errors had no programmatic link to their group. Fixed with `describedBy` on `Choice` at all five call sites, and covered by the goal e2e test.
+
 ## 5. Performance
 Production build (`next start`), 1440×900, median of 5 loads after one warm-up. Times are in ms.
 
@@ -291,3 +313,13 @@ Production build (`next start`), 1440×900, median of 5 loads after one warm-up.
 | `/test/n5-1` after | 34294 | 111 | 12 | 128 | 58 | 171 |
 
 - Group 8 has no before rows: these routes were not measured before the group started. The change is markup and CSS only, with no new data sent to the client.
+
+| Route | HTML bytes | DOM nodes | TTFB | FCP | DCL | Load |
+|---|---|---|---|---|---|---|
+| `/login` after | 24354 | 98 | 12 | 164 | 73 | 186 |
+| `/register` after | 24788 | 111 | 10 | 164 | 52 | 191 |
+| `/forgot` after | 23914 | 90 | 9 | 156 | 52 | 180 |
+| `/settings` after (guest) | 24472 | 99 | 16 | 168 | 61 | 185 |
+
+- Group 9 has no before rows: these routes were not measured before the group started. The motif board is about a dozen static nodes, `aria-hidden`.
+- `/settings` was measured as a guest, so it is the redirect to `/login?next=/settings`, not the settings page itself. The perf script does not sign in.

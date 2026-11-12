@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { accountText } from "../src/lib/account";
 import { testText } from "../src/lib/testText";
 import { startBackend, stopBackend } from "./backend";
 import { expect, test } from "./fixtures";
@@ -510,5 +511,70 @@ test("/test/n5-1 intro: one panel of parts, one raised start panel beside it on 
   }
   const borders = await page.locator("main *").evaluateAll((els) => els.filter((el) => getComputedStyle(el).borderLeftWidth === "3px").length);
   expect(borders).toBe(0);
+  await axe();
+});
+
+// Group 9 (AC-9.1–9.3): the auth motif, the invalid-field state and the settings columns.
+test("/login sets the 言葉 sign beside the form on desktop only, hidden from assistive tech", async ({ page, axe }, info) => {
+  await page.goto("/login");
+  const motif = page.locator("main [aria-hidden='true']").filter({ hasText: "言葉" });
+  const form = page.getByRole("button", { name: "Đăng nhập" }).locator("xpath=ancestor::form");
+  if (info.project.name === "desktop") {
+    await expect(motif).toBeVisible();
+    const [sign, box] = [await motif.boundingBox(), await form.boundingBox()];
+    expect(sign!.x).toBeGreaterThan(box!.x + box!.width);
+  } else await expect(motif).toBeHidden();
+  await expect(page.locator(AMBER)).toHaveCount(1);
+  await axe();
+});
+
+test("a refused login marks both fields invalid and points them at the alert", async ({ page, axe }, info) => {
+  await page.setExtraHTTPHeaders({ "x-forwarded-for": `10.37.0.${info.project.name === "desktop" ? 1 : 2}` });
+  await page.goto("/login");
+  const [email, password] = [page.getByLabel("Email"), page.getByLabel("Mật khẩu")];
+  await expect(email).not.toHaveAttribute("aria-invalid");
+  await email.fill(`nobody-${info.project.name}@example.com`);
+  await password.fill(PASSWORD);
+  await page.getByRole("button", { name: "Đăng nhập" }).click();
+  const alert = page.getByRole("alert").filter({ hasText: accountText.vi.errors.credentials });
+  await expect(alert).toHaveText(accountText.vi.errors.credentials);
+  const id = await alert.getAttribute("id");
+  for (const field of [email, password]) {
+    await expect(field).toHaveAttribute("aria-invalid", "true");
+    await expect(field).toHaveAttribute("aria-describedby", id!);
+  }
+  await axe();
+});
+
+test("a register refused for a missing goal points the goal group at the alert", async ({ page, axe }, info) => {
+  await page.goto("/register");
+  const goal = page.getByRole("group", { name: accountText.vi.register.goal });
+  await expect(goal).not.toHaveAttribute("aria-describedby");
+  await page.getByLabel("Email").fill(`nogoal-${info.project.name}@example.com`);
+  await page.getByLabel("Mật khẩu").fill(PASSWORD);
+  // A browser without constraint validation: the server action is the check that remains.
+  await page.locator("form", { has: page.getByRole("button", { name: "Tạo tài khoản" }) }).evaluate((form) => form.setAttribute("novalidate", ""));
+  await page.getByRole("button", { name: "Tạo tài khoản" }).click();
+  const alert = page.getByRole("alert").filter({ hasText: accountText.vi.errors.goal });
+  await expect(alert).toHaveText(accountText.vi.errors.goal);
+  await expect(goal).toHaveAttribute("aria-describedby", (await alert.getAttribute("id"))!);
+  await expect(page.getByLabel("Email")).not.toHaveAttribute("aria-invalid");
+  await axe();
+});
+
+test("/settings sets the account sections in a second column on desktop",async ({ page, axe }, info) => {
+  await page.setExtraHTTPHeaders({ "x-forwarded-for": `10.37.1.${info.project.name === "desktop" ? 1 : 2}` });
+  await page.goto("/register");
+  await page.getByLabel("Email").fill(`settings-${info.project.name}-${Date.now()}@example.com`);
+  await page.getByLabel("Mật khẩu").fill(PASSWORD);
+  await page.getByText("N5", { exact: true }).click();
+  await page.getByRole("button", { name: "Tạo tài khoản" }).click();
+  await page.waitForURL("**/onboarding");
+  await page.getByRole("button", { name: "Để sau" }).or(page.getByRole("link", { name: "Để sau" })).click();
+  await page.goto("/settings");
+  const [profile, password] = [page.getByRole("region", { name: "Hồ sơ" }), page.getByRole("region", { name: "Mật khẩu" })];
+  const [a, b] = [await profile.boundingBox(), await password.boundingBox()];
+  if (info.project.name === "desktop") expect(b!.x).toBeGreaterThan(a!.x + a!.width);
+  else expect(b!.y).toBeGreaterThan(a!.y + a!.height);
   await axe();
 });

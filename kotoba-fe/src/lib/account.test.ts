@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { examDate, examDay, isEmail, isExam, isGoal, isMinutes, isName, jlptSessions, safePath } from "./account";
+import { examDate, examDay, isEmail, isExam, isGoal, isInvalidField, isMinutes, isName, jlptSessions, safePath } from "./account";
 
 const values = (now: Date, n = 4) => jlptSessions(now, n).map((s) => s.value);
 
@@ -86,5 +86,22 @@ describe("examDay", () => {
   });
   it("returns null for unknown", () => {
     expect(examDay("unknown")).toBeNull();
+  });
+});
+
+describe("isInvalidField", () => {
+  it("marks nothing when there is no error", () => {
+    expect(isInvalidField(undefined, "email")).toBe(false);
+  });
+  it("marks both email and password for wrong credentials", () => {
+    expect(["email", "password", "current"].map((f) => isInvalidField("credentials", f))).toEqual([true, true, false]);
+  });
+  it("marks the email when it is taken and the current password when it is wrong", () => {
+    expect(isInvalidField("taken", "email")).toBe(true);
+    expect(isInvalidField("current", "current")).toBe(true);
+    expect(isInvalidField("current", "password")).toBe(false);
+  });
+  it.each(["rate", "token", "goal", "minutes"] as const)("marks no text input for %s", (code) => {
+    expect(["email", "password", "name", "exam", "current"].some((f) => isInvalidField(code, f))).toBe(false);
   });
 });

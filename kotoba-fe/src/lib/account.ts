@@ -20,6 +20,15 @@ export type FormState = {
   values: { email?: string; remember?: boolean; token?: string; name?: string; goal?: string; exam?: string; minutes?: string };
 };
 
+// The text inputs an error points at, by form field name, so the form can mark them aria-invalid.
+// Radio groups (goal, minutes) and refusals that are no one field's fault (rate, token) mark nothing.
+const ERROR_FIELDS: Record<ErrorCode, readonly string[]> = {
+  email: ["email"], password: ["password"], name: ["name"], exam: ["exam"], current: ["current"],
+  credentials: ["email", "password"], taken: ["email"], goal: [], minutes: [], rate: [], token: [],
+};
+export const isInvalidField = (error: ErrorCode | undefined, field: string): boolean =>
+  error !== undefined && ERROR_FIELDS[error].includes(field);
+
 // Only same-site paths: "//evil.com" and "/\evil.com" would leave the site.
 export const safePath = (v: unknown) => (typeof v === "string" && /^\/(?![/\\])/.test(v) ? v : "/");
 
