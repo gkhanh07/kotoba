@@ -109,8 +109,8 @@ test("/review?weak=1 on an empty deck shows the empty text, and other weak value
   await expect(page.getByRole("button", { name: "Xem đáp án" })).toHaveCount(0);
   await axe();
 
-  // Phase 18: an ignored weak value is plain /review, today's session with the new items of lesson 1.
-  await page.goto("/review?weak=0");
+  // Phase 18: an ignored weak value on ?start=1 is plain, today's session with the new items of lesson 1.
+  await page.goto("/review?start=1&weak=0");
   await expect(page.getByText("Còn 10 mục · Kana 10")).toBeVisible();
   await expect(page.getByText("Chưa có mục nào bạn thường trả lời sai")).toHaveCount(0);
   expect(be).toEqual([]);

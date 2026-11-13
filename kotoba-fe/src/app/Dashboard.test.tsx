@@ -24,7 +24,7 @@ describe("Dashboard continue link", () => {
     seed({ "hiragana:a": card(1, "2026-11-02") });
     mount();
     expect(await screen.findByText("Phiên hôm nay: 1 đến hạn · 1 mới")).toBeInTheDocument();
-    expect(continueLink()).toHaveAttribute("href", "/review");
+    expect(continueLink()).toHaveAttribute("href", "/review?start=1");
   });
 
   it("falls back to the last area when nothing is due and every lesson is done", async () => {

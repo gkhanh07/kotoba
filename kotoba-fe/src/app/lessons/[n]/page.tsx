@@ -116,7 +116,7 @@ export default async function LessonPage(props: PageProps<"/lessons/[n]">) {
         ) : (
           <aside className={`panel ${s.side}`} data-raised="">
             <p className={s.scheduled}>{t.reviewBody}</p>
-            <div className={s.actions}><Link href="/review" className="btn">{t.review} <Arrow /></Link></div>
+            <div className={s.actions}><Link href="/review?start=1" className="btn">{t.review} <Arrow /></Link></div>
           </aside>
         )}
         </div>

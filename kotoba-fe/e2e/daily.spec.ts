@@ -31,7 +31,7 @@ const hasHorizontalScroll = (page: Page) => page.evaluate(() => document.documen
 test("a new guest gets 10 new kana of lesson 1, and after one pass only the missed ones come back", async ({ page, axe }) => {
   const be = watchBackend(page);
   await page.clock.setFixedTime(NOW);
-  await page.goto("/review");
+  await page.goto("/review?start=1");
   await expect(page.getByText(`Còn ${NEW_PER_DAY} mục · Kana ${NEW_PER_DAY}`)).toBeVisible();
   await expect(page.getByText("Mục đến hạn ôn và mục mới của bài 1").first()).toBeVisible();
   await axe();
@@ -45,7 +45,7 @@ test("a new guest gets 10 new kana of lesson 1, and after one pass only the miss
   await expect.poll(() => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? "null")?.ids.length, DAILY)).toBe(NEW_PER_DAY);
 
   // Reopen: the allowance is used, so only the two misses (due today) are asked.
-  await page.goto("/review");
+  await page.goto("/review?start=1");
   await expect(page.getByText("Còn 2 mục · Kana 2")).toBeVisible();
   await expect(page.getByText("Tất cả các mục đến hạn ôn").first()).toBeVisible();
   for (const k of missed) {
@@ -76,10 +76,10 @@ test("the dashboard's Tiếp tục học opens today's session with its counts",
 
   await expect(page.getByText(`Phiên hôm nay: 0 đến hạn · ${NEW_PER_DAY} mới`)).toBeVisible();
   const go = page.getByRole("link", { name: "Tiếp tục học" });
-  await expect(go).toHaveAttribute("href", "/review");
+  await expect(go).toHaveAttribute("href", "/review?start=1");
   await axe();
   await go.click();
-  await expect(page).toHaveURL(/\/review$/);
+  await expect(page).toHaveURL(/\/review\?start=1$/);
   await expect(page.getByText(`Còn ${NEW_PER_DAY} mục · Kana ${NEW_PER_DAY}`)).toBeVisible();
 
   // One new item learned: the dashboard offers the 9 left.

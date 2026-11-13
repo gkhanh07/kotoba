@@ -125,7 +125,7 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
         <div className={f.side}>
           <div className={f.toolbar}>
             <p>{scope}</p>
-            {(kind || lesson) && <div className={f.tools}><Link href="/review" className={s.textLink}>{t.all}</Link></div>}
+            {(kind || lesson) && <div className={f.tools}><Link href="/review?start=1" className={s.textLink}>{t.all}</Link></div>}
           </div>
           {item && order && (
             <>

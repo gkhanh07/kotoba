@@ -113,3 +113,6 @@ DONE — direct user request; spec/report: `docs/tasks/vietnamese-copy-review.md
 Quality Gate: FE check green (665 tests, +7; lines 98.49%, branches 96.98%); BE check green with RUST_LOG=info (57 unit, 41 E2E, 35 content, JMdict 3,046 words, build). Content validation rerun after the final 2 explanation edits: green. Full Playwright: 238/240; both failures used one old text expectation. After updating it, all 14 vocab-page tests passed on mobile/desktop, confirming all 240 distinct cases; no product change between runs. FE lint/typecheck rerun green. Axe 0 serious/critical; screenshots at 360/768/1440 inspected. Existing Vite loader warning and Windows server logs documented in spec. Reviewer PASS. Not pushed from this local session.
 
 Content review sample: `docs/tasks/vietnamese-copy-content-sample.md`, 30 items from the 44 edited entries, seed 20261112; `reviewed: false` remains unchanged and needs the user's review. Phase 29b was pending at that time; it is now DONE (see Status).
+
+## Review hub (2026-11-13)
+DONE — direct user request; spec `docs/tasks/review-hub.md`. FE Vitest 675 tests (lib lines 98.54%, branches 97.09%); full Playwright 246 passed, the 2 failures (old `/review$` URL in `daily.spec.ts`) fixed and rerun green with `review-hub.spec.ts` (8/8). Next: audit of empty pages and navigation flow.

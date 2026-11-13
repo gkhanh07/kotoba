@@ -5,6 +5,7 @@ import { hvRows, KINDS, libraryText, type Kind, type ReviewItem } from "@/lib/li
 import { getLang } from "../LangSwitch";
 import { SiteBar, SiteFooter } from "../SiteBar";
 import { ReviewApp } from "./ReviewApp";
+import { ReviewHub } from "./ReviewHub";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = libraryText[await getLang()].review;
@@ -13,12 +14,29 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const cap = (x: string) => x.charAt(0).toUpperCase() + x.slice(1);
 
+// Bare /review is the hub. ?start=1, ?kind=, ?lesson= and ?weak=1 open a session;
 // ?kind= narrows the queue to one kind (unknown values are ignored), ?lesson=n to one lesson.
 export default async function ReviewPage(props: PageProps<"/review">) {
   const q = await props.searchParams;
   const lang = await getLang();
   const t = libraryText[lang];
+  const isSession = ["start", "kind", "lesson", "weak"].some((key) => q[key] !== undefined);
   const [kana, kanji, vocab, lessons] = await Promise.all([getKana(), getKanji(), getVocab(), getLessons()]);
+
+  if (!isSession) {
+    const cards = [
+      ...kana.map((k) => ({ id: k.id, kind: "kana" as const })),
+      ...kanji.map((k) => ({ id: k.id, kind: "kanji" as const })),
+      ...vocab.map((w) => ({ id: w.id, kind: "vocab" as const })),
+    ];
+    return (
+      <>
+        <SiteBar current="review" />
+        <ReviewHub cards={cards} lang={lang} />
+        <SiteFooter />
+      </>
+    );
+  }
 
   // ponytail: every item (~800) ships to the client so the queue and "next lesson" need no fetch; page it if content grows past N5.
   const items: ReviewItem[] = [

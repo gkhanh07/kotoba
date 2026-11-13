@@ -43,5 +43,5 @@ export function sessionStats(first: Record<string, boolean>, minutes: number[]):
 
 // Dashboard "Tiếp tục học": today's session when it has work, else back to the last area studied.
 export function continueTarget(due: number, fresh: number, last: Activity["last"]): { href: string; daily: boolean } {
-  return due + fresh > 0 ? { href: "/review", daily: true } : { href: continueHref(last), daily: false };
+  return due + fresh > 0 ? { href: "/review?start=1", daily: true } : { href: continueHref(last), daily: false };
 }

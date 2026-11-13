@@ -35,7 +35,7 @@ test("the export file holds the profile and exactly the cards this browser has",
   await page.getByRole("link", { name: "Để sau" }).click();
 
   // Three cards: two right, one wrong; wait until they reached the account.
-  await page.goto("/review");
+  await page.goto("/review?start=1");
   await grade(page, true);
   await grade(page, false);
   await grade(page, true);

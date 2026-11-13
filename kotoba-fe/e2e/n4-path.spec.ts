@@ -26,7 +26,7 @@ test("after all of N5, /review and /lessons move on to lesson 26", async ({ page
   await page.reload();
   await expect(page.getByRole("link", { name: /Học tiếp/ })).toHaveAttribute("href", "/lessons/26");
 
-  await page.goto("/review");
+  await page.goto("/review?start=1");
   await expect(page.getByText("Mục đến hạn ôn và mục mới của bài 26").first()).toBeVisible();
   // Lesson 26's items in queue order: its kanji first, then its words; the session takes 10.
   await expect(page.getByText(`Còn 10 mục · ${N4_KANJI_26 >= 10 ? "Kanji 10" : `Kanji ${N4_KANJI_26} · Từ vựng ${10 - N4_KANJI_26}`}`)).toBeVisible();
@@ -47,5 +47,5 @@ test("after all of N5, the dashboard offers today's session with 10 new N4 items
   await page.getByRole("link", { name: "Để sau" }).click();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByText("Phiên hôm nay: 0 đến hạn · 10 mới")).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByRole("link", { name: "Tiếp tục học" })).toHaveAttribute("href", "/review");
+  await expect(page.getByRole("link", { name: "Tiếp tục học" })).toHaveAttribute("href", "/review?start=1");
 });

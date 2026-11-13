@@ -72,8 +72,8 @@ describe("sessionStats", () => {
 
 describe("continueTarget", () => {
   it("goes to today's session when something is due or new", () => {
-    expect(continueTarget(3, 0, undefined)).toEqual({ href: "/review", daily: true });
-    expect(continueTarget(0, 10, { area: "vocab", ref: "vocab:水" })).toEqual({ href: "/review", daily: true });
+    expect(continueTarget(3, 0, undefined)).toEqual({ href: "/review?start=1", daily: true });
+    expect(continueTarget(0, 10, { area: "vocab", ref: "vocab:水" })).toEqual({ href: "/review?start=1", daily: true });
   });
   it("falls back to the last area when there is no work", () => {
     expect(continueTarget(0, 0, { area: "vocab", ref: "vocab:水" })).toEqual({ href: "/flashcards", daily: false });

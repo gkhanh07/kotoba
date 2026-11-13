@@ -24,7 +24,7 @@ test("sync status: saved, failed while kotoba-be is down, saved again after Th�
   await expect(page).toHaveURL(/\/onboarding/);
   await page.getByRole("link", { name: "Để sau" }).click();
 
-  await page.goto("/review");
+  await page.goto("/review?start=1");
   await expect(status(page)).toHaveText("Đã lưu");
   await expect(status(page)).toBeVisible();
   await grade(page);
@@ -63,6 +63,6 @@ test("sync status: saved, failed while kotoba-be is down, saved again after Th�
 });
 
 test("guests have no sync status", async ({ page }) => {
-  await page.goto("/review");
+  await page.goto("/review?start=1");
   await expect(status(page)).toHaveCount(0);
 });

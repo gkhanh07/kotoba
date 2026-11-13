@@ -1,0 +1,39 @@
+/* The /review hub: today's numbers and the way into each queue. Tokens only (kotoba-fe/AGENTS.md, colours). */
+.hub { max-width: 48rem; margin-inline: auto; padding: clamp(1.5rem, 4vw, 3rem) var(--gutter) 4rem; display: grid; gap: 1.75rem; }
+.heading h1 { font-size: var(--fs-page); color: var(--chalk); }
+.heading p { margin-top: .5rem; color: var(--silver-dim); }
+.muted { color: var(--silver-dim); font-size: var(--fs-caption); }
+.notice { color: var(--silver); }
+
+.panel { display: grid; gap: 1.25rem; padding: var(--space-panel); border: 1px solid var(--rule-dim); border-radius: var(--radius); background: var(--surface-1); box-shadow: var(--edge-hi); }
+.panel h2 { font-family: var(--font-title), sans-serif; font-size: var(--fs-card); font-weight: 700; color: var(--chalk); }
+.panel .btn { justify-self: start; }
+.panelHead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; }
+.pill { padding: .15rem .75rem; border-radius: 999px; background: color-mix(in srgb, var(--cool) 18%, var(--night)); color: var(--cool-core); font-size: var(--fs-meta); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0; text-align: center; }
+.stats div { display: flex; flex-direction: column-reverse; }
+.stats dd { margin: 0; font-family: var(--font-title), sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--chalk); font-variant-numeric: tabular-nums; }
+.stats dt { font-size: var(--fs-meta); color: var(--silver-dim); }
+.panel .start { justify-self: stretch; justify-content: center; min-height: 44px; }
+
+.sectionHead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.sectionTitle { margin-bottom: .75rem; font-family: var(--font-title), sans-serif; font-size: var(--fs-card); font-weight: 700; color: var(--chalk); }
+.sectionHead .sectionTitle { margin-bottom: .75rem; }
+.textLink { display: inline-flex; align-items: center; min-height: 44px; color: var(--amber); text-decoration: underline; text-underline-offset: .25em; font-size: var(--fs-caption); }
+.textLink:hover { color: var(--amber-core); }
+
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
+.card { display: grid; gap: .35rem; align-content: start; height: 100%; min-height: 44px; padding: 1rem; border: 1px solid var(--rule-dim); border-radius: var(--radius); background: var(--surface-1); color: var(--silver); text-decoration: none; transition: border-color var(--dur-fast) var(--ease-out); }
+.card:hover { border-color: var(--amber); }
+.cardTitle { font-size: var(--fs-card); font-weight: 600; color: var(--chalk); }
+.cardDue { margin-top: .25rem; font-size: var(--fs-caption); color: var(--amber); font-variant-numeric: tabular-nums; }
+
+.weakList { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.weakRow { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .25rem 1rem; min-height: 44px; padding: .5rem 1rem; border: 1px solid var(--rule-dim); border-radius: var(--radius); background: var(--surface-1); color: var(--chalk); text-decoration: none; }
+.weakRow:hover { border-color: var(--amber); }
+.weakRow span:last-child { color: var(--silver-dim); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 420px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .stats dd { font-size: 1.5rem; }
+}
