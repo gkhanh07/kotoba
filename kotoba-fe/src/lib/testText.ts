@@ -4,7 +4,7 @@ import type { Lang } from "./i18n";
 const vi = {
   title: "Thi thử",
   lede: "Làm trọn đề trong thời gian quy định, nộp bài rồi xem điểm từng phần. Kết quả chỉ được lưu trên thiết bị này.",
-  metaDesc: "Đề thi thử JLPT N5 có đồng hồ đếm ngược, chấm điểm từng phần và giải thích từng câu.",
+  metaDesc: (level: string) => `Đề thi thử JLPT ${level} có đồng hồ đếm ngược, chấm điểm từng phần và giải thích từng câu.`,
   minutes: (n: number) => `${n} phút`,
   count: (n: number) => `${n} câu`,
   noListening: "Không có phần nghe",
@@ -74,7 +74,7 @@ const vi = {
 const en: typeof vi = {
   title: "Mock test",
   lede: "Sit a whole paper against the real clock, submit it and see the score for each part. Results stay on this device.",
-  metaDesc: "JLPT N5 mock papers with a countdown, per-part scores and an explanation for every question.",
+  metaDesc: (level: string) => `JLPT ${level} mock papers with a countdown, per-part scores and an explanation for every question.`,
   minutes: (n) => `${n} min`,
   count: (n) => `${n} questions`,
   noListening: "No listening section",

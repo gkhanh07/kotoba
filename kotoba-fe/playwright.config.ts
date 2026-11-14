@@ -1,6 +1,6 @@
 import { defineConfig } from "@playwright/test";
+import { BE_PORT } from "./e2e/backend";
 
-const BE_PORT = 4000;
 const FE_PORT = 3000;
 
 // Against the production build, as the Next.js Playwright guide recommends.

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import type { Lang } from "@/lib/i18n";
-import { libraryText } from "@/lib/library";
+import { libraryText, type Level } from "@/lib/library";
 import { Arrow } from "../Arrow";
 import { isDue, isLearned } from "@/lib/srs";
 import { today, useDeck } from "@/lib/store";
@@ -11,7 +11,7 @@ type Deck = { lesson: number; title: string; ids: string[] };
 
 // Counts come from this browser's schedule, so they read "—" until it is loaded.
 // Stats and the action cover every deck; only decks[from, to) are listed.
-export function Decks({ decks, from, to, lang }: { decks: Deck[]; from: number; to: number; lang: Lang }) {
+export function Decks({ decks, from, to, lang, level }: { decks: Deck[]; from: number; to: number; lang: Lang; level: Level }) {
   const t = libraryText[lang].vocab;
   const states = libraryText[lang].lessons.state;
   const srs = useDeck()?.srs;
@@ -37,9 +37,10 @@ export function Decks({ decks, from, to, lang }: { decks: Deck[]; from: number; 
           </>
         ) : <p className={s.summaryCount}>—</p>}
         {/* Holds the button's height before the schedule loads, so the panel does not jump. */}
+        {/* Review links at the same level as the decks, so the queue holds exactly the cards counted here (phase 37). */}
         <div className={s.action}>
           {srs && (due > 0 ? (
-            <Link href="/review?kind=vocab" className="btn">{t.review(due)} <Arrow /></Link>
+            <Link href={`/review?kind=vocab&level=${level}`} className="btn">{t.review(due)} <Arrow /></Link>
           ) : next && (
             <Link href={`/flashcards?deck=${next.lesson}`} className="btn">{t.next} <Arrow /></Link>
           ))}

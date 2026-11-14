@@ -89,7 +89,7 @@ export default async function VocabPage(props: PageProps<"/vocab/[word]">) {
                 <li key={x.id}>
                   <Link href={`/kanji/${encodeURIComponent(x.char)}`} className={k.tile}>
                     <span lang="ja" className={k.char}>{x.char}</span>
-                    <span className={k.hv}>{x.hv.join(" · ")}</span>
+                    {x.hv.length > 0 && <span className={k.hv}>{x.hv.join(" · ")}</span>}
                     <span className="sr-only">{lang === "vi" && x.vi ? x.vi : x.en.join(", ")}</span>
                   </Link>
                 </li>

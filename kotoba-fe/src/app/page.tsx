@@ -116,16 +116,18 @@ export default async function Home() {
     const fronts = itemLinks(kana, kanji, vocab);
     const goal = user.profile?.goal;
     const idsOf = (items: { id: string }[]) => items.map((item) => item.id);
+    // Same scope as /review's daily session, so "N new" here is what that session brings in.
+    const inGoal = { kanji: goalScope(kanji, goal), vocab: goalScope(vocab, goal) };
     return (
       <>
         <SiteBar />
         <Dashboard
           fronts={fronts}
-          stops={stopsOf([...kana, ...kanji, ...vocab])}
+          stops={stopsOf([...kana, ...inGoal.kanji, ...inGoal.vocab])}
           lang={lang}
           name={user.profile?.name ?? user.email.split("@")[0]}
           profile={user.profile}
-          scope={{ kana: idsOf(kana), kanji: idsOf(goalScope(kanji, goal)), vocab: idsOf(goalScope(vocab, goal)) }}
+          scope={{ kana: idsOf(kana), kanji: idsOf(inGoal.kanji), vocab: idsOf(inGoal.vocab) }}
           tests={tests.map((p) => ({ id: p.id, title: p.title[lang], minutes: p.minutes }))}
         />
         <SiteFooter />
@@ -133,7 +135,7 @@ export default async function Home() {
     );
   }
   const t = dict(lang).home;
-  // The landing has its own footer, so it repeats SiteFooter's source credit (KANJIDIC2/JMdict licences, /legal).
+  // The landing has its own footer, so it repeats SiteFooter's source credits (KANJIDIC2/JMdict licences, Hán Việt, /legal).
   const credit = dict(lang).footer;
   const lampLabels = [t.lampMastered, t.lampLearning, t.lampUnseen];
   const [kana, kanji, vocab, grammar, lessons] = await Promise.all([getKana(), getKanji(), getVocab(), getGrammar(), getLessons()]);
@@ -141,7 +143,7 @@ export default async function Home() {
     const items = kana.filter((x) => x.script === k.script);
     return { ...k, text: t[k.textKey], total: items.length, basic: items.filter((x) => x.group === "basic").length };
   });
-  // Only levels that have lessons become stations, so the line never shows an empty N2.
+  // Only levels that have lessons become stations, so the line never shows an empty level.
   const journey = LEVELS.map((level) => ({
     level,
     lessons: lessons.filter((l) => l.level === level).length,
@@ -337,7 +339,7 @@ export default async function Home() {
         </p>
         <p>{t.footerB}</p>
         <p>
-          {credit.kanji}: KANJIDIC2 · {credit.dict}: JMdict · CC BY-SA 4.0 · <Link href="/legal">{credit.legal}</Link>
+          {credit.kanji}: KANJIDIC2 · {credit.dict}: JMdict · CC BY-SA 4.0 · {credit.hv}: hanviet-pinyin-wordlist · <Link href="/legal">{credit.legal}</Link>
         </p>
       </footer>
     </>

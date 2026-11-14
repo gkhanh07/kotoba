@@ -1,6 +1,10 @@
 .app { padding: clamp(1.5rem, 4vw, 3.5rem) var(--pad-x) 4rem; }
 .heading h1 { font-size: clamp(2.6rem, 5vw, 4.25rem); color: var(--silver); text-shadow: var(--glow-cool); }
 .heading p { margin-top: 1rem; color: var(--silver-dim); max-width: 65ch; }
+.legend { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin-top: 1rem; font-size: var(--fs-meta); color: var(--silver-dim); }
+.legend dl { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin: 0; }
+.legend dl div { display: flex; gap: .4rem; }
+.legend dt { color: var(--chalk); font-weight: 600; }
 
 /* ── list ─────────────────────────────────────── */
 /* Grouped by lesson; a point is a .tile with the pattern in its own face over the meaning (ADR 010). */

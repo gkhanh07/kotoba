@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { currentLesson, formatDay, goalScope, hvRows, kanjiIn, kanjiTitle, LEVELS, levelLabel, levelOf, libraryText, listHref, pageOf, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
+import { currentLesson, formatDay, goalScope, hvRows, reviewScope, kanjiIn, kanjiTitle, LEVELS, levelLabel, levelOf, libraryText, listHref, pageOf, prompt, splitReadings, stopsOf, vocabHref, type PromptSource } from "./library";
 
 const VOCAB: PromptSource = { kind: "vocab", word: "水", reading: "みず", meaning: "nước" };
 const KANA_WORD: PromptSource = { kind: "vocab", word: "ねこ", reading: "ねこ", meaning: "mèo" };
@@ -124,21 +124,21 @@ describe("vocab page helpers", () => {
 });
 
 describe("levels", () => {
-  it("lists N5 first and N2 last", () => {
-    expect([...LEVELS]).toEqual([5, 4, 3, 2]);
+  it("lists N5 first and N3 last (phase 37: the content ends at N3)", () => {
+    expect([...LEVELS]).toEqual([5, 4, 3]);
   });
   it("levelOf reads each known level", () => {
-    expect(["5", "4", "3", "2"].map(levelOf)).toEqual([5, 4, 3, 2]);
+    expect(["5", "4", "3"].map(levelOf)).toEqual([5, 4, 3]);
   });
   it("levelOf falls back to N5 for missing and unknown values", () => {
-    expect([undefined, "", "1", "6", "x", "05", "4.5"].map(levelOf)).toEqual([5, 5, 5, 5, 5, 5, 5]);
+    expect([undefined, "", "2", "1", "6", "x", "05", "4.5"].map(levelOf)).toEqual([5, 5, 5, 5, 5, 5, 5, 5]);
   });
   it("levelOf takes the first of a repeated param", () => {
     expect(levelOf(["3", "4"])).toBe(3);
     expect(levelOf([])).toBe(5);
   });
   it("levelLabel writes N before the number", () => {
-    expect(LEVELS.map(levelLabel)).toEqual(["N5", "N4", "N3", "N2"]);
+    expect(LEVELS.map(levelLabel)).toEqual(["N5", "N4", "N3"]);
   });
 });
 
@@ -179,6 +179,21 @@ describe("goalScope", () => {
   it("returns nothing from no items", () => expect(goalScope([], "N5")).toEqual([]));
 });
 
+describe("reviewScope (phase 37)", () => {
+  const ITEMS = [{ id: "n5", level: 5 as const }, { id: "n4", level: 4 as const }, { id: "n3", level: 3 as const }];
+  const ids = (goal?: Parameters<typeof reviewScope>[1], level?: Parameters<typeof reviewScope>[2]) => reviewScope(ITEMS, goal, level).map((i) => i.id);
+
+  it("keeps only the named level, whatever the goal", () => {
+    expect(ids("N3", 4)).toEqual(["n4"]);
+    expect(ids("N5", 3)).toEqual(["n3"]);
+    expect(ids(undefined, 5)).toEqual(["n5"]);
+  });
+  it("falls back to the goal's scope without a level", () => {
+    expect(ids("N4")).toEqual(["n5", "n4"]);
+    expect(ids()).toEqual(["n5", "n4", "n3"]);
+  });
+});
+
 describe("kanji without a Hán Việt reading", () => {
   it("titles a kanji with its readings", () => {
     expect(kanjiTitle({ char: "画", hv: ["Họa", "Hoạch"] })).toBe("画 · Họa, Hoạch · Kotoba");
@@ -201,5 +216,23 @@ describe("lessons lede (BUG-020)", () => {
   it("names the last level the path reaches, not N5", () => {
     expect(libraryText.vi.lessons.lede(81, "N3")).toBe("81 bài, từ bảng chữ đến ôn tập N3. Học theo thứ tự hoặc chọn bài bạn cần.");
     expect(libraryText.en.lessons.lede(81, "N3")).toBe("81 lessons, from the kana chart to N3 review. Go in order or jump to the one you need.");
+  });
+});
+
+describe("splitReadings (phase 37)", () => {
+  it("shows the first three readings and folds the rest", () => {
+    expect(splitReadings(["い", "う", "お", "は", "なま"])).toEqual([["い", "う", "お"], ["は", "なま"]]);
+  });
+  it("folds nothing when there are three or fewer", () => {
+    expect(splitReadings(["ニチ", "ジツ"])).toEqual([["ニチ", "ジツ"], []]);
+    expect(splitReadings([])).toEqual([[], []]);
+  });
+});
+
+describe("grammar legend (phase 37)", () => {
+  it("explains the same pattern symbols in both languages", () => {
+    const syms = (l: "vi" | "en") => libraryText[l].grammar.legend.map(([s]) => s);
+    expect(syms("vi")).toEqual(["N", "V", "V-て", "N1, N2", "A-い, A-な, adj", "A, B"]);
+    expect(syms("en")).toEqual(syms("vi"));
   });
 });

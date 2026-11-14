@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Page } from "@playwright/test";
+import { BE_PORT } from "./backend";
 import { expect, test } from "./fixtures";
 
 // Phase 22: level tabs on the list pages, paging, lesson level groups, search badge, legal source line.
@@ -12,7 +13,7 @@ const PAGES = ["/kanji", "/vocab", "/grammar", "/flashcards", "/test"];
 function watchBackend(page: Page) {
   const calls: string[] = [];
   page.on("request", (req) => {
-    if (new URL(req.url()).port === "4000") calls.push(req.url());
+    if (new URL(req.url()).port === String(BE_PORT)) calls.push(req.url());
   });
   return calls;
 }
@@ -23,22 +24,19 @@ const tabs = (page: Page) => page.getByRole("navigation", { name: "Cấp độ J
 const kanjiTiles = (page: Page) => page.locator('main a[href^="/kanji/"]');
 
 for (const path of PAGES) {
-  // N2 has no content until phase 31, so it is the level that shows the empty state on every page.
-  test(`${path} has level tabs with N5 current and an empty N2`, async ({ page, axe }) => {
+  // Phase 37: the content ends at N3, so there is no N2 tab and ?level=2 falls back to N5.
+  test(`${path} has level tabs N5 to N3 with N5 current, and ?level=2 falls back to N5`, async ({ page, axe }) => {
     const be = watchBackend(page);
     await page.goto(path);
-    await expect(tabs(page).getByRole("link")).toHaveText(["N5", "N4", "N3", "N2"]);
+    await expect(tabs(page).getByRole("link")).toHaveText(["N5", "N4", "N3"]);
     await expect(tabs(page).getByRole("link", { name: "N5" })).toHaveAttribute("aria-current", "page");
     await expect(tabs(page).locator("[aria-current]")).toHaveCount(1);
     expect(await hasHorizontalScroll(page)).toBe(false);
     await axe();
 
-    await tabs(page).getByRole("link", { name: "N2" }).click();
-    await expect(page).toHaveURL(`${path}?level=2`);
-    await expect(tabs(page).getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
-    await expect(page.getByText("Chưa có nội dung N2.")).toBeVisible();
-    expect(await hasHorizontalScroll(page)).toBe(false);
-    await axe();
+    await page.goto(`${path}?level=2`);
+    await expect(tabs(page).getByRole("link", { name: "N5" })).toHaveAttribute("aria-current", "page");
+    await expect(page.getByText(/Chưa có nội dung N2/)).toHaveCount(0);
     expect(be).toEqual([]);
   });
 }
@@ -191,8 +189,8 @@ test("search results carry a level badge", async ({ page, axe }) => {
 test("/legal names the source of the level lists", async ({ page, axe }) => {
   await page.goto("/legal");
   await expect(page.getByText(/trường JLPT của KANJIDIC2/)).toBeVisible();
-  // ADR 006: the N3/N2 lists are Jonathan Waller's, CC BY, credited with a link to his archived licence page.
-  await expect(page.getByText(/Danh sách kanji N3 và N2 lấy từ danh sách của Jonathan Waller \(tanos\.co\.uk\), dùng theo giấy phép Creative Commons BY\./)).toBeVisible();
+  // ADR 006: the N3 list is Jonathan Waller's, CC BY, credited with a link to his archived licence page.
+  await expect(page.getByText(/Danh sách kanji N3 lấy từ danh sách của Jonathan Waller \(tanos\.co\.uk\), dùng theo giấy phép Creative Commons BY\./)).toBeVisible();
   await expect(page.getByRole("link", { name: "tanos.co.uk" })).toHaveAttribute("href", /web\.archive\.org\/.*tanos\.co\.uk\/jlpt\/sharing\//);
   await axe();
 });

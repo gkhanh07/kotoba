@@ -124,4 +124,9 @@ describe("Vietnamese guidance and warnings", () => {
   it("warns that an unsaved attempt is lost on reload or tab close", () => {
     expect(testText.vi.storageWarn).toBe("Trình duyệt không cho phép lưu bài làm. Bạn vẫn có thể làm bài, nhưng bài làm sẽ mất nếu tải lại trang hoặc đóng tab.");
   });
+
+  it("names the paper's own level in the test description (phase 37)", () => {
+    expect(testText.vi.metaDesc("N3")).toBe("Đề thi thử JLPT N3 có đồng hồ đếm ngược, chấm điểm từng phần và giải thích từng câu.");
+    expect(testText.en.metaDesc("N4")).toBe("JLPT N4 mock papers with a countdown, per-part scores and an explanation for every question.");
+  });
 });

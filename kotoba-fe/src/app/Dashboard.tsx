@@ -6,9 +6,9 @@ import { examDate, examDay, type Profile } from "@/lib/account";
 import { ACTIVITY_KEY, heat, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
 import { NEW_PER_DAY, WEAK_LIST_SIZE } from "@/config/srs";
-import { continueTarget, freshFor } from "@/lib/daily";
+import { continueTarget, freshFor, stageOf, type Area } from "@/lib/daily";
 import type { Stop } from "@/lib/library";
-import { INTERVALS, daysUntil, isDue, isLearned, type Srs } from "@/lib/srs";
+import { INTERVALS, daysUntil, dueCount, isLearned } from "@/lib/srs";
 import { weakItems, type ItemLink } from "@/lib/weak";
 import { learnedToday, today, useDeck } from "@/lib/store";
 import { remaining } from "@/lib/test";
@@ -40,11 +40,6 @@ function useStored(key: string) {
   );
 }
 
-const isKana = (id: string) => id.startsWith("hiragana:") || id.startsWith("katakana:");
-const isVocab = (id: string) => id.startsWith("vocab:");
-const isKanji = (id: string) => id.startsWith("kanji:");
-const count = (s: Srs, area: (id: string) => boolean, ok: (id: string) => boolean) =>
-  Object.keys(s).filter((id) => area(id) && ok(id)).length;
 
 export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: {
   fronts: Record<string, ItemLink>; stops: Stop[];
@@ -63,9 +58,9 @@ export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: 
     const now = new Date();
     const day = today();
     const { srs } = deck;
-    const due = (id: string) => isDue(srs[id], day);
     const learned = (id: string) => isLearned(srs, id);
-    const kanaDue = count(srs, isKana, due), kanjiDue = count(srs, isKanji, due), vocabDue = count(srs, isVocab, due);
+    // Only cards of items in scope: one whose item left the content (or the goal) is never offered for review.
+    const kanaDue = dueCount(srs, day, scope.kana), kanjiDue = dueCount(srs, day, scope.kanji), vocabDue = dueCount(srs, day, scope.vocab);
     const dueTotal = kanaDue + kanjiDue + vocabDue;
     const fresh = freshFor(stops, srs, learnedToday(), NEW_PER_DAY).ids.length;
     const summary = summarize(activity, now);
@@ -80,6 +75,7 @@ export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: 
       vocabLearned: scope.vocab.filter(learned).length,
       vocabDue,
       dueTotal,
+      stage: stageOf(scope, srs),
       weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
       fresh,
       summary,
@@ -125,9 +121,9 @@ export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: 
 
         {data && (
           <div className={s.stage}>
-            <span>{t.stage}</span>
-            <progress className="meter" aria-label={t.stage} value={data.kanaLearned} max={scope.kana.length} />
-            <span>{data.kanaLearned} / {scope.kana.length}</span>
+            <span>{t.stage(data.stage.area)}</span>
+            <progress className="meter" aria-label={t.stage(data.stage.area)} value={data.stage.learned} max={data.stage.total} />
+            <span>{data.stage.learned} / {data.stage.total}</span>
           </div>
         )}
       </section>
@@ -216,7 +212,7 @@ const vi = {
   goalToday: (g: string) => `Mục tiêu ${g} · thi hôm nay`,
   goalOnly: (g: string) => `Mục tiêu ${g}`,
   setGoal: "Đặt mục tiêu",
-  stage: "Chặng hiện tại: Kana",
+  stage: (a: Area) => `Chặng hiện tại: ${({ kana: "Kana", kanji: "Kanji", vocab: "Từ vựng" })[a]}`,
   streakLabel: "Chuỗi ngày học",
   streak: (n: number) => `${n} ngày liên tục`,
   minutesLabel: "Thời gian học",
@@ -258,7 +254,7 @@ const en: typeof vi = {
   goalToday: (g) => `Goal ${g} · exam today`,
   goalOnly: (g) => `Goal ${g}`,
   setGoal: "Set a goal",
-  stage: "Current stage: Kana",
+  stage: (a) => `Current stage: ${({ kana: "Kana", kanji: "Kanji", vocab: "Vocabulary" })[a]}`,
   streakLabel: "Streak",
   streak: (n) => `${n}-day streak`,
   minutesLabel: "Study time",

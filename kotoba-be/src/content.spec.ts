@@ -41,9 +41,9 @@ describe('paginate', () => {
 });
 
 describe('level and page guards', () => {
-  it('accepts the four JLPT levels only', () => {
-    expect([5, 4, 3, 2].every(isLevel)).toBe(true);
-    expect([1, 6, 0, 4.5, NaN, '5', undefined].some(isLevel)).toBe(false);
+  it('accepts the three JLPT levels the content covers only', () => {
+    expect([5, 4, 3].every(isLevel)).toBe(true);
+    expect([2, 1, 6, 0, 4.5, NaN, '5', undefined].some(isLevel)).toBe(false);
   });
 
   it('accepts whole pages from 1', () => {

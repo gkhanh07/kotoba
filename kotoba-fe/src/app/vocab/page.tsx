@@ -38,7 +38,7 @@ export default async function VocabPage(props: PageProps<"/vocab">) {
         <LevelTabs path="/vocab" level={level} lang={lang} />
         {decks.length === 0 ? <p className={lv.note}>{libraryText[lang].levels.empty(levelLabel(level))}</p> : (
           <>
-            <Decks decks={decks} from={(page - 1) * DECKS_PER_PAGE} to={page * DECKS_PER_PAGE} lang={lang} />
+            <Decks decks={decks} from={(page - 1) * DECKS_PER_PAGE} to={page * DECKS_PER_PAGE} lang={lang} level={level} />
             <Pager path="/vocab" params={{ level }} page={page} pages={pages} lang={lang} />
           </>
         )}

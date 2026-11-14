@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { examDate, examDay, isEmail, isExam, isGoal, isInvalidField, isMinutes, isName, jlptSessions, safePath } from "./account";
+import { examDate, examDay, goalChoices, isEmail, isExam, isGoal, isInvalidField, isMinutes, isName, jlptSessions, safePath } from "./account";
 
 const values = (now: Date, n = 4) => jlptSessions(now, n).map((s) => s.value);
 
@@ -103,5 +103,19 @@ describe("isInvalidField", () => {
   });
   it.each(["rate", "token", "goal", "minutes"] as const)("marks no text input for %s", (code) => {
     expect(["email", "password", "name", "exam", "current"].some((f) => isInvalidField(code, f))).toBe(false);
+  });
+});
+
+// Phase 37 AC-2: only N5-N3 are offered, but a stored N2/N1 goal stays readable and selected.
+describe("goalChoices", () => {
+  it("offers N5 to N3 only", () => {
+    expect(goalChoices()).toEqual(["N5", "N4", "N3"]);
+    expect(goalChoices("N4")).toEqual(["N5", "N4", "N3"]);
+    expect(goalChoices("x")).toEqual(["N5", "N4", "N3"]);
+  });
+  it("keeps a stored goal outside the offer", () => {
+    expect(goalChoices("N2")).toEqual(["N5", "N4", "N3", "N2"]);
+    expect(goalChoices("N1")).toEqual(["N5", "N4", "N3", "N1"]);
+    expect(isGoal("N2")).toBe(true);
   });
 });

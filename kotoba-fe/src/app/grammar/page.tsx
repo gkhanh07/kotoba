@@ -31,6 +31,11 @@ export default async function GrammarPage(props: PageProps<"/grammar">) {
           <p>{t.lede(grammar.length)}</p>
         </header>
         <LevelTabs path="/grammar" level={level} lang={lang} />
+        {grammar.length > 0 && (
+          <div className={s.legend}><span>{t.legendLabel}:</span><dl>
+            {t.legend.map(([sym, text]) => <div key={sym}><dt>{sym}</dt><dd>{text}</dd></div>)}
+          </dl></div>
+        )}
         {grammar.length === 0 ? <p className={lv.note}>{libraryText[lang].levels.empty(levelLabel(level))}</p> : groups.map(({ lesson, points }) => (
           <section key={lesson} className={s.group} aria-labelledby={`g-lesson-${lesson}`}>
             <h2 id={`g-lesson-${lesson}`}>{t.lesson(lesson)}{titles.has(lesson) && <span className={s.groupTitle}> · {titles.get(lesson)}</span>}</h2>

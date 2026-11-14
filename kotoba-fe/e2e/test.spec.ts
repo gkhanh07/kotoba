@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { BE_PORT } from "./backend";
 import { expect, test } from "./fixtures";
 import type { Page } from "@playwright/test";
 
@@ -33,11 +34,11 @@ const headline = (right: number, total: number) => `${right}/${total} — ${perc
 const choose = (page: Page, index: number) => page.keyboard.press(String(index + 1));
 const wrongChoice = (i: number) => (KEY[i] + 1) % 4;
 
-// The browser must never talk to kotoba-be on :4000 (AC-17).
+// The browser must never talk to kotoba-be on BE_PORT (AC-17).
 function watchBackend(page: Page) {
   const calls: string[] = [];
   page.on("request", (req) => {
-    if (new URL(req.url()).port === "4000") calls.push(req.url());
+    if (new URL(req.url()).port === String(BE_PORT)) calls.push(req.url());
   });
   return calls;
 }

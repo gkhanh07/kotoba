@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { BE_PORT } from "./backend";
 import { expect, test } from "./fixtures";
 
 // Phase 19: each word has its own page, the lists link to it, and kanji pages name look-alike kanji.
@@ -7,7 +8,7 @@ const TABERU = "/vocab/" + encodeURIComponent("食べる");
 function watchBackend(page: Page) {
   const calls: string[] = [];
   page.on("request", (req) => {
-    if (new URL(req.url()).port === "4000") calls.push(req.url());
+    if (new URL(req.url()).port === String(BE_PORT)) calls.push(req.url());
   });
   return calls;
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getKanji, getKanjiDetail } from "@/lib/content";
-import { kanjiTitle, libraryText, vocabHref } from "@/lib/library";
+import { kanjiTitle, libraryText, splitReadings, vocabHref } from "@/lib/library";
 import { getLang } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
 import { Speak } from "../../Speak";
@@ -22,9 +22,19 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
   const similar = (k.similar ?? []).flatMap((c) => all.filter((x) => x.char === c));
   const t = libraryText[lang].kanji;
   const meaning = lang === "en" ? k.en.join(", ") : k.vi;
+  // An empty reading list gets no row, and readings past the first few fold away (phase 37).
+  const readings = (key: string, r: string[]) => {
+    const [shown, rest] = splitReadings(r);
+    return (
+      <div lang="ja" key={key}>
+        {shown.join(" · ")}
+        {rest.length > 0 && <details className={s.more}><summary lang={lang}>{t.more(rest.length)}</summary>{rest.join(" · ")}</details>}
+      </div>
+    );
+  };
   const rows: [string, React.ReactNode][] = [
-    [t.on, <span lang="ja" key="on">{k.on.join(" · ")}</span>],
-    [t.kun, <span lang="ja" key="kun">{k.kun.join(" · ")}</span>],
+    ...(k.on.length ? [[t.on, readings("on", k.on)] as [string, React.ReactNode]] : []),
+    ...(k.kun.length ? [[t.kun, readings("kun", k.kun)] as [string, React.ReactNode]] : []),
     [t.meaning, meaning || <em className={s.missing}>{t.noVi}</em>],
     [t.strokes, k.strokes],
     [t.lessonLabel, k.lesson],
@@ -65,7 +75,7 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
                 <li key={x.id}>
                   <Link href={`/kanji/${encodeURIComponent(x.char)}`} className={s.tile}>
                     <span lang="ja" className={s.char}>{x.char}</span>
-                    <span className={s.hv}>{x.hv.join(" · ")}</span>
+                    {x.hv.length > 0 && <span className={s.hv}>{x.hv.join(" · ")}</span>}
                   </Link>
                 </li>
               ))}

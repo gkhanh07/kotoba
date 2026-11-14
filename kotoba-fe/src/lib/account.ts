@@ -35,7 +35,11 @@ export const safePath = (v: unknown) => (typeof v === "string" && /^\/(?![/\\])/
 export const isEmail = (v: unknown): v is string =>
   typeof v === "string" && v.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 export const isGoal = (v: unknown): v is Goal => (GOALS as readonly unknown[]).includes(v);
-export const isMinutes = (v: unknown): v is Minutes => (MINUTES as readonly unknown[]).includes(v);
+// Goals a form offers: the content ends at N3 (phase 37), but a stored N2/N1 stays shown and selected.
+const OFFERED: readonly Goal[] = ["N5", "N4", "N3"];
+export const goalChoices = (current?: string): Goal[] =>
+  isGoal(current) && !OFFERED.includes(current) ? [...OFFERED, current] : [...OFFERED];
+export const isMinutes =(v: unknown): v is Minutes => (MINUTES as readonly unknown[]).includes(v);
 // "2027-07" (a July/December sitting) or "unknown".
 export const isExam = (v: unknown): v is string =>
   v === "unknown" || (typeof v === "string" && /^\d{4}-(07|12)$/.test(v));
@@ -79,7 +83,6 @@ const vi = {
   email: "Email",
   password: "Mật khẩu",
   pending: "Đang xử lý…",
-  google: "Google · sắp có",
   errors: {
     email: "Email chưa đúng định dạng.",
     password: `Mật khẩu cần ít nhất ${PASSWORD_MIN} ký tự.`,
@@ -169,7 +172,6 @@ const en: typeof vi = {
   email: "Email",
   password: "Password",
   pending: "Working…",
-  google: "Google · coming soon",
   errors: {
     email: "That email doesn't look right.",
     password: `Password needs at least ${PASSWORD_MIN} characters.`,

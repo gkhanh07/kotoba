@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { flashcardText, shuffleCards } from "./flashcards";
+import { byLesson, flashcardText, shuffleCards } from "./flashcards";
 
 const ids = Array.from({ length: 12 }, (_, i) => `vocab:${i}`);
 
@@ -26,5 +26,13 @@ describe("shuffleCards", () => {
 describe("flashcardText", () => {
   it("has the same keys in vi and en", () => {
     expect(Object.keys(flashcardText.vi).sort()).toEqual(Object.keys(flashcardText.en).sort());
+  });
+});
+
+describe("byLesson (phase 37)", () => {
+  it("orders a deck by lesson and keeps each lesson's own order", () => {
+    const cards = [{ id: "c", lesson: 13 }, { id: "a", lesson: 10 }, { id: "d", lesson: 13 }, { id: "b", lesson: 10 }];
+    expect(byLesson(cards).map((c) => c.id)).toEqual(["a", "b", "c", "d"]);
+    expect(cards[0].id).toBe("c");
   });
 });

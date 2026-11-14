@@ -65,3 +65,20 @@ describe("Dashboard progress table", () => {
     expect(screen.queryByText("Đọc hiểu")).not.toBeInTheDocument();
   });
 });
+
+describe("Dashboard stage and due count (phase 37)", () => {
+  it("names the real stage with its numbers once kana is done", async () => {
+    seed({ "hiragana:a": card(1, "2026-11-05"), "hiragana:i": card(1, "2026-11-05") });
+    mount({ kana: ["hiragana:a", "hiragana:i"], kanji: ["kanji:日", "kanji:月"], vocab: ["vocab:水"] });
+    expect(await screen.findByText("Chặng hiện tại: Kanji")).toBeInTheDocument();
+    expect(screen.getByRole("progressbar", { name: "Chặng hiện tại: Kanji" })).toHaveAttribute("max", "2");
+    expect(screen.getByRole("progressbar", { name: "Chặng hiện tại: Kanji" }).nextElementSibling).toHaveTextContent("0 / 2");
+  });
+
+  it("does not count a due card whose item is gone from the content", async () => {
+    seed({ "hiragana:a": card(1, "2026-11-02"), "kanji:gone": card(1, "2026-11-01"), "vocab:old": card(1, "2026-11-01") });
+    mount();
+    expect(await screen.findByText("Phiên hôm nay: 1 đến hạn · 1 mới")).toBeInTheDocument();
+    expect(screen.queryByText(/kanji đến hạn/)).not.toBeInTheDocument();
+  });
+});

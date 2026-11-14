@@ -2,7 +2,7 @@
 // the end-of-session numbers, and where the dashboard's "continue" goes. Pure functions (ADR 004).
 import { continueHref, type Activity } from "./activity";
 import { currentLesson, type Stop } from "./library";
-import type { Srs } from "./srs";
+import { isLearned, type Srs } from "./srs";
 
 export const DAILY_KEY = "kotoba.daily.v1";
 // ids: items that got their first grade on `day` (a study day key).
@@ -44,4 +44,13 @@ export function sessionStats(first: Record<string, boolean>, minutes: number[]):
 // Dashboard "Tiếp tục học": today's session when it has work, else back to the last area studied.
 export function continueTarget(due: number, fresh: number, last: Activity["last"]): { href: string; daily: boolean } {
   return due + fresh > 0 ? { href: "/review?start=1", daily: true } : { href: continueHref(last), daily: false };
+}
+
+// Dashboard stage bar: the first area, kana → kanji → vocab, with something left to learn; vocab once all are done.
+export type Area = "kana" | "kanji" | "vocab";
+export function stageOf(scope: Record<Area, string[]>, srs: Srs): { area: Area; learned: number; total: number } {
+  const areas = (["kana", "kanji", "vocab"] as const).map((area) => ({
+    area, learned: scope[area].filter((id) => isLearned(srs, id)).length, total: scope[area].length,
+  }));
+  return areas.find((a) => a.learned < a.total) ?? areas[2];
 }

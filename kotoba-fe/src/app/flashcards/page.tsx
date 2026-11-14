@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteBar, SiteFooter } from "../SiteBar";
 import { getLang } from "../LangSwitch";
-import { flashcardText, type Vocab } from "@/lib/flashcards";
+import { byLesson, flashcardText, type Vocab } from "@/lib/flashcards";
 import { getLessons, getVocab } from "@/lib/content";
 import { levelLabel, levelOf, libraryText } from "@/lib/library";
 import { LevelTabs } from "../LevelTabs";
@@ -28,7 +28,7 @@ export default async function FlashcardPage(props: PageProps<"/flashcards">) {
     if (!cards.length) notFound();
     level = lesson.level;
     name = t.lesson(lesson.lesson, lesson.title[lang]);
-  } else cards = await getVocab(`?level=${level}`);
+  } else cards = byLesson(await getVocab(`?level=${level}`));
   const tabs = <LevelTabs path="/flashcards" level={level} lang={lang} />;
   return (
     <>

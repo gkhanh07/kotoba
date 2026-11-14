@@ -1,11 +1,8 @@
 // Leitner spaced repetition shared by kana, vocab and kanji. Pure functions.
-import { WEAK_MIN_LAPSES, MAX_LAPSES } from "@/config/srs";
+import { WEAK_MIN_LAPSES, MAX_LAPSES, INTERVALS, KNOWN_AT } from "@/config/srs";
+export { INTERVALS, KNOWN_AT };
 
 export const SRS_KEY = "kotoba.srs.v1";
-// Days until the next review after 1, 2, 3… correct reviews in a row.
-export const INTERVALS = [1, 3, 7, 14, 30];
-// Box = correct reviews in a row. Known = passed the review that came after the 30-day gap.
-export const KNOWN_AT = INTERVALS.length + 1;
 
 // due: study day YYYY-MM-DD (activity.ts dayKey), at: ms of last change, lapses: wrong answers so far (missing = 0)
 export type Card = { box: number; due: string; at: number; lapses?: number };

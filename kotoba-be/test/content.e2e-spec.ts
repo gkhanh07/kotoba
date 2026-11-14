@@ -93,12 +93,12 @@ describe('content (e2e)', () => {
 
   it('filters content by level', async () => {
     const ids = (body: { id: string }[]) => body.map((d) => d.id);
-    // Counts come from the JSON so new levels need no edit here; N2 has no content until phase 31.
+    // Counts come from the JSON so new levels need no edit here; the content ends at N3 (phase 37).
     expect(ids((await get('/content/kanji?level=5').expect(200)).body)).toEqual(kanji.filter((k) => k.level === 5).map((k) => k.id));
     expect(ids((await get('/content/kanji?level=4').expect(200)).body)).toEqual(kanji.filter((k) => k.level === 4).map((k) => k.id));
-    expect((await get('/content/kanji?level=2').expect(200)).body).toEqual([]);
+    expect(ids((await get('/content/kanji?level=3').expect(200)).body)).toEqual(kanji.filter((k) => k.level === 3).map((k) => k.id));
     expect(ids((await get('/content/vocab?lesson=13&level=5').expect(200)).body)).toEqual(vocab.filter((v) => v.lesson === 13).map((v) => v.id));
-    for (const bad of ['6', '1', 'x', '', '4.5', '5&level=4']) {
+    for (const bad of ['6', '2', '1', 'x', '', '4.5', '5&level=4']) {
       const res = await get(`/content/kanji?level=${bad}`).expect(400);
       expect(res.body.message, bad).toBe('level');
     }
@@ -108,11 +108,12 @@ describe('content (e2e)', () => {
     const n5 = (await get(`/search?q=${encodeURIComponent('Nhật')}&level=5`).expect(200)).body as { id: string; level: number }[];
     expect(n5.map((d) => d.id)).toContain('kanji:日');
     expect(n5.filter((d) => d.level !== 5)).toEqual([]);
-    expect((await get(`/search?q=${encodeURIComponent('Nhật')}&level=2`).expect(200)).body).toEqual([]);
+    expect((await get(`/search?q=${encodeURIComponent('Nhật')}&level=2`).expect(400)).body.message).toBe('level');
     expect((await get('/search?q=nhat&level=x').expect(400)).body.message).toBe('level');
     expect((await get('/tests?level=5').expect(200)).body.map((p: { id: string }) => p.id)).toEqual(['n5-1']);
     expect((await get('/tests?level=4').expect(200)).body.map((p: { id: string }) => p.id)).toEqual(['n4-1']);
-    expect((await get('/tests?level=2').expect(200)).body).toEqual([]);
+    expect((await get('/tests?level=3').expect(200)).body.map((p: { id: string }) => p.id)).toEqual(['n3-1']);
+    expect((await get('/tests?level=2').expect(400)).body.message).toBe('level');
     expect((await get('/tests?level=0').expect(400)).body.message).toBe('level');
   });
 
@@ -139,7 +140,7 @@ describe('content (e2e)', () => {
       pages: Math.ceil(hiragana.length / 100),
       total: hiragana.length,
     });
-    expect((await get('/content/kanji?level=2&page=1').expect(200)).body).toEqual({ items: [], page: 1, pages: 1, total: 0 });
+    expect((await get('/content/kanji?level=2&page=1').expect(400)).body.message).toBe('level');
   });
 
   // BUG-010: /kanji groups each page by lesson, so kanji pages go lesson by lesson, most frequent first within one.
@@ -156,19 +157,20 @@ describe('content (e2e)', () => {
     }
   });
 
-  describe('with 5,000 synthetic level-2 words (N2 has no real words; N3 has)', () => {
+  describe('with 5,000 synthetic N3 words after the real ones', () => {
     const N = 5000;
     const id = (n: number) => `vocab:__synthetic_${n}`;
+    const real = () => vocab.filter((v) => v.level === 3);
 
     beforeAll(async () => {
       await app.get(Db).item.createMany({
         data: Array.from({ length: N }, (_, n) => ({
           id: id(n),
           kind: 'vocab',
-          level: 2,
+          level: 3,
           sort: 100000 + n,
           search: '',
-          data: JSON.stringify({ id: id(n), level: 2 }),
+          data: JSON.stringify({ id: id(n), level: 3 }),
         })),
       });
     });
@@ -176,12 +178,13 @@ describe('content (e2e)', () => {
     afterAll(() => app.get(Db).item.deleteMany({ where: { id: { startsWith: 'vocab:__synthetic_' } } }));
 
     it('pages them correctly and quickly without touching the N5 lists', async () => {
-      for (let page = 1; page <= 51; page++) {
+      const all = [...real(), ...Array.from({ length: N }, (_, n) => ({ id: id(n), level: 3 }))];
+      const pages = Math.ceil(all.length / 100);
+      for (let page = 1; page <= pages + 1; page++) {
         const started = performance.now();
-        const res = await get(`/content/vocab?level=2&page=${page}`).expect(200);
+        const res = await get(`/content/vocab?level=3&page=${page}`).expect(200);
         expect(performance.now() - started, `page ${page}`).toBeLessThan(200);
-        const ids = Array.from({ length: page <= 50 ? 100 : 0 }, (_, i) => id((page - 1) * 100 + i));
-        expect(res.body).toEqual({ items: ids.map((i) => ({ id: i, level: 2 })), page, pages: 50, total: N });
+        expect(res.body).toEqual({ items: all.slice((page - 1) * 100, page * 100), page, pages, total: all.length });
       }
       expect((await get('/content/vocab?level=5&page=1').expect(200)).body.total).toBe(vocab.filter((v) => v.level === 5).length);
       expect((await get('/content/vocab?page=1').expect(200)).body.total).toBe(vocab.length + N);

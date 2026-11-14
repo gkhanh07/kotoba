@@ -81,7 +81,9 @@ Found while using the app as a learner; the technical bugs were fixed as BUG-023
 - Register and onboarding both ask for the goal level; onboarding pre-fills it, but the question is asked twice. The goal list also offers N2/N1, which have no content yet.
 
 ## Content review follow-ups (Codex read-only check, 2026-11-14)
-- Grammar patterns use slot symbols (`N1 は N2 です`, `N + も`, `V`) with no legend on the page saying N = danh từ, V = động từ; N1/N2 can also be misread as JLPT levels. Add a short legend.
+- Phase 37 scopes the Dashboard to the goal, so a learner who has finished every item of their goal (e.g. goal N5, all of N5 learned) sees "nothing due" and 0 new items, with no pointer to the next level. Phase 41.2 (Dashboard rewrite): offer to raise the goal.
+- Phase 37 tried a root `app/loading.tsx` (AC-19) and removed it: a Suspense boundary above the pages makes Next stream before `notFound()` or the outage boundary run, so 404 pages answered 200 and the outage page lost its title (e2e layout, levels, test, vocab-page, BUG-017). A route-level `loading.tsx` has the same effect on routes that call `notFound()`.
+- Grammar patterns write adjectives two ways: `A-い`/`A-な` (51 patterns) and `adj` (13). The phase 37 legend explains both; pick one in the content.
 - 16 N5 kanji need a person to confirm which readings are shown as main readings: 会 中 長 行 見 分 間 上 子 女 少 語 空 食 読 飲.
 - Lesson sizes are uneven: lesson 13 has 51 items and lesson 7 has 50, well above the others.
 - Every N5 grammar point has exactly 2 examples (68 in total); a third example on the harder points would help.

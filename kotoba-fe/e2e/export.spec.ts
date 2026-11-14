@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import type { Page } from "@playwright/test";
+import { BE_PORT } from "./backend";
 import { expect, test } from "./fixtures";
 
 // Phase 21: a signed-in learner downloads the account's study data as JSON; guests are sent to sign in.
@@ -9,7 +10,7 @@ const KANA_TOTAL = (JSON.parse(readFileSync("../kotoba-be/content/kana.json", "u
 function watchBackend(page: Page) {
   const calls: string[] = [];
   page.on("request", (req) => {
-    if (new URL(req.url()).port === "4000") calls.push(req.url());
+    if (new URL(req.url()).port === String(BE_PORT)) calls.push(req.url());
   });
   return calls;
 }

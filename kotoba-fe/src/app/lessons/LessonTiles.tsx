@@ -27,7 +27,7 @@ export function LessonTiles(props: Props) {
           <li key={tile.id}>
             <button type="button" className={`tile ${s.tile}`} aria-pressed={tile.id === selectedId} aria-controls={previewId} onClick={() => setSelectedId(tile.id)}>
               <span lang="ja" className={s.char}>{tile.char}</span>
-              <span className={s.sub}>{tile.sub}</span>
+              {tile.sub && <span className={s.sub} data-hv={props.kind === "kanji" || undefined}>{tile.sub}</span>}
             </button>
           </li>
         ))}

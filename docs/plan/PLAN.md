@@ -28,7 +28,7 @@ Mọi phase theo AGENTS.md: spec `docs/phases/NN-*.md` (AC + ma trận test) →
 2. `docs:` ghi các quyết định trên vào PLAN/PROGRESS; ADR 011 (id đồng âm); ghi ngoại lệ "người dùng ra lệnh đặt reviewed N3" vào PROGRESS.
 3. `content(n3)`: đặt `reviewed: true` cho mọi mục `level: 3` trong `vocab.json`, `kanji.json`, `grammar.json` và đề `n3-1`; chạy `validate:content`.
 
-#### Phase 37 — Việc dở và lỗi hiển thị (BACKLOG)
+#### Phase 37 — Việc dở và lỗi hiển thị (BACKLOG) — xong
 - Bỏ N2 khỏi `LEVELS` (`kotoba-fe/src/lib/library.ts`, `kotoba-be/src/config.ts`), sửa `LevelTabs.test.tsx`, `e2e/levels.spec.ts`; danh sách mục tiêu chỉ chào N5–N3 nhưng vẫn đọc được giá trị N2/N1 đã lưu (`lib/account.ts` `GOALS` không đổi).
 - Bỏ nút Google bị vô hiệu (`(auth)/forms.tsx`); thanh "Giai đoạn: Kana" tính từ dữ liệu thật (`Dashboard.tsx`).
 - Copy sai phạm vi: `testText.ts` ("JLPT N5" trên đề N4/N3), mô tả bài học trong `library.ts`, `/legal`, footer ghi nguồn Hán Việt.

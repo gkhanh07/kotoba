@@ -15,3 +15,12 @@ export function QuestionText({ text, lang }: { text: string; lang: Lang }) {
     </span>
   );
 }
+
+// A reading passage: each line of the source text is its own paragraph (phase 37).
+export function Passage({ text }: { text: string }) {
+  return (
+    <div lang="ja" className={s.passage}>
+      {text.split("\n").filter(Boolean).map((line, i) => <p key={i}>{line}</p>)}
+    </div>
+  );
+}

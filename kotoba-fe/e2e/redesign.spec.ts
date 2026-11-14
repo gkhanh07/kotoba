@@ -257,7 +257,7 @@ test("/vocab sums the level's progress in one panel and marks each deck's state 
   await expect(summary.getByText("1 từ đến hạn ôn hôm nay")).toBeVisible();
   const amber = page.locator(AMBER);
   await expect(amber).toHaveCount(1);
-  await expect(amber).toHaveAttribute("href", "/review?kind=vocab");
+  await expect(amber).toHaveAttribute("href", "/review?kind=vocab&level=5"); // the tab's level (phase 37 AC-16)
 
   // AC-5.3: the state is a word on the row, not only the bar's colour.
   const row = (lesson: number) => page.getByRole("link", { name: new RegExp(`^Bài ${lesson}(?!\\d)`) });

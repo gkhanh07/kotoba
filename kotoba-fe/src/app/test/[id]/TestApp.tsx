@@ -9,7 +9,7 @@ import { flatten, formatClock, headline, remaining, score, subset, weakest, wron
 import { clearSession, readResults, readSession, saveResult, writeSession } from "@/lib/testStore";
 import { testText } from "@/lib/testText";
 import { Arrow } from "../../Arrow";
-import { QuestionText } from "../QuestionText";
+import { Passage, QuestionText } from "../QuestionText";
 import s from "../test.module.css";
 
 type Stage = "intro" | "taking" | "result" | "review";
@@ -18,6 +18,13 @@ type Answers = (number | null)[];
 type State = { stage: Stage; active: Paper; retry: boolean; startedAt: number | null; answers: Answers; flagged: number[]; current: number; timeUp: boolean };
 
 const MS_PER_MINUTE = 60_000;
+// True when el or an ancestor scrolls sideways, so ←/→ belong to it (a wide table, an overflowing passage).
+function scrollsX(el: Element | null): boolean {
+  for (; el && el !== document.body; el = el.parentElement) {
+    if (el.scrollWidth > el.clientWidth && /auto|scroll/.test(getComputedStyle(el).overflowX)) return true;
+  }
+  return false;
+}
 const blanks = (n: number): Answers => Array<number | null>(n).fill(null);
 
 function initial(paper: Paper): State {
@@ -129,7 +136,8 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
     if (stage === "result") persist();
   });
 
-  // 1-4 choose, arrows move, F flags. Re-bound every render so the handler sees current state.
+  // 1-4 choose, arrows move (unless focus is in a region that scrolls sideways), F flags.
+  // Re-bound every render so the handler sees current state.
   useEffect(() => {
     if (stage !== "taking") return;
     function onKey(e: KeyboardEvent) {
@@ -138,7 +146,7 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
       if (dialogRef.current?.open) return;
       const choice = CHOICE_KEYS.indexOf(e.key as (typeof CHOICE_KEYS)[number]);
       if (choice >= 0 && choice < flat[current].choices.length) answer(choice);
-      else if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      else if ((e.key === "ArrowLeft" || e.key === "ArrowRight") && !scrollsX(e.target as Element)) {
         e.preventDefault(); // a focused radio would otherwise change its own answer
         go(current + (e.key === "ArrowRight" ? 1 : -1));
       } else if (e.key.toLowerCase() === "f") toggleFlag();
@@ -247,7 +255,7 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
                 return (
                   <li key={i}>
                     <h3>{`${t.question(i + 1, total)} · ${partName(f.part)}`}</h3>
-                    {f.passage && <p lang="ja" className={s.passage}>{f.passage}</p>}
+                    {f.passage && <Passage text={f.passage} />}
                     <p className={s.qtext}><QuestionText text={f.q} lang={lang} /></p>
                     <p className={s.answerRow}>
                       <span className={s.label}>{t.yourChoice}</span>{" "}
@@ -285,7 +293,7 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
         <button type="button" className="btn btnGhost" aria-pressed={flagged.includes(current)} onClick={toggleFlag}>{t.flag}</button>
       </div>
       <section className={s.card}>
-        {q.passage && <p lang="ja" className={s.passage}>{q.passage}</p>}
+        {q.passage && <Passage text={q.passage} />}
         <fieldset className={s.choices} aria-describedby="test-qtext">
           <legend>{t.question(current + 1, total)} · {partName(q.part)}</legend>
           <p id="test-qtext" className={s.qtext}><QuestionText text={q.q} lang={lang} /></p>

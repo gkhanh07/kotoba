@@ -8,7 +8,7 @@ import { isLearned, type Srs } from "./srs";
 type Translation = { vi: string; en: string };
 
 // JLPT levels, easiest first. Content items carry one (phase 22); pages show one at a time.
-export const LEVELS = [5, 4, 3, 2] as const;
+export const LEVELS = [5, 4, 3] as const; // the content ends at N3 (phase 37)
 export type Level = (typeof LEVELS)[number];
 const first = (q: string | string[] | undefined) => (Array.isArray(q) ? q[0] : q);
 // Anything that is not a known level (missing, "x", "6", "05") is N5, never an error.
@@ -66,6 +66,9 @@ export type ReviewRow = { label: string; text: string; ja?: boolean; strong?: bo
 export type ReviewItem = { id: string; kind: Kind; lesson: number; tag: string; front: string; back: ReviewRow[]; meaning?: string; reading?: string };
 export const hvRows = (hv: string[], label: string): ReviewRow[] => (hv.length ? [{ label, text: hv.join(" · "), strong: true }] : []);
 export const kanjiTitle = (k: Pick<Kanji, "char" | "hv">): string => [k.char, ...(k.hv.length ? [k.hv.join(", ")] : []), "Kotoba"].join(" · ");
+// Readings past the first few are rare ones, folded away on the kanji page (phase 37).
+export const READINGS_SHOWN = 3;
+export const splitReadings = (r: string[]): [string[], string[]] => [r.slice(0, READINGS_SHOWN), r.slice(READINGS_SHOWN)];
 
 // Direction a card is asked in (phase 17). The SRS schedule stays one per item.
 export type Dir = "word-meaning" | "meaning-word" | "word-reading";
@@ -98,6 +101,11 @@ export function goalScope<T extends { level: number }>(items: readonly T[], goal
   const hardest = goal ? Number(goal.slice(1)) : 0;
   return items.filter((item) => item.level >= hardest);
 }
+
+// What /review works on (phase 37): one level when the link names it (/vocab's tab, a lesson's level), else the goal's scope.
+// Pages that count due cards link with the same level, so their count and the queue agree.
+export const reviewScope = <T extends { level: number }>(items: readonly T[], goal?: Goal, level?: Level): T[] =>
+  level ? items.filter((i) => i.level === level) : goalScope(items, goal);
 
 export function stopsOf(items: { id: string; lesson: number }[]): Stop[] {
   const byLesson = new Map<number, string[]>();
@@ -132,6 +140,7 @@ const en = {
     study: (n: number) => `Study lesson ${n}`,
     speak: "Play",
     similar: "Easily confused with",
+    more: (n: number) => `${n} rarer readings`,
     state: { started: "Started", learned: "Learned", known: "Known" },
     peek: "Quick look",
     memory: "Your memory",
@@ -180,6 +189,8 @@ const en = {
     speak: "Play",
     sameLesson: (n: number) => `Also in lesson ${n}`,
     side: "Study this point",
+    legendLabel: "Symbols in patterns",
+    legend: [["N", "noun"], ["V", "verb"], ["V-て", "the verb in its て form (likewise V-た, V-ます…)"], ["N1, N2", "two different nouns"], ["A-い, A-な, adj", "an い- or な-adjective"], ["A, B", "two people or things (A は B に…)"]] as [string, string][],
   },
   lessons: {
     title: "Lessons",
@@ -318,6 +329,7 @@ const vi: typeof en = {
     study: (n) => `Học bài ${n}`,
     speak: "Đọc",
     similar: "Dễ nhầm với",
+    more: (n) => `${n} âm ít dùng`,
     state: { started: "Đang học", learned: "Đã học", known: "Đã thuộc" },
     peek: "Xem nhanh",
     memory: "Mức độ ghi nhớ",
@@ -366,6 +378,8 @@ const vi: typeof en = {
     speak: "Đọc",
     sameLesson: (n) => `Cùng bài ${n}`,
     side: "Học điểm ngữ pháp này",
+    legendLabel: "Ký hiệu trong cấu trúc",
+    legend: [["N", "danh từ"], ["V", "động từ"], ["V-て", "động từ ở thể て (tương tự V-た, V-ます…)"], ["N1, N2", "hai danh từ khác nhau"], ["A-い, A-な, adj", "tính từ đuôi い hoặc đuôi な"], ["A, B", "hai người hoặc vật (A は B に…)"]],
   },
   lessons: {
     title: "Bài học",

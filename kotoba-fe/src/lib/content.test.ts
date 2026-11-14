@@ -30,13 +30,13 @@ describe("content", () => {
     await getKanji(4);
     await getKanjiPage(5, 2);
     await getLessons(3);
-    await getGrammar(2);
+    await getGrammar(4);
     await getTests(5);
     expect(apiMock.mock.calls).toEqual([
       ["/content/kanji?level=4", { revalidate: 3600 }],
       ["/content/kanji?level=5&page=2", { revalidate: 3600 }],
       ["/content/lesson?level=3", { revalidate: 3600 }],
-      ["/content/grammar?level=2", { revalidate: 3600 }],
+      ["/content/grammar?level=4", { revalidate: 3600 }],
       ["/tests?level=5", { revalidate: 3600 }],
     ]);
   });

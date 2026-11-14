@@ -9,9 +9,10 @@ import { Arrow, SiteBar, SiteFooter } from "../SiteBar";
 import { Last } from "./Last";
 import s from "./test.module.css";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = testText[await getLang()];
-  return { title: `${t.title} · Kotoba`, description: t.metaDesc };
+export async function generateMetadata(props: PageProps<"/test">): Promise<Metadata> {
+  const [lang, sp] = await Promise.all([getLang(), props.searchParams]);
+  const t = testText[lang];
+  return { title: `${t.title} · Kotoba`, description: t.metaDesc(levelLabel(levelOf(sp.level))) };
 }
 
 export default async function TestListPage(props: PageProps<"/test">) {

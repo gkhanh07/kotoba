@@ -1,3 +1,4 @@
+import { BE_PORT } from "./backend";
 import { expect, test } from "./fixtures";
 
 // Guest smoke: the three entry pages render, pass axe, and the browser never calls kotoba-be.
@@ -12,7 +13,7 @@ for (const { path, name } of PAGES) {
   test(`guest can open ${path} with no axe violations`, async ({ page, axe }, info) => {
     const beRequests: string[] = [];
     page.on("request", (req) => {
-      if (new URL(req.url()).port === "4000") beRequests.push(req.url());
+      if (new URL(req.url()).port === String(BE_PORT)) beRequests.push(req.url());
     });
 
     const res = await page.goto(path);

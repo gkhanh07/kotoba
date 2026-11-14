@@ -3,7 +3,8 @@
 import { execFileSync, spawn } from "node:child_process";
 import { resolve } from "node:path";
 
-export const BE_PORT = 4000;
+// E2E_BE_PORT lets E2E run beside a dev kotoba-be that holds 4000.
+export const BE_PORT = Number(process.env.E2E_BE_PORT ?? 4000);
 const BE_URL = `http://127.0.0.1:${BE_PORT}/content/kana`;
 // Playwright runs from kotoba-fe (npm run test:e2e), like the specs that read ../kotoba-be/content.
 const BE_DIR = resolve(process.cwd(), "../kotoba-be");

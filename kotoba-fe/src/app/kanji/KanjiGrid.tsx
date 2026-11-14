@@ -52,7 +52,7 @@ export function KanjiGrid({ groups, filter, none, lang }: { groups: Group[]; fil
                       onFocus={() => setPeekId(k.id)}
                     >
                       <span lang="ja" className={s.char}>{k.char}</span>
-                      <span className={s.hv}>{k.hv}</span>
+                      {k.hv && <span className={s.hv}>{k.hv}</span>}
                       {state && <span className="tag" data-state={state}><span className="sr-only">, </span>{t.state[state]}</span>}
                     </Link>
                   </li>

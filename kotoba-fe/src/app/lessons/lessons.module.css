@@ -89,12 +89,13 @@ details[open] > .summary { border-bottom: 1px solid var(--rule-dim); border-radi
 .char { font-family: var(--font-kana); font-size: 2.5rem; line-height: 1.1; color: var(--cool-core); }
 .kana .char { font-size: 1.9rem; }
 .tile[aria-pressed="true"] .char { color: var(--chalk); }
-.sub { font-size: var(--fs-meta); letter-spacing: .06em; text-transform: uppercase; color: var(--silver-dim); }
+.sub { font-size: var(--fs-meta); letter-spacing: .06em; color: var(--silver-dim); }
+.sub[data-hv] { text-transform: uppercase; } /* romaji stays lower case (phase 37); Hán Việt is caps everywhere */
 .tile[aria-pressed="true"] .sub { color: var(--silver); }
 .preview { display: grid; gap: .6rem; justify-items: start; padding: var(--space-panel); border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface-2); box-shadow: var(--edge-hi); }
 .previewLabel { font-size: var(--fs-meta); letter-spacing: .06em; text-transform: uppercase; color: var(--silver-dim); }
 .previewChar { font-family: var(--font-kana); font-size: var(--fs-specimen); line-height: 1.1; color: var(--chalk); }
-.previewRomaji { font-size: var(--fs-card); letter-spacing: .06em; text-transform: uppercase; color: var(--silver); }
+.previewRomaji { font-size: var(--fs-card); letter-spacing: .06em; color: var(--silver); }
 .previewHint { color: var(--silver); font-size: var(--fs-caption); max-width: 40ch; }
 .facts { display: grid; gap: .35rem; margin: 0; width: 100%; }
 .facts > div { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: .75rem; }

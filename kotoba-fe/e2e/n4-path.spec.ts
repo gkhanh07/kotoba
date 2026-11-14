@@ -41,7 +41,7 @@ test("after all of N5, the dashboard offers today's session with 10 new N4 items
   await learnAllN5(page);
   await page.getByLabel("Email").fill(`n4-${info.project.name}-${Date.now()}@example.com`);
   await page.getByLabel("Mật khẩu").fill(PASSWORD);
-  await page.getByText("N5", { exact: true }).click();
+  await page.getByText("N4", { exact: true }).click(); // goal N4 covers N5 and N4 (phase 37 scopes the dashboard to the goal)
   await page.getByRole("button", { name: "Tạo tài khoản" }).click();
   await expect(page).toHaveURL(/\/onboarding/);
   await page.getByRole("link", { name: "Để sau" }).click();

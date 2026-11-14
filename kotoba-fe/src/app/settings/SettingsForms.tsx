@@ -50,7 +50,7 @@ function Profile({ lang, sessions, initial }: Omit<Props, "email">) {
           <span>{t.settings.name}</span>
           <input type="text" name="name" maxLength={40} autoComplete="given-name" defaultValue={state.values.name} {...flag(state.error, "name", problem)} />
         </label>
-        <Choice name="goal" legend={o.goal} options={goalOptions} value={state.values.goal} describedBy={state.error === "goal" ? problem : undefined} />
+        <Choice name="goal" legend={o.goal} options={goalOptions(state.values.goal)} value={state.values.goal} describedBy={state.error === "goal" ? problem : undefined} />
         <label className={a.field}>
           <span>{o.exam}</span>
           <select name="exam" defaultValue={state.values.exam ?? "unknown"} {...flag(state.error, "exam", problem)}>

@@ -22,7 +22,7 @@ type Split4 = { a: string; b: string; c: string; d: string };
 
 type Dict = {
   nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string; menu: string; library: string; kana: string; kanji: string; vocab: string; grammar: string; lessons: string; review: string; reviewDue: string; test: string; search: string; settings: string; sync: { saved: string; saving: string; pending: (n: number) => string; failed: string; retry: string } };
-  footer: { kanji: string; dict: string; legal: string };
+  footer: { kanji: string; dict: string; hv: string; legal: string };
   notFound: { title: string; body: string; home: string };
   down: { title: string; body: string; retry: string };
   meta: { rootTitle: string; rootDesc: string; kanaTitle: string; kanaDesc: string };
@@ -143,7 +143,7 @@ const DICT: Record<Lang, Dict> = {
       settings: "Cài đặt tài khoản",
       sync: { saved: "Đã lưu", saving: "Đang lưu…", pending: (n) => `Chờ lưu ${n} thay đổi`, failed: "Lỗi đồng bộ", retry: "Thử lại" },
     },
-    footer: { kanji: "Dữ liệu kanji", dict: "Từ điển", legal: "Điều khoản và quyền riêng tư" },
+    footer: { kanji: "Dữ liệu kanji", dict: "Từ điển", hv: "Hán Việt", legal: "Điều khoản và quyền riêng tư" },
     notFound: {
       title: "Không tìm thấy trang · Kotoba",
       body: "Trang bạn tìm không tồn tại.",
@@ -297,7 +297,7 @@ const DICT: Record<Lang, Dict> = {
       settings: "Account settings",
       sync: { saved: "Saved", saving: "Saving…", pending: (n) => `${n} ${n === 1 ? "change" : "changes"} waiting to save`, failed: "Sync failed", retry: "Retry" },
     },
-    footer: { kanji: "Kanji data", dict: "Dictionary", legal: "Terms and privacy" },
+    footer: { kanji: "Kanji data", dict: "Dictionary", hv: "Sino-Vietnamese", legal: "Terms and privacy" },
     notFound: {
       title: "Page not found · Kotoba",
       body: "This sign isn't lit yet. The page you're looking for isn't here.",

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useActionState, useId } from "react";
-import { accountText, GOALS, isInvalidField, MINUTES, type ErrorCode, type FormState } from "@/lib/account";
+import { accountText, goalChoices, isGoal, isInvalidField, MINUTES, type ErrorCode, type FormState } from "@/lib/account";
 import type { Lang } from "@/lib/i18n";
 import { forgot, login, register, reset, saveOnboarding } from "./actions";
 import s from "./auth.module.css";
@@ -62,7 +62,7 @@ export function Problem({ id, message }: { id?: string; message?: string }) {
   return message ? <p id={id} role="alert" className={s.error}>{message}</p> : null;
 }
 
-export const goalOptions = GOALS.map((g) => ({ value: g, label: g }));
+export const goalOptions = (current?: string) => goalChoices(current).map((g) => ({ value: g, label: g }));
 
 export function LoginForm({ lang, next }: { lang: Lang; next?: string }) {
   const t = accountText[lang];
@@ -82,7 +82,6 @@ export function LoginForm({ lang, next }: { lang: Lang; next?: string }) {
         </label>
         <Problem id={problem} message={state.error && t.errors[state.error]} />
         <button type="submit" className="btn" disabled={pending}>{pending ? t.pending : t.login.submit}</button>
-        <button type="button" className="btn btnGhost" disabled>{t.google}</button>
       </form>
       <p className={s.links}>
         <Link href="/forgot">{t.login.forgot}</Link>
@@ -102,10 +101,9 @@ export function RegisterForm({ lang }: { lang: Lang }) {
       <form action={action} className={s.form}>
         <Email label={t.email} value={state.values.email} invalid={flag(state.error, "email", problem)} />
         <Password label={t.password} invalid={flag(state.error, "password", problem)} />
-        <Choice name="goal" legend={t.register.goal} options={goalOptions} value={state.values.goal} describedBy={state.error === "goal" ? problem : undefined} />
+        <Choice name="goal" legend={t.register.goal} options={goalOptions(state.values.goal)} value={state.values.goal} describedBy={state.error === "goal" ? problem : undefined} />
         <Problem id={problem} message={state.error && t.errors[state.error]} />
         <button type="submit" className="btn" disabled={pending}>{pending ? t.pending : t.register.submit}</button>
-        <button type="button" className="btn btnGhost" disabled>{t.google}</button>
       </form>
       <p className={s.links}>
         <Link href="/login">{t.register.login}</Link>
@@ -190,7 +188,12 @@ export function OnboardingForm({
           <span>{o.name}</span>
           <input type="text" name="name" maxLength={40} autoComplete="given-name" defaultValue={state.values.name} {...flag(state.error, "name", problem)} />
         </label>
-        <Choice name="goal" legend={o.goal} options={goalOptions} value={state.values.goal} describedBy={state.error === "goal" ? problem : undefined} />
+        {/* A goal picked at sign-up is not asked again (phase 37); settings can still change it. */}
+        {isGoal(initial.goal) ? (
+          <input type="hidden" name="goal" value={initial.goal} />
+        ) : (
+          <Choice name="goal" legend={o.goal} options={goalOptions(state.values.goal)} value={state.values.goal} describedBy={state.error === "goal" ? problem : undefined} />
+        )}
         <label className={s.field}>
           <span>{o.exam}</span>
           <select name="exam" defaultValue={state.values.exam ?? "unknown"} {...flag(state.error, "exam", problem)}>

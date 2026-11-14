@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Page } from "@playwright/test";
+import { BE_PORT } from "./backend";
 import { expect, test } from "./fixtures";
 
 // Phase 16: wrong answers are counted, the dashboard lists the worst items, and /review?weak=1 asks just those.
@@ -13,11 +14,11 @@ const LESSON_SIZE = VOCAB.filter((w) => w.lesson === TARGET.lesson).length;
 const SRS = "kotoba.srs.v1";
 const PASSWORD = "correct-horse-battery";
 
-// The browser must never talk to kotoba-be on :4000: sync and sign-up go through the Next server.
+// The browser must never talk to kotoba-be on BE_PORT: sync and sign-up go through the Next server.
 function watchBackend(page: Page) {
   const calls: string[] = [];
   page.on("request", (req) => {
-    if (new URL(req.url()).port === "4000") calls.push(req.url());
+    if (new URL(req.url()).port === String(BE_PORT)) calls.push(req.url());
   });
   return calls;
 }

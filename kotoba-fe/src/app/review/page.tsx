@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getKana, getKanji, getLessons, getVocab } from "@/lib/content";
-import { hvRows, KINDS, libraryText, type Kind, type ReviewItem } from "@/lib/library";
+import { currentUser } from "@/lib/auth";
+import { hvRows, KINDS, LEVELS, libraryText, reviewScope, type Kind, type Level, type ReviewItem } from "@/lib/library";
 import { getLang } from "../LangSwitch";
 import { SiteBar, SiteFooter } from "../SiteBar";
 import { ReviewApp } from "./ReviewApp";
@@ -21,7 +22,17 @@ export default async function ReviewPage(props: PageProps<"/review">) {
   const lang = await getLang();
   const t = libraryText[lang];
   const isSession = ["start", "kind", "lesson", "weak"].some((key) => q[key] !== undefined);
-  const [kana, kanji, vocab, lessons] = await Promise.all([getKana(), getKanji(), getVocab(), getLessons()]);
+  const [all, user] = await Promise.all([Promise.all([getKana(), getKanji(), getVocab(), getLessons()]), currentUser()]);
+  const lessons = all[3];
+  // A lesson pins its own level, so a lesson past the goal still opens; ?level= comes from /vocab's tab.
+  const l = q.lesson === undefined ? undefined : lessons.find((x) => String(x.lesson) === q.lesson);
+  if (q.lesson !== undefined && !l) notFound();
+  const level: Level | undefined = l?.level ?? LEVELS.find((x) => String(x) === q.level);
+  const goal = user?.profile.goal;
+  // Kana is all N5: every goal keeps it (JLPT is cumulative); only an N4 or N3 link leaves it out.
+  const kana = reviewScope(all[0].map((k) => ({ ...k, level: 5 })), goal, level);
+  const kanji = reviewScope(all[1], goal, level);
+  const vocab = reviewScope(all[2], goal, level);
 
   if (!isSession) {
     const cards = [
@@ -38,7 +49,7 @@ export default async function ReviewPage(props: PageProps<"/review">) {
     );
   }
 
-  // ponytail: every item (~800) ships to the client so the queue and "next lesson" need no fetch; page it if content grows past N5.
+  // ponytail: every item in scope ships to the client so the queue and "next lesson" need no fetch; page it if a scope outgrows that.
   const items: ReviewItem[] = [
     ...kana.map((k) => ({
       id: k.id, kind: "kana" as const, lesson: k.lesson, tag: k.script === "katakana" ? "Katakana" : "Hiragana", front: k.char,
@@ -66,12 +77,8 @@ export default async function ReviewPage(props: PageProps<"/review">) {
   ];
 
   const kind = KINDS.find((k) => k === q.kind) as Kind | undefined;
-  let lesson: { n: number; title: string } | undefined;
-  if (q.lesson !== undefined) {
-    const l = lessons.find((x) => String(x.lesson) === q.lesson);
-    if (!l || !items.some((i) => i.lesson === l.lesson)) notFound();
-    lesson = { n: l.lesson, title: l.title[lang] };
-  }
+  if (l && !items.some((i) => i.lesson === l.lesson)) notFound();
+  const lesson = l && { n: l.lesson, title: l.title[lang] };
 
   return (
     <>

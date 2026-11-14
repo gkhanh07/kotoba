@@ -16,6 +16,9 @@ export type Vocab = {
   level: Level;
 };
 
+// A level deck goes lesson by lesson (phase 37); vocab.json is by frequency. Stable, so a lesson keeps its own order.
+export const byLesson = <T extends { lesson: number }>(cards: readonly T[]): T[] => [...cards].sort((a, b) => a.lesson - b.lesson);
+
 export function shuffleCards<T>(items: readonly T[]): T[] {
   const result = [...items];
   for (let i = result.length - 1; i > 0; i--) {

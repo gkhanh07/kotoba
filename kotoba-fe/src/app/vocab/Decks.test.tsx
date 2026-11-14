@@ -13,17 +13,17 @@ afterEach(() => vi.useRealTimers());
 
 describe("Decks paging", () => {
   it("lists only the decks of the page", () => {
-    render(<Decks decks={DECKS} from={30} to={60} lang="vi" />);
+    render(<Decks decks={DECKS} from={30} to={60} lang="vi" level={5} />);
     expect(listed()).toEqual([31, 32, 33, 34, 35].map((n) => `/flashcards?deck=${n}`));
   });
-  it("counts due words over every deck, not just the listed ones", () => {
+  it("counts due words over every deck and reviews them at the same level (phase 37)", () => {
     seed({ "vocab:a0": { box: 0, due: "2026-11-02", at: 1 }, "vocab:b33": { box: 1, due: "2026-11-01", at: 1 } });
-    render(<Decks decks={DECKS} from={30} to={60} lang="vi" />);
-    expect(screen.getByRole("link", { name: /Ôn 2 từ đến hạn/ })).toHaveAttribute("href", "/review?kind=vocab");
+    render(<Decks decks={DECKS} from={30} to={60} lang="vi" level={4} />);
+    expect(screen.getByRole("link", { name: /Ôn 2 từ đến hạn/ })).toHaveAttribute("href", "/review?kind=vocab&level=4");
   });
   it("offers the first unfinished deck even when it is on another page", () => {
     seed(Object.fromEntries(["vocab:a0", "vocab:b0"].map((id) => [id, { box: 1, due: "2026-11-05", at: 1 }])));
-    render(<Decks decks={DECKS} from={30} to={60} lang="vi" />);
+    render(<Decks decks={DECKS} from={30} to={60} lang="vi" level={5} />);
     expect(screen.getByRole("link", { name: /Học bài tiếp/ })).toHaveAttribute("href", "/flashcards?deck=2");
   });
 });

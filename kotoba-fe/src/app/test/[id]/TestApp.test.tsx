@@ -1,4 +1,4 @@
-import { act, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import paperJson from "../../../../tests/fixtures/paper.small.json";
@@ -161,6 +161,17 @@ describe("taking", () => {
     await user.click(palette(4));
     expect(screen.getByText("わたしの へやは 2かいです。テレビは ありません。")).toBeInTheDocument();
   });
+  it("puts each line of a passage in its own paragraph (phase 37)", async () => {
+    const parts = paper.parts.map((p, i) => (i === 2 ? { ...p, passage: "一つめ。\n二つめ。" } : p));
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime.bind(vi) });
+    render(<TestApp paper={{ ...paper, parts }} lang="vi" />);
+    await start(user);
+    await user.click(palette(4));
+    const first = screen.getByText("一つめ。");
+    expect(first.tagName).toBe("P");
+    expect(screen.getByText("二つめ。").tagName).toBe("P");
+    expect(first.parentElement).toHaveAttribute("lang", "ja");
+  });
   it("flags and unflags the current question and stores the flag", async () => {
     const { user } = mount();
     await start(user);
@@ -236,6 +247,19 @@ describe("keyboard", () => {
     await start(user);
     await user.keyboard("{Control>}1{/Control}{Meta>}2{/Meta}{Alt>}3{/Alt}{Control>}f{/Control}{Alt>}{ArrowRight}{/Alt}");
     expect(session()).toEqual({ v: 1, startedAt: T0, answers: [null, null, null, null, null, null], flagged: [], current: 0 });
+  });
+  it("leaves arrow keys to a horizontally scrollable region (phase 37)", async () => {
+    const { user } = mount();
+    await start(user);
+    const wide = document.body.appendChild(document.createElement("div"));
+    wide.style.overflowX = "auto";
+    wide.tabIndex = 0;
+    Object.defineProperties(wide, { scrollWidth: { value: 500 }, clientWidth: { value: 100 } });
+    wide.focus();
+    await user.keyboard("{ArrowRight}");
+    expect(palette(1)).toHaveAttribute("aria-current", "step");
+    expect(fireEvent.keyDown(wide, { key: "ArrowRight" })).toBe(true); // not prevented: the region scrolls
+    wide.remove();
   });
   it("ignores shortcuts typed into a text input", async () => {
     const { user } = mount();
