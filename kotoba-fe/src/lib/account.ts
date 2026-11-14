@@ -96,6 +96,7 @@ const vi = {
   login: {
     title: "Đăng nhập",
     lede: "Đăng nhập là không bắt buộc. Bạn vẫn có thể luyện tập mà không cần tài khoản.",
+    needed: "Trang bạn vừa mở cần đăng nhập. Luyện tập thì vẫn không cần tài khoản.",
     remember: "Ghi nhớ đăng nhập",
     submit: "Đăng nhập",
     forgot: "Quên mật khẩu?",
@@ -185,6 +186,7 @@ const en: typeof vi = {
   login: {
     title: "Log in",
     lede: "Optional. You can practise without an account.",
+    needed: "The page you opened needs an account. Practice still doesn't.",
     remember: "Remember me",
     submit: "Log in",
     forgot: "Forgot password?",

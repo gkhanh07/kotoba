@@ -326,3 +326,16 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Similar places: the review screen lists questions without a palette; no other page has one.
 - Commit: `fix(ui): hide key hints on touch and put the test question before the palette`
 - Status: FIXED
+
+## BUG-025: a guest sent to sign in is told signing in is optional
+- Severity: Low (confusing copy, the redirect itself works)
+- Found: 2026-11-14, user walkthrough as a guest opening /settings
+- Environment: `kotoba-fe/src/app/(auth)/forms.tsx` `LoginForm`
+- Expected: when a page that needs an account redirects to `/login?next=…`, the login page says that page needs an account.
+- Actual: the lede always read "Đăng nhập là không bắt buộc…", so the guest was not told why they landed there.
+- Reproducing test: `e2e/export.spec.ts` "a guest opening /settings is told the page needs an account" (failed before the fix).
+- Root cause: `LoginForm` rendered `t.login.lede` regardless of `next`.
+- Fix: with `next` set, the lede is the new `login.needed` text (vi/en in `src/lib/account.ts`); plain `/login` keeps the old lede.
+- Similar places: every redirect to login (`settings/page.tsx`, `settings/actions.ts`, `settings/export/route.ts`) passes `next`, so all are covered.
+- Commit: `fix(auth): tell a redirected guest the page needs an account`
+- Status: FIXED

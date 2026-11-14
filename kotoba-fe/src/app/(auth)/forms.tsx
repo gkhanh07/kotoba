@@ -70,7 +70,8 @@ export function LoginForm({ lang, next }: { lang: Lang; next?: string }) {
   const problem = useId();
   return (
     <>
-      <Heading title={t.login.title} lede={t.login.lede} />
+      {/* A redirect from a page that needs an account says so, rather than "logging in is optional" (BUG-025). */}
+      <Heading title={t.login.title} lede={next ? t.login.needed : t.login.lede} />
       <form action={action} className={s.form}>
         {next && <input type="hidden" name="next" value={next} />}
         <Email label={t.email} value={state.values.email} invalid={flag(state.error, "email", problem)} />

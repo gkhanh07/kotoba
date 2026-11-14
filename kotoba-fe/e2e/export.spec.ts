@@ -71,6 +71,15 @@ test("a guest asking for the export is sent to sign in", async ({ page }) => {
   await expect(page).toHaveURL(/\/login\?next=%2Fsettings|\/login\?next=\/settings/);
 });
 
+// BUG-025: the redirect landed on the plain login page, which says signing in is optional, with no word on why.
+test("a guest opening /settings is told the page needs an account", async ({ page }) => {
+  await page.goto("/settings");
+  await expect(page).toHaveURL(/\/login\?next=/);
+  await expect(page.getByText("Trang bạn vừa mở cần đăng nhập. Luyện tập thì vẫn không cần tài khoản.", { exact: true })).toBeVisible();
+  await page.goto("/login");
+  await expect(page.getByText("Đăng nhập là không bắt buộc. Bạn vẫn có thể luyện tập mà không cần tài khoản.", { exact: true })).toBeVisible();
+});
+
 test("the legal page says where to download the data", async ({ page, axe }) => {
   await page.goto("/legal");
   await expect(page.getByText(/Bạn có thể tải toàn bộ dữ liệu học của tài khoản/)).toBeVisible();
