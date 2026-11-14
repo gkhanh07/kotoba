@@ -133,6 +133,8 @@ export default async function Home() {
     );
   }
   const t = dict(lang).home;
+  // The landing has its own footer, so it repeats SiteFooter's source credit (KANJIDIC2/JMdict licences, /legal).
+  const credit = dict(lang).footer;
   const lampLabels = [t.lampMastered, t.lampLearning, t.lampUnseen];
   const [kana, kanji, vocab, grammar, lessons] = await Promise.all([getKana(), getKanji(), getVocab(), getGrammar(), getLessons()]);
   const kanaScripts = KANA_SCRIPTS.map((k) => {
@@ -334,6 +336,9 @@ export default async function Home() {
           <span lang="ja" className="brandMark">言葉</span> {t.footerA}
         </p>
         <p>{t.footerB}</p>
+        <p>
+          {credit.kanji}: KANJIDIC2 · {credit.dict}: JMdict · CC BY-SA 4.0 · <Link href="/legal">{credit.legal}</Link>
+        </p>
       </footer>
     </>
   );

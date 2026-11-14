@@ -40,6 +40,10 @@ test("the landing page opens every line and says an account is optional", async 
   await expect(page.getByRole("link", { name: /^N5 / })).toHaveAttribute("href", "/lessons");
   await expect(page.getByText("Sắp có")).toHaveCount(0);
   await expect(page.getByText("Không cần tài khoản để luyện tập. Đăng nhập để đồng bộ tiến độ giữa các thiết bị.")).toBeVisible();
+  // BUG-022: the guest landing credits the data sources and links the legal page like every other page.
+  const footer = page.getByRole("contentinfo");
+  await expect(footer).toContainText("Dữ liệu kanji: KANJIDIC2 · Từ điển: JMdict · CC BY-SA 4.0 · Điều khoản và quyền riêng tư");
+  await expect(footer.getByRole("link", { name: "Điều khoản và quyền riêng tư" })).toHaveAttribute("href", "/legal");
 });
 
 test("an N5 dashboard shows the N5 totals", async ({ page, axe }, info) => {

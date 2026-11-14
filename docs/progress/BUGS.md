@@ -261,3 +261,42 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Similar places: retry results are deliberately not saved (retryNote), so nothing else to reopen.
 - Commit: `fix(test): reopen the last result and correct the start note`
 - Status: FIXED
+
+## BUG-020: the /lessons lede says the path ends at N5 review
+- Severity: Medium (wrong copy; the path runs on to N3)
+- Found: 2026-11-14, user walkthrough of /lessons
+- Environment: `kotoba-fe/src/lib/library.ts` `lessons.lede`, `kotoba-fe/src/app/lessons/page.tsx`
+- Expected: the lede names the furthest level the lessons reach (N3 today).
+- Actual: "81 bài, từ bảng chữ đến ôn tập N5…" while lessons 33–81 are N4 and N3.
+- Reproducing test: `library.test.ts` "lessons lede (BUG-020)"; e2e `levels.spec.ts` "/lessons groups the path under an N5 heading" asserts the lede from the data.
+- Root cause: the lede was written when the path was N5 only and hard-coded the level.
+- Fix: `lede(n, last)` takes the level label of the last lesson; the page passes it for both the description meta and the paragraph.
+- Similar places: the landing copy counts lessons without naming a level; no other hard-coded "N5 review" text.
+- Commit: `fix(ui): name the last level in the lessons lede and title detail 404s`
+- Status: FIXED
+
+## BUG-021: a missing word, kanji, grammar point or lesson gets the home page title on its 404
+- Severity: Low (the page is a correct 404, only the tab title is wrong)
+- Found: 2026-11-14, user walkthrough of /lessons/999
+- Environment: `generateMetadata` of `vocab/[word]`, `kanji/[char]`, `grammar/[slug]`, `lessons/[n]`
+- Expected: tab title "Không tìm thấy trang · Kotoba", as for any unknown URL.
+- Actual: "Kotoba · Học tiếng Nhật cho người Việt".
+- Reproducing test: `e2e/layout.spec.ts` "<route> is a 404 titled as one" for 5 routes (4 failed before the fix).
+- Root cause: `generateMetadata` returned `{}` for a missing item, so the root layout's title won before the page called `notFound()`.
+- Fix: `generateMetadata` calls `notFound()` itself, so the not-found metadata applies.
+- Similar places: the four detail routes are all the dynamic routes with item metadata; all fixed.
+- Commit: `fix(ui): name the last level in the lessons lede and title detail 404s`
+- Status: FIXED
+
+## BUG-022: the guest landing page has no data credit or link to the legal page
+- Severity: Medium (licence attribution for KANJIDIC2/JMdict, CC BY-SA, missing on the most visited page)
+- Found: 2026-11-14, user walkthrough of /
+- Environment: `kotoba-fe/src/app/page.tsx`, guest branch
+- Expected: like every other page, the footer credits KANJIDIC2 and JMdict under CC BY-SA 4.0 and links /legal.
+- Actual: the landing renders its own footer with the tagline only; no credit, no /legal link.
+- Reproducing test: `e2e/home.spec.ts` "the landing page opens every line and says an account is optional" (footer assertions).
+- Root cause: the landing's own footer replaced `SiteFooter` and did not carry its credit line.
+- Fix: the landing footer adds the same credit line from `dict(lang).footer`.
+- Similar places: every other page (and the signed-in dashboard) renders `SiteFooter`.
+- Commit: `fix(home): credit the data sources on the landing page`
+- Status: FIXED
