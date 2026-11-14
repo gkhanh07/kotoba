@@ -191,35 +191,6 @@
   ]
  },
  {
-  "id": "kanji:十",
-  "char": "十",
-  "hv": [
-   "Thập"
-  ],
-  "on": [
-   "ジュウ",
-   "ジッ",
-   "ジュッ"
-  ],
-  "kun": [
-   "とお",
-   "と",
-   "そ"
-  ],
-  "en": [
-   "ten"
-  ],
-  "strokes": 2,
-  "freq": 8,
-  "vi": "mười",
-  "lesson": 6,
-  "level": 5,
-  "reviewed": false,
-  "similar": [
-   "千"
-  ]
- },
- {
   "id": "kanji:二",
   "char": "二",
   "hv": [
@@ -241,6 +212,31 @@
   "strokes": 2,
   "freq": 9,
   "vi": "hai",
+  "lesson": 6,
+  "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:三",
+  "char": "三",
+  "hv": [
+   "Tam"
+  ],
+  "on": [
+   "サン",
+   "ゾウ"
+  ],
+  "kun": [
+   "み",
+   "み.つ",
+   "みっ.つ"
+  ],
+  "en": [
+   "three"
+  ],
+  "strokes": 3,
+  "freq": 14,
+  "vi": "ba",
   "lesson": 6,
   "level": 5,
   "reviewed": false
@@ -367,26 +363,26 @@
   "reviewed": false
  },
  {
-  "id": "kanji:三",
-  "char": "三",
+  "id": "kanji:四",
+  "char": "四",
   "hv": [
-   "Tam"
+   "Tứ"
   ],
   "on": [
-   "サン",
-   "ゾウ"
+   "シ"
   ],
   "kun": [
-   "み",
-   "み.つ",
-   "みっ.つ"
+   "よ",
+   "よ.つ",
+   "よっ.つ",
+   "よん"
   ],
   "en": [
-   "three"
+   "four"
   ],
-  "strokes": 3,
-  "freq": 14,
-  "vi": "ba",
+  "strokes": 5,
+  "freq": 47,
+  "vi": "bốn",
   "lesson": 6,
   "level": 5,
   "reviewed": false
@@ -1305,26 +1301,27 @@
   ]
  },
  {
-  "id": "kanji:四",
-  "char": "四",
+  "id": "kanji:六",
+  "char": "六",
   "hv": [
-   "Tứ"
+   "Lục"
   ],
   "on": [
-   "シ"
+   "ロク",
+   "リク"
   ],
   "kun": [
-   "よ",
-   "よ.つ",
-   "よっ.つ",
-   "よん"
+   "む",
+   "む.つ",
+   "むっ.つ",
+   "むい"
   ],
   "en": [
-   "four"
+   "six"
   ],
-  "strokes": 5,
-  "freq": 47,
-  "vi": "bốn",
+  "strokes": 4,
+  "freq": 93,
+  "vi": "sáu",
   "lesson": 6,
   "level": 5,
   "reviewed": false
@@ -1515,25 +1512,25 @@
   "reviewed": false
  },
  {
-  "id": "kanji:九",
-  "char": "九",
+  "id": "kanji:七",
+  "char": "七",
   "hv": [
-   "Cửu"
+   "Thất"
   ],
   "on": [
-   "キュウ",
-   "ク"
+   "シチ"
   ],
   "kun": [
-   "ここの",
-   "ここの.つ"
+   "なな",
+   "なな.つ",
+   "なの"
   ],
   "en": [
-   "nine"
+   "seven"
   ],
   "strokes": 2,
-  "freq": 55,
-  "vi": "chín",
+  "freq": 115,
+  "vi": "bảy",
   "lesson": 6,
   "level": 5,
   "reviewed": false
@@ -1940,32 +1937,34 @@
   "reviewed": false
  },
  {
-  "id": "kanji:円",
-  "char": "円",
+  "id": "kanji:八",
+  "char": "八",
   "hv": [
-   "Viên"
+   "Bát"
   ],
   "on": [
-   "エン"
+   "ハチ",
+   "ハツ"
   ],
   "kun": [
-   "まる.い",
-   "まる",
-   "まど",
-   "まど.か",
-   "まろ.やか"
+   "や",
+   "や.つ",
+   "やっ.つ",
+   "よう"
   ],
   "en": [
-   "circle",
-   "yen",
-   "round"
+   "eight",
+   "eight radical (no. 12)"
   ],
-  "strokes": 4,
-  "freq": 69,
-  "vi": "yên (tiền Nhật); hình tròn",
+  "strokes": 2,
+  "freq": 92,
+  "vi": "tám",
   "lesson": 6,
   "level": 5,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "入"
+  ]
  },
  {
   "id": "kanji:関",
@@ -2583,60 +2582,57 @@
   "reviewed": false
  },
  {
-  "id": "kanji:八",
-  "char": "八",
+  "id": "kanji:九",
+  "char": "九",
   "hv": [
-   "Bát"
+   "Cửu"
   ],
   "on": [
-   "ハチ",
-   "ハツ"
+   "キュウ",
+   "ク"
   ],
   "kun": [
-   "や",
-   "や.つ",
-   "やっ.つ",
-   "よう"
+   "ここの",
+   "ここの.つ"
   ],
   "en": [
-   "eight",
-   "eight radical (no. 12)"
+   "nine"
   ],
   "strokes": 2,
-  "freq": 92,
-  "vi": "tám",
+  "freq": 55,
+  "vi": "chín",
+  "lesson": 6,
+  "level": 5,
+  "reviewed": false
+ },
+ {
+  "id": "kanji:十",
+  "char": "十",
+  "hv": [
+   "Thập"
+  ],
+  "on": [
+   "ジュウ",
+   "ジッ",
+   "ジュッ"
+  ],
+  "kun": [
+   "とお",
+   "と",
+   "そ"
+  ],
+  "en": [
+   "ten"
+  ],
+  "strokes": 2,
+  "freq": 8,
+  "vi": "mười",
   "lesson": 6,
   "level": 5,
   "reviewed": false,
   "similar": [
-   "入"
+   "千"
   ]
- },
- {
-  "id": "kanji:六",
-  "char": "六",
-  "hv": [
-   "Lục"
-  ],
-  "on": [
-   "ロク",
-   "リク"
-  ],
-  "kun": [
-   "む",
-   "む.つ",
-   "むっ.つ",
-   "むい"
-  ],
-  "en": [
-   "six"
-  ],
-  "strokes": 4,
-  "freq": 93,
-  "vi": "sáu",
-  "lesson": 6,
-  "level": 5,
-  "reviewed": false
  },
  {
   "id": "kanji:約",
@@ -3203,28 +3199,30 @@
   ]
  },
  {
-  "id": "kanji:七",
-  "char": "七",
+  "id": "kanji:百",
+  "char": "百",
   "hv": [
-   "Thất"
+   "Bách"
   ],
   "on": [
-   "シチ"
+   "ヒャク",
+   "ビャク"
   ],
   "kun": [
-   "なな",
-   "なな.つ",
-   "なの"
+   "もも"
   ],
   "en": [
-   "seven"
+   "hundred"
   ],
-  "strokes": 2,
-  "freq": 115,
-  "vi": "bảy",
+  "strokes": 6,
+  "freq": 163,
+  "vi": "trăm",
   "lesson": 6,
   "level": 5,
-  "reviewed": false
+  "reviewed": false,
+  "similar": [
+   "白"
+  ]
  },
  {
   "id": "kanji:成",
@@ -4248,29 +4246,28 @@
   "reviewed": false
  },
  {
-  "id": "kanji:百",
-  "char": "百",
+  "id": "kanji:千",
+  "char": "千",
   "hv": [
-   "Bách"
+   "Thiên"
   ],
   "on": [
-   "ヒャク",
-   "ビャク"
+   "セン"
   ],
   "kun": [
-   "もも"
+   "ち"
   ],
   "en": [
-   "hundred"
+   "thousand"
   ],
-  "strokes": 6,
-  "freq": 163,
-  "vi": "trăm",
+  "strokes": 3,
+  "freq": 195,
+  "vi": "nghìn",
   "lesson": 6,
   "level": 5,
   "reviewed": false,
   "similar": [
-   "白"
+   "十"
   ]
  },
  {
@@ -5050,28 +5047,30 @@
   "reviewed": false
  },
  {
-  "id": "kanji:千",
-  "char": "千",
+  "id": "kanji:万",
+  "char": "万",
   "hv": [
-   "Thiên"
+   "Vạn"
   ],
   "on": [
-   "セン"
+   "マン",
+   "バン"
   ],
   "kun": [
-   "ち"
+   "よろず"
   ],
   "en": [
-   "thousand"
+   "ten thousand",
+   "10,000"
   ],
   "strokes": 3,
-  "freq": 195,
-  "vi": "nghìn",
+  "freq": 375,
+  "vi": "vạn, mười nghìn",
   "lesson": 6,
   "level": 5,
   "reviewed": false,
   "similar": [
-   "十"
+   "方"
   ]
  },
  {
@@ -8754,31 +8753,32 @@
   "reviewed": false
  },
  {
-  "id": "kanji:万",
-  "char": "万",
+  "id": "kanji:円",
+  "char": "円",
   "hv": [
-   "Vạn"
+   "Viên"
   ],
   "on": [
-   "マン",
-   "バン"
+   "エン"
   ],
   "kun": [
-   "よろず"
+   "まる.い",
+   "まる",
+   "まど",
+   "まど.か",
+   "まろ.やか"
   ],
   "en": [
-   "ten thousand",
-   "10,000"
+   "circle",
+   "yen",
+   "round"
   ],
-  "strokes": 3,
-  "freq": 375,
-  "vi": "vạn, mười nghìn",
+  "strokes": 4,
+  "freq": 69,
+  "vi": "yên (tiền Nhật); hình tròn",
   "lesson": 6,
   "level": 5,
-  "reviewed": false,
-  "similar": [
-   "方"
-  ]
+  "reviewed": false
  },
  {
   "id": "kanji:着",
