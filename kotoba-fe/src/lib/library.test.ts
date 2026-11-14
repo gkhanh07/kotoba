@@ -1,0 +1,205 @@
+import { describe, expect, it } from "vitest";
+import { currentLesson, formatDay, goalScope, hvRows, kanjiIn, kanjiTitle, LEVELS, levelLabel, levelOf, libraryText, listHref, pageOf, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
+
+const VOCAB: PromptSource = { kind: "vocab", word: "水", reading: "みず", meaning: "nước" };
+const KANA_WORD: PromptSource = { kind: "vocab", word: "ねこ", reading: "ねこ", meaning: "mèo" };
+const KANJI: PromptSource = { kind: "kanji", word: "日", meaning: "Ngày, mặt trời" };
+const KANA: PromptSource = { kind: "kana", word: "あ", meaning: "a" };
+
+// rand → direction index = floor(rand * n), clamped to the last one.
+const dirsAt = (src: PromptSource, rands: number[]) => rands.map((r) => prompt(src, () => r).dir);
+const RANDS = [0, 0.34, 0.67, 0.99, 1];
+
+describe("prompt", () => {
+  it("picks one of three directions for a vocab word whose reading differs from the word", () => {
+    expect(dirsAt(VOCAB, RANDS)).toEqual(["word-meaning", "meaning-word", "word-reading", "word-reading", "word-reading"]);
+  });
+
+  it("switches direction exactly at the 1/3 and 2/3 boundaries for vocab", () => {
+    expect(dirsAt(VOCAB, [0.3333, 1 / 3, 0.6666, 2 / 3])).toEqual(["word-meaning", "meaning-word", "meaning-word", "word-reading"]);
+  });
+
+  it("picks one of two directions for a kanji, never word-reading", () => {
+    expect(dirsAt(KANJI, RANDS)).toEqual(["word-meaning", "word-meaning", "meaning-word", "meaning-word", "meaning-word"]);
+  });
+
+  it("switches direction exactly at 0.5 for a kanji", () => {
+    expect(dirsAt(KANJI, [0.4999, 0.5])).toEqual(["word-meaning", "meaning-word"]);
+  });
+
+  it("always asks a kana word-meaning, whatever rand returns", () => {
+    expect(dirsAt(KANA, RANDS)).toEqual(Array(5).fill("word-meaning"));
+  });
+
+  it("never gives word-reading to a vocab whose reading equals its word", () => {
+    expect(dirsAt(KANA_WORD, RANDS)).toEqual(["word-meaning", "word-meaning", "meaning-word", "meaning-word", "meaning-word"]);
+  });
+
+  it("clamps a rand above 1 to the last direction", () => {
+    expect(prompt(VOCAB, () => 1.5).dir).toBe("word-reading");
+    expect(prompt(KANJI, () => 7).dir).toBe("meaning-word");
+  });
+
+  it("puts the word on the front, marked Japanese, for word-meaning", () => {
+    expect(prompt(VOCAB, () => 0)).toEqual({ dir: "word-meaning", front: "水", frontIsJa: true });
+  });
+
+  it("puts the meaning on the front, not marked Japanese, for meaning-word", () => {
+    expect(prompt(VOCAB, () => 0.5)).toEqual({ dir: "meaning-word", front: "nước", frontIsJa: false });
+    expect(prompt(KANJI, () => 0.9)).toEqual({ dir: "meaning-word", front: "Ngày, mặt trời", frontIsJa: false });
+  });
+
+  it("puts the word on the front, marked Japanese, for word-reading", () => {
+    expect(prompt(VOCAB, () => 0.99)).toEqual({ dir: "word-reading", front: "水", frontIsJa: true });
+  });
+
+  it("calls rand exactly once", () => {
+    let calls = 0;
+    prompt(VOCAB, () => (calls++, 0.5));
+    expect(calls).toBe(1);
+  });
+});
+
+describe("stopsOf", () => {
+  it("groups ids by lesson, lessons ascending, ids in input order", () => {
+    const items = [{ id: "vocab:水", lesson: 13 }, { id: "hiragana:a", lesson: 1 }, { id: "kanji:日", lesson: 8 }, { id: "hiragana:i", lesson: 1 }];
+    expect(stopsOf(items)).toEqual([
+      { lesson: 1, ids: ["hiragana:a", "hiragana:i"] },
+      { lesson: 8, ids: ["kanji:日"] },
+      { lesson: 13, ids: ["vocab:水"] },
+    ]);
+  });
+  it("is empty for no items", () => {
+    expect(stopsOf([])).toEqual([]);
+  });
+});
+
+describe("currentLesson", () => {
+  const card = (box: number) => ({ box, due: "2026-11-02", at: 1 });
+  const STOPS = [
+    { lesson: 1, ids: ["a", "b"] },
+    { lesson: 2, ids: [] },
+    { lesson: 3, ids: ["c", "d"] },
+    { lesson: 4, ids: ["e"] },
+  ];
+  it("is the first lesson with items for a new learner, skipping lessons without items", () => {
+    expect(currentLesson(STOPS, {})).toBe(1);
+    expect(currentLesson([{ lesson: 1, ids: [] }, ...STOPS.slice(2)], {})).toBe(3);
+  });
+  it("prefers a started lesson over an earlier untouched one", () => {
+    expect(currentLesson(STOPS, { c: card(1) })).toBe(3);
+  });
+  it("moves past a finished lesson to the next open one", () => {
+    expect(currentLesson(STOPS, { a: card(1), b: card(2) })).toBe(3);
+  });
+  it("counts a card back at box 0 as not learned", () => {
+    expect(currentLesson(STOPS, { a: card(0), b: card(0) })).toBe(1);
+    expect(currentLesson(STOPS, { a: card(1), b: card(0) })).toBe(1);
+  });
+  it("is undefined when every lesson is finished or there are none", () => {
+    const all = Object.fromEntries(["a", "b", "c", "d", "e"].map((id) => [id, card(3)]));
+    expect(currentLesson(STOPS, all)).toBeUndefined();
+    expect(currentLesson([], {})).toBeUndefined();
+  });
+});
+
+describe("vocab page helpers", () => {
+  const TAUGHT = new Set(["食", "日", "本", "人"]);
+  it("builds the encoded word page path", () => {
+    expect(vocabHref("食べる")).toBe("/vocab/%E9%A3%9F%E3%81%B9%E3%82%8B");
+  });
+  it("lists the taught kanji of a word in order, once each", () => {
+    expect(kanjiIn("日本人", TAUGHT)).toEqual(["日", "本", "人"]);
+    expect(kanjiIn("人々", TAUGHT)).toEqual(["人"]);
+    expect(kanjiIn("日日", TAUGHT)).toEqual(["日"]);
+  });
+  it("skips kana and kanji the course does not teach", () => {
+    expect(kanjiIn("ねこ", TAUGHT)).toEqual([]);
+    expect(kanjiIn("食堂", TAUGHT)).toEqual(["食"]);
+  });
+  it("writes a day key as d/m/yyyy", () => {
+    expect(formatDay("2026-11-03")).toBe("3/11/2026");
+    expect(formatDay("2027-01-10")).toBe("10/1/2027");
+  });
+});
+
+describe("levels", () => {
+  it("lists N5 first and N2 last", () => {
+    expect([...LEVELS]).toEqual([5, 4, 3, 2]);
+  });
+  it("levelOf reads each known level", () => {
+    expect(["5", "4", "3", "2"].map(levelOf)).toEqual([5, 4, 3, 2]);
+  });
+  it("levelOf falls back to N5 for missing and unknown values", () => {
+    expect([undefined, "", "1", "6", "x", "05", "4.5"].map(levelOf)).toEqual([5, 5, 5, 5, 5, 5, 5]);
+  });
+  it("levelOf takes the first of a repeated param", () => {
+    expect(levelOf(["3", "4"])).toBe(3);
+    expect(levelOf([])).toBe(5);
+  });
+  it("levelLabel writes N before the number", () => {
+    expect(LEVELS.map(levelLabel)).toEqual(["N5", "N4", "N3", "N2"]);
+  });
+});
+
+describe("pageOf", () => {
+  it("reads positive integers", () => {
+    expect(["1", "2", "30", "999999", "1000000"].map(pageOf)).toEqual([1, 2, 30, 999999, 1000000]);
+    expect(pageOf("99999999999999999999")).toBe(Number.MAX_SAFE_INTEGER);
+  });
+  it("falls back to page 1 for missing, zero, negative, fractional and non-numeric values", () => {
+    expect([undefined, "", "0", "-1", "1.5", "x", "01"].map(pageOf)).toEqual([1, 1, 1, 1, 1, 1, 1]);
+  });
+  it("takes the first of a repeated param", () => {
+    expect(pageOf(["3", "4"])).toBe(3);
+  });
+});
+
+describe("listHref", () => {
+  it("joins the params in order", () => {
+    expect(listHref("/kanji", { level: 4, filter: "new", page: 2 })).toBe("/kanji?level=4&filter=new&page=2");
+  });
+  it("leaves out undefined and empty values", () => {
+    expect(listHref("/kanji", { level: 5, filter: undefined, page: "" })).toBe("/kanji?level=5");
+  });
+  it("is the bare path with no params", () => {
+    expect(listHref("/vocab", {})).toBe("/vocab");
+  });
+});
+
+describe("goalScope", () => {
+  const ITEMS = [{ id: "n5", level: 5 as const }, { id: "n4", level: 4 as const }, { id: "n3", level: 3 as const }, { id: "n2", level: 2 as const }];
+  const ids = (goal?: Parameters<typeof goalScope>[1]) => goalScope(ITEMS, goal).map((i) => i.id);
+
+  it("keeps only N5 for an N5 learner", () => expect(ids("N5")).toEqual(["n5"]));
+  it("keeps easier levels for an N4 learner", () => expect(ids("N4")).toEqual(["n5", "n4"]));
+  it("keeps N5 to N3 for an N3 learner", () => expect(ids("N3")).toEqual(["n5", "n4", "n3"]));
+  it("keeps everything for a goal above the content", () => expect(ids("N1")).toEqual(["n5", "n4", "n3", "n2"]));
+  it("keeps everything without a goal", () => expect(ids()).toEqual(["n5", "n4", "n3", "n2"]));
+  it("returns nothing from no items", () => expect(goalScope([], "N5")).toEqual([]));
+});
+
+describe("kanji without a Hán Việt reading", () => {
+  it("titles a kanji with its readings", () => {
+    expect(kanjiTitle({ char: "画", hv: ["Họa", "Hoạch"] })).toBe("画 · Họa, Hoạch · Kotoba");
+  });
+
+  it("leaves the reading out of the title of a Japanese-made kanji", () => {
+    expect(kanjiTitle({ char: "込", hv: [] })).toBe("込 · Kotoba");
+  });
+
+  it("puts the readings on the back of the review card, in order", () => {
+    expect(hvRows(["Họa", "Hoạch"], "Hán Việt")).toEqual([{ label: "Hán Việt", text: "Họa · Hoạch", strong: true }]);
+  });
+
+  it("adds no empty row to the review card of a Japanese-made kanji", () => {
+    expect(hvRows([], "Hán Việt")).toEqual([]);
+  });
+});
+
+describe("lessons lede (BUG-020)", () => {
+  it("names the last level the path reaches, not N5", () => {
+    expect(libraryText.vi.lessons.lede(81, "N3")).toBe("81 bài, từ bảng chữ đến ôn tập N3. Học theo thứ tự hoặc chọn bài bạn cần.");
+    expect(libraryText.en.lessons.lede(81, "N3")).toBe("81 lessons, from the kana chart to N3 review. Go in order or jump to the one you need.");
+  });
+});

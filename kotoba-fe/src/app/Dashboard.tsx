@@ -2,12 +2,21 @@
 
 import Link from "next/link";
 import { useMemo, useSyncExternalStore } from "react";
-import { examDate, type Profile } from "@/lib/account";
-import { ACTIVITY_KEY, continueHref, daysBetween, parseActivity, summarize, type Activity } from "@/lib/activity";
-import { FLASHCARDS_KEY, parseStatuses } from "@/lib/flashcards";
+import { examDate, examDay, type Profile } from "@/lib/account";
+import { ACTIVITY_KEY, heat, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
-import { MASTERED_AT, PROGRESS_KEY, isMastered, type Progress } from "@/lib/progress";
+import { NEW_PER_DAY, WEAK_LIST_SIZE } from "@/config/srs";
+import { continueTarget, freshFor } from "@/lib/daily";
+import type { Stop } from "@/lib/library";
+import { INTERVALS, daysUntil, isDue, isLearned, type Srs } from "@/lib/srs";
+import { weakItems, type ItemLink } from "@/lib/weak";
+import { learnedToday, today, useDeck } from "@/lib/store";
+import { remaining } from "@/lib/test";
+import { findSession } from "@/lib/testStore";
+import { testText } from "@/lib/testText";
 import s from "./dashboard.module.css";
+import { Heatmap } from "./Heatmap";
+import { WeakList } from "./WeakList";
 
 // Copied from SiteBar: that file pulls server-only code, so a client component can't import it.
 function Arrow() {
@@ -31,127 +40,169 @@ function useStored(key: string) {
   );
 }
 
-const count = <T,>(values: T[], ok: (v: T) => boolean) => values.filter(ok).length;
-const fromKey = (day: string) => { const [y, m, d] = day.split("-").map(Number); return new Date(y, m - 1, d); };
+const isKana = (id: string) => id.startsWith("hiragana:") || id.startsWith("katakana:");
+const isVocab = (id: string) => id.startsWith("vocab:");
+const isKanji = (id: string) => id.startsWith("kanji:");
+const count = (s: Srs, area: (id: string) => boolean, ok: (id: string) => boolean) =>
+  Object.keys(s).filter((id) => area(id) && ok(id)).length;
 
-export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
-  lang: Lang; name: string; profile: Profile | null; kanaTotal: number; vocabTotal: number;
+export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: {
+  fronts: Record<string, ItemLink>; stops: Stop[];
+  lang: Lang; name: string; profile: Profile | null; scope: { kana: string[]; kanji: string[]; vocab: string[] };
+  tests: { id: string; title: string; minutes: number }[];
 }) {
   const t = text[lang];
-  const kanaRaw = useStored(PROGRESS_KEY);
-  const vocabRaw = useStored(FLASHCARDS_KEY);
+  const deck = useDeck();
   const activityRaw = useStored(ACTIVITY_KEY);
-  const ready = kanaRaw !== undefined && vocabRaw !== undefined && activityRaw !== undefined;
 
   const data = useMemo(() => {
-    if (!ready) return null;
-    let bad = false;
-    let kana: Progress = {};
-    try { kana = JSON.parse(kanaRaw ?? "{}") as Progress; } catch { bad = true; }
-    let vocab: Record<string, string> = {};
-    try { vocab = parseStatuses(vocabRaw); } catch { bad = true; }
+    if (!deck || activityRaw === undefined) return null;
     let activity: Activity | null = parseActivity(activityRaw);
-    if (!activity) { bad = true; activity = { days: {} }; }
+    const bad = !deck.ok || !activity;
+    activity ??= { days: {} };
     const now = new Date();
+    const day = today();
+    const { srs } = deck;
+    const due = (id: string) => isDue(srs[id], day);
+    const learned = (id: string) => isLearned(srs, id);
+    const kanaDue = count(srs, isKana, due), kanjiDue = count(srs, isKanji, due), vocabDue = count(srs, isVocab, due);
+    const dueTotal = kanaDue + kanjiDue + vocabDue;
+    const fresh = freshFor(stops, srs, learnedToday(), NEW_PER_DAY).ids.length;
+    const summary = summarize(activity, now);
     return {
       bad,
       now,
-      mastered: count(Object.keys(kana), (id) => isMastered(kana, id)),
-      kanaReview: count(Object.values(kana), (v) => v.seen > 0 && v.streak < MASTERED_AT),
-      learned: count(Object.values(vocab), (v) => v === "learned"),
-      vocabReview: count(Object.values(vocab), (v) => v === "learning"),
-      summary: summarize(activity, now),
+      day,
+      kanaLearned: scope.kana.filter(learned).length,
+      kanaDue,
+      kanjiLearned: scope.kanji.filter(learned).length,
+      kanjiDue,
+      vocabLearned: scope.vocab.filter(learned).length,
+      vocabDue,
+      dueTotal,
+      weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
+      fresh,
+      summary,
+      heat: heat(activity, day),
+      next: continueTarget(dueTotal, fresh, summary.last),
+      at: now.getTime(),
+      attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
     };
-  }, [ready, kanaRaw, vocabRaw, activityRaw]);
+  }, [deck, activityRaw, fronts, stops, scope]);
+  const paper = data?.attempt && tests.find((p) => p.id === data.attempt?.id);
+  // Past the deadline the attempt is submitted on open, so "continue" would be a false promise.
+  const resume = paper && data.attempt && remaining(data.attempt.session.startedAt, paper.minutes, data.at) > 0 ? paper : undefined;
 
   const goal = profile?.goal;
   const exam = profile?.exam ? examDate(profile.exam) : null;
-  const days = exam && data ? daysBetween(data.now, exam) : null;
+  const examKey = profile?.exam ? examDay(profile.exam) : null;
+  const days = examKey && data ? daysUntil(examKey, data.day) : null;
 
   return (
     <main className={s.app}>
-      <header className={s.heading}>
-        <h1>{data && <><span lang="ja">{greet(data.now.getHours())}</span>, </>}{name}</h1>
-        <p>
-          {!goal ? <Link href="/onboarding">{t.setGoal}</Link>
-            : days !== null && days > 0 ? t.goal(goal, days)
-            : days === 0 ? t.goalToday(goal)
-            : t.goalOnly(goal)}
-        </p>
-      </header>
+      <section className={`panel ${s.hero}`} data-raised="" aria-labelledby="dash-title">
+        <header className={s.heading}>
+          <h1 id="dash-title">{data && <><span lang="ja">{greet(data.now.getHours())}</span>, </>}{name}</h1>
+          <p>
+            {!goal ? <Link href="/onboarding">{t.setGoal}</Link>
+              : days !== null && days > 0 ? t.goal(goal, days)
+              : days === 0 ? t.goalToday(goal)
+              : t.goalOnly(goal)}
+          </p>
+        </header>
 
-      {!data ? <p role="status" className={s.note}>{t.loading}</p> : (
-        <>
+        {!data ? <p role="status" className={s.note}>{t.loading}</p> : (
+          <div className={s.next}>
+            <p className={s.nextWhat}>{data.next.daily ? t.continueDaily(data.dueTotal, data.fresh) : t.continueWhat(data.summary.last)}</p>
+            <Link className="btn" href={data.next.href}>{t.continue} <Arrow /></Link>
+            {resume && data.attempt && (
+              <p className={s.resume}>
+                <Link href={`/test/${resume.id}`}>{testText[lang].resume(resume.title, data.attempt.session.current + 1, data.attempt.session.answers.length)}</Link>
+              </p>
+            )}
+          </div>
+        )}
+
+        {data && (
           <div className={s.stage}>
             <span>{t.stage}</span>
-            <progress aria-label={t.stage} value={data.mastered} max={kanaTotal} />
-            <span>{data.mastered} / {kanaTotal}</span>
+            <progress className="meter" aria-label={t.stage} value={data.kanaLearned} max={scope.kana.length} />
+            <span>{data.kanaLearned} / {scope.kana.length}</span>
           </div>
+        )}
+      </section>
 
+      {data && (
+        <>
           <dl className={s.stats}>
-            <div><dt>{t.streakLabel}</dt><dd>{t.streak(data.summary.streak)}</dd></div>
-            <div>
+            <div className="panel"><dt>{t.streakLabel}</dt><dd>{t.streak(data.summary.streak)}</dd></div>
+            <div className="panel">
               <dt>{t.minutesLabel}</dt>
               <dd>{t.minutes(data.summary.minutesToday, profile?.minutes)}</dd>
-              {profile?.minutes && <progress aria-label={t.minutesLabel} value={Math.min(data.summary.minutesToday, profile.minutes)} max={profile.minutes} />}
+              {profile?.minutes && <progress className="meter" aria-label={t.minutesLabel} value={Math.min(data.summary.minutesToday, profile.minutes)} max={profile.minutes} />}
             </div>
-            <div><dt>{t.review}</dt><dd>{data.kanaReview + data.vocabReview}</dd></div>
+            <div className="panel"><dt>{t.review}</dt><dd>{data.dueTotal}</dd></div>
           </dl>
 
-          <div className={s.continue}>
-            <Link className="btn" href={continueHref(data.summary.last)}>{t.continue} <Arrow /></Link>
-            <p>{t.continueWhat(data.summary.last)}</p>
+          <div className={s.layout}>
+            <div className={s.column}>
+              <section className={`panel ${s.section}`} aria-labelledby="dash-progress">
+                <h2 id="dash-progress">{t.progress}</h2>
+                <table className={s.table}>
+                  <caption className="sr-only">{t.progress}</caption>
+                  <thead><tr><th scope="col">{t.area}</th><th scope="col">{t.today}</th><th scope="col">{t.memorized}</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.kanaLearned} / {scope.kana.length}</td></tr>
+                    <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.vocabLearned} / {scope.vocab.length}</td></tr>
+                    <tr><th scope="row">Kanji</th><td>{data.summary.today.kanji}</td><td>{data.kanjiLearned} / {scope.kanji.length}</td></tr>
+                    <tr><th scope="row">{t.grammar}</th><td colSpan={2}><Link href="/grammar">{t.grammarLink}</Link></td></tr>
+                  </tbody>
+                </table>
+              </section>
+
+              <section className={`panel ${s.section}`} aria-labelledby="dash-review">
+                <h2 id="dash-review">{t.review}</h2>
+                {data.dueTotal === 0 ? <p>{t.reviewNone}</p> : (
+                  <ul className={s.list}>
+                    {data.kanaDue > 0 && <li><span>{t.reviewKana(data.kanaDue)}</span><Link href="/review?kind=kana">{t.practise}</Link></li>}
+                    {data.kanjiDue > 0 && <li><span>{t.reviewKanji(data.kanjiDue)}</span><Link href="/review?kind=kanji">{t.practise}</Link></li>}
+                    {data.vocabDue > 0 && <li><span>{t.reviewVocab(data.vocabDue)}</span><Link href="/review?kind=vocab">{t.practise}</Link></li>}
+                  </ul>
+                )}
+                <p className={s.note}>{t.reviewNote(INTERVALS)}</p>
+              </section>
+
+              <WeakList items={data.weak} lang={lang} />
+            </div>
+
+            <div className={s.column}>
+              <section className={`panel ${s.section}`} aria-labelledby="dash-upcoming">
+                <h2 id="dash-upcoming">{t.upcoming}</h2>
+                {exam && days !== null && days >= 0 ? (
+                  <p>{t.exam(goal)} · {new Intl.DateTimeFormat(lang === "vi" ? "vi-VN" : "en-GB", { weekday: "long", day: "numeric", month: "numeric", year: "numeric" }).format(exam)}</p>
+                ) : (
+                  <p className={s.list}><span>{exam ? t.examPast : t.examNone}</span> <Link href="/onboarding">{t.pick}</Link></p>
+                )}
+              </section>
+
+              <Heatmap heat={data.heat} lang={lang} />
+
+              <section className={`panel ${s.section}`} aria-labelledby="dash-history">
+                <h2 id="dash-history">{t.history}</h2>
+                {data.summary.recent.length === 0 ? <p>{t.empty}</p> : (
+                  <ol className={s.list}>
+                    {data.summary.recent.map((r) => {
+                      const ago = daysUntil(data.day, r.day);
+                      const label = ago === 0 ? t.todayLabel : ago === 1 ? t.yesterday : `${r.day.slice(8)}/${r.day.slice(5, 7)}`;
+                      return <li key={r.day}><span>{label}</span><span>{t.dayLine(r.minutes, r.kana, r.kanji, r.vocab)}</span></li>;
+                    })}
+                  </ol>
+                )}
+              </section>
+            </div>
           </div>
 
-          <section className={s.section} aria-labelledby="dash-progress">
-            <h2 id="dash-progress">{t.progress}</h2>
-            <table className={s.table}>
-              <caption className="sr-only">{t.progress}</caption>
-              <thead><tr><th scope="col">{t.area}</th><th scope="col">{t.today}</th><th scope="col">{t.memorized}</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.mastered} / {kanaTotal}</td></tr>
-                <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.learned} / {vocabTotal}</td></tr>
-                {t.soonAreas.map((area) => (
-                  <tr key={area}><th scope="row">{area}</th><td colSpan={2} className={s.soon}>{t.soon}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
-
-          <section className={s.section} aria-labelledby="dash-review">
-            <h2 id="dash-review">{t.review}</h2>
-            {data.kanaReview + data.vocabReview === 0 ? <p>{t.reviewNone}</p> : (
-              <ul className={s.list}>
-                {data.kanaReview > 0 && <li><span>{t.reviewKana(data.kanaReview)}</span><Link href="/kana?mode=quiz">{t.practise}</Link></li>}
-                {data.vocabReview > 0 && <li><span>{t.reviewVocab(data.vocabReview)}</span><Link href="/flashcards">{t.practise}</Link></li>}
-              </ul>
-            )}
-            <p className={s.note}>{t.reviewNote}</p>
-          </section>
-
-          <section className={s.section} aria-labelledby="dash-upcoming">
-            <h2 id="dash-upcoming">{t.upcoming}</h2>
-            {exam && days !== null && days >= 0 ? (
-              <p>{t.exam(goal)} · {new Intl.DateTimeFormat(lang === "vi" ? "vi-VN" : "en-GB", { weekday: "long", day: "numeric", month: "numeric", year: "numeric" }).format(exam)}</p>
-            ) : (
-              <p className={s.list}><span>{exam ? t.examPast : t.examNone}</span> <Link href="/onboarding">{t.pick}</Link></p>
-            )}
-          </section>
-
-          <section className={s.section} aria-labelledby="dash-history">
-            <h2 id="dash-history">{t.history}</h2>
-            {data.summary.recent.length === 0 ? <p>{t.empty}</p> : (
-              <ol className={s.list}>
-                {data.summary.recent.map((r) => {
-                  const ago = daysBetween(fromKey(r.day), data.now);
-                  const label = ago === 0 ? t.todayLabel : ago === 1 ? t.yesterday : `${r.day.slice(8)}/${r.day.slice(5, 7)}`;
-                  return <li key={r.day}><span>{label}</span><span>{t.dayLine(r.minutes, r.kana, r.vocab)}</span></li>;
-                })}
-              </ol>
-            )}
-          </section>
-
-          {data.bad && <p role="alert" className={s.warning}>{t.warning}</p>}
+          {data.bad && <p role="alert" className={`notice ${s.warning}`} data-tone="warn">{t.warning}</p>}
         </>
       )}
     </main>
@@ -171,21 +222,23 @@ const vi = {
   minutesLabel: "Thời gian học",
   minutes: (m: number, goal?: number) => (goal ? `${m} / ${goal} phút hôm nay` : `${m} phút hôm nay`),
   continue: "Tiếp tục học",
+  continueDaily: (due: number, fresh: number) => `Phiên hôm nay: ${due} đến hạn · ${fresh} mới`,
   continueWhat: (last: Activity["last"]): string =>
-    !last ? "Bắt đầu với Hiragana" : last.area === "vocab" ? "Thẻ từ vựng" : last.ref.startsWith("katakana:") ? "Trắc nghiệm Katakana" : "Trắc nghiệm Hiragana",
+    !last ? "Bắt đầu với Hiragana" : last.area === "vocab" ? "Thẻ từ vựng" : last.area === "kanji" ? "Ôn kanji" : last.ref.startsWith("katakana:") ? "Trắc nghiệm Katakana" : "Trắc nghiệm Hiragana",
   progress: "Tiến độ",
   area: "Phần",
   vocab: "Từ vựng",
-  soonAreas: ["Kanji", "Ngữ pháp", "Đọc hiểu"],
+  grammar: "Ngữ pháp",
+  grammarLink: "Xem ngữ pháp",
   today: "Hôm nay",
-  memorized: "Đã thuộc",
-  soon: "Sắp có",
-  review: "Cần ôn",
-  reviewKana: (n: number) => `${n} chữ kana chưa thuộc chắc`,
-  reviewVocab: (n: number) => `${n} từ đang học`,
-  reviewNone: "Chưa có gì cần ôn.",
-  reviewNote: "Kotoba chưa có lịch ôn ngắt quãng; đây là những mục bạn đã gặp nhưng chưa thuộc.",
-  practise: "Luyện",
+  memorized: "Đã học",
+  review: "Đến hạn ôn",
+  reviewKana: (n: number) => `${n} chữ kana đến hạn ôn`,
+  reviewKanji: (n: number) => `${n} chữ kanji đến hạn ôn`,
+  reviewVocab: (n: number) => `${n} từ đến hạn ôn`,
+  reviewNone: "Hôm nay không có gì đến hạn ôn.",
+  reviewNote: (gaps: number[]) => `Sau mỗi lần trả lời đúng, thời gian đến lần ôn tiếp theo lần lượt là ${gaps.join(", ")} ngày. Trả lời sai thì mục đó sẽ được ôn lại ngay trong ngày.`,
+  practise: "Ôn tập",
   upcoming: "Sắp tới",
   exam: (g?: string) => (g ? `Kỳ thi JLPT ${g}` : "Kỳ thi JLPT"),
   examNone: "Chưa chọn kỳ thi",
@@ -194,8 +247,8 @@ const vi = {
   history: "Gần đây",
   todayLabel: "Hôm nay",
   yesterday: "Hôm qua",
-  dayLine: (min: number, kana: number, vocab: number) => `${min} phút · ${kana} kana · ${vocab} từ`,
-  empty: "Chưa có buổi học nào. Bắt đầu từ bảng chữ cái là nhanh nhất.",
+  dayLine: (min: number, kana: number, kanji: number, vocab: number) => `${min} phút · ${kana} kana · ${kanji} kanji · ${vocab} từ`,
+  empty: "Chưa có buổi học nào. Bạn có thể bắt đầu từ bảng chữ cái.",
   loading: "Đang tải tiến độ…",
   warning: "Không đọc được tiến độ lưu trong trình duyệt. Số liệu có thể thiếu.",
 };
@@ -211,20 +264,22 @@ const en: typeof vi = {
   minutesLabel: "Study time",
   minutes: (m, goal) => (goal ? `${m} / ${goal} min today` : `${m} min today`),
   continue: "Continue learning",
+  continueDaily: (due, fresh) => `Today’s session: ${due} due · ${fresh} new`,
   continueWhat: (last) =>
-    !last ? "Start with Hiragana" : last.area === "vocab" ? "Flashcards" : last.ref.startsWith("katakana:") ? "Katakana quiz" : "Hiragana quiz",
+    !last ? "Start with Hiragana" : last.area === "vocab" ? "Flashcards" : last.area === "kanji" ? "Kanji review" : last.ref.startsWith("katakana:") ? "Katakana quiz" : "Hiragana quiz",
   progress: "Progress",
   area: "Area",
   vocab: "Vocabulary",
-  soonAreas: ["Kanji", "Grammar", "Reading"],
+  grammar: "Grammar",
+  grammarLink: "Open grammar",
   today: "Today",
-  memorized: "Memorized",
-  soon: "Coming soon",
-  review: "To review",
-  reviewKana: (n) => `${n} kana not solid yet`,
-  reviewVocab: (n) => `${n} ${n === 1 ? "word" : "words"} in progress`,
-  reviewNone: "Nothing to review.",
-  reviewNote: "No spaced-repetition schedule yet; these are items you've met but not memorized.",
+  memorized: "Learnt",
+  review: "Due for review",
+  reviewKana: (n) => `${n} kana due`,
+  reviewKanji: (n) => `${n} kanji due`,
+  reviewVocab: (n) => `${n} ${n === 1 ? "word" : "words"} due`,
+  reviewNone: "Nothing is due today.",
+  reviewNote: (gaps) => `Each right answer pushes the next review out: ${gaps.join(", ")} days. A miss brings the item back the same day.`,
   practise: "Practise",
   upcoming: "Upcoming",
   exam: (g) => (g ? `JLPT ${g} exam` : "JLPT exam"),
@@ -234,7 +289,7 @@ const en: typeof vi = {
   history: "Recent",
   todayLabel: "Today",
   yesterday: "Yesterday",
-  dayLine: (min, kana, vocab) => `${min} min · ${kana} kana · ${vocab} ${vocab === 1 ? "word" : "words"}`,
+  dayLine: (min, kana, kanji, vocab) => `${min} min · ${kana} kana · ${kanji} kanji · ${vocab} ${vocab === 1 ? "word" : "words"}`,
   empty: "No study sessions yet. The alphabet is the quickest start.",
   loading: "Loading progress…",
   warning: "Couldn't read progress saved in this browser. Numbers may be incomplete.",

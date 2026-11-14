@@ -1,0 +1,1169 @@
+[
+  {
+    "id": "n5-1",
+    "title": { "vi": "Đề 1", "en": "Paper 1" },
+    "minutes": 60,
+    "level": 5,
+    "reviewed": false,
+    "parts": [
+      {
+        "part": "kanji",
+        "questions": [
+          { "q": "{今日}は 天気が いいです。", "choices": ["きょう", "きょお", "ぎょう", "こんび"], "answer": 0, "explain": "今日 đọc đặc biệt là きょう (hôm nay), có trường âm う. きょお là cách viết sai trường âm." },
+          { "q": "あの {山}は たかいです。", "choices": ["かわ", "やま", "さん", "やさ"], "answer": 1, "explain": "山 đọc là やま (núi). さん là âm On, dùng trong tên núi như ふじさん, không dùng khi đứng một mình." },
+          { "q": "{学校}まで あるいて いきます。", "choices": ["がこう", "がっこ", "がっこう", "かっこう"], "answer": 2, "explain": "学校 đọc là がっこう, có âm ngắt っ và trường âm う. がっこ thiếu trường âm, かっこう sai âm đầu." },
+          { "q": "{毎週} 日よう日に テニスを します。", "choices": ["まいしゅ", "まいにち", "まいつき", "まいしゅう"], "answer": 3, "explain": "毎週 đọc là まいしゅう (hằng tuần), có trường âm う. まいしゅ thiếu trường âm; まいにち là 毎日." },
+          { "q": "つくえの {上}に ほんが あります。", "choices": ["した", "なか", "うえ", "まえ"], "answer": 2, "explain": "上 đọc là うえ (trên). した là 下 (dưới), なか là 中 (trong), まえ là 前 (trước)." },
+          { "q": "{先月} ともだちと うみへ いきました。", "choices": ["せんげつ", "せんがつ", "さきげつ", "せいげつ"], "answer": 0, "explain": "先月 đọc là せんげつ (tháng trước). 月 ở đây đọc げつ, không phải がつ như trong しがつ." },
+          { "q": "この {電車}は えきに とまりません。", "choices": ["でんき", "でんしゃ", "てんしゃ", "でんしや"], "answer": 1, "explain": "電車 đọc là でんしゃ (tàu điện). でんき là 電気 (điện, đèn); でんしや viết sai ゃ nhỏ." },
+          { "q": "ちちは {毎日} しんぶんを よみます。", "choices": ["まいひ", "めいにち", "まいび", "まいにち"], "answer": 3, "explain": "毎日 đọc là まいにち (hằng ngày). 日 ở đây đọc にち, không phải ひ hay び." }
+        ]
+      },
+      {
+        "part": "writing",
+        "questions": [
+          { "q": "{やすみ}の 日は うちで ほんを よみます。", "choices": ["体み", "休み", "伏み", "付み"], "answer": 1, "explain": "やすみ (nghỉ) viết là 休み, bộ nhân 亻 cạnh chữ 木. 体 (cơ thể) trông giống nhưng là chữ khác." },
+          { "q": "{みみ}が いたいです。", "choices": ["目", "口", "耳", "手"], "answer": 2, "explain": "みみ (tai) là 耳. 目 là め (mắt), 口 là くち (miệng), 手 là て (tay)." },
+          { "q": "この {みせ}は やすいです。", "choices": ["店", "広", "庄", "応"], "answer": 0, "explain": "みせ (cửa hàng) là 店. 広 (rộng) có hình dạng gần giống nhưng bên trong là 厶, không phải 占." },
+          { "q": "つぎの かどを {ひだり}に まがって ください。", "choices": ["右", "左", "石", "在"], "answer": 1, "explain": "ひだり (bên trái) là 左. 右 là みぎ (bên phải); hai chữ dễ nhầm vì chỉ khác phần dưới (工 và 口)." },
+          { "q": "あしたは {あめ}です。", "choices": ["両", "雪", "電", "雨"], "answer": 3, "explain": "あめ (mưa) là 雨. 雪 là ゆき (tuyết), 電 là でん (điện); hai chữ này có bộ 雨 ở trên." },
+          { "q": "この ほんを {よんで} ください。", "choices": ["語んで", "読んで", "話んで", "続んで"], "answer": 1, "explain": "よんで (đọc) là 読んで, từ động từ 読む. 語 (ngôn ngữ) và 話 (nói) cũng có bộ 言 nhưng là chữ khác." }
+        ]
+      },
+      {
+        "part": "context",
+        "questions": [
+          { "q": "さむいですから、まどを（　）ください。", "choices": ["しめて", "あけて", "つけて", "はいて"], "answer": 0, "explain": "Trời lạnh nên nhờ đóng cửa sổ: しめて (đóng). あけて là mở, ngược nghĩa với ngữ cảnh." },
+          { "q": "のどが かわきました。みずが（　）。", "choices": ["たべたいです", "ねたいです", "のみたいです", "よみたいです"], "answer": 2, "explain": "Khát nước thì muốn uống: みずが のみたいです. Nước đi với động từ のむ (uống), không đi với たべる (ăn)." },
+          { "q": "としょかんで ほんを 3さつ（　）。", "choices": ["かりました", "かしました", "かえりました", "かかりました"], "answer": 0, "explain": "Ở thư viện thì mượn sách: かりました (mượn). かしました là cho mượn, ngược hướng." },
+          { "q": "この へやは（　）ですね。でんきを つけましょう。", "choices": ["あかるい", "くらい", "ひろい", "あつい"], "answer": 1, "explain": "Câu sau bảo bật đèn, nên căn phòng tối: くらい. あかるい (sáng) thì không cần bật đèn." },
+          { "q": "えきまで タクシーで 10（　）ぐらいです。", "choices": ["まい", "ばん", "ぷん", "さつ"], "answer": 2, "explain": "Đơn vị đếm phút là ふん/ぷん; 10分 đọc là じゅっぷん. まい đếm vật mỏng, さつ đếm sách." },
+          { "q": "きのうは あたまが（　）、がっこうを やすみました。", "choices": ["たかくて", "ながくて", "わるくて", "いたくて"], "answer": 3, "explain": "Đau đầu là あたまが いたい; thể て いたくて nêu lý do nghỉ học. あたまが わるい nghĩa là kém thông minh." },
+          { "q": "（　）を ひいて、ねて います。", "choices": ["かさ", "かぜ", "かぎ", "かお"], "answer": 1, "explain": "Bị cảm là かぜを ひく. かさ (ô), かぎ (chìa khóa), かお (mặt) không đi với ひく trong nghĩa này." },
+          { "q": "まいあさ 6じに（　）、シャワーを あびます。", "choices": ["ねて", "おきて", "やすんで", "かえって"], "answer": 1, "explain": "Mỗi sáng 6 giờ dậy rồi tắm: おきて (thức dậy). ねて là ngủ, không hợp với buổi sáng trước khi tắm." }
+        ]
+      },
+      {
+        "part": "paraphrase",
+        "questions": [
+          { "q": "{この りょうりは まずいです。}", "choices": ["この りょうりは おいしいです。", "この りょうりは やすいです。", "この りょうりは おいしくないです。", "この りょうりは たかくないです。"], "answer": 2, "explain": "まずい nghĩa là dở, không ngon, tức là おいしくない. おいしい thì ngược nghĩa." },
+          { "q": "{あには きょうしです。}", "choices": ["あには がっこうで おしえて います。", "あには がっこうで べんきょうして います。", "あには びょういんで はたらいて います。", "あには がっこうが きらいです。"], "answer": 0, "explain": "きょうし là giáo viên, tức là người dạy ở trường: がっこうで おしえて います. べんきょうして います là học, đó là học sinh." },
+          { "q": "{おととい デパートへ いきました。}", "choices": ["きのう デパートへ いきました。", "ふつか まえに デパートへ いきました。", "あした デパートへ いきます。", "あさって デパートへ いきます。"], "answer": 1, "explain": "おととい là hôm kia, tức là ふつか まえ (hai ngày trước). きのう là hôm qua, chỉ một ngày trước." },
+          { "q": "{へやを そうじしました。}", "choices": ["へやを でました。", "へやに はいりました。", "へやを きたなく しました。", "へやを きれいに しました。"], "answer": 3, "explain": "そうじする là dọn dẹp, tức là làm cho phòng sạch: へやを きれいに しました." }
+        ]
+      },
+      {
+        "part": "grammar",
+        "questions": [
+          { "q": "わたしは まいあさ パン（　）たべます。", "choices": ["を", "が", "に", "で"], "answer": 0, "explain": "を đánh dấu tân ngữ của động từ たべます: パンを たべます (ăn bánh mì)." },
+          { "q": "としょかん（　）べんきょうします。", "choices": ["に", "で", "を", "へ"], "answer": 1, "explain": "で chỉ nơi diễn ra hành động: としょかんで べんきょうします. に chỉ nơi tồn tại hoặc đích đến, không dùng với hành động học." },
+          { "q": "あした ともだち（　）えいがを みます。", "choices": ["を", "へ", "と", "の"], "answer": 2, "explain": "と nghĩa là \"cùng với\": ともだちと えいがを みます (xem phim cùng bạn)." },
+          { "q": "A「コーヒー（　）こうちゃ、どちらが すきですか。」B「コーヒーの ほうが すきです。」", "choices": ["と", "や", "も", "に"], "answer": 0, "explain": "Mẫu so sánh hai thứ: Aと Bと どちらが すきですか. Ở đây dùng と để nối hai lựa chọn コーヒー và こうちゃ." },
+          { "q": "きのうは あまり（　）。", "choices": ["さむかったです", "さむいです", "さむくないです", "さむくなかったです"], "answer": 3, "explain": "あまり đi với thể phủ định; きのう là quá khứ, nên dùng さむくなかったです (không lạnh lắm)." },
+          { "q": "A「いっしょに こうえんへ（　）か。」B「ええ、いきましょう。」", "choices": ["いきました", "いって", "いきません", "いきたい"], "answer": 2, "explain": "〜ませんか dùng để rủ rê: いきませんか (đi cùng không?). B trả lời いきましょう nên đây là lời mời." },
+          { "q": "すみません、ここに なまえを かいて（　）。", "choices": ["います", "ください", "あります", "おきます"], "answer": 1, "explain": "〜て ください dùng để nhờ ai làm gì: かいて ください (xin hãy viết)." },
+          { "q": "つくえの 上に ねこが（　）。", "choices": ["あります", "です", "います", "します"], "answer": 2, "explain": "Con mèo là vật sống nên dùng います. あります chỉ dùng cho đồ vật, cây cối." },
+          { "q": "にほんごは えいご（　）むずかしいです。", "choices": ["ほう", "まで", "から", "より"], "answer": 3, "explain": "AはBより〜: A hơn B. にほんごは えいごより むずかしいです (tiếng Nhật khó hơn tiếng Anh). ほう dùng trong mẫu 〜の ほうが." }
+        ]
+      },
+      {
+        "part": "order",
+        "questions": [
+          { "q": "えきの ＿＿ ＿＿ ★ ＿＿ あります。", "choices": ["に", "ぎんこう", "が", "まえ"], "answer": 1, "explain": "Câu đúng: えきの まえ に ぎんこう が あります. Từ ở vị trí ★ là ぎんこう." },
+          { "q": "この ＿＿ ＿＿ ★ ＿＿ ですか。", "choices": ["だれ", "の", "かばん", "は"], "answer": 0, "explain": "Câu đúng: この かばん は だれ の ですか (cái cặp này là của ai?). Từ ở vị trí ★ là だれ." },
+          { "q": "わたしは まいばん ＿＿ ＿＿ ★ ＿＿ ねます。", "choices": ["から", "シャワー", "あびて", "を"], "answer": 2, "explain": "Câu đúng: まいばん シャワー を あびて から ねます (tắm xong rồi mới ngủ). Từ ở vị trí ★ là あびて." },
+          { "q": "＿＿ ＿＿ ★ ＿＿ いきますか。", "choices": ["へ", "どこ", "は", "なつやすみ"], "answer": 1, "explain": "Câu đúng: なつやすみ は どこ へ いきますか. Từ ở vị trí ★ là どこ." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "マリアさん\nわたしは 3時に かいものに 行きます。5時ごろ かえります。れいぞうこに ケーキが あります。たべて ください。\nゆき",
+        "questions": [
+          { "q": "マリアさんは なにを しますか。", "choices": ["かいものに 行きます。", "ケーキを たべます。", "ケーキを かいます。", "5時に かえります。"], "answer": 1, "explain": "Yuki viết ケーキが あります。たべて ください, tức là nhờ Maria ăn bánh. Đi mua sắm và về lúc 5 giờ là việc của Yuki." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "わたしの へやは 2かいです。へやには つくえと いすが あります。まどの ちかくに ベッドが あります。テレビは ありません。",
+        "questions": [
+          { "q": "わたしの へやに ない ものは どれですか。", "choices": ["つくえ", "いす", "ベッド", "テレビ"], "answer": 3, "explain": "Bài viết nói テレビは ありません, nên thứ không có trong phòng là tivi. Bàn, ghế, giường đều có." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "わたしは 先週の 土よう日に、ともだちの けんさんと 山へ 行きました。あさ 7時に 駅で あって、電車で 2時間ぐらい 行きました。山は とても きれいでしたが、さむかったです。山の 上で おべんとうを 食べました。かえりの 電車の 中で、二人とも ねました。",
+        "questions": [
+          { "q": "ふたりは どこで あいましたか。", "choices": ["山の 上", "駅", "電車の 中", "けんさんの うち"], "answer": 1, "explain": "Bài viết nói あさ 7時に 駅で あって, nên hai người gặp nhau ở nhà ga." },
+          { "q": "山は どうでしたか。", "choices": ["あつくて、きれいじゃ ありませんでした。", "きれいで、あたたかかったです。", "きれいでしたが、さむかったです。", "さむくて、きれいじゃ ありませんでした。"], "answer": 2, "explain": "Bài viết nói 山は とても きれいでしたが、さむかったです: núi rất đẹp nhưng lạnh." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "さくら としょかん\n・あいて いる 時間：火よう日〜金よう日 9:00〜19:00、土よう日・日よう日 10:00〜17:00\n・月よう日は やすみです。\n・本は 一人 5さつまで かりて いいです。2しゅうかんで かえして ください。",
+        "questions": [
+          { "q": "日よう日の 4時に としょかんへ 行きました。としょかんは どうでしたか。", "choices": ["やすみでした。", "しまって いました。", "あいて いました。", "9時に しまりました。"], "answer": 2, "explain": "Chủ nhật thư viện mở từ 10:00 đến 17:00, nên lúc 4 giờ chiều thư viện đang mở. Ngày nghỉ là thứ hai." },
+          { "q": "本は 何さつまで かりて いいですか。", "choices": ["2さつ", "5さつ", "9さつ", "10さつ"], "answer": 1, "explain": "Bài viết ghi 一人 5さつまで かりて いいです, nên mỗi người được mượn tối đa 5 cuốn. Thời hạn trả sách là 2 tuần." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "n4-1",
+    "title": { "vi": "Đề thi thử N4 số 1", "en": "N4 mock test 1" },
+    "minutes": 80,
+    "level": 4,
+    "reviewed": false,
+    "parts": [
+      {
+        "part": "kanji",
+        "questions": [
+          { "q": "この 町の {人口}は 少ないです。", "choices": ["にんこう", "じんこう", "じんく", "ひとくち"], "answer": 1, "explain": "人口 đọc là じんこう (dân số). 人 ở đây đọc âm On じん, không phải にん; 口 đọc こう, không phải く." },
+          { "q": "あしたは {試験}が あるので、早く ねます。", "choices": ["しけん", "しげん", "しっけん", "じけん"], "answer": 0, "explain": "試験 đọc là しけん (kỳ thi), không có âm đục và không có っ. じけん là một từ khác (sự kiện)." },
+          { "q": "{地図}を 見ながら 歩きました。", "choices": ["ちと", "じず", "ちず", "じと"], "answer": 2, "explain": "地図 đọc là ちず (bản đồ). 地 đọc ち, 図 đọc ず. じ là cách đọc của 地 trong 地しん, không dùng ở đây." },
+          { "q": "毎朝 こうえんで {運動}を して います。", "choices": ["うんど", "うんとう", "うどう", "うんどう"], "answer": 3, "explain": "運動 đọc là うんどう (vận động), có âm đục ど và trường âm う. うんど thiếu trường âm, うんとう sai âm đục." },
+          { "q": "駅の {近所}に スーパーが あります。", "choices": ["きんしょ", "きんじょ", "ちかじょ", "きんじょう"], "answer": 1, "explain": "近所 đọc là きんじょ (khu lân cận, hàng xóm). 所 ở đây đọc じょ (âm đục, không có trường âm). ちか là âm Kun của 近." },
+          { "q": "外が {暗く} なったので、電気を つけました。", "choices": ["くらく", "あかく", "くろく", "かるく"], "answer": 0, "explain": "暗く đọc là くらく, từ 暗い (tối). あかく là 赤く (đỏ), くろく là 黒く (đen), かるく là 軽く (nhẹ)." },
+          { "q": "{特急}に 乗って 京都へ 行きました。", "choices": ["とくきゅう", "とっきゅ", "とくきゅ", "とっきゅう"], "answer": 3, "explain": "特急 đọc là とっきゅう (tàu tốc hành đặc biệt): とく + きゅう biến thành とっきゅう, có っ và trường âm う." }
+        ]
+      },
+      {
+        "part": "writing",
+        "questions": [
+          { "q": "きのうは とても {さむかった}です。", "choices": ["暑かった", "寒かった", "悪かった", "軽かった"], "answer": 1, "explain": "さむかった (lạnh) viết là 寒かった. 暑かった là あつかった (nóng), 悪かった là わるかった (xấu), 軽かった là かるかった (nhẹ)." },
+          { "q": "道を わたる ときは {ちゅうい}して ください。", "choices": ["注意", "注音", "住意", "主意"], "answer": 0, "explain": "ちゅうい (chú ý, cẩn thận) viết là 注意. 住 (ở) và 主 (chủ) trông giống 注 nhưng không có bộ ba chấm thủy 氵." },
+          { "q": "{としょかん}で 本を かりました。", "choices": ["国書館", "図書館", "図所館", "図書飯"], "answer": 1, "explain": "としょかん (thư viện) viết là 図書館. 国 trông giống 図 nhưng bên trong là 玉; 飯 có chung bộ 飠 bên trái với 館 nhưng là chữ めし (cơm)." },
+          { "q": "毎日 {あるいて} 学校へ 行きます。", "choices": ["走いて", "少いて", "止いて", "歩いて"], "answer": 3, "explain": "あるいて (đi bộ) là 歩いて, từ 歩く. 歩 gồm 止 ở trên và phần giống 少 ở dưới. 走 là はしる (chạy)." },
+          { "q": "この 店は 夜 10時まで {あいて} います。", "choices": ["間いて", "問いて", "開いて", "聞いて"], "answer": 2, "explain": "あいて (đang mở cửa) là 開いて, từ 開く. 間, 問, 聞 cũng có bộ 門 nhưng là chữ khác: あいだ, もん(だい), きく." }
+        ]
+      },
+      {
+        "part": "context",
+        "questions": [
+          { "q": "電車が おくれて、じゅぎょうに（　）しまいました。", "choices": ["ちこくして", "しっぱいして", "ちゅうしして", "ねぼうして"], "answer": 0, "explain": "Tàu trễ nên đến lớp muộn: じゅぎょうに ちこくする. ねぼう là ngủ dậy muộn, không đi với じゅぎょうに; ちゅうし là hủy bỏ sự kiện." },
+          { "q": "かぜを ひいて、（　）が 38度 あります。", "choices": ["ち", "ちから", "ねつ", "こえ"], "answer": 2, "explain": "Bị cảm, sốt 38 độ: ねつが 38度 あります. ち (máu), ちから (sức lực), こえ (giọng) không đo bằng độ." },
+          { "q": "先生に しゅくだいを わすれた（　）を 聞かれました。", "choices": ["いけん", "りゆう", "ようじ", "へんじ"], "answer": 1, "explain": "Bị thầy hỏi lý do quên bài tập: わすれた りゆう. いけん là ý kiến, ようじ là việc bận, へんじ là câu trả lời/hồi âm." },
+          { "q": "ホテルの へやを 電話で（　）しました。", "choices": ["よてい", "じゅんび", "ちゅうもん", "よやく"], "answer": 3, "explain": "Đặt phòng khách sạn trước là へやを よやくする. ちゅうもん dùng khi gọi món hoặc đặt mua hàng, không dùng cho phòng." },
+          { "q": "いもうとは 先生に ほめられて、とても（　）そうでした。", "choices": ["かなし", "うれし", "いた", "にが"], "answer": 1, "explain": "Được thầy khen thì vui: うれしそうでした (trông rất vui). かなしそう là trông buồn, ngược với ngữ cảnh." },
+          { "q": "雨に ふられて、くつが（　）しまいました。", "choices": ["われて", "おれて", "ぬれて", "きえて"], "answer": 2, "explain": "Gặp mưa thì giày bị ướt: くつが ぬれる. われる (vỡ) dùng cho kính, đĩa; おれる (gãy) dùng cho cành cây, xương." },
+          { "q": "コーヒーが にがかったので、さとうを（　）。", "choices": ["入れました", "出しました", "おとしました", "ひろいました"], "answer": 0, "explain": "Cà phê đắng nên cho thêm đường: さとうを 入れました. おとしました (đánh rơi) và ひろいました (nhặt) không hợp ngữ cảnh." },
+          { "q": "あの 二人は 兄弟なので、顔が よく（　）います。", "choices": ["にあって", "にて", "あって", "かわって"], "answer": 1, "explain": "Anh em nên mặt giống nhau: 顔が にて いる (từ にる). にあう là hợp (quần áo hợp với ai), không dùng để nói hai người giống nhau." }
+        ]
+      },
+      {
+        "part": "paraphrase",
+        "questions": [
+          { "q": "{この 仕事は かんたんです。}", "choices": ["この 仕事は たいへんです。", "この 仕事は つまらないです。", "この 仕事は むずかしくないです。", "この 仕事は おもしろくないです。"], "answer": 2, "explain": "かんたん nghĩa là đơn giản, dễ, tức là むずかしくない (không khó). たいへん (vất vả) thì ngược nghĩa." },
+          { "q": "{父は るすです。}", "choices": ["父は 家に います。", "父は 家に いません。", "父は ねて います。", "父は びょうきです。"], "answer": 1, "explain": "るす là đi vắng, không có ở nhà: 父は 家に いません." },
+          { "q": "{わたしは 山田さんに 英語を 教えて もらいました。}", "choices": ["わたしは 山田さんに 英語を 教えました。", "山田さんは わたしに 英語を ならいました。", "わたしは 山田さんと 英語を ならいました。", "山田さんは わたしに 英語を 教えました。"], "answer": 3, "explain": "AにVて もらう: A làm V cho mình. Ở đây 山田さん dạy tiếng Anh cho tôi, tức là 山田さんは わたしに 英語を 教えました." },
+          { "q": "{この 道は あぶないです。}", "choices": ["この 道は きけんです。", "この 道は あんぜんです。", "この 道は しずかです。", "この 道は せまいです。"], "answer": 0, "explain": "あぶない (nguy hiểm) đồng nghĩa với きけん. あんぜん (an toàn) thì ngược nghĩa." }
+        ]
+      },
+      {
+        "part": "usage",
+        "questions": [
+          { "q": "{ひっこす}", "choices": ["毎朝 7時に 家を ひっこして、会社へ 行きます。", "車を ひっこして、ちゅうしゃじょうに 入れました。", "来月、駅の 近くの アパートに ひっこします。", "友だちの 家に 本を ひっこして あげました。"], "answer": 2, "explain": "ひっこす là chuyển nhà (đổi chỗ ở): アパートに ひっこします. Ra khỏi nhà là 家を 出る, dời xe là 車を 動かす, mang sách đi là 本を 持って いく." },
+          { "q": "{なおる}", "choices": ["こわれた 時計を 店で なおりました。", "薬を 飲んだら、かぜが すぐ なおりました。", "まちがえた 字を けしゴムで なおりました。", "電車が おくれたので、タクシーに なおりました。"], "answer": 1, "explain": "なおる là tự động từ: bệnh khỏi, đồ được sửa xong (かぜが なおる). Khi người sửa thì dùng tha động từ なおす: 時計を なおしました, 字を なおしました." },
+          { "q": "{にあう}", "choices": ["兄と わたしは 顔が よく にあって います。", "友だちと 駅で 3時に にあいました。", "この くつは 小さくて、足に にあいません。", "その 青い セーター、とても よく にあって いますよ。"], "answer": 3, "explain": "にあう là hợp với người mặc: セーターが にあう. Hai người giống nhau là にて いる, gặp bạn là 会う, giày vừa chân là 足に 合う." },
+          { "q": "{しっぱい}", "choices": ["はじめて パンを 作りましたが、しっぱいして かたく なって しまいました。", "しけんの 前に よく しっぱいしたので、100てんでした。", "あしたの パーティーは 雨で しっぱいに なりました。", "さいふを しっぱいして、こまりました。"], "answer": 0, "explain": "しっぱい là làm hỏng, thất bại: パン作りが しっぱいした. Sự kiện bị hủy là 中止に なる; mất ví là さいふを おとす/なくす; câu 100てん cần ôn kỹ (ふくしゅう), không phải thất bại." }
+        ]
+      },
+      {
+        "part": "grammar",
+        "questions": [
+          { "q": "この 料理は 母が わたしに 作って（　）ました。", "choices": ["あげ", "やり", "くれ", "さしあげ"], "answer": 2, "explain": "Người khác làm gì cho mình thì dùng 〜て くれる: 母が わたしに 作って くれました. あげる/やる/さしあげる dùng khi mình (hoặc người khác) làm cho người ngoài." },
+          { "q": "空が 暗く なりましたね。雨が ふり（　）ですね。", "choices": ["そう", "よう", "らしい", "みたい"], "answer": 0, "explain": "V-ます bỏ ます + そうだ: trông như sắp. ふりそうです (trời sắp mưa). よう, らしい, みたい không nối với thể ます bỏ ます (phải là ふる ようです...)." },
+          { "q": "日本語が 話せる（　）、毎日 れんしゅうして います。", "choices": ["ために", "のに", "ことに", "ように"], "answer": 3, "explain": "Sau thể khả năng (話せる) chỉ mục đích dùng 〜ように. 〜ために đi với động từ ý chí (話す ために), không đi với thể khả năng." },
+          { "q": "たくさん 勉強した（　）、しけんに おちて しまいました。", "choices": ["ので", "のに", "から", "ために"], "answer": 1, "explain": "〜のに: vậy mà, trái với mong đợi. Học nhiều vậy mà vẫn thi trượt. ので/から chỉ nguyên nhân, không hợp với kết quả ngược." },
+          { "q": "夏休みに 京都へ（　）つもりです。", "choices": ["行った", "行って", "行く", "行き"], "answer": 2, "explain": "Dự định làm gì: V thể từ điển + つもりです → 行く つもりです. 行った つもり nghĩa là \"tưởng là đã đi\", không hợp với kỳ nghỉ hè sắp tới." },
+          { "q": "大切な さいふを なくして（　）。", "choices": ["しまいました", "おきました", "みました", "ありました"], "answer": 0, "explain": "〜て しまう diễn tả việc lỡ xảy ra, đáng tiếc: なくして しまいました (lỡ làm mất). 〜て おく (làm sẵn) và 〜て みる (thử) không hợp với việc làm mất ví." },
+          { "q": "パーティーの 前に、飲み物を 買って（　）ください。", "choices": ["いて", "あって", "いる", "おいて"], "answer": 3, "explain": "〜て おく: làm sẵn trước để chuẩn bị. 買って おいて ください (hãy mua sẵn). いる không nối trực tiếp với ください; 〜て ある không dùng với ください." },
+          { "q": "わたしは 先生に 名前を（　）。", "choices": ["よびました", "よばせました", "よんで あげました", "よばれました"], "answer": 3, "explain": "Bị động: わたしは 先生に 名前を よばれました (tôi được thầy gọi tên). Chủ ngữ là わたし, người thực hiện đi với に, nên phải dùng thể bị động." },
+          { "q": "母は 弟に「へやを そうじして ください。」と 言って、そうじを（　）。", "choices": ["しました", "させました", "されました", "して あげました"], "answer": 1, "explain": "Mẹ bảo em trai dọn phòng, tức là bắt em làm: sai khiến 弟に そうじを させました. しました/して あげました nghĩa là mẹ tự dọn." },
+          { "q": "社長は もう お帰りに（　）。", "choices": ["なりました", "しました", "いたしました", "ありました"], "answer": 0, "explain": "Tôn kính ngữ: お V-ます bỏ ます に なる. 社長は お帰りに なりました (giám đốc đã về). お〜する/いたす là khiêm nhường ngữ, dùng cho hành động của mình." },
+          { "q": "先生、重そうですね。その かばん、わたしが お持ち（　）。", "choices": ["なります", "ください", "します", "です"], "answer": 2, "explain": "Khiêm nhường ngữ cho hành động của mình: お V-ます bỏ ます する → わたしが お持ちします (để em xách giúp). お持ちに なる là tôn kính, dùng cho thầy, không dùng cho わたし." },
+          { "q": "天気よほうに よると、あしたは ゆきが ふる（　）。", "choices": ["つもりです", "ことです", "そうです", "ほうです"], "answer": 2, "explain": "〜に よると + thể thường + そうです: nghe nói, truyền đạt thông tin. ふる そうです (nghe nói sẽ có tuyết). つもり chỉ dự định của người, không dùng cho thời tiết." },
+          { "q": "もし 時間が（　）、いっしょに 映画を 見に 行きませんか。", "choices": ["あるのに", "あっても", "あるので", "あったら"], "answer": 3, "explain": "もし đi với điều kiện 〜たら: もし 時間が あったら (nếu có thời gian). あっても là \"dù có\", あるので là \"vì có\", không đi với もし." }
+        ]
+      },
+      {
+        "part": "order",
+        "questions": [
+          { "q": "きのう ＿＿ ＿＿ ★ ＿＿ 読みました。", "choices": ["本を", "もらった", "友だちに", "かして"], "answer": 1, "explain": "Câu đúng: きのう 友だちに かして もらった 本を 読みました (hôm qua tôi đọc cuốn sách bạn cho mượn). Từ ở vị trí ★ là もらった." },
+          { "q": "毎日 れんしゅうした ＿＿ ★ ＿＿ ＿＿ なりました。", "choices": ["話せる", "ように", "ので", "日本語が"], "answer": 3, "explain": "Câu đúng: 毎日 れんしゅうした ので 日本語が 話せる ように なりました. Từ ở vị trí ★ là 日本語が." },
+          { "q": "母に ＿＿ ＿＿ ＿＿ ★ わすれて しまいました。", "choices": ["のを", "買う", "ものを", "言われた"], "answer": 0, "explain": "Câu đúng: 母に 言われた ものを 買う のを わすれて しまいました (tôi lỡ quên mua thứ mẹ dặn). Từ ở vị trí ★ là のを." },
+          { "q": "この ＿＿ ★ ＿＿ ＿＿ 書いて ください。", "choices": ["住所", "を", "名前と", "ノートに"], "answer": 2, "explain": "Câu đúng: この ノートに 名前と 住所 を 書いて ください (hãy viết tên và địa chỉ vào cuốn vở này). Từ ở vị trí ★ là 名前と." }
+        ]
+      },
+      {
+        "part": "text",
+        "passage": "わたしと 料理\n　わたしは 去年の 春、日本へ 来ました。日本へ 来る 前は、料理を した ことが ありませんでした。（１）、日本では 毎日 自分で ごはんを 作らなければ なりません。\n　さいしょは 何を 作っても おいしく ありませんでした。でも、となりの 田中さんが 料理の 作り方を 教えて（２）。今では いろいろな 料理が 作れる（３）。\n　来月、国から 母が 来ます。母に わたしの 料理を 食べて（４）と 思って います。",
+        "questions": [
+          { "q": "（１）", "choices": ["だから", "それに", "しかし", "それで"], "answer": 2, "explain": "Trước đây chưa từng nấu ăn, nhưng ở Nhật phải tự nấu mỗi ngày: hai câu trái ý nhau nên dùng しかし (nhưng). だから/それで chỉ kết quả, それに là thêm vào." },
+          { "q": "（２）", "choices": ["くれました", "あげました", "もらいました", "やりました"], "answer": 0, "explain": "田中さん làm việc tốt cho tôi, chủ ngữ là 田中さんが nên dùng 教えて くれました. 教えて もらいました cần 田中さんに." },
+          { "q": "（３）", "choices": ["ことに しました", "ように しました", "ように なりました", "ことが あります"], "answer": 2, "explain": "Thay đổi khả năng theo thời gian (trước không nấu được, bây giờ nấu được): V-る ように なりました. ことに しました là quyết định làm gì." },
+          { "q": "（４）", "choices": ["あげよう", "くれよう", "みよう", "もらおう"], "answer": 3, "explain": "Muốn mẹ ăn thử món mình nấu: 母に 食べて もらおうと 思って います (Vて もらう + thể ý chí). 食べて あげよう/みよう là chính mình ăn, không hợp với 母に." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "山田さんへ\n　きょうの 午後の かいぎは、社長の 都合で 3時から 4時に なりました。かいぎの 前に、つくえの 上の レポートを 10まい コピーして おいて ください。\n田中",
+        "questions": [
+          { "q": "山田さんは かいぎの 前に 何を しなければ なりませんか。", "choices": ["社長に れんらくする。", "3時に かいぎしつへ 行く。", "田中さんに レポートを 10まい わたす。", "レポートを 10まい コピーする。"], "answer": 3, "explain": "Lời nhắn ghi かいぎの 前に、レポートを 10まい コピーして おいて ください: Yamada phải photo sẵn 10 bản báo cáo. Cuộc họp dời sang 4 giờ, không phải 3 giờ." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "わたしは 毎朝 6時に 起きて、犬と さんぽします。前は 7時まで ねて いましたが、犬を かい始めてから、早起きに なりました。さんぽの 後で 飲む コーヒーは とても おいしいです。",
+        "questions": [
+          { "q": "この 人は どうして 早く 起きるように なりましたか。", "choices": ["コーヒーを 飲みたいから。", "犬と さんぽするから。", "7時に 会社へ 行くから。", "前より 早く ねるから。"], "answer": 1, "explain": "Bài viết nói 犬を かい始めてから、早起きに なりました: từ khi nuôi chó, người này dậy sớm để đi dạo cùng chó. Cà phê chỉ là việc sau khi đi dạo." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "お知らせ\n　来週の 月曜日は 工事の ため、ビルの エレベーターが 使えません。工事は 9時から 5時までです。じむしょへ 来る 人は かいだんを 使って ください。",
+        "questions": [
+          { "q": "来週の 月曜日の 午後3時に じむしょへ 行く 人は どう しますか。", "choices": ["エレベーターで 行く。", "5時まで 待つ。", "かいだんで 行く。", "9時より 前に 行く。"], "answer": 2, "explain": "Thứ hai tuần sau thang máy ngừng từ 9 giờ đến 5 giờ vì thi công, nên lúc 3 giờ chiều phải đi cầu thang bộ: かいだんを 使って ください." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "リンさん、お元気ですか。わたしは 先週から 入院して います。足の けがは だいぶ よく なりましたが、まだ 一人で 歩く ことが できません。病院の ごはんは あまり おいしくないので、早く 家に 帰りたいです。来週の 土曜日に たいいんする よていです。",
+        "questions": [
+          { "q": "この 人に ついて 正しい ものは どれですか。", "choices": ["今 病院に いる。", "足の けがは もう なおった。", "病院の ごはんが おいしい。", "来週から 入院する。"], "answer": 0, "explain": "Người viết đã nhập viện từ tuần trước và tuần sau mới xuất viện, nên bây giờ đang ở bệnh viện. Vết thương mới đỡ nhiều, chưa khỏi; cơm bệnh viện không ngon lắm." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "　わたしは 去年から 駅の 前の パン屋で アルバイトを して います。朝 6時から 9時までです。朝は 早くて たいへんですが、店の 人たちが とても 親切なので、楽しく 働いて います。\n　この 店の パンは 朝 7時に 店に ならびます。7時ごろには 会社へ 行く 人や 学生が たくさん 来て、店の 中は いつも こんで います。みんなが いちばん よく 買うのは クリームパンです。やわらかくて あまいので、子どもも 大好きです。\n　先週、店の 人に「新しい パンを 考えて みませんか。」と 言われました。わたしは 国の 料理を 使った パンを 作って みたいと 思って います。来月、店の 人に 食べて もらう つもりです。",
+        "questions": [
+          { "q": "この 人は どうして 楽しく 働いて いますか。", "choices": ["朝が 早くないから。", "店の 人たちが 親切だから。", "クリームパンが 好きだから。", "駅の 前に 住んで いるから。"], "answer": 1, "explain": "Bài viết nói 店の 人たちが とても 親切なので、楽しく 働いて います: vì mọi người ở tiệm rất tốt bụng. Buổi sáng thì sớm và vất vả." },
+          { "q": "朝 7時ごろ、店は どうですか。", "choices": ["パンが まだ ならんで いない。", "しまって いる。", "人が 少なくて しずかだ。", "たくさんの 人が 来て こんで いる。"], "answer": 3, "explain": "Bài viết nói 7時ごろには 会社へ 行く 人や 学生が たくさん 来て、店の 中は いつも こんで います: khoảng 7 giờ rất đông khách. Bánh được bày ra đúng lúc 7 giờ." },
+          { "q": "この 人は 来月 何を しますか。", "choices": ["自分が 考えた パンを 店の 人に 食べて もらう。", "国へ 帰って 料理を 作る。", "新しい パン屋で 働く。", "クリームパンの 作り方を ならう。"], "answer": 0, "explain": "Đoạn cuối: người này muốn làm bánh dùng món ăn của nước mình và 来月、店の 人に 食べて もらう つもりです: tháng sau sẽ nhờ người ở tiệm ăn thử." }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "さくら市 スポーツセンター\n【プール】\n・月〜金 10:00〜21:00、土・日 9:00〜18:00\n・休み：毎週 水曜日\n・お金：大人 400円、子ども（中学生まで）200円\n　65さい以上の 方は 300円です。\n【テニスコート】\n・1時間 1,000円です。\n・使う 日の 3日前までに 電話で よやくして ください。",
+        "questions": [
+          { "q": "70さいの おじいさんと 10さいの 男の子が 土曜日に プールへ 行きます。二人で いくら はらいますか。", "choices": ["400円", "500円", "600円", "800円"], "answer": 1, "explain": "Người từ 65 tuổi trở lên trả 300円, trẻ em đến hết cấp hai trả 200円: 300 + 200 = 500円. 600円 là tính ông theo giá người lớn 400円." },
+          { "q": "6月20日（土）に テニスコートを 使いたいです。どう しなければ なりませんか。", "choices": ["6月20日に スポーツセンターへ 行って よやくする。", "6月19日までに 電話で よやくする。", "6月17日までに 電話で よやくする。", "6月17日までに スポーツセンターへ 行って よやくする。"], "answer": 2, "explain": "Phải gọi điện đặt chỗ chậm nhất là 3 ngày trước ngày sử dụng: 20 − 3 = ngày 17. Cần đặt bằng điện thoại (電話で), không phải đến tận nơi." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "n3-1",
+    "title": {
+      "vi": "Đề thi thử N3 số 1",
+      "en": "N3 mock test 1"
+    },
+    "minutes": 100,
+    "level": 3,
+    "reviewed": false,
+    "parts": [
+      {
+        "part": "kanji",
+        "questions": [
+          {
+            "q": "この 町では、子どもの {成長}を みんなで 見守って います。",
+            "choices": [
+              "せいじょう",
+              "しょうちょう",
+              "せいちょう",
+              "せんちょう"
+            ],
+            "answer": 2,
+            "explain": "成長 đọc là せいちょう, nghĩa là sự trưởng thành, phát triển. 成 đọc せい và 長 đọc ちょう trong từ này."
+          },
+          {
+            "q": "来月の パーティーに 友人を {招待}しました。",
+            "choices": [
+              "しょうだい",
+              "しょたい",
+              "しょうたい",
+              "そうたい"
+            ],
+            "answer": 2,
+            "explain": "招待 đọc là しょうたい, nghĩa là mời. 招 đọc しょう, 待 đọc たい, không đọc đục thành だい."
+          },
+          {
+            "q": "この 書類の 内容を {確認}して ください。",
+            "choices": [
+              "かくねん",
+              "かっにん",
+              "かくにん",
+              "がくにん"
+            ],
+            "answer": 2,
+            "explain": "確認 đọc là かくにん, nghĩa là xác nhận, kiểm tra lại. 確 đọc かく, 認 đọc にん."
+          },
+          {
+            "q": "駅の 前の {薬局}で 薬を 買いました。",
+            "choices": [
+              "やっきょく",
+              "やくきょく",
+              "やっきょう",
+              "やくきょう"
+            ],
+            "answer": 0,
+            "explain": "薬局 đọc là やっきょく, nghĩa là hiệu thuốc. Âm く của 薬 được biến thành âm ngắt khi ghép với 局. Từ có trong danh sách N3."
+          },
+          {
+            "q": "天気の {予報}を 見てから、出発の 日を 決めます。",
+            "choices": [
+              "よほう",
+              "よぼう",
+              "ようほう",
+              "よほ"
+            ],
+            "answer": 0,
+            "explain": "予報 đọc là よほう, nghĩa là dự báo. 予 đọc よ, 報 đọc ほう; không nhầm với よぼう (phòng ngừa)."
+          },
+          {
+            "q": "彼は 毎日 {努力}を 続け、試験に 合格しました。",
+            "choices": [
+              "どりょう",
+              "とうりょく",
+              "どりょく",
+              "どりく"
+            ],
+            "answer": 2,
+            "explain": "努力 đọc là どりょく, nghĩa là nỗ lực. 努 đọc ど, 力 đọc りょく trong từ này."
+          },
+          {
+            "q": "この 仕事は {責任}を 持って やります。",
+            "choices": [
+              "せきねん",
+              "せっにん",
+              "せきにん",
+              "しゃくにん"
+            ],
+            "answer": 2,
+            "explain": "責任 đọc là せきにん, nghĩa là trách nhiệm. 責 đọc せき, 任 đọc にん."
+          },
+          {
+            "q": "この 二つの 商品には、どんな {共通点}が ありますか。",
+            "choices": [
+              "きょうずうてん",
+              "きょうつうてん",
+              "こうつうてん",
+              "きょうつうでん"
+            ],
+            "answer": 1,
+            "explain": "共通点 đọc là きょうつうてん, nghĩa là điểm chung. 共通 đọc きょうつう, 点 đọc てん."
+          }
+        ]
+      },
+      {
+        "part": "writing",
+        "questions": [
+          {
+            "q": "映画の 最後の 場面に {かんどう}しました。",
+            "choices": [
+              "感動",
+              "活動",
+              "行動",
+              "感想"
+            ],
+            "answer": 0,
+            "explain": "かんどう viết là 感動 (cảm động). 活動 đọc かつどう, 行動 đọc こうどう, 感想 đọc かんそう."
+          },
+          {
+            "q": "読んだ 本の {かんそう}を 書いて ください。",
+            "choices": [
+              "感動",
+              "感想",
+              "感心",
+              "感情"
+            ],
+            "answer": 1,
+            "explain": "かんそう viết là 感想 (cảm tưởng). 感動 đọc かんどう, 感心 đọc かんしん, 感情 đọc かんじょう."
+          },
+          {
+            "q": "この 店は {げんきん}でしか はらえません。",
+            "choices": [
+              "現金",
+              "料金",
+              "代金",
+              "お金"
+            ],
+            "answer": 0,
+            "explain": "げんきん viết là 現金 (tiền mặt). 料金 đọc りょうきん, 代金 đọc だいきん, お金 đọc おかね."
+          },
+          {
+            "q": "外国の 生活に だいぶ {なれました}。",
+            "choices": [
+              "慣れました",
+              "流れました",
+              "晴れました",
+              "生まれました"
+            ],
+            "answer": 0,
+            "explain": "なれる viết là 慣れる (quen với), nên なれました là 慣れました. 流れる đọc ながれる, 晴れる đọc はれる, 生まれる đọc うまれる."
+          },
+          {
+            "q": "この きかいの {しよう}方法を 教えて ください。",
+            "choices": [
+              "用意",
+              "信用",
+              "使用",
+              "利用"
+            ],
+            "answer": 2,
+            "explain": "しよう viết là 使用 (sử dụng). 用意 đọc ようい, 信用 đọc しんよう, 利用 đọc りよう."
+          },
+          {
+            "q": "出発の 時間を もう 一度 {たしかめて} ください。",
+            "choices": [
+              "確かめて",
+              "決めて",
+              "求めて",
+              "認めて"
+            ],
+            "answer": 0,
+            "explain": "たしかめる viết là 確かめる (kiểm tra, xác minh). 決める đọc きめる, 求める đọc もとめる, 認める đọc みとめる."
+          }
+        ]
+      },
+      {
+        "part": "context",
+        "questions": [
+          {
+            "q": "ゆうべは ほとんど 眠れなかったので、今日は（　）で 頭が うまく 働かない。",
+            "choices": [
+              "食欲",
+              "留守番",
+              "寝不足",
+              "外食"
+            ],
+            "answer": 2,
+            "explain": "Gần như không ngủ đêm qua nên hôm nay thiếu ngủ: 寝不足. 食欲 là cảm giác thèm ăn, 留守番 là trông nhà, 外食 là ăn ngoài."
+          },
+          {
+            "q": "パソコンが こわれたので、店に（　）を 頼んだ。",
+            "choices": [
+              "よやく",
+              "招待",
+              "しゅうり",
+              "つうやく"
+            ],
+            "answer": 2,
+            "explain": "Máy tính hỏng thì nhờ cửa hàng sửa chữa: しゅうりを 頼む. Đặt chỗ, mời hay phiên dịch không giải quyết chiếc máy hỏng."
+          },
+          {
+            "q": "約束の 時間に 遅れそうだったので、友人に 電話で（　）した。",
+            "choices": [
+              "出席",
+              "そつぎょう",
+              "れんらく",
+              "運動"
+            ],
+            "answer": 2,
+            "explain": "Có thể đến trễ giờ hẹn nên gọi điện liên lạc: 電話で 連絡する. Các từ khác không phù hợp với hành động thông báo qua điện thoại."
+          },
+          {
+            "q": "この 道は 工事中です。車は 別の 道へ（　）して ください。",
+            "choices": [
+              "回り道",
+              "昼寝",
+              "早退",
+              "見送り"
+            ],
+            "answer": 0,
+            "explain": "Đường đang thi công nên xe phải đi vòng: 回り道する. 昼寝 là ngủ trưa, 早退 là về sớm, 見送り là tiễn."
+          },
+          {
+            "q": "部屋に 入ると、電気が ついた ままだった。消すのを（　）忘れて しまった らしい。",
+            "choices": [
+              "ぐっすり",
+              "ぎっしり",
+              "うっかり",
+              "そっくり"
+            ],
+            "answer": 2,
+            "explain": "うっかり diễn tả sơ ý, lơ đễnh: lỡ quên tắt đèn. ぐっすり là ngủ say, ぎっしり là chật kín, そっくり là giống hệt."
+          },
+          {
+            "q": "発表中は ほかの ことを 考えず、話に（　）して ください。",
+            "choices": [
+              "集中",
+              "引っ越し",
+              "こうかん",
+              "注文"
+            ],
+            "answer": 0,
+            "explain": "Không nghĩ việc khác mà tập trung vào bài nói: 話に 集中する. Những lựa chọn còn lại không có nghĩa tập trung chú ý."
+          },
+          {
+            "q": "前は すぐに 疲れたが、毎日 運動して、少しずつ（　）が ついて きた。",
+            "choices": [
+              "気候",
+              "住所",
+              "体力",
+              "定員"
+            ],
+            "answer": 2,
+            "explain": "Tập thể dục giúp tăng thể lực: 体力が つく. 気候 là khí hậu, 住所 là địa chỉ, 定員 là số người tối đa."
+          },
+          {
+            "q": "店に ある 品物を すべて 売って しまい、たなが（　）に なった。",
+            "choices": [
+              "満員",
+              "しんせん",
+              "上品",
+              "空っぽ"
+            ],
+            "answer": 3,
+            "explain": "Bán hết hàng thì kệ trống rỗng: 空っぽに なる. 満員 dùng cho nơi đầy người; 新鮮 và 上品 không chỉ trạng thái trống."
+          },
+          {
+            "q": "この 説明では 意味が 分かりにくいので、もっと（　）例を 出して ください。",
+            "choices": [
+              "しょうきょくてきな",
+              "ぐたいてきな",
+              "じどうてきな",
+              "ていきてきな"
+            ],
+            "answer": 1,
+            "explain": "Giải thích khó hiểu thì cần ví dụ cụ thể: 具体的な 例. 消極的 là thụ động, 自動的 là tự động, 定期的 là định kỳ."
+          },
+          {
+            "q": "二人の 意見は（　）で、一人は 賛成、もう 一人は 反対だった。",
+            "choices": [
+              "共通",
+              "正反対",
+              "同様",
+              "平等"
+            ],
+            "answer": 1,
+            "explain": "Một người tán thành, người kia phản đối, tức ý kiến hoàn toàn trái ngược: 正反対. 共通 và 同様 diễn tả sự giống nhau; 平等 là bình đẳng."
+          },
+          {
+            "q": "同じ 間違いを しないように、仕事の やり方を（　）ことに した。",
+            "choices": [
+              "見送る",
+              "見直す",
+              "見上げる",
+              "見下ろす"
+            ],
+            "answer": 1,
+            "explain": "Để tránh lặp lại lỗi thì xem xét lại cách làm: やり方を 見直す. 見送る là tiễn/hoãn, 見上げる là nhìn lên, 見下ろす là nhìn xuống."
+          }
+        ]
+      },
+      {
+        "part": "paraphrase",
+        "questions": [
+          {
+            "q": "この 町は {相変わらず} 静かだ。",
+            "choices": [
+              "前より ずっと 静かに なった。",
+              "以前と 同じように、今も 静かだ。",
+              "前は 静かだったが、今は にぎやかだ。",
+              "これから 静かに なるだろう。"
+            ],
+            "answer": 1,
+            "explain": "相変わらず nghĩa là vẫn như trước, không thay đổi: thị trấn trước đây yên tĩnh, bây giờ vẫn yên tĩnh như vậy."
+          },
+          {
+            "q": "山田さんは 来週の 試験の ことを {気にして いる}。",
+            "choices": [
+              "試験が 心配で、その ことを よく 考えて いる。",
+              "試験の ことを すっかり 忘れて いる。",
+              "試験を 受けないと 決めて いる。",
+              "試験が 終わって 安心して いる。"
+            ],
+            "answer": 0,
+            "explain": "気にする trong ngữ cảnh này là bận tâm, lo lắng về kỳ thi. Không có nghĩa quên, quyết định bỏ thi hay đã yên tâm sau kỳ thi."
+          },
+          {
+            "q": "旅行は 雨の ため {中止に なった}。",
+            "choices": [
+              "旅行に 行く 日が 早く なった。",
+              "旅行に 行く 人数が 増えた。",
+              "旅行の 行き先だけが 変わった。",
+              "旅行には 行かない ことに なった。"
+            ],
+            "answer": 3,
+            "explain": "中止 là hủy bỏ, dừng thực hiện: chuyến đi không diễn ra. Không chỉ là đổi ngày, tăng người hay đổi nơi đến."
+          },
+          {
+            "q": "この 問題は {自分の 力で 解いて ください}。",
+            "choices": [
+              "ほかの 人の 答えを 写して ください。",
+              "先生に 答えを 聞いて ください。",
+              "ほかの 人に 助けて もらわずに 解いて ください。",
+              "友人と 相談して 答えを 決めて ください。"
+            ],
+            "answer": 2,
+            "explain": "自分の 力で là bằng sức mình, tự giải mà không nhờ người khác. Cả ba câu còn lại đều dựa vào sự giúp đỡ của người khác."
+          },
+          {
+            "q": "新しい 仕事にも {ようやく 慣れた}。",
+            "choices": [
+              "始める 前から すっかり 慣れて いた。",
+              "まだ 少しも 慣れて いない。",
+              "慣れる 必要が なくなった。",
+              "時間が かかったが、やっと 慣れた。"
+            ],
+            "answer": 3,
+            "explain": "ようやく là cuối cùng cũng, sau một thời gian hoặc nỗ lực. Ở đây là mất một thời gian nhưng cuối cùng đã quen việc."
+          }
+        ]
+      },
+      {
+        "part": "usage",
+        "questions": [
+          {
+            "q": "{せつやく}",
+            "choices": [
+              "電気代を せつやくする ために、使わない 部屋の 電気を 消した。",
+              "旅行の 日を 来月に せつやくして、ホテルに れんらくした。",
+              "重い にもつを となりの 部屋に せつやくして、車を 取りに 行った。",
+              "仕事を どうりょうに せつやくして、一週間 休みを 取った。"
+            ],
+            "answer": 0,
+            "explain": "せつやく là tiết kiệm tiền, điện, thời gian: 電気代を せつやくする. Đổi ngày dùng 変更する, dời hành lý dùng 移す, nhờ đồng nghiệp làm thay dùng 頼む."
+          },
+          {
+            "q": "{断る}",
+            "choices": [
+              "紙を 二つに 断って、半分を 友人に わたした。",
+              "都合が 悪かったので、食事の さそいを 断った。",
+              "使わない 電気を 断ってから、家を 出た。",
+              "駅で 電車を 断って、会社へ 歩いて 行った。"
+            ],
+            "answer": 1,
+            "explain": "断る là từ chối lời mời hoặc yêu cầu: さそいを 断る. Cắt giấy dùng 切る; tắt đèn dùng 消す; xuống tàu dùng 降りる. 断る không dùng như 断つ (cắt, ngắt)."
+          },
+          {
+            "q": "{そろえる}",
+            "choices": [
+              "会議の 前に、必要な 書類を すべて そろえた。",
+              "冷めた スープを 火に かけて、もう 一度 そろえた。",
+              "知らない 言葉の 意味を 辞書で そろえた。",
+              "けがを したので、足の 痛みを そろえる 薬を 飲んだ。"
+            ],
+            "answer": 0,
+            "explain": "そろえる là chuẩn bị, tập hợp cho đủ: 必要な 書類を すべて そろえる. Hâm súp dùng 温める, tra nghĩa dùng 調べる, làm dịu cơn đau dùng 抑える. Không dùng そろえる với 痛み theo nghĩa giảm đau."
+          },
+          {
+            "q": "{あずかる}",
+            "choices": [
+              "図書館で 読みたい 本を あずかって、家で 読んだ。",
+              "友人が 旅行して いる 間、友人の 犬を あずかった。",
+              "会議で 自分の 意見を あずかって、みんなに 説明した。",
+              "レストランで メニューを 見て、食べたい 料理を あずかった。"
+            ],
+            "answer": 1,
+            "explain": "あずかる là nhận giữ, trông giúp thứ thuộc về người khác, như trông chó khi bạn đi du lịch. Mượn sách để đọc dùng 借りる; nêu ý kiến dùng 言う/述べる; gọi món dùng 注文する."
+          },
+          {
+            "q": "{目立つ}",
+            "choices": [
+              "朝に なったので、目が 目立って 起きた。",
+              "白い 服の 人が 多い 中で、赤い 服の 彼は よく 目立って いた。",
+              "試験に 合格したので、もくひょうが 目立った。",
+              "暗い 部屋で 電気を 目立って、本を 読んだ。"
+            ],
+            "answer": 1,
+            "explain": "目立つ là nổi bật, dễ được chú ý: áo đỏ nổi bật giữa nhiều áo trắng. Không có nghĩa mở mắt, đạt mục tiêu hay bật đèn; cũng không phải động từ nhận tân ngữ với を."
+          }
+        ]
+      },
+      {
+        "part": "grammar",
+        "questions": [
+          {
+            "q": "日本へ 来る（　）、新しい 発見が あります。",
+            "choices": [
+              "ところに",
+              "ままに",
+              "ばかりに",
+              "たびに"
+            ],
+            "answer": 3,
+            "explain": "V nguyên mẫu + たびに: mỗi lần làm gì đều có kết quả lặp lại. Mỗi lần đến Nhật đều có phát hiện mới. Mẫu N3 〜たびに."
+          },
+          {
+            "q": "スープが あたたかい（　）、飲んで ください。",
+            "choices": [
+              "たびに",
+              "かわりに",
+              "うちに",
+              "とおりに"
+            ],
+            "answer": 2,
+            "explain": "Tính từ đuôi い + うちに: tranh thủ khi trạng thái còn duy trì. Hãy uống khi súp còn ấm."
+          },
+          {
+            "q": "先生が ていねいに 教えて くださった（　）、試験に 合格できました。",
+            "choices": [
+              "せいで",
+              "おかげで",
+              "かわりに",
+              "ためには"
+            ],
+            "answer": 1,
+            "explain": "Kết quả tích cực nhờ sự giúp đỡ của thầy cô dùng 〜おかげで. せいで thường chỉ nguyên nhân gây kết quả xấu; ためには chỉ mục đích."
+          },
+          {
+            "q": "この 町は、住めば（　）好きに なります。",
+            "choices": [
+              "住むほど",
+              "住んだまま",
+              "住むかわりに",
+              "住んだばかり"
+            ],
+            "answer": 0,
+            "explain": "〜ば 〜ほど diễn tả càng… càng…: 住めば 住むほど 好きに なる (càng sống càng yêu thích)."
+          },
+          {
+            "q": "昨日から 歯が 痛くて（　）ので、今日 歯医者へ 行きます。",
+            "choices": [
+              "ほしくない",
+              "みせない",
+              "おかない",
+              "たまらない"
+            ],
+            "answer": 3,
+            "explain": "〜て たまらない diễn tả cảm giác mạnh không chịu nổi: 歯が 痛くて たまらない. Các lựa chọn kia không kết hợp với 痛くて để diễn tả mức độ này."
+          },
+          {
+            "q": "後ろの 人にも 聞こえる（　）、大きな 声で 話して ください。",
+            "choices": [
+              "ためで",
+              "ように",
+              "そうに",
+              "ことに"
+            ],
+            "answer": 1,
+            "explain": "Nghe được là trạng thái khả năng ngoài ý chí trực tiếp, nên mục đích dùng 聞こえる ように: nói to để người phía sau cũng nghe được."
+          },
+          {
+            "q": "名前を 書き（　）すれば、だれでも 参加できます。",
+            "choices": [
+              "さえ",
+              "しか",
+              "こそ",
+              "まで"
+            ],
+            "answer": 0,
+            "explain": "V bỏ ます + さえ すれば: chỉ cần làm V là đủ. 名前を 書きさえ すれば nghĩa là chỉ cần viết tên thì ai cũng tham gia được."
+          },
+          {
+            "q": "国（　）、食事の 習慣は 違います。",
+            "choices": [
+              "にとって",
+              "に対して",
+              "によって",
+              "として"
+            ],
+            "answer": 2,
+            "explain": "〜によって ở đây chỉ sự khác nhau tùy theo từng quốc gia. にとって là theo góc nhìn, に対して là hướng tới/đối với, として là tư cách."
+          },
+          {
+            "q": "説明書に 書いて ある（　）、ボタンを 押して ください。",
+            "choices": [
+              "ばかりに",
+              "うちに",
+              "かわりに",
+              "とおりに"
+            ],
+            "answer": 3,
+            "explain": "〜とおりに: làm đúng theo điều đã ghi hoặc đã nói. Hãy bấm nút đúng như sách hướng dẫn."
+          },
+          {
+            "q": "弟は 電気を つけた（　）寝て しまいました。",
+            "choices": [
+              "まま",
+              "たび",
+              "ほど",
+              "ついで"
+            ],
+            "answer": 0,
+            "explain": "V quá khứ + まま chỉ để nguyên trạng thái: ngủ quên trong khi đèn vẫn bật."
+          },
+          {
+            "q": "この 店では、入口で くつを ぬぐ（　）なって います。",
+            "choices": [
+              "ようで",
+              "ことに",
+              "ためで",
+              "ばかりに"
+            ],
+            "answer": 1,
+            "explain": "〜ことに なって いる diễn tả quy định, việc đã được định sẵn. Ở cửa hàng này có quy định cởi giày ở lối vào."
+          },
+          {
+            "q": "田中さんは 日本語（　）、中国語も 話せます。",
+            "choices": [
+              "しかなく",
+              "ほどでなく",
+              "だけでなく",
+              "までなく"
+            ],
+            "answer": 2,
+            "explain": "〜だけでなく…も…: không chỉ… mà còn… Tanaka nói được cả tiếng Nhật lẫn tiếng Trung."
+          },
+          {
+            "q": "一度も 習って いないのだから、こんな 難しい 曲が ひける（　）。",
+            "choices": [
+              "ことに する",
+              "ように する",
+              "はずが ない",
+              "ばかりだ"
+            ],
+            "answer": 2,
+            "explain": "〜はずが ない diễn tả phủ định mạnh dựa vào lý do: chưa từng học thì không thể chơi được bản nhạc khó thế này."
+          }
+        ]
+      },
+      {
+        "part": "order",
+        "questions": [
+          {
+            "q": "先生が 説明した ＿＿ ＿＿ ★ ＿＿ 解いて みた。",
+            "choices": [
+              "とおりに",
+              "問題",
+              "を",
+              "難しい"
+            ],
+            "answer": 1,
+            "explain": "Câu đúng: 先生が 説明した とおりに 難しい 問題 を 解いて みた (tôi thử giải bài khó đúng như thầy đã giải thích). V-た とおりに đứng ngay sau động từ; 難しい bổ nghĩa cho 問題. Vị trí ★ thứ ba là 問題."
+          },
+          {
+            "q": "この 町は ＿＿ ★ ＿＿ ＿＿ なった。",
+            "choices": [
+              "場所に",
+              "にとって",
+              "大切な",
+              "わたし"
+            ],
+            "answer": 1,
+            "explain": "Câu đúng: この 町は わたし にとって 大切な 場所に なった (thị trấn này trở thành nơi quan trọng đối với tôi). Vị trí ★ thứ hai là にとって."
+          },
+          {
+            "q": "試験に 合格できたのは ＿＿ ＿＿ ★ ＿＿ です。",
+            "choices": [
+              "くださった",
+              "先生が",
+              "教えて",
+              "おかげ"
+            ],
+            "answer": 0,
+            "explain": "Câu đúng: 試験に 合格できたのは 先生が 教えて くださった おかげ です (tôi thi đỗ là nhờ thầy cô đã dạy). Vị trí ★ thứ ba là くださった. Mẫu 〜おかげ diễn tả nguyên nhân tạo ra kết quả tốt."
+          },
+          {
+            "q": "忘れない ＿＿ ＿＿ ＿＿ ★ います。",
+            "choices": [
+              "メモする",
+              "して",
+              "ように",
+              "ことに"
+            ],
+            "answer": 1,
+            "explain": "Câu đúng: 忘れない ように メモする ことに して います (tôi luôn ghi chú để không quên). Vị trí ★ thứ tư là して."
+          },
+          {
+            "q": "この 本は ＿＿ ★ ＿＿ ＿＿ あります。",
+            "choices": [
+              "写真",
+              "説明も",
+              "だけでなく",
+              "たくさん"
+            ],
+            "answer": 2,
+            "explain": "Câu đúng: この 本は 写真 だけでなく 説明も たくさん あります (cuốn sách này có nhiều ảnh và cả nhiều lời giải thích). Vị trí ★ thứ hai là だけでなく. Mẫu 〜だけでなく…も… diễn tả không chỉ… mà còn…."
+          }
+        ]
+      },
+      {
+        "part": "text",
+        "passage": "町の 図書館で\n　わたしは 先月から、町の 図書館で 子どもに 本を 読む 活動に 参加して います。子どもの ころは 人前で 話すのが 苦手で、こんな 活動を するとは 思って いませんでした。（１）、友人に さそわれて、一度だけ やって みる ことに しました。\n　初めての 日は、声が 小さく なって しまいました。後ろに 座って いる 子にも 聞こえる（２）、もう 少し 大きな 声で 読んで ほしいと 係の 人に 言われました。そこで、家で 何度も 声に 出して れんしゅうしました。\n　れんしゅうした（３）、次の 回には 最後まで 落ち着いて 読めました。今では、子どもたちに 会う（４）、次は どんな 本を 選ぼうかと 考えます。\n　活動を 始めてから、図書館は わたし（５）特別な 場所に なりました。来月も また 参加したいです。",
+        "questions": [
+          {
+            "q": "（１）",
+            "choices": [
+              "そのため",
+              "それに",
+              "つまり",
+              "ところが"
+            ],
+            "answer": 3,
+            "explain": "Trước đó không nghĩ sẽ tham gia hoạt động đọc sách, nhưng thực tế được bạn rủ và đã thử. ところが nối diễn biến trái với suy nghĩ ban đầu; các từ còn lại chỉ kết quả, bổ sung hoặc diễn giải."
+          },
+          {
+            "q": "（２）",
+            "choices": [
+              "そうに",
+              "ばかりに",
+              "とおりに",
+              "ように"
+            ],
+            "answer": 3,
+            "explain": "聞こえる ように chỉ mục đích: đọc to hơn để những em ngồi phía sau cũng nghe được."
+          },
+          {
+            "q": "（３）",
+            "choices": [
+              "おかげで",
+              "せいで",
+              "かわりに",
+              "ついでに"
+            ],
+            "answer": 0,
+            "explain": "Nhờ luyện tập mà lần sau đọc bình tĩnh đến cuối, nên dùng おかげで cho nguyên nhân tạo kết quả tốt."
+          },
+          {
+            "q": "（４）",
+            "choices": [
+              "たびに",
+              "ままに",
+              "うちには",
+              "だけには"
+            ],
+            "answer": 0,
+            "explain": "子どもたちに 会う たびに: mỗi lần gặp các em đều nghĩ nên chọn cuốn sách nào tiếp theo."
+          },
+          {
+            "q": "（５）",
+            "choices": [
+              "によって",
+              "にとって",
+              "に対して",
+              "に関して"
+            ],
+            "answer": 1,
+            "explain": "わたしにとって 特別な 場所: nơi đặc biệt đối với tôi, theo cảm nhận của tôi. にとって nêu góc nhìn đánh giá."
+          }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "山田さんへ\n　明日の 会議は 午後二時からです。会議室は 使えないので、いっかいの 食堂で 行います。資料は 先ほど メールで 送りました。いんさつした ものを 配る 予定は ありません。内容を 先に 確認して、自分の パソコンに 入れて 持って きて ください。もし 開けなかったら、今日の 五時までに わたしに れんらくして ください。\n田中",
+        "questions": [
+          {
+            "q": "山田さんは 会議の じゅんびとして 何を すれば いいですか。",
+            "choices": [
+              "資料を 確認し、パソコンに 入れて 持って いく。",
+              "会議室で いんさつした 資料を 配る。",
+              "明日の 五時までに 資料を メールで 送る。",
+              "今日の 二時に 食堂へ 行って 資料を 受け取る。"
+            ],
+            "answer": 0,
+            "explain": "Lời nhắn yêu cầu xem trước nội dung rồi lưu tài liệu vào máy tính và mang theo. Không phát bản in; hạn liên lạc khi không mở được là 5 giờ hôm nay."
+          }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "　駅前に できた 店では、パンを 買った 人に 紙の ふくろを むりょうで わたして いる。でも、わたしは いつも 家から ふくろを 持って いく。最初は ごみを へらす ためだった。最近は、旅行先で 買った 好きな ふくろを 使えるのが 楽しい。小さな 習慣だが、かんきょうの ために なる だけでなく、毎日の 買い物も 楽しく なった。",
+        "questions": [
+          {
+            "q": "この 人が 最近、自分の ふくろを 使うのを 楽しいと 思うのは なぜですか。",
+            "choices": [
+              "店で ふくろの 代金を 払わなくて いいから。",
+              "店から 新しい ふくろを もらえるから。",
+              "パンを 安く 買えるように なったから。",
+              "好きな ふくろを 使って 買い物が できるから。"
+            ],
+            "answer": 3,
+            "explain": "Gần đây người viết thấy vui vì dùng được chiếc túi yêu thích mua khi đi du lịch. Giảm rác là động cơ ban đầu; túi giấy ở cửa hàng vốn đã miễn phí."
+          }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "お知らせ\n　市の 体育館は、来月 一日から 十日まで ゆかの 工事を 行います。この 間、体育館は 利用できませんが、外の テニスコートは 通常どおり 利用できます。ただし、工事の 車が 通る ため、正面の 入口は 閉めます。テニスコートを 利用する 方は、こうえん側の 入口から 入って ください。予約の 方法や 料金は 変わりません。",
+        "questions": [
+          {
+            "q": "来月 五日に テニスコートを 利用する 人は、どう しなければ なりませんか。",
+            "choices": [
+              "こうえん側の 入口を 使う。",
+              "体育館の 工事が 終わるまで 待つ。",
+              "いつもより 高い 料金を 払う。",
+              "正面の 入口で 新しく 予約する。"
+            ],
+            "answer": 0,
+            "explain": "Ngày 5 vẫn trong thời gian thi công nhưng sân tennis hoạt động bình thường. Cửa chính đóng nên người dùng phải vào từ phía công viên; giá và cách đặt chỗ không đổi."
+          }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "　日本語の 勉強を 始めた とき、わたしは 知らない 言葉を 全部 ノートに 書いて いた。しかし、数が 多すぎて、後で 読み返す 気に なれなかった。先生に 相談すると、「まず 自分が 使いたい 言葉を 五つ 選んで、それで 文を 作って みたら」と 言われた。今は その 方法を 続けて いる。覚える 数は へったが、会話の 中で 使える 言葉は 前より 増えた。",
+        "questions": [
+          {
+            "q": "今の 勉強の 方法に ついて、この 人は どう 感じて いますか。",
+            "choices": [
+              "言葉を 全部 書く ほうが 会話に 役立つ。",
+              "覚える 数は 少なくても、実際に 使えるので よい。",
+              "文を 作るより 読み返す だけの ほうが よい。",
+              "五つでは 少ないので、この 方法を やめたい。"
+            ],
+            "answer": 1,
+            "explain": "Số từ học ít đi nhưng từ dùng được trong hội thoại tăng lên, nên người viết đánh giá tốt phương pháp chọn từ rồi đặt câu. Không nói muốn dừng cách này."
+          }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "　わたしが 働く 会社では、去年から 週に 一度、昼休みに 社員が 自分の 得意な ことを 教える 会を 開いて いる。参加は 自由で、毎回 二十分ほどだ。仕事に 関係が なくても よく、これまで 写真の とり方や かんたんな たいそうなどを 習った。\n　最初は、昼休みくらい 一人で 静かに 過ごしたいと 思って、参加しなかった。しかし、別の 部の 人が 旅行の 写真を 見せると 聞いて、行って みる ことに した。わたしも 旅行が 好きだからだ。写真を 見ながら 話して いる うちに、その 人と 気が 合う ことが 分かった。\n　その後、仕事で その 部に 相談する 必要が あった とき、前より 気軽に 話しかける ことが できた。会で 習った ことを ちょくせつ 仕事に 使う わけでは ないが、人との つながりが できる。それが この 会の 良さだと 思う。来月は わたしも、休日に 作って いる 料理に ついて 話す 予定だ。",
+        "questions": [
+          {
+            "q": "この 会社の 昼休みの 会は、どのような ものですか。",
+            "choices": [
+              "全員が 仕事の やり方を 一時間 習う 会。",
+              "毎日、会社の 外の 先生が 料理を 教える 会。",
+              "参加したい 社員が、社員の 得意な ことを 学べる 会。",
+              "同じ 部の 社員だけが 旅行の 計画を 立てる 会。"
+            ],
+            "answer": 2,
+            "explain": "Cuộc gặp diễn ra mỗi tuần một lần, khoảng 20 phút, tự nguyện tham gia và nhân viên chia sẻ sở trường; chủ đề không nhất thiết liên quan công việc."
+          },
+          {
+            "q": "この 人が 初めて 会に 参加した きっかけは 何ですか。",
+            "choices": [
+              "自分の 料理を 教えるように 頼まれた こと。",
+              "仕事の 相談を しなければ ならなかった こと。",
+              "一人で 過ごす 時間が なくなった こと。",
+              "好きな 旅行に 関する 写真を 見られると 聞いた こと。"
+            ],
+            "answer": 3,
+            "explain": "Người viết đi lần đầu vì nghe sẽ được xem ảnh du lịch, đúng sở thích của mình. Việc hỏi công việc xảy ra sau đó; chia sẻ món ăn là dự định tháng tới."
+          },
+          {
+            "q": "この 人が 考える、この 会の いちばんの 良さは 何ですか。",
+            "choices": [
+              "昼休みを 今までより 長く 取れる こと。",
+              "習った 料理を 仕事で 必ず 使える こと。",
+              "会社の 外へ 旅行に 行ける こと。",
+              "ほかの 社員と 知り合い、話しやすく なる こと。"
+            ],
+            "answer": 3,
+            "explain": "Kết luận của người viết là 人との つながりが できる: tạo kết nối, từ đó dễ trò chuyện và trao đổi công việc với người khác hơn."
+          }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "　町の 図書館で、本を 家まで とどける サービスが 始まった。病気や けがなどで 図書館へ 来るのが 難しい 人が 利用できる。電話で 読みたい 本を 伝えると、係の 人が 本を 選び、ボランティアが 週に 一度 とどける。利用者は 配達の お金を 払う 必要が ない。\n　わたしは 土曜日に 本を とどける ボランティアを して いる。始める 前は、本を わたせば それで 終わりだと 思って いた。ところが、ある 利用者に「この 前の 本は おもしろかったけれど、字が 小さくて 読みにくかった」と 言われた。その ことを 図書館の 人に 伝えると、次は 同じ 作者の、字が 大きい 本を 用意して くれた。利用者は とても 喜んだ。\n　それからは、本を わたす ときに、前の 本は どうだったかを 聞くように して いる。利用者の 声を 図書館に 伝えるのも 大事な 役目なのだ。ただし、ほかにも 配達を 待って いる 人が いるので、長く 話しすぎないように 気を つけて いる。",
+        "questions": [
+          {
+            "q": "この サービスを 利用できるのは、どのような 人ですか。",
+            "choices": [
+              "読みたい 本の 名前を 知らない 人 すべて。",
+              "土曜日だけ 図書館で 働く 人。",
+              "配達の 料金を 先に 払った 人だけ。",
+              "病気や けがなどで 図書館へ 来にくい 人。"
+            ],
+            "answer": 3,
+            "explain": "Dịch vụ dành cho người khó đến thư viện vì bệnh, chấn thương hoặc lý do tương tự. Không yêu cầu trả phí giao sách."
+          },
+          {
+            "q": "「その こと」とは 何ですか。",
+            "choices": [
+              "利用者が 土曜日には 家に いない こと。",
+              "図書館に 同じ 作者の 本が いっさつも ない こと。",
+              "配達を 待つ 人が 多すぎる こと。",
+              "前の 本は おもしろかったが、字が 小さくて 読みにくかった こと。"
+            ],
+            "answer": 3,
+            "explain": "その こと chỉ lời phản hồi ngay trước đó của người nhận: sách hay nhưng chữ nhỏ nên khó đọc. Đây là thông tin giúp thư viện chọn sách chữ lớn lần sau."
+          },
+          {
+            "q": "この 人は、本を とどける ときに 何を 大切に して いますか。",
+            "choices": [
+              "利用者が 喜ぶまで、一人の 家で 何時間も 話す こと。",
+              "利用者には 何も 聞かず、本を わたすだけに する こと。",
+              "図書館の 人の かわりに、必ず 自分で 本を 選ぶ こと。",
+              "前の 本の 感想を 聞くが、長く 話しすぎない こと。"
+            ],
+            "answer": 3,
+            "explain": "Người viết hỏi cảm nhận để chuyển lại thư viện, đồng thời tránh nói quá lâu vì còn người khác đang chờ giao sách."
+          }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "　わたしは、何かを 始めるなら、毎日 続けなければ 意味が ないと 思って いた。けんこうの ために 走り始めた ときも、毎朝 三十分 走ると 決めた。最初の 一週間は 楽しかったが、仕事が 忙しく なって 一日 休むと、もう 失敗したような 気が した。そして、その 次の 日からも 走らなく なって しまった。\n　その 話を 友人に すると、「毎日じゃなくても いいんじゃない。わたしは 走れる 日に 走って いるよ」と 言われた。友人は 五年も 走って いるが、雨の 日や 疲れた 日は 休むそうだ。休んだ 日の 分を 次の 日に 多く 走る ことも ない。「休むのも、長く 続ける ために 必要な ことだよ」という 言葉を 聞いて、わたしは 少し 安心した。\n　そこで、もう 一度 走り始めた。今度は 毎日とは 決めず、週に 二回か 三回、十分でも 走れれば いいと 考えた。すると、以前より 気軽に 外へ 出られるように なった。時間が ある 日には 少し 遠くまで 行くが、忙しい 日は 近くの こうえんを いっしゅうして 帰る。雨が 続いて 一週間 走れなかった ときも、天気が よく なったら また 始められた。\n　半年 たった 今、走る ことが 生活の 一部に なって いる。前より 速く 走れるように なった わけでは ない。それでも、体を 動かした 後は 気分が よく、夜も よく 眠れる。何より、できなかった 日の 自分を 責めなく なった。\n　もちろん、毎日 続ける ほうが 合って いる 人も いるだろう。しかし、大切なのは 決めた とおりに できるか どうかだけでは ない。自分の 生活や 体の 調子に 合わせて 方法を 変える ことも、続ける 力に なるのだと 今は 思う。",
+        "questions": [
+          {
+            "q": "この 人が 最初に 走るのを やめて しまったのは なぜですか。",
+            "choices": [
+              "一週間 走っても 速く ならなかったから。",
+              "一日 休んだ ことで、失敗したように 感じたから。",
+              "雨の 中で 走って、病気に なったから。",
+              "友人に 毎日 走るのは 危険だと 言われたから。"
+            ],
+            "answer": 1,
+            "explain": "Ban đầu người viết đặt điều kiện phải chạy mỗi ngày. Khi bận việc nghỉ một hôm, người viết cảm thấy như đã thất bại rồi bỏ luôn, không phải vì tốc độ hay bị bệnh."
+          },
+          {
+            "q": "友人は 走る ことに ついて、どのように 考えて いますか。",
+            "choices": [
+              "休んだ 日の 次には、にばい 走らなければ ならない。",
+              "五年 続けたら、もう 走らなくても よい。",
+              "雨でも 疲れて いても、毎日 走るべきだ。",
+              "長く 続けるには、必要な ときに 休んでも よい。"
+            ],
+            "answer": 3,
+            "explain": "Người bạn coi nghỉ ngơi cũng cần thiết để duy trì lâu dài, nghỉ lúc mưa hay mệt và không chạy bù thêm hôm sau."
+          },
+          {
+            "q": "もう 一度 走り始めてから、この 人は どう 変わりましたか。",
+            "choices": [
+              "以前より 速く 走る ことだけを もくひょうに するように なった。",
+              "忙しい 日にも 必ず 三十分 走るように なった。",
+              "一週間 休んだら、最初から あきらめるように なった。",
+              "走れない 日が あっても、また 始められるように なった。"
+            ],
+            "answer": 3,
+            "explain": "Lần sau người viết đặt mục tiêu linh hoạt, nên dù nghỉ cả tuần vì mưa vẫn bắt đầu lại được khi trời đẹp. Tốc độ không phải thay đổi được khẳng định."
+          },
+          {
+            "q": "この ぶんしょうで、この 人が 最も 伝えたい ことは 何ですか。",
+            "choices": [
+              "一度 決めた 方法は、生活が 変わっても 変えては いけない。",
+              "けんこうに なるには、毎日 同じ 時間に 三十分 走るしか ない。",
+              "どんな 人でも、毎日 続けるより 週に 二回の ほうが よい。",
+              "自分に 合うように 方法を 変える ことも、続ける ために 大切だ。"
+            ],
+            "answer": 3,
+            "explain": "Đoạn cuối nêu trọng tâm: điều chỉnh cách làm theo cuộc sống và thể trạng cũng giúp duy trì. Tác giả vẫn thừa nhận có người hợp với việc làm mỗi ngày, không áp một lịch cho tất cả."
+          }
+        ]
+      },
+      {
+        "part": "reading",
+        "passage": "さくら市民センター　秋の 写真教室\n　スマホでも カメラでも 参加できます。どの コースも 定員は 十人です。参加費には 資料代を ふくみます。\n【Ａコース】初めての 写真\n・十月五日（土）10:00〜12:00\n・初めて 写真を 習う 人向け。室内で きほんを れんしゅうします。\n・参加費：1,000円\n【Ｂコース】町を 歩いて 写真を とろう\n・十月六日（日）9:00〜12:00\n・きほんを 習った ことが ある 人向け。こうえんなどで 写真を とります。\n・参加費：1,500円\n・雨の 場合は 十月十三日（日）の 同じ 時間に 変更します。\n【Ｃコース】夜の 写真\n・十月十二日（土）18:00〜20:00\n・きほんを 習った ことが ある 人向け。駅前で 夜の 町を とります。\n・参加費：2,000円\n【申し込み】\n・九月二十日から 三十日までに、センターの ホームページか 窓口で 申し込んで ください。電話では 受け付けません。\n・市内に 住む 学生は、参加費が 500円 安く なります。窓口で 申し込む とき、または 教室の 当日に、がくせいしょうを 見せて ください。\n・参加費は 教室の 当日に 払って ください。道具の 貸し出しは ないので、スマホか カメラを 必ず 持って きて ください。",
+        "questions": [
+          {
+            "q": "市内に 住む 学生の リンさんは 写真の きほんを 習った ことが あります。昼間に 外で 写真を とる コースに 参加したいです。参加費は いくらですか。",
+            "choices": [
+              "500円",
+              "1,000円",
+              "1,500円",
+              "2,000円"
+            ],
+            "answer": 1,
+            "explain": "Ban ngày chụp ngoài trời và đã học cơ bản nên chọn B: 1.500 yên. Học sinh/sinh viên cư trú trong thành phố được giảm 500 yên, còn 1.000 yên."
+          },
+          {
+            "q": "Ｂコースに 申し込んだ 人への あんないとして、正しい ものは どれですか。",
+            "choices": [
+              "九月三十日までなら、電話で 申し込める。",
+              "参加費は 九月の 申し込みの ときに 払う。",
+              "カメラが なければ、当日 センターで 借りられる。",
+              "十月六日が 雨なら、十月十三日の 朝九時に 行く。"
+            ],
+            "answer": 3,
+            "explain": "B chuyển sang ngày 13/10 lúc 9 giờ nếu ngày 6/10 mưa. Chỉ đăng ký trên web hoặc tại quầy, trả phí hôm học và không cho mượn dụng cụ."
+          }
+        ]
+      }
+    ]
+  }
+]

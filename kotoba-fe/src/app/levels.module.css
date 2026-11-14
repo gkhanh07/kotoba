@@ -1,0 +1,14 @@
+/* Level tabs and page links, shared by the list pages. The tabs are the global .seg track (ADR 010); the level names
+   keep the title face, as the line on the home page does. */
+.tabs { margin-top: 2rem; }
+.tabs a { padding-inline: 1.25rem; font-family: var(--font-title); font-weight: 600; font-size: 1.1rem; letter-spacing: .04em; }
+.pager { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule-dim); }
+.pager p { color: var(--silver-dim); font-variant-numeric: tabular-nums; }
+.pager a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 1rem; border: 1px solid var(--rule); border-radius: var(--radius-sm); background: var(--surface-1); box-shadow: var(--edge-hi); color: var(--silver); text-decoration: none; transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.pager a:hover { border-color: var(--rule-strong); background: var(--surface-2); color: var(--chalk); }
+.pager a:active { transform: translateY(1px); }
+.note { margin-top: 2.5rem; color: var(--silver-dim); }
+@media (prefers-reduced-motion: reduce) {
+  .pager a { transition: none; }
+  .pager a:active { transform: none; }
+}

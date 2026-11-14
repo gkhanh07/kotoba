@@ -8,11 +8,11 @@
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -6rem calc(50% - 50vw) auto;
+  inset: -6rem 0 auto;
   height: 34rem;
   background:
-    radial-gradient(50% 70% at 75% 0%, rgb(46 78 170 / 0.28), transparent 70%),
-    linear-gradient(180deg, rgb(13 27 74 / 0.55), transparent);
+    radial-gradient(50% 70% at 75% 0%, color-mix(in srgb, var(--sky-glow) 80%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--sky-1) 55%, transparent), transparent);
   pointer-events: none;
 }
 
@@ -47,8 +47,12 @@
 
 .segment {
   display: flex;
-  border: 1px solid var(--rule);
-  background: var(--asphalt);
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--rule-dim);
+  border-radius: var(--radius);
+  background: var(--surface-0);
 }
 
 .segment a {
@@ -56,28 +60,30 @@
   align-items: center;
   gap: 0.5rem;
   min-height: 44px;
+  white-space: nowrap;
   padding: 0 1rem;
   font-family: var(--font-title);
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.04em;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
   color: var(--silver-dim);
   text-decoration: none;
-  transition: color 160ms, background-color 160ms;
-}
-
-.segment a + a {
-  border-left: 1px solid var(--rule);
+  transition: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
 }
 
 .segment a:hover {
-  color: var(--silver);
-  background: var(--wet);
+  color: var(--chalk);
+  background: var(--surface-2);
 }
 
+/* Selected: a raised step with an amber underline, so the page keeps its one amber fill for the action. */
 .segment a[aria-current="page"] {
-  color: var(--night);
-  background: var(--amber);
+  color: var(--chalk);
+  background: var(--surface-3);
+  border-color: var(--rule-strong);
+  box-shadow: var(--edge-hi), inset 0 -2px 0 var(--amber);
 }
 
 .segment span[lang="ja"] {
@@ -147,6 +153,30 @@
   color: var(--silver);
 }
 
+/* Nothing due or new: say so once above the card, the drill keeps going. */
+.note {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--rule-strong);
+  background: var(--asphalt);
+  color: var(--silver);
+}
+
+.noteLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+}
+
+.noteLinks a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--amber);
+}
+
 /* ── lamps ───────────────────────────────────── */
 .lamps {
   display: inline-flex;
@@ -180,7 +210,7 @@
 /* ── chart ───────────────────────────────────── */
 .chartWrap {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 22rem;
+  grid-template-columns: minmax(0, 1fr) 24rem;
   gap: clamp(1.5rem, 3vw, 3rem);
   align-items: start;
   margin-top: 2.5rem;
@@ -188,7 +218,14 @@
 
 .chart {
   display: grid;
-  grid-template-columns: 2.25rem repeat(5, minmax(0, 1fr));
+  grid-template-columns: 2.25rem repeat(var(--cols), minmax(0, 1fr));
+  gap: 6px;
+}
+
+/* special words have no sound grid, just a wrap of wider cells */
+.words {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
   gap: 6px;
 }
 
@@ -212,35 +249,56 @@
 }
 
 .gap {
-  background: repeating-linear-gradient(135deg, transparent 0 6px, rgb(38 48 74 / 0.45) 6px 7px);
+  background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--rule) 45%, transparent) 6px 7px);
 }
 
 .cell {
+  position: relative;
   display: grid;
   grid-template-rows: auto auto auto;
+  align-content: center;
   justify-items: center;
-  gap: 0.15rem;
-  padding: 0.6rem 0.25rem 0.55rem;
-  background: var(--asphalt);
+  gap: 0.2rem;
+  min-height: 5.75rem;
+  padding: 0.75rem 0.25rem 0.65rem;
+  background: var(--surface-1);
   border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--edge-hi);
   color: var(--silver);
   cursor: pointer;
-  transition: border-color 160ms, background-color 160ms, transform 160ms var(--ease-out), box-shadow 240ms var(--ease-out);
+  transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out), box-shadow var(--dur) var(--ease-out);
 }
 
 .cell:hover {
-  background: var(--wet);
-  border-color: var(--silver-dim);
+  background: var(--surface-2);
+  border-color: var(--rule-strong);
+}
+
+.cell:active {
+  transform: translateY(1px);
 }
 
 .cell[aria-pressed="true"] {
   border-color: var(--amber);
-  background: var(--wet);
-  box-shadow: inset 0 0 0 1px var(--amber), var(--glow-amber);
+  background: var(--surface-3);
+  box-shadow: var(--edge-hi), inset 0 0 0 1px var(--amber), var(--glow-amber);
+}
+
+/* The selection's second channel: a notch in the corner, a shape and not only a colour (ADR 010). */
+.cell[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  border-top: 10px solid var(--amber);
+  border-left: 10px solid transparent;
 }
 
 .cellChar {
-  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-size: min(clamp(1.75rem, 3vw, 2.6rem), calc(8.4rem / var(--len, 1)));
+  white-space: nowrap;
   font-weight: 700;
   line-height: 1.15;
 }
@@ -251,7 +309,7 @@
 }
 
 .cellRomaji {
-  font-size: 0.875rem;
+  font-size: var(--fs-meta);
   color: var(--silver-dim);
 }
 
@@ -279,9 +337,11 @@
   top: 1.5rem;
   display: grid;
   gap: 1.1rem;
-  padding: 1.5rem;
-  background: linear-gradient(180deg, var(--wet), var(--asphalt));
+  padding: var(--space-panel);
+  background: var(--surface-3);
   border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--edge-hi);
 }
 
 .detailSign {
@@ -289,15 +349,17 @@
   place-items: center;
   aspect-ratio: 1;
   background:
-    radial-gradient(circle at 50% 45%, rgb(255 61 110 / 0.14), transparent 65%),
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--neon) 14%, transparent), transparent 65%),
     var(--night);
   border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
 }
 
 .detailSign span {
   font-family: var(--font-kana) !important;
   font-weight: 700;
-  font-size: clamp(6rem, 11vw, 9rem);
+  font-size: min(clamp(6rem, 11vw, 9rem), calc(16.5rem / var(--len, 1)));
+  white-space: nowrap;
   line-height: 1;
   color: var(--neon-core);
   text-shadow: 0 0 6px var(--neon), 0 0 22px var(--neon), var(--glow-neon);
@@ -332,6 +394,19 @@
   color: var(--silver);
 }
 
+.memory {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+/* "Learning, due in N days" is long on a phone sheet: let it wrap instead of widening the sheet. */
+.memory :global(.tag) {
+  white-space: normal;
+  padding-block: 0.2em;
+}
+
 /* ── quiz ────────────────────────────────────── */
 .quiz {
   display: grid;
@@ -350,7 +425,7 @@
   height: clamp(18rem, 56svh, 32rem);
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 42%, rgb(255 61 110 / 0.12), transparent 62%),
+    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--neon) 12%, transparent), transparent 62%),
     var(--night);
   border: 1px solid var(--rule);
   transition: border-color 200ms;
@@ -359,7 +434,8 @@
 .cardChar {
   font-family: var(--font-kana) !important;
   font-weight: 700;
-  font-size: clamp(7rem, 17vw, 13rem);
+  font-size: min(clamp(7rem, 17vw, 13rem), calc(min(70vw, 30rem) / var(--len, 1)));
+  white-space: nowrap;
   line-height: 1;
   color: var(--neon-core);
   text-shadow: 0 0 6px var(--neon), 0 0 24px var(--neon), var(--glow-neon);
@@ -397,7 +473,7 @@
   position: absolute;
   inset: 0 0 auto;
   height: 30%;
-  background: linear-gradient(180deg, transparent, rgb(255 177 59 / 0.22), transparent);
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--amber) 22%, transparent), transparent);
   animation: scan 700ms var(--ease-out) both;
   pointer-events: none;
 }
@@ -493,7 +569,7 @@
 }
 
 .choice:disabled {
-  color: var(--silver-mute);
+  color: var(--silver-dim);
   cursor: default;
 }
 
@@ -504,7 +580,7 @@
 }
 
 .choice[data-mark="answer"] kbd {
-  border-color: rgb(5 6 8 / 0.4);
+  border-color: color-mix(in srgb, var(--night) 40%, transparent);
   color: var(--night);
 }
 
@@ -547,49 +623,27 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ── empty / status ──────────────────────────── */
-.empty,
+/* ── status ──────────────────────────────────── */
 .status {
   display: grid;
   justify-items: start;
   gap: 1.1rem;
   max-width: 44rem;
+  min-height: 50svh;
+  align-content: center;
   margin: 3rem auto 0;
   padding: 0 var(--gutter);
 }
 
-.empty {
-  padding: 0;
-  margin-left: 0;
-}
-
-.empty p,
 .status p {
   max-width: 62ch;
   color: var(--silver-dim);
 }
 
-.status {
-  min-height: 50svh;
-  align-content: center;
-}
-
-.emptySign,
 .statusSign {
   font-family: var(--font-sign) !important;
   font-size: clamp(3.5rem, 8vw, 5.5rem);
   line-height: 1;
-  color: var(--amber-core);
-  text-shadow: 0 0 6px var(--amber), 0 0 24px var(--amber), var(--glow-amber);
-}
-
-/* Lights once and holds. The sign is dark for the first steps, so the finished
-   screen arrives as a room with a sign in it that then switches on. */
-.emptySign {
-  animation: ignite 900ms steps(1, end) both;
-}
-
-.statusSign {
   color: var(--neon-core);
   text-shadow: 0 0 6px var(--neon), 0 0 24px var(--neon), var(--glow-neon);
   animation: ignite 1.4s steps(1, end) infinite;
@@ -638,12 +692,25 @@
 }
 
 .resetBtn:disabled {
-  color: var(--silver-mute);
+  color: var(--silver-dim);
   text-decoration: none;
-  cursor: default;
+  cursor: not-allowed;
 }
 
 /* ── small screens ───────────────────────────── */
+/* Phones: every segment becomes full-width two-up, so the 4 groups sit 2×2 instead of a ragged wrap. */
+@media (max-width: 560px) {
+  .segment {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .segment a {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 900px) {
   .chartWrap,
   .quiz {
@@ -651,20 +718,26 @@
   }
 
   .chart {
-    grid-template-columns: 1.5rem repeat(5, minmax(0, 1fr));
+    grid-template-columns: 1.5rem repeat(var(--cols), minmax(0, 1fr));
     gap: 4px;
+  }
+
+  .cell {
+    min-height: 4.5rem;
+    padding: 0.5rem 0.15rem 0.45rem;
   }
 
   .detail {
     position: sticky;
     top: auto;
     bottom: 0;
-    grid-template-columns: 5.5rem 1fr;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
     align-items: center;
     gap: 0.5rem 1rem;
     padding: 0.85rem;
     z-index: 2;
-    box-shadow: 0 -12px 30px rgb(5 6 8 / 0.8);
+    border-radius: var(--radius) var(--radius) 0 0;
+    box-shadow: var(--edge-hi), 0 -12px 30px color-mix(in srgb, var(--night) 80%, transparent);
   }
 
   .detailSign {
@@ -672,7 +745,7 @@
   }
 
   .detailSign span {
-    font-size: 3.6rem;
+    font-size: min(3.6rem, calc(4.6rem / var(--len, 1)));
   }
 
   .detailRomaji {
@@ -713,10 +786,22 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .cell:active {
+    transform: none;
+  }
+
+  .meter strong,
+  .detailSign span,
   .cardChar,
   .statusSign,
   .card[data-state="wrong"] .cardChar,
   .card[data-state="right"]::after {
     animation: none;
   }
+}
+
+/* Key hints only where there is a mouse, as flashcards' KeyHelp (BUG-023): on touch they are noise. */
+@media not (pointer: fine) {
+  .choice kbd,
+  .kbdOnBtn { display: none; }
 }
