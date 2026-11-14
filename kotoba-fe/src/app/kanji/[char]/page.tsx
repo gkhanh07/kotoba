@@ -5,6 +5,7 @@ import { getKanji, getKanjiDetail } from "@/lib/content";
 import { kanjiTitle, libraryText, splitReadings, vocabHref } from "@/lib/library";
 import { getLang } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
+import { SaveButton } from "../../SaveButton";
 import { Speak } from "../../Speak";
 import { KanjiMemory } from "./KanjiMemory";
 import s from "../kanji.module.css";
@@ -48,7 +49,7 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
             <Arrow back />
             {t.back}
           </Link>
-          <Speak text={k.char} label={t.speak} />
+          <div className={s.barTools}><SaveButton id={k.id} lang={lang} /><Speak text={k.char} label={t.speak} /></div>
         </div>
         <div className={s.top}>
         <article className={s.detail}>

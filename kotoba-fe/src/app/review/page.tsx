@@ -15,13 +15,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const cap = (x: string) => x.charAt(0).toUpperCase() + x.slice(1);
 
-// Bare /review is the hub. ?start=1, ?kind=, ?lesson= and ?weak=1 open a session;
+// Bare /review is the hub. ?start=1, ?kind=, ?lesson=, ?weak=1 and ?saved=1 (starred items) open a session;
 // ?kind= narrows the queue to one kind (unknown values are ignored), ?lesson=n to one lesson.
 export default async function ReviewPage(props: PageProps<"/review">) {
   const q = await props.searchParams;
   const lang = await getLang();
   const t = libraryText[lang];
-  const isSession = ["start", "kind", "lesson", "weak"].some((key) => q[key] !== undefined);
+  const isSession = ["start", "kind", "lesson", "weak", "saved"].some((key) => q[key] !== undefined);
   const [all, user] = await Promise.all([Promise.all([getKana(), getKanji(), getVocab(), getLessons()]), currentUser()]);
   const lessons = all[3];
   // A lesson pins its own level, so a lesson past the goal still opens; ?level= comes from /vocab's tab.
@@ -83,7 +83,8 @@ export default async function ReviewPage(props: PageProps<"/review">) {
   return (
     <>
       <SiteBar current="review" />
-      <ReviewApp items={items} lang={lang} kind={kind} lesson={lesson} weak={q.weak === "1"} />
+      {/* Keyed by scope: following "Review everything" from a scoped queue must rebuild the queue, not keep the old one. */}
+      <ReviewApp key={[kind, lesson?.n, level, q.weak, q.saved].join("|")} items={items} lang={lang} kind={kind} lesson={lesson} weak={q.weak === "1"} saved={q.saved === "1"} />
       <SiteFooter />
     </>
   );

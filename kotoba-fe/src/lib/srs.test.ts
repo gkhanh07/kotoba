@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import oldDeck from "../../tests/fixtures/progress.v1.without-lapses.json";
-import { KNOWN_AT, addDays, apply, boxOf, choicesFor, daysUntil, dueCount, forget, isKnown, isLearned, migrate, nextDue, parseSrs, pickNext, queue, weakest, type Srs } from "./srs";
+import { KNOWN_AT, addDays, apply, boxOf, choicesFor, daysUntil, dueCount, forget, isKnown, isLearned, migrate, nextDue, parseSrs, pickNext, queue, toggleSaved, weakest, type Srs } from "./srs";
 
 const D = "2026-11-02";
 const items = ["a", "i", "u"].map((r) => ({ id: `hiragana:${r}` }));
@@ -320,5 +320,31 @@ describe("lapses cap", () => {
   });
   it("rejects a stored deck with more lapses than MAX_LAPSES", () => {
     expect(parseSrs(JSON.stringify({ k: { box: 0, due: "2026-11-02", at: 1, lapses: 10001 } }))).toBeNull();
+  });
+});
+
+// Phase 40a: saved?: true marks an item the learner starred. Missing means not saved (ADR 002).
+describe("toggleSaved and saved", () => {
+  it("saving an unseen item adds a box 0 card due today", () => {
+    expect(toggleSaved({}, "k", D, NOW).k).toEqual({ box: 0, due: D, at: NOW, saved: true });
+  });
+  it("saving and unsaving keep the schedule and move at", () => {
+    const s = { k: { box: 3, due: "2026-11-20", at: 1, lapses: 2 } };
+    const on = toggleSaved(s, "k", D, NOW);
+    expect(on.k).toEqual({ box: 3, due: "2026-11-20", at: NOW, lapses: 2, saved: true });
+    const off = toggleSaved(on, "k", D, NOW + 1);
+    expect(off.k).toEqual({ box: 3, due: "2026-11-20", at: NOW + 1, lapses: 2 });
+    expect(off.k).not.toHaveProperty("saved");
+  });
+  it("a hit and a miss keep the flag", () => {
+    const s = { k: { box: 1, due: D, at: 1, saved: true as const } };
+    expect(apply(s, "k", true, D, NOW).k.saved).toBe(true);
+    expect(apply(s, "k", false, D, NOW).k.saved).toBe(true);
+    expect(apply({ k: card(1) }, "k", false, D, NOW).k).not.toHaveProperty("saved");
+  });
+  it("parseSrs reads an old deck without saved and refuses a saved that is not true", () => {
+    expect(parseSrs(JSON.stringify(oldDeck))).toEqual(oldDeck);
+    expect(parseSrs('{"k":{"box":0,"due":"2026-11-02","at":1,"saved":true}}')).not.toBeNull();
+    expect(parseSrs('{"k":{"box":0,"due":"2026-11-02","at":1,"saved":false}}')).toBeNull();
   });
 });

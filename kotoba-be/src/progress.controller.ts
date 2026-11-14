@@ -31,8 +31,8 @@ export class ProgressController {
       const known = new Set((await tx.item.findMany({ where: { id: { in: ids } }, select: { id: true } })).map((i) => i.id));
       const server = cardsOf(await tx.card.findMany({ where: { userId } }));
       for (const [itemId, pushedCard] of Object.entries(newer(server, cards, known))) {
-        // Only the known fields are written; a missing lapses is an old client's card and counts 0.
-        const c = { box: pushedCard.box, due: pushedCard.due, at: pushedCard.at, lapses: pushedCard.lapses ?? 0 };
+        // Only the known fields are written; a missing lapses is an old client's card and counts 0, a missing saved is false.
+        const c = { box: pushedCard.box, due: pushedCard.due, at: pushedCard.at, lapses: pushedCard.lapses ?? 0, saved: pushedCard.saved === true };
         await tx.card.upsert({ where: { userId_itemId: { userId, itemId } }, create: { userId, itemId, ...c }, update: c });
       }
 

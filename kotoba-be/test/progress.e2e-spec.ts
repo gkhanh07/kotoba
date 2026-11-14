@@ -178,4 +178,35 @@ describe('progress (e2e)', () => {
       expect(after.body.cards['hiragana:ki']).toBeUndefined();
     });
   });
+
+  // Phase 40a (AC-2): the star travels with the card; old rows and old clients read as not saved.
+  describe('saved (phase 40a)', () => {
+    const EMAIL = 'saved@example.com';
+    let st: string;
+    const sput = (body: unknown) => put(body, st);
+    const clean = () => app.get(Db).user.deleteMany({ where: { email: EMAIL } });
+
+    beforeAll(async () => {
+      await clean();
+      const res = await http.post('/auth/register').send({ email: EMAIL, password: 'password-1', goal: 'N5' }).expect(201);
+      st = res.body.token;
+    });
+    afterAll(clean);
+
+    it('stores saved, returns it from push, pull and export, and a newer unsaved push clears it', async () => {
+      const pushed = await sput({ cards: { 'hiragana:a': { ...card(0, 100), saved: true }, 'hiragana:i': card(0, 100) } }).expect(200);
+      expect(pushed.body.cards['hiragana:a']).toEqual({ ...read(0, 100), saved: true });
+      expect(pushed.body.cards['hiragana:i']).toEqual(read(0, 100));
+      const exported = await http.get('/me/export').set('Authorization', `Bearer ${st}`).expect(200);
+      expect(exported.body.cards['hiragana:a'].saved).toBe(true);
+      expect(exported.body.cards['hiragana:i']).not.toHaveProperty('saved');
+      const cleared = await sput({ cards: { 'hiragana:a': { ...card(0, 200), saved: false } } }).expect(200);
+      expect(cleared.body.cards['hiragana:a']).toEqual(read(0, 200));
+    });
+
+    it('rejects a saved that is not a boolean', async () => {
+      const res = await sput({ cards: { 'hiragana:u': { ...card(0, 100), saved: 'yes' } } }).expect(400);
+      expect(res.body.message).toBe('cards');
+    });
+  });
 });

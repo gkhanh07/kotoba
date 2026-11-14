@@ -83,7 +83,7 @@ describe("libraryText exact strings", () => {
     expect(libraryText.vi.search.found(3, "ka")).toBe("3 kết quả cho “ka”");
   });
   it("lists the known filters and kinds", () => {
-    expect([...FILTERS]).toEqual(["all", "learned", "new"]);
+    expect([...FILTERS]).toEqual(["all", "learned", "new", "saved"]);
     expect([...KINDS]).toEqual(["kana", "kanji", "vocab"]);
   });
 });

@@ -36,6 +36,7 @@
 
 /* ── detail ───────────────────────────────────── */
 .detailBar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 44px; }
+.barTools { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; }
 .back { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: var(--silver); text-decoration: none; }
 .back:hover { color: var(--amber-core); }
 .detail { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: clamp(1.5rem, 5vw, 4rem); margin-top: 1.5rem; }

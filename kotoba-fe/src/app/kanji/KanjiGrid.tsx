@@ -26,8 +26,9 @@ export function KanjiGrid({ groups, filter, none, lang }: { groups: Group[]; fil
   const [peekId, setPeekId] = useState<string>();
   if (filter !== "all" && !deck) return <p className={s.wait}>—</p>;
   const learned = (id: string) => !!deck && isLearned(deck.srs, id);
+  const keep = (id: string) => filter === "saved" ? !!deck?.srs[id]?.saved : learned(id) === (filter === "learned");
   const shown = groups
-    .map((g) => ({ ...g, items: filter === "all" ? g.items : g.items.filter((k) => learned(k.id) === (filter === "learned")) }))
+    .map((g) => ({ ...g, items: filter === "all" ? g.items : g.items.filter((k) => keep(k.id)) }))
     .filter((g) => g.items.length);
   if (!shown.length) return <p className={s.none}>{none}</p>;
   const all = shown.flatMap((g) => g.items);

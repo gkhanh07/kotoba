@@ -5,6 +5,7 @@ import { getKanji, getVocabItem } from "@/lib/content";
 import { kanjiIn, libraryText } from "@/lib/library";
 import { getLang } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
+import { SaveButton } from "../../SaveButton";
 import { Speak } from "../../Speak";
 import k from "../../kanji/kanji.module.css";
 import s from "../vocab.module.css";
@@ -57,7 +58,7 @@ export default async function VocabPage(props: PageProps<"/vocab/[word]">) {
       <main className={k.app}>
         <div className={k.detailBar}>
           <Link href="/vocab" className={k.back}><Arrow back />{t.back}</Link>
-          <Speak text={w.reading} label={t.speak} />
+          <div className={k.barTools}><SaveButton id={w.id} lang={lang} /><Speak text={w.reading} label={t.speak} /></div>
         </div>
         <div className={s.wordTop}>
           <article className={s.detail}>

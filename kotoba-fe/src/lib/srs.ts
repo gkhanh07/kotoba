@@ -4,8 +4,9 @@ export { INTERVALS, KNOWN_AT };
 
 export const SRS_KEY = "kotoba.srs.v1";
 
-// due: study day YYYY-MM-DD (activity.ts dayKey), at: ms of last change, lapses: wrong answers so far (missing = 0)
-export type Card = { box: number; due: string; at: number; lapses?: number };
+// due: study day YYYY-MM-DD (activity.ts dayKey), at: ms of last change, lapses: wrong answers so far (missing = 0),
+// saved: starred by the learner (phase 40a, missing = not saved)
+export type Card = { box: number; due: string; at: number; lapses?: number; saved?: true };
 export type Srs = Record<string, Card>;
 
 export const addDays = (day: string, n: number): string => {
@@ -34,12 +35,20 @@ export function nextDue(s: Srs, today: string, ids: string[]): { day: string; n:
 // but only when the card is new or due: drilling ahead of schedule does not speed it up.
 export function apply(s: Srs, id: string, correct: boolean, today: string, now: number): Srs {
   const c = s[id];
-  if (!correct) return { ...s, [id]: { box: 0, due: today, at: now, lapses: Math.min((c?.lapses ?? 0) + 1, MAX_LAPSES) } };
+  const keep = c?.saved ? { saved: true as const } : {};
+  if (!correct) return { ...s, [id]: { box: 0, due: today, at: now, lapses: Math.min((c?.lapses ?? 0) + 1, MAX_LAPSES), ...keep } };
   if (c && !isDue(c, today)) return s;
   const box = (c?.box ?? 0) + 1;
   const next: Card = { box, due: addDays(today, INTERVALS[Math.min(box, INTERVALS.length) - 1]), at: now };
   if (c?.lapses !== undefined) next.lapses = c.lapses;
-  return { ...s, [id]: next };
+  return { ...s, [id]: { ...next, ...keep } };
+}
+
+// Star or unstar. Starring an unseen item adds it as a new card due today: saving is for studying.
+// Unstarring keeps the schedule. at moves either way, so sync carries the change.
+export function toggleSaved(s: Srs, id: string, today: string, now: number): Srs {
+  const { saved, ...rest } = s[id] ?? { box: 0, due: today, at: now };
+  return { ...s, [id]: saved ? { ...rest, at: now } : { ...rest, at: now, saved: true } };
 }
 
 // Often-wrong cards, worst first: most lapses, then lowest box, then id so the order is stable.
@@ -95,7 +104,7 @@ export function parseSrs(raw: string): Srs | null {
   try {
     const o = JSON.parse(raw) as Srs | null;
     if (!o || typeof o !== "object" || Array.isArray(o)) return null;
-    const ok = Object.values(o).every((c) => c && Number.isInteger(c.box) && typeof c.due === "string" && typeof c.at === "number" && (c.lapses === undefined || (Number.isInteger(c.lapses) && c.lapses >= 0 && c.lapses <= MAX_LAPSES)));
+    const ok = Object.values(o).every((c) => c && Number.isInteger(c.box) && typeof c.due === "string" && typeof c.at === "number" && (c.lapses === undefined || (Number.isInteger(c.lapses) && c.lapses >= 0 && c.lapses <= MAX_LAPSES)) && (c.saved === undefined || c.saved === true));
     return ok ? o : null;
   } catch {
     return null;

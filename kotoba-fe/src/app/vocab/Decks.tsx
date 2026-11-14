@@ -25,6 +25,8 @@ export function Decks({ decks, from, to, lang, level }: { decks: Deck[]; from: n
   const learned = stats.reduce((n, d) => n + d.learned, 0);
   const total = stats.reduce((n, d) => n + d.ids.length, 0);
   const next = stats.find((d) => d.learned < d.ids.length);
+  // Starred words of this level (phase 40a): their own queue, only offered once there are some.
+  const saved = srs ? decks.reduce((n, d) => n + d.ids.filter((id) => srs[id]?.saved).length, 0) : 0;
   return (
     <div className={s.layout}>
       <section className={`panel ${s.summary}`} aria-labelledby="vocab-progress">
@@ -44,6 +46,7 @@ export function Decks({ decks, from, to, lang, level }: { decks: Deck[]; from: n
           ) : next && (
             <Link href={`/flashcards?deck=${next.lesson}`} className="btn">{t.next} <Arrow /></Link>
           ))}
+          {saved > 0 && <Link href={`/review?saved=1&kind=vocab&level=${level}`} className="btn btnGhost">{t.saved(saved)} <Arrow /></Link>}
         </div>
       </section>
       <div>

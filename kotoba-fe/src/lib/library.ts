@@ -121,7 +121,7 @@ export function currentLesson(stops: Stop[], srs: Srs): number | undefined {
   return (open.find((p) => learned(p) > 0) ?? open[0])?.lesson;
 }
 
-export const FILTERS = ["all", "learned", "new"] as const;
+export const FILTERS = ["all", "learned", "new", "saved"] as const;
 export type Filter = (typeof FILTERS)[number];
 
 const en = {
@@ -129,7 +129,7 @@ const en = {
     title: (l: string) => `${l} kanji`,
     lede: (n: number) => `${n} kanji, ordered by lesson. Tap one for its readings, Hán Việt and the words that use it.`,
     filter: "Show",
-    filters: { all: "All", learned: "Learned", new: "Not started" } satisfies Record<Filter, string>,
+    filters: { all: "All", learned: "Learned", new: "Not started", saved: "Saved" } satisfies Record<Filter, string>,
     lesson: (n: number, title: string) => `Lesson ${n} · ${title}`,
     none: "No kanji here yet.",
     back: "Kanji",
@@ -140,6 +140,7 @@ const en = {
     study: (n: number) => `Study lesson ${n}`,
     speak: "Play",
     similar: "Easily confused with",
+    save: "Save",
     more: (n: number) => `${n} rarer readings`,
     state: { started: "Started", learned: "Learned", known: "Known" },
     peek: "Quick look",
@@ -159,6 +160,7 @@ const en = {
     fresh: "Not started",
     review: (n: number) => `Review ${n} due ${n === 1 ? "word" : "words"}`,
     next: "Study the next deck",
+    saved: (n: number) => `Review ${n} saved ${n === 1 ? "word" : "words"}`,
     back: "Vocabulary",
     reading: "Reading", romaji: "Romaji", meaning: "Meaning", kanjiForm: "Kanji spelling", lessonLabel: "Lesson",
     example: "Example", notes: "Notes", kanji: "Kanji in this word", speak: "Play",
@@ -227,6 +229,8 @@ const en = {
     scope: { all: "Everything due", kana: "Kana due", kanji: "Kanji due", vocab: "Words due" } satisfies Record<"all" | Kind, string>,
     scopeLesson: (n: number, title: string) => `Lesson ${n} · ${title}`,
     daily: (n: number) => `Due items and new items from lesson ${n}`,
+    savedScope: "Saved items",
+    savedEmpty: "Nothing saved yet. Star a word or kanji on its page.",
     all: "Review everything",
     kinds: { kana: "Kana", kanji: "Kanji", vocab: "Words" } satisfies Record<Kind, string>,
     left: (n: number, parts: string) => `${n} left${parts ? ` · ${parts}` : ""}`,
@@ -276,6 +280,7 @@ const en = {
       kindNote: { kana: "Hiragana & Katakana", kanji: "Readings and meanings", vocab: "Words and phrases" } satisfies Record<Kind, string>,
       weak: "Needs work",
       weakAll: "See all",
+      saved: (n: number) => `Saved: ${n} ${n === 1 ? "item" : "items"}`,
       weakRow: (kind: string) => `${kind}: often wrong`,
       weakCount: (n: number) => `${n} ${n === 1 ? "item" : "items"}`,
       weakEmpty: "Nothing is often wrong yet.",
@@ -318,7 +323,7 @@ const vi: typeof en = {
     title: (l) => `Kanji ${l}`,
     lede: (n) => `${n} chữ, sắp xếp theo bài học. Chọn một chữ để xem cách đọc, âm Hán Việt và các từ chứa chữ đó.`,
     filter: "Lọc",
-    filters: { all: "Tất cả", learned: "Đã học", new: "Chưa học" },
+    filters: { all: "Tất cả", learned: "Đã học", new: "Chưa học", saved: "Đã lưu" },
     lesson: (n, title) => `Bài ${n} · ${title}`,
     none: "Chưa có chữ nào ở đây.",
     back: "Kanji",
@@ -329,6 +334,7 @@ const vi: typeof en = {
     study: (n) => `Học bài ${n}`,
     speak: "Đọc",
     similar: "Dễ nhầm với",
+    save: "Lưu",
     more: (n) => `${n} âm ít dùng`,
     state: { started: "Đang học", learned: "Đã học", known: "Đã thuộc" },
     peek: "Xem nhanh",
@@ -348,6 +354,7 @@ const vi: typeof en = {
     fresh: "Chưa học",
     review: (n) => `Ôn ${n} từ đến hạn`,
     next: "Học bài tiếp",
+    saved: (n) => `Ôn ${n} từ đã lưu`,
     back: "Từ vựng",
     reading: "Cách đọc", romaji: "Romaji", meaning: "Nghĩa", kanjiForm: "Cách viết kanji", lessonLabel: "Bài",
     example: "Ví dụ", notes: "Ghi chú", kanji: "Kanji trong từ", speak: "Đọc",
@@ -416,6 +423,8 @@ const vi: typeof en = {
     scope: { all: "Tất cả các mục đến hạn ôn", kana: "Kana đến hạn ôn", kanji: "Kanji đến hạn ôn", vocab: "Từ vựng đến hạn ôn" },
     scopeLesson: (n, title) => `Bài ${n} · ${title}`,
     daily: (n) => `Mục đến hạn ôn và mục mới của bài ${n}`,
+    savedScope: "Mục đã lưu",
+    savedEmpty: "Chưa lưu mục nào. Bấm Lưu ở trang một từ hoặc một kanji.",
     all: "Ôn tất cả",
     kinds: { kana: "Kana", kanji: "Kanji", vocab: "Từ vựng" },
     left: (n, parts) => `Còn ${n} mục${parts ? ` · ${parts}` : ""}`,
@@ -464,6 +473,7 @@ const vi: typeof en = {
       kindNote: { kana: "Hiragana & Katakana", kanji: "Âm đọc và ý nghĩa", vocab: "Từ và cụm từ" },
       weak: "Kiến thức cần cải thiện",
       weakAll: "Xem tất cả",
+      saved: (n) => `Đã lưu: ${n} mục`,
       weakRow: (kind) => `${kind} hay sai`,
       weakCount: (n) => `${n} mục`,
       weakEmpty: "Chưa có mục nào hay sai.",

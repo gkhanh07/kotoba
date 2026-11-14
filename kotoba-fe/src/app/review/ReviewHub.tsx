@@ -21,6 +21,8 @@ export function ReviewHub({ cards, lang }: { cards: HubCard[]; lang: Lang }) {
   const deck = useDeck();
   const summary = deck ? hubSummary(cards, deck.srs, today()) : null;
   const dash = h.noRetention;
+  // Starred items in scope (phase 40a); the queue is offered only once there are some.
+  const savedN = deck ? cards.filter((c) => deck.srs[c.id]?.saved).length : 0;
   const weakKinds = summary ? KINDS.filter((k) => summary.kinds[k].weak > 0) : [];
 
   return (
@@ -67,6 +69,7 @@ export function ReviewHub({ cards, lang }: { cards: HubCard[]; lang: Lang }) {
             </li>
           ))}
         </ul>
+        {savedN > 0 && <p><Link href="/review?saved=1" className={s.textLink}>{h.saved(savedN)} <Arrow /></Link></p>}
       </section>
 
       {summary && summary.started > 0 && (

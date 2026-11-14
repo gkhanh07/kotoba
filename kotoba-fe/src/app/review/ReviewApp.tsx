@@ -15,8 +15,8 @@ import { KeyHelp } from "../flashcards/KeyHelp";
 import f from "../flashcards/flashcards.module.css";
 import s from "./review.module.css";
 
-export function ReviewApp({ items, lang, kind, lesson, weak }: {
-  items: ReviewItem[]; lang: Lang; kind?: Kind; weak?: boolean; lesson?: { n: number; title: string };
+export function ReviewApp({ items, lang, kind, lesson, weak, saved }: {
+  items: ReviewItem[]; lang: Lang; kind?: Kind; weak?: boolean; saved?: boolean; lesson?: { n: number; title: string };
 }) {
   const t = libraryText[lang].review;
   const deck = useDeck();
@@ -34,7 +34,7 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
 
   const scoped = items.filter((i) => (!kind || i.kind === kind) && (!lesson || i.lesson === lesson.n));
   // No filter: today's session, due items plus a capped number of new ones from the current lesson.
-  const isDaily = !kind && !lesson && !weak;
+  const isDaily = !kind && !lesson && !weak && !saved;
   if (deck && order === null) {
     const day = today();
     // Weak queue: worst first, whatever the due date.
@@ -45,7 +45,9 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
     const fresh = lesson ? scoped.filter((i) => !deck.srs[i.id]) : [];
     const queue = due.length + fresh.length || !lesson ? [...due, ...fresh] : scoped;
     const newItems = isDaily ? freshFor(stopsOf(items), deck.srs, learnedToday(), NEW_PER_DAY) : { ids: [] };
-    setOrder(weak ? ranked.map((i) => i.id) : [...queue.map((i) => i.id), ...newItems.ids]);
+    // Saved queue: every starred item in scope, due or not.
+    const starred = saved ? scoped.filter((i) => deck.srs[i.id]?.saved) : [];
+    setOrder(saved ? starred.map((i) => i.id) : weak ? ranked.map((i) => i.id) : [...queue.map((i) => i.id), ...newItems.ids]);
     if (newItems.ids.length) setFreshLesson(newItems.lesson);
   }
   const byId = new Map(items.map((i) => [i.id, i]));
@@ -96,7 +98,7 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
   const left = order ? order.slice(index) : [];
   const parts = KINDS.map((k) => [k, left.filter((id) => byId.get(id)?.kind === k).length] as const)
     .filter(([, n]) => n > 0).map(([k, n]) => `${t.kinds[k]} ${n}`).join(" · ");
-  const scope = [lesson && t.scopeLesson(lesson.n, lesson.title), kind && (lesson ? t.kinds[kind] : t.scope[kind])]
+  const scope = [saved && t.savedScope, lesson && t.scopeLesson(lesson.n, lesson.title), kind && (lesson || saved ? t.kinds[kind] : t.scope[kind])]
     .filter(Boolean).join(" · ") || (freshLesson ? t.daily(freshLesson) : t.scope.all);
   // The first lesson that still has something never answered right.
   const nextLesson = deck && items.find((i) => !isLearned(deck.srs, i.id))?.lesson;
@@ -125,7 +127,7 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
         <div className={f.side}>
           <div className={f.toolbar}>
             <p>{scope}</p>
-            {(kind || lesson) && <div className={f.tools}><Link href="/review?start=1" className={s.textLink}>{t.all}</Link></div>}
+            {(kind || lesson || saved) && <div className={f.tools}><Link href="/review?start=1" className={s.textLink}>{t.all}</Link></div>}
           </div>
           {item && order && (
             <>
@@ -138,7 +140,7 @@ export function ReviewApp({ items, lang, kind, lesson, weak }: {
           )}
         </div>
         {!deck || !order ? <p className={f.notice} role="status">…</p>
-          : !order.length ? (weak ? panel(t.weakEmpty) : soon ? panel(t.waiting, t.next(daysUntil(soon.day, today()), soon.n)) : panel(t.empty))
+          : !order.length ? (saved ? panel(t.savedEmpty) : weak ? panel(t.weakEmpty) : soon ? panel(t.waiting, t.next(daysUntil(soon.day, today()), soon.n)) : panel(t.empty))
           : !item ? <>{notice && <p className={f.notice}>{notice}</p>}{panel(t.done, soon ? t.next(daysUntil(soon.day, today()), soon.n) : undefined, stats)}</>
           : (
             <>

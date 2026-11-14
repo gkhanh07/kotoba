@@ -10,7 +10,7 @@
 .summaryCount { margin: 0; color: var(--silver); font-size: var(--fs-body); font-variant-numeric: tabular-nums; }
 .summaryDue { margin: 0; color: var(--silver-dim); font-size: var(--fs-caption); font-variant-numeric: tabular-nums; }
 /* Holds the button's height before the schedule loads, so the panel does not jump. */
-.action { min-height: 48px; margin-top: .25rem; }
+.action { display: flex; flex-wrap: wrap; gap: .5rem; min-height: 48px; margin-top: .25rem; }
 .decks { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--rule-dim); }
 .deck { position: relative; display: grid; grid-template-columns: 5rem 1fr 6rem 15rem 18px; align-items: center; gap: 1.25rem; min-height: 60px; padding: .6rem .75rem; border-bottom: 1px solid var(--rule-dim); color: var(--silver); text-decoration: none; font-variant-numeric: tabular-nums; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
 .deck:hover { background: var(--surface-2); color: var(--chalk); }

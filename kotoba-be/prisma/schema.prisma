@@ -36,10 +36,10 @@ model Token {
 
 // Content is reseeded from content/*.json on boot; data holds the JSON for the item.
 model Item {
-  id     String  @id
+  id     String @id
   kind   String
   lesson Int?
-  level  Int     @default(5)
+  level  Int    @default(5)
   sort   Int
   search String
   data   String
@@ -52,12 +52,13 @@ model Item {
 model Card {
   userId String
   itemId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  item   Item   @relation(fields: [itemId], references: [id], onDelete: Restrict)
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item   Item    @relation(fields: [itemId], references: [id], onDelete: Restrict)
   box    Int
   due    String?
   at     Float
-  lapses Int    @default(0)
+  lapses Int     @default(0)
+  saved  Boolean @default(false)
 
   @@id([userId, itemId])
 }

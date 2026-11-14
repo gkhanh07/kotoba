@@ -89,8 +89,24 @@ describe('isCard lapses', () => {
 describe('cardsOf', () => {
   it('keys rows by item id and reads a null due as an empty string', () => {
     expect(cardsOf([
-      { itemId: 'kanji:日', box: 2, due: '2026-11-05', at: 9, lapses: 1 },
-      { itemId: 'hiragana:a', box: 0, due: null, at: 3, lapses: 0 },
+      { itemId: 'kanji:日', box: 2, due: '2026-11-05', at: 9, lapses: 1, saved: false },
+      { itemId: 'hiragana:a', box: 0, due: null, at: 3, lapses: 0, saved: false },
     ])).toEqual({ 'kanji:日': { box: 2, due: '2026-11-05', at: 9, lapses: 1 }, 'hiragana:a': { box: 0, due: '', at: 3, lapses: 0 } });
+  });
+});
+
+// Phase 40a: saved is optional; the API only ever answers saved: true.
+describe('saved', () => {
+  it('isCard accepts a card without saved and a boolean saved, and rejects anything else', () => {
+    expect(isCard(card(1, 1))).toBe(true);
+    expect(isCard({ ...card(1, 1), saved: true })).toBe(true);
+    expect(isCard({ ...card(1, 1), saved: false })).toBe(true);
+    for (const saved of ['true', 1, null]) expect(isCard({ ...card(1, 1), saved })).toBe(false);
+  });
+  it('cardsOf adds saved: true only for a saved row', () => {
+    expect(cardsOf([
+      { itemId: 'a', box: 0, due: null, at: 1, lapses: 0, saved: true },
+      { itemId: 'b', box: 0, due: null, at: 1, lapses: 0, saved: false },
+    ])).toEqual({ a: { box: 0, due: '', at: 1, lapses: 0, saved: true }, b: { box: 0, due: '', at: 1, lapses: 0 } });
   });
 });

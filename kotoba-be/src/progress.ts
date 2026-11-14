@@ -4,7 +4,8 @@
 import { MAX_LAPSES } from './config.js';
 
 // lapses came later (ADR 002, phase 16): old clients push cards without it, and it then reads 0.
-export type Card = { box: number; due: string; at: number; lapses?: number };
+// saved too (phase 40a): only true is ever sent; missing means not saved.
+export type Card = { box: number; due: string; at: number; lapses?: number; saved?: true };
 export type Cards = Record<string, Card>;
 export const AREAS = ['kana', 'vocab', 'kanji'] as const;
 // kanji came later, so days stored before it have no kanji list.
@@ -24,7 +25,8 @@ const isIds = (v: unknown) =>
 
 export const isCard = (v: unknown): v is Card =>
   isObject(v) && Number.isInteger(v.box) && (v.box as number) >= 0 && (v.box as number) <= 100 &&
-  typeof v.due === 'string' && DAY.test(v.due) && isTime(v.at) && isLapses(v.lapses);
+  typeof v.due === 'string' && DAY.test(v.due) && isTime(v.at) && isLapses(v.lapses) &&
+  (v.saved === undefined || typeof v.saved === 'boolean');
 export const isCards = (v: unknown): v is Cards => isObject(v) && Object.values(v).every(isCard);
 
 const isDay = (v: unknown) =>
@@ -66,5 +68,6 @@ export function parseActivity(raw: string): Activity {
 }
 
 // A card row as the API answers it: /progress and /me/export share this shape.
-export const cardsOf = (rows: { itemId: string; box: number; due: string | null; at: number; lapses: number }[]): Cards =>
-  Object.fromEntries(rows.map((c) => [c.itemId, { box: c.box, due: c.due ?? '', at: c.at, lapses: c.lapses }]));
+// saved is left out unless set, so a client that predates it reads the same card as before.
+export const cardsOf = (rows: { itemId: string; box: number; due: string | null; at: number; lapses: number; saved: boolean }[]): Cards =>
+  Object.fromEntries(rows.map((c) => [c.itemId, { box: c.box, due: c.due ?? '', at: c.at, lapses: c.lapses, ...(c.saved ? { saved: true as const } : {}) }]));

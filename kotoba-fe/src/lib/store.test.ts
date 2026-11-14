@@ -451,3 +451,21 @@ describe("broken stored data", () => {
     expect(Object.keys(localStorage)).toEqual([]);
   });
 });
+
+describe("toggleSaved (phase 40a)", () => {
+  it("stars an old card without touching the others, and a second call unstars it", () => {
+    localStorage.setItem(SRS, JSON.stringify(oldDeck));
+    const { result } = renderHook(() => store.useDeck());
+    act(() => {
+      store.toggleSaved("vocab:水");
+    });
+    const at = Date.now();
+    const stored = JSON.parse(localStorage.getItem(SRS)!);
+    expect(stored["vocab:水"]).toEqual({ ...oldDeck["vocab:水"], at, saved: true });
+    expect(result.current!.srs).toEqual(stored);
+    act(() => {
+      store.toggleSaved("vocab:水");
+    });
+    expect(JSON.parse(localStorage.getItem(SRS)!)["vocab:水"]).toEqual({ ...oldDeck["vocab:水"], at });
+  });
+});
