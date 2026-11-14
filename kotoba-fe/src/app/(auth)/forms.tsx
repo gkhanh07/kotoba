@@ -18,7 +18,7 @@ export function Heading({ title, lede }: { title: string; lede: string }) {
 }
 
 // Points a field at its form's error line when the error is about it: the border changes and the
-// line is read with the field, so the state is never colour alone (docs/tasks/ui-redesign.md AC-9.2).
+// line is read with the field, so the state is never colour alone.
 export const flag = (error: ErrorCode | undefined, field: string, problemId: string) =>
   isInvalidField(error, field) ? { "aria-invalid": true as const, "aria-describedby": problemId } : {};
 type Flag = ReturnType<typeof flag>;

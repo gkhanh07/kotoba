@@ -16,7 +16,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   );
 }
 
-// Decoration only (docs/tasks/ui-redesign.md AC-9.1): the brand word hung as a vertical shop sign
+// Decoration only (ADR 010): the brand word hung as a vertical shop sign
 // beside the form. Hidden from assistive tech, and not drawn below 64rem where the form takes the width.
 function Motif() {
   return (

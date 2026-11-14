@@ -9,7 +9,7 @@ const vocab = load('vocab');
 const lessons = load('lessons');
 const grammar = load('grammar');
 const all = [...kana, ...kanji, ...vocab, ...lessons, ...grammar];
-// N3 lessons 46–81, the last one "Ôn tập N3" (docs/phases/27-n3-kanji.md).
+// N3 lessons 46–81, the last one "Ôn tập N3".
 const N3_LESSONS = 36;
 // Japanese-made kanji with no Hán Việt reading (ADR 009).
 const NO_HAN_VIET = ['込'];
@@ -44,7 +44,7 @@ describe('content', () => {
       })
       .map((c) => `${k.char as string}→${c}`));
     expect(bad).toEqual([]);
-    // N5: 11 pairs over 21 kanji (docs/phases/19-vocab-page-similar-kanji.md); N4 adds 23 pairs (docs/phases/23-n4-kanji.md); N3 adds 40 (docs/phases/27-n3-kanji.md).
+    // N5: 11 pairs over 21 kanji (phase 19); N4 adds 23 pairs; N3 adds 40.
     expect(kanji.filter((k) => similar(k).length).length).toBe(131);
     expect(kanji.reduce((n, k) => n + similar(k).length, 0)).toBe(148);
   });
@@ -53,14 +53,14 @@ describe('content', () => {
   it('holds exactly the released content', () => {
     const count = (items: Item[], level: number) => items.filter((d) => d.level === level).length;
     expect(kana).toHaveLength(224);
-    // Phase 23: 181 N4 kanji; phase 27: 341 N3 kanji (docs/phases/27-n3-kanji.md).
+    // Phase 23: 181 N4 kanji; phase 27: 341 N3 kanji.
     expect([count(kanji, 5), count(kanji, 4), count(kanji, 3)]).toEqual([103, 181, 341]);
     expect(kanji).toHaveLength(625);
     expect([count(lessons, 5), count(lessons, 4), count(lessons, 3)]).toEqual([25, 20, N3_LESSONS]);
-    // Phase 24a/24b/24c: N4 vocab lessons 26–44 (docs/phases/24-n4-vocab.md); phase 28a/…/28i: N3 lessons 46–80 (docs/phases/28-n3-vocab.md).
+    // Phase 24a/24b/24c: N4 vocab lessons 26–44; phase 28a/…/28i: N3 lessons 46–80.
     expect([count(vocab, 5), count(vocab, 4), count(vocab, 3)]).toEqual([694, 578, 1774]);
     expect(vocab).toHaveLength(3046);
-    // Phase 25: N4 grammar in lessons 26–44 (docs/phases/25-n4-grammar.md); phase 29: N3 grammar in lessons 46–80 (docs/phases/29-n3-grammar.md).
+    // Phase 25: N4 grammar in lessons 26–44; phase 29: N3 grammar in lessons 46–80.
     expect([count(grammar, 5), count(grammar, 4), count(grammar, 3)]).toEqual([34, 44, 60]);
     expect(grammar).toHaveLength(78 + 60);
   });
@@ -73,7 +73,7 @@ describe('content', () => {
     expect(lessonsWithout).toEqual([]);
   });
 
-  // Phase 29 (docs/phases/29-n3-grammar.md): 29a covered lessons 46–63, 29b extends the range to 80.
+  // Phase 29: 29a covered lessons 46–63, 29b extends the range to 80.
   it('gives every N3 lesson 46–80 at least one grammar point', () => {
     const withGrammar = new Set(grammar.filter((g) => g.level === 3).map((g) => g.lesson));
     const lessonsWithout = lessons

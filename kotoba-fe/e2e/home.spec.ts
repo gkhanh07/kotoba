@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { expect, test } from "./fixtures";
 
-// docs/tasks/critique-home.md: the landing page and the dashboard say what the app does (BUG-012, ADR 007).
+// The landing page and the dashboard say what the app does (BUG-012, ADR 007).
 type Item = { level: number };
 const load = (name: string) => JSON.parse(readFileSync(resolve(process.cwd(), `../kotoba-be/content/${name}.json`), "utf8")) as Item[];
 const n5 = (items: Item[]) => items.filter((d) => d.level === 5).length;

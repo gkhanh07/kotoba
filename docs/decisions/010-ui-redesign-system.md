@@ -2,7 +2,7 @@
 
 - Status: accepted
 - Date: 2026-11-11
-- Spec: `docs/tasks/ui-redesign.md`
+- Spec: `docs/tasks/ui-redesign.md`, removed 2026-11-14; `git show e59b9ee:docs/tasks/ui-redesign.md`
 
 ## Context
 The guest hero at `/` (a rainy Tokyo street, neon signs, a train) is strong. Every page after it reads like a data admin tool. The baseline screenshots (spec §1) show:

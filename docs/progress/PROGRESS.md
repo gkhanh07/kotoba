@@ -5,6 +5,7 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 - Branch: `feat/n5-full` (pushed to `origin feat/n5-full`).
 - Node: the cloud image's default `node` is v22; use `/opt/node24/bin` (v24.22.1): `export PATH=/opt/node24/bin:$PATH`.
 - BE setup: `cp kotoba-be/.env.example kotoba-be/.env` before `npm ci` (the `postinstall` runs `prisma generate`, which needs `DATABASE_URL`).
+- Task docs: `docs/phases/` and `docs/tasks/` (phase/task specs, review sheets) were removed on 2026-11-14 at the user's request. The paths cited below are in git history: `git show e59b9ee:<path>`.
 
 ## Status
 
@@ -101,7 +102,7 @@ After store hardening: BE 49 unit + 41 e2e + 27 content; FE Vitest 588 tests (al
 After phase 30 (N3 complete, 2026-11-12): BE 58 unit + 41 e2e + 36 content, JMdict 3,046 words, unit coverage 30.57/35.59/33.96/30.06 (thresholds unchanged at 30/35/33/30); FE Vitest 665 tests (lib lines 98.23%, branches 96.98%), E2E 244 passed. Content: N3 = 341 kanji, 1,774 words, 60 grammar points, paper `n3-1`; all `reviewed: false`.
 
 ## Stopped here (2026-11-12, after phase 30)
-N3, the last level of the roadmap, is complete (AGENTS.md §15 checkpoint). Waiting for the user to: use the app for about 10 minutes on N3, check the N3 samples in `docs/tasks/sample-review-n3.md` (vocab, grammar, paper; seed 20261113) and the copy sample `docs/tasks/vietnamese-copy-content-sample.md`, and decide whether to merge `feat/n5-full` into `main`. `kotoba-fe/src/lib/i18n.ts` holds the user's uncommitted hero edit: leave it alone.
+N3, the last level of the roadmap, is complete (AGENTS.md §15 checkpoint). Waiting for the user to: use the app for about 10 minutes on N3, check the N3 samples (vocab, grammar, paper; regenerate with `npm run sample -- 20261113` in `kotoba-be`) and the copy sample (`git show e59b9ee:docs/tasks/vietnamese-copy-content-sample.md`), and decide whether to merge `feat/n5-full` into `main`. `kotoba-fe/src/lib/i18n.ts` holds the user's uncommitted hero edit: leave it alone.
 
 ## Next step
 None planned in `PLAN.md` after phase 30: wait for the checkpoint above. Fixes from the N3 sample review come first if more than 5% of a kind is wrong.

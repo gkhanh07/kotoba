@@ -5,7 +5,7 @@ import { testText } from "../src/lib/testText";
 import { startBackend, stopBackend } from "./backend";
 import { expect, test } from "./fixtures";
 
-// docs/tasks/ui-redesign.md, groups 2 and 3 (AC-2.1–3.3). Every count is read from the content the page renders.
+// UI redesign (ADR 010). Every count is read from the content the page renders.
 type Item = { id: string; level: number; lesson: number; script?: string; group?: string; word?: string; reading?: string; vi?: string; en?: string[]; char?: string; hv?: string[]; pattern?: string; title?: { vi: string } };
 type Lesson = { lesson: number; level: number; title: { vi: string } };
 const load = <T = Item>(name: string) => JSON.parse(readFileSync(resolve(process.cwd(), `../kotoba-be/content/${name}.json`), "utf8")) as T[];

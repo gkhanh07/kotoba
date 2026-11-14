@@ -50,7 +50,7 @@ Out-of-scope findings (AGENTS.md §2, §13). Not fixed in the task that found th
 A reset of a set with no local cards, made while a push is in flight, leaves `snapshot()` unchanged, so `applyRemote` writes `forget: []` and drops the entry. The account keeps those cards. Needs a reset of an empty set inside one request; the next reset of that set sends it again.
 
 ## Hán Việt source task follow-ups (2026-11-08)
-- AC-1 of `docs/tasks/hanviet-fix.md` (every `hv` is in hanviet-pinyin-wordlist) was checked by a scratchpad script, not a repo test, because the list and Unihan variants are not vendored. Vendor a trimmed list (MIT allows it) and turn the check into a `validate:content` step before N2 kanji are added.
+- AC-1 of the Hán Việt task spec (`git show e59b9ee:docs/tasks/hanviet-fix.md`; every `hv` is in hanviet-pinyin-wordlist) was checked by a scratchpad script, not a repo test, because the list and Unihan variants are not vendored. Vendor a trimmed list (MIT allows it) and turn the check into a `validate:content` step before N2 kanji are added.
 - A kanji with no `hv` (only 込 today) renders an empty `hv` span in kanji tiles: `kanji/[char]/page.tsx` (look-alikes), `vocab/[word]/page.tsx`, `KanjiGrid.tsx`, `lessons/[n]/page.tsx`. Invisible, but an empty node; render the span only when there is a reading.
 - A kanji with no on reading (込) shows an empty "Âm On" row on its page; show a dash or leave the row out.
 - The site footer credits "Dữ liệu kanji: KANJIDIC2" only; since ADR 009 the Hán Việt readings come from hanviet-pinyin-wordlist, which only the legal page credits.
@@ -61,7 +61,7 @@ A reset of a set with no local cards, made while a push is in flight, leaves `sn
 - `n4-1` question 5.4 (usage): the explanation would read more naturally as `パン作りに失敗した` than `パン作りが失敗した`; the answer is unaffected.
 - Kanji cards list every on/kun and Hán Việt reading from the sources, including rare ones (米 メエトル, 数 サク・ソク・シュ). Show the common readings first and fold the rare ones away.
 
-## UI redesign follow-ups (2026-11-12, docs/tasks/ui-redesign.md)
+## UI redesign follow-ups (2026-11-12, ADR 010)
 - Kanji stroke order: the content has only `strokes` (a count), so `/kanji/[char]` cannot show the order. Needs a licensed stroke source (KanjiVG, CC BY-SA 3.0) and an ADR.
 - Grammar sentence-part colouring: `examples` are plain strings, so a sentence cannot be split into its parts. Needs a segmented example field in `grammar.json` and a content migration.
 - "Related grammar": there is no such field. The grammar page uses same-lesson points and the prev/next pager instead.
