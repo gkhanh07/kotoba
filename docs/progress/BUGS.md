@@ -339,3 +339,16 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Similar places: every redirect to login (`settings/page.tsx`, `settings/actions.ts`, `settings/export/route.ts`) passes `next`, so all are covered.
 - Commit: `fix(auth): tell a redirected guest the page needs an account`
 - Status: FIXED
+
+## BUG-026: the landing page's review ladder breaks 5 + 2 on desktop
+- Severity: Low (layout; the content is right)
+- Found: 2026-11-14, user walkthrough of the landing page at 1440px
+- Environment: `kotoba-fe/src/app/page.module.css` `.ladder`
+- Expected: the seven steps (Chưa học, Lần 1–6) read as one sequence at every width.
+- Actual: a wrapping flex row needs ~957px; the 7fr column is ~706px at 1440, so 5 steps sat on one row and 2 on the next (other splits at 901–1280).
+- Reproducing test: `e2e/home.spec.ts` "the review ladder reads as one column of steps at every width" (failed on mobile and desktop before the fix).
+- Root cause: a horizontal wrapping row for a fixed seven-step sequence whose width depends on the column, which changes at every breakpoint.
+- Fix: the ladder is a single column (one step per row, `minmax(0, max-content)` wide); each step lays out its label, tag and wait inline.
+- Similar places: the lesson route (`.line`) already switches to a column under 900px; no other wrapping sequence on the page.
+- Commit: `fix(home): stack the review ladder one step per row`
+- Status: FIXED

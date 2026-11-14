@@ -33,6 +33,25 @@ test("the landing page states the real rule for known items", async ({ page, axe
   await axe();
 });
 
+// BUG-026: the seven-step ladder broke 5 + 2 on desktop, so the steps read as two groups.
+test("the review ladder reads as one column of steps at every width", async ({ page }, info) => {
+  await page.goto("/");
+  const ladder = page.getByRole("list", { name: "Các lần ôn đúng liên tiếp của một chữ" });
+  const steps = ladder.getByRole("listitem");
+  await expect(steps).toHaveCount(7);
+  const width = info.project.name === "mobile" ? 360 : 1440;
+  for (const size of [{ width, height: 900 }, { width: 768, height: 900 }, { width: 901, height: 900 }, { width: 1280, height: 900 }]) {
+    await page.setViewportSize(size);
+    const list = (await ladder.boundingBox())!;
+    const boxes = await Promise.all((await steps.all()).map(async (step) => (await step.boundingBox())!));
+    for (const [i, box] of boxes.entries()) {
+      expect(box.x).toBe(boxes[0].x);
+      if (i > 0) expect(box.y).toBeGreaterThan(boxes[i - 1].y + boxes[i - 1].height - 1);
+      expect(box.x + box.width).toBeLessThanOrEqual(list.x + list.width + 0.5);
+    }
+  }
+});
+
 test("the landing page opens every line and says an account is optional", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Ba loại chữ trong tiếng Nhật." })).toBeVisible();

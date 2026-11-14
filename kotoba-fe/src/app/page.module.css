@@ -543,17 +543,20 @@ a.station:hover .stationKana {
   text-align: center;
   color: var(--chalk);
 }
+/* One step per row: a wrapping row of seven broke 5 + 2 on desktop and read as two groups (BUG-026). */
 .ladder {
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  display: grid;
+  /* Rows as wide as the widest step, not the whole column. */
+  grid-template-columns: minmax(0, max-content);
+  gap: 0.4rem;
   margin-top: 1.5rem;
 }
 .ladder li {
-  display: grid;
-  align-content: start;
-  gap: 0.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
   padding: 0.6rem 0.8rem;
   border: 1px solid var(--rule-dim);
   border-radius: var(--radius-sm);
