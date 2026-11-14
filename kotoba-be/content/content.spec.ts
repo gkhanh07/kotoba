@@ -21,9 +21,26 @@ describe('content', () => {
     expect(dupes).toEqual([]);
   });
 
+  // ADR 011: `vocab:<word>`, or `vocab:<word>:<kanji>` for a homophone whose `vocab:<word>` belongs to a word with another kanji.
+  const vocabIdOk = (d: Item, byId: Map<string, Item>) =>
+    d.id === `vocab:${d.word as string}` ||
+    (typeof d.kanji === 'string' && d.id === `vocab:${d.word as string}:${d.kanji}` && byId.has(`vocab:${d.word as string}`) && byId.get(`vocab:${d.word as string}`)?.kanji !== d.kanji);
+
+  it('accepts a homophone id only when the short id is taken by another word', () => {
+    const kami = { id: 'vocab:かみ', word: 'かみ', kanji: '紙' };
+    const ids = (...d: Item[]) => new Map(d.map((x) => [x.id, x]));
+    const hair = { id: 'vocab:かみ:髪', word: 'かみ', kanji: '髪' };
+    expect(vocabIdOk(hair, ids(kami, hair))).toBe(true);
+    expect(vocabIdOk(hair, ids(hair))).toBe(false);
+    expect(vocabIdOk({ id: 'vocab:かみ:紙', word: 'かみ' }, ids(kami))).toBe(false);
+    expect(vocabIdOk({ id: 'vocab:かみ:2', word: 'かみ', kanji: '髪' }, ids(kami))).toBe(false);
+    expect(vocabIdOk({ id: 'vocab:かみ:紙', word: 'かみ', kanji: '紙' }, ids(kami))).toBe(false); // same word twice
+  });
+
   it('ids follow their kind', () => {
     expect(kanji.filter((d) => d.id !== `kanji:${d.char as string}`)).toEqual([]);
-    expect(vocab.filter((d) => d.id !== `vocab:${d.word as string}`)).toEqual([]);
+    const vocabIds = new Map(vocab.map((d) => [d.id, d]));
+    expect(vocab.filter((d) => !vocabIdOk(d, vocabIds)).map((d) => d.id)).toEqual([]);
     expect(grammar.filter((d) => d.id !== `grammar:${d.slug as string}`)).toEqual([]);
     expect(kana.filter((d) => d.id !== `${d.script as string}:${d.id.split(':')[1]}`)).toEqual([]);
   });
@@ -58,8 +75,8 @@ describe('content', () => {
     expect(kanji).toHaveLength(625);
     expect([count(lessons, 5), count(lessons, 4), count(lessons, 3)]).toEqual([25, 20, N3_LESSONS]);
     // Phase 24a/24b/24c: N4 vocab lessons 26–44; phase 28a/…/28i: N3 lessons 46–80.
-    expect([count(vocab, 5), count(vocab, 4), count(vocab, 3)]).toEqual([694, 578, 1774]);
-    expect(vocab).toHaveLength(3046);
+    expect([count(vocab, 5), count(vocab, 4), count(vocab, 3)]).toEqual([702, 578, 1817]);
+    expect(vocab).toHaveLength(3097);
     // Phase 25: N4 grammar in lessons 26–44; phase 29: N3 grammar in lessons 46–80.
     expect([count(grammar, 5), count(grammar, 4), count(grammar, 3)]).toEqual([34, 44, 60]);
     expect(grammar).toHaveLength(78 + 60);

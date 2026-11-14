@@ -88,7 +88,7 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
             <ul>
               {k.words.map((w) => (
                 <li key={w.id}>
-                  <Link href={vocabHref(w.word)} lang="ja" className={s.word}>{w.kanji ?? w.word}</Link>
+                  <Link href={vocabHref(w.id)} lang="ja" className={s.word}>{w.kanji ?? w.word}</Link>
                   <span lang="ja">{w.reading}</span>
                   <span>{w[lang]}</span>
                 </li>

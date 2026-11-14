@@ -79,7 +79,7 @@ test("an N5 dashboard shows the N5 totals", async ({ page, axe }, info) => {
   await expect(page).toHaveURL(/\/$/);
 
   const vocab = n5(load("vocab")), kanji = n5(load("kanji"));
-  expect([vocab, kanji]).toEqual([694, 103]);
+  expect([vocab, kanji]).toEqual([702, 103]);
   await expect(page.getByRole("row", { name: /^Từ vựng/ }).getByRole("cell", { name: `0 / ${vocab}` })).toBeVisible({ timeout: 15_000 });
   await expect(page.getByRole("row", { name: /^Kanji/ }).getByRole("cell", { name: `0 / ${kanji}` })).toBeVisible();
   await expect(page.getByRole("row", { name: /^Kana/ }).getByRole("cell", { name: "0 / 224" })).toBeVisible();

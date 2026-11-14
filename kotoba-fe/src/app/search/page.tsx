@@ -35,7 +35,7 @@ export default async function SearchPage(props: PageProps<"/search">) {
   const rowOf = (h: Hit): Omit<Row, "level"> => {
     switch (h.kind) {
       case "vocab": // h.kanji: the written form a kana-only word can match on (日曜日 for にちようび), shown so the hit makes sense.
-        return { href: vocabHref(h.word), head: h.word, ja: true,
+        return { href: vocabHref(h.id), head: h.word, ja: true,
           parts: [ja(h.word === h.reading ? "" : h.reading), { text: h.romaji }, ja(h.kanji ?? ""), { text: cap(h[lang]) }], lesson: h.lesson };
       case "kanji":
         return { href: `/kanji/${encodeURIComponent(h.char)}`, head: h.char, ja: true, parts: [{ text: h.hv.join(" · ").toUpperCase() }, ja([...h.on, ...h.kun].join(" · ")), { text: cap(lang === "vi" && h.vi ? h.vi : h.en.join(", ")) }], lesson: h.lesson };

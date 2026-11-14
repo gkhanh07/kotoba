@@ -33,7 +33,8 @@ const item = <T,>(id: string) =>
     throw e;
   });
 export const getKanjiDetail = (char: string) => item<KanjiDetail>(`kanji:${char}`);
-export const getVocabItem = (word: string) => item<Vocab>(`vocab:${word}`);
+// `key` is the id after `vocab:`: the word, or `<word>:<kanji>` for a homophone (ADR 011).
+export const getVocabItem = (key: string) => item<Vocab>(`vocab:${key}`);
 
 export const getGrammar = (level?: Level) => api<Grammar[]>(`/content/grammar${levelQuery(level)}`, { revalidate: HOUR });
 export const getGrammarItem = (slug: string) => item<Grammar>(`grammar:${slug}`);

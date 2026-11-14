@@ -82,8 +82,8 @@ export function prompt(src: PromptSource, rand: () => number): Prompt {
   return dir === "meaning-word" ? { dir, front: src.meaning, frontIsJa: false } : { dir, front: src.word, frontIsJa: true };
 }
 
-// Word detail page (phase 19). The id suffix is the word itself (`vocab:<word>`).
-export const vocabHref = (word: string) => `/vocab/${encodeURIComponent(word)}`;
+// Word detail page, addressed by the id after `vocab:`: `<word>`, or `<word>:<kanji>` for a homophone (ADR 011).
+export const vocabHref = (id: string) => `/vocab/${encodeURIComponent(id.slice("vocab:".length))}`;
 // Distinct kanji of the written word that the course teaches, in order. Kana and other kanji are skipped.
 export const kanjiIn = (word: string, taught: ReadonlySet<string>): string[] => [...new Set([...word].filter((c) => taught.has(c)))];
 

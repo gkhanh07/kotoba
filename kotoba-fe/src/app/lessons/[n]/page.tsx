@@ -84,7 +84,7 @@ export default async function LessonPage(props: PageProps<"/lessons/[n]">) {
             <dl className={s.words}>
               {vocab.map((w) => (
                 <div key={w.id}>
-                  <dt lang="ja"><Link href={vocabHref(w.word)}>{w.word}</Link>{w.word !== w.reading && <span>{w.reading}</span>}</dt>
+                  <dt lang="ja"><Link href={vocabHref(w.id)}>{w.word}</Link>{w.word !== w.reading && <span>{w.reading}</span>}</dt>
                   <dd>{w[lang]}</dd>
                   <dd><Speak text={w.reading} label={t.speak} /></dd>
                 </div>

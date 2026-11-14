@@ -105,8 +105,10 @@ describe("currentLesson", () => {
 
 describe("vocab page helpers", () => {
   const TAUGHT = new Set(["食", "日", "本", "人"]);
-  it("builds the encoded word page path", () => {
-    expect(vocabHref("食べる")).toBe("/vocab/%E9%A3%9F%E3%81%B9%E3%82%8B");
+  // ADR 011: the path is the id after vocab:, so a homophone (vocab:<word>:<kanji>) gets its own page.
+  it("builds the encoded word page path from the id", () => {
+    expect(vocabHref("vocab:食べる")).toBe("/vocab/%E9%A3%9F%E3%81%B9%E3%82%8B");
+    expect(vocabHref("vocab:かみ:紙")).toBe("/vocab/%E3%81%8B%E3%81%BF%3A%E7%B4%99");
   });
   it("lists the taught kanji of a word in order, once each", () => {
     expect(kanjiIn("日本人", TAUGHT)).toEqual(["日", "本", "人"]);

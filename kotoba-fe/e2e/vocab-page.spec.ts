@@ -58,6 +58,27 @@ test("a kana-only word has no kanji section, and an unknown word is a 404", asyn
   pageErrors.length = 0;
 });
 
+// Phase 39 (ADR 011): a homophone has its own page at /vocab/<word>:<kanji>; the old /vocab/<word> keeps its word.
+test("two homophones open two pages, and the lesson links the new one by its id", async ({ page }) => {
+  await page.goto("/vocab/" + encodeURIComponent("かみ"));
+  await expect(fact(page, "Cách viết kanji")).toHaveText("髪");
+  await expect(fact(page, "Nghĩa")).toHaveText("Tóc");
+
+  const paper = "/vocab/" + encodeURIComponent("かみ:紙");
+  await page.goto("/lessons/10");
+  await page.locator(`a[href="${paper}"]`).click();
+  await expect(page).toHaveURL(paper);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("かみ");
+  await expect(fact(page, "Cách viết kanji")).toHaveText("紙");
+  await expect(fact(page, "Nghĩa")).toHaveText("Giấy");
+
+  // Search and the kanji page link the homophone by its id too.
+  await page.goto("/search?q=kami");
+  await expect(page.locator(`a[href="${paper}"]`).first()).toBeVisible();
+  await page.goto("/kanji/" + encodeURIComponent("紙"));
+  await expect(page.locator(`a[href="${paper}"]`)).toHaveText("紙");
+});
+
 test("the lesson page and the kanji page link their words to the word page", async ({ page }) => {
   await page.goto("/lessons/13");
   await expect(page.locator(`a[href="${TABERU}"]`)).toHaveText("食べる");

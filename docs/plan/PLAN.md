@@ -47,7 +47,7 @@ Mọi phase theo AGENTS.md: spec `docs/phases/NN-*.md` (AC + ma trận test) →
 - Mail: `mailer.ts` gửi SMTP khi có cấu hình env, không có thì giữ log (ADR cho dependency). **Cần người dùng cấp SMTP mới gửi thật**; tôi không tự đăng ký dịch vụ.
 - Nâng ngưỡng coverage BE theo ratchet.
 
-#### Phase 39 — Từ đồng âm
+#### Phase 39 — Từ đồng âm — xong
 - `be`: chấp nhận id `vocab:<kana>:<kanji>` (seed, `content.spec.ts`, `jmdict-check.ts`, route `/vocab/[word]`), test fixture id cũ không đổi.
 - `content`: thêm ~70 từ đã bỏ qua (danh sách trong BACKLOG), `reviewed: false`, kèm mẫu duyệt có seed.
 

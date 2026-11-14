@@ -7,7 +7,7 @@ import { itemLinks, weakItems } from "./weak";
 
 const kana = [{ id: "katakana:a", script: "katakana", char: "ア" }] as Kana[];
 const kanji = [{ id: "kanji:日", char: "日" }] as Kanji[];
-const vocab = [{ id: "vocab:水", word: "水", lesson: 13 }, { id: "vocab:ねこ", word: "ねこ", lesson: 16 }] as Vocab[];
+const vocab = [{ id: "vocab:水", word: "水", lesson: 13 }, { id: "vocab:ねこ", word: "ねこ", lesson: 16 }, { id: "vocab:ねこ:猫", word: "ねこ", lesson: 16 }] as Vocab[];
 const links = itemLinks(kana, kanji, vocab);
 const card = (lapses: number, box = 0) => ({ box, due: "2026-11-03", at: 1, lapses });
 
@@ -18,6 +18,7 @@ describe("itemLinks", () => {
       "kanji:日": { front: "日", href: "/kanji/%E6%97%A5" },
       "vocab:水": { front: "水", href: "/vocab/%E6%B0%B4" },
       "vocab:ねこ": { front: "ねこ", href: "/vocab/%E3%81%AD%E3%81%93" },
+      "vocab:ねこ:猫": { front: "ねこ", href: "/vocab/%E3%81%AD%E3%81%93%3A%E7%8C%AB" },
     });
   });
 });
