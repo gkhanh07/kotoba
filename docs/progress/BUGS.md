@@ -300,3 +300,29 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Similar places: every other page (and the signed-in dashboard) renders `SiteFooter`.
 - Commit: `fix(home): credit the data sources on the landing page`
 - Status: FIXED
+
+## BUG-023: keyboard hints show on touch screens
+- Severity: Low (noise on phones, no wrong behaviour)
+- Found: 2026-11-14, user walkthrough on a 360px phone
+- Environment: `/kana?mode=quiz` (kbd on the choices and on "Chữ tiếp theo"), `/test/[id]` ("Phím tắt" panel)
+- Expected: as flashcards' KeyHelp, key hints show only with a fine pointer (a mouse).
+- Actual: the kana quiz and the mock test show 1–4 / Enter hints and the shortcut panel on touch screens.
+- Reproducing test: `e2e/keyboard-hints.spec.ts` (2 tests; failed on mobile before the fix).
+- Root cause: the hint styles had no pointer media query; only flashcards hid them.
+- Fix: `@media not (pointer: fine)` hides `.choice kbd`, `.kbdOnBtn` (kana) and `.help` (test).
+- Similar places: flashcards already does this; no other page renders kbd hints.
+- Commit: `fix(ui): hide key hints on touch and put the test question before the palette`
+- Status: FIXED
+
+## BUG-024: on a phone the mock test question starts below the fold
+- Severity: Medium (every question needs a scroll past 45 palette buttons)
+- Found: 2026-11-14, user walkthrough of /test/n5-1 at 360×740
+- Environment: `kotoba-fe/src/app/test/[id]/TestApp.tsx`
+- Expected: after Start, the question and all its choices are inside the first screen; the palette comes after.
+- Actual: the 45-button palette came first; the last choice ended at y=954 on a 740px screen.
+- Reproducing test: `e2e/test.spec.ts` "the question and its choices come before the palette, within the first screen" (failed on mobile and desktop before the fix).
+- Root cause: the palette `<nav>` was rendered before the question card.
+- Fix: the palette moves after the question and its moves; `.palette` gets 1.5rem top margin.
+- Similar places: the review screen lists questions without a palette; no other page has one.
+- Commit: `fix(ui): hide key hints on touch and put the test question before the palette`
+- Status: FIXED

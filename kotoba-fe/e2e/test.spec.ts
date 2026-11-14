@@ -342,3 +342,16 @@ test("the test pages fit at 768px without horizontal scroll", async ({ page, axe
   await shot(page, info, "test-768");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
+
+// BUG-024: on a phone the 45-button palette came first and pushed the question below the fold.
+test("the question and its choices come before the palette, within the first screen", async ({ page }) => {
+  await page.goto("/test/n5-1");
+  await page.getByRole("button", { name: "Bắt đầu" }).click();
+  const choices = page.getByRole("group", { name: /^Câu 1 \/ 45/ }).getByRole("radio");
+  await expect(choices).toHaveCount(4);
+  const viewport = page.viewportSize()!;
+  const lastChoice = await choices.last().boundingBox();
+  expect(lastChoice!.y + lastChoice!.height).toBeLessThanOrEqual(viewport.height);
+  const firstDot = await page.getByRole("button", { name: "Câu 1, chưa làm" }).boundingBox();
+  expect(firstDot!.y).toBeGreaterThan(lastChoice!.y);
+});

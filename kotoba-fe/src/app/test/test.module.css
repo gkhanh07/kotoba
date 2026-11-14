@@ -51,7 +51,7 @@
 .timer[data-low] { color: var(--amber); }
 .progress { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; font-variant-numeric: tabular-nums; color: var(--silver); }
 .progress .btn { min-height: 44px; font-size: 1rem; }
-.palette { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: .4rem; margin-top: 1rem; }
+.palette { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: .4rem; margin-top: 1.5rem; }
 .dot { position: relative; min-height: 44px; border: 1px solid var(--rule-strong); border-radius: 2px; color: var(--silver-dim); font-variant-numeric: tabular-nums; }
 .dot:hover { border-color: var(--amber); color: var(--chalk); }
 .dot[data-state="answered"] { background: color-mix(in srgb, var(--cool) 28%, var(--night)); color: var(--chalk); border-color: var(--cool); }
@@ -120,4 +120,9 @@
   .moves .btn { flex: 1 1 8rem; justify-content: center; }
   .moves .btn:last-child { flex-basis: 100%; margin-left: 0; }
   .label { display: block; }
+}
+
+/* Shortcuts only where there is a mouse, as flashcards' KeyHelp (BUG-023). */
+@media not (pointer: fine) {
+  .help { display: none; }
 }

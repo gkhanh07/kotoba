@@ -284,21 +284,6 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
         <p aria-live="polite">{t.answered} <span>{answered}/{total}</span></p>
         <button type="button" className="btn btnGhost" aria-pressed={flagged.includes(current)} onClick={toggleFlag}>{t.flag}</button>
       </div>
-      <nav aria-label={t.palette} className={s.palette}>
-        {flat.map((f) => (
-          <button
-            key={f.index}
-            type="button"
-            className={s.dot}
-            data-state={stateOf(f.index)}
-            aria-label={t.paletteLabel(f.index + 1, stateOf(f.index))}
-            aria-current={f.index === current ? "step" : undefined}
-            onClick={() => go(f.index)}
-          >
-            {f.index + 1}
-          </button>
-        ))}
-      </nav>
       <section className={s.card}>
         {q.passage && <p lang="ja" className={s.passage}>{q.passage}</p>}
         <fieldset className={s.choices} aria-describedby="test-qtext">
@@ -318,6 +303,22 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
         <button type="button" className="btn btnGhost" disabled={current === total - 1} onClick={() => go(current + 1)}>{t.next} <Arrow /></button>
         <button type="button" className="btn" onClick={() => dialogRef.current?.showModal()}>{t.submit}</button>
       </div>
+      {/* The palette follows the question: on a phone 45 buttons would push the question below the fold (BUG-024). */}
+      <nav aria-label={t.palette} className={s.palette}>
+        {flat.map((f) => (
+          <button
+            key={f.index}
+            type="button"
+            className={s.dot}
+            data-state={stateOf(f.index)}
+            aria-label={t.paletteLabel(f.index + 1, stateOf(f.index))}
+            aria-current={f.index === current ? "step" : undefined}
+            onClick={() => go(f.index)}
+          >
+            {f.index + 1}
+          </button>
+        ))}
+      </nav>
       {warning}
       <details className={s.help}>
         <summary>{t.shortcuts}</summary>
