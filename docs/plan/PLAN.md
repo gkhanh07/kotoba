@@ -2,6 +2,168 @@
 
 > **Đổi phạm vi (chốt với người dùng 2026-11-04):** lộ trình dừng ở N3. Bỏ các giai đoạn 31–34 (N2). Giai đoạn 35 (hoàn thiện) cũng bỏ khỏi lộ trình (2026-11-11); việc bắt buộc của nó nằm trong BACKLOG. Số giai đoạn giữ nguyên để các tham chiếu cũ (ADR, BACKLOG, spec) vẫn đúng.
 
+> **Đợt hoàn thiện N5–N3 (chốt với người dùng 2026-11-14): phase 36–42 ở mục ngay dưới đây, thắng các mục cũ khi lệch.**
+
+## Đợt hoàn thiện N5–N3: phase 36–42 (2026-11-14)
+
+### Bối cảnh
+
+Kotoba đã xong các phase 0–30: kana, 625 kanji, 3.046 từ, 138 điểm ngữ pháp, 81 bài, 3 đề thi thử, SRS Leitner, đồng bộ tài khoản, dashboard, tìm kiếm, redesign (ADR 010). Rà soát cho thấy sản phẩm chạy thật, không có mock data, nhưng còn thiếu so với yêu cầu "sản phẩm hoàn chỉnh": một số tính năng chưa có (yêu thích, chủ đề từ vựng, luyện đọc riêng, bài tập ngữ pháp, gõ đáp án, kiểm tra trình độ, lịch sử thi trên server), một loạt việc dở trong BACKLOG, vài lỗ hổng BE, và ~70 từ đồng âm bị bỏ.
+
+Quyết định của người dùng (2026-11-14):
+- **Không làm luyện nghe** đợt này (giữ non-goal trong PLAN.md, thêm sau).
+- **Đặt `reviewed: true` cho nội dung N3**: người dùng đã duyệt N3 và ra lệnh trực tiếp. N5/N4 giữ `false` cho tới khi người dùng nói rõ. Nội dung mới viết trong đợt này luôn `reviewed: false`.
+- Hai file sửa dở: tôi hoàn thiện rồi commit.
+- Git: chỉ commit cục bộ trên `feat/n5-full`, không push, không merge.
+- Id từ đồng âm mới: `vocab:<kana>:<kanji>`; id cũ giữ nguyên.
+- Trần nội dung vẫn là N3. Giữ token/phông/chủ đề ADR 010, nhưng đổi cấu trúc, bố cục và luồng học (Phase 41).
+- 6 ảnh mẫu người dùng gửi: **chỉ lấy UX**, không sao chép giao diện (Phase 41 mục 8).
+
+Mọi phase theo AGENTS.md: spec `docs/phases/NN-*.md` (AC + ma trận test) → test đỏ → code → reviewer → Quality Gate → commit Conventional, không AI attribution. Checklist tiến độ: `docs/progress/PROGRESS.md` + `docs/plan/PLAN.md`, cập nhật đầu và cuối mỗi phase.
+
+### Thứ tự thực hiện
+
+#### Phase 36 — Dọn nền (làm ngay)
+1. `chore(fe)`: `kotoba-fe/next.config.ts` đọc `allowedDevOrigins` từ biến môi trường (`ALLOWED_DEV_ORIGINS`, thêm vào `.env.example`), bỏ IP ghi cứng; `src/lib/i18n.ts` giữ hero tiếng Việt mới, cập nhật bản `en` và test liên quan.
+2. `docs:` ghi các quyết định trên vào PLAN/PROGRESS; ADR 011 (id đồng âm); ghi ngoại lệ "người dùng ra lệnh đặt reviewed N3" vào PROGRESS.
+3. `content(n3)`: đặt `reviewed: true` cho mọi mục `level: 3` trong `vocab.json`, `kanji.json`, `grammar.json` và đề `n3-1`; chạy `validate:content`.
+
+#### Phase 37 — Việc dở và lỗi hiển thị (BACKLOG)
+- Bỏ N2 khỏi `LEVELS` (`kotoba-fe/src/lib/library.ts`, `kotoba-be/src/config.ts`), sửa `LevelTabs.test.tsx`, `e2e/levels.spec.ts`; danh sách mục tiêu chỉ chào N5–N3 nhưng vẫn đọc được giá trị N2/N1 đã lưu (`lib/account.ts` `GOALS` không đổi).
+- Bỏ nút Google bị vô hiệu (`(auth)/forms.tsx`); thanh "Giai đoạn: Kana" tính từ dữ liệu thật (`Dashboard.tsx`).
+- Copy sai phạm vi: `testText.ts` ("JLPT N5" trên đề N4/N3), mô tả bài học trong `library.ts`, `/legal`, footer ghi nguồn Hán Việt.
+- `TestApp`: `\n` trong `passage` thành đoạn; mũi tên không chặn cuộn ngang.
+- Kanji: không render span `hv` rỗng, hàng "Âm On" rỗng; gập âm hiếm.
+- Chú giải ký hiệu N/V/A trên trang ngữ pháp; romaji thống nhất chữ thường.
+- Số đến hạn: dashboard chỉ đếm thẻ còn trong nội dung; `/vocab` và `/review?kind=vocab` cùng phạm vi level; `/flashcards` mặc định theo thứ tự bài (`byLesson` trong `content.controller.ts`).
+- `loading.tsx` cho các route còn thiếu; `/review` chỉ gửi mục trong phạm vi (hiện 1,8 MB HTML).
+- Bài học: dạy trước, hỏi sau; onboarding không hỏi lại mục tiêu đã chọn.
+- Docs: README (credit EDRDG), `kotoba-be/README.md`, `PRODUCT.md` non-goals, `DESIGN.md` trùng Glossary; chuyển `INTERVALS`/`KNOWN_AT` vào `src/config/`.
+
+#### Phase 38 — Bảo mật và độ bền BE
+- `kotoba-fe/src/lib/auth.ts`: không chuyển tiếp `x-forwarded-for` của client; e2e dùng cơ chế riêng cho test.
+- Rate limit cho `/me/password`, `DELETE /me`, `/auth/reset`; dọn token hết hạn; giới hạn số thẻ mỗi lần `PUT /progress`.
+- Lỗi reset-khi-đang-push (BACKLOG, mất dữ liệu → ưu tiên 1).
+- Mail: `mailer.ts` gửi SMTP khi có cấu hình env, không có thì giữ log (ADR cho dependency). **Cần người dùng cấp SMTP mới gửi thật**; tôi không tự đăng ký dịch vụ.
+- Nâng ngưỡng coverage BE theo ratchet.
+
+#### Phase 39 — Từ đồng âm
+- `be`: chấp nhận id `vocab:<kana>:<kanji>` (seed, `content.spec.ts`, `jmdict-check.ts`, route `/vocab/[word]`), test fixture id cũ không đổi.
+- `content`: thêm ~70 từ đã bỏ qua (danh sách trong BACKLOG), `reviewed: false`, kèm mẫu duyệt có seed.
+
+#### Phase 40 — Tính năng học mới
+Dùng lại `useDeck`/`review()` (`lib/store.ts`, `lib/srs.ts`), `prompt()`/`choicesFor` (`lib/library.ts`), `Sync.tsx`, guard trong `kotoba-be/src/validate.ts`.
+1. **Yêu thích**: trường tuỳ chọn trên Card (ADR 002, không bump version) + cột Prisma mới (migration cộng thêm), nút sao ở trang chi tiết, bộ lọc và bộ thẻ "Đã lưu".
+2. **Gõ đáp án**: chế độ nhập kana/romaji cho kana và từ vựng bên cạnh trắc nghiệm.
+3. **Luyện ngữ pháp**: bài điền chỗ trống/sắp xếp câu sinh từ `examples`; đưa ngữ pháp vào SRS.
+4. **Bật/tắt furigana và romaji**: thiết lập hiển thị, lưu cục bộ + hồ sơ.
+5. **Từ vựng theo chủ đề**: trường `topic` (BE đã lọc sẵn `topic`), gán theo lô nội dung; trang lọc theo chủ đề.
+6. **Luyện đọc**: trang riêng dùng lại các đoạn văn trong đề, thêm đoạn mới theo lô (`reviewed: false`).
+7. **Kiểm tra trình độ**: bài ngắn lấy từ ngân hàng câu hỏi, gợi ý level và bài bắt đầu ở onboarding.
+8. **Lịch sử thi trên server**: bảng `TestResult`, đồng bộ từ `kotoba.tests.v1`, hiện ở dashboard và export.
+9. **Quản lý nội dung đã học**: danh sách theo trạng thái, đặt lại từng mục/bộ (`resetDeck`); lộ trình hằng ngày theo mục tiêu và ngày thi (`lib/daily.ts` `continueTarget`).
+
+#### Phase 41 — Thay đổi lớn nhìn thấy ngay khi vào trang
+Yêu cầu của người dùng: sau khi xong phải thấy khác hẳn, không phải vài chức năng lẻ. Giữ hệ token/phông/chủ đề ADR 010 (không vứt công redesign), nhưng **đổi cấu trúc và bố cục** các màn chính. Ghi ADR 012.
+**Luồng UX (gộp bản spec "Shiori" người dùng gửi với UI hiện có).** Chỉ lấy luồng và hành vi; mục 9 "Visual rules" của spec (hệ Classical, mã màu hex, inline style) bỏ hẳn vì trái ADR 010 và luật `var(--token)`.
+
+```
+[Khách] /  ── bài thử 3 câu ── chọn trình độ ──► /register (mang theo trình độ) ──► kiểm tra trình độ (bỏ qua được)
+                                                                                      │
+[Đã đăng nhập]  Hôm nay (/) · Lộ trình (/lessons) · Luyện tập (/review) · Thư viện (/library) · Tiến độ (/progress)
+                     └──────────────┴──────────────────┴──► Phiên học (tập trung, ẩn nav) ──► Kết quả ──► Hôm nay
+```
+
+Nguyên tắc giữ (thành AC của spec phase): một hành động chính mỗi màn (`.btn` chính duy nhất); người học luôn thấy đang ở đâu / làm gì / còn bao lâu; nhớ lại chủ động, không hiện đáp án cạnh câu hỏi; mỗi màn một khái niệm; phản hồi tức thì có lý do; nút chính cố định; bàn phím đầy đủ (Space/Enter, 1–4, 1/2 Quên/Nhớ, Esc thoát); kanji neo bằng âm Hán Việt và đứng sau từ chứa nó; không popup chúc mừng, không confetti (ràng buộc luôn mục 7).
+
+Thứ tự một phiên, không đổi: **Ôn thẻ đến hạn → Từ mới → Kanji → Ngữ pháp → Ghép câu → Luyện tập → Kết quả**, dựng từ nội dung của bài hiện tại trong 81 bài sẵn có; bước nào bài không có thì bỏ (bài kana không có kanji/ngữ pháp). Nút "Ôn ngay" chạy phiên chỉ gồm bước ôn.
+
+Sửa so với spec, có lý do:
+| Spec nói | Làm thế nào | Vì sao |
+|---|---|---|
+| Phiên cố định 15 phút, mỗi bài ~15 phút | Phiên cắt theo mục tiêu phút và `NEW_PER_DAY`; bài dài trải nhiều ngày; "≈ n phút còn lại" là ước lượng từ số bước | Bài hiện có lệch nhau (bài 13 có 51 mục) |
+| Bài sau khoá tới khi xong bài trước, "mở vào ngày mai" | Không khoá. Chỉ một bài có nút "Học tiếp"; bài khác vẫn mở được | Người đã biết N5 hoặc đặt mục tiêu N3 sẽ bị chặn; hiện app cho vào tự do |
+| Quên = gặp lại sau 10 phút | Nhãn "gặp lại trong phiên này"; thẻ chèn lại cuối phiên, về hộp 1 | Leitner tính theo ngày; không đổi thuật toán, không migration |
+| Câu sai quay lại sau 2 câu (ảnh) / cuối phiên (spec) | Cuối phiên, bộ đếm ghi "làm lại câu sai"; phiên chỉ xong khi trả lời đúng hết | Chọn một quy tắc; cuối phiên giãn cách xa hơn |
+| Modal đăng ký/đăng nhập, nút Google | Giữ trang `(auth)` hiện có; trình độ chọn ở trang khách đi theo query vào form | Trang riêng đã có test, URL trực tiếp, a11y; Google ngoài phạm vi |
+| Hero "Mỗi ngày 15 phút…" | Giữ câu hero người dùng tự viết (Phase 36) | Yêu cầu đã chốt |
+| Nav 4 mục, không có Thi thử/Thư viện | 5 mục; Thi thử nằm trong Luyện tập | App có đề thi và thư viện tra cứu, spec thì không |
+| Bạn bè, bảng xếp hạng, nhắc 20:00, nút Nghe (R), mẹo nhớ, tập viết | Bỏ | Đã quyết ở mục 8 |
+| Nút chính màn Kết quả là "Nhắc tôi…" | Nút chính "Về Hôm nay", phụ "Học thêm 5 phút" | Không có nhắc học |
+
+Giữ thêm từ spec: lưu vị trí phiên bỏ dở để tiếp tục (cục bộ, theo ngày học); mục tiêu phút 5/10/15/20/30; furigana mặc định bật; XP = 10 × câu đúng + 5 × mục mới + 30 khi xong bài, 260 XP mỗi cấp (hằng số ở `src/config/`; nếu `kotoba.activity.v1` chưa ghi số câu đúng thì thêm trường tuỳ chọn, ngày cũ tính 0); bố cục mobile của phiên: chân trang dính đáy, nút ≥ 44px.
+
+Thứ tự làm (mỗi bước một commit xanh, đi từ phần lõi dùng chung ra vỏ): (a) khung phiên học chung trích từ bài học/ôn tập/flashcard hiện có → (b) sáu loại bước trong phiên → (c) Kết quả + XP → (d) Hôm nay → (e) Lộ trình → (f) Luyện tập → (g) Tiến độ → (h) Thư viện → (i) điều hướng + trang khách → (j) hiệu ứng → (k) hoạt ảnh nét.
+
+1. **Điều hướng mới** (`SiteBar.tsx`, `MenuNav.tsx`): Hôm nay · Lộ trình · Luyện tập · Thư viện · Tiến độ; thanh trên có chuỗi ngày và cấp + thanh XP (dẫn tới Tiến độ); thanh tab dưới trên mobile thay cho menu ẩn; ẩn toàn bộ trong phiên học. URL cũ (`/kana`, `/kanji`, `/vocab`, `/grammar`, `/test`, `/flashcards`) vẫn chạy.
+2. **"Hôm nay"** (`/`, viết lại bố cục `Dashboard.tsx`), trả lời "hôm nay học gì": lời chào theo giờ (tính ở client, tránh lệch hydration); khối "Phiên học hôm nay" liệt kê 5 phần (Ôn tập, Từ mới, Kanji, Ngữ pháp, Luyện tập) với nội dung thật và số phút, phần xong có ✓; một nút chính đổi nhãn theo trạng thái (Bắt đầu · n phút / Học bài mới · n phút / Tiếp tục phiên dở / Ôn lại từ hôm nay); cột phụ: vòng mục tiêu phút + 7 chấm của tuần; dải dưới: đang ở bài nào (%), ôn ngày mai (số thẻ), mục tiêu JLPT và ngày thi. Số liệu chi tiết chuyển sang Tiến độ.
+3. **"Lộ trình"** (`/lessons`): level → bài, trạng thái Đã xong ✓ / Học tiếp (nút, chỉ một bài) / Chưa học; không khoá.
+   **"Luyện tập"** (`/review`, gộp hub ôn tập hiện có): số thẻ đến hạn + nút chính "Ôn ngay · khoảng n phút"; biểu đồ thẻ đến hạn 7 ngày tới; 4 mức ghi nhớ Mới → Đang học → Thuộc → Vững ánh xạ từ 5 hộp Leitner (ngưỡng theo `KNOWN_AT`); thẻ hay quên (`lib/weak.ts`); bên dưới là các dạng bài của phase 40 (gõ đáp án, ngữ pháp, đọc hiểu, ôn trộn) và Thi thử, mỗi ô số liệu thật.
+   **"Tiến độ"** (`/progress`, mới, lấy phần thống kê khỏi Dashboard): cấp + XP còn thiếu; 4 tổng số (chuỗi ngày, từ, kanji, ngữ pháp); phút học theo tuần có vạch mục tiêu; độ phủ từng level JLPT; lịch sử thi; heatmap.
+4. **Trang khách mới** (`page.tsx`): hero theo câu của người dùng; bên cạnh là **bài thử 3 câu** không cần tài khoản (cách đọc một từ → âm Hán Việt một kanji → hỏi lại từ đầu để thấy lặp lại ngắt quãng), lấy từ nội dung N5 thật, xong thì "Lưu tiến độ" dẫn tới đăng ký; "Một phiên học diễn ra thế nào" 4 bước; "Kanji qua âm Hán Việt" 3 ví dụ thật; chọn trình độ (Chưa biết / N5 / N4 / N3) mang vào form đăng ký; số liệu nội dung thật theo level.
+5. **Thư viện hợp nhất** (`/library`): kana, kanji, từ vựng (theo bài và theo chủ đề), ngữ pháp trong một màn có lọc level, trạng thái đã học, đã lưu.
+6. **Màn học/ôn thống nhất**: cùng một khung phiên học (thanh tiến độ, phản hồi đúng/sai, màn tổng kết cuối phiên với gợi ý bước tiếp) cho bài học, ôn tập, flashcard và luyện tập; trích thành component dùng chung.
+7. **Hiệu ứng chuyển động toàn site** (yêu cầu của người dùng). Chỉ dùng CSS và View Transitions của Next, không thêm thư viện; token thời lượng/easing mới trong `globals.css`; mọi hiệu ứng tắt khi `prefers-reduced-motion: reduce`; chỉ animate `transform`/`opacity` để không giật.
+   - Chuyển trang: mờ + trượt nhẹ giữa các route; phần tử chung (ô kanji → trang chi tiết) nối liền.
+   - Trang khách: biển hiệu neon bật sáng lần lượt, mưa và ánh phản chiếu chuyển động chậm, nội dung hiện dần khi cuộn tới.
+   - Phiên học: thẻ lật 3D, thẻ trượt ra/vào khi sang câu, nháy sáng khi đúng, rung nhẹ khi sai, thanh tiến độ chạy mượt, màn tổng kết đếm số tăng dần.
+   - Dashboard: số liệu đếm lên, thanh tiến độ và heatmap vẽ dần, huy hiệu chuỗi ngày bừng sáng khi đạt mốc.
+   - Vi tương tác: hover/nhấn của nút và ô, đèn trạng thái SRS đổi màu có chuyển tiếp, khung chờ (skeleton) lấp lánh ở `loading.tsx`.
+   - Test: e2e chạy với reduced motion để ổn định; một test xác nhận hiệu ứng tắt khi người dùng bật giảm chuyển động.
+8. **UX phiên học theo 6 ảnh mẫu** (chỉ hành vi; hình thức vẫn là hệ ADR 010). Áp vào khung phiên học chung ở mục 6.
+   - **Chế độ tập trung**: trong phiên không có menu; chỉ Thoát (có xác nhận nếu đang dở), thanh tiến độ chia đoạn theo bước, và "x / y phút" so với mục tiêu ngày. Mục tiêu ngày tính bằng phút (5/10/15/20/30, mặc định 15) đo từ thời gian thực học; trường mới tuỳ chọn, không bump schema (ADR 002); `NEW_PER_DAY` vẫn là trần số mục mới.
+   - **Chia nhỏ**: cứ 3 mục mới thì một lượt kiểm tra nhanh 3 mục đó; chân trang báo trước bước kế ("Sau từ này: kiểm tra nhanh 3 từ vừa học"). Thay cho "dạy trước, hỏi sau" ở Phase 37.
+   - **Nút chính cố định** góc phải dưới, cùng một phím ở mọi bước (Space tiếp, Enter kiểm tra, 1–4 chọn đáp án, H gợi ý); bảng trợ giúp phím; phím không bắt khi đang gõ ô nhập (§8.1).
+   - **Thẻ từ mới**: cách đọc, nghĩa, loại từ, một câu ví dụ có gạch dưới từ đang học, nút bật/tắt furigana ngay trên thẻ. Ưu tiên câu ví dụ chỉ chứa kanji người học đã gặp (kiểm được bằng dữ liệu); "ngữ pháp đã gặp" không kiểm tự động được nên không cam kết.
+   - **Thẻ kanji**: âm Hán Việt đặt lớn nhất, rồi nghĩa, On/Kun, số nét; kanji xuất hiện sau các từ chứa nó trong cùng bài; danh sách "Từ có chữ này" đánh dấu đã học / chưa học (kèm số bài), không ép học thêm.
+   - **Ngữ pháp**: công thức thành các khối (dùng `pattern` sẵn có), giải thích và bài tập cạnh nhau trên desktop, xếp dọc trên mobile; bài ghép câu có 1 thẻ thừa, kéo thả hoặc phím số, nút Kiểm tra mờ tới khi ghép đủ. Cần trường ví dụ tách đoạn trong `grammar.json` (BACKLOG): lô nội dung riêng, `reviewed: false`, trường tuỳ chọn nên ví dụ cũ vẫn chạy.
+   - **Phản hồi**: đúng/sai hiện ngay tại đáp án (màu + biểu tượng ✓/✗, không chỉ màu) và dải chân trang; một dòng nói lý do sai sinh từ dữ liệu thật (cách đọc đúng, âm Hán Việt của chữ sai); câu sai chèn lại cuối phiên, phải trả lời đúng mới xong phiên; thông báo qua `aria-live`.
+   - **Ôn tập nhớ lại chủ động**: gõ cách đọc (romaji tự đổi sang kana) trước khi thấy đáp án, có lối thoát "Không nhớ"; sau khi lật chỉ 2 nút Quên / Nhớ, mỗi nút ghi khoảng gặp lại lấy từ `INTERVALS`; gõ đúng thì gợi ý sẵn "Nhớ"; đếm ngược "còn n / m thẻ đến hạn"; thẻ đến hạn luôn đứng trước bài mới; đánh dấu khó (D) nối vào Yêu thích/điểm yếu. Giữ Leitner 5 hộp (không đổi thuật toán, không migration): "Quên" về hộp 1 và lặp lại trong phiên.
+   - **Màn tổng kết**: phút đã học so với mục tiêu, số thẻ ôn / từ mới / kanji / % đúng, dải 7 ngày của tuần, "Hay nhầm hôm nay" tự xếp ưu tiên vào lượt ôn sau, dòng "Ngày mai: n thẻ ôn + Bài k, khoảng x phút" tính từ lịch SRS thật, nút phụ "Học thêm 5 phút".
+   - **XP + cấp cá nhân** (người dùng chọn; ADR 013 đảo non-goal XP trong PLAN.md). XP là số **suy ra** từ hoạt động thật đã lưu (thẻ ôn, mục mới, phút học, bài thi), tính bằng một hàm thuần trong `src/lib/` với hằng số ở `src/config/`; không lưu XP riêng nên không có dữ liệu mới để lệch hay mất. Hiện ở thanh trên, "Hôm nay" và màn tổng kết (+XP của phiên, đếm lên). Không có bạn bè, không bảng xếp hạng.
+   - **Hoạt ảnh thứ tự nét** (người dùng chọn; ADR 014): dữ liệu KanjiVG (CC BY-SA 3.0) cho 625 kanji, sinh bằng script trong `kotoba-be/scripts/` vào một file nội dung riêng để giấy phép share-alike chỉ áp lên file đó; ghi công ở `/legal`, footer và README; trang kanji và thẻ kanji phát lại từng nét, có nút xem lại, dừng khi reduced motion (hiện các nét đánh số tĩnh). Không có tập viết, không chấm chữ viết tay. Kanji thiếu trong KanjiVG thì chỉ hiện số nét.
+   - **Không lấy từ ảnh** (ghi lý do trong PLAN.md): nút Nghe và nhắc giờ học (người dùng chọn không làm; màn tổng kết chỉ báo việc ngày mai), bảng xếp hạng bạn bè, mẹo nhớ kanji (không có nguồn được phép, tự viết 625 mẹo là bịa nội dung), "Sửa thẻ" (nội dung dùng chung, không phải thẻ cá nhân), "Tập viết".
+Kiểm chứng riêng: ảnh trước/sau ở 360, 768, 1440 cho mỗi màn đính vào báo cáo; e2e cho luồng khách → dùng thử → đăng ký → Hôm nay → phiên học → tổng kết.
+
+#### Phase 42 — Hoàn thiện UI và QA cuối
+- Phần còn lại của bản critique trang chủ, `rgba()` thô → token, Lighthouse a11y ≥ 95, ảnh chụp 360/768/1440 mọi route.
+- Chạy toàn bộ gate, cập nhật DESIGN/README/PROGRESS, báo cáo cuối theo mẫu §14 kèm danh sách nội dung còn `reviewed: false`.
+
+### Chia việc cho Codex (người dùng yêu cầu 2026-11-14, để tăng tốc)
+
+Mở rộng quy ước cũ (Codex chỉ review read-only; ngoại lệ viết nội dung trên file tách rời). Từ đợt này Codex được **viết** song song, với điều kiện giữ nguyên các luật của AGENTS.md.
+
+Giới hạn thật của việc tăng tốc: Quality Gate và e2e vẫn chạy tuần tự, một người commit. Codex chỉ rút ngắn phần *viết*, không rút ngắn phần *kiểm*. Vì vậy chỉ giao việc dài, độc lập, có đầu ra kiểm được bằng máy.
+
+Giao cho Codex (`codex exec --sandbox workspace-write`, mỗi lần một việc, ghi rõ danh sách file được phép sửa):
+| Việc | Phase | File Codex sở hữu | Kiểm bằng |
+|---|---|---|---|
+| Lô ~70 từ đồng âm | 39 | `content/vocab.json` (chỉ thêm mục mới) | `validate:content`, `jmdict`, mẫu seed |
+| Gán `topic` cho từ vựng | 40.5 | `content/vocab.json` (chỉ thêm trường) | `validate:content`, diff không đổi trường khác |
+| Đoạn đọc mới | 40.6 | file nội dung đọc riêng | `validate:content`, mẫu seed |
+| Ví dụ ngữ pháp tách đoạn | 41.8 | `content/grammar.json` (chỉ thêm trường) | test ghép lại đúng bằng `examples` gốc |
+| Script KanjiVG → file nét | 41.8 | `kotoba-be/scripts/kanjivg.ts` + file sinh ra | test đếm 625 kanji, số nét khớp `strokes` |
+| Docs: README, `kotoba-be/README.md`, `PRODUCT.md` | 37 | đúng các file đó | đọc lại |
+| Module BE tách rời khi Claude đang làm FE (rate limit, dọn token, SMTP mailer) | 38 | `kotoba-be/src/**` theo spec | unit + supertest e2e do Claude chạy |
+| Review read-only trước mỗi commit | mọi phase | không sửa gì | Claude tự xác minh từng phát hiện |
+
+Không giao cho Codex: Phase 41 phần giao diện (cần một ngôn ngữ hình ảnh thống nhất), migration và mọi thứ chạm dữ liệu người dùng (`store.ts`, `srs.ts`, `Sync.tsx`, Prisma schema), lỗi reset-khi-đang-push, e2e/Playwright, git.
+
+Luật khi giao:
+- Hai bên không sửa cùng một file cùng lúc. Hai việc cùng chạm `vocab.json` (đồng âm, `topic`) chạy nối tiếp, không song song.
+- Codex không commit, không chạy e2e, không chạy dev server, không đặt `reviewed: true`. Nội dung nó viết là `reviewed: false` và theo §12 (không bịa; JMdict bắt buộc).
+- Đầu ra của Codex là bản nháp: Claude đọc diff, chạy gate, sửa hoặc bỏ. Test do agent `test` viết vẫn là hợp đồng, Codex không được nới.
+- Mỗi lần giao kèm đường dẫn spec, AC cần đạt, danh sách file được sửa, lệnh kiểm. Ghi vào PROGRESS.md phần nào do Codex viết.
+- Codex lỗi, hết quota hoặc ra kết quả kém hai lần liên tiếp cho một việc: Claude tự làm việc đó, không chờ.
+- Binary không nằm trên PATH: `~/.vscode/extensions/openai.chatgpt-<ver>-win32-x64/bin/windows-x86_64/codex.exe`; kiểm lại thư mục phiên bản trước khi gọi.
+
+
+### Ngoài phạm vi
+Luyện nghe và nút phát âm, N2/N1, tập viết kanji, bạn bè/bảng xếp hạng, nhắc học (push/e-mail), Google OAuth, PWA, light mode, push/merge/deploy.
+
+### Kiểm chứng
+Sau mỗi phase: `npm run check` ở `kotoba-be` và `kotoba-fe`, rồi `npm run test:e2e` ở `kotoba-fe` (mobile + desktop, axe, không console error); nội dung thêm `npm run validate:content` và `npm run sample -- <seed>`. Test mới phải thấy đỏ trước. Thay đổi UI: xem ảnh Playwright 360×740 và 1440×900. `git status` sạch cuối mỗi task.
+
 ## Bắt đầu ở đây (mỗi phiên, kể cả cloud session)
 1. Nếu có `docs/progress/PROGRESS.md`: đọc trước, làm tiếp task đầu tiên chưa DONE. Không làm lại task đã DONE.
 2. Nếu chưa có: bắt đầu từ Task A.

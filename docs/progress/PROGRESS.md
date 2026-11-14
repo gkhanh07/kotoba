@@ -2,7 +2,8 @@
 
 Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLAN.md`.
 
-- Branch: `feat/n5-full` (pushed to `origin feat/n5-full`).
+- Branch: `feat/n5-full`. From 2026-11-14 (phases 36–42) commits stay local: no push, no merge (user decision).
+- Windows: run Vitest from a cwd with an upper-case drive letter (`C:\Users\...`). A lower-case `c:\` cwd (as VS Code opens it) loads vitest twice and every file fails with "Vitest failed to find the current suite" at `tests/setup.ts`.
 - Node: the cloud image's default `node` is v22; use `/opt/node24/bin` (v24.22.1): `export PATH=/opt/node24/bin:$PATH`.
 - BE setup: `cp kotoba-be/.env.example kotoba-be/.env` before `npm ci` (the `postinstall` runs `prisma generate`, which needs `DATABASE_URL`).
 - Task docs: `docs/phases/` and `docs/tasks/` (phase/task specs, review sheets) were removed on 2026-11-14 at the user's request. The paths cited below are in git history: `git show e59b9ee:<path>`.
@@ -47,6 +48,10 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 31–34 (N2) | DROPPED | user decision 2026-11-04: the roadmap stops at N3 |
 | 35 (finish) | DROPPED | user decision 2026-11-11: removed from the roadmap; its required items (EDRDG credits, N2 tab removal) are in BACKLOG |
 | UI redesign: one visual language from the hero to every study screen, 10 page groups (spec `docs/tasks/ui-redesign.md`, ADR 010). The user's 29b test that was stashed here landed with 29b (`3f53292`); no stash is left | DONE | 731f6ef, 97669e2, 2c02360, d55f2b0, 22f2e58, 6c017bb, 3fe5337, 72e5758, 2a34916, 68b1217, f32f62f (one `feat(ui): …` per group); last gate: FE 658 tests, lib coverage 98.23%, e2e 240 passed |
+| 36.1 dev origins from `ALLOWED_DEV_ORIGINS`, new hero copy (PLAN "Đợt hoàn thiện N5–N3") | DONE | `6f7b84b` |
+| 36.2 decisions in PLAN/PROGRESS, ADR 011 (homophone ids) | DONE | `docs: record the N5-N3 completion plan and homophone ids` |
+| 36.3 `reviewed: true` on N3 content (user order) | TODO | |
+| 37–42 | TODO | see PLAN |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -102,10 +107,17 @@ After store hardening: BE 49 unit + 41 e2e + 27 content; FE Vitest 588 tests (al
 After phase 30 (N3 complete, 2026-11-12): BE 58 unit + 41 e2e + 36 content, JMdict 3,046 words, unit coverage 30.57/35.59/33.96/30.06 (thresholds unchanged at 30/35/33/30); FE Vitest 665 tests (lib lines 98.23%, branches 96.98%), E2E 244 passed. Content: N3 = 341 kanji, 1,774 words, 60 grammar points, paper `n3-1`; all `reviewed: false`.
 
 ## Stopped here (2026-11-12, after phase 30)
-N3, the last level of the roadmap, is complete (AGENTS.md §15 checkpoint). Waiting for the user to: use the app for about 10 minutes on N3, check the N3 samples (vocab, grammar, paper; regenerate with `npm run sample -- 20261113` in `kotoba-be`) and the copy sample (`git show e59b9ee:docs/tasks/vietnamese-copy-content-sample.md`), and decide whether to merge `feat/n5-full` into `main`. `kotoba-fe/src/lib/i18n.ts` holds the user's uncommitted hero edit: leave it alone.
+N3, the last level of the roadmap, is complete (AGENTS.md §15 checkpoint). Waiting for the user to: use the app for about 10 minutes on N3, check the N3 samples (vocab, grammar, paper; regenerate with `npm run sample -- 20261113` in `kotoba-be`) and the copy sample (`git show e59b9ee:docs/tasks/vietnamese-copy-content-sample.md`), and decide whether to merge `feat/n5-full` into `main`.
+## N5–N3 completion (phases 36–42, started 2026-11-14)
+The user answered the checkpoint above: N3 is accepted, no merge yet, and the plan in `PLAN.md` ("Đợt hoàn thiện N5–N3") runs next. Decisions (2026-11-14):
+- **Exception to AGENTS.md §12, by direct user order:** the user reviewed N3 and ordered `reviewed: true` on every `level: 3` item (vocab, kanji, grammar) and on paper `n3-1`. The agent applies the flag because the user ordered it; it is not an agent review. N5 and N4 stay `reviewed: false` until the user says otherwise; all new content of these phases is `reviewed: false`.
+- No listening practice; the content ceiling stays N3; ADR 010 tokens stay, layouts change in phase 41.
+- New homophone ids are `vocab:<kana>:<kanji>`; old ids are unchanged (ADR 011).
+- Commit locally only; no push, no merge.
+- Codex may write in parallel on disjoint files under the rules in PLAN ("Chia việc cho Codex"); this file records which parts Codex wrote.
 
 ## Next step
-None planned in `PLAN.md` after phase 30: wait for the checkpoint above. Fixes from the N3 sample review come first if more than 5% of a kind is wrong.
+Phase 36.3, then phases 37–42 in order (PLAN.md). Fixes from the N3 sample review come first if more than 5% of a kind is wrong.
 Note: kill stray `next-server` / `kotoba-be/dist/main` / `nest start --watch` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`; it finds the process with `lsof`, or PowerShell on Windows, BUG-008), so it needs a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).
 
 ## Vietnamese copy review (2026-11-12)
@@ -121,4 +133,4 @@ DONE — direct user request; spec `docs/tasks/review-hub.md`. FE Vitest 675 tes
 ## User walkthrough fixes (2026-11-14)
 DONE — direct user request: use the app as a learner, then fix the technical bugs and hand the uncertain content questions to Codex (read-only). Fixed BUG-023 (key hints on touch), BUG-024 (mock test question below the fold on a phone), BUG-025 (redirected guest told login is optional), BUG-026 (review ladder broke 5 + 2), in commits 4bfc81b, 02be8d1, c1de90c, each with a failing e2e test first. Copy/design questions and Codex's content findings are in BACKLOG ("User walkthrough follow-ups", "Content review follow-ups"); 16 N5 kanji readings there need a person.
 
-Quality Gate: FE `npm run check` green (680 Vitest tests) per fix; full Playwright 268 passed (mobile + desktop, axe). No BE change. `kotoba-fe/next.config.ts` and `kotoba-fe/src/lib/i18n.ts` hold the user's uncommitted edits: leave them alone.
+Quality Gate: FE `npm run check` green (680 Vitest tests) per fix; full Playwright 268 passed (mobile + desktop, axe). No BE change. The user's edits to `kotoba-fe/next.config.ts` and `kotoba-fe/src/lib/i18n.ts` were finished and committed in `6f7b84b` (phase 36.1).
