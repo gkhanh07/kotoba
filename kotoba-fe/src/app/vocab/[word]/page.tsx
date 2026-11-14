@@ -29,7 +29,7 @@ function Facts({ rows, className }: { rows: Fact[]; className: string }) {
 
 export async function generateMetadata(props: PageProps<"/vocab/[word]">): Promise<Metadata> {
   const [lang, w] = await Promise.all([getLang(), props.params.then((p) => getVocabItem(decodeURIComponent(p.word)))]);
-  if (!w) return {};
+  if (!w) notFound();
   return { title: `${w.word} · ${w[lang]} · Kotoba`, description: `${w.reading} (${w.romaji}): ${w[lang]}` };
 }
 

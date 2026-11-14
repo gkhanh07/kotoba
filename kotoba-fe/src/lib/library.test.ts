@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { currentLesson, formatDay, goalScope, hvRows, kanjiIn, kanjiTitle, LEVELS, levelLabel, levelOf, listHref, pageOf, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
+import { currentLesson, formatDay, goalScope, hvRows, kanjiIn, kanjiTitle, LEVELS, levelLabel, levelOf, libraryText, listHref, pageOf, prompt, stopsOf, vocabHref, type PromptSource } from "./library";
 
 const VOCAB: PromptSource = { kind: "vocab", word: "水", reading: "みず", meaning: "nước" };
 const KANA_WORD: PromptSource = { kind: "vocab", word: "ねこ", reading: "ねこ", meaning: "mèo" };
@@ -194,5 +194,12 @@ describe("kanji without a Hán Việt reading", () => {
 
   it("adds no empty row to the review card of a Japanese-made kanji", () => {
     expect(hvRows([], "Hán Việt")).toEqual([]);
+  });
+});
+
+describe("lessons lede (BUG-020)", () => {
+  it("names the last level the path reaches, not N5", () => {
+    expect(libraryText.vi.lessons.lede(81, "N3")).toBe("81 bài, từ bảng chữ đến ôn tập N3. Học theo thứ tự hoặc chọn bài bạn cần.");
+    expect(libraryText.en.lessons.lede(81, "N3")).toBe("81 lessons, from the kana chart to N3 review. Go in order or jump to the one you need.");
   });
 });

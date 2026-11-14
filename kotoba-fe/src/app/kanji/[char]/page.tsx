@@ -11,7 +11,7 @@ import s from "../kanji.module.css";
 
 export async function generateMetadata(props: PageProps<"/kanji/[char]">): Promise<Metadata> {
   const [lang, k] = await Promise.all([getLang(), props.params.then((p) => getKanjiDetail(decodeURIComponent(p.char)))]);
-  if (!k) return {};
+  if (!k) notFound();
   return { title: kanjiTitle(k), description: lang === "vi" ? k.vi : k.en.join(", ") };
 }
 

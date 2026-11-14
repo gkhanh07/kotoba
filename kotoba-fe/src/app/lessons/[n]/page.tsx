@@ -20,7 +20,7 @@ async function find(n: string) {
 
 export async function generateMetadata(props: PageProps<"/lessons/[n]">): Promise<Metadata> {
   const [lang, hit] = await Promise.all([getLang(), props.params.then((p) => find(p.n))]);
-  if (!hit) return {};
+  if (!hit) notFound();
   return { title: `${hit.lesson.title[lang]} · Kotoba`, description: libraryText[lang].lessons.of(hit.lesson.lesson, hit.total) };
 }
 

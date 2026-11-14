@@ -19,7 +19,7 @@ async function find(slug: string) {
 
 export async function generateMetadata(props: PageProps<"/grammar/[slug]">): Promise<Metadata> {
   const [lang, hit] = await Promise.all([getLang(), props.params.then((p) => find(p.slug))]);
-  if (!hit) return {};
+  if (!hit) notFound();
   return { title: `${hit.g.pattern} · Kotoba`, description: hit.g.explain[lang] };
 }
 

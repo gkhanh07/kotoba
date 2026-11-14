@@ -170,6 +170,9 @@ test("/lessons groups the path under an N5 heading", async ({ page, axe }, info)
   const be = watchBackend(page);
   await page.goto("/lessons");
   await expect(page.getByRole("heading", { level: 2, name: "N5" })).toBeVisible();
+  // BUG-020: the lede names the furthest level from the data, not a fixed N5.
+  const lessons = (content("lessons") as { lesson: number; level: number }[]).toSorted((a, b) => a.lesson - b.lesson);
+  await expect(page.getByText(`${lessons.length} bài, từ bảng chữ đến ôn tập N${lessons.at(-1)?.level}. Học theo thứ tự hoặc chọn bài bạn cần.`, { exact: true })).toBeVisible();
   await expect(page.getByRole("region", { name: "N5" }).getByRole("link").first()).toBeVisible();
   expect(await hasHorizontalScroll(page)).toBe(false);
   await axe();

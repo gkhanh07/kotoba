@@ -183,7 +183,7 @@ const en = {
   },
   lessons: {
     title: "Lessons",
-    lede: (n: number) => `${n} lessons, from the kana chart to N5 review. Go in order or jump to the one you need.`,
+    lede: (n: number, last: string) => `${n} lessons, from the kana chart to ${last} review. Go in order or jump to the one you need.`,
     learned: "learned",
     state: { done: "Done", started: "In progress", fresh: "Not started" },
     doneOf: (x: number, y: number) => `${x}/${y} lessons done`,
@@ -369,7 +369,7 @@ const vi: typeof en = {
   },
   lessons: {
     title: "Bài học",
-    lede: (n) => `${n} bài, từ bảng chữ đến ôn tập N5. Học theo thứ tự hoặc chọn bài bạn cần.`,
+    lede: (n, last) => `${n} bài, từ bảng chữ đến ôn tập ${last}. Học theo thứ tự hoặc chọn bài bạn cần.`,
     learned: "đã học",
     state: { done: "Hoàn thành", started: "Đang học", fresh: "Chưa học" },
     doneOf: (x, y) => `${x}/${y} bài đã hoàn thành`,

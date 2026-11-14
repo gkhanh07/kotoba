@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
 import { getKana, getKanji, getLessons, getVocab } from "@/lib/content";
-import { libraryText } from "@/lib/library";
+import { levelLabel, libraryText, type Level } from "@/lib/library";
 import { getLang } from "../LangSwitch";
 import { SiteBar, SiteFooter } from "../SiteBar";
 import { Path } from "./Path";
 import s from "./lessons.module.css";
 
+// Lesson numbers run on from N5 upwards, so the last lesson names the furthest level the path reaches.
+const lastLevel = (lessons: { level: Level }[]) => levelLabel(lessons.at(-1)?.level ?? 5);
+
 export async function generateMetadata(): Promise<Metadata> {
   const [lang, lessons] = await Promise.all([getLang(), getLessons()]);
   const t = libraryText[lang].lessons;
-  return { title: `${t.title} · Kotoba`, description: t.lede(lessons.length) };
+  return { title: `${t.title} · Kotoba`, description: t.lede(lessons.length, lastLevel(lessons)) };
 }
 
 export default async function LessonsPage() {
@@ -24,7 +27,7 @@ export default async function LessonsPage() {
       <main className={s.app}>
         <header className={s.heading}>
           <h1>{t.title}</h1>
-          <p>{t.lede(lessons.length)}</p>
+          <p>{t.lede(lessons.length, lastLevel(lessons))}</p>
         </header>
         <Path stops={stops} lang={lang} />
       </main>
