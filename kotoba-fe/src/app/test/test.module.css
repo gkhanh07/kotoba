@@ -37,6 +37,8 @@
 .startPanel { display: grid; justify-items: start; gap: 1rem; align-self: start; }
 .startPanel p { color: var(--silver); }
 .startPanel .warning { margin-top: 0; }
+.lastResult { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; padding-top: 1rem; border-top: 1px solid var(--rule-dim); font-variant-numeric: tabular-nums; }
+.lastResult strong { color: var(--chalk); }
 @media (min-width: 64rem) {
   .intro { grid-template-columns: minmax(0, 1fr) 22rem; gap: clamp(1.5rem, 3vw, 3rem); }
   .startPanel { position: sticky; top: 1.5rem; }

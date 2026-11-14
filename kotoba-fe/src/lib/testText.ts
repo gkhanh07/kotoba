@@ -14,7 +14,8 @@ const vi = {
   loading: "Đang tải đề…",
   partsHeading: "Các phần của đề",
   start: "Bắt đầu",
-  startNote: "Thời gian được tính ngay khi bạn chọn Bắt đầu và vẫn tiếp tục nếu bạn đóng trang.",
+  startNote: "Thời gian được tính ngay khi bạn chọn Bắt đầu. Tải lại trang vẫn giữ bài làm và đồng hồ; đóng tab thì bài làm dở bị mất.",
+  openLast: "Xem kết quả lần trước",
   parts: {
     kanji: "Cách đọc kanji",
     writing: "Cách viết kanji",
@@ -83,7 +84,8 @@ const en: typeof vi = {
   loading: "Loading the paper…",
   partsHeading: "Parts of the paper",
   start: "Start",
-  startNote: "The clock starts the moment you press Start and keeps running if you close the page.",
+  startNote: "The clock starts the moment you press Start. Reloading keeps your answers and the clock; closing the tab loses the attempt.",
+  openLast: "Open the last result",
   parts: {
     kanji: "Kanji reading",
     writing: "Kanji writing",

@@ -401,6 +401,41 @@ describe("manual submit", () => {
   });
 });
 
+describe("last saved result (BUG-019)", () => {
+  const AT = T0 - 3 * 24 * 60 * MINUTE;
+  const stored = { right: 3, total: 6, parts: [{ part: "kanji", right: 2, total: 2 }, { part: "order", right: 0, total: 1 }, { part: "reading", right: 1, total: 3 }], answers: MIXED, at: AT };
+  const seedResult = (r: object = stored) => localStorage.setItem(RESULTS_KEY, JSON.stringify({ "fx-1": r }));
+
+  it("shows the last score on the intro and offers to open it", () => {
+    seedResult();
+    mount();
+    expect(screen.getByText("3/6 — 50%")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Xem kết quả lần trước" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Bắt đầu" })).toBeEnabled();
+  });
+  it("opens the saved result and its wrong answers without saving it again", async () => {
+    seedResult();
+    const { user } = mount();
+    await user.click(screen.getByRole("button", { name: "Xem kết quả lần trước" }));
+    expect(screen.getByRole("heading", { name: "3/6 — 50%" })).toBeInTheDocument();
+    expect(screen.getByRole("row", { name: "Sắp xếp câu 0/1" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Xem lại câu sai" }));
+    expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual(["Câu 3 / 6 · Sắp xếp câu", "Câu 5 / 6 · Đọc hiểu", "Câu 6 / 6 · Đọc hiểu"]);
+    expect(results()["fx-1"].at).toBe(AT);
+    expect(sessionStorage.length).toBe(0);
+  });
+  it("offers nothing when there is no result, or the result belongs to an older paper of another size", () => {
+    seedResult({ ...stored, answers: [0, 1] });
+    mount();
+    expect(screen.queryByRole("button", { name: "Xem kết quả lần trước" })).toBeNull();
+  });
+  it("says the attempt survives a reload but not closing the tab", () => {
+    mount();
+    expect(screen.getByText(/Tải lại trang vẫn giữ bài làm/)).toBeInTheDocument();
+    expect(screen.queryByText(/vẫn tiếp tục nếu bạn đóng trang/)).toBeNull();
+  });
+});
+
 describe("result", () => {
   it("shows right/total — percent, saves exactly that, and removes the session", async () => {
     const { user } = mount();

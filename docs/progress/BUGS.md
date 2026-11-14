@@ -235,3 +235,29 @@ Format per AGENTS.md §11. Severity: Critical / High / Medium / Low.
 - Similar places: `global-error.tsx` already renders its title; `not-found.tsx` exports metadata. No other error boundary exists.
 - Commit: `feat(ui): redesign the site frame`
 - Status: FIXED
+
+## BUG-018: the mock test intro promises the attempt survives closing the page
+- Severity: High (wrong promise about the learner's work; closing the tab loses it)
+- Found: 2026-11-14, user walkthrough of /test/n5-1
+- Environment: `kotoba-fe/src/lib/testText.ts` `startNote`
+- Expected: the copy says what really happens: a reload keeps the answers and the clock, closing the tab loses the attempt in progress.
+- Actual: "…vẫn tiếp tục nếu bạn đóng trang", while the attempt lives in `sessionStorage` (`kotoba.test.<id>`), which the browser drops with the tab.
+- Reproducing test: `TestApp.test.tsx` "tells the learner a reload keeps the attempt and closing the tab loses it (BUG-018)"
+- Root cause: the copy was not checked against the store: the attempt is kept in sessionStorage, which survives a reload but not closing the tab.
+- Fix: new vi/en `startNote`. Behaviour unchanged (keeping a half-done paper across tabs is a feature, not a bugfix).
+- Similar places: `storageWarn` already says reload or close loses it, which is right when storage is blocked.
+- Commit: `fix(test): reopen the last result and correct the start note`
+- Status: FIXED
+
+## BUG-019: the saved result of a paper cannot be opened again
+- Severity: Medium (the result is stored but unreachable; workaround: sit the paper again)
+- Found: 2026-11-14, user walkthrough of /test/n5-1
+- Environment: `kotoba-fe/src/app/test/[id]/TestApp.tsx`
+- Expected: after leaving the result, the paper's intro offers the last score and a way back to its result and wrong-answer review.
+- Actual: the list shows "Lần gần nhất 3/6"; the intro only offers Start, and the stored answers are never shown again.
+- Reproducing test: `TestApp.test.tsx` describe "last saved result (BUG-019)", 3 tests (offer, open without re-saving, ignore a result of a different paper size).
+- Root cause: the result stage was reachable only from a just-finished run; `readResults` was used by the list and dashboard, not by the paper.
+- Fix: the intro reads the saved result (only if its answer count matches the paper) and opens the result stage from it without saving again.
+- Similar places: retry results are deliberately not saved (retryNote), so nothing else to reopen.
+- Commit: `fix(test): reopen the last result and correct the start note`
+- Status: FIXED

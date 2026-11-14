@@ -6,7 +6,7 @@ import { CHOICE_KEYS, TEST_SESSION_VERSION, TEST_TICK_MS, TEST_WARN_MINUTES } fr
 import type { Lang } from "@/lib/i18n";
 import { useMounted } from "@/lib/mounted";
 import { flatten, formatClock, headline, remaining, score, subset, weakest, wrongIds, type Paper } from "@/lib/test";
-import { clearSession, readSession, saveResult, writeSession } from "@/lib/testStore";
+import { clearSession, readResults, readSession, saveResult, writeSession } from "@/lib/testStore";
 import { testText } from "@/lib/testText";
 import { Arrow } from "../../Arrow";
 import { QuestionText } from "../QuestionText";
@@ -51,6 +51,11 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
   const [run, setRun] = useState(() => initial(paper));
   const [now, setNow] = useState(() => Date.now());
   const [storageFailed, setStorageFailed] = useState(false);
+  // The saved result of this paper, if its answers still fit the paper (an older version of another size does not).
+  const [last] = useState(() => {
+    const saved = readResults()[paper.id];
+    return saved && saved.answers.length === flatten(paper).length ? saved : null;
+  });
   const finished = useRef(false); // the timer and a confirm can both ask to submit; only the first counts
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -96,6 +101,12 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
   function submit() {
     if (!persist()) setStorageFailed(true);
     setRun({ ...run, stage: "result" });
+  }
+  // Reopens the saved result; it is already stored, so nothing is saved again.
+  function openLast() {
+    if (!last) return;
+    finished.current = true;
+    setRun({ ...run, stage: "result", answers: last.answers });
   }
   function retryWrong() {
     const ids = wrongIds(active, answers);
@@ -177,6 +188,12 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
             <p>{t.startNote}</p>
             {warning}
             <button type="button" className="btn" onClick={start} disabled={total === 0}>{t.start} <Arrow /></button>
+            {last && (
+              <p className={s.lastResult}>
+                <span>{t.last}</span> <strong>{headline(last.right, last.total)}</strong>{" "}
+                <button type="button" className="btn btnGhost" onClick={openLast}>{t.openLast}</button>
+              </p>
+            )}
           </div>
         </div>
       </main>
