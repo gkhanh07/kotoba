@@ -71,3 +71,18 @@ A reset of a set with no local cards, made while a push is in flight, leaves `sn
 ## Vietnamese copy review follow-ups (2026-11-12)
 - The lesson-list description in library.ts still says lessons end at N5 review although the list includes N4/N3. The mock-test metadata in testText.ts similarly mentions N5 only. Updating level scope is a factual copy correction requiring agreement with the intended catalogue, outside this wording-only task.
 - GET /settings/export returns English-only plain text on a 503 (Export unavailable, try again later.). Localising it requires adding language selection to the route and its tests; left unchanged to preserve the current handler behavior in this wording-only task.
+
+## User walkthrough follow-ups (2026-11-14)
+Found while using the app as a learner; the technical bugs were fixed as BUG-023 to BUG-026. These are copy, design or content questions, not defects.
+- `/flashcards` with no `?deck` loads `/content/vocab?level=5`, which kotoba-be orders by `sort` only (`content.controller.ts`, lesson order is applied only to paged kanji, BUG-010). The N5 `sort` order is frequency-like, so a guest's first cards are lesson 13 words (水, 本, ねこ…). Decide whether the level deck should follow lesson order; if so, extend `byLesson` to vocab and check the other callers of `getVocab('?level=')`.
+- Review hub: "Ghi nhớ" (box ≥ 1 / started) sits beside "Kiến thức cần cải thiện" (lapses ≥ 2), so one card can count in both. The figures are consistent; the labels need a short explanation. The "Hôm nay 0" pill does not say what it counts.
+- The lesson preview shows romaji upper-case (`lessons.module.css` `.previewRomaji`, `text-transform: uppercase`), while `/kana` shows it lower-case. Pick one style.
+- Lessons quiz a kana or word before the lesson has shown it; consider teaching first (show the card, then ask).
+- Register and onboarding both ask for the goal level; onboarding pre-fills it, but the question is asked twice. The goal list also offers N2/N1, which have no content yet.
+
+## Content review follow-ups (Codex read-only check, 2026-11-14)
+- Grammar patterns use slot symbols (`N1 は N2 です`, `N + も`, `V`) with no legend on the page saying N = danh từ, V = động từ; N1/N2 can also be misread as JLPT levels. Add a short legend.
+- 16 N5 kanji need a person to confirm which readings are shown as main readings: 会 中 長 行 見 分 間 上 子 女 少 語 空 食 読 飲.
+- Lesson sizes are uneven: lesson 13 has 51 items and lesson 7 has 50, well above the others.
+- Every N5 grammar point has exactly 2 examples (68 in total); a third example on the harder points would help.
+- `npm run kanjidic` sorts by frequency, so rerunning it undoes the manual lesson 6 kanji reorder. Make the generator keep the authored order.

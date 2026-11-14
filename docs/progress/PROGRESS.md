@@ -116,3 +116,8 @@ Content review sample: `docs/tasks/vietnamese-copy-content-sample.md`, 30 items 
 
 ## Review hub (2026-11-13)
 DONE — direct user request; spec `docs/tasks/review-hub.md`. FE Vitest 675 tests (lib lines 98.54%, branches 97.09%); full Playwright 246 passed, the 2 failures (old `/review$` URL in `daily.spec.ts`) fixed and rerun green with `review-hub.spec.ts` (8/8). Next: audit of empty pages and navigation flow.
+
+## User walkthrough fixes (2026-11-14)
+DONE — direct user request: use the app as a learner, then fix the technical bugs and hand the uncertain content questions to Codex (read-only). Fixed BUG-023 (key hints on touch), BUG-024 (mock test question below the fold on a phone), BUG-025 (redirected guest told login is optional), BUG-026 (review ladder broke 5 + 2), in commits 4bfc81b, 02be8d1, c1de90c, each with a failing e2e test first. Copy/design questions and Codex's content findings are in BACKLOG ("User walkthrough follow-ups", "Content review follow-ups"); 16 N5 kanji readings there need a person.
+
+Quality Gate: FE `npm run check` green (680 Vitest tests) per fix; full Playwright 268 passed (mobile + desktop, axe). No BE change. `kotoba-fe/next.config.ts` and `kotoba-fe/src/lib/i18n.ts` hold the user's uncommitted edits: leave them alone.
