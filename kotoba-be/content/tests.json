@@ -259,7 +259,7 @@
     },
     "minutes": 100,
     "level": 3,
-    "reviewed": false,
+    "reviewed": true,
     "parts": [
       {
         "part": "kanji",

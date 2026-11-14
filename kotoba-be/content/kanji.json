@@ -461,7 +461,7 @@
   "vi": "chính trị, việc cai trị",
   "lesson": 63,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:事",
@@ -706,7 +706,7 @@
   "vi": "bàn bạc, thảo luận",
   "lesson": 63,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:後",
@@ -856,7 +856,7 @@
   "vi": "nối liền, liên tiếp; dẫn theo",
   "lesson": 76,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "速",
    "運"
@@ -981,7 +981,7 @@
   "vi": "đối diện, đối với; chống lại",
   "lesson": 63,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:上",
@@ -1050,7 +1050,7 @@
   "vi": "bộ phận, phần; ban, phòng",
   "lesson": 61,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:東",
@@ -1234,7 +1234,7 @@
   "vi": "bên trong",
   "lesson": 75,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "肉"
   ]
@@ -1269,7 +1269,7 @@
   "vi": "lẫn nhau, cùng nhau; bộ trưởng",
   "lesson": 76,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:方",
@@ -1352,7 +1352,7 @@
   "vi": "định ra, quyết định; cố định",
   "lesson": 66,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:今",
@@ -1593,7 +1593,7 @@
   "vi": "chọn, lựa chọn; bầu cử",
   "lesson": 63,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:立",
@@ -1714,7 +1714,7 @@
   "vi": "gạo; nước Mỹ",
   "lesson": 48,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:力",
@@ -1934,7 +1934,7 @@
   "vi": "thật, thực tế; quả, hạt",
   "lesson": 73,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:八",
@@ -1994,7 +1994,7 @@
   "vi": "liên quan; cửa ải",
   "lesson": 76,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:決",
@@ -2022,7 +2022,7 @@
   "vi": "quyết định",
   "lesson": 66,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:子",
@@ -2135,7 +2135,7 @@
   "vi": "toàn bộ, tất cả",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:目",
@@ -2199,7 +2199,7 @@
   "vi": "mặt ngoài; bảng biểu; biểu lộ",
   "lesson": 71,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:戦",
@@ -2227,7 +2227,7 @@
   "vi": "chiến tranh, trận đánh; thi đấu",
   "lesson": 59,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:経",
@@ -2259,7 +2259,7 @@
   "vi": "trải qua, đi qua; kinh tế, kinh doanh",
   "lesson": 60,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "軽"
   ]
@@ -2349,7 +2349,7 @@
   "vi": "nhất, tột cùng",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:言",
@@ -2401,7 +2401,7 @@
   "vi": "hiện tại; xuất hiện",
   "lesson": 73,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:理",
@@ -2462,7 +2462,7 @@
   "vi": "điều tra, tìm hiểu; điều chỉnh; giọng điệu",
   "lesson": 80,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:体",
@@ -2524,7 +2524,7 @@
   "vi": "biến đổi, hóa thành",
   "lesson": 73,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:田",
@@ -2579,7 +2579,7 @@
   "vi": "trúng, đúng; thích đáng",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:九",
@@ -2658,7 +2658,7 @@
   "vi": "hẹn, hứa hẹn; khoảng, chừng",
   "lesson": 66,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:主",
@@ -2832,7 +2832,7 @@
   "vi": "pháp luật; phương pháp",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:不",
@@ -2946,7 +2946,7 @@
   "vi": "tính chất, bản tính; giới tính",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:要",
@@ -2974,7 +2974,7 @@
   "vi": "cần, cần thiết; điểm chính",
   "lesson": 66,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:用",
@@ -3022,7 +3022,7 @@
   "vi": "chế độ; hạn chế, kiểm soát",
   "lesson": 63,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:治",
@@ -3057,7 +3057,7 @@
   "vi": "cai trị; chữa bệnh, khỏi bệnh",
   "lesson": 49,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:度",
@@ -3111,7 +3111,7 @@
   "vi": "nhiệm vụ, công việc",
   "lesson": 61,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:強",
@@ -3252,7 +3252,7 @@
   "vi": "trở thành; hoàn thành, thành công",
   "lesson": 73,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:期",
@@ -3276,7 +3276,7 @@
   "vi": "thời kỳ, khoảng thời gian; kỳ hạn",
   "lesson": 67,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:持",
@@ -3360,7 +3360,7 @@
   "vi": "lấy, cầm lấy",
   "lesson": 56,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:都",
@@ -3419,7 +3419,7 @@
   "vi": "hòa hợp, hòa bình; kiểu Nhật",
   "lesson": 48,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:以",
@@ -3473,7 +3473,7 @@
   "vi": "máy móc; máy bay; cơ hội",
   "lesson": 70,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:平",
@@ -3501,7 +3501,7 @@
   "vi": "bằng phẳng; bình thường; hòa bình",
   "lesson": 75,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "半"
   ]
@@ -3532,7 +3532,7 @@
   "vi": "thêm vào, cộng; tham gia",
   "lesson": 69,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:山",
@@ -3695,7 +3695,7 @@
   "vi": "nhận, tiếp nhận; dự (thi)",
   "lesson": 80,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:区",
@@ -3796,7 +3796,7 @@
   "vi": "tiếp tục, nối tiếp",
   "lesson": 80,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "読"
   ]
@@ -3925,7 +3925,7 @@
   "vi": "số, con số; đếm",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:記",
@@ -3949,7 +3949,7 @@
   "vi": "ghi chép, ghi lại",
   "lesson": 70,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:院",
@@ -4029,7 +4029,7 @@
   "vi": "đầu tiên, lần đầu",
   "lesson": 67,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:北",
@@ -4108,7 +4108,7 @@
   "vi": "ngón tay; chỉ, trỏ",
   "lesson": 49,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:権",
@@ -4135,7 +4135,7 @@
   "vi": "quyền, quyền lực",
   "lesson": 63,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:心",
@@ -4212,7 +4212,7 @@
   "vi": "chống đỡ, hỗ trợ; chi nhánh; chi trả",
   "lesson": 62,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:産",
@@ -4300,7 +4300,7 @@
   "vi": "điểm, dấu chấm; bật (đèn, lửa)",
   "lesson": 80,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:教",
@@ -4350,7 +4350,7 @@
   "vi": "báo tin, thông báo; đền đáp",
   "lesson": 70,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:済",
@@ -4387,7 +4387,7 @@
   "vi": "xong, giải quyết xong; cứu giúp",
   "lesson": 60,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:書",
@@ -4438,7 +4438,7 @@
   "vi": "sống, hoạt động; sinh động",
   "lesson": 80,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "話"
   ]
@@ -4470,7 +4470,7 @@
   "vi": "gốc, ban đầu; cánh đồng",
   "lesson": 74,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:先",
@@ -4527,7 +4527,7 @@
   "vi": "cùng nhau, chung",
   "lesson": 76,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:得",
@@ -4560,7 +4560,7 @@
   "vi": "được, có được; lợi",
   "lesson": 62,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:解",
@@ -4601,7 +4601,7 @@
   "vi": "giải quyết, giải đáp; hiểu; tháo ra",
   "lesson": 72,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:名",
@@ -4662,7 +4662,7 @@
   "vi": "giao nhau, qua lại; trộn lẫn",
   "lesson": 76,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:資",
@@ -4688,7 +4688,7 @@
   "vi": "vốn, tiền của; tư liệu",
   "lesson": 60,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:予",
@@ -4715,7 +4715,7 @@
   "vi": "trước, sẵn từ trước",
   "lesson": 66,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:川",
@@ -4777,7 +4777,7 @@
   "vi": "hướng về, quay về phía",
   "lesson": 75,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "同"
   ]
@@ -4811,7 +4811,7 @@
   "vi": "lúc, khi; mép, bên cạnh",
   "lesson": 75,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:勝",
@@ -4840,7 +4840,7 @@
   "vi": "thắng",
   "lesson": 59,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:面",
@@ -4868,7 +4868,7 @@
   "vi": "mặt; bề mặt; phương diện",
   "lesson": 75,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:告",
@@ -4893,7 +4893,7 @@
   "vi": "báo, thông báo",
   "lesson": 71,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:文",
@@ -4953,7 +4953,7 @@
   "vi": "ngược lại, chống lại",
   "lesson": 63,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "友"
   ]
@@ -5125,7 +5125,7 @@
   "vi": "phán đoán, phán xét; con dấu",
   "lesson": 72,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:認",
@@ -5153,7 +5153,7 @@
   "vi": "công nhận, thừa nhận",
   "lesson": 65,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:画",
@@ -5245,7 +5245,7 @@
   "vi": "tham gia; đi, đến (khiêm nhường)",
   "lesson": 76,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:売",
@@ -5292,7 +5292,7 @@
   "vi": "lợi, lợi ích; tiện lợi",
   "lesson": 62,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:組",
@@ -5323,7 +5323,7 @@
   "vi": "nhóm, tổ, lớp; lắp ráp, ghép",
   "lesson": 70,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:知",
@@ -5400,7 +5400,7 @@
   "vi": "tin, tin tưởng; tin tức, liên lạc",
   "lesson": 70,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:集",
@@ -5453,7 +5453,7 @@
   "vi": "có mặt, ở; tồn tại",
   "lesson": 73,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "存"
   ]
@@ -5481,7 +5481,7 @@
   "vi": "việc, vụ việc",
   "lesson": 70,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:別",
@@ -5563,7 +5563,7 @@
   "vi": "bên, phía",
   "lesson": 75,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:任",
@@ -5591,7 +5591,7 @@
   "vi": "giao phó; nhiệm vụ, trách nhiệm",
   "lesson": 61,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "仕"
   ]
@@ -5685,7 +5685,7 @@
   "vi": "tìm kiếm, mong muốn; yêu cầu",
   "lesson": 52,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:所",
@@ -5737,7 +5737,7 @@
   "vi": "tiếp theo; thứ tự",
   "lesson": 67,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:水",
@@ -5837,7 +5837,7 @@
   "vi": "hôm qua; (năm) trước",
   "lesson": 67,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "作"
   ]
@@ -5863,7 +5863,7 @@
   "vi": "bàn luận, lý luận",
   "lesson": 63,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:計",
@@ -5935,7 +5935,7 @@
   "vi": "quan chức, viên chức; nhà nước",
   "lesson": 63,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:増",
@@ -5964,7 +5964,7 @@
   "vi": "tăng, tăng thêm",
   "lesson": 69,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:係",
@@ -5992,7 +5992,7 @@
   "vi": "người phụ trách; liên quan",
   "lesson": 76,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:感",
@@ -6014,7 +6014,7 @@
   "vi": "cảm giác, cảm xúc",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:特",
@@ -6066,7 +6066,7 @@
   "vi": "tình cảm; tình hình",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:投",
@@ -6097,7 +6097,7 @@
   "vi": "ném; bỏ (phiếu); đầu tư",
   "lesson": 56,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "役"
   ]
@@ -6127,7 +6127,7 @@
   "vi": "chỉ ra, cho thấy",
   "lesson": 71,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:変",
@@ -6153,7 +6153,7 @@
   "vi": "thay đổi; lạ, kỳ quặc",
   "lesson": 73,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:打",
@@ -6182,7 +6182,7 @@
   "vi": "đánh, đập",
   "lesson": 56,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:男",
@@ -6289,7 +6289,7 @@
   "vi": "thẳng; sửa, chữa; trực tiếp",
   "lesson": 80,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "真"
   ]
@@ -6319,7 +6319,7 @@
   "vi": "cả hai, hai bên",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:朝",
@@ -6374,7 +6374,7 @@
   "vi": "nghi thức, lễ; kiểu, cách; công thức",
   "lesson": 78,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:確",
@@ -6405,7 +6405,7 @@
   "vi": "chắc chắn, xác thực",
   "lesson": 66,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:村",
@@ -6522,7 +6522,7 @@
   "vi": "quả; kết quả",
   "lesson": 80,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:西",
@@ -6626,7 +6626,7 @@
   "vi": "chứa đựng; nội dung; dung mạo",
   "lesson": 77,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "客"
   ]
@@ -6653,7 +6653,7 @@
   "vi": "nhất định, tất yếu",
   "lesson": 66,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "心"
   ]
@@ -6680,7 +6680,7 @@
   "vi": "biểu diễn, diễn",
   "lesson": 58,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:電",
@@ -6728,7 +6728,7 @@
   "vi": "tuổi; năm",
   "lesson": 67,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:住",
@@ -6786,7 +6786,7 @@
   "vi": "tranh giành, cạnh tranh",
   "lesson": 59,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:談",
@@ -6807,7 +6807,7 @@
   "vi": "nói chuyện, bàn bạc",
   "lesson": 71,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:能",
@@ -6833,7 +6833,7 @@
   "vi": "năng lực, khả năng",
   "lesson": 57,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:位",
@@ -6861,7 +6861,7 @@
   "vi": "vị trí, thứ hạng; khoảng (chừng)",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:置",
@@ -6891,7 +6891,7 @@
   "vi": "đặt, để",
   "lesson": 75,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:真",
@@ -6949,7 +6949,7 @@
   "vi": "chảy, dòng chảy; lưu hành; trường phái",
   "lesson": 80,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:格",
@@ -6976,7 +6976,7 @@
   "vi": "tư cách, thứ bậc; quy cách",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:有",
@@ -7029,7 +7029,7 @@
   "vi": "nghi ngờ",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:口",
@@ -7083,7 +7083,7 @@
   "vi": "vượt quá; trôi qua; lỗi lầm",
   "lesson": 69,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:局",
@@ -7112,7 +7112,7 @@
   "vi": "cơ quan, sở (bưu điện, đài); tình thế",
   "lesson": 70,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:少",
@@ -7173,7 +7173,7 @@
   "vi": "thả, buông ra; phát (sóng)",
   "lesson": 70,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:町",
@@ -7228,7 +7228,7 @@
   "vi": "thường, thông thường; luôn luôn",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:校",
@@ -7301,7 +7301,7 @@
   "vi": "tình trạng, trạng thái; thư, giấy tờ",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:工",
@@ -7403,7 +7403,7 @@
   "vi": "quả bóng; hình cầu",
   "lesson": 59,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:空",
@@ -7460,7 +7460,7 @@
   "vi": "nghề nghiệp, việc làm; chức vụ",
   "lesson": 61,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "識"
   ]
@@ -7523,7 +7523,7 @@
   "vi": "cho, ban cho; tham dự",
   "lesson": 76,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:急",
@@ -7644,7 +7644,7 @@
   "vi": "cung cấp, dâng; đi theo",
   "lesson": 62,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:役",
@@ -7671,7 +7671,7 @@
   "vi": "vai trò, nhiệm vụ; chức vụ",
   "lesson": 61,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "投"
   ]
@@ -7701,7 +7701,7 @@
   "vi": "cấu trúc, dựng lên; để tâm",
   "lesson": 66,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:木",
@@ -7760,7 +7760,7 @@
   "vi": "chia, cắt; vỡ; tỷ lệ",
   "lesson": 62,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:聞",
@@ -7817,7 +7817,7 @@
   "vi": "chi phí; tiêu tốn",
   "lesson": 60,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:付",
@@ -7856,7 +7856,7 @@
   "vi": "gắn, dính; kèm theo",
   "lesson": 56,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:切",
@@ -7916,7 +7916,7 @@
   "vi": "lý do, nguyên do; do, bởi",
   "lesson": 72,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "申"
   ]
@@ -8036,7 +8036,7 @@
   "vi": "khó; tai nạn, hoạn nạn",
   "lesson": 74,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:車",
@@ -8088,7 +8088,7 @@
   "vi": "dịu dàng, hiền; ưu tú; diễn viên",
   "lesson": 58,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:夫",
@@ -8115,7 +8115,7 @@
   "vi": "chồng; người đàn ông",
   "lesson": 46,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:研",
@@ -8168,7 +8168,7 @@
   "vi": "thu, thu nhập; thu nạp, cất giữ",
   "lesson": 60,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:断",
@@ -8202,7 +8202,7 @@
   "vi": "cắt đứt; từ chối; quyết đoán",
   "lesson": 65,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:何",
@@ -8274,7 +8274,7 @@
   "vi": "đá, hòn đá",
   "lesson": 50,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "右"
   ]
@@ -8333,7 +8333,7 @@
   "vi": "khác, sai",
   "lesson": 74,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "偉"
   ]
@@ -8363,7 +8363,7 @@
   "vi": "tắt; biến mất, xóa",
   "lesson": 73,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:神",
@@ -8390,7 +8390,7 @@
   "vi": "thần, thần thánh; tinh thần",
   "lesson": 78,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:番",
@@ -8414,7 +8414,7 @@
   "vi": "lượt, số thứ tự; canh gác",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:規",
@@ -8435,7 +8435,7 @@
   "vi": "quy tắc, chuẩn mực",
   "lesson": 65,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:術",
@@ -8463,7 +8463,7 @@
   "vi": "kỹ thuật, phương pháp",
   "lesson": 57,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:備",
@@ -8489,7 +8489,7 @@
   "vi": "chuẩn bị, trang bị",
   "lesson": 66,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:宅",
@@ -8513,7 +8513,7 @@
   "vi": "nhà, nơi ở",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:害",
@@ -8534,7 +8534,7 @@
   "vi": "hại, có hại; thiệt hại",
   "lesson": 74,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:配",
@@ -8559,7 +8559,7 @@
   "vi": "phân phát, phân phối; lo nghĩ",
   "lesson": 62,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:警",
@@ -8582,7 +8582,7 @@
   "vi": "cảnh báo, răn bảo; canh phòng",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:究",
@@ -8637,7 +8637,7 @@
   "vi": "nuôi dưỡng, giáo dục; lớn lên",
   "lesson": 57,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:席",
@@ -8662,7 +8662,7 @@
   "vi": "chỗ ngồi, ghế",
   "lesson": 54,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:訪",
@@ -8690,7 +8690,7 @@
   "vi": "thăm, viếng thăm",
   "lesson": 54,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:楽",
@@ -8892,7 +8892,7 @@
   "vi": "còn lại, để lại; tàn khốc",
   "lesson": 69,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:想",
@@ -8918,7 +8918,7 @@
   "vi": "nghĩ, tưởng tượng; ý tưởng",
   "lesson": 72,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:病",
@@ -9024,7 +9024,7 @@
   "vi": "ý nghĩ, tâm niệm; chú ý",
   "lesson": 72,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:待",
@@ -9149,7 +9149,7 @@
   "vi": "giúp đỡ, cứu",
   "lesson": 80,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:労",
@@ -9180,7 +9180,7 @@
   "vi": "lao động, sức lực; vất vả",
   "lesson": 61,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:例",
@@ -9205,7 +9205,7 @@
   "vi": "ví dụ; lệ thường",
   "lesson": 71,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "列"
   ]
@@ -9238,7 +9238,7 @@
   "vi": "như thế, như vậy",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:早",
@@ -9323,7 +9323,7 @@
   "vi": "giới hạn, hạn chế",
   "lesson": 69,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:親",
@@ -9412,7 +9412,7 @@
   "vi": "đuổi theo, theo đuổi; thêm vào",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:商",
@@ -9437,7 +9437,7 @@
   "vi": "buôn bán, thương mại",
   "lesson": 62,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:葉",
@@ -9467,7 +9467,7 @@
   "vi": "lá; lời (nói)",
   "lesson": 50,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:伝",
@@ -9503,7 +9503,7 @@
   "vi": "truyền đạt, truyền lại; giúp đỡ",
   "lesson": 71,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:働",
@@ -9554,7 +9554,7 @@
   "vi": "hình dáng, hình thức",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:景",
@@ -9575,7 +9575,7 @@
   "vi": "phong cảnh, cảnh",
   "lesson": 50,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:落",
@@ -9603,7 +9603,7 @@
   "vi": "rơi, rớt; đánh rơi",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:好",
@@ -9664,7 +9664,7 @@
   "vi": "lùi lại, rút lui; rời, nghỉ (việc)",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:英",
@@ -9912,7 +9912,7 @@
   "vi": "thua; gánh vác, chịu",
   "lesson": 59,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:渡",
@@ -9943,7 +9943,7 @@
   "vi": "băng qua; trao, đưa",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:失",
@@ -9970,7 +9970,7 @@
   "vi": "mất, đánh mất; lỗi",
   "lesson": 74,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:差",
@@ -9999,7 +9999,7 @@
   "vi": "chênh lệch, khác biệt; giương (ô)",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:門",
@@ -10080,7 +10080,7 @@
   "vi": "cuối, cuối cùng",
   "lesson": 67,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "未"
   ]
@@ -10113,7 +10113,7 @@
   "vi": "bảo vệ, giữ gìn; tuân thủ",
   "lesson": 65,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:若",
@@ -10147,7 +10147,7 @@
   "vi": "trẻ",
   "lesson": 46,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "苦"
   ]
@@ -10178,7 +10178,7 @@
   "vi": "loại, chủng loại; hạt giống",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:美",
@@ -10202,7 +10202,7 @@
   "vi": "đẹp, vẻ đẹp",
   "lesson": 58,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:命",
@@ -10230,7 +10230,7 @@
   "vi": "sinh mạng; mệnh lệnh; số mệnh",
   "lesson": 78,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:福",
@@ -10253,7 +10253,7 @@
   "vi": "phúc, may mắn",
   "lesson": 78,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "富"
   ]
@@ -10285,7 +10285,7 @@
   "vi": "mong muốn, hy vọng; nhìn xa",
   "lesson": 52,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:非",
@@ -10311,7 +10311,7 @@
   "vi": "không, phi (phủ định); sai trái",
   "lesson": 65,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:観",
@@ -10339,7 +10339,7 @@
   "vi": "xem, quan sát; quan điểm",
   "lesson": 58,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:察",
@@ -10363,7 +10363,7 @@
   "vi": "xem xét, quan sát; đoán, hiểu",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:段",
@@ -10386,7 +10386,7 @@
   "vi": "bậc, bậc thang; cấp, giai đoạn",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:横",
@@ -10416,7 +10416,7 @@
   "vi": "bên cạnh; chiều ngang",
   "lesson": 75,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:白",
@@ -10474,7 +10474,7 @@
   "vi": "sâu",
   "lesson": 50,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "探"
   ]
@@ -10608,7 +10608,7 @@
   "vi": "nói (khiêm nhường); xin, thỉnh cầu",
   "lesson": 71,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "由"
   ]
@@ -10639,7 +10639,7 @@
   "vi": "dáng vẻ, tình trạng; ngài (kính ngữ)",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:財",
@@ -10666,7 +10666,7 @@
   "vi": "của cải, tài sản; tiền bạc",
   "lesson": 60,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:港",
@@ -10688,7 +10688,7 @@
   "vi": "cảng, bến cảng",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:識",
@@ -10714,7 +10714,7 @@
   "vi": "biết, nhận thức; kiến thức",
   "lesson": 72,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "職"
   ]
@@ -10775,7 +10775,7 @@
   "vi": "gọi; mời",
   "lesson": 71,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:達",
@@ -10801,7 +10801,7 @@
   "vi": "đạt tới, thành thạo; các, những (số nhiều)",
   "lesson": 57,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:良",
@@ -10828,7 +10828,7 @@
   "vi": "tốt, hay",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:帰",
@@ -10906,7 +10906,7 @@
   "vi": "thời tiết, mùa; ứng cử",
   "lesson": 50,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:天",
@@ -10964,7 +10964,7 @@
   "vi": "mức độ, chừng; quá trình",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:満",
@@ -10992,7 +10992,7 @@
   "vi": "đầy; đủ, thỏa mãn",
   "lesson": 69,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:敗",
@@ -11016,7 +11016,7 @@
   "vi": "thua, thất bại",
   "lesson": 59,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:値",
@@ -11041,7 +11041,7 @@
   "vi": "giá, giá trị",
   "lesson": 60,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:歌",
@@ -11116,7 +11116,7 @@
   "vi": "đâm, chọc; đột ngột",
   "lesson": 59,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "究"
   ]
@@ -11170,7 +11170,7 @@
   "vi": "đường, lối đi",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:悪",
@@ -11229,7 +11229,7 @@
   "vi": "khoa, bộ môn",
   "lesson": 57,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "料"
   ]
@@ -11312,7 +11312,7 @@
   "vi": "chất lên, tích lũy; diện tích",
   "lesson": 69,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:他",
@@ -11336,7 +11336,7 @@
   "vi": "khác, cái khác; người khác",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:処",
@@ -11368,7 +11368,7 @@
   "vi": "xử lý; nơi chốn",
   "lesson": 75,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:室",
@@ -11477,7 +11477,7 @@
   "vi": "khách, khách hàng",
   "lesson": 62,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "容"
   ]
@@ -11558,7 +11558,7 @@
   "vi": "không, phủ định; từ chối",
   "lesson": 65,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:師",
@@ -11586,7 +11586,7 @@
   "vi": "thầy, người dạy; chuyên gia",
   "lesson": 57,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:登",
@@ -11614,7 +11614,7 @@
   "vi": "leo, trèo lên; ghi vào, đăng ký",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:母",
@@ -11669,7 +11669,7 @@
   "vi": "dễ; trao đổi, buôn bán",
   "lesson": 62,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:黒",
@@ -11743,7 +11743,7 @@
   "vi": "nhanh, tốc độ",
   "lesson": 53,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "連"
   ]
@@ -11776,7 +11776,7 @@
   "vi": "tồn tại; biết, nghĩ (khiêm nhường)",
   "lesson": 73,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "在"
   ]
@@ -11851,7 +11851,7 @@
   "vi": "bay; nhảy",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:殺",
@@ -11885,7 +11885,7 @@
   "vi": "giết",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:赤",
@@ -11942,7 +11942,7 @@
   "vi": "số hiệu; tín hiệu, tên gọi",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:単",
@@ -11969,7 +11969,7 @@
   "vi": "đơn, một; đơn giản",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:座",
@@ -11995,7 +11995,7 @@
   "vi": "ngồi; chỗ ngồi",
   "lesson": 54,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:青",
@@ -12051,7 +12051,7 @@
   "vi": "phá, làm rách, làm vỡ",
   "lesson": 59,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:除",
@@ -12080,7 +12080,7 @@
   "vi": "loại bỏ, trừ ra",
   "lesson": 69,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:完",
@@ -12102,7 +12102,7 @@
   "vi": "hoàn thành, trọn vẹn",
   "lesson": 66,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:降",
@@ -12134,7 +12134,7 @@
   "vi": "xuống, đi xuống; rơi (mưa)",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:責",
@@ -12158,7 +12158,7 @@
   "vi": "trách nhiệm; trách mắng",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:右",
@@ -12214,7 +12214,7 @@
   "vi": "bắt, bắt giữ",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:危",
@@ -12240,7 +12240,7 @@
   "vi": "nguy hiểm",
   "lesson": 74,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:森",
@@ -12321,7 +12321,7 @@
   "vi": "lương; cấp, cung cấp",
   "lesson": 60,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "絵"
   ]
@@ -12462,7 +12462,7 @@
   "vi": "khổ, vất vả; đắng",
   "lesson": 49,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "若"
   ]
@@ -12489,7 +12489,7 @@
   "vi": "đón, nghênh đón",
   "lesson": 54,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:走",
@@ -12536,7 +12536,7 @@
   "vi": "vườn, công viên",
   "lesson": 54,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "遠"
   ]
@@ -12567,7 +12567,7 @@
   "vi": "dụng cụ, đồ dùng; cụ thể",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:左",
@@ -12619,7 +12619,7 @@
   "vi": "từ, lời; nghỉ việc, từ chức",
   "lesson": 61,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:秋",
@@ -12669,7 +12669,7 @@
   "vi": "nguyên nhân",
   "lesson": 74,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "困"
   ]
@@ -12699,7 +12699,7 @@
   "vi": "ngựa",
   "lesson": 48,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:愛",
@@ -12727,7 +12727,7 @@
   "vi": "yêu, tình yêu",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:休",
@@ -12783,7 +12783,7 @@
   "vi": "giàu; của cải",
   "lesson": 60,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "福"
   ]
@@ -12834,7 +12834,7 @@
   "vi": "anh ấy, người ấy; kia",
   "lesson": 46,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:未",
@@ -12866,7 +12866,7 @@
   "vi": "chưa",
   "lesson": 67,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "末"
   ]
@@ -12896,7 +12896,7 @@
   "vi": "múa, nhảy múa",
   "lesson": 58,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:林",
@@ -12976,7 +12976,7 @@
   "vi": "chết, mất; diệt vong",
   "lesson": 73,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:冷",
@@ -13007,7 +13007,7 @@
   "vi": "lạnh; làm lạnh",
   "lesson": 48,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:適",
@@ -13033,7 +13033,7 @@
   "vi": "thích hợp, phù hợp",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:婦",
@@ -13058,7 +13058,7 @@
   "vi": "người phụ nữ; vợ",
   "lesson": 46,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:寄",
@@ -13088,7 +13088,7 @@
   "vi": "ghé vào; lại gần; gửi",
   "lesson": 54,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:込",
@@ -13114,7 +13114,7 @@
   "vi": "đông, chật; cho vào, bao gồm",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:顔",
@@ -13163,7 +13163,7 @@
   "vi": "loại, chủng loại",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:余",
@@ -13192,7 +13192,7 @@
   "vi": "dư, thừa",
   "lesson": 62,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:王",
@@ -13216,7 +13216,7 @@
   "vi": "vua",
   "lesson": 78,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "主"
   ]
@@ -13247,7 +13247,7 @@
   "vi": "trả lại; trả lời",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:短",
@@ -13297,7 +13297,7 @@
   "vi": "vợ",
   "lesson": 46,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:背",
@@ -13330,7 +13330,7 @@
   "vi": "lưng; chiều cao",
   "lesson": 49,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:熱",
@@ -13356,7 +13356,7 @@
   "vi": "nhiệt, nóng; sốt",
   "lesson": 49,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:宿",
@@ -13388,7 +13388,7 @@
   "vi": "nhà trọ, chỗ ở",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:薬",
@@ -13467,7 +13467,7 @@
   "vi": "hiểm trở; nguy hiểm",
   "lesson": 74,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "験"
   ]
@@ -13495,7 +13495,7 @@
   "vi": "nhờ, nhờ vả; tin cậy, dựa vào",
   "lesson": 52,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:覚",
@@ -13525,7 +13525,7 @@
   "vi": "nhớ; thức dậy, tỉnh; cảm giác",
   "lesson": 72,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:船",
@@ -13549,7 +13549,7 @@
   "vi": "thuyền, tàu",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:途",
@@ -13573,7 +13573,7 @@
   "vi": "đường đi; giữa chừng",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:許",
@@ -13597,7 +13597,7 @@
   "vi": "cho phép; tha thứ",
   "lesson": 65,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:駅",
@@ -13655,7 +13655,7 @@
   "vi": "rút ra, nhổ; bỏ qua, sót",
   "lesson": 56,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:便",
@@ -13716,7 +13716,7 @@
   "vi": "ở lại, lưu lại; giữ lại",
   "lesson": 54,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:罪",
@@ -13743,7 +13743,7 @@
   "vi": "tội, tội lỗi",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:努",
@@ -13767,7 +13767,7 @@
   "vi": "cố gắng, nỗ lực",
   "lesson": 52,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "怒"
   ]
@@ -13802,7 +13802,7 @@
   "vi": "tinh túy, tỉ mỉ; tinh thần",
   "lesson": 52,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:散",
@@ -13835,7 +13835,7 @@
   "vi": "tản ra, vương vãi; rơi rụng",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:洋",
@@ -13884,7 +13884,7 @@
   "vi": "yên tĩnh, tĩnh lặng",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:婚",
@@ -13904,7 +13904,7 @@
   "vi": "hôn nhân, cưới",
   "lesson": 46,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:喜",
@@ -13928,7 +13928,7 @@
   "vi": "vui mừng",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:浮",
@@ -13955,7 +13955,7 @@
   "vi": "nổi; hiện lên",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:旅",
@@ -14011,7 +14011,7 @@
   "vi": "cắt đứt, chấm dứt; tuyệt đối",
   "lesson": 65,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:幸",
@@ -14037,7 +14037,7 @@
   "vi": "hạnh phúc, may mắn",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:押",
@@ -14073,7 +14073,7 @@
   "vi": "ấn, đẩy",
   "lesson": 56,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:軽",
@@ -14135,7 +14135,7 @@
   "vi": "ngã, đổ; lật đổ",
   "lesson": 59,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "到"
   ]
@@ -14167,7 +14167,7 @@
   "vi": "bằng nhau; hạng, cấp; vân vân",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:老",
@@ -14192,7 +14192,7 @@
   "vi": "già; người già",
   "lesson": 46,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "考"
   ]
@@ -14229,7 +14229,7 @@
   "vi": "bản nhạc; cong, uốn cong",
   "lesson": 58,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:払",
@@ -14259,7 +14259,7 @@
   "vi": "trả (tiền); phủi, gạt đi",
   "lesson": 60,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:庭",
@@ -14283,7 +14283,7 @@
   "vi": "sân, vườn; gia đình",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:徒",
@@ -14316,7 +14316,7 @@
   "vi": "đi bộ; học trò",
   "lesson": 57,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:池",
@@ -14369,7 +14369,7 @@
   "vi": "làm việc, đi làm; siêng năng",
   "lesson": 61,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "動"
   ]
@@ -14399,7 +14399,7 @@
   "vi": "chậm, muộn",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:居",
@@ -14427,7 +14427,7 @@
   "vi": "ở, cư trú; có mặt",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:雑",
@@ -14451,7 +14451,7 @@
   "vi": "tạp, lẫn lộn; linh tinh",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:招",
@@ -14476,7 +14476,7 @@
   "vi": "mời, chiêu đãi; gây ra",
   "lesson": 54,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:困",
@@ -14500,7 +14500,7 @@
   "vi": "khó khăn, bối rối",
   "lesson": 74,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "因"
   ]
@@ -14531,7 +14531,7 @@
   "vi": "thiếu; vắng mặt",
   "lesson": 69,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:更",
@@ -14565,7 +14565,7 @@
   "vi": "đổi mới, thay đổi; hơn nữa",
   "lesson": 73,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:刻",
@@ -14594,7 +14594,7 @@
   "vi": "khắc, chạm; thời khắc",
   "lesson": 67,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:賛",
@@ -14621,7 +14621,7 @@
   "vi": "tán thành; khen ngợi",
   "lesson": 63,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:抱",
@@ -14647,7 +14647,7 @@
   "vi": "ôm, bế; mang (trong lòng)",
   "lesson": 56,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:服",
@@ -14695,7 +14695,7 @@
   "vi": "phạm (tội); tội phạm",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:恐",
@@ -14723,7 +14723,7 @@
   "vi": "sợ, sợ hãi; e rằng",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:息",
@@ -14750,7 +14750,7 @@
   "vi": "hơi thở; nghỉ ngơi; con trai",
   "lesson": 46,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:遠",
@@ -14805,7 +14805,7 @@
   "vi": "quay lại, trở về; trả lại",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:願",
@@ -14832,7 +14832,7 @@
   "vi": "mong muốn, ước nguyện; nhờ, xin",
   "lesson": 52,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:絵",
@@ -14856,7 +14856,7 @@
   "vi": "tranh, bức vẽ",
   "lesson": 58,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "給"
   ]
@@ -14890,7 +14890,7 @@
   "vi": "vượt qua; chuyển (nhà); Việt (Nam)",
   "lesson": 53,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:欲",
@@ -14918,7 +14918,7 @@
   "vi": "ham muốn; muốn có",
   "lesson": 52,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:痛",
@@ -14946,7 +14946,7 @@
   "vi": "đau",
   "lesson": 49,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:笑",
@@ -14969,7 +14969,7 @@
   "vi": "cười",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:互",
@@ -14994,7 +14994,7 @@
   "vi": "lẫn nhau, qua lại",
   "lesson": 76,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:束",
@@ -15025,7 +15025,7 @@
   "vi": "bó, buộc; ràng buộc",
   "lesson": 66,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "東"
   ]
@@ -15055,7 +15055,7 @@
   "vi": "giống, tương tự",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:夕",
@@ -15102,7 +15102,7 @@
   "vi": "hàng, dãy",
   "lesson": 75,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "例"
   ]
@@ -15130,7 +15130,7 @@
   "vi": "tìm kiếm; dò xét",
   "lesson": 56,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "深"
   ]
@@ -15162,7 +15162,7 @@
   "vi": "trốn, chạy trốn; để lỡ",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:借",
@@ -15229,7 +15229,7 @@
   "vi": "chơi; đi chơi",
   "lesson": 54,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:迷",
@@ -15256,7 +15256,7 @@
   "vi": "lạc đường; phân vân, do dự",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:夢",
@@ -15283,7 +15283,7 @@
   "vi": "giấc mơ, ước mơ",
   "lesson": 52,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:君",
@@ -15309,7 +15309,7 @@
   "vi": "cậu, em (gọi thân mật); vua, chúa",
   "lesson": 46,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:雨",
@@ -15360,7 +15360,7 @@
   "vi": "đóng, khép",
   "lesson": 47,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "開"
   ]
@@ -15393,7 +15393,7 @@
   "vi": "đầu mối, khởi đầu; dây",
   "lesson": 76,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:弱",
@@ -15451,7 +15451,7 @@
   "vi": "gấp, bẻ; gãy",
   "lesson": 56,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:草",
@@ -15480,7 +15480,7 @@
   "vi": "cỏ",
   "lesson": 50,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:飲",
@@ -15535,7 +15535,7 @@
   "vi": "trời tối, chiều tà; sinh sống",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:肉",
@@ -15608,7 +15608,7 @@
   "vi": "rượu",
   "lesson": 48,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:堂",
@@ -15655,7 +15655,7 @@
   "vi": "buồn, đau buồn",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:晴",
@@ -15681,7 +15681,7 @@
   "vi": "trời quang, nắng",
   "lesson": 50,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:掛",
@@ -15720,7 +15720,7 @@
   "vi": "treo, móc; tốn (thời gian, tiền)",
   "lesson": 56,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:到",
@@ -15746,7 +15746,7 @@
   "vi": "đến, tới nơi",
   "lesson": 53,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "倒"
   ]
@@ -15779,7 +15779,7 @@
   "vi": "ngủ; nằm",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:暗",
@@ -15879,7 +15879,7 @@
   "vi": "trộm, ăn cắp",
   "lesson": 64,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:吸",
@@ -15904,7 +15904,7 @@
   "vi": "hút, hít vào",
   "lesson": 48,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:勉",
@@ -15958,7 +15958,7 @@
   "vi": "mặt trời, ánh nắng; dương",
   "lesson": 50,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:御",
@@ -15985,7 +15985,7 @@
   "vi": "tiền tố kính ngữ; điều khiển",
   "lesson": 78,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:冬",
@@ -16033,7 +16033,7 @@
   "vi": "răng",
   "lesson": 49,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:昼",
@@ -16099,7 +16099,7 @@
   "vi": "quên",
   "lesson": 72,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "忙"
   ]
@@ -16124,7 +16124,7 @@
   "vi": "tuyết",
   "lesson": 50,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:吹",
@@ -16151,7 +16151,7 @@
   "vi": "thổi",
   "lesson": 50,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:娘",
@@ -16175,7 +16175,7 @@
   "vi": "con gái; cô gái",
   "lesson": 46,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:誤",
@@ -16201,7 +16201,7 @@
   "vi": "sai, nhầm lẫn",
   "lesson": 72,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "語"
   ]
@@ -16279,7 +16279,7 @@
   "vi": "quen, thói quen",
   "lesson": 80,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:礼",
@@ -16304,7 +16304,7 @@
   "vi": "lễ nghĩa, phép lịch sự; cảm ơn; cúi chào",
   "lesson": 78,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:窓",
@@ -16330,7 +16330,7 @@
   "vi": "cửa sổ",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:昔",
@@ -16355,7 +16355,7 @@
   "vi": "ngày xưa, ngày trước",
   "lesson": 67,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:牛",
@@ -16428,7 +16428,7 @@
   "vi": "nghèo",
   "lesson": 60,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:兄",
@@ -16477,7 +16477,7 @@
   "vi": "giận, tức giận",
   "lesson": 51,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "努"
   ]
@@ -16502,7 +16502,7 @@
   "vi": "bơi",
   "lesson": 55,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:祖",
@@ -16524,7 +16524,7 @@
   "vi": "tổ tiên, ông bà",
   "lesson": 46,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:杯",
@@ -16549,7 +16549,7 @@
   "vi": "chén, ly; cốc (đếm)",
   "lesson": 48,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:疲",
@@ -16575,7 +16575,7 @@
   "vi": "mệt mỏi",
   "lesson": 49,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:皆",
@@ -16599,7 +16599,7 @@
   "vi": "tất cả, mọi người",
   "lesson": 79,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:鳴",
@@ -16629,7 +16629,7 @@
   "vi": "kêu, hót; reo (chuông)",
   "lesson": 58,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:腹",
@@ -16653,7 +16653,7 @@
   "vi": "bụng",
   "lesson": 49,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:煙",
@@ -16677,7 +16677,7 @@
   "vi": "khói; thuốc lá",
   "lesson": 48,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:眠",
@@ -16702,7 +16702,7 @@
   "vi": "ngủ; buồn ngủ",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:怖",
@@ -16730,7 +16730,7 @@
   "vi": "sợ, đáng sợ",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:犬",
@@ -16831,7 +16831,7 @@
   "vi": "đỉnh, chóp; nhận (khiêm nhường)",
   "lesson": 78,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:箱",
@@ -16857,7 +16857,7 @@
   "vi": "hộp, thùng",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:晩",
@@ -16878,7 +16878,7 @@
   "vi": "buổi tối, đêm",
   "lesson": 67,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:暑",
@@ -16997,7 +16997,7 @@
   "vi": "tóc",
   "lesson": 49,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:忙",
@@ -17025,7 +17025,7 @@
   "vi": "bận rộn",
   "lesson": 61,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "忘"
   ]
@@ -17071,7 +17071,7 @@
   "vi": "tài năng; tuổi",
   "lesson": 57,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:靴",
@@ -17093,7 +17093,7 @@
   "vi": "giày",
   "lesson": 47,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:恥",
@@ -17119,7 +17119,7 @@
   "vi": "xấu hổ, nhục",
   "lesson": 51,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:偶",
@@ -17145,7 +17145,7 @@
   "vi": "ngẫu nhiên, tình cờ; số chẵn",
   "lesson": 77,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:偉",
@@ -17172,7 +17172,7 @@
   "vi": "vĩ đại, giỏi giang",
   "lesson": 57,
   "level": 3,
-  "reviewed": false,
+  "reviewed": true,
   "similar": [
    "違"
   ]
@@ -17197,7 +17197,7 @@
   "vi": "mèo",
   "lesson": 48,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  },
  {
   "id": "kanji:幾",
@@ -17227,6 +17227,6 @@
   "vi": "bao nhiêu; vài",
   "lesson": 68,
   "level": 3,
-  "reviewed": false
+  "reviewed": true
  }
 ]

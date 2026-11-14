@@ -49,8 +49,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 35 (finish) | DROPPED | user decision 2026-11-11: removed from the roadmap; its required items (EDRDG credits, N2 tab removal) are in BACKLOG |
 | UI redesign: one visual language from the hero to every study screen, 10 page groups (spec `docs/tasks/ui-redesign.md`, ADR 010). The user's 29b test that was stashed here landed with 29b (`3f53292`); no stash is left | DONE | 731f6ef, 97669e2, 2c02360, d55f2b0, 22f2e58, 6c017bb, 3fe5337, 72e5758, 2a34916, 68b1217, f32f62f (one `feat(ui): …` per group); last gate: FE 658 tests, lib coverage 98.23%, e2e 240 passed |
 | 36.1 dev origins from `ALLOWED_DEV_ORIGINS`, new hero copy (PLAN "Đợt hoàn thiện N5–N3") | DONE | `6f7b84b` |
-| 36.2 decisions in PLAN/PROGRESS, ADR 011 (homophone ids) | DONE | `docs: record the N5-N3 completion plan and homophone ids` |
-| 36.3 `reviewed: true` on N3 content (user order) | TODO | |
+| 36.2 decisions in PLAN/PROGRESS, ADR 011 (homophone ids) | DONE | `920f5d3` |
+| 36.3 `reviewed: true` on N3 content (user order): 1,774 words, 341 kanji, 60 grammar points, paper `n3-1`; N5/N4 untouched. The content check that kept N3 kanji unreviewed (phase 27 AC-1) now checks that only level-3 items are reviewed. BE check green: 58 unit, 41 e2e, 36 content, JMdict 3,046 words | DONE | `content(n3): mark N3 content as reviewed by the user` |
 | 37–42 | TODO | see PLAN |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
@@ -117,7 +117,7 @@ The user answered the checkpoint above: N3 is accepted, no merge yet, and the pl
 - Codex may write in parallel on disjoint files under the rules in PLAN ("Chia việc cho Codex"); this file records which parts Codex wrote.
 
 ## Next step
-Phase 36.3, then phases 37–42 in order (PLAN.md). Fixes from the N3 sample review come first if more than 5% of a kind is wrong.
+Phase 37 (PLAN.md), then 38–42 in order. Fixes from the N3 sample review come first if more than 5% of a kind is wrong.
 Note: kill stray `next-server` / `kotoba-be/dist/main` / `nest start --watch` processes before `npm run test:e2e`. E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`; it finds the process with `lsof`, or PowerShell on Windows, BUG-008), so it needs a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).
 
 ## Vietnamese copy review (2026-11-12)

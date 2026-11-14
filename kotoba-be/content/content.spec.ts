@@ -97,9 +97,12 @@ describe('content', () => {
     expect(bad.map((k) => k.id)).toEqual([]);
   });
 
-  // Phase 27 AC-1: the N3 meanings are authored, not yet checked by a person.
-  it('keeps every N3 kanji marked for review', () => {
-    expect(kanji.filter((k) => k.level === 3 && k.reviewed !== false).map((k) => k.id)).toEqual([]);
+  // Only the user sets `reviewed: true` (AGENTS.md §12). On 2026-11-14 the user checked N3 and ordered the flag on
+  // N3 content (PROGRESS.md, "N5–N3 completion"); N5 and N4 stay unchecked. This replaces phase 27 AC-1, which
+  // required every N3 kanji to stay unreviewed while no person had checked them.
+  it('marks as reviewed only the N3 content the user checked', () => {
+    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as Item[];
+    expect([...all, ...papers].filter((d) => d.reviewed === true && d.level !== 3).map((d) => d.id)).toEqual([]);
   });
 
   // BUG-011: KANJIDIC2 text is XML, so entities must be decoded, not shown ("coming &amp; going").
