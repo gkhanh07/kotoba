@@ -20,4 +20,13 @@ describe('Limiter', () => {
     expect(l.blocked('b', 900)).toBe(false);
     expect(l.blocked('a', 1001)).toBe(false);
   });
+  it('undo takes back one hit only', () => {
+    const l = new Limiter(2, 1000);
+    l.hit('a', 0);
+    l.undo('a', l.hit('a', 0));
+    l.undo('b', 0);
+    expect(l.blocked('a', 0)).toBe(false);
+    l.hit('a', 0);
+    expect(l.blocked('a', 0)).toBe(true);
+  });
 });

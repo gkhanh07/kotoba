@@ -46,9 +46,6 @@ Out-of-scope findings (AGENTS.md §2, §13). Not fixed in the task that found th
 - Mock test passages: line breaks in `passage` (title, paragraphs) are not kept on screen, so the N4 `text` passage reads as one block. Render `\n` as paragraph breaks in TestApp (and check n5-1's memo passages).
 - N4 content not yet seen by a reviewer pass: grammar (phase 25) and paper n4-1 (phase 26); all `reviewed: false`.
 
-## A reset during a push (found in the store hardening task, 2026-11-05)
-A reset of a set with no local cards, made while a push is in flight, leaves `snapshot()` unchanged, so `applyRemote` writes `forget: []` and drops the entry. The account keeps those cards. Needs a reset of an empty set inside one request; the next reset of that set sends it again.
-
 ## Hán Việt source task follow-ups (2026-11-08)
 - AC-1 of the Hán Việt task spec (`git show e59b9ee:docs/tasks/hanviet-fix.md`; every `hv` is in hanviet-pinyin-wordlist) was checked by a scratchpad script, not a repo test, because the list and Unihan variants are not vendored. Vendor a trimmed list (MIT allows it) and turn the check into a `validate:content` step before N2 kanji are added.
 - A kanji with no `hv` (only 込 today) renders an empty `hv` span in kanji tiles: `kanji/[char]/page.tsx` (look-alikes), `vocab/[word]/page.tsx`, `KanjiGrid.tsx`, `lessons/[n]/page.tsx`. Invisible, but an empty node; render the span only when there is a reading.

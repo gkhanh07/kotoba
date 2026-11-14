@@ -40,7 +40,7 @@ Mọi phase theo AGENTS.md: spec `docs/phases/NN-*.md` (AC + ma trận test) →
 - Bài học: dạy trước, hỏi sau; onboarding không hỏi lại mục tiêu đã chọn.
 - Docs: README (credit EDRDG), `kotoba-be/README.md`, `PRODUCT.md` non-goals, `DESIGN.md` trùng Glossary; chuyển `INTERVALS`/`KNOWN_AT` vào `src/config/`.
 
-#### Phase 38 — Bảo mật và độ bền BE
+#### Phase 38 — Bảo mật và độ bền BE — xong
 - `kotoba-fe/src/lib/auth.ts`: không chuyển tiếp `x-forwarded-for` của client; e2e dùng cơ chế riêng cho test.
 - Rate limit cho `/me/password`, `DELETE /me`, `/auth/reset`; dọn token hết hạn; giới hạn số thẻ mỗi lần `PUT /progress`.
 - Lỗi reset-khi-đang-push (BACKLOG, mất dữ liệu → ưu tiên 1).

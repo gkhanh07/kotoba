@@ -44,12 +44,20 @@ describe("currentUser", () => {
 });
 
 describe("signIn", () => {
-  it("sets a persistent cookie when remembered and forwards the last forwarded ip", async () => {
+  it("sets a persistent cookie when remembered and, behind a trusted proxy, forwards the last forwarded ip", async () => {
+    vi.stubEnv("TRUST_PROXY", "1");
     hdrs.get.mockReturnValue("9.9.9.9, 1.2.3.4");
     apiMock.mockResolvedValue({ token: "t1", expiresAt: "2030-01-01T00:00:00.000Z", onboarded: true });
     expect(await signIn("a@b.co", "pw", true)).toEqual({ onboarded: true });
     expect(apiMock).toHaveBeenCalledWith("/auth/login", { method: "POST", body: { email: "a@b.co", password: "pw", remember: true }, ip: "1.2.3.4" });
     expect(jar.set).toHaveBeenCalledWith("kotoba.session", "t1", { httpOnly: true, sameSite: "lax", path: "/", secure: false, expires: new Date("2030-01-01T00:00:00.000Z") });
+    vi.unstubAllEnvs();
+  });
+  it("ignores a client's x-forwarded-for without a trusted proxy", async () => {
+    hdrs.get.mockReturnValue("1.2.3.4");
+    apiMock.mockResolvedValue({ token: "t1", expiresAt: "2030-01-01T00:00:00.000Z", onboarded: true });
+    await signIn("a@b.co", "pw", true);
+    expect(apiMock.mock.calls[0][1]).toMatchObject({ ip: undefined });
   });
   it("sets a session cookie when not remembered", async () => {
     apiMock.mockResolvedValue({ token: "t2", expiresAt: "2030-01-01T00:00:00.000Z", onboarded: false });
@@ -121,11 +129,28 @@ describe("passwords and account", () => {
   it("resetPassword succeeds with {}", async () => {
     apiMock.mockResolvedValue(undefined);
     expect(await resetPassword("rt", "newpassword")).toEqual({});
-    expect(apiMock).toHaveBeenCalledWith("/auth/reset", { method: "POST", body: { token: "rt", password: "newpassword" } });
+    expect(apiMock).toHaveBeenCalledWith("/auth/reset", { method: "POST", body: { token: "rt", password: "newpassword" }, ip: undefined });
+  });
+  // The BE limits bad reset tokens per IP, so without it every reset shares one bucket.
+  it("resetPassword forwards the ip behind a trusted proxy", async () => {
+    vi.stubEnv("TRUST_PROXY", "1");
+    hdrs.get.mockReturnValue("9.9.9.9, 1.2.3.4");
+    apiMock.mockResolvedValue(undefined);
+    await resetPassword("rt", "newpassword");
+    expect(apiMock.mock.calls[0][1]).toMatchObject({ ip: "1.2.3.4" });
+    vi.unstubAllEnvs();
   });
   it("resetPassword reports a bad token", async () => {
     apiMock.mockRejectedValue(new ApiError(400, "token"));
     expect(await resetPassword("rt", "newpassword")).toEqual({ error: "token" });
+  });
+  // Phase 38: the BE now rate-limits these; the form shows "try later" instead of the error boundary.
+  it("passes the rate refusal of reset, password change and account deletion through", async () => {
+    withToken("tok");
+    apiMock.mockRejectedValue(new ApiError(429, "rate"));
+    expect(await resetPassword("rt", "newpassword")).toEqual({ error: "rate" });
+    expect(await changePassword("old", "newpassword")).toEqual({ error: "rate" });
+    expect(await deleteAccount("old")).toEqual({ error: "rate" });
   });
   it("changePassword succeeds with {}", async () => {
     withToken("tok");

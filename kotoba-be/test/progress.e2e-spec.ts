@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import request from 'supertest';
 import { AppModule } from '../src/app.module.js';
 import { Db } from '../src/db.js';
 
 describe('progress (e2e)', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
   let http: ReturnType<typeof request>;
   let token: string;
   const put = (body: unknown, t = token) => http.put('/progress').set('Authorization', `Bearer ${t}`).send(body as object);
@@ -15,7 +15,8 @@ describe('progress (e2e)', () => {
 
   beforeAll(async () => {
     const mod = await Test.createTestingModule({ imports: [AppModule] }).compile();
-    app = mod.createNestApplication();
+    app = mod.createNestApplication<NestExpressApplication>({ bodyParser: false });
+    app.useBodyParser('json', { limit: '1mb' });
     await app.init();
     http = request(app.getHttpServer());
     await app.get(Db).user.deleteMany({ where: { email: 'sync@example.com' } });
@@ -59,6 +60,22 @@ describe('progress (e2e)', () => {
   it('applies a reset to cards older than it, keeping later reviews', async () => {
     const res = await put({ forget: [{ prefix: 'hiragana:', at: 150 }], cards: { 'hiragana:u': card(1, 160) } }).expect(200);
     expect(Object.keys(res.body.cards).sort()).toEqual(['hiragana:a', 'hiragana:u', 'vocab:水']);
+  });
+
+  it('accepts 10000 cards and rejects 10001 without changing cards or activity', async () => {
+    const cards = Object.fromEntries(Array.from({ length: 9999 }, (_, i) => [`unknown:${i}`, card(1, 300)]));
+    cards['hiragana:a'] = card(3, 200);
+    await put({ cards }).expect(200);
+    const before = await put({}).expect(200);
+    cards['hiragana:i'] = card(4, 400);
+    const res = await put({
+      cards,
+      forget: [{ prefix: 'hiragana:', at: 500 }],
+      activity: { days: { '2026-11-02': { minutes: [9], kana: ['hiragana:i'], vocab: [] } } },
+    }).expect(400);
+    expect(res.body.message).toBe('cards');
+    const after = await put({}).expect(200);
+    expect(after.body).toEqual(before.body);
   });
 
   describe('export (phase 21)', () => {

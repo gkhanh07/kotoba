@@ -51,7 +51,9 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 36.1 dev origins from `ALLOWED_DEV_ORIGINS`, new hero copy (PLAN "Đợt hoàn thiện N5–N3") | DONE | `6f7b84b` |
 | 36.2 decisions in PLAN/PROGRESS, ADR 011 (homophone ids) | DONE | `920f5d3` |
 | 36.3 `reviewed: true` on N3 content (user order): 1,774 words, 341 kanji, 60 grammar points, paper `n3-1`; N5/N4 untouched. The content check that kept N3 kanji unreviewed (phase 27 AC-1) now checks that only level-3 items are reviewed. BE check green: 58 unit, 41 e2e, 36 content, JMdict 3,046 words | DONE | `content(n3): mark N3 content as reviewed by the user` |
-| 37–42 | TODO | see PLAN |
+| 37 backlog cleanup (spec `docs/phases/37-backlog-cleanup.md`) | DONE | `4a8688a` |
+| 38 BE security and durability (spec `docs/phases/38-security-durability.md`, ADR 012) | DONE | `feat(security): phase 38 rate limits, token cleanup, push cap, SMTP mail` |
+| 39–42 | TODO | see PLAN |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -117,9 +119,10 @@ The user answered the checkpoint above: N3 is accepted, no merge yet, and the pl
 - Codex may write in parallel on disjoint files under the rules in PLAN ("Chia việc cho Codex"); this file records which parts Codex wrote.
 
 - Phase 37 (2026-11-15): done. BE and FE `npm run check` green; e2e green (6 failing files rerun 204/204 after the fix). AC-19 dropped: a root `loading.tsx` turned 404s into 200s (see BACKLOG). Codex wrote the root `README.md`, `kotoba-be/README.md` and `kotoba-fe/PRODUCT.md`. Details and AC-18 numbers: `docs/phases/37-backlog-cleanup.md` § Review. Open: guests and users with no goal still get the full 1.8 MB `/review` payload; Waller CC BY version to confirm; a finished goal leaves the Dashboard with no next step (phase 41.2).
+- Phase 38 (2026-11-15): done. BE check green (64 unit, 49 e2e, 36 content; coverage thresholds raised to 31/35/34/30). FE check green (708 tests, lib lines 98.56%); e2e 268/268. Codex wrote AC-3, 4, 6, 7, 9 and reviewed twice; the first review caught a limiter race (hit now lands before the first await, a success undoes it) and a reset that did not forward the IP. Details: `docs/phases/38-security-durability.md` § Review. Open: real SMTP untested until the user supplies `SMTP_URL`.
 
 ## Next step
-Phase 38 (security and data loss), then 39–42 in order. Fixes from the N3 sample review come first if more than 5% of a kind is wrong.
+Phase 39 (homophones, ADR 011), then 40–42 in order. Fixes from the N3 sample review come first if more than 5% of a kind is wrong.
 Note: kill stray `next-server` / `kotoba-be/dist/main` / `nest start --watch` processes before `npm run test:e2e`, or set `E2E_BE_PORT` (e.g. 4100) to run beside a dev kotoba-be on 4000 (run it from Git Bash: the webServer commands use `rm`). E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`; it finds the process with `lsof`, or PowerShell on Windows, BUG-008), so it needs a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).
 
 ## Vietnamese copy review (2026-11-12)

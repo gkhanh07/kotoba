@@ -92,7 +92,7 @@ export async function newPassword(_prev: FormState, form: FormData): Promise<For
   if (!current || current.length > 200) return { error: "current", values: {} };
   if (password.length < PASSWORD_MIN || password.length > 200) return { error: "password", values: {} };
   const { error } = await changePassword(current, password);
-  if (error) return { error: "current", values: {} };
+  if (error) return { error: error === "rate" ? "rate" : "current", values: {} };
   return { sent: true, at: Date.now(), values: {} };
 }
 
@@ -102,7 +102,7 @@ export async function removeAccount(_prev: FormState, form: FormData): Promise<F
   const password = text(form, "password");
   if (!password || password.length > 200) return { error: "current", values: {} };
   const { error } = await deleteAccount(password);
-  if (error) return { error: "current", values: {} };
+  if (error) return { error: error === "rate" ? "rate" : "current", values: {} };
   return { sent: true, values: {} };
 }
 

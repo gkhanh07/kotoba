@@ -138,13 +138,22 @@ describe("syncState", () => {
 });
 
 describe("snapshot", () => {
-  it("joins the deck and activity raw values", () => {
+  it("joins the deck, activity and sync raw values", () => {
     localStorage.setItem(SRS, "{}");
     localStorage.setItem(ACT, '{"days":{}}');
-    expect(store.snapshot()).toBe('{}\n{"days":{}}');
+    expect(store.snapshot()).toBe('{}\n{"days":{}}\nnull');
   });
   it("shows null for missing values", () => {
-    expect(store.snapshot()).toBe("null\nnull");
+    expect(store.snapshot()).toBe("null\nnull\nnull");
+  });
+  // BACKLOG "A reset during a push": the deck does not change, the queued forget must still stop applyRemote.
+  it("changes when a reset of a set with no local cards queues a forget", () => {
+    localStorage.setItem(SRS, "{}");
+    localStorage.setItem(SYNC, JSON.stringify({ owner: "a@b.co", lastSync: 4, forget: [] }));
+    const before = store.snapshot();
+    act(() => store.resetDeck("hiragana:"));
+    expect(localStorage.getItem(SRS)).toBe("{}");
+    expect(store.snapshot()).not.toBe(before);
   });
   it("is empty when storage throws", () => {
     vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {

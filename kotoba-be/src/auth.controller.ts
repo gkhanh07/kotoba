@@ -1,6 +1,6 @@
 import {
   Body, ConflictException, Controller, Delete, Get, HttpCode, HttpException, Patch, Post, Req,
-  UnauthorizedException, UseGuards,
+  Logger, UnauthorizedException, UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
 import { AuthGuard, burnTime, clientIp, hashPassword, hashToken, Limiter, newToken, verifyPassword, type Authed } from './auth.js';
@@ -26,17 +26,22 @@ export const profile = (u: User) => ({
 
 @Controller()
 export class AuthController {
+  private log = new Logger('AuthController');
   // Failed logins per email and per IP; reset requests per email; sign-ups per IP.
   private loginEmail = new Limiter(5, 15 * MIN);
   private loginIp = new Limiter(20, 15 * MIN);
   private forgotEmail = new Limiter(3, 60 * MIN);
   private registerIp = new Limiter(10, 60 * MIN);
+  private passwordUser = new Limiter(5, 15 * MIN);
+  private resetIp = new Limiter(10, 15 * MIN);
 
   constructor(private db: Db, private mailer: Mailer) {}
 
   private async session(userId: string, remember: boolean) {
+    const now = new Date();
+    await this.db.token.deleteMany({ where: { expiresAt: { lte: now } } });
     const token = newToken();
-    const expiresAt = new Date(Date.now() + (remember ? 30 : 7) * DAY);
+    const expiresAt = new Date(now.getTime() + (remember ? 30 : 7) * DAY);
     await this.db.token.create({ data: { hash: hashToken(token), userId, kind: 'session', expiresAt } });
     return { token, expiresAt: expiresAt.toISOString() };
   }
@@ -67,15 +72,15 @@ export class AuthController {
     const email = normEmail(b.email);
     const ip = clientIp(req);
     if (this.loginEmail.blocked(email) || this.loginIp.blocked(ip)) throw tooMany();
+    const at = this.loginEmail.hit(email);
+    this.loginIp.hit(ip, at);
     const user = await this.db.user.findUnique({ where: { email } });
     let ok = false;
     if (user) ok = await verifyPassword(b.password, user.passwordHash);
     else await burnTime(b.password);
-    if (!user || !ok) {
-      this.loginEmail.hit(email);
-      this.loginIp.hit(ip);
-      throw new UnauthorizedException('credentials');
-    }
+    if (!user || !ok) throw new UnauthorizedException('credentials');
+    this.loginEmail.undo(email, at);
+    this.loginIp.undo(ip, at);
     return { ...(await this.session(user.id, b.remember === true)), onboarded: user.minutes !== null };
   }
 
@@ -105,22 +110,29 @@ export class AuthController {
       }),
     ]);
     const link = `${process.env.APP_URL ?? 'http://localhost:3000'}/reset-password?token=${token}`;
-    await this.mailer.send(
-      user.email,
-      'Đặt lại mật khẩu Kotoba',
-      `Mở liên kết dưới đây trong vòng 30 phút để đặt mật khẩu mới:\n${link}\n\nNếu bạn không yêu cầu đặt lại mật khẩu, hãy bỏ qua email này.`,
-    );
+    // Not awaited: an SMTP round trip only for real accounts would tell which emails exist by the reply time.
+    void this.mailer
+      .send(
+        user.email,
+        'Đặt lại mật khẩu Kotoba',
+        `Mở liên kết dưới đây trong vòng 30 phút để đặt mật khẩu mới:\n${link}\n\nNếu bạn không yêu cầu đặt lại mật khẩu, hãy bỏ qua email này.`,
+      )
+      .catch((error: unknown) => this.log.error('Failed to send password reset email', error));
   }
 
   // A reset ends every session: whoever knew the old password is logged out.
   @Post('auth/reset')
   @HttpCode(204)
-  async reset(@Body() raw: unknown) {
+  async reset(@Body() raw: unknown, @Req() req: Request) {
+    const ip = clientIp(req);
+    if (this.resetIp.blocked(ip)) throw tooMany();
     const b = body(raw);
     check(typeof b.token === 'string' && b.token.length <= 100, 'token');
     check(isPassword(b.password), 'password');
+    const at = this.resetIp.hit(ip);
     const row = await this.db.token.findUnique({ where: { hash: hashToken(b.token) } });
     if (!row || row.kind !== 'reset' || row.expiresAt <= new Date()) throw new HttpException('token', 400);
+    this.resetIp.undo(ip, at);
     const passwordHash = await hashPassword(b.password);
     await this.db.$transaction([
       this.db.user.update({ where: { id: row.userId }, data: { passwordHash } }),
@@ -184,7 +196,10 @@ export class AuthController {
     const b = body(raw);
     check(typeof b.current === 'string' && b.current.length <= 200, 'current');
     check(isPassword(b.password), 'password');
+    if (this.passwordUser.blocked(req.user.id)) throw tooMany();
+    const at = this.passwordUser.hit(req.user.id);
     if (!(await verifyPassword(b.current, req.user.passwordHash))) throw new UnauthorizedException('credentials');
+    this.passwordUser.undo(req.user.id, at);
     const passwordHash = await hashPassword(b.password);
     await this.db.$transaction([
       this.db.user.update({ where: { id: req.user.id }, data: { passwordHash } }),
@@ -198,7 +213,10 @@ export class AuthController {
   async remove(@Body() raw: unknown, @Req() req: Authed) {
     const b = body(raw);
     check(typeof b.password === 'string' && b.password.length <= 200, 'password');
+    if (this.passwordUser.blocked(req.user.id)) throw tooMany();
+    const at = this.passwordUser.hit(req.user.id);
     if (!(await verifyPassword(b.password, req.user.passwordHash))) throw new UnauthorizedException('credentials');
+    this.passwordUser.undo(req.user.id, at);
     await this.db.user.delete({ where: { id: req.user.id } });
   }
 }

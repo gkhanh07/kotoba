@@ -1,6 +1,7 @@
 import { Body, Controller, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard, type Authed } from './auth.js';
 import { Db } from './db.js';
+import { MAX_PUSH_CARDS } from './config.js';
 import { cardsOf, isActivity, isCards, isForget, mergeActivity, newer, parseActivity } from './progress.js';
 import { body, check } from './validate.js';
 
@@ -18,6 +19,7 @@ export class ProgressController {
     const forget = b.forget ?? [];
     const pushed = b.activity ?? null;
     check(isCards(cards), 'cards');
+    check(Object.keys(cards).length <= MAX_PUSH_CARDS, 'cards');
     check(pushed === null || isActivity(pushed), 'activity');
     check(Array.isArray(forget) && forget.length <= 50 && forget.every(isForget), 'forget');
     const userId = req.user.id;

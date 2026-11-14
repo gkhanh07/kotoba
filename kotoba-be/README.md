@@ -23,8 +23,12 @@ Các biến trong `.env.example`:
 | `PORT` | `4000` | Cổng API trên `127.0.0.1` |
 | `DATABASE_URL` | `file:./dev.db` | Kết nối SQLite |
 | `APP_URL` | `http://localhost:3000` | URL frontend dùng trong liên kết đặt lại mật khẩu |
+| `SMTP_URL` | (trống) | Tùy chọn. Ví dụ `smtps://user:pass@host:465`; cùng `MAIL_FROM` thì gửi email đặt lại mật khẩu qua SMTP ([ADR 012](../docs/decisions/012-smtp-via-nodemailer.md)) |
+| `MAIL_FROM` | (trống) | Tùy chọn. Địa chỉ người gửi, ví dụ `Kotoba <no-reply@example.com>` |
 
-`Mailer` hiện ghi email và liên kết đặt lại mật khẩu vào log, chưa gửi email thật.
+Thiếu `SMTP_URL` hoặc `MAIL_FROM` thì `Mailer` chỉ ghi liên kết đặt lại mật khẩu vào log. Gửi lỗi cũng chỉ ghi log; `/auth/forgot` vẫn trả 204.
+
+Giới hạn theo IP (đăng nhập, đăng ký, đặt lại mật khẩu) dùng IP mà frontend chuyển qua. Frontend chỉ chuyển IP khi đặt `TRUST_PROXY=1` trong môi trường frontend, và chỉ nên đặt khi có reverse proxy phía trước ghi `X-Forwarded-For`. Không có proxy thì để trống: mọi người dùng chung một bucket (chặt hơn, nhưng client không giả IP được).
 
 ## Script và kiểm thử
 

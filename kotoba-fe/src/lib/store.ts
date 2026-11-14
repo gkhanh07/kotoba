@@ -162,10 +162,11 @@ const subscribeSync = (cb: () => void) => {
 };
 export const useSyncPhase = () => useSyncExternalStore(subscribeSync, () => syncPhase, () => IDLE).phase;
 
-// What a push compares against to tell whether the user studied while it was in flight.
+// What a push compares against to tell whether the user studied while it was in flight. The sync key is in it
+// because a reset of a set with no local cards changes only the forget queue; applyRemote would drop it (phase 38).
 export function snapshot() {
   try {
-    return `${localStorage.getItem(SRS_KEY)}\n${localStorage.getItem(ACTIVITY_KEY)}`;
+    return `${localStorage.getItem(SRS_KEY)}\n${localStorage.getItem(ACTIVITY_KEY)}\n${localStorage.getItem(SYNC_KEY)}`;
   } catch {
     return "";
   }

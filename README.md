@@ -32,7 +32,7 @@ npm ci
 npm run dev
 ```
 
-Mở `http://localhost:3000`. Các biến frontend đều tùy chọn trong `.env.local`: `API_URL` là địa chỉ backend dùng phía server (mặc định `http://127.0.0.1:4000`); `ALLOWED_DEV_ORIGINS` là danh sách hostname bổ sung cho dev server, phân cách bằng dấu phẩy, không gồm scheme hoặc cổng.
+Mở `http://localhost:3000`. Các biến frontend đều tùy chọn trong `.env.local`: `API_URL` là địa chỉ backend dùng phía server (mặc định `http://127.0.0.1:4000`); `ALLOWED_DEV_ORIGINS` là danh sách hostname bổ sung cho dev server, phân cách bằng dấu phẩy, không gồm scheme hoặc cổng; `TRUST_PROXY=1` chỉ đặt khi có reverse proxy phía trước ghi `X-Forwarded-For` (xem [README backend](kotoba-be/README.md)).
 
 ## Script và kiểm thử
 

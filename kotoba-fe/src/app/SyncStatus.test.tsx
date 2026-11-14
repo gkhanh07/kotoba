@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { setSyncPhase } from "@/lib/store";
+import { resetDeck, setSyncPhase } from "@/lib/store";
 import { syncProgress } from "./(auth)/actions";
 import { Sync, SyncStatus } from "./Sync";
 
@@ -74,6 +74,23 @@ describe("SyncStatus", () => {
     });
     render(<><Sync uid={ME} /><SyncStatus uid={ME} lang="vi" /></>);
     expect(await screen.findByText(/Lỗi đồng bộ/)).toBeInTheDocument();
+  });
+
+  // Phase 38 AC-8: a reset of a set with no local cards only queues a forget; the reply must not wipe it.
+  it("keeps a forget queued during a push and sends it with the next push", async () => {
+    seed({}, { owner: ME, lastSync: 10, forget: [] });
+    vi.mocked(syncProgress).mockClear();
+    let reply!: (r: Awaited<ReturnType<typeof syncProgress>>) => void;
+    vi.mocked(syncProgress).mockReturnValueOnce(new Promise((r) => (reply = r)));
+    render(<Sync uid={ME} />);
+    await vi.waitFor(() => expect(syncProgress).toHaveBeenCalledTimes(1));
+    act(() => resetDeck("hiragana:"));
+    await act(async () => reply({ failed: false, remote: { cards: {}, activity: { days: {} } } }));
+    expect(JSON.parse(localStorage.getItem("kotoba.sync.v1")!).forget).toEqual([{ prefix: "hiragana:", at: expect.any(Number) }]);
+    vi.mocked(syncProgress).mockResolvedValueOnce({ failed: false, remote: null });
+    vi.spyOn(document, "visibilityState", "get").mockReturnValue("hidden");
+    await act(async () => void document.dispatchEvent(new Event("visibilitychange")));
+    expect(syncProgress).toHaveBeenLastCalledWith(expect.objectContaining({ forget: [{ prefix: "hiragana:", at: expect.any(Number) }] }));
   });
 
   it("shows Đang lưu… while a push with nothing pending is in flight", async () => {

@@ -18,10 +18,11 @@ const base = {
 type Session = { token: string; expiresAt: string; onboarded: boolean };
 export type AuthError = "credentials" | "rate" | "taken" | "token";
 
-// The BE rate-limits per IP. Next fills x-forwarded-for only when the request has none.
-// ponytail: a client can send its own x-forwarded-for when Next faces the internet directly;
-// the per-email limits still hold. Put a proxy that overwrites the header in front for real IP limits.
+// The BE rate-limits per IP. Next keeps a client's own x-forwarded-for, so it is only read when a proxy in
+// front appends the real address (TRUST_PROXY=1; E2E sets it too). Without one the BE sees this server's
+// address: one shared bucket, stricter but not something a client can dodge (phase 38).
 async function ip() {
+  if (process.env.TRUST_PROXY !== "1") return undefined;
   return (await headers()).get("x-forwarded-for")?.split(",").at(-1)?.trim() || undefined;
 }
 
@@ -94,19 +95,19 @@ export async function requestReset(email: string) {
 }
 
 export async function resetPassword(resetToken: string, password: string): Promise<{ error?: AuthError }> {
-  const r = await attempt(() => api("/auth/reset", { method: "POST", body: { token: resetToken, password } }), ["token"]);
+  const r = await attempt(async () => api("/auth/reset", { method: "POST", body: { token: resetToken, password }, ip: await ip() }), ["token", "rate"]);
   return r ?? {};
 }
 
 // The BE keeps this session and ends the others.
 export async function changePassword(current: string, password: string): Promise<{ error?: AuthError }> {
-  const r = await attempt(async () => api("/me/password", { method: "POST", body: { current, password }, token: await token() }), ["credentials"]);
+  const r = await attempt(async () => api("/me/password", { method: "POST", body: { current, password }, token: await token() }), ["credentials", "rate"]);
   return r ?? {};
 }
 
 // The BE deletes the user, its sessions and its synced cards.
 export async function deleteAccount(password: string): Promise<{ error?: AuthError }> {
-  const r = await attempt(async () => api("/me", { method: "DELETE", body: { password }, token: await token() }), ["credentials"]);
+  const r = await attempt(async () => api("/me", { method: "DELETE", body: { password }, token: await token() }), ["credentials", "rate"]);
   if (r) return r;
   (await cookies()).delete(SESSION);
   return {};

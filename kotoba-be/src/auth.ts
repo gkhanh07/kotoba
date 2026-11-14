@@ -54,6 +54,14 @@ export class Limiter {
   hit(key: string, now = Date.now()) {
     this.blocked(key, now);
     this.hits.set(key, [...(this.hits.get(key) ?? []), now]);
+    return now;
+  }
+
+  // Callers hit before their first await, so parallel requests can't all pass blocked(); a success takes its hit back.
+  undo(key: string, at: number) {
+    const list = this.hits.get(key) ?? [];
+    const i = list.indexOf(at);
+    if (i >= 0) list.splice(i, 1);
   }
 }
 

@@ -1,13 +1,17 @@
 import { Injectable, Logger } from '@nestjs/common';
+import nodemailer from 'nodemailer';
 
-// ponytail: prints mail to the log instead of sending it. Add an SMTP client
-// (e.g. nodemailer + SMTP_URL) here when real email is needed; callers stay the same.
 @Injectable()
 export class Mailer {
   private log = new Logger('Mailer');
+  private transport?: ReturnType<typeof nodemailer.createTransport>;
 
-  send(to: string, subject: string, text: string): Promise<void> {
+  async send(to: string, subject: string, text: string): Promise<void> {
+    if (process.env.SMTP_URL && process.env.MAIL_FROM) {
+      this.transport ??= nodemailer.createTransport(process.env.SMTP_URL);
+      await this.transport.sendMail({ from: process.env.MAIL_FROM, to, subject, text });
+      return;
+    }
     this.log.log(`to=${to} subject="${subject}"\n${text}`);
-    return Promise.resolve();
   }
 }

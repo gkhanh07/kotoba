@@ -36,7 +36,8 @@ export default defineConfig({
       // The fetch cache outlives builds and would serve content from the previous run for an hour (BUG-005).
       command: `rm -rf .next/cache/fetch-cache && npm run build && npm run start -- -p ${FE_PORT}`,
       url: `http://localhost:${FE_PORT}`,
-      env: { API_URL: `http://127.0.0.1:${BE_PORT}` },
+      // TRUST_PROXY: specs set x-forwarded-for to get their own sign-up allowance (phase 38).
+      env: { API_URL: `http://127.0.0.1:${BE_PORT}`, TRUST_PROXY: "1" },
       reuseExistingServer: false,
       timeout: 300_000,
     },
