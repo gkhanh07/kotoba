@@ -6,6 +6,8 @@ import { parseActivity } from "@/lib/activity";
 import { dict, type Lang } from "@/lib/i18n";
 import { applyRemote, clearLocal, pendingCount, setSyncPhase, snapshot, syncState, useDeck, useSyncPhase } from "@/lib/store";
 import { parseSrs } from "@/lib/srs";
+import { scoresOf } from "@/lib/test";
+import { readResults } from "@/lib/testStore";
 
 let uid: string | null = null;
 let chain = Promise.resolve(true);
@@ -23,6 +25,8 @@ const flush = (pull = false) => (chain = chain.then(() => {
 async function push(pull: boolean): Promise<boolean> {
   const owner = uid;
   if (!owner) return true;
+  // Before anything is read: a change made after this moment is newer than the lastSync this push sets.
+  const sentAt = Date.now();
   const st = syncState();
   const before = snapshot();
   const [srsRaw, activityRaw] = before.split("\n");
@@ -32,13 +36,17 @@ async function push(pull: boolean): Promise<boolean> {
   // First sync of this browser's data to this account sends all of it: that is the guest merge.
   const cards = foreign ? {} : st.owner === undefined ? srs
     : Object.fromEntries(Object.entries(srs).filter(([, c]) => c.at > st.lastSync));
-  if (!pull && st.owner === owner && !Object.keys(cards).length && !st.forget.length) return true;
-  const sentAt = Date.now();
+  // Test scores all go every time (the server skips what it has), so one saved before 40g or missed by a race
+  // still arrives; a score saved since the last sync is what makes a push due.
+  const tests = foreign ? [] : scoresOf(readResults());
+  const newTest = tests.some((t) => t.at >= st.lastSync);
+  if (!pull && st.owner === owner && !Object.keys(cards).length && !st.forget.length && !newTest) return true;
   try {
     const res = await syncProgress({
       cards,
       activity: foreign ? null : parseActivity(activityRaw === "null" ? null : activityRaw),
       forget: foreign ? [] : st.forget,
+      tests,
     });
     if (res.failed) return false;
     // Studied while the push was in flight: keep the local copy; that change schedules the next push.
@@ -48,6 +56,9 @@ async function push(pull: boolean): Promise<boolean> {
     return false;
   }
 }
+
+// After a mock test is saved, so the dashboard's history has it without waiting for the tab to hide.
+export const syncSoon = () => void flush();
 
 // Mounted once in the root layout. uid: the signed-in email, null for guests (no network at all).
 // ponytail: a push started on visibilitychange can die with the tab; the next visit resends it (lastSync never moved).

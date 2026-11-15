@@ -4,7 +4,9 @@
 export const MAX_LAPSES = 10000;
 // Limit one progress push; leaves room above the current ~4,100 content items.
 export const MAX_PUSH_CARDS = 10000;
-// Shape of the GET /me/export file (phase 21). Bump when its fields change.
+// Test scores the dashboard shows (phase 40g); the export has all of them.
+export const MAX_LIST_TESTS = 20;
+// Shape of the GET /me/export file (phase 21). Bump when a field changes or goes away; an added field (tests, 40g) keeps it.
 export const EXPORT_VERSION = 1;
 // JLPT levels the content covers, easiest first (phase 22; N2 dropped in phase 37). Items without a level are N5.
 export const LEVELS = [5, 4, 3];

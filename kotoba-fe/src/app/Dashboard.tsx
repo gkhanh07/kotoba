@@ -6,12 +6,13 @@ import { examDate, examDay, type Profile } from "@/lib/account";
 import { ACTIVITY_KEY, heat, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
 import { NEW_PER_DAY, WEAK_LIST_SIZE } from "@/config/srs";
+import { STUDY_TIME_ZONE } from "@/config/time";
 import { continueTarget, freshFor, stageOf, type Area } from "@/lib/daily";
 import type { Stop } from "@/lib/library";
 import { INTERVALS, daysUntil, dueCount, isLearned } from "@/lib/srs";
 import { weakItems, type ItemLink } from "@/lib/weak";
 import { learnedToday, today, useDeck } from "@/lib/store";
-import { remaining } from "@/lib/test";
+import { headline, remaining, type TestScore } from "@/lib/test";
 import { findSession } from "@/lib/testStore";
 import { testText } from "@/lib/testText";
 import s from "./dashboard.module.css";
@@ -41,12 +42,16 @@ function useStored(key: string) {
 }
 
 
-export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: {
+export function Dashboard({ lang, name, profile, scope, tests, scores = [], fronts, stops }: {
   fronts: Record<string, ItemLink>; stops: Stop[];
   lang: Lang; name: string; profile: Profile | null; scope: { kana: string[]; kanji: string[]; vocab: string[] };
   tests: { id: string; title: string; minutes: number }[];
+  /** The account's mock test scores, newest first (phase 40g); papers no longer listed are left out. */
+  scores?: TestScore[];
 }) {
   const t = text[lang];
+  const titles = new Map(tests.map((p) => [p.id, p.title]));
+  const taken = scores.filter((r) => titles.has(r.testId));
   const deck = useDeck();
   const activityRaw = useStored(ACTIVITY_KEY);
 
@@ -195,6 +200,19 @@ export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: 
                   </ol>
                 )}
               </section>
+              {taken.length > 0 && (
+                <section className={`panel ${s.section}`} aria-labelledby="dash-tests">
+                  <h2 id="dash-tests">{t.tests}</h2>
+                  <ol className={s.list}>
+                    {taken.map((r) => (
+                      <li key={`${r.testId}@${r.at}`}>
+                        <Link href={`/test/${r.testId}`}>{titles.get(r.testId)}</Link>
+                        <span>{dayOf(r.at)} · {headline(r.score, r.total)}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
             </div>
           </div>
 
@@ -204,6 +222,9 @@ export function Dashboard({ lang, name, profile, scope, tests, fronts, stops }: 
     </main>
   );
 }
+
+// dd/mm in the study time zone, so the server render and the browser agree.
+const dayOf = (at: number) => new Date(at).toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", timeZone: STUDY_TIME_ZONE });
 
 const greet = (hour: number) => (hour >= 5 && hour < 10 ? "おはよう" : hour >= 10 && hour < 18 ? "こんにちは" : "こんばんは");
 
@@ -241,6 +262,7 @@ const vi = {
   examPast: "Kỳ thi đã qua",
   pick: "Chọn kỳ thi",
   history: "Gần đây",
+  tests: "Kết quả thi thử",
   todayLabel: "Hôm nay",
   yesterday: "Hôm qua",
   dayLine: (min: number, kana: number, kanji: number, vocab: number) => `${min} phút · ${kana} kana · ${kanji} kanji · ${vocab} từ`,
@@ -283,6 +305,7 @@ const en: typeof vi = {
   examPast: "This exam has passed",
   pick: "Pick an exam",
   history: "Recent",
+  tests: "Mock test results",
   todayLabel: "Today",
   yesterday: "Yesterday",
   dayLine: (min, kana, kanji, vocab) => `${min} min · ${kana} kana · ${kanji} kanji · ${vocab} ${vocab === 1 ? "word" : "words"}`,

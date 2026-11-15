@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { TEST_RESULTS_KEY, TEST_SESSION_PREFIX } from "@/config/test";
 import paperJson from "../../tests/fixtures/paper.small.json";
-import { flatten, formatClock, parseResults, parseSession, remaining, score, segments, wrongIds, weakest, type Paper } from "./test";
+import { flatten, formatClock, parseResults, parseSession, remaining, score, scoresOf, segments, wrongIds, weakest, type Paper, type Result } from "./test";
 
 // Fixture flat order: 0,1 kanji | 2 order | 3 reading (passage A) | 4,5 reading (passage B).
 // Right answers: [0, 1, 1, 1, 1, 0].
@@ -292,5 +292,13 @@ describe("part labels", () => {
     const parts = [...new Set(papers.flatMap((p) => p.parts.map((x) => x.part)))];
     expect(parts.filter((p) => !testText.vi.parts[p] || !testText.en.parts[p as keyof typeof testText.en.parts])).toEqual([]);
     expect([testText.vi.parts.usage, testText.vi.parts.text]).toEqual(["Cách dùng từ", "Ngữ pháp theo đoạn văn"]);
+  });
+});
+
+describe("scoresOf (phase 40g)", () => {
+  const r = (right: number, at: number): Result => ({ right, total: 6, parts: [], answers: [], at });
+  it("sends every stored result, score only", () => {
+    expect(scoresOf({ "n5-1": r(4, 100), "n5-2": r(2, 300) })).toEqual([{ testId: "n5-1", score: 4, total: 6, at: 100 }, { testId: "n5-2", score: 2, total: 6, at: 300 }]);
+    expect(scoresOf({})).toEqual([]);
   });
 });

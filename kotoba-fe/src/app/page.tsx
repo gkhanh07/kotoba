@@ -3,7 +3,7 @@ import { Arrow, SiteBar, SiteFooter } from "./SiteBar";
 import { Street } from "./Street";
 import { getLang } from "./LangSwitch";
 import { dict } from "@/lib/i18n";
-import { currentUser } from "@/lib/auth";
+import { currentUser, testHistory } from "@/lib/auth";
 import type { CSSProperties } from "react";
 import { getGrammar, getKana, getKanji, getLessons, getTests, getVocab } from "@/lib/content";
 import { goalScope, LEVELS, levelLabel, stopsOf } from "@/lib/library";
@@ -111,7 +111,7 @@ export default async function Home() {
   const lang = await getLang();
   const user = await currentUser();
   if (user) {
-    const [kana, kanji, vocab, tests] = await Promise.all([getKana(), getKanji(), getVocab(), getTests()]);
+    const [kana, kanji, vocab, tests, scores] = await Promise.all([getKana(), getKanji(), getVocab(), getTests(), testHistory()]);
     // Fronts and detail links for the "Hay sai" block; the weak ids are only known in the browser.
     const fronts = itemLinks(kana, kanji, vocab);
     const goal = user.profile?.goal;
@@ -128,6 +128,7 @@ export default async function Home() {
           name={user.profile?.name ?? user.email.split("@")[0]}
           profile={user.profile}
           scope={{ kana: idsOf(kana), kanji: idsOf(inGoal.kanji), vocab: idsOf(inGoal.vocab) }}
+          scores={scores}
           tests={tests.map((p) => ({ id: p.id, title: p.title[lang], minutes: p.minutes }))}
         />
         <SiteFooter />

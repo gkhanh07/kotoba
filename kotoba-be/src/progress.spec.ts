@@ -1,4 +1,4 @@
-import { cardsOf, isActivity, isCard, isCards, isForget, mergeActivity, newer } from './progress.js';
+import { cardsOf, isActivity, isCard, isCards, isForget, isTestScores, MAX_PUSH_TESTS, mergeActivity, newer, testsOf } from './progress.js';
 
 const card = (box: number, at: number) => ({ box, due: '2026-11-02', at });
 
@@ -108,5 +108,22 @@ describe('saved', () => {
       { itemId: 'a', box: 0, due: null, at: 1, lapses: 0, saved: true },
       { itemId: 'b', box: 0, due: null, at: 1, lapses: 0, saved: false },
     ])).toEqual({ a: { box: 0, due: '', at: 1, lapses: 0, saved: true }, b: { box: 0, due: '', at: 1, lapses: 0 } });
+  });
+});
+
+describe('test scores (phase 40g)', () => {
+  const t = (over: object = {}) => ({ testId: 'n5-1', score: 30, total: 41, at: 1000, ...over });
+  it('accepts a list of scores and rejects bad ones', () => {
+    expect(isTestScores([])).toBe(true);
+    expect(isTestScores([t(), t({ testId: 'n4-2', score: 0 })])).toBe(true);
+    expect(isTestScores({})).toBe(false);
+    for (const bad of [{ testId: '' }, { testId: 'N5 1' }, { testId: 'x'.repeat(65) }, { score: -1 }, { score: 42 }, { score: 1.5 },
+      { total: 0 }, { total: 501 }, { at: 0 }, { at: 'now' }]) expect(isTestScores([t(bad)])).toBe(false);
+    expect(isTestScores(Array.from({ length: MAX_PUSH_TESTS + 1 }, (_, i) => t({ at: i + 1 })))).toBe(false);
+  });
+
+  it('testsOf answers only the public fields, newest first', () => {
+    const rows = [{ id: 1, userId: 'u', testId: 'n5-1', score: 3, total: 4, at: 10 }, { id: 2, userId: 'u', testId: 'n5-2', score: 1, total: 4, at: 20 }];
+    expect(testsOf(rows)).toEqual([{ testId: 'n5-2', score: 1, total: 4, at: 20 }, { testId: 'n5-1', score: 3, total: 4, at: 10 }]);
   });
 });

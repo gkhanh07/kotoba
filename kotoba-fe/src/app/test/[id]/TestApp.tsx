@@ -7,6 +7,7 @@ import type { Lang } from "@/lib/i18n";
 import { useMounted } from "@/lib/mounted";
 import { flatten, formatClock, headline, remaining, score, subset, weakest, wrongIds, type Paper } from "@/lib/test";
 import { clearSession, readResults, readSession, saveResult, writeSession } from "@/lib/testStore";
+import { syncSoon } from "../../Sync";
 import { testText } from "@/lib/testText";
 import { Arrow } from "../../Arrow";
 import { Passage, QuestionText } from "../QuestionText";
@@ -103,6 +104,7 @@ function Run({ paper, lang }: { paper: Paper; lang: Lang }) {
     finished.current = true;
     const saved = saveResult(paper.id, { ...score(active, answers), answers, at: Date.now() });
     clearSession(paper.id);
+    if (saved) syncSoon();
     return saved;
   }
   function submit() {

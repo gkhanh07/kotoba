@@ -71,3 +71,16 @@ export function parseActivity(raw: string): Activity {
 // saved is left out unless set, so a client that predates it reads the same card as before.
 export const cardsOf = (rows: { itemId: string; box: number; due: string | null; at: number; lapses: number; saved: boolean }[]): Cards =>
   Object.fromEntries(rows.map((c) => [c.itemId, { box: c.box, due: c.due ?? '', at: c.at, lapses: c.lapses, ...(c.saved ? { saved: true as const } : {}) }]));
+
+// A finished mock test (phase 40g). The browser keeps its latest per paper with the answers;
+// the account keeps every attempt's score, one row per (testId, at), so a resend writes nothing new.
+export type TestScore = { testId: string; score: number; total: number; at: number };
+export const MAX_PUSH_TESTS = 50;
+const isTestScore = (v: unknown): v is TestScore =>
+  isObject(v) && typeof v.testId === 'string' && /^[a-z0-9-]{1,64}$/.test(v.testId) &&
+  Number.isInteger(v.total) && (v.total as number) >= 1 && (v.total as number) <= 500 &&
+  Number.isInteger(v.score) && (v.score as number) >= 0 && (v.score as number) <= (v.total as number) && isTime(v.at);
+export const isTestScores = (v: unknown): v is TestScore[] => Array.isArray(v) && v.length <= MAX_PUSH_TESTS && v.every(isTestScore);
+
+export const testsOf = (rows: TestScore[]): TestScore[] =>
+  [...rows].sort((a, b) => b.at - a.at).map(({ testId, score, total, at }) => ({ testId, score, total, at }));

@@ -1,5 +1,6 @@
 // The SRS deck in localStorage, shared by every page through one external store.
 import { useSyncExternalStore } from "react";
+import { TEST_RESULTS_BACKUP_KEY, TEST_RESULTS_KEY } from "@/config/test";
 import { ACTIVITY_KEY, dayKey, parseActivity, type Activity } from "./activity";
 import { brokenKey, keepBroken } from "./broken";
 import { DAILY_KEY, newToday, noteNew, parseDaily } from "./daily";
@@ -239,7 +240,8 @@ export function applyRemote(p: Progress, owner: string, lastSync: number): boole
 export function clearLocal() {
   const stored = [SRS_KEY, ACTIVITY_KEY, SYNC_KEY];
   try {
-    for (const k of [...stored, ...stored.map(brokenKey), DAILY_KEY, OLD_PROGRESS_KEY, OLD_FLASHCARDS_KEY]) localStorage.removeItem(k);
+    // The test results too (40g): left behind, the next account's first sync would take them as its own.
+    for (const k of [...stored, ...stored.map(brokenKey), DAILY_KEY, OLD_PROGRESS_KEY, OLD_FLASHCARDS_KEY, TEST_RESULTS_KEY, TEST_RESULTS_BACKUP_KEY]) localStorage.removeItem(k);
   } catch (e) {
     console.error("Could not clear this browser's data", e);
   }

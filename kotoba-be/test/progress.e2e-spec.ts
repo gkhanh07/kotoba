@@ -93,7 +93,7 @@ describe('progress (e2e)', () => {
       }).expect(200);
       const pulled = await put({}).expect(200);
       const res = await exp().expect(200);
-      expect(Object.keys(res.body).sort()).toEqual(['activity', 'cards', 'exportedAt', 'format', 'profile', 'version']);
+      expect(Object.keys(res.body).sort()).toEqual(['activity', 'cards', 'exportedAt', 'format', 'profile', 'tests', 'version']);
       expect(res.body.format).toBe('kotoba-export');
       expect(res.body.version).toBe(1);
       expect(Number.isNaN(Date.parse(res.body.exportedAt))).toBe(false);
@@ -110,6 +110,7 @@ describe('progress (e2e)', () => {
       const reg = await http.post('/auth/register').send({ email: 'empty-export@example.com', password: 'password-1', goal: 'N4' }).expect(201);
       const res = await exp(reg.body.token).expect(200);
       expect(res.body.cards).toEqual({});
+      expect(res.body.tests).toEqual([]);
       expect(res.body.activity).toEqual({ days: {} });
       expect(res.body.profile).toEqual({ email: 'empty-export@example.com', goal: 'N4' });
     });
@@ -207,6 +208,46 @@ describe('progress (e2e)', () => {
     it('rejects a saved that is not a boolean', async () => {
       const res = await sput({ cards: { 'hiragana:u': { ...card(0, 100), saved: 'yes' } } }).expect(400);
       expect(res.body.message).toBe('cards');
+    });
+  });
+
+  describe('test scores (phase 40g)', () => {
+    const EMAIL = 'tests@example.com';
+    let tt: string;
+    const tput = (body: unknown) => put(body, tt);
+    const list = (t = tt) => http.get('/progress/tests').set('Authorization', `Bearer ${t}`);
+    const score = (testId: string, at: number, sc = 30) => ({ testId, score: sc, total: 41, at });
+    const clean = () => app.get(Db).user.deleteMany({ where: { email: EMAIL } });
+
+    beforeAll(async () => {
+      await clean();
+      const res = await http.post('/auth/register').send({ email: EMAIL, password: 'password-1', goal: 'N5' }).expect(201);
+      tt = res.body.token;
+    });
+    afterAll(clean);
+
+    it('stores each attempt once, lists them newest first and exports them', async () => {
+      await list('nope').expect(401);
+      expect((await list().expect(200)).body).toEqual([]);
+      await tput({ tests: [score('n5-1', 100), score('n5-2', 200, 12)] }).expect(200);
+      // The browser resends what it has; a pushed duplicate inside one push is written once too.
+      await tput({ tests: [score('n5-1', 100), score('n5-1', 300, 35), score('n5-1', 300, 35)] }).expect(200);
+      const expected = [score('n5-1', 300, 35), score('n5-2', 200, 12), score('n5-1', 100)];
+      expect((await list().expect(200)).body).toEqual(expected);
+      const exported = await http.get('/me/export').set('Authorization', `Bearer ${tt}`).expect(200);
+      expect(exported.body.tests).toEqual(expected);
+    });
+
+    it('writes to the signed-in account only, whatever userId the payload carries (40g review)', async () => {
+      await tput({ tests: [{ ...score('n5-9', 900), userId: 999999 }] }).expect(200);
+      expect((await list().expect(200)).body[0]).toEqual(score('n5-9', 900));
+    });
+
+    it('rejects a bad score without writing anything, and a push without tests still works (old clients)', async () => {
+      const res = await tput({ tests: [score('n5-3', 400), { ...score('n5-3', 500), score: 99 }] }).expect(400);
+      expect(res.body.message).toBe('tests');
+      await tput({ cards: {} }).expect(200);
+      expect((await list().expect(200)).body).toHaveLength(4);
     });
   });
 });

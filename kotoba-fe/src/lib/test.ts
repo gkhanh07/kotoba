@@ -118,3 +118,9 @@ export function parseResults(raw: string | null): Results | null {
   if (!isRecord(v)) return null;
   return Object.values(v).every(isResult) ? (v as Results) : null;
 }
+
+// A finished test as the account stores it (phase 40g): the score only, one row per attempt.
+export type TestScore = { testId: string; score: number; total: number; at: number };
+// Every push sends all of them (one per paper); the server skips what it has.
+export const scoresOf = (results: Results): TestScore[] =>
+  Object.entries(results).map(([testId, r]) => ({ testId, score: r.right, total: r.total, at: r.at }));

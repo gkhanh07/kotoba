@@ -196,7 +196,7 @@ describe("applyRemote and clearLocal", () => {
     expect(() => store.applyRemote({ cards: {}, activity: { days: {} } }, "a@b.co", 1)).not.toThrow();
   });
   it("clearLocal removes every key including the pre-SRS ones", () => {
-    for (const k of [SRS, ACT, SYNC, DAILY, "kotoba.progress.v1", "kotoba.flashcards.v1"]) localStorage.setItem(k, "1");
+    for (const k of [SRS, ACT, SYNC, DAILY, "kotoba.progress.v1", "kotoba.flashcards.v1", "kotoba.tests.v1", "kotoba.tests.v1.bak"]) localStorage.setItem(k, "1");
     localStorage.setItem("keep", "1");
     act(() => store.clearLocal());
     expect(Object.keys(localStorage)).toEqual(["keep"]);

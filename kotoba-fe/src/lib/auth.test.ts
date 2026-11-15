@@ -6,7 +6,7 @@ vi.mock("next/headers", () => ({ cookies: async () => jar, headers: async () => 
 vi.mock("./api", async (orig) => ({ ...(await orig<typeof import("./api")>()), api: vi.fn() }));
 
 import { ApiError, api } from "./api";
-import { changePassword, currentUser, deleteAccount, exportProgress, pushProgress, requestReset, resetPassword, saveProfile, signIn, signOut, signUp } from "./auth";
+import { changePassword, currentUser, deleteAccount, exportProgress, pushProgress, requestReset, resetPassword, saveProfile, signIn, signOut, signUp, testHistory } from "./auth";
 
 const apiMock = vi.mocked(api);
 const withToken = (t: string | undefined) => jar.get.mockReturnValue(t ? { value: t } : undefined);
@@ -200,6 +200,28 @@ describe("pushProgress", () => {
     withToken("tok");
     apiMock.mockRejectedValue(new ApiError(500, ""));
     await expect(pushProgress(push)).rejects.toBeInstanceOf(ApiError);
+  });
+});
+
+describe("testHistory (phase 40g)", () => {
+  it("is empty without a session", async () => {
+    withToken(undefined);
+    expect(await testHistory()).toEqual([]);
+    expect(apiMock).not.toHaveBeenCalled();
+  });
+  it("reads the account's scores", async () => {
+    withToken("tok");
+    const rows = [{ testId: "n5-1", score: 3, total: 4, at: 1 }];
+    apiMock.mockResolvedValue(rows);
+    expect(await testHistory()).toEqual(rows);
+    expect(apiMock).toHaveBeenCalledWith("/progress/tests", { token: "tok" });
+  });
+  it("is empty when the session died, throws other failures", async () => {
+    withToken("tok");
+    apiMock.mockRejectedValueOnce(new ApiError(401, ""));
+    expect(await testHistory()).toEqual([]);
+    apiMock.mockRejectedValueOnce(new ApiError(500, ""));
+    await expect(testHistory()).rejects.toBeInstanceOf(ApiError);
   });
 });
 

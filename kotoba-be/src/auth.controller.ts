@@ -8,7 +8,7 @@ import { Db } from './db.js';
 import type { User } from './generated/prisma/client.js';
 import { EXPORT_VERSION } from './config.js';
 import { Mailer } from './mailer.js';
-import { cardsOf, parseActivity } from './progress.js';
+import { cardsOf, parseActivity, testsOf } from './progress.js';
 import { body, check, isEmail, isExam, isGoal, isMinutes, isName, isPassword, normEmail } from './validate.js';
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -153,6 +153,7 @@ export class AuthController {
   async export(@Req() req: Authed) {
     const userId = req.user.id;
     const rows = await this.db.card.findMany({ where: { userId }, orderBy: { itemId: 'asc' } });
+    const tests = await this.db.testResult.findMany({ where: { userId } });
     return {
       format: 'kotoba-export',
       version: EXPORT_VERSION,
@@ -160,6 +161,7 @@ export class AuthController {
       profile: profile(req.user),
       cards: cardsOf(rows),
       activity: parseActivity(req.user.activity),
+      tests: testsOf(tests),
     };
   }
 

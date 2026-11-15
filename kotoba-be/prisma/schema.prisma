@@ -21,6 +21,7 @@ model User {
   createdAt    DateTime @default(now())
   tokens       Token[]
   cards        Card[]
+  tests        TestResult[]
 }
 
 // Only sha256(token) is stored; the raw token lives in the user's cookie or reset link.
@@ -61,4 +62,17 @@ model Card {
   saved  Boolean @default(false)
 
   @@id([userId, itemId])
+}
+
+// One finished mock test (phase 40g). (userId, testId, at) is unique: a browser resending its results writes nothing twice.
+model TestResult {
+  id     Int    @id @default(autoincrement())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  testId String
+  score  Int
+  total  Int
+  at     Float
+
+  @@unique([userId, testId, at])
 }

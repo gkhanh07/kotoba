@@ -82,3 +82,23 @@ describe("Dashboard stage and due count (phase 37)", () => {
     expect(screen.queryByText(/kanji đến hạn/)).not.toBeInTheDocument();
   });
 });
+
+describe("Dashboard mock test results (phase 40g)", () => {
+  it("lists server scores of papers still offered, newest first, and hides the rest", async () => {
+    const at = NOW.getTime();
+    render(
+      <Dashboard lang="vi" name="Lan" profile={null} scope={SCOPE} fronts={{}} stops={STOPS}
+        tests={[{ id: "n5-1", title: "Đề 1", minutes: 50 }]}
+        scores={[{ testId: "n5-1", score: 30, total: 40, at }, { testId: "gone", score: 1, total: 2, at: at - 1 }]} />,
+    );
+    const box = await screen.findByRole("region", { name: "Kết quả thi thử" });
+    expect(within(box).getAllByRole("listitem")).toHaveLength(1);
+    expect(within(box).getByRole("link", { name: "Đề 1" })).toHaveAttribute("href", "/test/n5-1");
+    expect(within(box).getByText("02/11 · 30/40 — 75%")).toBeInTheDocument();
+  });
+
+  it("has no results block without scores", () => {
+    mount();
+    expect(screen.queryByRole("region", { name: "Kết quả thi thử" })).not.toBeInTheDocument();
+  });
+});

@@ -5,6 +5,7 @@ import { cookies, headers } from "next/headers";
 import { api, ApiError } from "./api";
 import type { Goal, Profile } from "./account";
 import type { Progress, SyncState } from "./store";
+import type { TestScore } from "./test";
 
 const SESSION = "kotoba.session";
 
@@ -126,13 +127,25 @@ export async function exportProgress(): Promise<unknown> {
 }
 
 // Sends the browser's changes, gets the whole account state back. null: no session (signed out meanwhile).
-export async function pushProgress(push: { cards: Progress["cards"]; activity: Progress["activity"] | null; forget: SyncState["forget"] }) {
+export async function pushProgress(push: { cards: Progress["cards"]; activity: Progress["activity"] | null; forget: SyncState["forget"]; tests?: TestScore[] }) {
   const t = await token();
   if (!t) return null;
   try {
     return await api<Progress>("/progress", { method: "PUT", body: push, token: t });
   } catch (e) {
     if (e instanceof ApiError && e.status === 401) return null;
+    throw e;
+  }
+}
+
+// The account's mock test scores, newest first (phase 40g). Empty without a session; a BE failure throws.
+export async function testHistory(): Promise<TestScore[]> {
+  const t = await token();
+  if (!t) return [];
+  try {
+    return await api<TestScore[]>("/progress/tests", { token: t });
+  } catch (e) {
+    if (e instanceof ApiError && e.status === 401) return [];
     throw e;
   }
 }
