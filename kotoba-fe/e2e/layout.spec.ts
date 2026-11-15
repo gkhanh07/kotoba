@@ -49,7 +49,7 @@ for (const route of CAPPED) {
 }
 
 // BUG-021: a detail page whose item does not exist titled its 404 with the site's home title.
-for (const route of ["/khong-co-trang-nay", "/lessons/999", "/kanji/%E9%BE%98", "/vocab/khongco", "/grammar/khong-co"]) {
+for (const route of ["/khong-co-trang-nay", "/lessons/999", "/kanji/%E9%BE%98", "/vocab/khongco", "/grammar/khong-co", "/reading/khong-co"]) {
   test(`${route} is a 404 titled as one`, async ({ page, pageErrors }) => {
     const res = await page.goto(route);
     expect(res?.status()).toBe(404);

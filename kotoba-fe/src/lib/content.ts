@@ -4,7 +4,7 @@ import { api, ApiError } from "./api";
 import type { Grammar, Hit, Kanji, KanjiDetail, Lesson, Level, Paged } from "./library";
 import type { Vocab } from "./flashcards";
 import type { Group, Kana, KanaSet, Script } from "./kana";
-import type { Paper } from "./test";
+import type { Paper, Question } from "./test";
 
 // ponytail: content only changes when kotoba-be reseeds, so an hour of staleness is fine;
 // add revalidateTag on a BE webhook if editors ever need instant updates.
@@ -47,6 +47,16 @@ export const getTests = (level?: Level) => api<TestSummary[]>(`/tests${levelQuer
 // null on 404 so the page can call notFound(); the whole paper, answers included, is fetched on the server.
 export const getTest = (id: string) =>
   api<Paper>(`/tests/${encodeURIComponent(id)}`, { revalidate: HOUR }).catch((e) => {
+    if (e instanceof ApiError && e.status === 404) return null;
+    throw e;
+  });
+
+// Phase 40f: reading passages, from the papers and content/reading.json. paper is set for a passage of a mock paper.
+export type ReadingSummary = { id: string; level: Level; title: { vi: string; en: string }; paper?: string; questions: number };
+export type Reading = Omit<ReadingSummary, "questions"> & { passage: string; questions: Question[] };
+export const getReadings = (level: Level) => api<ReadingSummary[]>(`/reading${levelQuery(level)}`, { revalidate: HOUR });
+export const getReading = (id: string) =>
+  api<Reading>(`/reading/${encodeURIComponent(id)}`, { revalidate: HOUR }).catch((e) => {
     if (e instanceof ApiError && e.status === 404) return null;
     throw e;
   });

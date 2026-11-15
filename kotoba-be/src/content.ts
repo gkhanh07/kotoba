@@ -36,3 +36,24 @@ export type Page<T> = { items: T[]; page: number; pages: number; total: number }
 export function paginate<T>(all: T[], page: number, size: number): Page<T> {
   return { items: all.slice((page - 1) * size, page * size), page, pages: Math.max(1, Math.ceil(all.length / size)), total: all.length };
 }
+
+// Phase 40f: /reading serves each reading part of a mock paper as its own passage. It keeps its paper id,
+// so the page can link back to the whole paper.
+type Title = { vi: string; en: string };
+export type ReadingPaper = { id: string; title: Title; level: number; reviewed: boolean; parts: { part: string; passage?: string; questions: unknown[] }[] };
+export type Reading = { id: string; level: number; title: Title; reviewed: boolean; paper?: string; passage: string; questions: unknown[] };
+
+export const paperPassages = (papers: ReadingPaper[]): Reading[] =>
+  papers.flatMap((p) =>
+    p.parts
+      .filter((x) => x.part === 'reading')
+      .map((x, i) => ({
+        id: `${p.id}-r${i + 1}`,
+        level: p.level,
+        title: { vi: `${p.title.vi} · Đoạn ${i + 1}`, en: `${p.title.en} · Passage ${i + 1}` },
+        reviewed: p.reviewed,
+        paper: p.id,
+        passage: x.passage ?? '',
+        questions: x.questions,
+      })),
+  );

@@ -69,6 +69,22 @@ const vi = {
   explain: "Giải thích",
   retryNote: "Chỉ làm lại các câu sai, không tính giờ và không thay đổi kết quả đã lưu.",
   resume: (title: string, k: number, n: number) => `Làm tiếp ${title} · câu ${k}/${n}`,
+  // Phase 40f: /reading.
+  reading: {
+    entry: "Luyện đọc từng đoạn",
+    title: "Luyện đọc",
+    lede: "Đọc từng đoạn văn, trả lời câu hỏi rồi xem giải thích. Đoạn lấy từ đề thi thử, thêm các bài luyện riêng.",
+    metaDesc: (level: string) => `Luyện đọc hiểu JLPT ${level}: từng đoạn văn kèm câu hỏi và giải thích.`,
+    fromPaper: "Trong đề thi thử",
+    practice: "Bài luyện thêm",
+    back: "Tất cả đoạn đọc",
+    check: "Chấm bài",
+    again: "Làm lại",
+    result: (right: number, total: number) => `Đúng ${right}/${total} câu`,
+    right: "Đúng",
+    wrong: "Chưa đúng",
+    openPaper: "Làm cả đề này",
+  },
 };
 
 const en: typeof vi = {
@@ -138,6 +154,21 @@ const en: typeof vi = {
   explain: "Explanation",
   retryNote: "Retry: wrong questions only, no timer, the saved result stays as it is.",
   resume: (title, k, n) => `Resume ${title} · question ${k}/${n}`,
+  reading: {
+    entry: "Practise reading passage by passage",
+    title: "Reading practice",
+    lede: "Read one passage at a time, answer its questions and see why. Passages come from the mock papers, plus extra practice ones.",
+    metaDesc: (level) => `JLPT ${level} reading practice: passages with questions and explanations.`,
+    fromPaper: "From a mock paper",
+    practice: "Extra practice",
+    back: "All passages",
+    check: "Check answers",
+    again: "Try again",
+    result: (right, total) => `${right}/${total} right`,
+    right: "Right",
+    wrong: "Not quite",
+    openPaper: "Take this whole paper",
+  },
 };
 
 export const testText: Record<Lang, typeof vi> = { vi, en };

@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { Controller, Get, NotFoundException, Param, Query } from '@nestjs/common';
 import { PAGE_SIZE } from './config.js';
-import { isKind, KINDS, normalize, paginate } from './content.js';
+import { isKind, KINDS, normalize, paginate, paperPassages, type Reading, type ReadingPaper } from './content.js';
 import { Db } from './db.js';
 import { check, isLevel, isPage } from './validate.js';
 
@@ -9,8 +9,12 @@ type Data = Record<string, unknown>;
 const parse = (rows: { data: string }[]) => rows.map((r) => JSON.parse(r.data) as Data);
 
 // Mock test papers stay out of the Item table: they are served whole, never searched or reviewed.
-type Paper = { id: string; title: unknown; minutes: number; level: number; parts: { questions: unknown[] }[] };
-const PAPERS = JSON.parse(readFileSync(new URL('../content/tests.json', import.meta.url), 'utf8')) as Paper[];
+type Paper = ReadingPaper & { minutes: number };
+const json = <T>(file: string) => JSON.parse(readFileSync(new URL(`../content/${file}`, import.meta.url), 'utf8')) as T;
+const PAPERS = json<Paper[]>('tests.json');
+
+// Phase 40f: every reading part of the papers, then the practice passages of content/reading.json.
+const READING: Reading[] = [...paperPassages(PAPERS), ...json<Reading[]>('reading.json')];
 
 // Exact-match filters on item fields, e.g. /content/kana?script=hiragana&group=yoon.
 const FILTERS = ['script', 'group', 'topic'];
@@ -83,6 +87,25 @@ export class ContentController {
       minutes,
       questions: parts.reduce((n, p) => n + p.questions.length, 0),
     }));
+  }
+
+  @Get('reading')
+  readings(@Query('level') raw: unknown) {
+    const level = levelParam(raw);
+    return READING.filter((r) => level === undefined || r.level === level).map(({ id, level, title, paper, questions }) => ({
+      id,
+      level,
+      title,
+      paper,
+      questions: questions.length,
+    }));
+  }
+
+  @Get('reading/:id')
+  reading(@Param('id') id: string) {
+    const r = READING.find((x) => x.id === id);
+    if (!r) throw new NotFoundException();
+    return r;
   }
 
   // ponytail: answers ship with the paper, fine for self-study; score on the server if results ever count.

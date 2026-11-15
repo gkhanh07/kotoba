@@ -73,6 +73,21 @@ describe('content (e2e)', () => {
     await get('/tests/nope').expect(404);
   });
 
+  // Phase 40f (AC-12): each reading part of a paper is a passage, after it the practice passages of reading.json.
+  it('serves reading passages by level', async () => {
+    const n5 = (await get('/reading?level=5').expect(200)).body as { id: string; level: number; paper?: string; questions: number }[];
+    expect(n5.slice(0, 4).map((r) => r.id)).toEqual(['n5-1-r1', 'n5-1-r2', 'n5-1-r3', 'n5-1-r4']);
+    expect(n5[0]).toMatchObject({ level: 5, paper: 'n5-1', title: { vi: 'Đề 1 · Đoạn 1', en: 'Paper 1 · Passage 1' } });
+    expect(n5.filter((r) => r.paper === undefined).length).toBeGreaterThanOrEqual(4);
+    expect(n5.every((r) => r.level === 5 && r.questions > 0)).toBe(true);
+    const one = (await get('/reading/n5-1-r1').expect(200)).body as { passage: string; questions: { choices: string[] }[] };
+    expect(one.passage).toContain('\n');
+    expect(one.questions[0].choices).toHaveLength(4);
+    await get(`/reading/${n5.at(-1)!.id}`).expect(200);
+    await get('/reading/nope').expect(404);
+    await get('/reading?level=2').expect(400);
+  });
+
   // Phase 22: levels and paging.
   it('seeds every row with the level from its JSON', async () => {
     const rows = await app.get(Db).item.findMany({ select: { id: true, level: true } });

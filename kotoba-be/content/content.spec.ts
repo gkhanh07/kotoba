@@ -9,6 +9,13 @@ const vocab = load('vocab');
 const lessons = load('lessons');
 const grammar = load('grammar');
 const all = [...kana, ...kanji, ...vocab, ...lessons, ...grammar];
+// Phase 40f: practice passages are checked like one-passage papers (questions, kanji gate, review flag), not the blueprint.
+type Practice = Item & { level: number; title?: { vi?: unknown; en?: unknown }; passage?: unknown; questions: unknown[] };
+const practice = load('reading') as Practice[];
+const papersAndPractice = (): unknown[] => [
+  ...(JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as unknown[]),
+  ...practice.map(({ id, level, reviewed, passage, questions }) => ({ id, level, reviewed, parts: [{ part: 'reading', passage, questions }] })),
+];
 // N3 lessons 46–81, the last one "Ôn tập N3".
 const N3_LESSONS = 36;
 // Japanese-made kanji with no Hán Việt reading (ADR 009).
@@ -118,7 +125,7 @@ describe('content', () => {
   // N3 content (PROGRESS.md, "N5–N3 completion"); N5 and N4 stay unchecked. This replaces phase 27 AC-1, which
   // required every N3 kanji to stay unreviewed while no person had checked them.
   it('marks as reviewed only the N3 content the user checked', () => {
-    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as Item[];
+    const papers = papersAndPractice() as Item[];
     expect([...all, ...papers].filter((d) => d.reviewed === true && d.level !== 3).map((d) => d.id)).toEqual([]);
   });
 
@@ -142,7 +149,7 @@ describe('content', () => {
   // JLPT levels 5 (easiest) to 2 (phase 22). Every item and every paper names exactly one.
   const LEVELS = [5, 4, 3, 2];
   it('gives every item and paper a level', () => {
-    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as Item[];
+    const papers = papersAndPractice() as Item[];
     expect([...all, ...papers].filter((d) => !LEVELS.includes(d.level as number)).map((d) => d.id)).toEqual([]);
   });
 
@@ -178,13 +185,17 @@ describe('content', () => {
   // Every question explains its answer in Vietnamese (AGENTS.md §12).
   it('has well-formed mock test papers', () => {
     type Q = { q: string; choices: string[]; answer: number; explain?: unknown };
-    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as { id: string; parts: { part: string; questions: Q[] }[] }[];
+    const papers = papersAndPractice() as { id: string; parts: { part: string; questions: Q[] }[] }[];
     expect(new Set(papers.map((p) => p.id)).size).toBe(papers.length);
     const bad = papers.flatMap((p) =>
       p.parts.flatMap(({ part, questions }) =>
         questions
           .filter(
             ({ q, choices, answer, explain }) =>
+              typeof q !== 'string' ||
+              q.trim() === '' ||
+              !Array.isArray(choices) ||
+              !choices.every((c) => typeof c === 'string' && c.trim() !== '') ||
               typeof explain !== 'string' ||
               explain.trim() === '' ||
               new Set(choices).size !== 4 ||
@@ -241,7 +252,7 @@ describe('content', () => {
   it("writes mock test papers only with kanji at the paper's level or easier", () => {
     type Q = { q: string; choices: string[]; answer: number };
     type P = { id: string; level: number; parts: { part: string; passage?: string; questions: Q[] }[] };
-    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as P[];
+    const papers = papersAndPractice() as P[];
     const kanjiLevel = new Map(kanji.map((k) => [k.char as string, k.level as number]));
     const checked = (part: string, { q, choices, answer }: Q) => [q, ...(part === 'writing' ? [choices[answer]] : choices)];
     const bad = papers.flatMap((p) => {
@@ -256,7 +267,7 @@ describe('content', () => {
   // Reading and text parts carry their passage; a text passage has one numbered blank （１）… per question.
   it('gives passage parts their passage and blanks', () => {
     type P = { id: string; parts: { part: string; passage?: string; questions: { q: string }[] }[] };
-    const papers = JSON.parse(readFileSync(new URL('tests.json', import.meta.url), 'utf8')) as P[];
+    const papers = papersAndPractice() as P[];
     const bad = papers.flatMap((p) =>
       p.parts
         .filter(({ part, passage, questions }) => {
@@ -307,6 +318,14 @@ describe('content', () => {
     const shieki = grammar.find((g) => g.id === 'grammar:shieki') as Item & { structure: string; examples: { ja: string }[] };
     expect(shieki.structure).toContain('ngoại động từ: A は B に N を V-(さ)せる; nội động từ: A は B を V-(さ)せる');
     expect(shieki.examples.map((e) => e.ja)).toContain('先生は 学生を うちへ 帰らせました。');
+  });
+
+  // AC-12: new passages for /reading, written by Codex, unreviewed until the user checks them.
+  it('gives every level practice passages with a title, unreviewed', () => {
+    const bad = practice.filter((r) => !new RegExp(`^r${r.level}-[0-9]+$`).test(r.id) || typeof r.title?.vi !== 'string' || typeof r.title?.en !== 'string' || r.reviewed !== false || !Array.isArray(r.questions) || r.questions.length === 0);
+    expect(bad.map((r) => r.id)).toEqual([]);
+    expect(new Set(practice.map((r) => r.id)).size).toBe(practice.length);
+    for (const level of [5, 4, 3]) expect(practice.filter((r) => r.level === level).length, `N${level}`).toBeGreaterThanOrEqual(4);
   });
 
   it('reports what still needs a human review', () => {

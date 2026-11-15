@@ -1,4 +1,4 @@
-import { normalize, paginate, searchText } from './content.js';
+import { normalize, paginate, paperPassages, searchText } from './content.js';
 import { isLevel, isPage } from './validate.js';
 
 describe('normalize', () => {
@@ -49,5 +49,21 @@ describe('level and page guards', () => {
   it('accepts whole pages from 1', () => {
     expect([1, 2, 1000].every(isPage)).toBe(true);
     expect([0, -1, 1.5, NaN, Infinity, '1', 2 ** 53].some(isPage)).toBe(false);
+  });
+});
+
+describe('paperPassages (40f)', () => {
+  it('makes each reading part a passage that links back to its paper', () => {
+    const q = { q: 'x' };
+    const out = paperPassages([
+      {
+        id: 'n5-1', level: 5, reviewed: true, title: { vi: 'Đề 1', en: 'Paper 1' },
+        parts: [{ part: 'vocab', questions: [q] }, { part: 'reading', passage: 'a', questions: [q] }, { part: 'reading', questions: [q, q] }],
+      },
+    ]);
+    expect(out).toEqual([
+      { id: 'n5-1-r1', level: 5, title: { vi: 'Đề 1 · Đoạn 1', en: 'Paper 1 · Passage 1' }, reviewed: true, paper: 'n5-1', passage: 'a', questions: [q] },
+      { id: 'n5-1-r2', level: 5, title: { vi: 'Đề 1 · Đoạn 2', en: 'Paper 1 · Passage 2' }, reviewed: true, paper: 'n5-1', passage: '', questions: [q, q] },
+    ]);
   });
 });

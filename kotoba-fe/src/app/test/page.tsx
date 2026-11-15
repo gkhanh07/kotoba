@@ -26,6 +26,7 @@ export default async function TestListPage(props: PageProps<"/test">) {
         <header className={s.heading}>
           <h1>{t.title}</h1>
           <p>{t.lede}</p>
+          <Link href={`/reading?level=${level}`} className={s.textLink}>{t.reading.entry}</Link>
         </header>
         <LevelTabs path="/test" level={level} lang={lang} />
         {tests.length === 0 ? <p className={s.note}>{libraryText[lang].levels.empty(levelLabel(level))}</p> : (
