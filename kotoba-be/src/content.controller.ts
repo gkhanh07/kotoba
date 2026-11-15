@@ -16,6 +16,9 @@ const PAPERS = json<Paper[]>('tests.json');
 // Phase 40f: every reading part of the papers, then the practice passages of content/reading.json.
 const READING: Reading[] = [...paperPassages(PAPERS), ...json<Reading[]>('reading.json')];
 
+// Phase 41k: KanjiVG stroke paths by kanji (CC BY-SA 3.0, ADR 015), kept in their own file for the licence.
+const STROKES = json<{ items: Record<string, string[]> }>('strokes.json').items;
+
 // Exact-match filters on item fields, e.g. /content/kana?script=hiragana&group=yoon.
 const FILTERS = ['script', 'group', 'topic'];
 
@@ -49,7 +52,7 @@ export class ContentController {
     return page === undefined ? items : paginate(items, page, PAGE_SIZE);
   }
 
-  // A kanji comes with the words written with it.
+  // A kanji comes with the words written with it and its stroke paths, when KanjiVG has them.
   @Get('content/item/:id')
   async item(@Param('id') id: string) {
     const row = await this.db.item.findUnique({ where: { id } });
@@ -58,7 +61,7 @@ export class ContentController {
     if (row.kind !== 'kanji') return d;
     const char = d.char as string;
     const vocab = parse(await this.db.item.findMany({ where: { kind: 'vocab', data: { contains: char } }, orderBy: { sort: 'asc' } }));
-    return { ...d, words: vocab.filter((v) => [v.word, v.kanji].some((w) => typeof w === 'string' && w.includes(char))) };
+    return { ...d, paths: STROKES[char], words: vocab.filter((v) => [v.word, v.kanji].some((w) => typeof w === 'string' && w.includes(char))) };
   }
 
   // Up to 20 per kind, so short queries matching many kana still show words and kanji.

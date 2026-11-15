@@ -8,8 +8,8 @@
       "en": "は (read わ) marks the topic. です closes the sentence and politely states that the topic is N2."
     },
     "examples": [
-      { "ja": "わたしは 学生です。", "vi": "Tôi là học sinh.", "en": "I am a student." },
-      { "ja": "たなかさんは 先生です。", "vi": "Anh Tanaka là giáo viên.", "en": "Mr Tanaka is a teacher." }
+      { "ja": "わたしは 学生です。", "vi": "Tôi là học sinh.", "en": "I am a student.", "parts": ["わたしは", "学生", "です。"] },
+      { "ja": "たなかさんは 先生です。", "vi": "Anh Tanaka là giáo viên.", "en": "Mr Tanaka is a teacher.", "parts": ["たなかさんは", "先生", "です。"] }
     ],
     "note": { "vi": "Không dùng さん cho chính mình.", "en": "Never put さん after your own name." },
     "reviewed": false
@@ -23,8 +23,8 @@
       "en": "The negative of です. じゃ ありません is spoken; では ありません is more formal and common in writing."
     },
     "examples": [
-      { "ja": "わたしは 先生じゃ ありません。", "vi": "Tôi không phải là giáo viên.", "en": "I am not a teacher." },
-      { "ja": "これは 水じゃ ありません。", "vi": "Đây không phải là nước.", "en": "This is not water." }
+      { "ja": "わたしは 先生じゃ ありません。", "vi": "Tôi không phải là giáo viên.", "en": "I am not a teacher.", "parts": ["わたしは", "先生じゃ", "ありません。"] },
+      { "ja": "これは 水じゃ ありません。", "vi": "Đây không phải là nước.", "en": "This is not water.", "parts": ["これは", "水じゃ", "ありません。"] }
     ],
     "reviewed": false
   },
@@ -37,8 +37,8 @@
       "en": "Add か at the end to make a question. Word order stays the same; the voice rises at the end."
     },
     "examples": [
-      { "ja": "あなたは 学生ですか。", "vi": "Bạn là học sinh phải không?", "en": "Are you a student?" },
-      { "ja": "はい、学生です。", "vi": "Vâng, tôi là học sinh.", "en": "Yes, I am a student." }
+      { "ja": "あなたは 学生ですか。", "vi": "Bạn là học sinh phải không?", "en": "Are you a student?", "parts": ["あなたは", "学生", "ですか。"] },
+      { "ja": "はい、学生です。", "vi": "Vâng, tôi là học sinh.", "en": "Yes, I am a student.", "parts": ["はい、", "学生", "です。"] }
     ],
     "note": { "vi": "Tiếng Nhật thường không dùng dấu ? sau か.", "en": "Japanese usually writes no ? after か." },
     "reviewed": false
@@ -52,7 +52,7 @@
       "en": "の joins two nouns so that N1 describes N2: owner, origin or field. The order is the reverse of Vietnamese."
     },
     "examples": [
-      { "ja": "わたしの 本です。", "vi": "Đây là sách của tôi.", "en": "It is my book." },
+      { "ja": "わたしの 本です。", "vi": "Đây là sách của tôi.", "en": "It is my book.", "parts": ["わたしの", "本", "です。"] },
       { "ja": "日本語の 先生", "vi": "giáo viên tiếng Nhật", "en": "a Japanese teacher" }
     ],
     "reviewed": false
@@ -66,7 +66,7 @@
       "en": "さい counts years of age. Ask with なんさいですか, or more politely おいくつですか."
     },
     "examples": [
-      { "ja": "なんさいですか。", "vi": "Bạn bao nhiêu tuổi?", "en": "How old are you?" },
+      { "ja": "なんさいですか。", "vi": "Bạn bao nhiêu tuổi?", "en": "How old are you?", "parts": ["なんさい", "です", "か。"] },
       { "ja": "十九さいです。", "vi": "Tôi mười chín tuổi.", "en": "I am nineteen." }
     ],
     "note": { "vi": "Hai mươi tuổi đọc riêng là はたち.", "en": "Twenty years old has its own reading, はたち." },
@@ -81,8 +81,8 @@
       "en": "に follows a time with a number in it to say when the action happens."
     },
     "examples": [
-      { "ja": "七時に おきます。", "vi": "Tôi dậy lúc bảy giờ.", "en": "I get up at seven." },
-      { "ja": "十時半に ねます。", "vi": "Tôi ngủ lúc mười giờ rưỡi.", "en": "I go to bed at half past ten." }
+      { "ja": "七時に おきます。", "vi": "Tôi dậy lúc bảy giờ.", "en": "I get up at seven.", "parts": ["七時に", "おき", "ます。"] },
+      { "ja": "十時半に ねます。", "vi": "Tôi ngủ lúc mười giờ rưỡi.", "en": "I go to bed at half past ten.", "parts": ["十時半に", "ね", "ます。"] }
     ],
     "note": {
       "vi": "Không dùng に với từ chỉ thời gian tương đối như きょう, あした, まいにち, いま.",
@@ -99,8 +99,8 @@
       "en": "から marks the start and まで the end, for times and places alike. Either can stand alone."
     },
     "examples": [
-      { "ja": "九時から 五時まで はたらきます。", "vi": "Tôi làm việc từ chín giờ đến năm giờ.", "en": "I work from nine to five." },
-      { "ja": "うちから 駅まで あるきます。", "vi": "Tôi đi bộ từ nhà đến ga.", "en": "I walk from home to the station." }
+      { "ja": "九時から 五時まで はたらきます。", "vi": "Tôi làm việc từ chín giờ đến năm giờ.", "en": "I work from nine to five.", "parts": ["九時から", "五時まで", "はたらきます。"] },
+      { "ja": "うちから 駅まで あるきます。", "vi": "Tôi đi bộ từ nhà đến ga.", "en": "I walk from home to the station.", "parts": ["うちから", "駅まで", "あるきます。"] }
     ],
     "reviewed": false
   },
@@ -113,8 +113,8 @@
       "en": "も replaces は (or が, を) when the same thing holds for something just mentioned."
     },
     "examples": [
-      { "ja": "きょうは 休みです。あしたも 休みです。", "vi": "Hôm nay là ngày nghỉ. Ngày mai cũng nghỉ.", "en": "Today is a day off. Tomorrow is too." },
-      { "ja": "わたしも 学生です。", "vi": "Tôi cũng là học sinh.", "en": "I am a student too." }
+      { "ja": "きょうは 休みです。あしたも 休みです。", "vi": "Hôm nay là ngày nghỉ. Ngày mai cũng nghỉ.", "en": "Today is a day off. Tomorrow is too.", "parts": ["きょうは", "休みです。", "あしたも", "休みです。"] },
+      { "ja": "わたしも 学生です。", "vi": "Tôi cũng là học sinh.", "en": "I am a student too.", "parts": ["わたしも", "学生", "です。"] }
     ],
     "reviewed": false
   },
@@ -128,7 +128,7 @@
     },
     "examples": [
       { "ja": "父と 母", "vi": "bố và mẹ", "en": "my father and mother" },
-      { "ja": "友だちと 日本へ 行きます。", "vi": "Tôi đi Nhật cùng bạn.", "en": "I am going to Japan with a friend." }
+      { "ja": "友だちと 日本へ 行きます。", "vi": "Tôi đi Nhật cùng bạn.", "en": "I am going to Japan with a friend.", "parts": ["友だちと", "日本へ", "行きます。"] }
     ],
     "reviewed": false
   },
@@ -141,8 +141,8 @@
       "en": "これ is near the speaker, それ near the listener, あれ far from both. Ask \"which one\" with どれ."
     },
     "examples": [
-      { "ja": "これは なんですか。", "vi": "Đây là cái gì?", "en": "What is this?" },
-      { "ja": "それは わたしの かばんです。", "vi": "Đó là cặp của tôi.", "en": "That is my bag." }
+      { "ja": "これは なんですか。", "vi": "Đây là cái gì?", "en": "What is this?", "parts": ["これは", "なん", "ですか。"] },
+      { "ja": "それは わたしの かばんです。", "vi": "Đó là cặp của tôi.", "en": "That is my bag.", "parts": ["それは", "わたしの", "かばんです。"] }
     ],
     "reviewed": false
   },
@@ -155,8 +155,8 @@
       "en": "Like これ・それ・あれ, but always placed before a noun, never alone."
     },
     "examples": [
-      { "ja": "この 本は わたしのです。", "vi": "Quyển sách này là của tôi.", "en": "This book is mine." },
-      { "ja": "あの 人は だれですか。", "vi": "Người kia là ai?", "en": "Who is that person?" }
+      { "ja": "この 本は わたしのです。", "vi": "Quyển sách này là của tôi.", "en": "This book is mine.", "parts": ["この", "本は", "わたしのです。"] },
+      { "ja": "あの 人は だれですか。", "vi": "Người kia là ai?", "en": "Who is that person?", "parts": ["あの", "人は", "だれですか。"] }
     ],
     "reviewed": false
   },
@@ -169,7 +169,7 @@
       "en": "Ask for a place with どこ. Answer with ここ (here), そこ (there), あそこ (over there) or a place name."
     },
     "examples": [
-      { "ja": "トイレは どこですか。", "vi": "Nhà vệ sinh ở đâu?", "en": "Where is the toilet?" },
+      { "ja": "トイレは どこですか。", "vi": "Nhà vệ sinh ở đâu?", "en": "Where is the toilet?", "parts": ["トイレは", "どこ", "ですか。"] },
       { "ja": "あそこです。", "vi": "Ở đằng kia.", "en": "Over there." }
     ],
     "reviewed": false
@@ -183,8 +183,8 @@
       "en": "Position words follow N の: the landmark comes first, then the position."
     },
     "examples": [
-      { "ja": "つくえの 上に 本が あります。", "vi": "Trên bàn có quyển sách.", "en": "There is a book on the desk." },
-      { "ja": "駅の 前で まって います。", "vi": "Tôi đang đợi trước nhà ga.", "en": "I am waiting in front of the station." }
+      { "ja": "つくえの 上に 本が あります。", "vi": "Trên bàn có quyển sách.", "en": "There is a book on the desk.", "parts": ["つくえの", "上に", "本が", "あります。"] },
+      { "ja": "駅の 前で まって います。", "vi": "Tôi đang đợi trước nhà ga.", "en": "I am waiting in front of the station.", "parts": ["駅の", "前で", "まって", "います。"] }
     ],
     "reviewed": false
   },
@@ -197,7 +197,7 @@
       "en": "で marks where an action takes place. Where something simply is takes に, not で."
     },
     "examples": [
-      { "ja": "学校で 日本語を べんきょうします。", "vi": "Tôi học tiếng Nhật ở trường.", "en": "I study Japanese at school." },
+      { "ja": "学校で 日本語を べんきょうします。", "vi": "Tôi học tiếng Nhật ở trường.", "en": "I study Japanese at school.", "parts": ["学校で", "日本語を", "べんきょうします。"] },
       { "ja": "会社で はたらきます。", "vi": "Tôi làm việc ở công ty.", "en": "I work at a company." }
     ],
     "reviewed": false
@@ -211,8 +211,8 @@
       "en": "を (read お) marks what the verb acts on: what you eat, what you drink."
     },
     "examples": [
-      { "ja": "パンを 食べます。", "vi": "Tôi ăn bánh mì.", "en": "I eat bread." },
-      { "ja": "おちゃを 飲みます。", "vi": "Tôi uống trà.", "en": "I drink tea." }
+      { "ja": "パンを 食べます。", "vi": "Tôi ăn bánh mì.", "en": "I eat bread.", "parts": ["パンを", "食べ", "ます。"] },
+      { "ja": "おちゃを 飲みます。", "vi": "Tôi uống trà.", "en": "I drink tea.", "parts": ["おちゃを", "飲み", "ます。"] }
     ],
     "reviewed": false
   },
@@ -225,8 +225,8 @@
       "en": "すき (like) and きらい (dislike) are な-adjectives. The thing liked comes before が."
     },
     "examples": [
-      { "ja": "ねこが すきです。", "vi": "Tôi thích mèo.", "en": "I like cats." },
-      { "ja": "にくが きらいです。", "vi": "Tôi ghét thịt.", "en": "I dislike meat." }
+      { "ja": "ねこが すきです。", "vi": "Tôi thích mèo.", "en": "I like cats.", "parts": ["ねこが", "すき", "です。"] },
+      { "ja": "にくが きらいです。", "vi": "Tôi ghét thịt.", "en": "I dislike meat.", "parts": ["にくが", "きらい", "です。"] }
     ],
     "note": { "vi": "Với すき, đối tượng dùng が, không dùng を.", "en": "With すき the object takes が, not を." },
     "reviewed": false
@@ -241,7 +241,7 @@
     },
     "examples": [
       { "ja": "コーヒーを ください。", "vi": "Cho tôi cà phê.", "en": "A coffee, please." },
-      { "ja": "りんごを 三つ ください。", "vi": "Cho tôi ba quả táo.", "en": "Three apples, please." }
+      { "ja": "りんごを 三つ ください。", "vi": "Cho tôi ba quả táo.", "en": "Three apples, please.", "parts": ["りんごを", "三つ", "ください。"] }
     ],
     "reviewed": false
   },
@@ -254,8 +254,8 @@
       "en": "へ (read え) marks the direction of movement with 行きます (go), 来ます (come) and かえります (return)."
     },
     "examples": [
-      { "ja": "あした 東京へ 行きます。", "vi": "Ngày mai tôi đi Tokyo.", "en": "I am going to Tokyo tomorrow." },
-      { "ja": "七時に うちへ かえります。", "vi": "Tôi về nhà lúc bảy giờ.", "en": "I go home at seven." }
+      { "ja": "あした 東京へ 行きます。", "vi": "Ngày mai tôi đi Tokyo.", "en": "I am going to Tokyo tomorrow.", "parts": ["あした", "東京へ", "行きます。"] },
+      { "ja": "七時に うちへ かえります。", "vi": "Tôi về nhà lúc bảy giờ.", "en": "I go home at seven.", "parts": ["七時に", "うちへ", "かえります。"] }
     ],
     "note": { "vi": "Có thể thay へ bằng に mà nghĩa gần như không đổi.", "en": "に can replace へ with almost no change in meaning." },
     "reviewed": false
@@ -269,7 +269,7 @@
       "en": "で marks the means: how you travel, what you write with. On foot is あるいて, without で."
     },
     "examples": [
-      { "ja": "電車で 学校へ 行きます。", "vi": "Tôi đi học bằng tàu điện.", "en": "I go to school by train." },
+      { "ja": "電車で 学校へ 行きます。", "vi": "Tôi đi học bằng tàu điện.", "en": "I go to school by train.", "parts": ["電車で", "学校へ", "行きます。"] },
       { "ja": "日本語で 話します。", "vi": "Tôi nói bằng tiếng Nhật.", "en": "I speak in Japanese." }
     ],
     "reviewed": false
@@ -283,7 +283,7 @@
       "en": "いくら asks for a price. Answer with a number + 円 (えん)."
     },
     "examples": [
-      { "ja": "この 本は いくらですか。", "vi": "Quyển sách này bao nhiêu tiền?", "en": "How much is this book?" },
+      { "ja": "この 本は いくらですか。", "vi": "Quyển sách này bao nhiêu tiền?", "en": "How much is this book?", "parts": ["この", "本は", "いくらですか。"] },
       { "ja": "三百円です。", "vi": "Ba trăm yên.", "en": "Three hundred yen." }
     ],
     "note": { "vi": "三百 đọc là さんびゃく, không phải さんひゃく.", "en": "三百 is read さんびゃく, not さんひゃく." },
@@ -298,8 +298,8 @@
       "en": "ね at the end invites agreement (isn't it). よ tells the listener something new (you know)."
     },
     "examples": [
-      { "ja": "いい てんきですね。", "vi": "Trời đẹp nhỉ.", "en": "Lovely weather, isn't it?" },
-      { "ja": "あしたは 雨ですよ。", "vi": "Ngày mai trời mưa đấy.", "en": "It will rain tomorrow, you know." }
+      { "ja": "いい てんきですね。", "vi": "Trời đẹp nhỉ.", "en": "Lovely weather, isn't it?", "parts": ["いい", "てんき", "ですね。"] },
+      { "ja": "あしたは 雨ですよ。", "vi": "Ngày mai trời mưa đấy.", "en": "It will rain tomorrow, you know.", "parts": ["あしたは", "雨", "ですよ。"] }
     ],
     "reviewed": false
   },
@@ -312,8 +312,8 @@
       "en": "N1 is the topic; N2 is a part or aspect of it that the adjective describes."
     },
     "examples": [
-      { "ja": "ぞうは はなが ながいです。", "vi": "Voi có vòi dài.", "en": "Elephants have long trunks." },
-      { "ja": "わたしは あたまが いたいです。", "vi": "Tôi bị đau đầu.", "en": "I have a headache." }
+      { "ja": "ぞうは はなが ながいです。", "vi": "Voi có vòi dài.", "en": "Elephants have long trunks.", "parts": ["ぞうは", "はなが", "ながいです。"] },
+      { "ja": "わたしは あたまが いたいです。", "vi": "Tôi bị đau đầu.", "en": "I have a headache.", "parts": ["わたしは", "あたまが", "いたいです。"] }
     ],
     "reviewed": false
   },
@@ -326,8 +326,8 @@
       "en": "An い-adjective goes straight before a noun. Negative: drop い and add くないです."
     },
     "examples": [
-      { "ja": "たかい 山です。", "vi": "Đó là ngọn núi cao.", "en": "It is a tall mountain." },
-      { "ja": "この へやは ひろくないです。", "vi": "Căn phòng này không rộng.", "en": "This room is not big." }
+      { "ja": "たかい 山です。", "vi": "Đó là ngọn núi cao.", "en": "It is a tall mountain.", "parts": ["たかい", "山", "です。"] },
+      { "ja": "この へやは ひろくないです。", "vi": "Căn phòng này không rộng.", "en": "This room is not big.", "parts": ["この", "へやは", "ひろくないです。"] }
     ],
     "note": { "vi": "いい là ngoại lệ: phủ định là よくないです.", "en": "いい is irregular: its negative is よくないです." },
     "reviewed": false
@@ -341,8 +341,8 @@
       "en": "A な-adjective needs な before a noun. At the end it takes です and negates like a noun."
     },
     "examples": [
-      { "ja": "しずかな まちです。", "vi": "Đó là một thị trấn yên tĩnh.", "en": "It is a quiet town." },
-      { "ja": "この 店は きれいじゃ ありません。", "vi": "Cửa hàng này không sạch.", "en": "This shop is not clean." }
+      { "ja": "しずかな まちです。", "vi": "Đó là một thị trấn yên tĩnh.", "en": "It is a quiet town.", "parts": ["しずかな", "まち", "です。"] },
+      { "ja": "この 店は きれいじゃ ありません。", "vi": "Cửa hàng này không sạch.", "en": "This shop is not clean.", "parts": ["この", "店は", "きれいじゃ", "ありません。"] }
     ],
     "note": { "vi": "きれい tuy tận cùng bằng い nhưng là tính từ đuôi な.", "en": "きれい ends in い but is a な-adjective." },
     "reviewed": false
@@ -356,7 +356,7 @@
       "en": "ます is the polite present and future, ません its negative. The verb always ends the sentence."
     },
     "examples": [
-      { "ja": "まいにち 日本語を べんきょうします。", "vi": "Hằng ngày tôi học tiếng Nhật.", "en": "I study Japanese every day." },
+      { "ja": "まいにち 日本語を べんきょうします。", "vi": "Hằng ngày tôi học tiếng Nhật.", "en": "I study Japanese every day.", "parts": ["まいにち", "日本語を", "べんきょうします。"] },
       { "ja": "おさけを 飲みません。", "vi": "Tôi không uống rượu.", "en": "I don't drink alcohol." }
     ],
     "reviewed": false
@@ -370,8 +370,8 @@
       "en": "The て form plus ください makes a polite request or instruction."
     },
     "examples": [
-      { "ja": "ここに 名前を 書いて ください。", "vi": "Hãy viết tên vào đây.", "en": "Please write your name here." },
-      { "ja": "ゆっくり 話して ください。", "vi": "Xin hãy nói chậm.", "en": "Please speak slowly." }
+      { "ja": "ここに 名前を 書いて ください。", "vi": "Hãy viết tên vào đây.", "en": "Please write your name here.", "parts": ["ここに", "名前を", "書いて", "ください。"] },
+      { "ja": "ゆっくり 話して ください。", "vi": "Xin hãy nói chậm.", "en": "Please speak slowly.", "parts": ["ゆっくり", "話して", "ください。"] }
     ],
     "reviewed": false
   },
@@ -384,8 +384,8 @@
       "en": "The て form plus います describes an action in progress or a lasting state."
     },
     "examples": [
-      { "ja": "いま 雨が ふって います。", "vi": "Bây giờ trời đang mưa.", "en": "It is raining now." },
-      { "ja": "ちちは 会社で はたらいて います。", "vi": "Bố tôi làm việc ở công ty.", "en": "My father works at a company." }
+      { "ja": "いま 雨が ふって います。", "vi": "Bây giờ trời đang mưa.", "en": "It is raining now.", "parts": ["いま", "雨が", "ふって", "います。"] },
+      { "ja": "ちちは 会社で はたらいて います。", "vi": "Bố tôi làm việc ở công ty.", "en": "My father works at a company.", "parts": ["ちちは", "会社で", "はたらいて", "います。"] }
     ],
     "reviewed": false
   },
@@ -398,8 +398,8 @@
       "en": "あります is for things and plants; います is for people and animals."
     },
     "examples": [
-      { "ja": "へやに テレビが あります。", "vi": "Trong phòng có cái tivi.", "en": "There is a TV in the room." },
-      { "ja": "こうえんに 子どもが います。", "vi": "Có trẻ con ở công viên.", "en": "There are children in the park." }
+      { "ja": "へやに テレビが あります。", "vi": "Trong phòng có cái tivi.", "en": "There is a TV in the room.", "parts": ["へやに", "テレビが", "あります。"] },
+      { "ja": "こうえんに 子どもが います。", "vi": "Có trẻ con ở công viên.", "en": "There are children in the park.", "parts": ["こうえんに", "子どもが", "います。"] }
     ],
     "reviewed": false
   },
@@ -412,8 +412,8 @@
       "en": "Change ます to ました for the past, and ません to ませんでした for the past negative."
     },
     "examples": [
-      { "ja": "きのう えいがを 見ました。", "vi": "Hôm qua tôi đã xem phim.", "en": "I saw a film yesterday." },
-      { "ja": "けさ ごはんを 食べませんでした。", "vi": "Sáng nay tôi đã không ăn cơm.", "en": "I didn't eat breakfast this morning." }
+      { "ja": "きのう えいがを 見ました。", "vi": "Hôm qua tôi đã xem phim.", "en": "I saw a film yesterday.", "parts": ["きのう", "えいがを", "見ました。"] },
+      { "ja": "けさ ごはんを 食べませんでした。", "vi": "Sáng nay tôi đã không ăn cơm.", "en": "I didn't eat breakfast this morning.", "parts": ["けさ", "ごはんを", "食べませんでした。"] }
     ],
     "reviewed": false
   },
@@ -426,8 +426,8 @@
       "en": "Nouns and な-adjectives: です → でした. い-adjectives: drop い and add かったです."
     },
     "examples": [
-      { "ja": "きのうは 雨でした。", "vi": "Hôm qua trời mưa.", "en": "It rained yesterday." },
-      { "ja": "りょこうは たのしかったです。", "vi": "Chuyến du lịch đã rất vui.", "en": "The trip was fun." }
+      { "ja": "きのうは 雨でした。", "vi": "Hôm qua trời mưa.", "en": "It rained yesterday.", "parts": ["きのうは", "雨", "でした。"] },
+      { "ja": "りょこうは たのしかったです。", "vi": "Chuyến du lịch đã rất vui.", "en": "The trip was fun.", "parts": ["りょこうは", "たのしかった", "です。"] }
     ],
     "note": { "vi": "いい → よかったです.", "en": "いい → よかったです." },
     "reviewed": false
@@ -441,8 +441,8 @@
       "en": "Drop ます and add たいです to say what you want to do. It is normally only used about yourself."
     },
     "examples": [
-      { "ja": "日本へ 行きたいです。", "vi": "Tôi muốn đi Nhật.", "en": "I want to go to Japan." },
-      { "ja": "すしを 食べたいです。", "vi": "Tôi muốn ăn sushi.", "en": "I want to eat sushi." }
+      { "ja": "日本へ 行きたいです。", "vi": "Tôi muốn đi Nhật.", "en": "I want to go to Japan.", "parts": ["日本へ", "行きたい", "です。"] },
+      { "ja": "すしを 食べたいです。", "vi": "Tôi muốn ăn sushi.", "en": "I want to eat sushi.", "parts": ["すしを", "食べたい", "です。"] }
     ],
     "reviewed": false
   },
@@ -455,7 +455,7 @@
       "en": "ませんか is a gentle invitation (won't you ~). ましょう proposes doing it together (let's ~)."
     },
     "examples": [
-      { "ja": "いっしょに 昼ごはんを 食べませんか。", "vi": "Cùng ăn trưa không?", "en": "Would you like to have lunch together?" },
+      { "ja": "いっしょに 昼ごはんを 食べませんか。", "vi": "Cùng ăn trưa không?", "en": "Would you like to have lunch together?", "parts": ["いっしょに", "昼ごはんを", "食べませんか。"] },
       { "ja": "ええ、食べましょう。", "vi": "Ừ, cùng ăn nào.", "en": "Yes, let's." }
     ],
     "reviewed": false
@@ -469,8 +469,8 @@
       "en": "より follows the thing compared against. The adjective stays as it is; no word for \"more\" is needed."
     },
     "examples": [
-      { "ja": "東京は 大阪より 大きいです。", "vi": "Tokyo lớn hơn Osaka.", "en": "Tokyo is bigger than Osaka." },
-      { "ja": "きょうは きのうより さむいです。", "vi": "Hôm nay lạnh hơn hôm qua.", "en": "Today is colder than yesterday." }
+      { "ja": "東京は 大阪より 大きいです。", "vi": "Tokyo lớn hơn Osaka.", "en": "Tokyo is bigger than Osaka.", "parts": ["東京は", "大阪より", "大きいです。"] },
+      { "ja": "きょうは きのうより さむいです。", "vi": "Hôm nay lạnh hơn hôm qua.", "en": "Today is colder than yesterday.", "parts": ["きょうは", "きのうより", "さむいです。"] }
     ],
     "reviewed": false
   },
@@ -483,8 +483,8 @@
       "en": "いちばん (most) goes before the adjective. の 中で sets the group being compared."
     },
     "examples": [
-      { "ja": "くだものの 中で りんごが いちばん すきです。", "vi": "Trong các loại hoa quả, tôi thích táo nhất.", "en": "Of all fruit, I like apples best." },
-      { "ja": "クラスで だれが いちばん 高いですか。", "vi": "Trong lớp ai cao nhất?", "en": "Who is the tallest in the class?" }
+      { "ja": "くだものの 中で りんごが いちばん すきです。", "vi": "Trong các loại hoa quả, tôi thích táo nhất.", "en": "Of all fruit, I like apples best.", "parts": ["くだものの", "中で", "りんごが", "いちばん", "すきです。"] },
+      { "ja": "クラスで だれが いちばん 高いですか。", "vi": "Trong lớp ai cao nhất?", "en": "Who is the tallest in the class?", "parts": ["クラスで", "だれが", "いちばん", "高いですか。"] }
     ],
     "reviewed": false
   },
@@ -497,8 +497,8 @@
       "en": "The speaker (or someone on the speaker's side) does something for another person's benefit. The doer is the subject; the receiver takes に."
     },
     "examples": [
-      { "ja": "わたしは 妹に 本を 読んで あげました。", "vi": "Tôi đã đọc sách cho em gái.", "en": "I read a book to my little sister." },
-      { "ja": "おばあさんの かばんを 持って あげました。", "vi": "Tôi đã xách túi giúp bà cụ.", "en": "I carried an old woman's bag for her." }
+      { "ja": "わたしは 妹に 本を 読んで あげました。", "vi": "Tôi đã đọc sách cho em gái.", "en": "I read a book to my little sister.", "parts": ["わたしは", "妹に", "本を", "読んで", "あげました。"] },
+      { "ja": "おばあさんの かばんを 持って あげました。", "vi": "Tôi đã xách túi giúp bà cụ.", "en": "I carried an old woman's bag for her.", "parts": ["おばあさんの", "かばんを", "持って", "あげました。"] }
     ],
     "note": { "vi": "Với người bề trên, tránh てあげる vì nghe như ban ơn.", "en": "Avoid てあげる towards superiors: it sounds like you are doing them a favour." },
     "reviewed": false
@@ -512,9 +512,9 @@
       "en": "Someone else does something for the speaker or the speaker's side. It carries a sense of gratitude. The receiver is わたし, so it is usually left out."
     },
     "examples": [
-      { "ja": "友だちが 駅まで 車で 送って くれました。", "vi": "Bạn tôi đã chở tôi đến ga bằng ô tô.", "en": "My friend drove me to the station." },
-      { "ja": "母が セーターを 作って くれました。", "vi": "Mẹ đã đan áo len cho tôi.", "en": "My mother made me a sweater." },
-      { "ja": "父が 自転車を 買って くれました。", "vi": "Bố đã mua xe đạp cho tôi.", "en": "My father bought me a bicycle." }
+      { "ja": "友だちが 駅まで 車で 送って くれました。", "vi": "Bạn tôi đã chở tôi đến ga bằng ô tô.", "en": "My friend drove me to the station.", "parts": ["友だちが", "駅まで", "車で", "送って", "くれました。"] },
+      { "ja": "母が セーターを 作って くれました。", "vi": "Mẹ đã đan áo len cho tôi.", "en": "My mother made me a sweater.", "parts": ["母が", "セーターを", "作って", "くれました。"] },
+      { "ja": "父が 自転車を 買って くれました。", "vi": "Bố đã mua xe đạp cho tôi.", "en": "My father bought me a bicycle.", "parts": ["父が", "自転車を", "買って", "くれました。"] }
     ],
     "reviewed": false
   },
@@ -527,8 +527,8 @@
       "en": "The receiver (usually the speaker) is the subject and the doer takes に. It is the same event as てくれる seen from the receiver's side, sometimes with the sense that you asked for it."
     },
     "examples": [
-      { "ja": "わたしは 姉に しゅくだいを 見て もらいました。", "vi": "Tôi đã nhờ chị gái xem bài tập giúp.", "en": "I had my older sister look over my homework." },
-      { "ja": "友だちに 写真を とって もらいました。", "vi": "Tôi đã được bạn chụp ảnh cho.", "en": "I had a friend take a photo of me." }
+      { "ja": "わたしは 姉に しゅくだいを 見て もらいました。", "vi": "Tôi đã nhờ chị gái xem bài tập giúp.", "en": "I had my older sister look over my homework.", "parts": ["わたしは", "姉に", "しゅくだいを", "見て", "もらいました。"] },
+      { "ja": "友だちに 写真を とって もらいました。", "vi": "Tôi đã được bạn chụp ảnh cho.", "en": "I had a friend take a photo of me.", "parts": ["友だちに", "写真を", "とって", "もらいました。"] }
     ],
     "reviewed": false
   },
@@ -541,9 +541,9 @@
       "en": "Says what you guess from what you can see right now: how something looks, or what is about to happen."
     },
     "examples": [
-      { "ja": "雨が ふりそうです。", "vi": "Trời sắp mưa rồi.", "en": "It looks like it is going to rain." },
-      { "ja": "この パンは おいしそうですね。", "vi": "Cái bánh mì này trông ngon nhỉ.", "en": "This bread looks delicious." },
-      { "ja": "台風が 来そうです。", "vi": "Có vẻ bão sắp đến.", "en": "A typhoon looks set to come." }
+      { "ja": "雨が ふりそうです。", "vi": "Trời sắp mưa rồi.", "en": "It looks like it is going to rain.", "parts": ["雨が", "ふりそう", "です。"] },
+      { "ja": "この パンは おいしそうですね。", "vi": "Cái bánh mì này trông ngon nhỉ.", "en": "This bread looks delicious.", "parts": ["この", "パンは", "おいしそうですね。"] },
+      { "ja": "台風が 来そうです。", "vi": "Có vẻ bão sắp đến.", "en": "A typhoon looks set to come.", "parts": ["台風が", "来そう", "です。"] }
     ],
     "note": { "vi": "いい → よさそう, ない → なさそう. Khác với そうだ nghe nói (bài 41).", "en": "いい → よさそう, ない → なさそう. Not the same as hearsay そうだ (lesson 41)." },
     "reviewed": false
@@ -557,9 +557,9 @@
       "en": "Expresses the speaker's guess and is common in weather forecasts. でしょう is polite and だろう is plain. With a rising tone it asks for agreement (…, right?)."
     },
     "examples": [
-      { "ja": "明日は 雨が ふるでしょう。", "vi": "Ngày mai có lẽ trời sẽ mưa.", "en": "It will probably rain tomorrow." },
-      { "ja": "明日は 寒いでしょう。", "vi": "Ngày mai chắc là sẽ lạnh.", "en": "Tomorrow will probably be cold." },
-      { "ja": "かれも パーティーに 来るだろう。", "vi": "Chắc anh ấy cũng sẽ đến bữa tiệc.", "en": "He will probably come to the party too." }
+      { "ja": "明日は 雨が ふるでしょう。", "vi": "Ngày mai có lẽ trời sẽ mưa.", "en": "It will probably rain tomorrow.", "parts": ["明日は", "雨が", "ふるでしょう。"] },
+      { "ja": "明日は 寒いでしょう。", "vi": "Ngày mai chắc là sẽ lạnh.", "en": "Tomorrow will probably be cold.", "parts": ["明日は", "寒い", "でしょう。"] },
+      { "ja": "かれも パーティーに 来るだろう。", "vi": "Chắc anh ấy cũng sẽ đến bữa tiệc.", "en": "He will probably come to the party too.", "parts": ["かれも", "パーティーに", "来るだろう。"] }
     ],
     "reviewed": false
   },
@@ -572,9 +572,9 @@
       "en": "States a possibility the speaker is not sure about. It is less certain than でしょう."
     },
     "examples": [
-      { "ja": "午後から ゆきが ふるかもしれません。", "vi": "Từ chiều có thể sẽ có tuyết rơi.", "en": "It might snow from the afternoon." },
-      { "ja": "明日は 雨かもしれません。", "vi": "Ngày mai không chừng trời mưa.", "en": "It may rain tomorrow." },
-      { "ja": "今夜は 寒く なるかもしれません。", "vi": "Tối nay có thể trời sẽ trở lạnh.", "en": "It might get cold tonight." }
+      { "ja": "午後から ゆきが ふるかもしれません。", "vi": "Từ chiều có thể sẽ có tuyết rơi.", "en": "It might snow from the afternoon.", "parts": ["午後から", "ゆきが", "ふるかもしれません。"] },
+      { "ja": "明日は 雨かもしれません。", "vi": "Ngày mai không chừng trời mưa.", "en": "It may rain tomorrow.", "parts": ["明日は", "雨", "かもしれません。"] },
+      { "ja": "今夜は 寒く なるかもしれません。", "vi": "Tối nay có thể trời sẽ trở lạnh.", "en": "It might get cold tonight.", "parts": ["今夜は", "寒く", "なるかもしれません。"] }
     ],
     "reviewed": false
   },
@@ -587,9 +587,9 @@
       "en": "V2 happens once V1 is done. It stresses the order of the two actions."
     },
     "examples": [
-      { "ja": "朝ごはんを 食べてから、学校へ 行きます。", "vi": "Sau khi ăn sáng, tôi đi học.", "en": "After eating breakfast, I go to school." },
-      { "ja": "しゅくだいを してから、テレビを 見ます。", "vi": "Làm bài tập xong rồi tôi mới xem tivi.", "en": "I watch TV after doing my homework." },
-      { "ja": "日本へ 来てから、もう 一年に なります。", "vi": "Từ khi đến Nhật đến nay đã được một năm.", "en": "It has been a year since I came to Japan." }
+      { "ja": "朝ごはんを 食べてから、学校へ 行きます。", "vi": "Sau khi ăn sáng, tôi đi học.", "en": "After eating breakfast, I go to school.", "parts": ["朝ごはんを", "食べてから、", "学校へ", "行きます。"] },
+      { "ja": "しゅくだいを してから、テレビを 見ます。", "vi": "Làm bài tập xong rồi tôi mới xem tivi.", "en": "I watch TV after doing my homework.", "parts": ["しゅくだいを", "してから、", "テレビを", "見ます。"] },
+      { "ja": "日本へ 来てから、もう 一年に なります。", "vi": "Từ khi đến Nhật đến nay đã được một năm.", "en": "It has been a year since I came to Japan.", "parts": ["日本へ", "来てから、", "もう", "一年に", "なります。"] }
     ],
     "reviewed": false
   },
@@ -602,8 +602,8 @@
       "en": "Talks about a plan the speaker has already decided on. V-ない つもり means you intend not to do it."
     },
     "examples": [
-      { "ja": "夏休みに 京都へ 行く つもりです。", "vi": "Tôi định đi Kyoto vào kỳ nghỉ hè.", "en": "I intend to go to Kyoto in the summer holidays." },
-      { "ja": "今度の 日曜日は どこへも 出かけない つもりです。", "vi": "Chủ nhật tới tôi định không đi đâu cả.", "en": "I intend not to go anywhere this coming Sunday." }
+      { "ja": "夏休みに 京都へ 行く つもりです。", "vi": "Tôi định đi Kyoto vào kỳ nghỉ hè.", "en": "I intend to go to Kyoto in the summer holidays.", "parts": ["夏休みに", "京都へ", "行く", "つもりです。"] },
+      { "ja": "今度の 日曜日は どこへも 出かけない つもりです。", "vi": "Chủ nhật tới tôi định không đi đâu cả.", "en": "I intend not to go anywhere this coming Sunday.", "parts": ["今度の", "日曜日は", "どこへも", "出かけない", "つもりです。"] }
     ],
     "reviewed": false
   },
@@ -616,8 +616,8 @@
       "en": "One person does two things at the same time. V2 is the main action; V1 goes along with it."
     },
     "examples": [
-      { "ja": "音楽を 聞きながら、勉強します。", "vi": "Tôi vừa nghe nhạc vừa học bài.", "en": "I study while listening to music." },
-      { "ja": "テレビを 見ながら 夕飯を 食べました。", "vi": "Tôi vừa xem tivi vừa ăn tối.", "en": "I ate dinner while watching TV." }
+      { "ja": "音楽を 聞きながら、勉強します。", "vi": "Tôi vừa nghe nhạc vừa học bài.", "en": "I study while listening to music.", "parts": ["音楽を", "聞きながら、", "勉強します。"] },
+      { "ja": "テレビを 見ながら 夕飯を 食べました。", "vi": "Tôi vừa xem tivi vừa ăn tối.", "en": "I ate dinner while watching TV.", "parts": ["テレビを", "見ながら", "夕飯を", "食べました。"] }
     ],
     "reviewed": false
   },
@@ -630,9 +630,9 @@
       "en": "Besides an action in progress (lesson 20), V-て いる also shows the state left after something has happened (a window is open, someone is married) or a regular habit."
     },
     "examples": [
-      { "ja": "まどが 開いて います。", "vi": "Cửa sổ đang mở.", "en": "The window is open." },
-      { "ja": "森の 中で 花が さいて います。", "vi": "Trong rừng hoa đang nở.", "en": "Flowers are in bloom in the forest." },
-      { "ja": "毎朝 こうえんを 走って います。", "vi": "Sáng nào tôi cũng chạy bộ ở công viên.", "en": "I run in the park every morning." }
+      { "ja": "まどが 開いて います。", "vi": "Cửa sổ đang mở.", "en": "The window is open.", "parts": ["まどが", "開いて", "います。"] },
+      { "ja": "森の 中で 花が さいて います。", "vi": "Trong rừng hoa đang nở.", "en": "Flowers are in bloom in the forest.", "parts": ["森の", "中で", "花が", "さいて", "います。"] },
+      { "ja": "毎朝 こうえんを 走って います。", "vi": "Sáng nào tôi cũng chạy bộ ở công viên.", "en": "I run in the park every morning.", "parts": ["毎朝", "こうえんを", "走って", "います。"] }
     ],
     "note": { "vi": "知って います (biết) nhưng phủ định là 知りません.", "en": "知って います (I know), but the negative is 知りません." },
     "reviewed": false
@@ -646,9 +646,9 @@
       "en": "Do something to see what it is like or how it turns out."
     },
     "examples": [
-      { "ja": "この 肉を 食べて みて ください。", "vi": "Bạn ăn thử miếng thịt này xem.", "en": "Try this meat." },
-      { "ja": "日本の 料理を 作って みました。", "vi": "Tôi đã thử nấu món ăn Nhật.", "en": "I tried making Japanese food." },
-      { "ja": "あの どうぶつえんへ 行って みたいです。", "vi": "Tôi muốn thử đến sở thú đó.", "en": "I would like to try going to that zoo." }
+      { "ja": "この 肉を 食べて みて ください。", "vi": "Bạn ăn thử miếng thịt này xem.", "en": "Try this meat.", "parts": ["この", "肉を", "食べて", "みて", "ください。"] },
+      { "ja": "日本の 料理を 作って みました。", "vi": "Tôi đã thử nấu món ăn Nhật.", "en": "I tried making Japanese food.", "parts": ["日本の", "料理を", "作って", "みました。"] },
+      { "ja": "あの どうぶつえんへ 行って みたいです。", "vi": "Tôi muốn thử đến sở thú đó.", "en": "I would like to try going to that zoo.", "parts": ["あの", "どうぶつえんへ", "行って", "みたいです。"] }
     ],
     "reviewed": false
   },
@@ -661,8 +661,8 @@
       "en": "Lists a few typical actions among others, in no set order. The tense goes on the final する."
     },
     "examples": [
-      { "ja": "日曜日は 本を 読んだり、そうじを したり します。", "vi": "Chủ nhật tôi đọc sách, dọn dẹp nhà cửa.", "en": "On Sundays I do things like reading and cleaning." },
-      { "ja": "パーティーで 食べたり 飲んだり しました。", "vi": "Ở bữa tiệc chúng tôi ăn uống vui vẻ.", "en": "At the party we ate and drank." }
+      { "ja": "日曜日は 本を 読んだり、そうじを したり します。", "vi": "Chủ nhật tôi đọc sách, dọn dẹp nhà cửa.", "en": "On Sundays I do things like reading and cleaning.", "parts": ["日曜日は", "本を", "読んだり、", "そうじを", "したり", "します。"] },
+      { "ja": "パーティーで 食べたり 飲んだり しました。", "vi": "Ở bữa tiệc chúng tôi ăn uống vui vẻ.", "en": "At the party we ate and drank.", "parts": ["パーティーで", "食べたり", "飲んだり", "しました。"] }
     ],
     "reviewed": false
   },
@@ -675,9 +675,9 @@
       "en": "Shows that something goes beyond the normal degree, usually in a bad way."
     },
     "examples": [
-      { "ja": "きのう 飲みすぎて、頭が いたいです。", "vi": "Hôm qua tôi uống quá nhiều nên đau đầu.", "en": "I drank too much yesterday, so my head hurts." },
-      { "ja": "この くつは 大きすぎます。", "vi": "Đôi giày này to quá.", "en": "These shoes are too big." },
-      { "ja": "この へやは 暑すぎます。", "vi": "Căn phòng này nóng quá.", "en": "This room is too hot." }
+      { "ja": "きのう 飲みすぎて、頭が いたいです。", "vi": "Hôm qua tôi uống quá nhiều nên đau đầu.", "en": "I drank too much yesterday, so my head hurts.", "parts": ["きのう", "飲みすぎて、", "頭が", "いたいです。"] },
+      { "ja": "この くつは 大きすぎます。", "vi": "Đôi giày này to quá.", "en": "These shoes are too big.", "parts": ["この", "くつは", "大きすぎます。"] },
+      { "ja": "この へやは 暑すぎます。", "vi": "Căn phòng này nóng quá.", "en": "This room is too hot.", "parts": ["この", "へやは", "暑すぎます。"] }
     ],
     "note": { "vi": "いい → よすぎる. Khác với động từ すぎる (đi qua).", "en": "いい → よすぎる. Not the same as the verb すぎる (to pass)." },
     "reviewed": false
@@ -691,9 +691,9 @@
       "en": "Do something in advance to prepare for later, or leave something in a certain state."
     },
     "examples": [
-      { "ja": "友だちが 来る 前に、へやを かたづけて おきます。", "vi": "Tôi dọn phòng sẵn trước khi bạn đến.", "en": "I tidy my room before my friend comes." },
-      { "ja": "まどを 開けて おいて ください。", "vi": "Hãy cứ để cửa sổ mở.", "en": "Please leave the window open." },
-      { "ja": "旅行の 前に ホテルを よやくして おきました。", "vi": "Trước chuyến du lịch tôi đã đặt khách sạn sẵn.", "en": "I booked a hotel before the trip." }
+      { "ja": "友だちが 来る 前に、へやを かたづけて おきます。", "vi": "Tôi dọn phòng sẵn trước khi bạn đến.", "en": "I tidy my room before my friend comes.", "parts": ["友だちが", "来る", "前に、", "へやを", "かたづけて", "おきます。"] },
+      { "ja": "まどを 開けて おいて ください。", "vi": "Hãy cứ để cửa sổ mở.", "en": "Please leave the window open.", "parts": ["まどを", "開けて", "おいて", "ください。"] },
+      { "ja": "旅行の 前に ホテルを よやくして おきました。", "vi": "Trước chuyến du lịch tôi đã đặt khách sạn sẵn.", "en": "I booked a hotel before the trip.", "parts": ["旅行の", "前に", "ホテルを", "よやくして", "おきました。"] }
     ],
     "reviewed": false
   },
@@ -706,8 +706,8 @@
       "en": "Puts a yes-or-no question inside a larger sentence, with verbs such as 知る, わかる and 聞く."
     },
     "examples": [
-      { "ja": "田中さんが るすか どうか、電話で 聞いて みます。", "vi": "Tôi sẽ gọi điện hỏi xem anh Tanaka có vắng nhà không.", "en": "I will phone and ask whether Mr Tanaka is out." },
-      { "ja": "この 建物に エレベーターが あるか どうか わかりません。", "vi": "Tôi không biết tòa nhà này có thang máy hay không.", "en": "I don't know whether this building has a lift." }
+      { "ja": "田中さんが るすか どうか、電話で 聞いて みます。", "vi": "Tôi sẽ gọi điện hỏi xem anh Tanaka có vắng nhà không.", "en": "I will phone and ask whether Mr Tanaka is out.", "parts": ["田中さんが", "るすか", "どうか、", "電話で", "聞いて", "みます。"] },
+      { "ja": "この 建物に エレベーターが あるか どうか わかりません。", "vi": "Tôi không biết tòa nhà này có thang máy hay không.", "en": "I don't know whether this building has a lift.", "parts": ["この", "建物に", "エレベーターが", "あるか", "どうか", "わかりません。"] }
     ],
     "note": { "vi": "Nếu có từ để hỏi thì chỉ dùng か: いつ 来るか わかりません.", "en": "With a question word, use only か: いつ 来るか わかりません." },
     "reviewed": false
@@ -721,9 +721,9 @@
       "en": "Talks about something you have done at some time in the past. The negative ことが ありません means never."
     },
     "examples": [
-      { "ja": "京都へ 行った ことが あります。", "vi": "Tôi đã từng đến Kyoto.", "en": "I have been to Kyoto." },
-      { "ja": "アメリカの 小説を 読んだ ことが ありますか。", "vi": "Bạn đã từng đọc tiểu thuyết Mỹ chưa?", "en": "Have you ever read an American novel?" },
-      { "ja": "その 村には 一度も 行った ことが ありません。", "vi": "Tôi chưa từng đến ngôi làng đó lần nào.", "en": "I have never been to that village." }
+      { "ja": "京都へ 行った ことが あります。", "vi": "Tôi đã từng đến Kyoto.", "en": "I have been to Kyoto.", "parts": ["京都へ", "行った", "ことが", "あります。"] },
+      { "ja": "アメリカの 小説を 読んだ ことが ありますか。", "vi": "Bạn đã từng đọc tiểu thuyết Mỹ chưa?", "en": "Have you ever read an American novel?", "parts": ["アメリカの", "小説を", "読んだ", "ことが", "ありますか。"] },
+      { "ja": "その 村には 一度も 行った ことが ありません。", "vi": "Tôi chưa từng đến ngôi làng đó lần nào.", "en": "I have never been to that village.", "parts": ["その", "村には", "一度も", "行った", "ことが", "ありません。"] }
     ],
     "reviewed": false
   },
@@ -736,8 +736,8 @@
       "en": "Lists several reasons or features, hinting that there are more. It usually leads to a conclusion at the end."
     },
     "examples": [
-      { "ja": "この 町は しずかだし、駅も 近いし、とても いい 所です。", "vi": "Thị trấn này vừa yên tĩnh vừa gần ga, là một nơi rất tốt.", "en": "This town is quiet and close to the station; it is a very nice place." },
-      { "ja": "きょうは 雨だし、寒いし、どこへも 行きたくないです。", "vi": "Hôm nay vừa mưa vừa lạnh, tôi chẳng muốn đi đâu.", "en": "It's raining and cold today, so I don't want to go anywhere." }
+      { "ja": "この 町は しずかだし、駅も 近いし、とても いい 所です。", "vi": "Thị trấn này vừa yên tĩnh vừa gần ga, là một nơi rất tốt.", "en": "This town is quiet and close to the station; it is a very nice place.", "parts": ["この", "町は", "しずかだし、", "駅も", "近いし、", "とても", "いい所です。"] },
+      { "ja": "きょうは 雨だし、寒いし、どこへも 行きたくないです。", "vi": "Hôm nay vừa mưa vừa lạnh, tôi chẳng muốn đi đâu.", "en": "It's raining and cold today, so I don't want to go anywhere.", "parts": ["きょうは", "雨だし、", "寒いし、", "どこへも", "行きたくないです。"] }
     ],
     "reviewed": false
   },
@@ -750,8 +750,8 @@
       "en": "On its own the volitional is a plain \"let's ~\". With と 思う / と 思って いる it states your intention, less firm than つもり."
     },
     "examples": [
-      { "ja": "夏休みに 旅行を しようと 思って います。", "vi": "Tôi đang định đi du lịch vào kỳ nghỉ hè.", "en": "I'm thinking of travelling in the summer holidays." },
-      { "ja": "来年 車の 運転を 習おうと 思います。", "vi": "Tôi định năm sau sẽ học lái ô tô.", "en": "I'm thinking of learning to drive next year." },
+      { "ja": "夏休みに 旅行を しようと 思って います。", "vi": "Tôi đang định đi du lịch vào kỳ nghỉ hè.", "en": "I'm thinking of travelling in the summer holidays.", "parts": ["夏休みに", "旅行を", "しようと", "思って", "います。"] },
+      { "ja": "来年 車の 運転を 習おうと 思います。", "vi": "Tôi định năm sau sẽ học lái ô tô.", "en": "I'm thinking of learning to drive next year.", "parts": ["来年", "車の", "運転を", "習おうと", "思います。"] },
       { "ja": "そろそろ 帰ろう。", "vi": "Sắp đến giờ rồi, về thôi.", "en": "Let's head home soon." }
     ],
     "reviewed": false
@@ -765,8 +765,8 @@
       "en": "The most general condition: if V1 happens, then V2. It is also used when V1 will surely happen, meaning once ~."
     },
     "examples": [
-      { "ja": "駅に 着いたら、電話して ください。", "vi": "Khi đến ga thì gọi điện cho tôi nhé.", "en": "Please call me when you get to the station." },
-      { "ja": "雨が ふったら、出かけません。", "vi": "Nếu trời mưa thì tôi không ra ngoài.", "en": "If it rains, I won't go out." },
+      { "ja": "駅に 着いたら、電話して ください。", "vi": "Khi đến ga thì gọi điện cho tôi nhé.", "en": "Please call me when you get to the station.", "parts": ["駅に", "着いたら、", "電話して", "ください。"] },
+      { "ja": "雨が ふったら、出かけません。", "vi": "Nếu trời mưa thì tôi không ra ngoài.", "en": "If it rains, I won't go out.", "parts": ["雨が", "ふったら、", "出かけません。"] },
       { "ja": "安かったら、買います。", "vi": "Nếu rẻ thì tôi sẽ mua.", "en": "If it's cheap, I'll buy it." }
     ],
     "reviewed": false
@@ -780,9 +780,9 @@
       "en": "The potential form says someone is able to do something, or that circumstances allow it. The object usually takes が instead of を."
     },
     "examples": [
-      { "ja": "わたしは 漢字が 少し 読めます。", "vi": "Tôi đọc được một ít chữ Hán.", "en": "I can read a little kanji." },
-      { "ja": "日本語で 自分の 意見が 言えます。", "vi": "Tôi có thể nói ý kiến của mình bằng tiếng Nhật.", "en": "I can give my own opinion in Japanese." },
-      { "ja": "明日は 早く 起きられますか。", "vi": "Ngày mai bạn dậy sớm được không?", "en": "Can you get up early tomorrow?" }
+      { "ja": "わたしは 漢字が 少し 読めます。", "vi": "Tôi đọc được một ít chữ Hán.", "en": "I can read a little kanji.", "parts": ["わたしは", "漢字が", "少し", "読めます。"] },
+      { "ja": "日本語で 自分の 意見が 言えます。", "vi": "Tôi có thể nói ý kiến của mình bằng tiếng Nhật.", "en": "I can give my own opinion in Japanese.", "parts": ["日本語で", "自分の", "意見が", "言えます。"] },
+      { "ja": "明日は 早く 起きられますか。", "vi": "Ngày mai bạn dậy sớm được không?", "en": "Can you get up early tomorrow?", "parts": ["明日は", "早く", "起きられますか。"] }
     ],
     "note": { "vi": "Khi nói hay gặp 食べれる (bỏ ら) nhưng khi viết nên dùng 食べられる.", "en": "In speech you often hear 食べれる (without ら), but write 食べられる." },
     "reviewed": false
@@ -796,8 +796,8 @@
       "en": "Means the same as the potential form but is more formal; it is common for rules and abilities."
     },
     "examples": [
-      { "ja": "この 図書館では 本を 二週間 借りる ことが できます。", "vi": "Ở thư viện này có thể mượn sách trong hai tuần.", "en": "At this library you can borrow books for two weeks." },
-      { "ja": "姉は ピアノを ひく ことが できます。", "vi": "Chị tôi biết chơi piano.", "en": "My older sister can play the piano." }
+      { "ja": "この 図書館では 本を 二週間 借りる ことが できます。", "vi": "Ở thư viện này có thể mượn sách trong hai tuần.", "en": "At this library you can borrow books for two weeks.", "parts": ["この", "図書館では", "本を", "二週間", "借りる", "ことが", "できます。"] },
+      { "ja": "姉は ピアノを ひく ことが できます。", "vi": "Chị tôi biết chơi piano.", "en": "My older sister can play the piano.", "parts": ["姉は", "ピアノを", "ひく", "ことが", "できます。"] }
     ],
     "reviewed": false
   },
@@ -810,9 +810,9 @@
       "en": "Gives the purpose of the following action. The verb before ために is something you can do on purpose. N の ために can also mean for the sake of N."
     },
     "examples": [
-      { "ja": "日本の 大学に 入る ために、日本語を 勉強して います。", "vi": "Tôi đang học tiếng Nhật để vào đại học ở Nhật.", "en": "I am studying Japanese to get into a Japanese university." },
-      { "ja": "家族の ために 働いて います。", "vi": "Tôi làm việc vì gia đình.", "en": "I work for my family." },
-      { "ja": "体の ために、毎朝 歩いて います。", "vi": "Vì sức khỏe, sáng nào tôi cũng đi bộ.", "en": "I walk every morning for my health." }
+      { "ja": "日本の 大学に 入る ために、日本語を 勉強して います。", "vi": "Tôi đang học tiếng Nhật để vào đại học ở Nhật.", "en": "I am studying Japanese to get into a Japanese university.", "parts": ["日本の", "大学に", "入る", "ために、", "日本語を", "勉強して", "います。"] },
+      { "ja": "家族の ために 働いて います。", "vi": "Tôi làm việc vì gia đình.", "en": "I work for my family.", "parts": ["家族の", "ために", "働いて", "います。"] },
+      { "ja": "体の ために、毎朝 歩いて います。", "vi": "Vì sức khỏe, sáng nào tôi cũng đi bộ.", "en": "I walk every morning for my health.", "parts": ["体の", "ために、", "毎朝", "歩いて", "います。"] }
     ],
     "reviewed": false
   },
@@ -825,9 +825,9 @@
       "en": "Adding 方 to the verb stem makes a noun meaning the way of doing it. The object takes の instead of を."
     },
     "examples": [
-      { "ja": "この 漢字の 読み方を 教えて ください。", "vi": "Hãy chỉ tôi cách đọc chữ Hán này.", "en": "Please tell me how to read this kanji." },
-      { "ja": "駅への 行き方が わかりません。", "vi": "Tôi không biết đường đến ga.", "en": "I don't know how to get to the station." },
-      { "ja": "この きかいの 使い方は かんたんです。", "vi": "Cách dùng cái máy này đơn giản.", "en": "This machine is easy to use." }
+      { "ja": "この 漢字の 読み方を 教えて ください。", "vi": "Hãy chỉ tôi cách đọc chữ Hán này.", "en": "Please tell me how to read this kanji.", "parts": ["この", "漢字の", "読み方を", "教えて", "ください。"] },
+      { "ja": "駅への 行き方が わかりません。", "vi": "Tôi không biết đường đến ga.", "en": "I don't know how to get to the station.", "parts": ["駅への", "行き方が", "わかりません。"] },
+      { "ja": "この きかいの 使い方は かんたんです。", "vi": "Cách dùng cái máy này đơn giản.", "en": "This machine is easy to use.", "parts": ["この", "きかいの", "使い方は", "かんたんです。"] }
     ],
     "reviewed": false
   },
@@ -840,9 +840,9 @@
       "en": "Says whether something is easy or hard to do. The compound conjugates like an い-adjective."
     },
     "examples": [
-      { "ja": "この 本は 字が 大きくて、読みやすいです。", "vi": "Cuốn sách này chữ to nên dễ đọc.", "en": "This book has large print, so it is easy to read." },
-      { "ja": "この ペンは 書きにくいです。", "vi": "Cây bút này khó viết.", "en": "This pen is hard to write with." },
-      { "ja": "先生の 説明は わかりやすいです。", "vi": "Lời giải thích của thầy dễ hiểu.", "en": "The teacher's explanations are easy to understand." }
+      { "ja": "この 本は 字が 大きくて、読みやすいです。", "vi": "Cuốn sách này chữ to nên dễ đọc.", "en": "This book has large print, so it is easy to read.", "parts": ["この", "本は", "字が", "大きくて、", "読みやすいです。"] },
+      { "ja": "この ペンは 書きにくいです。", "vi": "Cây bút này khó viết.", "en": "This pen is hard to write with.", "parts": ["この", "ペンは", "書きにくいです。"] },
+      { "ja": "先生の 説明は わかりやすいです。", "vi": "Lời giải thích của thầy dễ hiểu.", "en": "The teacher's explanations are easy to understand.", "parts": ["先生の", "説明は", "わかりやすいです。"] }
     ],
     "reviewed": false
   },
@@ -855,9 +855,9 @@
       "en": "ように なる: a gradual change until you can do something or it becomes a habit. ように する: making an effort to do (or not do) something regularly."
     },
     "examples": [
-      { "ja": "日本語の 新聞が 読めるように なりました。", "vi": "Tôi đã đọc được báo tiếng Nhật.", "en": "I have become able to read Japanese newspapers." },
-      { "ja": "毎日 野菜を 食べるように して います。", "vi": "Tôi cố gắng ăn rau mỗi ngày.", "en": "I make a point of eating vegetables every day." },
-      { "ja": "子どもが 一人で 自転車に 乗れるように なりました。", "vi": "Con tôi đã tự đi được xe đạp.", "en": "My child can now ride a bicycle alone." }
+      { "ja": "日本語の 新聞が 読めるように なりました。", "vi": "Tôi đã đọc được báo tiếng Nhật.", "en": "I have become able to read Japanese newspapers.", "parts": ["日本語の", "新聞が", "読めるように", "なりました。"] },
+      { "ja": "毎日 野菜を 食べるように して います。", "vi": "Tôi cố gắng ăn rau mỗi ngày.", "en": "I make a point of eating vegetables every day.", "parts": ["毎日", "野菜を", "食べるように", "して", "います。"] },
+      { "ja": "子どもが 一人で 自転車に 乗れるように なりました。", "vi": "Con tôi đã tự đi được xe đạp.", "en": "My child can now ride a bicycle alone.", "parts": ["子どもが", "一人で", "自転車に", "乗れるように", "なりました。"] }
     ],
     "reviewed": false
   },
@@ -870,9 +870,9 @@
       "en": "ことに する: you make the decision yourself. ことに なる: the decision comes from others or circumstances, not from you."
     },
     "examples": [
-      { "ja": "毎朝 六時に 起きる ことに しました。", "vi": "Tôi đã quyết định mỗi sáng dậy lúc 6 giờ.", "en": "I have decided to get up at six every morning." },
-      { "ja": "来月から 新しい 会社で 働く ことに なりました。", "vi": "Từ tháng sau tôi sẽ làm việc ở công ty mới.", "en": "It has been arranged that I will work at a new company from next month." },
-      { "ja": "かいぎは 金曜日に する ことに なりました。", "vi": "Cuộc họp đã được quyết định tổ chức vào thứ Sáu.", "en": "It was decided to hold the meeting on Friday." }
+      { "ja": "毎朝 六時に 起きる ことに しました。", "vi": "Tôi đã quyết định mỗi sáng dậy lúc 6 giờ.", "en": "I have decided to get up at six every morning.", "parts": ["毎朝", "六時に", "起きる", "ことに", "しました。"] },
+      { "ja": "来月から 新しい 会社で 働く ことに なりました。", "vi": "Từ tháng sau tôi sẽ làm việc ở công ty mới.", "en": "It has been arranged that I will work at a new company from next month.", "parts": ["来月から", "新しい", "会社で", "働く", "ことに", "なりました。"] },
+      { "ja": "かいぎは 金曜日に する ことに なりました。", "vi": "Cuộc họp đã được quyết định tổ chức vào thứ Sáu.", "en": "It was decided to hold the meeting on Friday.", "parts": ["かいぎは", "金曜日に", "する", "ことに", "なりました。"] }
     ],
     "reviewed": false
   },
@@ -885,9 +885,9 @@
       "en": "なければ ならない: something you must do. なくても いい: it is fine not to do it; it is not required."
     },
     "examples": [
-      { "ja": "明日までに レポートを 出さなければ なりません。", "vi": "Tôi phải nộp báo cáo trước ngày mai.", "en": "I have to hand in the report by tomorrow." },
-      { "ja": "土曜日は 会社へ 行かなくても いいです。", "vi": "Thứ Bảy không cần đến công ty.", "en": "I don't have to go to the office on Saturday." },
-      { "ja": "毎日 早く 起きなければ なりません。", "vi": "Ngày nào tôi cũng phải dậy sớm.", "en": "I have to get up early every day." }
+      { "ja": "明日までに レポートを 出さなければ なりません。", "vi": "Tôi phải nộp báo cáo trước ngày mai.", "en": "I have to hand in the report by tomorrow.", "parts": ["明日までに", "レポートを", "出さなければ", "なりません。"] },
+      { "ja": "土曜日は 会社へ 行かなくても いいです。", "vi": "Thứ Bảy không cần đến công ty.", "en": "I don't have to go to the office on Saturday.", "parts": ["土曜日は", "会社へ", "行かなくても", "いいです。"] },
+      { "ja": "毎日 早く 起きなければ なりません。", "vi": "Ngày nào tôi cũng phải dậy sớm.", "en": "I have to get up early every day.", "parts": ["毎日", "早く", "起きなければ", "なりません。"] }
     ],
     "note": { "vi": "Khi nói thân mật hay rút gọn thành なきゃ.", "en": "In casual speech it is often shortened to なきゃ." },
     "reviewed": false
@@ -901,9 +901,9 @@
       "en": "Has two meanings: finishing something completely, or doing something regrettable by accident."
     },
     "examples": [
-      { "ja": "電車の 中に かさを わすれて しまいました。", "vi": "Tôi lỡ để quên ô trên tàu mất rồi.", "en": "I left my umbrella on the train." },
-      { "ja": "友だちに 借りた カメラを こわして しまいました。", "vi": "Tôi lỡ làm hỏng chiếc máy ảnh mượn của bạn.", "en": "I broke the camera I borrowed from my friend." },
-      { "ja": "おかしを ぜんぶ 食べて しまいました。", "vi": "Tôi đã ăn hết sạch bánh kẹo rồi.", "en": "I ate all the sweets." }
+      { "ja": "電車の 中に かさを わすれて しまいました。", "vi": "Tôi lỡ để quên ô trên tàu mất rồi.", "en": "I left my umbrella on the train.", "parts": ["電車の", "中に", "かさを", "わすれて", "しまいました。"] },
+      { "ja": "友だちに 借りた カメラを こわして しまいました。", "vi": "Tôi lỡ làm hỏng chiếc máy ảnh mượn của bạn.", "en": "I broke the camera I borrowed from my friend.", "parts": ["友だちに", "借りた", "カメラを", "こわして", "しまいました。"] },
+      { "ja": "おかしを ぜんぶ 食べて しまいました。", "vi": "Tôi đã ăn hết sạch bánh kẹo rồi.", "en": "I ate all the sweets.", "parts": ["おかしを", "ぜんぶ", "食べて", "しまいました。"] }
     ],
     "note": { "vi": "Khi nói thân mật: 〜て しまった → 〜ちゃった.", "en": "In casual speech: 〜て しまった → 〜ちゃった." },
     "reviewed": false
@@ -917,9 +917,9 @@
       "en": "ても いい gives permission, or asks for it in a question. ては いけない forbids something."
     },
     "examples": [
-      { "ja": "この ペンを 借りても いいですか。", "vi": "Tôi mượn cây bút này được không?", "en": "May I borrow this pen?" },
-      { "ja": "ここで 写真を とっては いけません。", "vi": "Không được chụp ảnh ở đây.", "en": "You must not take photos here." },
-      { "ja": "ここに 車を 止めては いけません。", "vi": "Không được đỗ xe ở đây.", "en": "You must not park here." }
+      { "ja": "この ペンを 借りても いいですか。", "vi": "Tôi mượn cây bút này được không?", "en": "May I borrow this pen?", "parts": ["この", "ペンを", "借りても", "いいですか。"] },
+      { "ja": "ここで 写真を とっては いけません。", "vi": "Không được chụp ảnh ở đây.", "en": "You must not take photos here.", "parts": ["ここで", "写真を", "とっては", "いけません。"] },
+      { "ja": "ここに 車を 止めては いけません。", "vi": "Không được đỗ xe ở đây.", "en": "You must not park here.", "parts": ["ここに", "車を", "止めては", "いけません。"] }
     ],
     "reviewed": false
   },
@@ -932,9 +932,9 @@
       "en": "Gives a reason more objectively and softly than から; it suits apologies and requests."
     },
     "examples": [
-      { "ja": "電車が おくれたので、ちこくしました。", "vi": "Vì tàu đến muộn nên tôi bị trễ.", "en": "The train was late, so I was late." },
-      { "ja": "かいぎが 始まるので、そろそろ 行きます。", "vi": "Vì cuộc họp sắp bắt đầu nên tôi đi đây.", "en": "The meeting is starting, so I'll be going." },
-      { "ja": "今日は 日曜日なので、店は 休みです。", "vi": "Hôm nay là Chủ nhật nên cửa hàng nghỉ.", "en": "It's Sunday today, so the shop is closed." }
+      { "ja": "電車が おくれたので、ちこくしました。", "vi": "Vì tàu đến muộn nên tôi bị trễ.", "en": "The train was late, so I was late.", "parts": ["電車が", "おくれたので、", "ちこくしました。"] },
+      { "ja": "かいぎが 始まるので、そろそろ 行きます。", "vi": "Vì cuộc họp sắp bắt đầu nên tôi đi đây.", "en": "The meeting is starting, so I'll be going.", "parts": ["かいぎが", "始まるので、", "そろそろ", "行きます。"] },
+      { "ja": "今日は 日曜日なので、店は 休みです。", "vi": "Hôm nay là Chủ nhật nên cửa hàng nghỉ.", "en": "It's Sunday today, so the shop is closed.", "parts": ["今日は", "日曜日なので、", "店は", "休みです。"] }
     ],
     "reviewed": false
   },
@@ -947,9 +947,9 @@
       "en": "The result goes against what was expected, often with a feeling of frustration or regret."
     },
     "examples": [
-      { "ja": "一時間 待ったのに、かれは 来ませんでした。", "vi": "Tôi đã đợi một tiếng thế mà anh ấy không đến.", "en": "I waited an hour, but he didn't come." },
-      { "ja": "薬を 飲んだのに、まだ ねつが あります。", "vi": "Đã uống thuốc rồi vậy mà vẫn còn sốt.", "en": "Even though I took medicine, I still have a fever." },
-      { "ja": "日曜日なのに、会社へ 行かなければ なりません。", "vi": "Chủ nhật mà vẫn phải đi làm.", "en": "Even though it's Sunday, I have to go to work." }
+      { "ja": "一時間 待ったのに、かれは 来ませんでした。", "vi": "Tôi đã đợi một tiếng thế mà anh ấy không đến.", "en": "I waited an hour, but he didn't come.", "parts": ["一時間", "待ったのに、", "かれは", "来ませんでした。"] },
+      { "ja": "薬を 飲んだのに、まだ ねつが あります。", "vi": "Đã uống thuốc rồi vậy mà vẫn còn sốt.", "en": "Even though I took medicine, I still have a fever.", "parts": ["薬を", "飲んだのに、", "まだ", "ねつが", "あります。"] },
+      { "ja": "日曜日なのに、会社へ 行かなければ なりません。", "vi": "Chủ nhật mà vẫn phải đi làm.", "en": "Even though it's Sunday, I have to go to work.", "parts": ["日曜日なのに、", "会社へ", "行かなければ", "なりません。"] }
     ],
     "reviewed": false
   },
@@ -962,9 +962,9 @@
       "en": "The passive makes the person or thing affected the subject, and the doer takes に. It can show being troubled, being praised, or describe objects neutrally."
     },
     "examples": [
-      { "ja": "わたしは 先生に ほめられました。", "vi": "Tôi được thầy khen.", "en": "I was praised by my teacher." },
-      { "ja": "弟に おかしを 食べられました。", "vi": "Tôi bị em trai ăn mất bánh kẹo.", "en": "My little brother ate my sweets (on me)." },
-      { "ja": "この 車は 日本で 作られました。", "vi": "Chiếc xe này được sản xuất ở Nhật.", "en": "This car was made in Japan." }
+      { "ja": "わたしは 先生に ほめられました。", "vi": "Tôi được thầy khen.", "en": "I was praised by my teacher.", "parts": ["わたしは", "先生に", "ほめられました。"] },
+      { "ja": "弟に おかしを 食べられました。", "vi": "Tôi bị em trai ăn mất bánh kẹo.", "en": "My little brother ate my sweets (on me).", "parts": ["弟に", "おかしを", "食べられました。"] },
+      { "ja": "この 車は 日本で 作られました。", "vi": "Chiếc xe này được sản xuất ở Nhật.", "en": "This car was made in Japan.", "parts": ["この", "車は", "日本で", "作られました。"] }
     ],
     "reviewed": false
   },
@@ -977,10 +977,10 @@
       "en": "Someone in a higher position makes or lets another person do something. V-(さ)せて ください politely asks to be allowed to do it."
     },
     "examples": [
-      { "ja": "母は 子どもに 野菜を 食べさせます。", "vi": "Mẹ bắt con ăn rau.", "en": "The mother makes her child eat vegetables." },
-      { "ja": "先生は 学生に 本を 読ませました。", "vi": "Thầy giáo bắt học sinh đọc sách.", "en": "The teacher had the students read a book." },
-      { "ja": "先生は 学生を うちへ 帰らせました。", "vi": "Thầy giáo cho học sinh về nhà.", "en": "The teacher let the students go home." },
-      { "ja": "すみませんが、少し 休ませて ください。", "vi": "Xin lỗi, cho tôi nghỉ một chút.", "en": "Excuse me, please let me rest a little." }
+      { "ja": "母は 子どもに 野菜を 食べさせます。", "vi": "Mẹ bắt con ăn rau.", "en": "The mother makes her child eat vegetables.", "parts": ["母は", "子どもに", "野菜を", "食べさせます。"] },
+      { "ja": "先生は 学生に 本を 読ませました。", "vi": "Thầy giáo bắt học sinh đọc sách.", "en": "The teacher had the students read a book.", "parts": ["先生は", "学生に", "本を", "読ませました。"] },
+      { "ja": "先生は 学生を うちへ 帰らせました。", "vi": "Thầy giáo cho học sinh về nhà.", "en": "The teacher let the students go home.", "parts": ["先生は", "学生を", "うちへ", "帰らせました。"] },
+      { "ja": "すみませんが、少し 休ませて ください。", "vi": "Xin lỗi, cho tôi nghỉ một chút.", "en": "Excuse me, please let me rest a little.", "parts": ["すみませんが、", "少し", "休ませて", "ください。"] }
     ],
     "reviewed": false
   },
@@ -993,9 +993,9 @@
       "en": "Used for the actions of a superior or a customer, to raise that person. Some verbs have their own forms: いらっしゃる, めしあがる, おっしゃる, ごらんに なる."
     },
     "examples": [
-      { "ja": "先生は もう お帰りに なりました。", "vi": "Thầy đã về rồi ạ.", "en": "The teacher has already gone home." },
-      { "ja": "社長は 何時に お着きに なりますか。", "vi": "Giám đốc mấy giờ sẽ đến ạ?", "en": "What time will the company president arrive?" },
-      { "ja": "この 本を お読みに なりましたか。", "vi": "Ngài đã đọc cuốn sách này chưa ạ?", "en": "Have you read this book?" }
+      { "ja": "先生は もう お帰りに なりました。", "vi": "Thầy đã về rồi ạ.", "en": "The teacher has already gone home.", "parts": ["先生は", "もう", "お帰りに", "なりました。"] },
+      { "ja": "社長は 何時に お着きに なりますか。", "vi": "Giám đốc mấy giờ sẽ đến ạ?", "en": "What time will the company president arrive?", "parts": ["社長は", "何時に", "お着きに", "なりますか。"] },
+      { "ja": "この 本を お読みに なりましたか。", "vi": "Ngài đã đọc cuốn sách này chưa ạ?", "en": "Have you read this book?", "parts": ["この", "本を", "お読みに", "なりましたか。"] }
     ],
     "note": { "vi": "Không dùng cho hành động của chính mình.", "en": "Never use it for your own actions." },
     "reviewed": false
@@ -1011,7 +1011,7 @@
     "examples": [
       { "ja": "かばんを お持ちします。", "vi": "Để tôi xách túi giúp ạ.", "en": "Let me carry your bag." },
       { "ja": "駅まで お送りします。", "vi": "Tôi xin tiễn ngài ra ga.", "en": "I will see you to the station." },
-      { "ja": "先生に 本を おかえししました。", "vi": "Tôi đã trả sách cho thầy.", "en": "I returned the book to my teacher." }
+      { "ja": "先生に 本を おかえししました。", "vi": "Tôi đã trả sách cho thầy.", "en": "I returned the book to my teacher.", "parts": ["先生に", "本を", "おかえししました。"] }
     ],
     "reviewed": false
   },
@@ -1024,9 +1024,9 @@
       "en": "Passes on information you heard or read, not your own view. It follows the full plain form, unlike the appearance そうだ (lesson 27)."
     },
     "examples": [
-      { "ja": "てんきよほうに よると、明日は 雨が ふるそうです。", "vi": "Theo dự báo thời tiết, nghe nói ngày mai trời mưa.", "en": "According to the forecast, it will rain tomorrow." },
-      { "ja": "あの 店の パンは とても おいしいそうです。", "vi": "Nghe nói bánh mì ở tiệm đó rất ngon.", "en": "I hear the bread at that shop is very good." },
-      { "ja": "かれは 来年 けっこんするそうです。", "vi": "Nghe nói năm sau anh ấy sẽ kết hôn.", "en": "I hear he is getting married next year." }
+      { "ja": "てんきよほうに よると、明日は 雨が ふるそうです。", "vi": "Theo dự báo thời tiết, nghe nói ngày mai trời mưa.", "en": "According to the forecast, it will rain tomorrow.", "parts": ["てんきよほうによると、", "明日は", "雨が", "ふるそうです。"] },
+      { "ja": "あの 店の パンは とても おいしいそうです。", "vi": "Nghe nói bánh mì ở tiệm đó rất ngon.", "en": "I hear the bread at that shop is very good.", "parts": ["あの", "店の", "パンは", "とても", "おいしいそうです。"] },
+      { "ja": "かれは 来年 けっこんするそうです。", "vi": "Nghe nói năm sau anh ấy sẽ kết hôn.", "en": "I hear he is getting married next year.", "parts": ["かれは", "来年", "けっこんするそうです。"] }
     ],
     "note": { "vi": "A-な, N + だ そうです: しずかだ そうです, 学生だ そうです.", "en": "With な-adjectives and nouns, keep だ: しずかだ そうです, 学生だ そうです." },
     "reviewed": false
@@ -1040,9 +1040,9 @@
       "en": "Even if the first part happens, the result stays the same. It goes with いくら or どんなに for emphasis."
     },
     "examples": [
-      { "ja": "高くても、この 本を 買います。", "vi": "Dù đắt tôi cũng sẽ mua cuốn sách này.", "en": "Even if it's expensive, I'll buy this book." },
-      { "ja": "雨が ふっても、試合は 中止に なりません。", "vi": "Dù trời mưa trận đấu cũng không bị hủy.", "en": "Even if it rains, the match won't be called off." },
-      { "ja": "いくら 考えても、わかりません。", "vi": "Nghĩ mãi mà vẫn không hiểu.", "en": "No matter how much I think about it, I can't work it out." }
+      { "ja": "高くても、この 本を 買います。", "vi": "Dù đắt tôi cũng sẽ mua cuốn sách này.", "en": "Even if it's expensive, I'll buy this book.", "parts": ["高くても、", "この", "本を", "買います。"] },
+      { "ja": "雨が ふっても、試合は 中止に なりません。", "vi": "Dù trời mưa trận đấu cũng không bị hủy.", "en": "Even if it rains, the match won't be called off.", "parts": ["雨が", "ふっても、", "試合は", "中止に", "なりません。"] },
+      { "ja": "いくら 考えても、わかりません。", "vi": "Nghĩ mãi mà vẫn không hiểu.", "en": "No matter how much I think about it, I can't work it out.", "parts": ["いくら", "考えても、", "わかりません。"] }
     ],
     "reviewed": false
   },
@@ -1056,8 +1056,8 @@
     },
     "examples": [
       { "ja": "安ければ、買います。", "vi": "Nếu rẻ thì tôi mua.", "en": "If it's cheap, I'll buy it." },
-      { "ja": "この 薬を 飲めば、すぐ なおりますよ。", "vi": "Uống thuốc này thì sẽ khỏi ngay đấy.", "en": "If you take this medicine, you'll get better quickly." },
-      { "ja": "天気が よければ、山が 見えます。", "vi": "Nếu trời đẹp thì có thể nhìn thấy núi.", "en": "If the weather is good, you can see the mountains." }
+      { "ja": "この 薬を 飲めば、すぐ なおりますよ。", "vi": "Uống thuốc này thì sẽ khỏi ngay đấy.", "en": "If you take this medicine, you'll get better quickly.", "parts": ["この", "薬を", "飲めば、", "すぐ", "なおりますよ。"] },
+      { "ja": "天気が よければ、山が 見えます。", "vi": "Nếu trời đẹp thì có thể nhìn thấy núi.", "en": "If the weather is good, you can see the mountains.", "parts": ["天気が", "よければ、", "山が", "見えます。"] }
     ],
     "note": { "vi": "いい → よければ, ない → なければ.", "en": "いい → よければ, ない → なければ." },
     "reviewed": false
@@ -1071,9 +1071,9 @@
       "en": "When V1 happens, V2 always follows: natural laws, how machines work, directions. The second half cannot be a request or an intention."
     },
     "examples": [
-      { "ja": "この 道を まっすぐ 行くと、右に 駅が あります。", "vi": "Đi thẳng đường này thì sẽ thấy ga ở bên phải.", "en": "Go straight along this road and the station is on the right." },
-      { "ja": "春に なると、花が さきます。", "vi": "Hễ đến mùa xuân là hoa nở.", "en": "When spring comes, flowers bloom." },
-      { "ja": "この ボタンを おすと、ドアが 開きます。", "vi": "Bấm nút này thì cửa mở.", "en": "When you press this button, the door opens." }
+      { "ja": "この 道を まっすぐ 行くと、右に 駅が あります。", "vi": "Đi thẳng đường này thì sẽ thấy ga ở bên phải.", "en": "Go straight along this road and the station is on the right.", "parts": ["この", "道を", "まっすぐ", "行くと、", "右に", "駅が", "あります。"] },
+      { "ja": "春に なると、花が さきます。", "vi": "Hễ đến mùa xuân là hoa nở.", "en": "When spring comes, flowers bloom.", "parts": ["春に", "なると、", "花が", "さきます。"] },
+      { "ja": "この ボタンを おすと、ドアが 開きます。", "vi": "Bấm nút này thì cửa mở.", "en": "When you press this button, the door opens.", "parts": ["この", "ボタンを", "おすと、", "ドアが", "開きます。"] }
     ],
     "reviewed": false
   },
@@ -1086,9 +1086,9 @@
       "en": "Takes what the other person has just said as given and offers advice or an opinion."
     },
     "examples": [
-      { "ja": "旅行なら、京都が いいですよ。", "vi": "Nếu đi du lịch thì Kyoto hay đấy.", "en": "If it's a trip you want, Kyoto is good." },
-      { "ja": "駅へ 行くなら、この 道が 近道です。", "vi": "Nếu đi ra ga thì đường này là đường tắt.", "en": "If you're going to the station, this road is a shortcut." },
-      { "ja": "コーヒーなら、あの 店が おいしいです。", "vi": "Nếu là cà phê thì quán kia ngon.", "en": "If it's coffee, that café is good." }
+      { "ja": "旅行なら、京都が いいですよ。", "vi": "Nếu đi du lịch thì Kyoto hay đấy.", "en": "If it's a trip you want, Kyoto is good.", "parts": ["旅行なら、", "京都が", "いいですよ。"] },
+      { "ja": "駅へ 行くなら、この 道が 近道です。", "vi": "Nếu đi ra ga thì đường này là đường tắt.", "en": "If you're going to the station, this road is a shortcut.", "parts": ["駅へ", "行くなら、", "この", "道が", "近道です。"] },
+      { "ja": "コーヒーなら、あの 店が おいしいです。", "vi": "Nếu là cà phê thì quán kia ngon.", "en": "If it's coffee, that café is good.", "parts": ["コーヒーなら、", "あの", "店が", "おいしいです。"] }
     ],
     "reviewed": false
   },
@@ -1101,9 +1101,9 @@
       "en": "The speaker is confident because of a logical reason. It is not used for your own intentions."
     },
     "examples": [
-      { "ja": "田中さんは もう 家に 着いた はずです。", "vi": "Chắc chắn anh Tanaka đã về đến nhà rồi.", "en": "Mr Tanaka should be home by now." },
-      { "ja": "あの 店は 日曜日も 開いて いる はずです。", "vi": "Cửa hàng đó chắc là Chủ nhật cũng mở cửa.", "en": "That shop should be open on Sundays too." },
-      { "ja": "かぎは かばんの 中に ある はずです。", "vi": "Chìa khóa chắc chắn là ở trong cặp.", "en": "The key should be in the bag." }
+      { "ja": "田中さんは もう 家に 着いた はずです。", "vi": "Chắc chắn anh Tanaka đã về đến nhà rồi.", "en": "Mr Tanaka should be home by now.", "parts": ["田中さんは", "もう", "家に", "着いた", "はずです。"] },
+      { "ja": "あの 店は 日曜日も 開いて いる はずです。", "vi": "Cửa hàng đó chắc là Chủ nhật cũng mở cửa.", "en": "That shop should be open on Sundays too.", "parts": ["あの", "店は", "日曜日も", "開いて", "いる", "はずです。"] },
+      { "ja": "かぎは かばんの 中に ある はずです。", "vi": "Chìa khóa chắc chắn là ở trong cặp.", "en": "The key should be in the bag.", "parts": ["かぎは", "かばんの", "中に", "ある", "はずです。"] }
     ],
     "reviewed": false
   },
@@ -1116,9 +1116,9 @@
       "en": "A guess based on what you see or feel, or a comparison meaning like. みたい is spoken; ようだ is more formal."
     },
     "examples": [
-      { "ja": "だれも いない ようです。", "vi": "Hình như không có ai cả.", "en": "It seems nobody is here." },
-      { "ja": "あの 人は 日本人みたいです。", "vi": "Người kia hình như là người Nhật.", "en": "That person seems to be Japanese." },
-      { "ja": "この お茶は 花の ような 味が します。", "vi": "Trà này có vị giống như hoa.", "en": "This tea tastes like flowers." }
+      { "ja": "だれも いない ようです。", "vi": "Hình như không có ai cả.", "en": "It seems nobody is here.", "parts": ["だれも", "いない", "ようです。"] },
+      { "ja": "あの 人は 日本人みたいです。", "vi": "Người kia hình như là người Nhật.", "en": "That person seems to be Japanese.", "parts": ["あの", "人は", "日本人みたいです。"] },
+      { "ja": "この お茶は 花の ような 味が します。", "vi": "Trà này có vị giống như hoa.", "en": "This tea tastes like flowers.", "parts": ["この", "お茶は", "花の", "ような", "味が", "します。"] }
     ],
     "reviewed": false
   },
@@ -1131,9 +1131,9 @@
       "en": "A guess based on information heard or read from outside. N らしい can also mean typical of N."
     },
     "examples": [
-      { "ja": "あの 店は 来月 しまるらしいです。", "vi": "Nghe nói tháng sau cửa hàng đó sẽ đóng cửa.", "en": "Apparently that shop will close next month." },
-      { "ja": "かれは 病気らしいです。", "vi": "Có vẻ anh ấy bị ốm.", "en": "He seems to be ill." },
-      { "ja": "今日は 春らしい 天気ですね。", "vi": "Hôm nay đúng là thời tiết mùa xuân nhỉ.", "en": "Today is real spring weather, isn't it?" }
+      { "ja": "あの 店は 来月 しまるらしいです。", "vi": "Nghe nói tháng sau cửa hàng đó sẽ đóng cửa.", "en": "Apparently that shop will close next month.", "parts": ["あの", "店は", "来月", "しまるらしいです。"] },
+      { "ja": "かれは 病気らしいです。", "vi": "Có vẻ anh ấy bị ốm.", "en": "He seems to be ill.", "parts": ["かれは", "病気らしい", "です。"] },
+      { "ja": "今日は 春らしい 天気ですね。", "vi": "Hôm nay đúng là thời tiết mùa xuân nhỉ.", "en": "Today is real spring weather, isn't it?", "parts": ["今日は", "春らしい", "天気ですね。"] }
     ],
     "reviewed": false
   },
@@ -1146,9 +1146,9 @@
       "en": "Says what to do in a situation that may arise; common in instructions and rules."
     },
     "examples": [
-      { "ja": "雨の 場合は、試合は 中止です。", "vi": "Nếu trời mưa, trận đấu sẽ bị hủy.", "en": "In case of rain, the match is cancelled." },
-      { "ja": "おくれる 場合は、れんらくして ください。", "vi": "Nếu đến muộn thì hãy liên lạc.", "en": "If you are going to be late, please let us know." },
-      { "ja": "火事の 場合は、エレベーターを 使わないで ください。", "vi": "Khi có hỏa hoạn, đừng dùng thang máy.", "en": "In case of fire, do not use the lift." }
+      { "ja": "雨の 場合は、試合は 中止です。", "vi": "Nếu trời mưa, trận đấu sẽ bị hủy.", "en": "In case of rain, the match is cancelled.", "parts": ["雨の", "場合は、", "試合は", "中止です。"] },
+      { "ja": "おくれる 場合は、れんらくして ください。", "vi": "Nếu đến muộn thì hãy liên lạc.", "en": "If you are going to be late, please let us know.", "parts": ["おくれる", "場合は、", "れんらくして", "ください。"] },
+      { "ja": "火事の 場合は、エレベーターを 使わないで ください。", "vi": "Khi có hỏa hoạn, đừng dùng thang máy.", "en": "In case of fire, do not use the lift.", "parts": ["火事の", "場合は、", "エレベーターを", "使わないで", "ください。"] }
     ],
     "reviewed": false
   },
@@ -1161,9 +1161,9 @@
       "en": "The moment just before an action starts, or an attempt at it. Often followed by something showing it did not happen: 〜ようと したが / 〜ようと した とき."
     },
     "examples": [
-      { "ja": "出かけようと した とき、電話が 鳴った。", "vi": "Lúc tôi định ra ngoài thì điện thoại reo.", "en": "Just as I was about to go out, the phone rang." },
-      { "ja": "赤ちゃんが 立とうと して います。", "vi": "Em bé đang cố đứng dậy.", "en": "The baby is trying to stand up." },
-      { "ja": "両親に 本当の ことを 話そうと したが、なかなか 言えなかった。", "vi": "Tôi định nói thật với bố mẹ nhưng mãi không nói ra được.", "en": "I tried to tell my parents the truth, but I just could not say it." }
+      { "ja": "出かけようと した とき、電話が 鳴った。", "vi": "Lúc tôi định ra ngoài thì điện thoại reo.", "en": "Just as I was about to go out, the phone rang.", "parts": ["出かけようと", "した", "とき、", "電話が", "鳴った。"] },
+      { "ja": "赤ちゃんが 立とうと して います。", "vi": "Em bé đang cố đứng dậy.", "en": "The baby is trying to stand up.", "parts": ["赤ちゃんが", "立とうと", "して", "います。"] },
+      { "ja": "両親に 本当の ことを 話そうと したが、なかなか 言えなかった。", "vi": "Tôi định nói thật với bố mẹ nhưng mãi không nói ra được.", "en": "I tried to tell my parents the truth, but I just could not say it.", "parts": ["両親に", "本当の", "ことを", "話そうと", "したが、", "なかなか", "言えなかった。"] }
     ],
     "note": { "vi": "V-(よ)う と 思う (N4) là dự định trong đầu; ようと する là đang cố làm hoặc ngay sắp làm.", "en": "V-(よ)う と 思う (N4) is a plan in mind; ようと する is an actual attempt or the moment just before acting." },
     "reviewed": true
@@ -1177,9 +1177,9 @@
       "en": "Every time the first thing happens, the second happens too. N の たびに takes nouns for repeated events (旅行, 試験…)."
     },
     "examples": [
-      { "ja": "この 写真を 見る たびに、祖母を 思い出す。", "vi": "Mỗi lần xem bức ảnh này, tôi lại nhớ đến bà.", "en": "Every time I look at this photo, I remember my grandmother." },
-      { "ja": "兄は 帰って くる たびに、おみやげを 買って きて くれる。", "vi": "Mỗi lần về nhà, anh trai tôi đều mua quà cho tôi.", "en": "Every time my brother comes home, he brings me a present." },
-      { "ja": "旅行の たびに、家族に 手紙を 書きます。", "vi": "Mỗi chuyến du lịch, tôi đều viết thư cho gia đình.", "en": "Every time I travel, I write a letter to my family." }
+      { "ja": "この 写真を 見る たびに、祖母を 思い出す。", "vi": "Mỗi lần xem bức ảnh này, tôi lại nhớ đến bà.", "en": "Every time I look at this photo, I remember my grandmother.", "parts": ["この", "写真を", "見る", "たびに、", "祖母を", "思い出す。"] },
+      { "ja": "兄は 帰って くる たびに、おみやげを 買って きて くれる。", "vi": "Mỗi lần về nhà, anh trai tôi đều mua quà cho tôi.", "en": "Every time my brother comes home, he brings me a present.", "parts": ["兄は", "帰ってくる", "たびに、", "おみやげを", "買ってきて", "くれる。"] },
+      { "ja": "旅行の たびに、家族に 手紙を 書きます。", "vi": "Mỗi chuyến du lịch, tôi đều viết thư cho gia đình.", "en": "Every time I travel, I write a letter to my family.", "parts": ["旅行の", "たびに、", "家族に", "手紙を", "書きます。"] }
     ],
     "reviewed": true
   },
@@ -1192,9 +1192,9 @@
       "en": "Do something while a state lasts, before it changes; V-ない うちに means before ~. With V-ている うちに, the second part is a change that happens by itself."
     },
     "examples": [
-      { "ja": "あたたかい うちに 食べて ください。", "vi": "Hãy ăn khi còn nóng.", "en": "Please eat it while it is warm." },
-      { "ja": "暗く ならない うちに 家に 帰りましょう。", "vi": "Về nhà trước khi trời tối thôi.", "en": "Let's go home before it gets dark." },
-      { "ja": "本を 読んで いる うちに、寝て しまった。", "vi": "Đang đọc sách thì tôi ngủ thiếp đi lúc nào không hay.", "en": "I fell asleep while reading." }
+      { "ja": "あたたかい うちに 食べて ください。", "vi": "Hãy ăn khi còn nóng.", "en": "Please eat it while it is warm.", "parts": ["あたたかい", "うちに", "食べて", "ください。"] },
+      { "ja": "暗く ならない うちに 家に 帰りましょう。", "vi": "Về nhà trước khi trời tối thôi.", "en": "Let's go home before it gets dark.", "parts": ["暗く", "ならない", "うちに", "家に", "帰りましょう。"] },
+      { "ja": "本を 読んで いる うちに、寝て しまった。", "vi": "Đang đọc sách thì tôi ngủ thiếp đi lúc nào không hay.", "en": "I fell asleep while reading.", "parts": ["本を", "読んで", "いる", "うちに、", "寝て", "しまった。"] }
     ],
     "note": { "vi": "Khác 〜間に: うちに nhấn mạnh tranh thủ làm trước khi tình trạng thay đổi.", "en": "Unlike 〜間に, うちに stresses acting before the situation changes." },
     "reviewed": true
@@ -1208,9 +1208,9 @@
       "en": "間: something lasts the whole period. 間に: something happens once at some point within it."
     },
     "examples": [
-      { "ja": "夏休みの 間、祖父の 家に いました。", "vi": "Suốt kỳ nghỉ hè, tôi ở nhà ông.", "en": "I stayed at my grandfather's house during the summer holidays." },
-      { "ja": "母が 寝て いる 間に、部屋を そうじしました。", "vi": "Trong lúc mẹ ngủ, tôi đã dọn phòng.", "en": "While my mother was asleep, I cleaned the room." },
-      { "ja": "留守の 間に、だれか 来た ようです。", "vi": "Trong lúc tôi vắng nhà, hình như có ai đó đến.", "en": "It seems someone came while I was out." }
+      { "ja": "夏休みの 間、祖父の 家に いました。", "vi": "Suốt kỳ nghỉ hè, tôi ở nhà ông.", "en": "I stayed at my grandfather's house during the summer holidays.", "parts": ["夏休みの", "間、", "祖父の", "家に", "いました。"] },
+      { "ja": "母が 寝て いる 間に、部屋を そうじしました。", "vi": "Trong lúc mẹ ngủ, tôi đã dọn phòng.", "en": "While my mother was asleep, I cleaned the room.", "parts": ["母が", "寝て", "いる", "間に、", "部屋を", "そうじしました。"] },
+      { "ja": "留守の 間に、だれか 来た ようです。", "vi": "Trong lúc tôi vắng nhà, hình như có ai đó đến.", "en": "It seems someone came while I was out.", "parts": ["留守の", "間に、", "だれか", "来た", "ようです。"] }
     ],
     "reviewed": true
   },
@@ -1223,9 +1223,9 @@
       "en": "Casual. After a noun or adjective: having a quality like ~ (子どもっぽい, 白っぽい). After a verb stem: tending to ~ (忘れっぽい). Often mildly negative."
     },
     "examples": [
-      { "ja": "この スープは 水っぽくて、あまり おいしくない。", "vi": "Món súp này loãng như nước, không ngon lắm.", "en": "This soup is watery and not very tasty." },
-      { "ja": "父は 年を とって、忘れっぽく なった。", "vi": "Bố tôi có tuổi rồi nên hay quên.", "en": "My father has got older and become forgetful." },
-      { "ja": "うちの 犬は 白っぽい 色を して います。", "vi": "Con chó nhà tôi có màu trăng trắng.", "en": "Our dog is a whitish colour." }
+      { "ja": "この スープは 水っぽくて、あまり おいしくない。", "vi": "Món súp này loãng như nước, không ngon lắm.", "en": "This soup is watery and not very tasty.", "parts": ["この", "スープは", "水っぽくて、", "あまり", "おいしくない。"] },
+      { "ja": "父は 年を とって、忘れっぽく なった。", "vi": "Bố tôi có tuổi rồi nên hay quên.", "en": "My father has got older and become forgetful.", "parts": ["父は", "年を", "とって、", "忘れっぽく", "なった。"] },
+      { "ja": "うちの 犬は 白っぽい 色を して います。", "vi": "Con chó nhà tôi có màu trăng trắng.", "en": "Our dog is a whitish colour.", "parts": ["うちの", "犬は", "白っぽい", "色を", "して", "います。"] }
     ],
     "reviewed": true
   },
@@ -1238,9 +1238,9 @@
       "en": "Taking the chance of the main action to do something extra."
     },
     "examples": [
-      { "ja": "買い物に 行く ついでに、この 手紙を 出して きて くれませんか。", "vi": "Tiện đi mua sắm, bạn gửi giúp tôi lá thư này được không?", "en": "Since you are going shopping, could you post this letter for me?" },
-      { "ja": "散歩の ついでに、犬の えさを 買って 帰った。", "vi": "Tiện đi dạo, tôi mua thức ăn cho chó rồi về.", "en": "On my walk, I bought dog food on the way home." },
-      { "ja": "駅前の 店で 夕飯を 食べた ついでに、おべんとうも 買いました。", "vi": "Nhân tiện ăn tối ở quán trước ga, tôi mua luôn hộp cơm.", "en": "While having dinner at a shop by the station, I also bought a boxed lunch." }
+      { "ja": "買い物に 行く ついでに、この 手紙を 出して きて くれませんか。", "vi": "Tiện đi mua sắm, bạn gửi giúp tôi lá thư này được không?", "en": "Since you are going shopping, could you post this letter for me?", "parts": ["買い物に", "行くついでに、", "この", "手紙を", "出して", "きてくれませんか。"] },
+      { "ja": "散歩の ついでに、犬の えさを 買って 帰った。", "vi": "Tiện đi dạo, tôi mua thức ăn cho chó rồi về.", "en": "On my walk, I bought dog food on the way home.", "parts": ["散歩の", "ついでに、", "犬の", "えさを", "買って", "帰った。"] },
+      { "ja": "駅前の 店で 夕飯を 食べた ついでに、おべんとうも 買いました。", "vi": "Nhân tiện ăn tối ở quán trước ga, tôi mua luôn hộp cơm.", "en": "While having dinner at a shop by the station, I also bought a boxed lunch.", "parts": ["駅前の", "店で", "夕飯を", "食べた", "ついでに、", "おべんとうも", "買いました。"] }
     ],
     "reviewed": true
   },
@@ -1253,9 +1253,9 @@
       "en": "Gives the cause of a good result, with gratitude. おかげさまで is the polite reply when someone asks after you."
     },
     "examples": [
-      { "ja": "薬を 飲んだ おかげで、熱が 下がりました。", "vi": "Nhờ uống thuốc mà tôi đã hạ sốt.", "en": "Thanks to the medicine, my fever went down." },
-      { "ja": "先生の おかげで、試験に 合格できました。", "vi": "Nhờ thầy mà em đã đỗ kỳ thi.", "en": "Thanks to my teacher, I passed the exam." },
-      { "ja": "毎日 歩いて いる おかげで、体が 軽く なった。", "vi": "Nhờ ngày nào cũng đi bộ mà người tôi nhẹ nhõm hơn.", "en": "Thanks to walking every day, my body feels lighter." }
+      { "ja": "薬を 飲んだ おかげで、熱が 下がりました。", "vi": "Nhờ uống thuốc mà tôi đã hạ sốt.", "en": "Thanks to the medicine, my fever went down.", "parts": ["薬を", "飲んだ", "おかげで、", "熱が", "下がりました。"] },
+      { "ja": "先生の おかげで、試験に 合格できました。", "vi": "Nhờ thầy mà em đã đỗ kỳ thi.", "en": "Thanks to my teacher, I passed the exam.", "parts": ["先生の", "おかげで、", "試験に", "合格できました。"] },
+      { "ja": "毎日 歩いて いる おかげで、体が 軽く なった。", "vi": "Nhờ ngày nào cũng đi bộ mà người tôi nhẹ nhõm hơn.", "en": "Thanks to walking every day, my body feels lighter.", "parts": ["毎日", "歩いて", "いる", "おかげで、", "体が", "軽く", "なった。"] }
     ],
     "reviewed": true
   },
@@ -1268,9 +1268,9 @@
       "en": "Gives the cause of a bad result, often with a sense of blame."
     },
     "examples": [
-      { "ja": "かぜの せいで、頭が 痛い。", "vi": "Tại bị cảm nên tôi đau đầu.", "en": "I have a headache because of my cold." },
-      { "ja": "昨日 飲みすぎた せいで、今朝は 気分が 悪い。", "vi": "Do hôm qua uống quá nhiều nên sáng nay tôi thấy khó chịu.", "en": "I feel sick this morning because I drank too much yesterday." },
-      { "ja": "遅れたのは 私の せいです。", "vi": "Chúng ta bị muộn là tại tôi.", "en": "It is my fault that we were late." }
+      { "ja": "かぜの せいで、頭が 痛い。", "vi": "Tại bị cảm nên tôi đau đầu.", "en": "I have a headache because of my cold.", "parts": ["かぜの", "せいで、", "頭が", "痛い。"] },
+      { "ja": "昨日 飲みすぎた せいで、今朝は 気分が 悪い。", "vi": "Do hôm qua uống quá nhiều nên sáng nay tôi thấy khó chịu.", "en": "I feel sick this morning because I drank too much yesterday.", "parts": ["昨日", "飲みすぎた", "せいで、", "今朝は", "気分が", "悪い。"] },
+      { "ja": "遅れたのは 私の せいです。", "vi": "Chúng ta bị muộn là tại tôi.", "en": "It is my fault that we were late.", "parts": ["遅れたのは", "私の", "せいです。"] }
     ],
     "note": { "vi": "おかげで dùng cho kết quả tốt, せいで cho kết quả xấu.", "en": "おかげで is for good results, せいで for bad ones." },
     "reviewed": true
@@ -1284,9 +1284,9 @@
       "en": "The speaker's vague feeling or impression, without firm grounds. ような can be dropped: 〜気が する."
     },
     "examples": [
-      { "ja": "明日は 雨が 降る ような 気が します。", "vi": "Tôi có cảm giác mai trời sẽ mưa.", "en": "I have a feeling it will rain tomorrow." },
-      { "ja": "この 景色は 前にも 見た ような 気が する。", "vi": "Tôi có cảm giác đã từng thấy phong cảnh này.", "en": "I feel as if I have seen this view before." },
-      { "ja": "今年の 夏は 去年より 暑い 気が します。", "vi": "Tôi có cảm giác hè năm nay nóng hơn năm ngoái.", "en": "I feel this summer is hotter than last year." }
+      { "ja": "明日は 雨が 降る ような 気が します。", "vi": "Tôi có cảm giác mai trời sẽ mưa.", "en": "I have a feeling it will rain tomorrow.", "parts": ["明日は", "雨が", "降る", "ような", "気が", "します。"] },
+      { "ja": "この 景色は 前にも 見た ような 気が する。", "vi": "Tôi có cảm giác đã từng thấy phong cảnh này.", "en": "I feel as if I have seen this view before.", "parts": ["この", "景色は", "前にも", "見た", "ような", "気が", "する。"] },
+      { "ja": "今年の 夏は 去年より 暑い 気が します。", "vi": "Tôi có cảm giác hè năm nay nóng hơn năm ngoái.", "en": "I feel this summer is hotter than last year.", "parts": ["今年の", "夏は", "去年より", "暑い", "気が", "します。"] }
     ],
     "reviewed": true
   },
@@ -1299,9 +1299,9 @@
       "en": "As the first grows, the second changes with it. The same word is repeated: first in the ば form, then in the dictionary form."
     },
     "examples": [
-      { "ja": "山は 高ければ 高い ほど、空気が うすく なる。", "vi": "Núi càng cao thì không khí càng loãng.", "en": "The higher the mountain, the thinner the air." },
-      { "ja": "日本語は 勉強すれば する ほど、おもしろく なる。", "vi": "Tiếng Nhật càng học càng thấy thú vị.", "en": "The more you study Japanese, the more interesting it gets." },
-      { "ja": "魚は 新しければ 新しい ほど おいしい。", "vi": "Cá càng tươi càng ngon.", "en": "The fresher the fish, the better it tastes." }
+      { "ja": "山は 高ければ 高い ほど、空気が うすく なる。", "vi": "Núi càng cao thì không khí càng loãng.", "en": "The higher the mountain, the thinner the air.", "parts": ["山は", "高ければ", "高いほど、", "空気が", "うすくなる。"] },
+      { "ja": "日本語は 勉強すれば する ほど、おもしろく なる。", "vi": "Tiếng Nhật càng học càng thấy thú vị.", "en": "The more you study Japanese, the more interesting it gets.", "parts": ["日本語は", "勉強すれば", "するほど、", "おもしろくなる。"] },
+      { "ja": "魚は 新しければ 新しい ほど おいしい。", "vi": "Cá càng tươi càng ngon.", "en": "The fresher the fish, the better it tastes.", "parts": ["魚は", "新しければ", "新しいほど", "おいしい。"] }
     ],
     "note": { "vi": "Dựa trên thể ば (N4).", "en": "Builds on the ば form (N4)." },
     "reviewed": true
@@ -1315,9 +1315,9 @@
       "en": "A feeling or bodily sensation so strong it cannot be held back. The subject is usually the speaker."
     },
     "examples": [
-      { "ja": "国の 家族に 会いたくて たまらない。", "vi": "Tôi muốn gặp gia đình ở quê đến không chịu nổi.", "en": "I am dying to see my family back home." },
-      { "ja": "試験に 合格して、うれしくて たまりません。", "vi": "Đỗ kỳ thi rồi, tôi vui không tả xiết.", "en": "I passed the exam and I am overjoyed." },
-      { "ja": "歯が 痛くて たまらない。", "vi": "Răng tôi đau không chịu nổi.", "en": "My tooth hurts unbearably." }
+      { "ja": "国の 家族に 会いたくて たまらない。", "vi": "Tôi muốn gặp gia đình ở quê đến không chịu nổi.", "en": "I am dying to see my family back home.", "parts": ["国の", "家族に", "会いたくて", "たまらない。"] },
+      { "ja": "試験に 合格して、うれしくて たまりません。", "vi": "Đỗ kỳ thi rồi, tôi vui không tả xiết.", "en": "I passed the exam and I am overjoyed.", "parts": ["試験に", "合格して、", "うれしくて", "たまりません。"] },
+      { "ja": "歯が 痛くて たまらない。", "vi": "Răng tôi đau không chịu nổi.", "en": "My tooth hurts unbearably.", "parts": ["歯が", "痛くて", "たまらない。"] }
     ],
     "reviewed": true
   },
@@ -1330,9 +1330,9 @@
       "en": "Uses a concrete example to show the degree of a feeling or state."
     },
     "examples": [
-      { "ja": "なきたい くらい うれしかった。", "vi": "Tôi vui đến mức muốn khóc.", "en": "I was so happy I wanted to cry." },
-      { "ja": "声が 出ない くらい おどろいた。", "vi": "Tôi ngạc nhiên đến mức không thốt nên lời.", "en": "I was so surprised I could not make a sound." },
-      { "ja": "足が 動かなく なる くらい 疲れた。", "vi": "Tôi mệt đến mức chân không nhấc nổi.", "en": "I was so tired my legs would not move." }
+      { "ja": "なきたい くらい うれしかった。", "vi": "Tôi vui đến mức muốn khóc.", "en": "I was so happy I wanted to cry.", "parts": ["なきたい", "くらい", "うれしかった。"] },
+      { "ja": "声が 出ない くらい おどろいた。", "vi": "Tôi ngạc nhiên đến mức không thốt nên lời.", "en": "I was so surprised I could not make a sound.", "parts": ["声が", "出ないくらい", "おどろいた。"] },
+      { "ja": "足が 動かなく なる くらい 疲れた。", "vi": "Tôi mệt đến mức chân không nhấc nổi.", "en": "I was so tired my legs would not move.", "parts": ["足が", "動かなくなるくらい", "疲れた。"] }
     ],
     "note": { "vi": "Với số lượng (三十分ぐらい), くらい・ぐらい nghĩa là khoảng.", "en": "With amounts (三十分ぐらい), くらい・ぐらい means about." },
     "reviewed": true
@@ -1346,9 +1346,9 @@
       "en": "States the aim. The first part is usually a non-volitional verb, a potential form or a negative (聞こえる, できる, 忘れない)."
     },
     "examples": [
-      { "ja": "忘れない ように、メモして おきます。", "vi": "Để không quên, tôi ghi chú lại.", "en": "I will write it down so I do not forget." },
-      { "ja": "夢が かなう ように、毎日 努力して います。", "vi": "Tôi nỗ lực mỗi ngày để ước mơ thành hiện thực.", "en": "I make an effort every day so that my dream comes true." },
-      { "ja": "後ろの 人にも 聞こえる ように、大きな 声で 話して ください。", "vi": "Hãy nói to để người ở phía sau cũng nghe được.", "en": "Please speak loudly so the people at the back can hear too." }
+      { "ja": "忘れない ように、メモして おきます。", "vi": "Để không quên, tôi ghi chú lại.", "en": "I will write it down so I do not forget.", "parts": ["忘れない", "ように、", "メモして", "おきます。"] },
+      { "ja": "夢が かなう ように、毎日 努力して います。", "vi": "Tôi nỗ lực mỗi ngày để ước mơ thành hiện thực.", "en": "I make an effort every day so that my dream comes true.", "parts": ["夢が", "かなう", "ように、", "毎日", "努力して", "います。"] },
+      { "ja": "後ろの 人にも 聞こえる ように、大きな 声で 話して ください。", "vi": "Hãy nói to để người ở phía sau cũng nghe được.", "en": "Please speak loudly so the people at the back can hear too.", "parts": ["後ろの", "人にも", "聞こえるように、", "大きな", "声で", "話してください。"] }
     ],
     "note": { "vi": "ために (N4) đi với động từ ý chí, cùng chủ ngữ (留学する ために); ように đi với động từ không ý chí, thể khả năng hoặc phủ định.", "en": "ために (N4) takes a volitional verb with the same subject (留学する ために); ように takes non-volitional verbs, potentials or negatives." },
     "reviewed": true
@@ -1362,9 +1362,9 @@
       "en": "As long as this one minimum condition is met, the result follows; nothing more is needed."
     },
     "examples": [
-      { "ja": "道さえ わかれば、一人で 行けます。", "vi": "Chỉ cần biết đường là tôi đi một mình được.", "en": "As long as I know the way, I can go alone." },
-      { "ja": "この 薬を 飲みさえ すれば、すぐ 治りますよ。", "vi": "Chỉ cần uống thuốc này là sẽ khỏi ngay.", "en": "Just take this medicine and you will soon get better." },
-      { "ja": "あきらめさえ しなければ、夢は かなうと 思う。", "vi": "Tôi nghĩ chỉ cần không bỏ cuộc thì ước mơ sẽ thành hiện thực.", "en": "I think your dream will come true as long as you do not give up." }
+      { "ja": "道さえ わかれば、一人で 行けます。", "vi": "Chỉ cần biết đường là tôi đi một mình được.", "en": "As long as I know the way, I can go alone.", "parts": ["道さえ", "わかれば、", "一人で", "行けます。"] },
+      { "ja": "この 薬を 飲みさえ すれば、すぐ 治りますよ。", "vi": "Chỉ cần uống thuốc này là sẽ khỏi ngay.", "en": "Just take this medicine and you will soon get better.", "parts": ["この", "薬を", "飲みさえ", "すれば、", "すぐ", "治りますよ。"] },
+      { "ja": "あきらめさえ しなければ、夢は かなうと 思う。", "vi": "Tôi nghĩ chỉ cần không bỏ cuộc thì ước mơ sẽ thành hiện thực.", "en": "I think your dream will come true as long as you do not give up.", "parts": ["あきらめさえ", "しなければ、", "夢は", "かなうと", "思う。"] }
     ],
     "reviewed": true
   },
@@ -1377,9 +1377,9 @@
       "en": "The result varies with N; the second part often has ちがう or 変わる. に よっては: in some cases ~."
     },
     "examples": [
-      { "ja": "曜日に よって、電車の 時間が 変わります。", "vi": "Giờ tàu thay đổi tùy theo ngày trong tuần.", "en": "Train times change depending on the day of the week." },
-      { "ja": "国に よって、車が 走る 側が ちがう。", "vi": "Xe chạy bên nào của đường là tùy từng nước.", "en": "Which side cars drive on differs from country to country." },
-      { "ja": "天気に よっては、バスが 止まる ことも あります。", "vi": "Tùy thời tiết, có khi xe buýt cũng ngừng chạy.", "en": "Depending on the weather, the buses sometimes stop." }
+      { "ja": "曜日に よって、電車の 時間が 変わります。", "vi": "Giờ tàu thay đổi tùy theo ngày trong tuần.", "en": "Train times change depending on the day of the week.", "parts": ["曜日によって、", "電車の", "時間が", "変わります。"] },
+      { "ja": "国に よって、車が 走る 側が ちがう。", "vi": "Xe chạy bên nào của đường là tùy từng nước.", "en": "Which side cars drive on differs from country to country.", "parts": ["国によって、", "車が", "走る", "側が", "ちがう。"] },
+      { "ja": "天気に よっては、バスが 止まる ことも あります。", "vi": "Tùy thời tiết, có khi xe buýt cũng ngừng chạy.", "en": "Depending on the weather, the buses sometimes stop.", "parts": ["天気によっては、", "バスが", "止まる", "ことも", "あります。"] }
     ],
     "reviewed": true
   },
@@ -1392,9 +1392,9 @@
       "en": "Doing exactly as said, written or seen. Attached directly to a noun it is read どおり (予定どおり)."
     },
     "examples": [
-      { "ja": "地図の とおりに 行けば、駅に 着きます。", "vi": "Nếu đi đúng theo bản đồ thì sẽ tới ga.", "en": "If you follow the map, you will reach the station." },
-      { "ja": "先生が 言った とおりに、もう 一度 書いて ください。", "vi": "Hãy viết lại một lần nữa đúng như thầy đã nói.", "en": "Please write it once more, just as the teacher said." },
-      { "ja": "バスは 予定どおりに 着いた。", "vi": "Xe buýt đã đến đúng như dự kiến.", "en": "The bus arrived on schedule." }
+      { "ja": "地図の とおりに 行けば、駅に 着きます。", "vi": "Nếu đi đúng theo bản đồ thì sẽ tới ga.", "en": "If you follow the map, you will reach the station.", "parts": ["地図の", "とおりに", "行けば、", "駅に", "着きます。"] },
+      { "ja": "先生が 言った とおりに、もう 一度 書いて ください。", "vi": "Hãy viết lại một lần nữa đúng như thầy đã nói.", "en": "Please write it once more, just as the teacher said.", "parts": ["先生が", "言った", "とおりに、", "もう", "一度", "書いて", "ください。"] },
+      { "ja": "バスは 予定どおりに 着いた。", "vi": "Xe buýt đã đến đúng như dự kiến.", "en": "The bus arrived on schedule.", "parts": ["バスは", "予定どおりに", "着いた。"] }
     ],
     "reviewed": true
   },
@@ -1407,9 +1407,9 @@
       "en": "Says you want someone else to do (or not do) something. That person takes に."
     },
     "examples": [
-      { "ja": "友だちに 遊びに 来て ほしい。", "vi": "Tôi muốn bạn đến nhà chơi.", "en": "I want my friend to come and visit." },
-      { "ja": "子どもには 元気に 育って ほしい。", "vi": "Tôi mong con lớn lên khỏe mạnh.", "en": "I want my children to grow up healthy." },
-      { "ja": "大事な 話なので、だれにも 言わないで ほしい。", "vi": "Chuyện quan trọng nên tôi không muốn cậu nói với ai.", "en": "It is important, so I do not want you to tell anyone." }
+      { "ja": "友だちに 遊びに 来て ほしい。", "vi": "Tôi muốn bạn đến nhà chơi.", "en": "I want my friend to come and visit.", "parts": ["友だちに", "遊びに", "来て", "ほしい。"] },
+      { "ja": "子どもには 元気に 育って ほしい。", "vi": "Tôi mong con lớn lên khỏe mạnh.", "en": "I want my children to grow up healthy.", "parts": ["子どもには", "元気に", "育って", "ほしい。"] },
+      { "ja": "大事な 話なので、だれにも 言わないで ほしい。", "vi": "Chuyện quan trọng nên tôi không muốn cậu nói với ai.", "en": "It is important, so I do not want you to tell anyone.", "parts": ["大事な", "話なので、", "だれにも", "言わないで", "ほしい。"] }
     ],
     "note": { "vi": "V-たい (N5) là mong muốn của chính mình; て ほしい là mong muốn người khác làm.", "en": "V-たい (N5) is your own wish; て ほしい is wanting someone else to act." },
     "reviewed": true
@@ -1423,9 +1423,9 @@
       "en": "Reports a request or instruction indirectly. 言う can be replaced by たのむ, 伝える or 注意する."
     },
     "examples": [
-      { "ja": "母に 早く 帰る ように 言われた。", "vi": "Mẹ bảo tôi phải về sớm.", "en": "My mother told me to come home early." },
-      { "ja": "お客さんが 来たら、こちらで 待つ ように 伝えて ください。", "vi": "Nếu khách đến thì nhắn họ chờ ở đây giúp tôi.", "en": "When the guest arrives, please tell them to wait here." },
-      { "ja": "医者に お酒を 飲まない ように 言われました。", "vi": "Bác sĩ dặn tôi không được uống rượu.", "en": "The doctor told me not to drink alcohol." }
+      { "ja": "母に 早く 帰る ように 言われた。", "vi": "Mẹ bảo tôi phải về sớm.", "en": "My mother told me to come home early.", "parts": ["母に", "早く", "帰る", "ように", "言われた。"] },
+      { "ja": "お客さんが 来たら、こちらで 待つ ように 伝えて ください。", "vi": "Nếu khách đến thì nhắn họ chờ ở đây giúp tôi.", "en": "When the guest arrives, please tell them to wait here.", "parts": ["お客さんが", "来たら、", "こちらで", "待つ", "ように", "伝えて", "ください。"] },
+      { "ja": "医者に お酒を 飲まない ように 言われました。", "vi": "Bác sĩ dặn tôi không được uống rượu.", "en": "The doctor told me not to drink alcohol.", "parts": ["医者に", "お酒を", "飲まない", "ように", "言われました。"] }
     ],
     "reviewed": true
   },
@@ -1438,9 +1438,9 @@
       "en": "A state stays unchanged while something else happens, usually something unusual."
     },
     "examples": [
-      { "ja": "靴を はいた まま、部屋に 入らないで ください。", "vi": "Đừng đi nguyên giày vào phòng.", "en": "Please do not come into the room with your shoes on." },
-      { "ja": "電気を つけた まま、寝て しまった。", "vi": "Tôi lỡ ngủ quên mà vẫn để đèn sáng.", "en": "I fell asleep with the light on." },
-      { "ja": "窓を 開けた まま、出かけた。", "vi": "Tôi để nguyên cửa sổ mở rồi đi ra ngoài.", "en": "I went out leaving the window open." }
+      { "ja": "靴を はいた まま、部屋に 入らないで ください。", "vi": "Đừng đi nguyên giày vào phòng.", "en": "Please do not come into the room with your shoes on.", "parts": ["靴を", "はいた", "まま、", "部屋に", "入らないで", "ください。"] },
+      { "ja": "電気を つけた まま、寝て しまった。", "vi": "Tôi lỡ ngủ quên mà vẫn để đèn sáng.", "en": "I fell asleep with the light on.", "parts": ["電気を", "つけた", "まま、", "寝て", "しまった。"] },
+      { "ja": "窓を 開けた まま、出かけた。", "vi": "Tôi để nguyên cửa sổ mở rồi đi ra ngoài.", "en": "I went out leaving the window open.", "parts": ["窓を", "開けた", "まま、", "出かけた。"] }
     ],
     "reviewed": true
   },
@@ -1453,9 +1453,9 @@
       "en": "An action has started but is not finished, or nearly happens and stops."
     },
     "examples": [
-      { "ja": "読みかけの 本が つくえの 上に ある。", "vi": "Cuốn sách đọc dở đang ở trên bàn.", "en": "There is a half-read book on the desk." },
-      { "ja": "何か 言いかけて、彼は 口を 閉じた。", "vi": "Anh ấy định nói gì đó rồi lại ngậm miệng.", "en": "He started to say something, then closed his mouth." },
-      { "ja": "駅の かいだんで 転びかけた。", "vi": "Tôi suýt ngã ở cầu thang nhà ga.", "en": "I nearly fell on the station stairs." }
+      { "ja": "読みかけの 本が つくえの 上に ある。", "vi": "Cuốn sách đọc dở đang ở trên bàn.", "en": "There is a half-read book on the desk.", "parts": ["読みかけの", "本が", "つくえの", "上に", "ある。"] },
+      { "ja": "何か 言いかけて、彼は 口を 閉じた。", "vi": "Anh ấy định nói gì đó rồi lại ngậm miệng.", "en": "He started to say something, then closed his mouth.", "parts": ["何か", "言いかけて、", "彼は", "口を", "閉じた。"] },
+      { "ja": "駅の かいだんで 転びかけた。", "vi": "Tôi suýt ngã ở cầu thang nhà ga.", "en": "I nearly fell on the station stairs.", "parts": ["駅の", "かいだんで", "転びかけた。"] }
     ],
     "reviewed": true
   },
@@ -1468,9 +1468,9 @@
       "en": "Doing one thing over and over and nothing else; usually critical."
     },
     "examples": [
-      { "ja": "スマホを さわって ばかり いないで、手伝って。", "vi": "Đừng có chỉ nghịch điện thoại mãi, phụ một tay đi.", "en": "Stop just fiddling with your phone and help out." },
-      { "ja": "彼女は 何を 聞いても 笑って ばかり いる。", "vi": "Hỏi gì cô ấy cũng chỉ cười.", "en": "Whatever you ask her, she just laughs." },
-      { "ja": "肉ばかり 食べないで、野菜も 食べなさい。", "vi": "Đừng chỉ ăn thịt, ăn cả rau nữa.", "en": "Do not eat only meat; eat vegetables too." }
+      { "ja": "スマホを さわって ばかり いないで、手伝って。", "vi": "Đừng có chỉ nghịch điện thoại mãi, phụ một tay đi.", "en": "Stop just fiddling with your phone and help out.", "parts": ["スマホを", "さわってばかり", "いないで、", "手伝って。"] },
+      { "ja": "彼女は 何を 聞いても 笑って ばかり いる。", "vi": "Hỏi gì cô ấy cũng chỉ cười.", "en": "Whatever you ask her, she just laughs.", "parts": ["彼女は", "何を", "聞いても", "笑ってばかり", "いる。"] },
+      { "ja": "肉ばかり 食べないで、野菜も 食べなさい。", "vi": "Đừng chỉ ăn thịt, ăn cả rau nữa.", "en": "Do not eat only meat; eat vegetables too.", "parts": ["肉ばかり", "食べないで、", "野菜も", "食べなさい。"] }
     ],
     "note": { "vi": "V-た ばかり là vừa mới ~, nghĩa khác hẳn.", "en": "V-た ばかり means have just ~, a different meaning." },
     "reviewed": true
@@ -1484,9 +1484,9 @@
       "en": "States the role, capacity or status of a person or thing."
     },
     "examples": [
-      { "ja": "彼は 留学生として 日本に 来ました。", "vi": "Anh ấy đến Nhật với tư cách du học sinh.", "en": "He came to Japan as an exchange student." },
-      { "ja": "姉は 英語の 先生として 働いて います。", "vi": "Chị tôi làm giáo viên tiếng Anh.", "en": "My sister works as an English teacher." },
-      { "ja": "この 部屋は 教室として 使われて いる。", "vi": "Căn phòng này được dùng làm phòng học.", "en": "This room is used as a classroom." }
+      { "ja": "彼は 留学生として 日本に 来ました。", "vi": "Anh ấy đến Nhật với tư cách du học sinh.", "en": "He came to Japan as an exchange student.", "parts": ["彼は", "留学生として", "日本に", "来ました。"] },
+      { "ja": "姉は 英語の 先生として 働いて います。", "vi": "Chị tôi làm giáo viên tiếng Anh.", "en": "My sister works as an English teacher.", "parts": ["姉は", "英語の", "先生として", "働いて", "います。"] },
+      { "ja": "この 部屋は 教室として 使われて いる。", "vi": "Căn phòng này được dùng làm phòng học.", "en": "This room is used as a classroom.", "parts": ["この", "部屋は", "教室として", "使われて", "いる。"] }
     ],
     "reviewed": true
   },
@@ -1499,9 +1499,9 @@
       "en": "Judges something from N's point of view. The second part is an evaluation (大切だ, むずかしい…), not an action."
     },
     "examples": [
-      { "ja": "私に とって、家族が いちばん 大切です。", "vi": "Đối với tôi, gia đình là quan trọng nhất.", "en": "To me, family is the most important thing." },
-      { "ja": "この 問題は 子どもに とって むずかしすぎる。", "vi": "Bài này quá khó đối với trẻ con.", "en": "This problem is too hard for children." },
-      { "ja": "学生に とって、試験は 大切な ものだ。", "vi": "Đối với học sinh, kỳ thi là điều quan trọng.", "en": "For students, exams are important." }
+      { "ja": "私に とって、家族が いちばん 大切です。", "vi": "Đối với tôi, gia đình là quan trọng nhất.", "en": "To me, family is the most important thing.", "parts": ["私にとって、", "家族が", "いちばん", "大切です。"] },
+      { "ja": "この 問題は 子どもに とって むずかしすぎる。", "vi": "Bài này quá khó đối với trẻ con.", "en": "This problem is too hard for children.", "parts": ["この", "問題は", "子どもにとって", "むずかしすぎる。"] },
+      { "ja": "学生に とって、試験は 大切な ものだ。", "vi": "Đối với học sinh, kỳ thi là điều quan trọng.", "en": "For students, exams are important.", "parts": ["学生にとって、", "試験は", "大切な", "ものだ。"] }
     ],
     "reviewed": true
   },
@@ -1514,9 +1514,9 @@
       "en": "Adds one more thing to what was said; the second part usually has も. Spoken: だけじゃなく."
     },
     "examples": [
-      { "ja": "この 映画は 子どもだけでなく、大人も 楽しめる。", "vi": "Không chỉ trẻ em mà người lớn cũng có thể thấy thích thú khi xem bộ phim này.", "en": "Not only children but adults too can enjoy this film." },
-      { "ja": "彼女は 歌が 上手な だけでなく、ダンスも できる。", "vi": "Cô ấy không chỉ hát hay mà còn biết nhảy.", "en": "She not only sings well but can also dance." },
-      { "ja": "音楽は 聞く だけでなく、自分で えんそうするのも 好きです。", "vi": "Với âm nhạc, tôi không chỉ thích nghe mà còn thích tự chơi nhạc.", "en": "I like not only listening to music but also playing it myself." }
+      { "ja": "この 映画は 子どもだけでなく、大人も 楽しめる。", "vi": "Không chỉ trẻ em mà người lớn cũng có thể thấy thích thú khi xem bộ phim này.", "en": "Not only children but adults too can enjoy this film.", "parts": ["この", "映画は", "子どもだけでなく、", "大人も", "楽しめる。"] },
+      { "ja": "彼女は 歌が 上手な だけでなく、ダンスも できる。", "vi": "Cô ấy không chỉ hát hay mà còn biết nhảy.", "en": "She not only sings well but can also dance.", "parts": ["彼女は", "歌が", "上手な", "だけでなく、", "ダンスも", "できる。"] },
+      { "ja": "音楽は 聞く だけでなく、自分で えんそうするのも 好きです。", "vi": "Với âm nhạc, tôi không chỉ thích nghe mà còn thích tự chơi nhạc.", "en": "I like not only listening to music but also playing it myself.", "parts": ["音楽は", "聞く", "だけでなく、", "自分で", "えんそうするのも", "好きです。"] }
     ],
     "reviewed": true
   },
@@ -1529,9 +1529,9 @@
       "en": "The speaker is sure, on reasonable grounds, that it cannot be so."
     },
     "examples": [
-      { "ja": "あの 強い チームが 負ける はずが ない。", "vi": "Đội mạnh như thế không thể nào thua được.", "en": "There is no way that strong team will lose." },
-      { "ja": "れんしゅうしなかったのだから、勝てる はずが ない。", "vi": "Không luyện tập thì làm sao thắng được.", "en": "We did not practise, so there is no way we can win." },
-      { "ja": "彼が うそを つく はずが ない。", "vi": "Anh ấy không lẽ nào lại nói dối.", "en": "There is no way he would lie." }
+      { "ja": "あの 強い チームが 負ける はずが ない。", "vi": "Đội mạnh như thế không thể nào thua được.", "en": "There is no way that strong team will lose.", "parts": ["あの", "強い", "チームが", "負ける", "はずが", "ない。"] },
+      { "ja": "れんしゅうしなかったのだから、勝てる はずが ない。", "vi": "Không luyện tập thì làm sao thắng được.", "en": "We did not practise, so there is no way we can win.", "parts": ["れんしゅうしなかったのだから、", "勝てる", "はずが", "ない。"] },
+      { "ja": "彼が うそを つく はずが ない。", "vi": "Anh ấy không lẽ nào lại nói dối.", "en": "There is no way he would lie.", "parts": ["彼が", "うそを", "つく", "はずが", "ない。"] }
     ],
     "note": { "vi": "はずだ (N4): chắc là ~; はずが ない phủ định mạnh khả năng đó.", "en": "はずだ (N4): should be ~; はずが ない firmly denies the possibility." },
     "reviewed": true
@@ -1545,9 +1545,9 @@
       "en": "A formal way to give a cause, common in news and notices. The second part is the result."
     },
     "examples": [
-      { "ja": "物の 値段が 上がった ため、生活が 苦しく なった。", "vi": "Do giá cả tăng nên cuộc sống trở nên khó khăn.", "en": "Because prices went up, life became hard." },
-      { "ja": "大雪の ため、電車が 遅れて います。", "vi": "Do tuyết rơi dày nên tàu đang bị trễ.", "en": "Trains are delayed because of heavy snow." },
-      { "ja": "円が 安く なった ため、外国からの 客が 増えた。", "vi": "Do đồng yên mất giá nên khách nước ngoài tăng lên.", "en": "Because the yen got weaker, visitors from abroad increased." }
+      { "ja": "物の 値段が 上がった ため、生活が 苦しく なった。", "vi": "Do giá cả tăng nên cuộc sống trở nên khó khăn.", "en": "Because prices went up, life became hard.", "parts": ["物の", "値段が", "上がった", "ため、", "生活が", "苦しく", "なった。"] },
+      { "ja": "大雪の ため、電車が 遅れて います。", "vi": "Do tuyết rơi dày nên tàu đang bị trễ.", "en": "Trains are delayed because of heavy snow.", "parts": ["大雪の", "ため、", "電車が", "遅れて", "います。"] },
+      { "ja": "円が 安く なった ため、外国からの 客が 増えた。", "vi": "Do đồng yên mất giá nên khách nước ngoài tăng lên.", "en": "Because the yen got weaker, visitors from abroad increased.", "parts": ["円が", "安く", "なった", "ため、", "外国からの", "客が", "増えた。"] }
     ],
     "note": { "vi": "ために (N4) với động từ ý chí là mục đích; ở đây là nguyên nhân, vế sau là kết quả.", "en": "ために (N4) with a volitional verb is a purpose; here it is a cause and the second part is the result." },
     "reviewed": true
@@ -1561,9 +1561,9 @@
       "en": "1) Replacement: something or someone else instead. 2) Trade-off: a good side comes with a bad one, or one thing in return for another."
     },
     "examples": [
-      { "ja": "現金の かわりに、カードで 払えます。", "vi": "Có thể trả bằng thẻ thay cho tiền mặt.", "en": "You can pay by card instead of cash." },
-      { "ja": "この 店は 安い かわりに、サービスが よくない。", "vi": "Cửa hàng này rẻ nhưng bù lại phục vụ không tốt.", "en": "This shop is cheap, but in return the service is poor." },
-      { "ja": "宿題を 手伝って もらう かわりに、昼ご飯を おごった。", "vi": "Đổi lại việc được giúp làm bài tập, tôi đã khao bữa trưa.", "en": "In return for help with my homework, I treated them to lunch." }
+      { "ja": "現金の かわりに、カードで 払えます。", "vi": "Có thể trả bằng thẻ thay cho tiền mặt.", "en": "You can pay by card instead of cash.", "parts": ["現金の", "かわりに、", "カードで", "払えます。"] },
+      { "ja": "この 店は 安い かわりに、サービスが よくない。", "vi": "Cửa hàng này rẻ nhưng bù lại phục vụ không tốt.", "en": "This shop is cheap, but in return the service is poor.", "parts": ["この", "店は", "安い", "かわりに、", "サービスが", "よくない。"] },
+      { "ja": "宿題を 手伝って もらう かわりに、昼ご飯を おごった。", "vi": "Đổi lại việc được giúp làm bài tập, tôi đã khao bữa trưa.", "en": "In return for help with my homework, I treated them to lunch.", "parts": ["宿題を", "手伝って", "もらう", "かわりに、", "昼ご飯を", "おごった。"] }
     ],
     "reviewed": true
   },
@@ -1576,9 +1576,9 @@
       "en": "States a rule, custom or arrangement already decided, not by the speaker alone."
     },
     "examples": [
-      { "ja": "この 会社では、毎朝 九時に 会議を する ことに なって いる。", "vi": "Ở công ty này, theo quy định mỗi sáng họp lúc chín giờ.", "en": "At this company, there is a meeting at nine every morning." },
-      { "ja": "休む ときは、部長に れんらくする ことに なって います。", "vi": "Theo quy định, khi nghỉ thì phải báo cho trưởng phòng.", "en": "When you take a day off, you are supposed to contact the department head." },
-      { "ja": "来月から 東京の 本社で 働く ことに なって います。", "vi": "Theo kế hoạch đã định, từ tháng sau tôi sẽ làm ở trụ sở chính tại Tokyo.", "en": "From next month I am to work at the head office in Tokyo." }
+      { "ja": "この 会社では、毎朝 九時に 会議を する ことに なって いる。", "vi": "Ở công ty này, theo quy định mỗi sáng họp lúc chín giờ.", "en": "At this company, there is a meeting at nine every morning.", "parts": ["この会社では、", "毎朝", "九時に", "会議を", "することに", "なっている。"] },
+      { "ja": "休む ときは、部長に れんらくする ことに なって います。", "vi": "Theo quy định, khi nghỉ thì phải báo cho trưởng phòng.", "en": "When you take a day off, you are supposed to contact the department head.", "parts": ["休むときは、", "部長に", "れんらくする", "ことになっています。"] },
+      { "ja": "来月から 東京の 本社で 働く ことに なって います。", "vi": "Theo kế hoạch đã định, từ tháng sau tôi sẽ làm ở trụ sở chính tại Tokyo.", "en": "From next month I am to work at the head office in Tokyo.", "parts": ["来月から", "東京の", "本社で", "働く", "ことになっています。"] }
     ],
     "note": { "vi": "ことに なる (N4) là một việc được quyết định; ことに なって いる là quy định hay kế hoạch đã có sẵn.", "en": "ことに なる (N4) is that something gets decided; ことに なって いる is a rule or plan already in place." },
     "reviewed": true
@@ -1592,9 +1592,9 @@
       "en": "The speaker is allowed by someone to do something and is grateful. させて いただきます humbly announces what the speaker will do."
     },
     "examples": [
-      { "ja": "体調が 悪いので、今日は 早く 帰らせて いただけませんか。", "vi": "Tôi không khỏe nên hôm nay cho tôi về sớm được không ạ?", "en": "I am not feeling well; may I go home early today?" },
-      { "ja": "部長に 会議で 発表させて もらいました。", "vi": "Tôi được trưởng phòng cho phát biểu trong cuộc họp.", "en": "The department head let me give a presentation at the meeting." },
-      { "ja": "では、説明させて いただきます。", "vi": "Vậy tôi xin phép được trình bày.", "en": "Now, allow me to explain." }
+      { "ja": "体調が 悪いので、今日は 早く 帰らせて いただけませんか。", "vi": "Tôi không khỏe nên hôm nay cho tôi về sớm được không ạ?", "en": "I am not feeling well; may I go home early today?", "parts": ["体調が", "悪いので、", "今日は", "早く", "帰らせて", "いただけませんか。"] },
+      { "ja": "部長に 会議で 発表させて もらいました。", "vi": "Tôi được trưởng phòng cho phát biểu trong cuộc họp.", "en": "The department head let me give a presentation at the meeting.", "parts": ["部長に", "会議で", "発表させて", "もらいました。"] },
+      { "ja": "では、説明させて いただきます。", "vi": "Vậy tôi xin phép được trình bày.", "en": "Now, allow me to explain.", "parts": ["では、", "説明させて", "いただきます。"] }
     ],
     "note": { "vi": "Ghép thể sai khiến (N4) với て もらう (N4).", "en": "Combines the causative (N4) with て もらう (N4)." },
     "reviewed": true
@@ -1608,9 +1608,9 @@
       "en": "Names the topic of speech, questions or documents. More formal than について."
     },
     "examples": [
-      { "ja": "商品に 関する 質問は、こちらで 受け付けて います。", "vi": "Chúng tôi tiếp nhận câu hỏi về sản phẩm tại đây.", "en": "Questions about our products are handled here." },
-      { "ja": "料金に 関して、お客さまから 問い合わせが ありました。", "vi": "Có khách hàng hỏi về giá tiền.", "en": "A customer made an enquiry about the price." },
-      { "ja": "新しい 店の 計画に 関して、意見を 聞かせて ください。", "vi": "Hãy cho tôi biết ý kiến về kế hoạch cho cửa hàng mới.", "en": "Please tell me your opinion about the plan for the new shop." }
+      { "ja": "商品に 関する 質問は、こちらで 受け付けて います。", "vi": "Chúng tôi tiếp nhận câu hỏi về sản phẩm tại đây.", "en": "Questions about our products are handled here.", "parts": ["商品に関する", "質問は、", "こちらで", "受け付けています。"] },
+      { "ja": "料金に 関して、お客さまから 問い合わせが ありました。", "vi": "Có khách hàng hỏi về giá tiền.", "en": "A customer made an enquiry about the price.", "parts": ["料金に関して、", "お客さまから", "問い合わせが", "ありました。"] },
+      { "ja": "新しい 店の 計画に 関して、意見を 聞かせて ください。", "vi": "Hãy cho tôi biết ý kiến về kế hoạch cho cửa hàng mới.", "en": "Please tell me your opinion about the plan for the new shop.", "parts": ["新しい", "店の", "計画に関して、", "意見を", "聞かせてください。"] }
     ],
     "reviewed": true
   },
@@ -1623,9 +1623,9 @@
       "en": "1) Names the target of an action, attitude or feeling. 2) Contrasts two facts (〜のに対して)."
     },
     "examples": [
-      { "ja": "国の 決定に 対して、反対の 意見が 多い。", "vi": "Có nhiều ý kiến phản đối quyết định của nhà nước.", "en": "There are many opinions against the government decision." },
-      { "ja": "先生に 対して、そんな 言い方を しては いけません。", "vi": "Không được ăn nói như thế với thầy giáo.", "en": "You must not speak to your teacher like that." },
-      { "ja": "兄が 外で 遊ぶのが 好きなのに 対して、弟は 家で 本を 読むのが 好きだ。", "vi": "Anh trai thích chơi ngoài trời, còn em trai lại thích ở nhà đọc sách.", "en": "While the older brother likes playing outside, the younger one likes reading at home." }
+      { "ja": "国の 決定に 対して、反対の 意見が 多い。", "vi": "Có nhiều ý kiến phản đối quyết định của nhà nước.", "en": "There are many opinions against the government decision.", "parts": ["国の", "決定に対して、", "反対の", "意見が", "多い。"] },
+      { "ja": "先生に 対して、そんな 言い方を しては いけません。", "vi": "Không được ăn nói như thế với thầy giáo.", "en": "You must not speak to your teacher like that.", "parts": ["先生に対して、", "そんな", "言い方を", "してはいけません。"] },
+      { "ja": "兄が 外で 遊ぶのが 好きなのに 対して、弟は 家で 本を 読むのが 好きだ。", "vi": "Anh trai thích chơi ngoài trời, còn em trai lại thích ở nhà đọc sách.", "en": "While the older brother likes playing outside, the younger one likes reading at home.", "parts": ["兄が", "外で遊ぶのが", "好きなのに対して、", "弟は", "家で", "本を読むのが", "好きだ。"] }
     ],
     "note": { "vi": "Khác にとって (bài 57): にとって là theo góc nhìn của N; に対して là hành động, thái độ hướng tới N.", "en": "Unlike にとって (lesson 57), which is from N's point of view, に対して is an action or attitude aimed at N." },
     "reviewed": true
@@ -1639,9 +1639,9 @@
       "en": "わけだ: a natural conclusion from known facts (no wonder, that means). わけでは ない: a partial denial (it is not that ~), often used to soften an opinion."
     },
     "examples": [
-      { "ja": "毎日 三時間も れんしゅうして いるのか。上手な わけだ。", "vi": "Ngày nào cũng luyện tận ba tiếng à. Thảo nào giỏi thế.", "en": "You practise three hours every day? No wonder you are good." },
-      { "ja": "その 意見に 反対して いる わけでは ありません。もう 少し 考えたい だけです。", "vi": "Tôi không phải là phản đối ý kiến đó. Tôi chỉ muốn suy nghĩ thêm một chút.", "en": "It is not that I oppose that view. I just want to think a little more." },
-      { "ja": "高い 物が いつも いい わけでは ない。", "vi": "Đồ đắt không phải lúc nào cũng tốt.", "en": "Expensive things are not always good." }
+      { "ja": "毎日 三時間も れんしゅうして いるのか。上手な わけだ。", "vi": "Ngày nào cũng luyện tận ba tiếng à. Thảo nào giỏi thế.", "en": "You practise three hours every day? No wonder you are good.", "parts": ["毎日", "三時間も", "れんしゅうして", "いるのか。", "上手な", "わけだ。"] },
+      { "ja": "その 意見に 反対して いる わけでは ありません。もう 少し 考えたい だけです。", "vi": "Tôi không phải là phản đối ý kiến đó. Tôi chỉ muốn suy nghĩ thêm một chút.", "en": "It is not that I oppose that view. I just want to think a little more.", "parts": ["その意見に", "反対している", "わけではありません。", "もう少し", "考えたい", "だけです。"] },
+      { "ja": "高い 物が いつも いい わけでは ない。", "vi": "Đồ đắt không phải lúc nào cũng tốt.", "en": "Expensive things are not always good.", "parts": ["高い", "物が", "いつも", "いい", "わけでは", "ない。"] }
     ],
     "reviewed": true
   },
@@ -1654,9 +1654,9 @@
       "en": "It is possible, but duty, morals or the situation rule it out. V-ない わけには いかない: have no choice but to ~."
     },
     "examples": [
-      { "ja": "大事な 会議が あるので、休む わけには いかない。", "vi": "Có cuộc họp quan trọng nên tôi không thể nghỉ được.", "en": "I have an important meeting, so I can't take the day off." },
-      { "ja": "友だちの たのみでも、うそを つく わけには いきません。", "vi": "Dù là bạn nhờ, tôi cũng không thể nói dối.", "en": "Even if a friend asks, I can't lie." },
-      { "ja": "見た ことを 警察に 話さない わけには いかない。", "vi": "Tôi không thể không kể với cảnh sát những gì mình đã thấy.", "en": "I have no choice but to tell the police what I saw." }
+      { "ja": "大事な 会議が あるので、休む わけには いかない。", "vi": "Có cuộc họp quan trọng nên tôi không thể nghỉ được.", "en": "I have an important meeting, so I can't take the day off.", "parts": ["大事な", "会議が", "あるので、", "休む", "わけには", "いかない。"] },
+      { "ja": "友だちの たのみでも、うそを つく わけには いきません。", "vi": "Dù là bạn nhờ, tôi cũng không thể nói dối.", "en": "Even if a friend asks, I can't lie.", "parts": ["友だちの", "たのみでも、", "うそを", "つく", "わけには", "いきません。"] },
+      { "ja": "見た ことを 警察に 話さない わけには いかない。", "vi": "Tôi không thể không kể với cảnh sát những gì mình đã thấy.", "en": "I have no choice but to tell the police what I saw.", "parts": ["見た", "ことを", "警察に", "話さない", "わけには", "いかない。"] }
     ],
     "note": { "vi": "Khác thể khả năng (bài 35): 〜られない là không có khả năng; わけには いかない là làm được nhưng không nên, không được phép làm. Khác わけだ (bài 63).", "en": "Unlike the potential form (lesson 35), which means being unable, わけには いかない means it could be done but must not be. Different from わけだ (lesson 63)." },
     "reviewed": true
@@ -1670,9 +1670,9 @@
       "en": "The speaker is convinced of their own inference. Stronger than だろう or かもしれない; common in writing."
     },
     "examples": [
-      { "ja": "窓が 開いて いる。犯人は ここから 入ったに 違いない。", "vi": "Cửa sổ đang mở. Chắc chắn hung thủ đã vào từ đây.", "en": "The window is open. The culprit must have got in this way." },
-      { "ja": "あの 人が 犯人に 違いない。", "vi": "Người đó chắc chắn là thủ phạm.", "en": "That person must be the culprit." },
-      { "ja": "彼女は 毎日 図書館で 勉強して いるから、試験に 合格するに 違いない。", "vi": "Cô ấy ngày nào cũng học ở thư viện nên chắc chắn sẽ đỗ.", "en": "She studies at the library every day, so she is sure to pass the exam." }
+      { "ja": "窓が 開いて いる。犯人は ここから 入ったに 違いない。", "vi": "Cửa sổ đang mở. Chắc chắn hung thủ đã vào từ đây.", "en": "The window is open. The culprit must have got in this way.", "parts": ["窓が", "開いている。", "犯人は", "ここから", "入った", "に違いない。"] },
+      { "ja": "あの 人が 犯人に 違いない。", "vi": "Người đó chắc chắn là thủ phạm.", "en": "That person must be the culprit.", "parts": ["あの", "人が", "犯人", "に違いない。"] },
+      { "ja": "彼女は 毎日 図書館で 勉強して いるから、試験に 合格するに 違いない。", "vi": "Cô ấy ngày nào cũng học ở thư viện nên chắc chắn sẽ đỗ.", "en": "She studies at the library every day, so she is sure to pass the exam.", "parts": ["彼女は", "毎日", "図書館で", "勉強しているから、", "試験に", "合格する", "に違いない。"] }
     ],
     "note": { "vi": "Khác はずだ (bài 43): はずだ dựa trên lý lẽ, căn cứ khách quan; に違いない là niềm tin chắc của người nói.", "en": "Unlike はずだ (lesson 43), which rests on logic or objective grounds, に違いない is the speaker's own conviction." },
     "reviewed": true
@@ -1686,9 +1686,9 @@
       "en": "The second action is impossible or not allowed until the first is done. The second part is negative or difficult: できない, いけない, わからない."
     },
     "examples": [
-      { "ja": "先生に 聞いてからでないと、この 部屋は 使えません。", "vi": "Phải hỏi thầy giáo rồi mới được dùng phòng này.", "en": "You can't use this room until you have asked the teacher." },
-      { "ja": "お金を 払ってからでないと、中に 入る ことは できません。", "vi": "Phải trả tiền rồi mới được vào trong.", "en": "You can't go in until you have paid." },
-      { "ja": "実際に 見てからでないと、買うか どうか 決められない。", "vi": "Phải xem tận mắt rồi tôi mới quyết định được có mua hay không.", "en": "I can't decide whether to buy it until I have actually seen it." }
+      { "ja": "先生に 聞いてからでないと、この 部屋は 使えません。", "vi": "Phải hỏi thầy giáo rồi mới được dùng phòng này.", "en": "You can't use this room until you have asked the teacher.", "parts": ["先生に", "聞いてからでないと、", "この", "部屋は", "使えません。"] },
+      { "ja": "お金を 払ってからでないと、中に 入る ことは できません。", "vi": "Phải trả tiền rồi mới được vào trong.", "en": "You can't go in until you have paid.", "parts": ["お金を", "払ってからでないと、", "中に", "入る", "ことは", "できません。"] },
+      { "ja": "実際に 見てからでないと、買うか どうか 決められない。", "vi": "Phải xem tận mắt rồi tôi mới quyết định được có mua hay không.", "en": "I can't decide whether to buy it until I have actually seen it.", "parts": ["実際に", "見てからでないと、", "買うか", "どうか", "決められない。"] }
     ],
     "note": { "vi": "Khác てから (bài 28): てから chỉ nêu thứ tự; てからでないと nhấn mạnh việc trước là điều kiện bắt buộc.", "en": "Unlike てから (lesson 28), which only gives the order, てからでないと stresses that the first action is a required condition." },
     "reviewed": true
@@ -1702,9 +1702,9 @@
       "en": "Advises or reassures the listener that ~ is not necessary. Used to equals or juniors."
     },
     "examples": [
-      { "ja": "まだ 時間が あるから、急ぐ ことは ないよ。", "vi": "Vẫn còn thời gian nên không cần vội đâu.", "en": "There is still time, so there is no need to hurry." },
-      { "ja": "小さな ミスだから、そんなに 心配する ことは ない。", "vi": "Chỉ là lỗi nhỏ nên không cần lo lắng đến vậy.", "en": "It is a small mistake, so there is no need to worry so much." },
-      { "ja": "ルールが 変わったので、もう この 書類を 出す ことは ありません。", "vi": "Quy định đã thay đổi nên không cần nộp giấy tờ này nữa.", "en": "The rule has changed, so you no longer need to submit this form." }
+      { "ja": "まだ 時間が あるから、急ぐ ことは ないよ。", "vi": "Vẫn còn thời gian nên không cần vội đâu.", "en": "There is still time, so there is no need to hurry.", "parts": ["まだ", "時間が", "あるから、", "急ぐ", "ことは", "ないよ。"] },
+      { "ja": "小さな ミスだから、そんなに 心配する ことは ない。", "vi": "Chỉ là lỗi nhỏ nên không cần lo lắng đến vậy.", "en": "It is a small mistake, so there is no need to worry so much.", "parts": ["小さな", "ミスだから、", "そんなに", "心配する", "ことは", "ない。"] },
+      { "ja": "ルールが 変わったので、もう この 書類を 出す ことは ありません。", "vi": "Quy định đã thay đổi nên không cần nộp giấy tờ này nữa.", "en": "The rule has changed, so you no longer need to submit this form.", "parts": ["ルールが", "変わったので、", "もう", "この書類を", "出す", "ことはありません。"] }
     ],
     "note": { "vi": "Gần nghĩa なくても いい (bài 37) nhưng mang sắc thái khuyên nhủ, trấn an. Khác 〜ことが ある (đôi khi ~).", "en": "Close to なくても いい (lesson 37) but sounds like advice or reassurance. Different from 〜ことが ある (sometimes ~)." },
     "reviewed": true
@@ -1718,9 +1718,9 @@
       "en": "Supposes something that has not happened or may not be true, then gives a thought or plan for that case. The second part often has だろう, か or つもり."
     },
     "examples": [
-      { "ja": "もし 一か月 休みが あるとしたら、何を したいですか。", "vi": "Giả sử có một tháng nghỉ thì bạn muốn làm gì?", "en": "Supposing you had a month off, what would you want to do?" },
-      { "ja": "旅行に 行くと すれば、いつ ごろが いいでしょうか。", "vi": "Nếu đi du lịch thì khoảng khi nào là hợp lý nhỉ?", "en": "If we go on a trip, around when would be good?" },
-      { "ja": "その 話が 本当だと したら、計画を 変えなければ ならない。", "vi": "Nếu chuyện đó là thật thì phải thay đổi kế hoạch.", "en": "If that story is true, we will have to change the plan." }
+      { "ja": "もし 一か月 休みが あるとしたら、何を したいですか。", "vi": "Giả sử có một tháng nghỉ thì bạn muốn làm gì?", "en": "Supposing you had a month off, what would you want to do?", "parts": ["もし", "一か月", "休みが", "あるとしたら、", "何を", "したいですか。"] },
+      { "ja": "旅行に 行くと すれば、いつ ごろが いいでしょうか。", "vi": "Nếu đi du lịch thì khoảng khi nào là hợp lý nhỉ?", "en": "If we go on a trip, around when would be good?", "parts": ["旅行に", "行くとすれば、", "いつごろが", "いいでしょうか。"] },
+      { "ja": "その 話が 本当だと したら、計画を 変えなければ ならない。", "vi": "Nếu chuyện đó là thật thì phải thay đổi kế hoạch.", "en": "If that story is true, we will have to change the plan.", "parts": ["その", "話が", "本当だとしたら、", "計画を", "変えなければ", "ならない。"] }
     ],
     "note": { "vi": "Gần たら, ば (bài 34, 42) nhưng nhấn mạnh đây chỉ là giả định.", "en": "Close to たら and ば (lessons 34, 42) but stresses that it is only a supposition." },
     "reviewed": true
@@ -1734,9 +1734,9 @@
       "en": "Right when the first thing happens, the second happens, usually unexpectedly. The second part cannot be the speaker's intention or a request."
     },
     "examples": [
-      { "ja": "家を 出た とたんに、雨が 降り出した。", "vi": "Vừa ra khỏi nhà thì trời đổ mưa.", "en": "The moment I left the house, it started to rain." },
-      { "ja": "立ち上がった とたん、頭が 痛く なった。", "vi": "Vừa đứng dậy thì tôi thấy đau đầu.", "en": "As soon as I stood up, I got a headache." },
-      { "ja": "ベルが 鳴った とたん、学生たちは 教室を 飛び出した。", "vi": "Chuông vừa reo là học sinh lao ra khỏi lớp.", "en": "The moment the bell rang, the students rushed out of the classroom." }
+      { "ja": "家を 出た とたんに、雨が 降り出した。", "vi": "Vừa ra khỏi nhà thì trời đổ mưa.", "en": "The moment I left the house, it started to rain.", "parts": ["家を", "出た", "とたんに、", "雨が", "降り出した。"] },
+      { "ja": "立ち上がった とたん、頭が 痛く なった。", "vi": "Vừa đứng dậy thì tôi thấy đau đầu.", "en": "As soon as I stood up, I got a headache.", "parts": ["立ち上がった", "とたん、", "頭が", "痛く", "なった。"] },
+      { "ja": "ベルが 鳴った とたん、学生たちは 教室を 飛び出した。", "vi": "Chuông vừa reo là học sinh lao ra khỏi lớp.", "en": "The moment the bell rang, the students rushed out of the classroom.", "parts": ["ベルが", "鳴った", "とたん、", "学生たちは", "教室を", "飛び出した。"] }
     ],
     "note": { "vi": "Khác て から (bài 28) và たら (bài 34): たとたん nhấn mạnh hai việc gần như cùng lúc và việc sau là bất ngờ.", "en": "Unlike てから (lesson 28) and たら (lesson 34), たとたん stresses that the two happen almost at once and the second is a surprise." },
     "reviewed": true
@@ -1750,9 +1750,9 @@
       "en": "While something is in full swing, something else (usually unexpected or disruptive) happens."
     },
     "examples": [
-      { "ja": "会議の 最中に、電話が 鳴った。", "vi": "Đang họp thì điện thoại reo.", "en": "The phone rang in the middle of the meeting." },
-      { "ja": "試験の 最中に、急に 気分が 悪く なった。", "vi": "Đang làm bài thi thì tôi đột nhiên thấy khó chịu.", "en": "In the middle of the exam, I suddenly felt sick." },
-      { "ja": "話して いる 最中に、口を 出さないで ください。", "vi": "Đang lúc người khác nói thì xin đừng chen vào.", "en": "Please don't butt in while someone is talking." }
+      { "ja": "会議の 最中に、電話が 鳴った。", "vi": "Đang họp thì điện thoại reo.", "en": "The phone rang in the middle of the meeting.", "parts": ["会議の", "最中に、", "電話が", "鳴った。"] },
+      { "ja": "試験の 最中に、急に 気分が 悪く なった。", "vi": "Đang làm bài thi thì tôi đột nhiên thấy khó chịu.", "en": "In the middle of the exam, I suddenly felt sick.", "parts": ["試験の", "最中に、", "急に", "気分が", "悪く", "なった。"] },
+      { "ja": "話して いる 最中に、口を 出さないで ください。", "vi": "Đang lúc người khác nói thì xin đừng chen vào.", "en": "Please don't butt in while someone is talking.", "parts": ["話して", "いる", "最中に、", "口を", "出さないで", "ください。"] }
     ],
     "note": { "vi": "Khác 間に (bài 47): 最中に nhấn mạnh đúng lúc việc đang diễn ra sôi nổi nhất.", "en": "Unlike 間に (lesson 47), 最中に stresses the very moment an activity is in full swing." },
     "reviewed": true
@@ -1766,9 +1766,9 @@
       "en": "Gives a regular interval. With days, 一日おきに is every other day and 一日ごとに is every day. With hours or distances, 二時間おきに and 二時間ごとに usually mean the same. ごとに also follows nouns: 駅ごとに (at every station)."
     },
     "examples": [
-      { "ja": "この 薬は 六時間おきに 飲んで ください。", "vi": "Thuốc này hãy uống cách sáu tiếng một lần.", "en": "Take this medicine every six hours." },
-      { "ja": "一日おきに プールで 泳いで います。", "vi": "Tôi đi bơi ở bể bơi cách một ngày một lần.", "en": "I swim at the pool every other day." },
-      { "ja": "この 電車は 駅ごとに 止まります。", "vi": "Chuyến tàu này dừng ở mọi ga.", "en": "This train stops at every station." }
+      { "ja": "この 薬は 六時間おきに 飲んで ください。", "vi": "Thuốc này hãy uống cách sáu tiếng một lần.", "en": "Take this medicine every six hours.", "parts": ["この", "薬は", "六時間おきに", "飲んで", "ください。"] },
+      { "ja": "一日おきに プールで 泳いで います。", "vi": "Tôi đi bơi ở bể bơi cách một ngày một lần.", "en": "I swim at the pool every other day.", "parts": ["一日おきに", "プールで", "泳いで", "います。"] },
+      { "ja": "この 電車は 駅ごとに 止まります。", "vi": "Chuyến tàu này dừng ở mọi ga.", "en": "This train stops at every station.", "parts": ["この", "電車は", "駅ごとに", "止まります。"] }
     ],
     "reviewed": true
   },
@@ -1781,9 +1781,9 @@
       "en": "Something keeps changing in one direction without stopping, usually for the worse. Used with verbs of change: 増える, へる, 上がる, 悪く なる."
     },
     "examples": [
-      { "ja": "この 町の 人口は へる 一方だ。", "vi": "Dân số thị trấn này cứ giảm mãi.", "en": "The population of this town keeps falling." },
-      { "ja": "物の 値段は 上がる 一方です。", "vi": "Giá cả cứ ngày một tăng.", "en": "Prices keep going up." },
-      { "ja": "車が 増えて、空気は 悪く なる 一方だ。", "vi": "Xe cộ tăng lên nên không khí ngày càng xấu đi.", "en": "With more and more cars, the air keeps getting worse." }
+      { "ja": "この 町の 人口は へる 一方だ。", "vi": "Dân số thị trấn này cứ giảm mãi.", "en": "The population of this town keeps falling.", "parts": ["この", "町の", "人口は", "へる", "一方だ。"] },
+      { "ja": "物の 値段は 上がる 一方です。", "vi": "Giá cả cứ ngày một tăng.", "en": "Prices keep going up.", "parts": ["物の", "値段は", "上がる", "一方です。"] },
+      { "ja": "車が 増えて、空気は 悪く なる 一方だ。", "vi": "Xe cộ tăng lên nên không khí ngày càng xấu đi.", "en": "With more and more cars, the air keeps getting worse.", "parts": ["車が", "増えて、", "空気は", "悪く", "なる", "一方だ。"] }
     ],
     "note": { "vi": "Khác ように なる (bài 36): 一方だ nhấn mạnh sự thay đổi một chiều, không ngừng.", "en": "Unlike ように なる (lesson 36), 一方だ stresses a one-way change that does not stop." },
     "reviewed": true
@@ -1797,9 +1797,9 @@
       "en": "As one thing changes, another changes with it. Both parts are gradual changes; the second part cannot be the speaker's intention."
     },
     "examples": [
-      { "ja": "時間が たつに つれて、悲しい 気持ちも 少しずつ 消えて いった。", "vi": "Thời gian trôi qua, nỗi buồn cũng dần dần tan đi.", "en": "As time passed, the sadness slowly faded." },
-      { "ja": "年を とるに つれて、体が 弱く なる。", "vi": "Càng có tuổi thì cơ thể càng yếu đi.", "en": "As we get older, our bodies get weaker." },
-      { "ja": "町が 大きく なるに つれて、問題も 増えて きた。", "vi": "Thị trấn càng lớn thì vấn đề cũng càng nhiều.", "en": "As the town grew, the problems increased too." }
+      { "ja": "時間が たつに つれて、悲しい 気持ちも 少しずつ 消えて いった。", "vi": "Thời gian trôi qua, nỗi buồn cũng dần dần tan đi.", "en": "As time passed, the sadness slowly faded.", "parts": ["時間が", "たつにつれて、", "悲しい", "気持ちも", "少しずつ", "消えていった。"] },
+      { "ja": "年を とるに つれて、体が 弱く なる。", "vi": "Càng có tuổi thì cơ thể càng yếu đi.", "en": "As we get older, our bodies get weaker.", "parts": ["年を", "とるにつれて、", "体が", "弱くなる。"] },
+      { "ja": "町が 大きく なるに つれて、問題も 増えて きた。", "vi": "Thị trấn càng lớn thì vấn đề cũng càng nhiều.", "en": "As the town grew, the problems increased too.", "parts": ["町が", "大きくなるにつれて、", "問題も", "増えてきた。"] }
     ],
     "note": { "vi": "Gần ば〜ほど (bài 50); につれて nhấn mạnh hai sự thay đổi đi song song theo thời gian.", "en": "Close to ば〜ほど (lesson 50); につれて stresses two changes moving together over time." },
     "reviewed": true
@@ -1813,9 +1813,9 @@
       "en": "Names the source of information. The sentence usually ends in そうだ, らしい or と いう ことだ."
     },
     "examples": [
-      { "ja": "天気予報に よると、明日は 雨が 降るそうです。", "vi": "Theo dự báo thời tiết thì ngày mai trời mưa.", "en": "According to the weather forecast, it will rain tomorrow." },
-      { "ja": "新聞に よれば、この 町に 新しい 駅が できるらしい。", "vi": "Theo báo thì hình như thị trấn này sắp có ga mới.", "en": "According to the newspaper, a new station is going to be built in this town." },
-      { "ja": "警察の 発表に よると、犯人は まだ 見つかって いないそうです。", "vi": "Theo thông báo của cảnh sát thì vẫn chưa tìm ra hung thủ.", "en": "According to the police, the culprit has not been found yet." }
+      { "ja": "天気予報に よると、明日は 雨が 降るそうです。", "vi": "Theo dự báo thời tiết thì ngày mai trời mưa.", "en": "According to the weather forecast, it will rain tomorrow.", "parts": ["天気予報によると、", "明日は", "雨が", "降るそうです。"] },
+      { "ja": "新聞に よれば、この 町に 新しい 駅が できるらしい。", "vi": "Theo báo thì hình như thị trấn này sắp có ga mới.", "en": "According to the newspaper, a new station is going to be built in this town.", "parts": ["新聞によれば、", "この", "町に", "新しい", "駅が", "できるらしい。"] },
+      { "ja": "警察の 発表に よると、犯人は まだ 見つかって いないそうです。", "vi": "Theo thông báo của cảnh sát thì vẫn chưa tìm ra hung thủ.", "en": "According to the police, the culprit has not been found yet.", "parts": ["警察の", "発表によると、", "犯人は", "まだ", "見つかっていないそうです。"] }
     ],
     "note": { "vi": "Khác によって (bài 53, tùy theo). Hay đi cùng そうだ (bài 41).", "en": "Different from によって (lesson 53, depending on). Often paired with そうだ (lesson 41)." },
     "reviewed": true
@@ -1829,9 +1829,9 @@
       "en": "1) Passes on information heard or read, often from news or notices; more formal than そうだ. 2) Sums up or draws a conclusion: that means ~."
     },
     "examples": [
-      { "ja": "ニュースに よると、来月から 電車の 料金が 上がると いう ことだ。", "vi": "Theo tin tức thì từ tháng sau giá vé tàu sẽ tăng.", "en": "According to the news, train fares will go up from next month." },
-      { "ja": "部長は 今日 会社を 休むと いう ことです。", "vi": "Nghe nói hôm nay trưởng phòng nghỉ làm.", "en": "I hear the manager is off work today." },
-      { "ja": "つまり、明日は 休みだと いう ことですね。", "vi": "Tóm lại, tức là ngày mai được nghỉ nhỉ.", "en": "So that means tomorrow is a day off, right?" }
+      { "ja": "ニュースに よると、来月から 電車の 料金が 上がると いう ことだ。", "vi": "Theo tin tức thì từ tháng sau giá vé tàu sẽ tăng.", "en": "According to the news, train fares will go up from next month.", "parts": ["ニュースによると、", "来月から", "電車の", "料金が", "上がる", "ということだ。"] },
+      { "ja": "部長は 今日 会社を 休むと いう ことです。", "vi": "Nghe nói hôm nay trưởng phòng nghỉ làm.", "en": "I hear the manager is off work today.", "parts": ["部長は", "今日", "会社を", "休む", "ということです。"] },
+      { "ja": "つまり、明日は 休みだと いう ことですね。", "vi": "Tóm lại, tức là ngày mai được nghỉ nhỉ.", "en": "So that means tomorrow is a day off, right?", "parts": ["つまり、", "明日は", "休みだ", "ということですね。"] }
     ],
     "note": { "vi": "Nghĩa 1 gần そうだ (nghe nói, bài 41) nhưng trang trọng hơn.", "en": "Meaning 1 is close to そうだ (hearsay, lesson 41) but more formal." },
     "reviewed": true
@@ -1845,9 +1845,9 @@
       "en": "Casual spoken form. 1) Replaces と when quoting: 〜って 言った. 2) At the end of a sentence: I hear (= そうだ). 3) After a noun: raises a topic or asks a meaning (= と いうのは)."
     },
     "examples": [
-      { "ja": "田中さんは 明日 来られないって 言って いたよ。", "vi": "Anh Tanaka bảo là mai không đến được đấy.", "en": "Tanaka said he can't come tomorrow." },
-      { "ja": "あの 店の ケーキ、すごく おいしいって。", "vi": "Nghe nói bánh ngọt ở tiệm đó ngon lắm.", "en": "I hear the cakes at that shop are really good." },
-      { "ja": "「伝言」って、どういう 意味ですか。", "vi": "\"Dengon\" nghĩa là gì vậy?", "en": "What does \"dengon\" mean?" }
+      { "ja": "田中さんは 明日 来られないって 言って いたよ。", "vi": "Anh Tanaka bảo là mai không đến được đấy.", "en": "Tanaka said he can't come tomorrow.", "parts": ["田中さんは", "明日", "来られないって", "言って", "いたよ。"] },
+      { "ja": "あの 店の ケーキ、すごく おいしいって。", "vi": "Nghe nói bánh ngọt ở tiệm đó ngon lắm.", "en": "I hear the cakes at that shop are really good.", "parts": ["あの", "店の", "ケーキ、", "すごく", "おいしいって。"] },
+      { "ja": "「伝言」って、どういう 意味ですか。", "vi": "\"Dengon\" nghĩa là gì vậy?", "en": "What does \"dengon\" mean?", "parts": ["「伝言」って、", "どういう", "意味ですか。"] }
     ],
     "note": { "vi": "Chỉ dùng trong hội thoại thân mật, không dùng trong văn viết trang trọng.", "en": "Only for casual conversation, not for formal writing." },
     "reviewed": true
@@ -1861,9 +1861,9 @@
       "en": "Used when trying to recall something you once knew, or to check it again. Casual speech; politer: 〜でしたっけ, 〜ましたっけ."
     },
     "examples": [
-      { "ja": "会議は 何時からだっけ。", "vi": "Cuộc họp bắt đầu lúc mấy giờ nhỉ?", "en": "What time does the meeting start again?" },
-      { "ja": "あの 人の 名前、何だっけ。", "vi": "Người kia tên là gì nhỉ?", "en": "What was that person's name again?" },
-      { "ja": "この 本、もう 返しましたっけ。", "vi": "Cuốn sách này tôi trả rồi nhỉ?", "en": "Did I already return this book?" }
+      { "ja": "会議は 何時からだっけ。", "vi": "Cuộc họp bắt đầu lúc mấy giờ nhỉ?", "en": "What time does the meeting start again?", "parts": ["会議は", "何時から", "だっけ。"] },
+      { "ja": "あの 人の 名前、何だっけ。", "vi": "Người kia tên là gì nhỉ?", "en": "What was that person's name again?", "parts": ["あの", "人の", "名前、", "何だっけ。"] },
+      { "ja": "この 本、もう 返しましたっけ。", "vi": "Cuốn sách này tôi trả rồi nhỉ?", "en": "Did I already return this book?", "parts": ["この", "本、", "もう", "返しましたっけ。"] }
     ],
     "reviewed": true
   },
@@ -1876,9 +1876,9 @@
       "en": "A partial denial: what is usually thought true has exceptions. Often used with かならずしも, いつも or みんな."
     },
     "examples": [
-      { "ja": "有名な 大学を 出た 人が みんな 仕事が できるとは 限らない。", "vi": "Không phải ai tốt nghiệp đại học danh tiếng cũng làm việc giỏi.", "en": "Not everyone who graduated from a famous university is good at their job." },
-      { "ja": "新聞に 書いて ある ことが かならずしも 正しいとは 限らない。", "vi": "Những gì viết trên báo chưa chắc đã đúng.", "en": "What is written in the newspaper is not necessarily true." },
-      { "ja": "日本人でも、漢字が 全部 読めるとは 限らない。", "vi": "Ngay cả người Nhật cũng chưa chắc đọc được hết chữ Hán.", "en": "Even Japanese people cannot necessarily read every kanji." }
+      { "ja": "有名な 大学を 出た 人が みんな 仕事が できるとは 限らない。", "vi": "Không phải ai tốt nghiệp đại học danh tiếng cũng làm việc giỏi.", "en": "Not everyone who graduated from a famous university is good at their job.", "parts": ["有名な大学を", "出た", "人が", "みんな", "仕事が", "できるとは", "限らない。"] },
+      { "ja": "新聞に 書いて ある ことが かならずしも 正しいとは 限らない。", "vi": "Những gì viết trên báo chưa chắc đã đúng.", "en": "What is written in the newspaper is not necessarily true.", "parts": ["新聞に", "書いて", "ある", "ことが", "かならずしも", "正しいとは", "限らない。"] },
+      { "ja": "日本人でも、漢字が 全部 読めるとは 限らない。", "vi": "Ngay cả người Nhật cũng chưa chắc đọc được hết chữ Hán.", "en": "Even Japanese people cannot necessarily read every kanji.", "parts": ["日本人でも、", "漢字が", "全部", "読めるとは", "限らない。"] }
     ],
     "note": { "vi": "Gần わけでは ない (bài 63); とは 限らない nhấn mạnh có ngoại lệ.", "en": "Close to わけでは ない (lesson 63); とは 限らない stresses that there are exceptions." },
     "reviewed": true
@@ -1892,9 +1892,9 @@
       "en": "Something (usually unpleasant) is everywhere or covers everything: どろ, ゴミ, まちがい, きず."
     },
     "examples": [
-      { "ja": "子どもが どろだらけに なって 帰って きた。", "vi": "Con tôi về nhà người lấm lem toàn bùn.", "en": "My child came home covered in mud." },
-      { "ja": "この 作文は まちがいだらけだ。", "vi": "Bài văn này toàn lỗi sai.", "en": "This essay is full of mistakes." },
-      { "ja": "部屋が ゴミだらけで、座る 所も ない。", "vi": "Căn phòng đầy rác, đến chỗ ngồi cũng không có.", "en": "The room is so full of rubbish that there is nowhere to sit." }
+      { "ja": "子どもが どろだらけに なって 帰って きた。", "vi": "Con tôi về nhà người lấm lem toàn bùn.", "en": "My child came home covered in mud.", "parts": ["子どもが", "どろだらけに", "なって", "帰って", "きた。"] },
+      { "ja": "この 作文は まちがいだらけだ。", "vi": "Bài văn này toàn lỗi sai.", "en": "This essay is full of mistakes.", "parts": ["この", "作文は", "まちがいだらけだ。"] },
+      { "ja": "部屋が ゴミだらけで、座る 所も ない。", "vi": "Căn phòng đầy rác, đến chỗ ngồi cũng không có.", "en": "The room is so full of rubbish that there is nowhere to sit.", "parts": ["部屋が", "ゴミだらけで、", "座る", "所も", "ない。"] }
     ],
     "note": { "vi": "Khác っぽい (bài 48): っぽい là có vẻ giống; だらけ là có thật và rất nhiều.", "en": "Unlike っぽい (lesson 48), which means \"-ish\", だらけ means really present in large amounts." },
     "reviewed": true
@@ -1908,9 +1908,9 @@
       "en": "Something bad may happen. Common in news, forecasts and notices."
     },
     "examples": [
-      { "ja": "台風の ため、明日は 大雨に なる おそれが あります。", "vi": "Do bão nên ngày mai có nguy cơ mưa lớn.", "en": "Because of the typhoon, there is a risk of heavy rain tomorrow." },
-      { "ja": "この はしは 古いので、こわれる おそれが ある。", "vi": "Cây cầu này cũ nên có nguy cơ bị sập.", "en": "This bridge is old, so there is a risk it will collapse." },
-      { "ja": "火事の おそれが あるので、ここで たばこを 吸わないで ください。", "vi": "Vì có nguy cơ cháy nên xin đừng hút thuốc ở đây.", "en": "There is a risk of fire, so please do not smoke here." }
+      { "ja": "台風の ため、明日は 大雨に なる おそれが あります。", "vi": "Do bão nên ngày mai có nguy cơ mưa lớn.", "en": "Because of the typhoon, there is a risk of heavy rain tomorrow.", "parts": ["台風の", "ため、", "明日は", "大雨に", "なる", "おそれが", "あります。"] },
+      { "ja": "この はしは 古いので、こわれる おそれが ある。", "vi": "Cây cầu này cũ nên có nguy cơ bị sập.", "en": "This bridge is old, so there is a risk it will collapse.", "parts": ["この", "はしは", "古いので、", "こわれる", "おそれが", "ある。"] },
+      { "ja": "火事の おそれが あるので、ここで たばこを 吸わないで ください。", "vi": "Vì có nguy cơ cháy nên xin đừng hút thuốc ở đây.", "en": "There is a risk of fire, so please do not smoke here.", "parts": ["火事の", "おそれが", "あるので、", "ここで", "たばこを", "吸わないで", "ください。"] }
     ],
     "note": { "vi": "Gần かもしれない (bài 27) nhưng chỉ dùng cho điều xấu và trang trọng hơn.", "en": "Close to かもしれない (lesson 27) but only for bad things, and more formal." },
     "reviewed": true
@@ -1924,9 +1924,9 @@
       "en": "You would like to, but there is no means of doing it."
     },
     "examples": [
-      { "ja": "電話番号も 住所も わからないので、れんらくしようが ない。", "vi": "Không biết cả số điện thoại lẫn địa chỉ nên không có cách nào liên lạc.", "en": "I know neither the phone number nor the address, so there is no way to contact them." },
-      { "ja": "こんなに こわれて いては、直しようが ない。", "vi": "Hỏng đến mức này thì không có cách nào sửa được.", "en": "It is so badly broken that there is no way to fix it." },
-      { "ja": "答えを 知らないのだから、教えようが ない。", "vi": "Tôi không biết đáp án thì làm sao chỉ cho được.", "en": "I don't know the answer, so I have no way of telling you." }
+      { "ja": "電話番号も 住所も わからないので、れんらくしようが ない。", "vi": "Không biết cả số điện thoại lẫn địa chỉ nên không có cách nào liên lạc.", "en": "I know neither the phone number nor the address, so there is no way to contact them.", "parts": ["電話番号も", "住所も", "わからないので、", "れんらくしようが", "ない。"] },
+      { "ja": "こんなに こわれて いては、直しようが ない。", "vi": "Hỏng đến mức này thì không có cách nào sửa được.", "en": "It is so badly broken that there is no way to fix it.", "parts": ["こんなに", "こわれて", "いては、", "直しようが", "ない。"] },
+      { "ja": "答えを 知らないのだから、教えようが ない。", "vi": "Tôi không biết đáp án thì làm sao chỉ cho được.", "en": "I don't know the answer, so I have no way of telling you.", "parts": ["答えを", "知らないのだから、", "教えようが", "ない。"] }
     ],
     "note": { "vi": "Khác thể khả năng (bài 35): ようが ない nhấn mạnh không có phương pháp nào.", "en": "Unlike the potential form (lesson 35), ようが ない stresses that no method exists." },
     "reviewed": true
@@ -1940,9 +1940,9 @@
       "en": "N is the centre in space, or the main part or focus of an activity or event."
     },
     "examples": [
-      { "ja": "この 町は 駅を 中心に 広がって いる。", "vi": "Thị trấn này trải rộng ra xung quanh nhà ga.", "en": "This town spreads out around the station." },
-      { "ja": "雨は 関東を 中心に 降るでしょう。", "vi": "Mưa sẽ rơi chủ yếu ở vùng Kanto.", "en": "Rain will fall mainly in the Kanto region." },
-      { "ja": "この クラスでは 会話を 中心に 勉強します。", "vi": "Lớp này học chủ yếu về hội thoại.", "en": "This class focuses mainly on conversation." }
+      { "ja": "この 町は 駅を 中心に 広がって いる。", "vi": "Thị trấn này trải rộng ra xung quanh nhà ga.", "en": "This town spreads out around the station.", "parts": ["この", "町は", "駅を中心に", "広がっている。"] },
+      { "ja": "雨は 関東を 中心に 降るでしょう。", "vi": "Mưa sẽ rơi chủ yếu ở vùng Kanto.", "en": "Rain will fall mainly in the Kanto region.", "parts": ["雨は", "関東を中心に", "降るでしょう。"] },
+      { "ja": "この クラスでは 会話を 中心に 勉強します。", "vi": "Lớp này học chủ yếu về hội thoại.", "en": "This class focuses mainly on conversation.", "parts": ["この", "クラスでは", "会話を中心に", "勉強します。"] }
     ],
     "reviewed": true
   },
@@ -1955,9 +1955,9 @@
       "en": "Two or more people do something with or to each other: 助け合う, 話し合う, 知り合う."
     },
     "examples": [
-      { "ja": "困った ときは、みんなで 助け合いましょう。", "vi": "Khi gặp khó khăn, mọi người hãy giúp đỡ lẫn nhau.", "en": "When things are hard, let's all help each other." },
-      { "ja": "その 問題に ついて、クラスで 話し合った。", "vi": "Cả lớp đã cùng nhau bàn bạc về vấn đề đó.", "en": "The class talked the problem over together." },
-      { "ja": "二人は 大学で 知り合って、けっこんした。", "vi": "Hai người quen nhau ở đại học rồi kết hôn.", "en": "The two met at university and got married." }
+      { "ja": "困った ときは、みんなで 助け合いましょう。", "vi": "Khi gặp khó khăn, mọi người hãy giúp đỡ lẫn nhau.", "en": "When things are hard, let's all help each other.", "parts": ["困った", "ときは、", "みんなで", "助け合いましょう。"] },
+      { "ja": "その 問題に ついて、クラスで 話し合った。", "vi": "Cả lớp đã cùng nhau bàn bạc về vấn đề đó.", "en": "The class talked the problem over together.", "parts": ["その", "問題について、", "クラスで", "話し合った。"] },
+      { "ja": "二人は 大学で 知り合って、けっこんした。", "vi": "Hai người quen nhau ở đại học rồi kết hôn.", "en": "The two met at university and got married.", "parts": ["二人は", "大学で", "知り合って、", "けっこんした。"] }
     ],
     "reviewed": true
   },
@@ -1970,9 +1970,9 @@
       "en": "Names N as the leading example, then includes others of the same kind. The second part often has みんな, 多くの or いろいろな."
     },
     "examples": [
-      { "ja": "社長を はじめ、会社の みんなが 手伝って くれた。", "vi": "Từ giám đốc cho đến mọi người trong công ty đều đã giúp tôi.", "en": "Everyone at the company, starting with the president, helped me." },
-      { "ja": "この 町には 古い おてらを はじめ、見る 所が たくさん ある。", "vi": "Thị trấn này có nhiều chỗ để tham quan, tiêu biểu là ngôi chùa cổ.", "en": "This town has many sights, starting with an old temple." },
-      { "ja": "両親を はじめ、多くの 人に 助けて もらった。", "vi": "Tôi đã được nhiều người giúp đỡ, trước hết là bố mẹ.", "en": "Many people helped me, my parents first of all." }
+      { "ja": "社長を はじめ、会社の みんなが 手伝って くれた。", "vi": "Từ giám đốc cho đến mọi người trong công ty đều đã giúp tôi.", "en": "Everyone at the company, starting with the president, helped me.", "parts": ["社長をはじめ、", "会社の", "みんなが", "手伝ってくれた。"] },
+      { "ja": "この 町には 古い おてらを はじめ、見る 所が たくさん ある。", "vi": "Thị trấn này có nhiều chỗ để tham quan, tiêu biểu là ngôi chùa cổ.", "en": "This town has many sights, starting with an old temple.", "parts": ["この町には", "古い", "おてらをはじめ、", "見る所が", "たくさん", "ある。"] },
+      { "ja": "両親を はじめ、多くの 人に 助けて もらった。", "vi": "Tôi đã được nhiều người giúp đỡ, trước hết là bố mẹ.", "en": "Many people helped me, my parents first of all.", "parts": ["両親をはじめ、", "多くの", "人に", "助けてもらった。"] }
     ],
     "note": { "vi": "Chữ Hán: を 始め. Khác だけで なく (bài 58): を はじめ nêu một ví dụ tiêu biểu trong cả nhóm.", "en": "Kanji form: を 始め. Unlike だけで なく (lesson 58), を はじめ names one leading example of a whole group." },
     "reviewed": true
@@ -1986,9 +1986,9 @@
       "en": "Shows a slight sign of a state, usually a bad one: かぜ気味, 疲れ気味, 太り気味."
     },
     "examples": [
-      { "ja": "今日は かぜ気味なので、早く 寝ます。", "vi": "Hôm nay tôi hơi bị cảm nên sẽ đi ngủ sớm.", "en": "I have a bit of a cold today, so I'll go to bed early." },
-      { "ja": "最近 仕事が 忙しくて、疲れ気味だ。", "vi": "Dạo này công việc bận nên tôi hơi mệt.", "en": "Work has been busy lately, so I'm a little tired." },
-      { "ja": "電車が 遅れ気味で、会議に 間に合うか 心配だ。", "vi": "Tàu hơi bị trễ nên tôi lo không kịp họp.", "en": "The train is running a bit late, so I'm worried about making the meeting." }
+      { "ja": "今日は かぜ気味なので、早く 寝ます。", "vi": "Hôm nay tôi hơi bị cảm nên sẽ đi ngủ sớm.", "en": "I have a bit of a cold today, so I'll go to bed early.", "parts": ["今日は", "かぜ気味なので、", "早く", "寝ます。"] },
+      { "ja": "最近 仕事が 忙しくて、疲れ気味だ。", "vi": "Dạo này công việc bận nên tôi hơi mệt.", "en": "Work has been busy lately, so I'm a little tired.", "parts": ["最近", "仕事が", "忙しくて、", "疲れ気味だ。"] },
+      { "ja": "電車が 遅れ気味で、会議に 間に合うか 心配だ。", "vi": "Tàu hơi bị trễ nên tôi lo không kịp họp.", "en": "The train is running a bit late, so I'm worried about making the meeting.", "parts": ["電車が", "遅れ気味で、", "会議に", "間に合うか", "心配だ。"] }
     ],
     "note": { "vi": "Khác がち: 気味 là trạng thái hiện có một chút; がち là hay xảy ra lặp đi lặp lại.", "en": "Unlike がち: 気味 is a slight state now; がち is something that tends to happen again and again." },
     "reviewed": true
@@ -2002,9 +2002,9 @@
       "en": "Something (usually bad) tends to happen often: 忘れがち, 遅れがち, 病気がち."
     },
     "examples": [
-      { "ja": "冬は 運動不足に なりがちだ。", "vi": "Mùa đông người ta dễ bị thiếu vận động.", "en": "People tend to lack exercise in winter." },
-      { "ja": "子どもの ころは 病気がちだった。", "vi": "Hồi nhỏ tôi hay ốm vặt.", "en": "I was often ill as a child." },
-      { "ja": "雨の 日は、電車が 遅れがちだ。", "vi": "Ngày mưa tàu hay bị trễ.", "en": "Trains tend to be late on rainy days." }
+      { "ja": "冬は 運動不足に なりがちだ。", "vi": "Mùa đông người ta dễ bị thiếu vận động.", "en": "People tend to lack exercise in winter.", "parts": ["冬は", "運動不足に", "なりがちだ。"] },
+      { "ja": "子どもの ころは 病気がちだった。", "vi": "Hồi nhỏ tôi hay ốm vặt.", "en": "I was often ill as a child.", "parts": ["子どもの", "ころは", "病気がちだった。"] },
+      { "ja": "雨の 日は、電車が 遅れがちだ。", "vi": "Ngày mưa tàu hay bị trễ.", "en": "Trains tend to be late on rainy days.", "parts": ["雨の", "日は、", "電車が", "遅れがちだ。"] }
     ],
     "reviewed": true
   },
@@ -2017,9 +2017,9 @@
       "en": "1) States what is natural or what society expects: it is in the nature of ~, one should ~. 2) V-た ものだ: recalls something you often did in the past."
     },
     "examples": [
-      { "ja": "年上の 人には、ていねいな 言葉を 使う ものだ。", "vi": "Với người lớn tuổi hơn thì nên dùng lời lẽ lịch sự.", "en": "You should use polite language with older people." },
-      { "ja": "人の 心は 変わる ものだ。", "vi": "Lòng người vốn dễ đổi thay.", "en": "People's hearts do change." },
-      { "ja": "子どもの ころは、よく この 川で 泳いだ ものだ。", "vi": "Hồi nhỏ tôi hay bơi ở con sông này.", "en": "As a child I often used to swim in this river." }
+      { "ja": "年上の 人には、ていねいな 言葉を 使う ものだ。", "vi": "Với người lớn tuổi hơn thì nên dùng lời lẽ lịch sự.", "en": "You should use polite language with older people.", "parts": ["年上の", "人には、", "ていねいな", "言葉を", "使う", "ものだ。"] },
+      { "ja": "人の 心は 変わる ものだ。", "vi": "Lòng người vốn dễ đổi thay.", "en": "People's hearts do change.", "parts": ["人の", "心は", "変わる", "ものだ。"] },
+      { "ja": "子どもの ころは、よく この 川で 泳いだ ものだ。", "vi": "Hồi nhỏ tôi hay bơi ở con sông này.", "en": "As a child I often used to swim in this river.", "parts": ["子どもの", "ころは、", "よく", "この", "川で", "泳いだ", "ものだ。"] }
     ],
     "reviewed": true
   },
@@ -2032,9 +2032,9 @@
       "en": "The speaker thinks ~ is the right thing or a duty. Stronger than ordinary advice. To state an obligation set by law or rules, なければ ならない is usual; べきだ is the speaker's judgement of what is right, even about obeying rules (ルールは 守る べきだ)."
     },
     "examples": [
-      { "ja": "約束は 守る べきだ。", "vi": "Đã hứa thì phải giữ lời.", "en": "You should keep your promises." },
-      { "ja": "電車の 中で 大きな 声で 話す べきでは ない。", "vi": "Không nên nói to trên tàu điện.", "en": "You should not talk loudly on the train." },
-      { "ja": "わからない ことは、すぐに 先生に 聞く べきです。", "vi": "Điều gì không hiểu thì nên hỏi thầy giáo ngay.", "en": "You should ask the teacher straight away about anything you don't understand." }
+      { "ja": "約束は 守る べきだ。", "vi": "Đã hứa thì phải giữ lời.", "en": "You should keep your promises.", "parts": ["約束は", "守る", "べきだ。"] },
+      { "ja": "電車の 中で 大きな 声で 話す べきでは ない。", "vi": "Không nên nói to trên tàu điện.", "en": "You should not talk loudly on the train.", "parts": ["電車の", "中で", "大きな", "声で", "話す", "べきでは", "ない。"] },
+      { "ja": "わからない ことは、すぐに 先生に 聞く べきです。", "vi": "Điều gì không hiểu thì nên hỏi thầy giáo ngay.", "en": "You should ask the teacher straight away about anything you don't understand.", "parts": ["わからない", "ことは、", "すぐに", "先生に", "聞く", "べきです。"] }
     ],
     "note": { "vi": "Khác ものだ: ものだ là chuẩn mực chung của xã hội; べきだ là ý kiến của người nói. Khác なければ ならない (bài 37).", "en": "Unlike ものだ, which is a general social norm, べきだ is the speaker's opinion. Compare なければ ならない (lesson 37)." },
     "reviewed": true
@@ -2048,9 +2048,9 @@
       "en": "Sets N beside something else to show a difference in degree. Kanji form: 比べて."
     },
     "examples": [
-      { "ja": "去年に くらべて、今年の 夏は 暑い。", "vi": "So với năm ngoái, mùa hè năm nay nóng hơn.", "en": "This summer is hotter than last year." },
-      { "ja": "都会に くらべて、いなかは 物の 値段が 安い。", "vi": "So với thành phố, ở quê giá cả rẻ hơn.", "en": "Compared with the city, things are cheaper in the countryside." },
-      { "ja": "兄に くらべて、弟は 背が 高い。", "vi": "So với anh trai thì em trai cao hơn.", "en": "The younger brother is taller than the older one." }
+      { "ja": "去年に くらべて、今年の 夏は 暑い。", "vi": "So với năm ngoái, mùa hè năm nay nóng hơn.", "en": "This summer is hotter than last year.", "parts": ["去年にくらべて、", "今年の", "夏は", "暑い。"] },
+      { "ja": "都会に くらべて、いなかは 物の 値段が 安い。", "vi": "So với thành phố, ở quê giá cả rẻ hơn.", "en": "Compared with the city, things are cheaper in the countryside.", "parts": ["都会にくらべて、", "いなかは", "物の", "値段が", "安い。"] },
+      { "ja": "兄に くらべて、弟は 背が 高い。", "vi": "So với anh trai thì em trai cao hơn.", "en": "The younger brother is taller than the older one.", "parts": ["兄にくらべて、", "弟は", "背が", "高い。"] }
     ],
     "note": { "vi": "Gần より (bài 24) nhưng trang trọng hơn và nhấn mạnh việc đặt hai bên cạnh nhau để so sánh.", "en": "Close to より (lesson 24) but more formal, stressing that two things are set side by side." },
     "reviewed": true
@@ -2064,9 +2064,9 @@
       "en": "The result differs (better or worse) from what you would expect given N. Not used after adjectives."
     },
     "examples": [
-      { "ja": "初めて 作ったに しては、よく できて いる。", "vi": "Lần đầu làm mà được như vậy là khá lắm.", "en": "For a first attempt, it is well made." },
-      { "ja": "この かばんは ブランド品に しては 安い。", "vi": "Cái túi này là hàng hiệu mà rẻ.", "en": "This bag is cheap for a brand-name item." },
-      { "ja": "彼は 日本に 十年 住んで いるに しては、日本語が あまり 上手では ない。", "vi": "Anh ấy sống ở Nhật mười năm rồi mà tiếng Nhật không giỏi lắm.", "en": "For someone who has lived in Japan for ten years, his Japanese is not very good." }
+      { "ja": "初めて 作ったに しては、よく できて いる。", "vi": "Lần đầu làm mà được như vậy là khá lắm.", "en": "For a first attempt, it is well made.", "parts": ["初めて", "作ったにしては、", "よく", "できている。"] },
+      { "ja": "この かばんは ブランド品に しては 安い。", "vi": "Cái túi này là hàng hiệu mà rẻ.", "en": "This bag is cheap for a brand-name item.", "parts": ["この", "かばんは", "ブランド品にしては", "安い。"] },
+      { "ja": "彼は 日本に 十年 住んで いるに しては、日本語が あまり 上手では ない。", "vi": "Anh ấy sống ở Nhật mười năm rồi mà tiếng Nhật không giỏi lắm.", "en": "For someone who has lived in Japan for ten years, his Japanese is not very good.", "parts": ["彼は", "日本に", "十年", "住んでいるにしては、", "日本語が", "あまり", "上手ではない。"] }
     ],
     "note": { "vi": "Gần のに (bài 39); にしては nêu căn cứ (N) để so với kết quả thực tế.", "en": "Close to のに (lesson 39); にしては names the basis (N) the actual result is measured against." },
     "reviewed": true
@@ -2080,9 +2080,9 @@
       "en": "After doing something, you learn the result or discover something. The second part is in the past and not under the speaker's control. More formal than 〜たら."
     },
     "examples": [
-      { "ja": "先生に 相談した ところ、いい 方法を 教えて くれた。", "vi": "Tôi hỏi ý kiến thầy thì thầy chỉ cho một cách hay.", "en": "When I consulted my teacher, he told me a good method." },
-      { "ja": "店に 電話して みた ところ、もう 閉まって いた。", "vi": "Tôi thử gọi điện đến cửa hàng thì đã đóng cửa rồi.", "en": "When I phoned the shop, it had already closed." },
-      { "ja": "新しい やり方で 試した ところ、前より 早く 終わった。", "vi": "Thử làm theo cách mới thì xong nhanh hơn trước.", "en": "When I tried the new way, it finished sooner than before." }
+      { "ja": "先生に 相談した ところ、いい 方法を 教えて くれた。", "vi": "Tôi hỏi ý kiến thầy thì thầy chỉ cho một cách hay.", "en": "When I consulted my teacher, he told me a good method.", "parts": ["先生に", "相談した", "ところ、", "いい", "方法を", "教えて", "くれた。"] },
+      { "ja": "店に 電話して みた ところ、もう 閉まって いた。", "vi": "Tôi thử gọi điện đến cửa hàng thì đã đóng cửa rồi.", "en": "When I phoned the shop, it had already closed.", "parts": ["店に", "電話して", "みた", "ところ、", "もう", "閉まって", "いた。"] },
+      { "ja": "新しい やり方で 試した ところ、前より 早く 終わった。", "vi": "Thử làm theo cách mới thì xong nhanh hơn trước.", "en": "When I tried the new way, it finished sooner than before.", "parts": ["新しい", "やり方で", "試した", "ところ、", "前より", "早く", "終わった。"] }
     ],
     "note": { "vi": "Khác 〜た ところだ (vừa mới ~). Gần たら (bài 34) khi phát hiện điều gì.", "en": "Different from 〜た ところだ (have just ~). Close to たら (lesson 34) for discoveries." },
     "reviewed": true

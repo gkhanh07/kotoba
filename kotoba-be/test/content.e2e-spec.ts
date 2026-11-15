@@ -45,6 +45,8 @@ describe('content (e2e)', () => {
     const withMizu = vocab.filter((v) => [v.word, (v as { kanji?: string }).kanji].some((w) => w?.includes('水'))).map((v) => v.id);
     expect(withMizu.slice(0, 2)).toEqual(['vocab:水', 'vocab:すいようび']);
     expect(res.body.words.map((w: { id: string }) => w.id)).toEqual(withMizu);
+    // Phase 41k: its KanjiVG stroke paths, one per stroke.
+    expect(res.body.paths).toHaveLength(res.body.strokes);
     await get('/content/item/kanji:nope').expect(404);
   });
 

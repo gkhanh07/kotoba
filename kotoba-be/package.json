@@ -27,6 +27,7 @@
     "prestart": "prisma migrate deploy",
     "prestart:prod": "prisma migrate deploy",
     "kanjidic": "node scripts/kanjidic.ts",
+    "kanjivg": "node scripts/kanjivg.ts",
     "jmdict": "node scripts/jmdict-check.ts",
     "sample": "node scripts/sample.ts"
   },

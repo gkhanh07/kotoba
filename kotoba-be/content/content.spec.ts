@@ -22,6 +22,15 @@ const N3_LESSONS = 36;
 const NO_HAN_VIET = ['込'];
 
 describe('content', () => {
+  // Phase 41b: sentence ordering. `parts` are the example's chunks in order; joined they give `ja` without spaces.
+  it('splits at least one example of every grammar point into 3–7 parts that rebuild it', () => {
+    type Example = { ja: string; parts?: string[] };
+    const examples = grammar.flatMap((g) => (g.examples as Example[]).map((e) => ({ id: g.id, ...e })));
+    const wrong = examples.filter((e) => e.parts && (e.parts.length < 3 || e.parts.length > 7 || e.parts.some((p) => !p.trim() || /\s/.test(p)) || e.parts.join('') !== e.ja.replace(/\s/g, '')));
+    expect(wrong.map((e) => `${e.id}: ${e.ja}`)).toEqual([]);
+    expect(grammar.filter((g) => !(g.examples as Example[]).some((e) => e.parts)).map((g) => g.id)).toEqual([]);
+  });
+
   it('has unique ids', () => {
     const seen = new Set<string>();
     const dupes = all.filter((d) => seen.size === seen.add(d.id).size).map((d) => d.id);
