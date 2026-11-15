@@ -19,6 +19,9 @@ export const daysUntil = (due: string, today: string) => Math.round((Date.parse(
 
 export const boxOf = (s: Srs, id: string) => s[id]?.box ?? 0;
 export const isDue = (c: Card | undefined, today: string) => !!c && c.due <= today;
+// Phase 40i "Đã học" page (cardStage): new (seen, never right since the last miss), learning, known. Undefined: never seen.
+export type Stage = "new" | "learning" | "known";
+export const cardStage = (s: Srs, id: string): Stage | undefined => (!s[id] ? undefined : s[id].box >= KNOWN_AT ? "known" : s[id].box >= 1 ? "learning" : "new");
 export const isKnown = (s: Srs, id: string) => boxOf(s, id) >= KNOWN_AT;
 // Learned = answered right at least once since the last miss. Lessons and meters count these.
 export const isLearned = (s: Srs, id: string) => boxOf(s, id) >= 1;
@@ -58,6 +61,13 @@ export function weakest(s: Srs, n: number): { id: string; lapses: number; box: n
     .map(([id, c]) => ({ id, lapses: c.lapses ?? 0, box: c.box }))
     .sort((a, b) => b.lapses - a.lapses || a.box - b.box || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
     .slice(0, n);
+}
+
+// Phase 40i: one item starts over: box 0, due today, misses cleared, star kept. A new card rather than a deletion,
+// so it syncs like any other change (a deletion would come back on the next pull).
+export function restart(s: Srs, id: string, today: string, now: number): Srs {
+  if (!s[id]) return s;
+  return { ...s, [id]: { box: 0, due: today, at: now, ...(s[id].saved ? { saved: true as const } : {}) } };
 }
 
 export function forget(s: Srs, prefix: string): Srs {

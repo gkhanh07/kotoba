@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import oldDeck from "../../tests/fixtures/progress.v1.without-lapses.json";
-import { KNOWN_AT, addDays, apply, boxOf, choicesFor, daysUntil, dueCount, forget, isKnown, isLearned, migrate, nextDue, parseSrs, pickNext, queue, toggleSaved, weakest, type Srs } from "./srs";
+import { KNOWN_AT, addDays, apply, boxOf, cardStage, choicesFor, daysUntil, dueCount, forget, isKnown, isLearned, migrate, nextDue, parseSrs, pickNext, queue, restart, toggleSaved, weakest, type Srs } from "./srs";
 
 const D = "2026-11-02";
 const items = ["a", "i", "u"].map((r) => ({ id: `hiragana:${r}` }));
@@ -102,6 +102,21 @@ describe("choicesFor", () => {
       expect(new Set(c.map((k) => k.romaji)).size).toBe(c.length);
       expect(c.some((k) => k.id === "hiragana:ぢ")).toBe(false);
     }
+  });
+});
+
+describe("restart and cardStage (phase 40i)", () => {
+  it("restart puts one card back to box 0 due today, clears misses and keeps the star", () => {
+    const s = { "vocab:a": { box: 4, due: "2026-12-01", at: 1, lapses: 3, saved: true as const }, "vocab:b": { box: 2, due: "2026-12-01", at: 1 } };
+    const r = restart(s, "vocab:a", "2026-11-15", 9);
+    expect(r["vocab:a"]).toEqual({ box: 0, due: "2026-11-15", at: 9, saved: true });
+    expect(r["vocab:b"]).toBe(s["vocab:b"]);
+    expect(restart(s, "vocab:z", "2026-11-15", 9)).toBe(s);
+  });
+  it("cardStage: box 0 is new, from 1 learning, from KNOWN_AT known, no card undefined", () => {
+    const c = (box: number) => ({ box, due: "2026-11-15", at: 1 });
+    const s = { a: c(0), b: c(1), k: c(KNOWN_AT) };
+    expect([cardStage(s, "a"), cardStage(s, "b"), cardStage(s, "k"), cardStage(s, "z")]).toEqual(["new", "learning", "known", undefined]);
   });
 });
 

@@ -4,7 +4,7 @@ import { TEST_RESULTS_BACKUP_KEY, TEST_RESULTS_KEY } from "@/config/test";
 import { ACTIVITY_KEY, dayKey, parseActivity, type Activity } from "./activity";
 import { brokenKey, keepBroken } from "./broken";
 import { DAILY_KEY, newToday, noteNew, parseDaily } from "./daily";
-import { OLD_FLASHCARDS_KEY, OLD_PROGRESS_KEY, SRS_KEY, apply, forget, migrate, parseSrs, toggleSaved as toggle, type Srs } from "./srs";
+import { OLD_FLASHCARDS_KEY, OLD_PROGRESS_KEY, SRS_KEY, apply, forget, migrate, restart, parseSrs, toggleSaved as toggle, type Srs } from "./srs";
 
 export type Deck = { srs: Srs; ok: boolean }; // ok = false: storage blocked or unreadable, changes live in memory only
 
@@ -95,6 +95,10 @@ export function review(id: string, correct: boolean): Srs {
 // toward the daily new-item cap: the learner picked it, so it may go past the cap.
 export function toggleSaved(id: string) {
   write(toggle(read().srs, id, today(), Date.now()));
+}
+
+export function resetItem(id: string) {
+  write(restart(read().srs, id, today(), Date.now()));
 }
 
 // Signed-in sync bookkeeping. owner: the account this browser's data belongs to (its email).

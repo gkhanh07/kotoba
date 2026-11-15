@@ -46,6 +46,10 @@ export function continueTarget(due: number, fresh: number, last: Activity["last"
   return due + fresh > 0 ? { href: "/review?start=1", daily: true } : { href: continueHref(last), daily: false };
 }
 
+// Phase 40i (AC-16) daily plan: new items a day so the items not yet learned are all met by exam day.
+// Exam day itself is not counted; null when the exam is today, past or not set.
+export const perDayFor = (left: number, days: number | null): number | null => (days !== null && days > 0 ? Math.ceil(left / days) : null);
+
 // Dashboard stage bar: the first area, kana → kanji → vocab, with something left to learn; vocab once all are done.
 export type Area = "kana" | "kanji" | "vocab";
 export function stageOf(scope: Record<Area, string[]>, srs: Srs): { area: Area; learned: number; total: number } {

@@ -102,3 +102,22 @@ describe("Dashboard mock test results (phase 40g)", () => {
     expect(screen.queryByRole("region", { name: "Kết quả thi thử" })).not.toBeInTheDocument();
   });
 });
+
+// Phase 40i AC-16: new items a day so what is left of the goal is met by exam day (6 Dec 2026, 34 days from 2 Nov).
+describe("Dashboard daily plan", () => {
+  const withExam = (exam?: string) => render(
+    <Dashboard lang="vi" name="Lan" profile={{ email: "a@b.c", goal: "N5", exam }} scope={SCOPE} tests={[]} fronts={{}} stops={STOPS} />,
+  );
+  it("divides the items not yet learned by the days left", async () => {
+    seed({ "hiragana:a": card(1, "2026-11-05") });
+    withExam("2026-12");
+    expect(await screen.findByText("Còn 2 mục chưa học: cần 1 mục mới mỗi ngày để kịp ngày thi.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Xem và đặt lại mục đã học" })).toHaveAttribute("href", "/learned");
+  });
+  it("has no plan without an exam date", async () => {
+    seed({});
+    withExam();
+    expect(await screen.findByText("Chưa chọn kỳ thi")).toBeInTheDocument();
+    expect(screen.queryByText(/mục mới mỗi ngày/)).not.toBeInTheDocument();
+  });
+});

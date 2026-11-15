@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { continueTarget, freshFor, newToday, noteNew, parseDaily, sessionStats, stageOf } from "./daily";
+import { continueTarget, freshFor, perDayFor, newToday, noteNew, parseDaily, sessionStats, stageOf } from "./daily";
 
 const DAY = "2026-11-02";
 const card = (box: number) => ({ box, due: DAY, at: 1 });
@@ -67,6 +67,17 @@ describe("sessionStats", () => {
   });
   it("is all zero for an empty session", () => {
     expect(sessionStats({}, [])).toEqual({ items: 0, pct: 0, minutes: 0 });
+  });
+});
+
+describe("perDayFor (AC-16)", () => {
+  it("spreads what is left over the days before the exam, rounding up", () => {
+    expect(perDayFor(100, 30)).toBe(4);
+    expect(perDayFor(90, 30)).toBe(3);
+    expect(perDayFor(0, 30)).toBe(0);
+  });
+  it("has no plan on exam day, after it or with no exam", () => {
+    expect([perDayFor(10, 0), perDayFor(10, -3), perDayFor(10, null)]).toEqual([null, null, null]);
   });
 });
 

@@ -7,7 +7,7 @@ import { ACTIVITY_KEY, heat, parseActivity, summarize, type Activity } from "@/l
 import type { Lang } from "@/lib/i18n";
 import { NEW_PER_DAY, WEAK_LIST_SIZE } from "@/config/srs";
 import { STUDY_TIME_ZONE } from "@/config/time";
-import { continueTarget, freshFor, stageOf, type Area } from "@/lib/daily";
+import { continueTarget, freshFor, perDayFor, stageOf, type Area } from "@/lib/daily";
 import type { Stop } from "@/lib/library";
 import { INTERVALS, daysUntil, dueCount, isLearned } from "@/lib/srs";
 import { weakItems, type ItemLink } from "@/lib/weak";
@@ -80,6 +80,8 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
       vocabLearned: scope.vocab.filter(learned).length,
       vocabDue,
       dueTotal,
+      // Everything in the goal's scope not yet learned: what the daily plan has to cover by exam day.
+      left: [...scope.kana, ...scope.kanji, ...scope.vocab].filter((id) => !learned(id)).length,
       stage: stageOf(scope, srs),
       weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
       fresh,
@@ -98,6 +100,7 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
   const exam = profile?.exam ? examDate(profile.exam) : null;
   const examKey = profile?.exam ? examDay(profile.exam) : null;
   const days = examKey && data ? daysUntil(examKey, data.day) : null;
+  const perDay = data ? perDayFor(data.left, days) : null;
 
   return (
     <main className={s.app}>
@@ -171,6 +174,7 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
                   </ul>
                 )}
                 <p className={s.note}>{t.reviewNote(INTERVALS)}</p>
+                <p className={s.note}><Link href="/learned">{t.learned}</Link></p>
               </section>
 
               <WeakList items={data.weak} lang={lang} />
@@ -184,6 +188,7 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
                 ) : (
                   <p className={s.list}><span>{exam ? t.examPast : t.examNone}</span> <Link href="/onboarding">{t.pick}</Link></p>
                 )}
+                {perDay !== null && <p>{t.plan(data.left, perDay)}</p>}
               </section>
 
               <Heatmap heat={data.heat} lang={lang} />
@@ -261,6 +266,9 @@ const vi = {
   examNone: "Chưa chọn kỳ thi",
   examPast: "Kỳ thi đã qua",
   pick: "Chọn kỳ thi",
+  plan: (left: number, n: number) => (left === 0 ? "Bạn đã học hết các mục của mục tiêu."
+    : `Còn ${left} mục chưa học: cần ${n} mục mới mỗi ngày để kịp ngày thi${n > NEW_PER_DAY ? ` (buổi học mỗi ngày đưa vào ${NEW_PER_DAY})` : ""}.`),
+  learned: "Xem và đặt lại mục đã học",
   history: "Gần đây",
   tests: "Kết quả thi thử",
   todayLabel: "Hôm nay",
@@ -304,6 +312,9 @@ const en: typeof vi = {
   examNone: "No exam date set",
   examPast: "This exam has passed",
   pick: "Pick an exam",
+  plan: (left, n) => (left === 0 ? "You have learned every item of your goal."
+    : `${left} items left: ${n} new a day to finish by the exam${n > NEW_PER_DAY ? ` (the daily session brings in ${NEW_PER_DAY})` : ""}.`),
+  learned: "See and reset studied items",
   history: "Recent",
   tests: "Mock test results",
   todayLabel: "Today",
