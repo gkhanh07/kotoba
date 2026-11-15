@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getGrammar, getLessons } from "@/lib/content";
-import { levelLabel, levelOf, libraryText } from "@/lib/library";
+import { levelLabel, levelOf, libraryText, listHref } from "@/lib/library";
 import { LevelTabs } from "../LevelTabs";
 import lv from "../levels.module.css";
 import { getLang } from "../LangSwitch";
@@ -29,6 +29,7 @@ export default async function GrammarPage(props: PageProps<"/grammar">) {
         <header className={s.heading}>
           <h1>{t.title(levelLabel(level))}</h1>
           <p>{t.lede(grammar.length)}</p>
+          {grammar.length > 0 && <p><Link href={listHref("/grammar/practice", { level })} className="btn">{t.practice}</Link></p>}
         </header>
         <LevelTabs path="/grammar" level={level} lang={lang} />
         {grammar.length > 0 && (

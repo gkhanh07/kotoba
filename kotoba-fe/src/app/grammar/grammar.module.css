@@ -50,3 +50,30 @@
 .pager span { font-family: var(--font-kana); }
 .pager a[rel="next"] { margin-left: auto; text-align: right; }
 
+
+/* ── practice (phase 40e) ─────────────────────── */
+/* Same marks as the kana quiz: amber = the answer, neon = the wrong pick. */
+.quiz { display: grid; gap: 1.25rem; max-width: 46rem; margin-top: 2rem; }
+.quizLoading { margin-top: 2rem; color: var(--silver-dim); }
+.sentence { font-family: var(--font-kana); font-size: clamp(1.4rem, 3vw, 2rem); color: var(--chalk); line-height: 1.7; }
+.blank { padding: 0 .2em; border-bottom: 2px solid var(--silver-dim); }
+.blank[data-state="right"] { color: var(--amber); border-color: var(--amber); }
+.blank[data-state="wrong"] { color: var(--neon-soft); border-color: var(--neon); }
+.translation { color: var(--silver-dim); }
+.ask { font-size: var(--fs-card); color: var(--chalk); }
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 10px; }
+.choice { display: flex; align-items: center; gap: 1rem; min-height: 3.5rem; padding: 0 1rem; background: var(--asphalt); border: 1px solid var(--rule); color: var(--silver); font-family: var(--font-kana); font-size: 1.3rem; text-align: left; cursor: pointer; transition: border-color var(--dur-fast), background-color var(--dur-fast); }
+.choice kbd { display: inline-grid; place-items: center; min-width: 1.75rem; height: 1.75rem; border: 1px solid var(--rule); font-family: var(--font-body); font-size: .8rem; color: var(--silver-dim); }
+.choice:hover:not([aria-disabled="true"]) { border-color: var(--amber); background: var(--wet); }
+.choice[aria-disabled="true"] { cursor: default; }
+.choice[data-mark="answer"] { border-color: var(--amber); background: var(--amber); color: var(--night); }
+.choice[data-mark="answer"] kbd { color: var(--night); border-color: color-mix(in srgb, var(--night) 40%, transparent); }
+.choice[data-mark="miss"] { border-color: var(--neon); color: var(--neon-soft); text-decoration: line-through; }
+.feedback { min-height: 3.4em; color: var(--silver); }
+.feedback[data-state="right"] { color: var(--amber); }
+.feedback[data-state="wrong"] { color: var(--neon-soft); }
+.feedback a { color: inherit; }
+.quizFoot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; color: var(--silver-dim); }
+.quizFoot kbd { margin-left: .5rem; font-size: .8rem; }
+
+.warning { margin-bottom: 1rem; color: var(--amber); }

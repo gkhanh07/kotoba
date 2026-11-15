@@ -88,7 +88,7 @@ for (const level of [4, 3]) {
     const levelGrammar = (content("grammar") as { slug?: string; level: number }[]).filter((g) => g.level === level);
     await page.goto(`/grammar?level=${level}`);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(`Ngữ pháp N${level}`);
-    await expect(page.locator('main a[href^="/grammar/"]')).toHaveCount(levelGrammar.length);
+    await expect(page.locator('main a[href^="/grammar/"]:not([href^="/grammar/practice"])')).toHaveCount(levelGrammar.length);
     expect(await hasHorizontalScroll(page)).toBe(false);
     await axe();
     await page.goto(`/grammar/${levelGrammar[0].slug}`);
