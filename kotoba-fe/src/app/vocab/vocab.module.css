@@ -68,3 +68,10 @@
   .wordTop { grid-template-columns: minmax(0, 1fr) 20rem; align-items: start; }
   .side { position: sticky; top: 5.5rem; }
 }
+
+/* ── topics (phase 40b) ───────────────────────── */
+.heading .topicsLink { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: var(--chalk); }
+.topics { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 6px; margin: 2rem 0 0; padding: 0; list-style: none; }
+.topic { display: grid; grid-template-columns: 1fr auto 18px; align-items: center; gap: 1rem; min-height: 60px; padding: .6rem 1rem; border: 1px solid var(--rule-dim); border-radius: var(--radius); background: var(--surface-1); color: var(--silver); text-decoration: none; font-variant-numeric: tabular-nums; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.topic:hover { background: var(--surface-2); color: var(--chalk); }
+.topic:hover svg { color: var(--amber-core); }

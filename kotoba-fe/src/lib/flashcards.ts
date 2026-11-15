@@ -14,6 +14,7 @@ export type Vocab = {
   notes?: Translation;
   lesson: number;
   level: Level;
+  topic?: string; // phase 40b, a key of config/topics.ts
 };
 
 // A level deck goes lesson by lesson (phase 37); vocab.json is by frequency. Stable, so a lesson keeps its own order.

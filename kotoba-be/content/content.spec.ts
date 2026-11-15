@@ -161,6 +161,12 @@ describe('content', () => {
     expect(bad.map((v) => v.id)).toEqual([]);
   });
 
+  // Phase 40b: an optional topic from a fixed list; labels live in kotoba-fe/src/config/topics.ts.
+  it('tags vocab only with known topics', () => {
+    const TOPICS = ['people', 'body', 'health', 'food', 'home', 'clothes', 'school', 'work', 'time', 'numbers', 'weather', 'nature', 'animals', 'places', 'transport', 'shopping', 'hobbies', 'feelings', 'communication'];
+    expect(vocab.filter((v) => v.topic !== undefined && !TOPICS.includes(v.topic as string)).map((v) => v.id)).toEqual([]);
+  });
+
   // While there is only N5 content, the gate above means: N5 words use only N5 kanji.
   it('writes N5 vocab only with N5 kanji', () => {
     const n5 = new Set(kanji.filter((k) => k.level === 5).map((k) => k.char));

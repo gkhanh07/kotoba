@@ -63,3 +63,4 @@ Quyết định: "đã lưu" là trường `saved?: true` trên Card. Lưu một
 
 ## Review
 - 40a: FE unit 713 pass, BE check pass (e2e BE 51/51), Playwright 274/274 (có `e2e/saved.spec.ts`). Bộ lọc kanji "Đã lưu" lọc theo trang hiện tại, cùng giới hạn với bộ lọc "Đã học". Codex review: `ReviewApp` giữ hàng ôn cũ khi bấm "Ôn tất cả" từ một hàng có phạm vi (lỗi có từ trước, hàng đã lưu làm lộ ra); sửa bằng `key` theo phạm vi (kind, bài, level, weak, saved), e2e kiểm và đã thấy fail khi bỏ `key`.
+- 40b: FE check pass, BE check pass, Playwright 280/280 (có `e2e/topics.spec.ts`, thấy fail trước khi có trang). Tag `topic` do Codex viết (1.308 từ), diff chỉ thêm `topic`; 1.789 từ chưa có chủ đề nên không hiện ở trang chủ đề. Codex review: không có lỗi.

@@ -55,7 +55,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 38 BE security and durability (spec `docs/phases/38-security-durability.md`, ADR 012) | DONE | `feat(security): phase 38 rate limits, token cleanup, push cap, SMTP mail` |
 | 39 Homophones (spec `docs/phases/39-homophones.md`, ADR 011; 51 words) | DONE | `feat(content): phase 39 homophone ids and words` |
 | 40a Saved items (spec `docs/phases/40-study-features.md`) | DONE | `feat: phase 40a saved items` |
-| 40b–40i, 41–42 | TODO | see PLAN and the phase 40 spec |
+| 40b Vocab by topic | DONE | `feat(vocab): phase 40b topic pages` |
+| 40c–40i, 41–42 | TODO | see PLAN and the phase 40 spec |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -124,9 +125,10 @@ The user answered the checkpoint above: N3 is accepted, no merge yet, and the pl
 - Phase 38 (2026-11-15): done. BE check green (64 unit, 49 e2e, 36 content; coverage thresholds raised to 31/35/34/30). FE check green (708 tests, lib lines 98.56%); e2e 268/268. Codex wrote AC-3, 4, 6, 7, 9 and reviewed twice; the first review caught a limiter race (hit now lands before the first await, a success undoes it) and a reset that did not forward the IP. Details: `docs/phases/38-security-durability.md` § Review. Open: real SMTP untested until the user supplies `SMTP_URL`.
 - Phase 39 (2026-11-15): done. Ids `vocab:<word>:<kanji>` for homophones (content.spec rule, `vocabHref` takes the id); Codex added 51 words (N5 702, N3 1,817), all `reviewed: false`: review the last 51 entries of vocab.json. Gates green (BE 65/49/37, FE 708), e2e 268/270 then the two stale N5 counts fixed and rerun green. Codex review: 3 points, all handled. Same-spelling words with another reading (十/とお, 開く/ひらく, 空/から) stay in BACKLOG.
 - Phase 40a (2026-11-15): done. `saved?: true` on cards (FE + BE column, migration `20261115000000_saved`), a "Lưu" toggle (`aria-pressed`) on word and kanji pages, the kanji filter "Đã lưu", a saved-words link per vocab level, and a saved queue at `/review?saved=1`. Gates: FE 713 unit, BE check (51 e2e), Playwright 274/274, then the 168 /review specs again after the fix. Codex review found 2 issues, both fixed: `ReviewApp` kept a stale queue on "Ôn tất cả" (pre-existing for every scope), and `level` was missing from the new key. Codex also wrote the 40b `topic` tags in `vocab.json` (1,308 words), not committed yet and unreviewed.
+- Phase 40b (2026-11-15): done. Codex wrote the `topic` tags (1,308 of 3,097 words, `reviewed` unchanged, so still unreviewed by the user); the diff only adds `topic` (checked by script). Labels in `kotoba-fe/src/config/topics.ts`, pages `/vocab/topics` and `/vocab/topics/[topic]`, a link from `/vocab`. The BE already filtered by `?topic=`. Gates: FE check, BE check, Playwright 280/280. Codex review: no findings.
 
 ## Next step
-Phase 40b (topic pages; commit the Codex topic tags with it), then 40c–40i, then 41–42 in order. The user reviews the 51 phase 39 words. Fixes from the N3 sample review come first if more than 5% of a kind is wrong.
+Phase 40c (furigana/romaji toggles), then 40d–40i, then 41–42 in order. The user reviews the 51 phase 39 words. Fixes from the N3 sample review come first if more than 5% of a kind is wrong.
 Note: kill stray `next-server` / `kotoba-be/dist/main` / `nest start --watch` processes before `npm run test:e2e`, or set `E2E_BE_PORT` (e.g. 4100) to run beside a dev kotoba-be on 4000 (run it from Git Bash: the webServer commands use `rm`). E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`; it finds the process with `lsof`, or PowerShell on Windows, BUG-008), so it needs a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).
 
 ## Vietnamese copy review (2026-11-12)

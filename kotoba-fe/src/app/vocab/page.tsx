@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getLessons, getVocab } from "@/lib/content";
 import { notFound } from "next/navigation";
 import { DECKS_PER_PAGE } from "@/config/library";
@@ -8,6 +9,7 @@ import { Pager } from "../Pager";
 import lv from "../levels.module.css";
 import { getLang } from "../LangSwitch";
 import { SiteBar, SiteFooter } from "../SiteBar";
+import { Arrow } from "../Arrow";
 import { Decks } from "./Decks";
 import s from "./vocab.module.css";
 
@@ -34,6 +36,7 @@ export default async function VocabPage(props: PageProps<"/vocab">) {
         <header className={s.heading}>
           <h1>{t.title(levelLabel(level))}</h1>
           <p>{t.lede}</p>
+          <p><Link href="/vocab/topics" className={s.topicsLink}>{t.topics} <Arrow /></Link></p>
         </header>
         <LevelTabs path="/vocab" level={level} lang={lang} />
         {decks.length === 0 ? <p className={lv.note}>{libraryText[lang].levels.empty(levelLabel(level))}</p> : (

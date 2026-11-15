@@ -175,6 +175,8 @@ const en = {
     learnedOf: (x: number, y: number) => `${x}/${y} words learned`,
     dueNow: (n: number) => `${n} ${n === 1 ? "word" : "words"} due today`,
     side: "Study this word",
+    topics: "Words by topic",
+    topicsLede: "The same words, grouped by what they are about.",
   },
   grammar: {
     title: (l: string) => `${l} grammar`,
@@ -369,6 +371,8 @@ const vi: typeof en = {
     learnedOf: (x, y) => `${x}/${y} từ đã học`,
     dueNow: (n) => `${n} từ đến hạn ôn hôm nay`,
     side: "Học từ này",
+    topics: "Từ vựng theo chủ đề",
+    topicsLede: "Cùng các từ ấy, xếp theo chủ đề.",
   },
   grammar: {
     title: (l) => `Ngữ pháp ${l}`,
