@@ -10,6 +10,8 @@
 .tools button { min-height: 44px; color: var(--amber); text-decoration: underline; text-underline-offset: .25em; font-size: var(--fs-caption); }
 .tools button:hover { color: var(--amber-core); }
 .tools button:disabled { color: var(--silver-dim); cursor: not-allowed; }
+/* Phase 40c: the romaji switch reads as on (amber, as the other tools) or off (struck through). */
+.tools .toggle[aria-pressed="false"] { color: var(--silver-dim); text-decoration-line: line-through; }
 /* Count and memory state on one line, the meter under them at full width. */
 .progress { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .6rem 1rem; padding: 1.1rem 0 1.25rem; font-size: var(--fs-caption); font-variant-numeric: tabular-nums; }
 .progress progress { grid-column: 1 / -1; width: 100%; }

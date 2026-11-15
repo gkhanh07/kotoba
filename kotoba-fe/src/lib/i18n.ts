@@ -11,6 +11,8 @@ export function isLang(v: unknown): v is Lang {
 }
 
 export const LANG_COOKIE = "kotoba.lang";
+// Phase 40c: "off" hides romaji on cards and word pages; anything else shows it. A cookie, like the language, so the server renders it.
+export const ROMAJI_COOKIE = "kotoba.romaji";
 
 // Sign words on the landing street; the union keeps meanings complete in both languages.
 export type SignWord = "ラーメン" | "くすり" | "カラオケ" | "すし" | "ホテル";

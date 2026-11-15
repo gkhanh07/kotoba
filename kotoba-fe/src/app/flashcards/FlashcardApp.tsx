@@ -13,7 +13,7 @@ import { KeyHelp } from "./KeyHelp";
 import s from "./flashcards.module.css";
 
 // `tabs` is the server-rendered level switcher; `empty` replaces the generic empty line when a level has no words.
-export function FlashcardApp({ cards, lang, deck: name, tabs, empty }: { cards: Vocab[]; lang: Lang; deck: string; tabs?: ReactNode; empty?: string }) {
+export function FlashcardApp({ cards, lang, deck: name, tabs, empty, romaji = true, display }: { cards: Vocab[]; lang: Lang; deck: string; tabs?: ReactNode; empty?: string; romaji?: boolean; display?: ReactNode }) {
   const t = flashcardText[lang];
   const [order, setOrder] = useState(cards);
   const [index, setIndex] = useState(0);
@@ -86,6 +86,7 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty }: { cards: 
                 <Speak text={card.word} label={t.speak} className={s.speak} />
                 <button type="button" onClick={() => restart(true)} disabled={cards.length < 2}>{t.shuffle}</button>
                 <button type="button" onClick={() => restart(false)}>{t.restart}</button>
+                {display}
               </div>
             </div>
             <div className={s.progress}>
@@ -113,7 +114,7 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty }: { cards: 
               <span id="flashcard-back" className={s.back} aria-hidden={!flipped}>
                 <span lang="ja" className={s.backWord}>{card.word}{card.kanji && `（${card.kanji}）`}</span>
                 <span className={s.label}>{t.reading}</span>
-                <span><span lang="ja">{card.reading}</span><span className={s.romaji}> · {card.romaji}</span></span>
+                <span><span lang="ja">{card.reading}</span>{romaji && <span className={s.romaji}> · {card.romaji}</span>}</span>
                 <span className={s.label}>{t.meaning}</span>
                 <strong className={s.meaning}>{card[lang]}</strong>
                 <span className={s.label}>{t.example}</span>

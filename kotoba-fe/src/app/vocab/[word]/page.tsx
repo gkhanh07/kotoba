@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getKanji, getVocabItem } from "@/lib/content";
 import { kanjiIn, libraryText } from "@/lib/library";
-import { getLang } from "../../LangSwitch";
+import { getLang, getRomaji, RomajiSwitch } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
 import { SaveButton } from "../../SaveButton";
 import { Speak } from "../../Speak";
@@ -36,7 +36,7 @@ export async function generateMetadata(props: PageProps<"/vocab/[word]">): Promi
 
 export default async function VocabPage(props: PageProps<"/vocab/[word]">) {
   const { word } = await props.params;
-  const [lang, w, kanji] = await Promise.all([getLang(), getVocabItem(decodeURIComponent(word)), getKanji()]);
+  const [lang, romaji, w, kanji] = await Promise.all([getLang(), getRomaji(), getVocabItem(decodeURIComponent(word)), getKanji()]);
   if (!w) notFound();
   const t = libraryText[lang].vocab;
   const byChar = new Map(kanji.map((x) => [x.char, x]));
@@ -44,7 +44,7 @@ export default async function VocabPage(props: PageProps<"/vocab/[word]">) {
   // The word's own facts sit under it; the facts about studying it sit beside it.
   const readings: Fact[] = [
     [t.reading, <span lang="ja" key="reading">{w.reading}</span>],
-    [t.romaji, w.romaji],
+    ...(romaji ? [[t.romaji, w.romaji] as Fact] : []),
     [t.meaning, cap(w[lang])],
   ];
   const study: Fact[] = [
@@ -58,7 +58,7 @@ export default async function VocabPage(props: PageProps<"/vocab/[word]">) {
       <main className={k.app}>
         <div className={k.detailBar}>
           <Link href="/vocab" className={k.back}><Arrow back />{t.back}</Link>
-          <div className={k.barTools}><SaveButton id={w.id} lang={lang} /><Speak text={w.reading} label={t.speak} /></div>
+          <div className={k.barTools}><SaveButton id={w.id} lang={lang} /><RomajiSwitch on={romaji} /><Speak text={w.reading} label={t.speak} /></div>
         </div>
         <div className={s.wordTop}>
           <article className={s.detail}>

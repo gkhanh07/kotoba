@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteBar, SiteFooter } from "../SiteBar";
-import { getLang } from "../LangSwitch";
+import { getLang, getRomaji, RomajiSwitch } from "../LangSwitch";
 import { byLesson, flashcardText, type Vocab } from "@/lib/flashcards";
 import { getLessons, getVocab } from "@/lib/content";
 import { levelLabel, levelOf, libraryText } from "@/lib/library";
 import { LevelTabs } from "../LevelTabs";
 import { FlashcardApp } from "./FlashcardApp";
+import s from "./flashcards.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = flashcardText[await getLang()];
@@ -16,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 // ?deck=n studies lesson n's words (a lesson has one level, so ?level is ignored then); no deck studies all words of ?level.
 export default async function FlashcardPage(props: PageProps<"/flashcards">) {
   const q = await props.searchParams;
-  const lang = await getLang();
+  const [lang, romaji] = await Promise.all([getLang(), getRomaji()]);
   const t = flashcardText[lang];
   let level = levelOf(q.level);
   let cards: Vocab[] = [];
@@ -33,7 +34,7 @@ export default async function FlashcardPage(props: PageProps<"/flashcards">) {
   return (
     <>
       <SiteBar current="vocab" />
-      <FlashcardApp key={`${level}:${name}`} cards={cards} lang={lang} deck={name} tabs={tabs} empty={libraryText[lang].levels.empty(levelLabel(level))} />
+      <FlashcardApp key={`${level}:${name}`} cards={cards} lang={lang} deck={name} tabs={tabs} romaji={romaji} display={<RomajiSwitch on={romaji} className={s.toggle} />} empty={libraryText[lang].levels.empty(levelLabel(level))} />
       <SiteFooter />
     </>
   );

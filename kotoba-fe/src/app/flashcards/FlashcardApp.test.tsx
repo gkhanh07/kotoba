@@ -109,6 +109,17 @@ describe("FlashcardApp front face by direction (AC-4)", () => {
     expect(back.getByText("ví dụ nước")).toBeInTheDocument();
   });
 
+  // Phase 40c (AC-8): the romaji cookie off drops the romaji, the reading stays.
+  it("leaves the romaji off the back when romaji is off", async () => {
+    rand(0.5);
+    const user = userEvent.setup();
+    render(<FlashcardApp cards={CARDS} lang="vi" deck="Bài 13" romaji={false} />);
+    await user.click(flipButton());
+    const back = within(described());
+    expect(back.getByText("みず")).toBeInTheDocument();
+    expect(back.queryByText(/romaji-水/)).toBeNull();
+  });
+
   it("keeps the chosen direction when the card is flipped and flipped back", async () => {
     rand(0.5, 0.99);
     const { user } = mount();

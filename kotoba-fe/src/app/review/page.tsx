@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getKana, getKanji, getLessons, getVocab } from "@/lib/content";
 import { currentUser } from "@/lib/auth";
 import { hvRows, KINDS, LEVELS, libraryText, reviewScope, type Kind, type Level, type ReviewItem } from "@/lib/library";
-import { getLang } from "../LangSwitch";
+import { getLang, getRomaji } from "../LangSwitch";
 import { SiteBar, SiteFooter } from "../SiteBar";
 import { ReviewApp } from "./ReviewApp";
 import { ReviewHub } from "./ReviewHub";
@@ -19,7 +19,7 @@ const cap = (x: string) => x.charAt(0).toUpperCase() + x.slice(1);
 // ?kind= narrows the queue to one kind (unknown values are ignored), ?lesson=n to one lesson.
 export default async function ReviewPage(props: PageProps<"/review">) {
   const q = await props.searchParams;
-  const lang = await getLang();
+  const [lang, romaji] = await Promise.all([getLang(), getRomaji()]);
   const t = libraryText[lang];
   const isSession = ["start", "kind", "lesson", "weak", "saved"].some((key) => q[key] !== undefined);
   const [all, user] = await Promise.all([Promise.all([getKana(), getKanji(), getVocab(), getLessons()]), currentUser()]);
@@ -69,7 +69,7 @@ export default async function ReviewPage(props: PageProps<"/review">) {
       id: w.id, kind: "vocab" as const, lesson: w.lesson, tag: t.review.kinds.vocab, front: w.word,
       meaning: cap(w[lang]), reading: w.reading,
       back: [
-        { label: t.review.reading, text: w.reading, ja: true, sub: w.romaji },
+        { label: t.review.reading, text: w.reading, ja: true, ...(romaji && { sub: w.romaji }) },
         { label: t.kanji.meaning, text: cap(w[lang]), strong: true },
         { label: t.review.example, text: w.example.ja, ja: true, sub: w.example[lang] },
       ],

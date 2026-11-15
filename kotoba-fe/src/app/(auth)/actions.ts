@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { changePassword, currentUser, deleteAccount, pushProgress, requestReset, resetPassword, saveProfile, signIn, signOut, signUp } from "@/lib/auth";
-import { isLang, LANG_COOKIE } from "@/lib/i18n";
+import { isLang, LANG_COOKIE, ROMAJI_COOKIE } from "@/lib/i18n";
 import { isEmail, isExam, isGoal, isMinutes, isName, PASSWORD_MIN, safePath, type FormState } from "@/lib/account";
 
 const text = (form: FormData, key: string) => {
@@ -109,6 +109,11 @@ export async function removeAccount(_prev: FormState, form: FormData): Promise<F
 export async function setLang(form: FormData) {
   const v = form.get("lang");
   (await cookies()).set(LANG_COOKIE, isLang(v) ? v : "vi", { path: "/", maxAge: 31536000, sameSite: "lax" });
+  revalidatePath("/", "layout");
+}
+
+export async function setRomaji(form: FormData) {
+  (await cookies()).set(ROMAJI_COOKIE, form.get("romaji") === "off" ? "off" : "on", { path: "/", maxAge: 31536000, sameSite: "lax" });
   revalidatePath("/", "layout");
 }
 
