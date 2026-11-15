@@ -805,3 +805,12 @@
   .choice kbd,
   .kbdOnBtn { display: none; }
 }
+.typed {
+  display: flex;
+  gap: 10px;
+}
+
+.typed input {
+  flex: 1;
+  min-width: 0;
+}

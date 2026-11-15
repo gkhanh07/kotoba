@@ -117,6 +117,9 @@ type Dict = {
     wrong: (char: string, romaji: string, hint?: string) => string;
     nextChar: string;
     session: (right: number, total: number) => string;
+    typeMode: string;
+    typeLabel: string;
+    check: string;
   };
   status: { loading: string; errorBody: string; retry: string; home: string };
 };
@@ -267,6 +270,9 @@ const DICT: Record<Lang, Dict> = {
       wrong: (char, romaji, hint) => `Chưa đúng. ${char} đọc là “${romaji}”${hint ? `, gần giống “${hint}”` : ""}. Chữ này sẽ quay lại trong hôm nay.`,
       nextChar: "Chữ tiếp theo",
       session: (right, total) => `Phiên này: ${right}/${total} đúng`,
+      typeMode: "Gõ đáp án",
+      typeLabel: "Gõ cách đọc (romaji hoặc kana)",
+      check: "Kiểm tra",
     },
     status: {
       loading: "Đang tải bảng chữ…",
@@ -423,6 +429,9 @@ const DICT: Record<Lang, Dict> = {
       wrong: (char, romaji) => `Not quite. ${char} is read “${romaji}”. It will come back today.`,
       nextChar: "Next letter",
       session: (right, total) => `This session: ${right}/${total} correct`,
+      typeMode: "Type the answer",
+      typeLabel: "Type the reading (romaji or kana)",
+      check: "Check",
     },
     status: {
       loading: "Turning on the chart lights…",

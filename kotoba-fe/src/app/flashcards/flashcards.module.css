@@ -91,3 +91,5 @@
 .keys { display: none; }
 /* Key hints only where there is a keyboard and a mouse to go with it (as in /review). */
 @media (pointer: fine) { .keys { display: inline; } }
+.typed { display: flex; gap: .75rem; margin-top: 1rem; }
+.typed input { flex: 1; min-width: 0; }

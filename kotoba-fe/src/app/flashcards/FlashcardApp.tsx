@@ -7,6 +7,7 @@ import type { Lang } from "@/lib/i18n";
 import { libraryText } from "@/lib/library";
 import { daysUntil, isDue, isKnown } from "@/lib/srs";
 import { review, today, useDeck } from "@/lib/store";
+import { typedMatch } from "@/lib/typed";
 import { Speak } from "../Speak";
 import { useCardPrompt } from "../useCardPrompt";
 import { KeyHelp } from "./KeyHelp";
@@ -19,6 +20,9 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty, romaji = tr
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [notice, setNotice] = useState("");
+  // Phase 40d: type the reading instead of grading yourself. checked = the typed answer was graded.
+  const [typing, setTyping] = useState(false);
+  const [checked, setChecked] = useState(false);
   const deck = useDeck();
   const cardRef = useRef<HTMLButtonElement>(null);
   const card = order[index];
@@ -29,19 +33,23 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty, romaji = tr
   function move(next: number, message = "") {
     setIndex(next);
     setFlipped(false);
+    setChecked(false);
     setNotice(message);
   }
   function restart(shuffle: boolean) {
     setOrder(shuffle ? shuffleCards(cards) : cards);
     move(0, shuffle ? t.shuffled : t.restarted);
   }
-  function grade(knew: boolean) {
+  function graded(knew: boolean): string {
     const before = deck?.srs;
     const after = review(card.id, knew);
-    const message = !knew ? t.gradedMiss(card.word)
+    return !knew ? t.gradedMiss(card.word)
       : after === before ? t.gradedEarly(card.word)
       : isKnown(after, card.id) ? t.gradedKnown(card.word)
       : t.gradedHit(card.word, daysUntil(after[card.id].due, today()));
+  }
+  function grade(knew: boolean) {
+    const message = graded(knew);
     if (index < order.length - 1) {
       move(index + 1, message);
       // The card button remounts per card, so hand focus to the new one.
@@ -60,6 +68,23 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty, romaji = tr
     setFlipped((value) => !value);
   }
 
+  // Typed mode: the first submit grades and shows the back, the next one moves on.
+  function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (checked) {
+      if (index < order.length - 1) move(index + 1);
+      return;
+    }
+    const typed = String(new FormData(e.currentTarget).get("answer") ?? "");
+    if (!typed.trim()) return; // empty is ignored, not graded
+    const knew = typedMatch(typed, card.reading, card.romaji);
+    const message = graded(knew);
+    if (!flipped) logActivity("vocab", card.id);
+    setChecked(true);
+    setFlipped(true);
+    setNotice(knew ? message : t.typedWrong(card.reading, card.romaji));
+  }
+
   // Space flips, 1/2 grade. Re-bound every render so the handler sees current state.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -67,7 +92,7 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty, romaji = tr
       const el = e.target as Element;
       if (el.closest("input, textarea, select, [contenteditable]")) return;
       if (e.key === " " && !el.closest("a, button, summary")) { e.preventDefault(); flip(); }
-      else if ((e.key === "1" || e.key === "2") && flipped) grade(e.key === "2");
+      else if ((e.key === "1" || e.key === "2") && flipped && !typing) grade(e.key === "2");
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -86,6 +111,7 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty, romaji = tr
                 <Speak text={card.word} label={t.speak} className={s.speak} />
                 <button type="button" onClick={() => restart(true)} disabled={cards.length < 2}>{t.shuffle}</button>
                 <button type="button" onClick={() => restart(false)}>{t.restart}</button>
+                <button type="button" aria-pressed={typing} onClick={() => { setTyping((v) => !v); move(index); }}>{t.typeMode}</button>
                 {display}
               </div>
             </div>
@@ -108,8 +134,17 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty, romaji = tr
           >
             <span className={s.inner}>
               <span id="flashcard-front" className={s.face} aria-hidden={flipped}>
-                <span lang={asked?.frontIsJa === false ? lang : "ja"} className={asked?.frontIsJa === false ? `${s.word} ${s.wordText}` : s.word}>{asked?.front ?? card.word}</span>
-                <span className={s.hint}>{r.recall[asked?.dir ?? "word-meaning"]} · {r.hint}<span className={s.keys}> · {r.keys}</span></span>
+                {typing ? (
+                  <>
+                    <span lang={lang} className={`${s.word} ${s.wordText}`}>{card[lang]}</span>
+                    <span className={s.hint}>{t.typeAsk}</span>
+                  </>
+                ) : (
+                  <>
+                    <span lang={asked?.frontIsJa === false ? lang : "ja"} className={asked?.frontIsJa === false ? `${s.word} ${s.wordText}` : s.word}>{asked?.front ?? card.word}</span>
+                    <span className={s.hint}>{r.recall[asked?.dir ?? "word-meaning"]} · {r.hint}<span className={s.keys}> · {r.keys}</span></span>
+                  </>
+                )}
               </span>
               <span id="flashcard-back" className={s.back} aria-hidden={!flipped}>
                 <span lang="ja" className={s.backWord}>{card.word}{card.kanji && `（${card.kanji}）`}</span>
@@ -135,11 +170,16 @@ export function FlashcardApp({ cards, lang, deck: name, tabs, empty, romaji = tr
               className={s.hit}
             />
           </div>
-          <fieldset className={s.status}>
+          {typing ? (
+            <form key={`typed-${card.id}-${index}`} className={s.typed} onSubmit={submit}>
+              <input name="answer" className="field" aria-label={t.typeAsk} lang="ja" autoComplete="off" autoCapitalize="off" spellCheck={false} autoFocus onKeyDown={(e) => { if (e.key === "Enter" && e.repeat) e.preventDefault(); }} />
+              <button type="submit" className="btn">{checked ? t.nextCard : t.check}</button>
+            </form>
+          ) : <fieldset className={s.status}>
             <legend>{flipped ? t.grade : t.gradeHint}</legend>
             <button type="button" className="btn btnGhost" disabled={!flipped} onClick={() => grade(false)}>{t.missed}</button>
             <button type="button" className="btn" disabled={!flipped} onClick={() => grade(true)}>{t.knew}</button>
-          </fieldset>
+          </fieldset>}
           <nav className={s.navigation} aria-label={t.title}>
             <button type="button" className="btn btnGhost" disabled={index === 0} onClick={() => move(index - 1)}>{t.previous}</button>
             <button type="button" className="btn btnGhost" disabled={index === order.length - 1} onClick={() => move(index + 1)}>{t.next}</button>

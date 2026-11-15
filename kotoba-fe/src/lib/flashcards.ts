@@ -47,6 +47,8 @@ const en = {
   lesson: (n: number, title: string) => `Lesson ${n} · ${title}`,
   end: "Last card. Restart or shuffle to practice again.", empty: "No vocabulary in this deck yet.",
   shuffled: "Cards shuffled. Back to the first card.", restarted: "Session restarted.",
+  typeMode: "Type the answer", typeAsk: "Type the reading (kana or romaji)", check: "Check", nextCard: "Next card",
+  typedWrong: (reading: string, romaji: string) => `Not quite. The reading is ${reading} (${romaji}). It will come back today.`,
 };
 
 const vi: typeof en = {
@@ -67,6 +69,8 @@ const vi: typeof en = {
   lesson: (n, title) => `Bài ${n} · ${title}`,
   end: "Đã đến thẻ cuối. Học lại hoặc trộn thẻ để luyện thêm.", empty: "Bộ thẻ này chưa có từ vựng.",
   shuffled: "Đã trộn thẻ. Bắt đầu từ thẻ đầu tiên.", restarted: "Đã bắt đầu lại phiên học.",
+  typeMode: "Gõ đáp án", typeAsk: "Gõ cách đọc (kana hoặc romaji)", check: "Kiểm tra", nextCard: "Thẻ tiếp",
+  typedWrong: (reading, romaji) => `Chưa đúng. Cách đọc là ${reading} (${romaji}). Từ này sẽ quay lại trong hôm nay.`,
 };
 
 export const flashcardText = { en, vi };

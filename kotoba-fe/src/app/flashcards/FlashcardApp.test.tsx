@@ -282,3 +282,50 @@ describe("FlashcardApp keys (AC-5)", () => {
     expect(stored()).toEqual({});
   });
 });
+
+describe("FlashcardApp typed answers (AC-9)", () => {
+  async function typing() {
+    const m = mount();
+    await m.user.click(screen.getByRole("button", { name: "Gõ đáp án" }));
+    return m;
+  }
+  const field = () => screen.getByRole("textbox", { name: "Gõ cách đọc (kana hoặc romaji)" });
+
+  it("asks with the meaning and hides self-grading", async () => {
+    await typing();
+    expect(screen.getByRole("button", { name: "Gõ đáp án" })).toHaveAttribute("aria-pressed", "true");
+    expect(front().getByText("nước")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Nhớ rồi" })).not.toBeInTheDocument();
+  });
+
+  it("grades romaji through review(), flips, and moves on with the next submit", async () => {
+    const { user } = await typing();
+    await user.type(field(), " mizu {Enter}");
+    expect(stored()["vocab:水"]).toMatchObject({ box: 1 });
+    expect(isFlipped()).toBe(true);
+    expect(screen.getByRole("status")).toHaveTextContent("水: ôn lại ngày mai.");
+    await user.click(screen.getByRole("button", { name: "Thẻ tiếp" }));
+    expect(screen.getByText("2 / 3")).toBeInTheDocument();
+    expect(field()).toHaveValue("");
+  });
+
+  it("accepts kana and shows the right reading after a miss", async () => {
+    const { user } = await typing();
+    await user.type(field(), "みず{Enter}");
+    expect(stored()["vocab:水"]).toMatchObject({ box: 1 });
+    await user.keyboard("{Enter}");
+    await user.type(field(), "neko{Enter}");
+    expect(stored()["vocab:ねこ"]).toMatchObject({ box: 1 });
+    await user.keyboard("{Enter}");
+    await user.type(field(), "taberu x{Enter}");
+    expect(stored()["vocab:食べる"]).toMatchObject({ box: 0, lapses: 1 });
+    expect(screen.getByRole("status")).toHaveTextContent("Cách đọc là たべる (romaji-食べる)");
+  });
+
+  it("ignores an empty submit, so a held Enter never grades the next card (40d review)", async () => {
+    const { user } = await typing();
+    await user.type(field(), "   {Enter}");
+    expect(stored()).toEqual({});
+    expect(isFlipped()).toBe(false);
+  });
+});

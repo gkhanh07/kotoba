@@ -7,6 +7,7 @@ import { dict, type Lang } from "@/lib/i18n";
 import { KNOWN_AT, boxOf, choicesFor, daysUntil, isDue, isKnown, isLearned, pickNext, queue, type Srs } from "@/lib/srs";
 import { resetDeck, review, today, useDeck } from "@/lib/store";
 import { logActivity } from "@/lib/activity";
+import { typedMatch } from "@/lib/typed";
 import s from "./kana.module.css";
 
 type Mode = "chart" | "quiz";
@@ -206,13 +207,15 @@ function Quiz({ set, progress, otherHref, chartHref, t }: { set: KanaSet; progre
   const [choices, setChoices] = useState<Kana[]>(() => (q ? choicesFor(q, set.items) : []));
   const [answer, setAnswer] = useState<Answer>(null);
   const [session, setSession] = useState({ right: 0, total: 0 });
+  const [typing, setTyping] = useState(false);
+  const [turn, setTurn] = useState(0); // keys the typed form, so a repeated kana still gets a fresh, focused field // phase 40d: type the reading instead of picking it
   const nextRef = useRef<HTMLButtonElement>(null);
 
   const choose = useCallback(
-    (k: Kana | undefined) => {
-      if (!q || !k || answer) return;
-      const correct = k.id === q.id;
-      setAnswer({ id: k.id, correct, moved: review(q.id, correct) !== progress });
+    (k: Kana | undefined, typed?: string) => {
+      if (!q || (!k && !typed?.trim()) || answer) return; // an empty typed answer is ignored, not graded
+      const correct = typed === undefined ? k!.id === q.id : typedMatch(typed, q.char, q.romaji);
+      setAnswer({ id: typed === undefined ? k!.id : correct ? q.id : "", correct, moved: review(q.id, correct) !== progress });
       setSession((v) => ({ right: v.right + Number(correct), total: v.total + 1 }));
       logActivity("kana", q.id);
       requestAnimationFrame(() => nextRef.current?.focus({ preventScroll: true }));
@@ -225,12 +228,13 @@ function Quiz({ set, progress, otherHref, chartHref, t }: { set: KanaSet; progre
     setQ(n);
     setChoices(n ? choicesFor(n, set.items) : []);
     setAnswer(null);
+    setTurn((v) => v + 1);
   }, [set.items, progress, q]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (/^[1-4]$/.test(e.key)) choose(choices[Number(e.key) - 1]);
+      if (/^[1-4]$/.test(e.key) && !typing && !(e.target as Element).closest?.("input")) choose(choices[Number(e.key) - 1]);
       else if (e.key === "Enter" && answer) {
         e.preventDefault(); // keep the focused button from answering the next card
         next();
@@ -238,7 +242,7 @@ function Quiz({ set, progress, otherHref, chartHref, t }: { set: KanaSet; progre
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [choices, answer, choose, next]);
+  }, [choices, answer, choose, next, typing]);
 
   if (!q) return null; // only when the set itself is empty
 
@@ -267,7 +271,12 @@ function Quiz({ set, progress, otherHref, chartHref, t }: { set: KanaSet; progre
 
       <div className={s.panel}>
         <h2 className={s.ask} id="ask">{t.ask}</h2>
-        <div className={s.choices} role="group" aria-labelledby="ask">
+        {typing ? (
+          <form key={turn} className={s.typed} onSubmit={(e) => { e.preventDefault(); choose(undefined, String(new FormData(e.currentTarget).get("answer") ?? "")); }}>
+            <input name="answer" className="field" aria-labelledby="ask" lang="ja" autoComplete="off" autoCapitalize="off" spellCheck={false} autoFocus onKeyDown={(e) => { if (e.key === "Enter" && e.repeat) e.preventDefault(); }} />
+            <button type="submit" className="btn" disabled={!!answer}>{t.check}</button>
+          </form>
+        ) : <div className={s.choices} role="group" aria-labelledby="ask">
           {choices.map((k, i) => {
             const mark = !answer ? undefined : k.id === q.id ? "answer" : k.id === answer.id ? "miss" : "rest";
             return (
@@ -277,7 +286,7 @@ function Quiz({ set, progress, otherHref, chartHref, t }: { set: KanaSet; progre
               </button>
             );
           })}
-        </div>
+        </div>}
 
         <p className={s.feedback} aria-live="polite" data-state={state}>
           {!answer
@@ -295,6 +304,7 @@ function Quiz({ set, progress, otherHref, chartHref, t }: { set: KanaSet; progre
           <button ref={nextRef} type="button" className="btn" onClick={next} disabled={!answer}>
             {t.nextChar} <kbd className={s.kbdOnBtn}>Enter</kbd>
           </button>
+          <button type="button" className="btn btnGhost" aria-pressed={typing} onClick={() => setTyping((v) => !v)}>{t.typeMode}</button>
           <p className={s.session}>{t.session(session.right, session.total)}</p>
         </div>
       </div>

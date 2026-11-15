@@ -59,9 +59,13 @@ Quyết định: "đã lưu" là trường `saved?: true` trên Card. Lưu một
 | 3–4 | `e2e/saved.spec.ts` | e2e |
 | 5–6 | `content/content.spec.ts`, diff | content |
 | 7 | `e2e/topics.spec.ts` | e2e |
-| 8–16 | ghi khi làm từng bước | |
+| 8 | `e2e/romaji.spec.ts` | e2e |
+| 9 | `src/lib/typed.test.ts`, `FlashcardApp.test.tsx`, `KanaApp.test.tsx`, `e2e/typed.spec.ts` | FE unit + e2e |
+| 10–11 | `src/lib/grammarQuiz.test.ts`, `e2e/grammar-practice.spec.ts` | FE unit + e2e |
+| 12–16 | ghi khi làm từng bước | |
 
 ## Review
 - 40a: FE unit 713 pass, BE check pass (e2e BE 51/51), Playwright 274/274 (có `e2e/saved.spec.ts`). Bộ lọc kanji "Đã lưu" lọc theo trang hiện tại, cùng giới hạn với bộ lọc "Đã học". Codex review: `ReviewApp` giữ hàng ôn cũ khi bấm "Ôn tất cả" từ một hàng có phạm vi (lỗi có từ trước, hàng đã lưu làm lộ ra); sửa bằng `key` theo phạm vi (kind, bài, level, weak, saved), e2e kiểm và đã thấy fail khi bỏ `key`.
 - 40b: FE check pass, BE check pass, Playwright 280/280 (có `e2e/topics.spec.ts`, thấy fail trước khi có trang). Tag `topic` do Codex viết (1.308 từ), diff chỉ thêm `topic`; 1.789 từ chưa có chủ đề nên không hiện ở trang chủ đề. Codex review: không có lỗi.
 - 40c: chỉ làm romaji. Hai quyết định của người dùng (2026-11-15) thay AC-8: hoãn furigana (câu ví dụ chưa có dữ liệu cách đọc), và lưu bằng cookie `kotoba.romaji` qua server action như ngôn ngữ, không dùng localStorage + hồ sơ. Nút "Romaji" (`aria-pressed`) ở trang từ và thanh công cụ thẻ học; tắt thì ẩn romaji ở trang từ, mặt sau thẻ học và thẻ từ vựng ở `/review` (thẻ kana giữ romaji vì đó là đáp án). FE check pass (714 unit), Playwright 284/284, `e2e/romaji.spec.ts` thấy fail trước khi có code. Codex review: `/review` chưa đọc cookie (đã sửa, e2e fail khi bỏ sửa); e2e thêm lật thẻ và tên nút chính xác.
+- 40d: nút "Gõ đáp án" (`aria-pressed`) ở luyện kana và thẻ học; `lib/typed.ts` đổi romaji Hepburn sang hiragana (cả `tch`, `nn`, phụ âm đôi) rồi so với cách đọc, chấp nhận cả romaji của mục. Ô trống không chấm. e2e bắt được lỗi trùng `key` giữa thẻ và form làm thẻ cũ còn trên trang (đã sửa). Codex review 4 lỗi, đã sửa: `tch` không đổi, phím 1–4 vẫn chấm khi đang gõ, giữ Enter chấm câu trống ở thẻ sau, kana lặp lại giữ chữ cũ trong ô (form `key` theo lượt).
