@@ -61,7 +61,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 40e Grammar practice | DONE | `feat(grammar): phase 40e grammar practice` |
 | 40f Reading practice | DONE | `feat(reading): phase 40f reading practice`; Codex wrote `content/reading.json` (15 passages, 31 questions, `reviewed: false`) |
 | 40g Test history on the server | DONE | `feat(progress): phase 40g test history on the server`; Codex review found 4 bugs (one let a push write to another account), all fixed |
-| 40h–40i, 41–42 | TODO | see PLAN and the phase 40 spec |
+| 40h Placement test | DONE | `feat(onboarding): phase 40h placement test`; Codex review found no bugs |
+| 40i, 41–42 | TODO | see PLAN and the phase 40 spec |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 
@@ -134,7 +135,7 @@ The user answered the checkpoint above: N3 is accepted, no merge yet, and the pl
 - Phase 40c (2026-11-15): done, romaji only. Two user decisions change AC-8: furigana is deferred (no example sentence has reading data yet; it needs a content task first), and the setting is a `kotoba.romaji` cookie set by a server action, like the language, not localStorage + profile. A "Romaji" toggle (`aria-pressed`) sits on the word page and the flashcards toolbar; off hides the romaji fact on the word page, the romaji on the flashcard back and on vocab cards in `/review` (kana cards keep romaji, it is their answer). Gates: FE check (714 unit), Playwright 284/284 (52 failed in a full run while `npm run check` rebuilt `.next` beside it; all 52 passed on `--last-failed`, so never run the two together), no BE change. Codex review: `/review` ignored the cookie (fixed, e2e fails without it); e2e now flips a card and pins the exact button name.
 
 ## Next step
-Phase 40h (placement test), then 40i, then 41–42 in order. The user reviews the 51 phase 39 words and the 15 practice passages in `reading.json`. Fixes from the N3 sample review come first if more than 5% of a kind is wrong. Furigana (deferred from 40c) needs reading data for the example sentences first.
+Phase 40i (studied items and daily plan), then 41–42 in order. The user reviews the 51 phase 39 words and the 15 practice passages in `reading.json`. Fixes from the N3 sample review come first if more than 5% of a kind is wrong. Furigana (deferred from 40c) needs reading data for the example sentences first.
 Note: kill stray `next-server` / `kotoba-be/dist/main` / `nest start --watch` processes before `npm run test:e2e`, or set `E2E_BE_PORT` (e.g. 4100) to run beside a dev kotoba-be on 4000 (run it from Git Bash: the webServer commands use `rm`). E2E sign-ups share kotoba-be's limit of 10 per IP per hour; a new spec that registers must use its own `x-forwarded-for` (see `e2e/daily.spec.ts`). `e2e/sync-status.spec.ts` stops and restarts kotoba-be (`e2e/backend.ts`, also the `globalTeardown`; it finds the process with `lsof`, or PowerShell on Windows, BUG-008), so it needs a built `kotoba-be/dist`. Playwright clears `.next/cache/fetch-cache` before building (BUG-005).
 
 ## Vietnamese copy review (2026-11-12)

@@ -73,7 +73,7 @@ export async function saveOnboarding(_prev: FormState, form: FormData): Promise<
   if (!(await currentUser())) redirect("/login");
   const r = await profileFrom(form);
   if (r) return r;
-  redirect("/");
+  redirect("/placement"); // phase 40h: the placement test comes next, skippable
 }
 
 export async function saveSettings(_prev: FormState, form: FormData): Promise<FormState> {

@@ -85,6 +85,17 @@ const vi = {
     wrong: "Chưa đúng",
     openPaper: "Làm cả đề này",
   },
+  // Phase 40h: /placement.
+  placement: {
+    title: "Kiểm tra trình độ",
+    lede: "Vài câu ngắn từ đề N5, N4 và N3 để gợi ý nên bắt đầu từ đâu. Không lưu điểm, bỏ qua lúc nào cũng được.",
+    skip: "Bỏ qua",
+    check: "Xem kết quả",
+    level: (level: string, right: number, total: number) => `${level}: đúng ${right}/${total}`,
+    suggest: (level: string) => `Gợi ý: bắt đầu từ ${level}`,
+    start: (n: number, title: string) => `Học bài ${n}: ${title}`,
+    home: "Về trang chính",
+  },
 };
 
 const en: typeof vi = {
@@ -168,6 +179,16 @@ const en: typeof vi = {
     right: "Right",
     wrong: "Not quite",
     openPaper: "Take this whole paper",
+  },
+  placement: {
+    title: "Placement test",
+    lede: "A few short questions from the N5, N4 and N3 papers to suggest where to start. No score is kept; skip any time.",
+    skip: "Skip",
+    check: "See my result",
+    level: (level, right, total) => `${level}: ${right}/${total} right`,
+    suggest: (level) => `Suggested: start at ${level}`,
+    start: (n, title) => `Study lesson ${n}: ${title}`,
+    home: "Back to home",
   },
 };
 
