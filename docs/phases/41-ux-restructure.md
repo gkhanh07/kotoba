@@ -15,6 +15,8 @@ Thứ tự bước, mỗi bước một commit xanh: (a+b) lõi phiên học `li
 | Đánh dấu khó (D) | Nút Lưu (`toggleSaved` có sẵn) | "Đã lưu" của 40a đã là cờ yêu thích/khó; thêm cờ thứ hai trùng nghĩa |
 | Lặp lại "sau 10 phút" | "Gặp lại trong phiên này", chèn cuối phiên | Như bảng ở PLAN |
 | Lộ trình: 3 trạng thái Đã xong ✓ / Học tiếp / Chưa học | Bài đã học dở mà không phải bài hiện tại vẫn ghi "Đang học"; bài ôn tập (25, 45, 81, không có mục) không ghi trạng thái | Ghi "Chưa học" cho bài đã học một phần là sai; bài ôn tập không có gì để xong (ADR 010) |
+| AC-19: hiệu ứng chỉ transform/opacity | Mưa ở hero vẫn chạy `background-position` (ngoại lệ ghi trong test) | Bản transform đo được chậm hơn: lớp phủ lớn hơn khung nhìn phải dời cả lớp; dưới reduced motion mưa vẫn tắt |
+| AC-19: hiệu ứng chỉ transform/opacity | Transition khi hover/đổi trạng thái vẫn đổi màu, viền, bóng | Đó là phản hồi trạng thái, chỉ tốn paint, không dịch chuyển gì; test cấm mọi thuộc tính layout trong `transition`, và reduced motion vẫn tắt hết |
 
 ## AC
 ### 41a+b Phiên học

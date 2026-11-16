@@ -416,7 +416,12 @@ a.tile:active, button.tile:active:not(:disabled) { transform: translateY(1px); }
   background: var(--surface-2);
   animation: skeleton-pulse 1.6s ease-in-out infinite;
 }
-@keyframes skeleton-pulse { 50% { background: var(--surface-1); } }
+@keyframes skeleton-pulse { 50% { opacity: 0.55; } }
+
+/* AC-19: pages cross-fade (the default view transition is opacity only), never under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
 
 /* A floating layer (popover, sheet, dialog): the only place --shadow-float is used. */
 .float {

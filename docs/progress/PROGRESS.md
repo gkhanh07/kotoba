@@ -69,7 +69,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 41g Progress page | DONE | `feat(progress): phase 41g progress page`; Codex review: 2 P2 fixed (goal line measured against the whole chart, not the bar track; test did not check the line) |
 | 41h Library | DONE | `feat(library): phase 41h library page`; Codex review: P2 fixed (kana links dropped the chart group, so dakuten/yoon kana opened the basic chart; fixed in the shared itemLinks), P3 fixed (e2e now switches level and opens the word tab) |
 | 41i Nav, bar stats, guest trial | DONE | `feat(nav): phase 41i five-tab nav, bar stats and guest trial`; Codex review: P2 fixed (keys 1–4 worked anywhere on the landing page; now only while focus is in the trial) |
-| 41j–k, 42 | TODO | spec `docs/phases/41-ux-restructure.md` |
+| 41j Motion | DONE | each session step rises in (opacity/transform), page navigations cross-fade via `@view-transition` (no-preference only); unit test bans non-transform/opacity keyframes and layout transitions, e2e motion.spec; Codex review: P2 fixed (the results bar sat inside the animated card, which became its containing block; bar moved out, e2e pins it to the viewport), P2 pushed back (hover colour/border transitions are paint-only state feedback; deviation recorded) |
+| 41k, 42 | TODO | spec `docs/phases/41-ux-restructure.md` |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 

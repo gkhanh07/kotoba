@@ -419,7 +419,9 @@ function End({ state, t, srs, goalMinutes, name, onMore }: {
   const day = today();
   const week = weekMinutes(day);
   const top = Math.max(goalMinutes, ...week.map((d) => d.minutes));
+  // The bar stays outside the card: the card's rise animation would make it the bar's containing block.
   return (
+    <>
     <div className={s.card} role="status">
       <h2 className={s.lead}>{state.steps.length ? t.done : t.empty}</h2>
       {state.steps.length > 0 && (
@@ -444,10 +446,11 @@ function End({ state, t, srs, goalMinutes, name, onMore }: {
           <p>{t.tomorrow(dueCount(srs, addDays(day, 1)))}</p>
         </>
       )}
+    </div>
       <Bar>
         <button type="button" className="btn btnGhost" onClick={onMore}>{t.more}</button>
         <Link href="/" className={`btn ${s.primary}`} data-primary="">{t.home}</Link>
       </Bar>
-    </div>
+    </>
   );
 }

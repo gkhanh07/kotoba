@@ -44,6 +44,11 @@ test("study session: the results screen", async ({ page, axe }) => {
   await expect(page.getByText(/XP trong phiên này$/)).toBeVisible();
   await expect(page.getByRole("list", { name: "7 ngày qua" }).getByRole("listitem")).toHaveCount(7);
   await expect(page.getByText(/^Ngày mai: \d+ thẻ ôn$/)).toBeVisible();
+  // 41j: the action bar is pinned to the viewport's bottom, not to the card that rises in.
+  const vh = page.viewportSize()!.height;
+  const more = (await page.getByRole("button", { name: "Học thêm 5 phút" }).boundingBox())!;
+  expect(more.y + more.height).toBeGreaterThan(vh - 80);
+  expect(more.y + more.height).toBeLessThanOrEqual(vh);
   await axe();
   await page.getByRole("button", { name: "Học thêm 5 phút" }).click();
   await expect(page).toHaveURL(/\/session\?mode=more$/);

@@ -138,3 +138,43 @@ describe("reduced motion (AC-1.3)", () => {
     expect(block).toMatch(/\.card\[data-flipped="true"\] \.back \{ visibility: visible; \}/);
   });
 });
+
+describe("motion (Phase 41j AC-19)", () => {
+  const srcDir = dirname(dirname(fileURLToPath(import.meta.url)));
+  const sheets = readdirSync(srcDir, { recursive: true, encoding: "utf8" })
+    .filter((f) => f.endsWith(".css"))
+    .map((file) => ({ file, text: readFileSync(join(srcDir, file), "utf8").replace(/\/\*[\s\S]*?\*\//g, "") }));
+  // The hero's rain moves its background: measured cheaper than transform on two layers (page.module.css).
+  const EXCEPTIONS = ["rain"];
+
+  it("animates only transform and opacity", () => {
+    const frames = sheets.flatMap(({ file, text }) =>
+      [...text.matchAll(/@keyframes\s+([\w-]+)\s*\{((?:[^{}]*\{[^{}]*\})*)\s*\}/g)].map(([, name, body]) => ({ file, name, body })));
+    expect(frames.map((f) => f.name)).toEqual(expect.arrayContaining(["rise", "skeleton-pulse"]));
+    for (const { file, name, body } of frames.filter((f) => !EXCEPTIONS.includes(f.name))) {
+      const props = [...body.matchAll(/([\w-]+)\s*:/g)].map(([, p]) => p);
+      expect(props.filter((p) => p !== "transform" && p !== "opacity"), `${file} @keyframes ${name}`).toEqual([]);
+    }
+  });
+
+  // Hover/state transitions may fade colour, border and shadow (paint only, no movement); none may animate layout.
+  it("never transitions a layout property", () => {
+    const LAYOUT = /\b(width|height|inline-size|block-size|top|right|bottom|left|inset|margin[\w-]*|padding[\w-]*|gap|grid[\w-]*|flex[\w-]*|font-size|all)\b/;
+    for (const { file, text } of sheets) {
+      for (const [, value] of text.matchAll(/transition(?:-property)?\s*:\s*([^;}]+)/g)) {
+        expect(value, `${file}: transition ${value}`).not.toMatch(LAYOUT);
+      }
+    }
+  });
+
+  it("cross-fades page navigations only when motion is allowed", () => {
+    expect(globals).toMatch(/@media \(prefers-reduced-motion: no-preference\) \{\s*@view-transition \{ navigation: auto; \}/);
+    expect(globals.match(/@view-transition/g)).toHaveLength(1);
+  });
+
+  it("brings each session step in, and the site-wide reduced-motion rule stops it", () => {
+    const session = sheets.find((s) => s.file.endsWith("session.module.css"))!.text;
+    expect(rulesFor(session, ".card")).toMatch(/animation: rise /);
+    expect(reducedMotion(globals)).toContain("animation-duration: 0.001ms !important");
+  });
+});

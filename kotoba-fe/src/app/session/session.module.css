@@ -74,6 +74,8 @@
   gap: 1rem;
 }
 .card {
+  /* AC-19: each step rises in; keyed by step, so it runs once per step. Reduced motion: globals.css. */
+  animation: rise var(--dur) var(--ease-out) both;
   display: grid;
   gap: 0.75rem;
   padding: var(--space-panel);
@@ -323,3 +325,5 @@
 .week li[data-goal] span {
   background: var(--amber);
 }
+
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } }
