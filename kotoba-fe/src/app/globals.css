@@ -470,10 +470,10 @@ body > .bar { background: var(--surface-1); border-bottom: 1px solid var(--rule-
   letter-spacing: 0.08em;
   color: var(--chalk);
 }
-/* One nav element: a row from 900px up, a popover sheet (opened by .menuBtn) below. */
+/* Phase 41i (AC-17): five tabs, then streak/XP, then the More nav (search, account, language).
+   From 900px up all sit in the bar; below, the tabs are a bottom tab bar and More is a popover sheet. */
 .bar nav a,
-.bar nav .logout,
-.libraryBtn {
+.bar nav .logout {
   font-family: var(--font-title), sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
@@ -485,10 +485,8 @@ body > .bar { background: var(--surface-1); border-bottom: 1px solid var(--rule-
   transition: color 0.2s, border-color 0.2s;
 }
 .bar nav a:hover,
-.bar nav .logout:hover,
-.libraryBtn:hover { color: var(--chalk); border-color: var(--rule); }
-.bar nav a[aria-current="page"],
-.libraryBtn[data-current] { color: var(--amber); border-color: var(--amber); }
+.bar nav .logout:hover { color: var(--chalk); border-color: var(--rule); }
+.bar nav a[aria-current="page"] { color: var(--amber); border-color: var(--amber); }
 .bar nav .logout { background: none; border-width: 0 0 1.5px; cursor: pointer; }
 .bar .syncStatus { font-size: 0.85rem; color: var(--silver-dim); white-space: nowrap; }
 .bar .syncStatus:empty { display: none; }
@@ -497,42 +495,18 @@ body > .bar { background: var(--surface-1); border-bottom: 1px solid var(--rule-
 .bar nav .who { max-width: 16ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.9rem; color: var(--silver-dim); }
 /* Review's due count: a plain number after the label, no pill. */
 .dueCount { margin-left: 0.45em; color: var(--silver-dim); font-weight: 400; font-variant-numeric: tabular-nums; }
-.account { display: flex; align-items: center; gap: clamp(14px, 3vw, 32px); }
-.libraryBtn { display: inline-flex; align-items: center; gap: 8px; anchor-name: --library; }
-
-/* The library sheet, a .float popover under its trigger. */
-.library {
-  margin: 0;
-  min-width: 12rem;
-  padding: 6px 0;
-  color: var(--silver);
-  position: fixed;
-  inset: auto;
-  top: 72px;
-  right: var(--pad-x);
-}
-@supports (top: anchor(bottom)) {
-  .library { position-anchor: --library; top: anchor(bottom); left: anchor(left); right: auto; }
-}
-.bar nav .library a {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 18px;
-  border: 0;
-}
-.bar nav .library a:hover { background: var(--surface-3); color: var(--amber-core); }
-/* The current page carries an inset bar as well as the amber text: never colour alone. */
-.bar nav .library a[aria-current="page"] { box-shadow: inset 3px 0 0 var(--amber); }
+.tabs { display: flex; align-items: center; gap: clamp(14px, 2.2vw, 28px); }
+.barStats { min-height: 44px; display: inline-flex; align-items: center; font-size: 0.85rem; color: var(--silver-dim); text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.barStats:hover { color: var(--chalk); }
 
 @media (min-width: 900px) {
   .menuBtn { display: none; }
-  /* Undo the UA popover box so the nav sits in the bar as a plain row. */
+  .tabs { flex: 1; padding-left: clamp(14px, 3vw, 32px); }
+  /* Undo the UA popover box so the More nav sits in the bar as a plain row. */
   .bar nav[popover] {
     display: flex;
     align-items: center;
-    gap: clamp(14px, 3vw, 32px);
-    flex: 1;
+    gap: clamp(14px, 2.2vw, 28px);
     position: static;
     inset: auto;
     margin: 0;
@@ -540,19 +514,45 @@ body > .bar { background: var(--surface-1); border-bottom: 1px solid var(--rule-
     height: auto;
     border: 0;
     border-radius: 0;
-    padding: 0 0 0 clamp(14px, 3vw, 32px);
+    padding: 0;
     background: none;
     box-shadow: none;
     color: inherit;
     overflow: visible;
   }
-  .account { margin-left: auto; }
 }
 
 @media (max-width: 899.98px) {
   .menuBtn { min-height: 44px; font-size: 1rem; order: 2; }
-  .bar .syncStatus { order: 1; min-width: 0; margin-left: auto; font-size: 0.8rem; white-space: normal; text-align: right; }
-  .libraryBtn { display: none; }
+  /* Shrinks and wraps so brand, stats and More fit a 360px bar. */
+  .barStats { order: 1; margin-left: auto; min-width: 0; white-space: normal; text-align: right; font-size: 0.8rem; line-height: 1.3; }
+  .bar .syncStatus { order: 1; min-width: 0; font-size: 0.8rem; white-space: normal; text-align: right; }
+  .tabs {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--surface-1);
+    border-top: 1px solid var(--rule-dim);
+  }
+  .bar .tabs a {
+    min-height: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+    text-align: center;
+    font-size: 0.85rem;
+    letter-spacing: 0;
+    border-bottom: 0;
+    border-top: 2px solid transparent;
+  }
+  .bar .tabs a[aria-current="page"] { border-top-color: var(--amber); }
+  body { padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
   .bar nav:popover-open {
     position: fixed;
     inset: auto 0 auto 0;
@@ -567,36 +567,14 @@ body > .bar { background: var(--surface-1); border-bottom: 1px solid var(--rule-
     border-radius: 0;
     color: inherit;
     display: grid;
+    justify-items: start;
   }
   @supports (top: anchor(bottom)) {
     .bar nav:popover-open { position-anchor: --bar; top: anchor(bottom); max-height: calc(100dvh - anchor-size(height)); }
   }
-  .bar nav a,
+  .bar nav[popover] a,
   .bar nav .logout { min-height: 44px; display: flex; align-items: center; }
-  .bar nav > a { font-size: 1.25rem; }
-  /* The library lists inline in the sheet, under a rule. */
-  .bar nav .library {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 24px;
-    position: static;
-    inset: auto;
-    width: auto;
-    height: auto;
-    margin: 8px 0 0;
-    padding: 8px 0 0;
-    border: 0;
-    border-top: 1px solid var(--rule);
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
-    overflow: visible;
-  }
-  .bar nav .library a { padding: 0; }
-  .bar nav .library a:hover { background: none; }
-  /* Inline in the sheet the current link is underlined like the other nav links. */
-  .bar nav .library a[aria-current="page"] { box-shadow: none; border-bottom: 1.5px solid var(--amber); }
-  .account { flex-wrap: wrap; gap: 8px 20px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--rule); }
+  .bar nav[popover] > a { font-size: 1.25rem; }
   .bar nav .who { max-width: 22ch; }
 }
 

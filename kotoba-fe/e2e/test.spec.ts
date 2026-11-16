@@ -60,10 +60,6 @@ async function submitAll(page: Page) {
   await page.getByRole("button", { name: "Nộp bài" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Nộp bài" }).click();
 }
-async function openMenu(page: Page) {
-  const menu = page.getByRole("button", { name: "Danh mục" });
-  if (await menu.isVisible()) await menu.click();
-}
 
 test("the list page shows the paper's title, minutes, question count and the no-listening note", async ({ page, axe }, info) => {
   const be = watchBackend(page);
@@ -261,16 +257,13 @@ test("retrying the wrong questions has no timer and leaves the saved result alon
   expect(be).toEqual([]);
 });
 
-test("the nav shows Thi thử and marks it as the current page on /test", async ({ page, axe }) => {
-  await page.goto("/");
-  await openMenu(page);
-  const link = page.getByRole("link", { name: "Thi thử" });
-  await expect(link).toBeVisible();
-  await expect(link).not.toHaveAttribute("aria-current", "page");
-  await link.click();
+test("the practice tab reaches Thi thử and stays current on /test", async ({ page, axe }) => {
+  await page.goto("/review");
+  const tab = page.getByRole("navigation", { name: "Điều hướng chính" }).getByRole("link", { name: /Luyện tập/ });
+  await expect(tab).toHaveAttribute("aria-current", "page");
+  await page.getByRole("main").getByRole("link", { name: "Thi thử" }).click();
   await expect(page).toHaveURL(/\/test$/);
-  await openMenu(page);
-  await expect(page.getByRole("link", { name: "Thi thử" })).toHaveAttribute("aria-current", "page");
+  await expect(tab).toHaveAttribute("aria-current", "page");
   await axe();
 });
 

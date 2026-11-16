@@ -593,32 +593,21 @@ const tokenColor = (page: import("@playwright/test").Page, token: string) =>
     return color;
   }, token);
 
-test("the site bar's floating layer casts the float shadow and marks the current page by more than colour", async ({ page, axe }, info) => {
+test("the site bar marks the current tab by more than colour, and the More sheet floats on small screens", async ({ page, axe }, info) => {
   await page.goto("/kanji");
-  const surface2 = await tokenColor(page, "--surface-2");
-  if (info.project.name === "desktop") {
-    await page.getByRole("button", { name: "Thư viện" }).click();
-    const library = page.locator("#site-library");
-    await expect(library).toBeVisible();
-    expect(await shadowOf(library)).toContain("48px");
-    expect(await groundOf(library)).toBe(surface2);
-    const here = library.getByRole("link", { name: "Kanji" });
-    await expect(here).toHaveAttribute("aria-current", "page");
-    // The current row carries an inset bar, not only the amber text.
-    expect(await shadowOf(here)).toContain("inset");
-    expect(await shadowOf(library.getByRole("link", { name: "Bảng chữ cái" }))).toBe("none");
-  } else {
-    await page.getByRole("button", { name: "Danh mục" }).click();
-    const sheet = page.getByRole("navigation", { name: "Điều hướng chính" });
+  const tabs = page.getByRole("navigation", { name: "Điều hướng chính" });
+  const here = tabs.getByRole("link", { name: "Thư viện" });
+  await expect(here).toHaveAttribute("aria-current", "page");
+  // The current tab carries a rule (under it in the bar, over it in the bottom tab bar), not only the amber text.
+  const side = info.project.name === "desktop" ? "borderBottomStyle" : "borderTopStyle";
+  expect(await here.evaluate((el, k) => getComputedStyle(el)[k as "borderTopStyle"], side)).toBe("solid");
+  if (info.project.name !== "desktop") {
+    await page.getByRole("button", { name: "Thêm" }).click();
+    const sheet = page.getByRole("navigation", { name: "Thêm" });
     await expect(sheet).toBeVisible();
     expect(await shadowOf(sheet)).toContain("48px");
-    expect(await groundOf(sheet)).toBe(surface2);
-    // Inline in the sheet the library links are plain links; the current one is underlined, not only amber.
-    const here = sheet.getByRole("link", { name: "Kanji" });
-    await expect(here).toBeVisible();
-    await expect(here).toHaveAttribute("aria-current", "page");
-    expect(await here.evaluate((el) => getComputedStyle(el).borderBottomStyle)).toBe("solid");
-    expect(await shadowOf(here)).toBe("none");
+    expect(await groundOf(sheet)).toBe(await tokenColor(page, "--surface-2"));
+    await expect(sheet.getByRole("link", { name: "Tra cứu" })).toBeVisible();
   }
   await axe();
 });

@@ -9,6 +9,8 @@ import { getGrammar, getKana, getKanji, getLessons, getTests, getVocab } from "@
 import { goalScope, LEVELS, levelLabel } from "@/lib/library";
 import { INTERVALS, KNOWN_AT } from "@/lib/srs";
 import { Dashboard } from "./Dashboard";
+import { GuestTrial } from "./GuestTrial";
+import { guestTrial, hvExamples } from "@/lib/trial";
 import s from "./page.module.css";
 
 // Three depth planes, far to near. Rim is the lit top edge, win scales the windows
@@ -117,7 +119,7 @@ export default async function Home() {
     const inGoal = { kanji: goalScope(kanji, goal), vocab: goalScope(vocab, goal) };
     return (
       <>
-        <SiteBar />
+        <SiteBar current="today" />
         <Dashboard
           items={[
             ...goalScope(kana.map((k) => ({ ...k, level: 5 })), goal).map((k) => ({ id: k.id, kind: "kana" as const, lesson: k.lesson })),
@@ -165,12 +167,15 @@ export default async function Home() {
     .flatMap(({ lesson, words, kanji: k, grammar: g }) =>
       words.length > 0 && k && g ? [{ lesson, words: words.slice(0, PREVIEW_WORDS), card: words[0], kanji: k, grammar: g }] : [])[0];
 
+  const trial = guestTrial(vocab, kanji);
+  const hvWords = hvExamples(vocab, kanji);
+
   return (
     <>
       <section className={s.hero}>
         <div className={s.rain} aria-hidden="true" />
         <div className={s.spill} aria-hidden="true" />
-        <SiteBar />
+        <SiteBar current="today" />
         <Street
           lang={lang}
           skyline={<Skyline />}
@@ -193,6 +198,16 @@ export default async function Home() {
       </section>
 
       <main className={s.body}>
+        {trial.length > 0 && (
+          <section className={s.trialSec} aria-labelledby="trial-h">
+            <div className={s.sectionHead}>
+              <h2 id="trial-h">{t.trialH}</h2>
+              <p>{t.trialP}</p>
+            </div>
+            <GuestTrial questions={trial} lang={lang} />
+          </section>
+        )}
+
         <section className={s.scripts} aria-labelledby="route-h">
           <div className={s.sectionHead}>
             <h2 id="route-h">{t.routeH}</h2>
@@ -220,6 +235,25 @@ export default async function Home() {
           </ul>
         </section>
 
+        {hvWords.length > 0 && (
+          <section className={s.hvSec} aria-labelledby="hv-h">
+            <div className={s.sectionHead}>
+              <h2 id="hv-h">{t.hvH}</h2>
+              <p>{t.hvP}</p>
+            </div>
+            <ul className={s.hvGrid}>
+              {hvWords.map((w) => (
+                <li key={w.id} className="panel">
+                  <span lang="ja" className={s.previewKanjiChar}>{w.word}</span>
+                  <span lang="ja" className={s.previewReading}>{w.reading}</span>
+                  <span className={s.previewHv}>{w.hv.join(" ")}</span>
+                  <span className={s.previewMeaning}>{w[lang]}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         <section className={s.route} aria-labelledby="line-h">
           <div className={s.sectionHead}>
             <h2 id="line-h">{t.lineH}</h2>
@@ -237,6 +271,21 @@ export default async function Home() {
                     <div><dt>{t.lineGrammar}</dt><dd>{stop.grammar}</dd></div>
                   </dl>
                 </Link>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className={s.session} aria-labelledby="session-h">
+          <div className={s.sectionHead}>
+            <h2 id="session-h">{t.sessionH}</h2>
+            <p>{t.sessionP}</p>
+          </div>
+          <ol className={s.steps}>
+            {t.sessionSteps.map((step) => (
+              <li key={step.name} className="panel">
+                <h3>{step.name}</h3>
+                <p>{step.text}</p>
               </li>
             ))}
           </ol>
@@ -331,6 +380,15 @@ export default async function Home() {
           <h2 id="closing-h">{t.closingH}</h2>
           <p>{t.closingP}</p>
           <Link href="/kana?mode=quiz" className="btn">{t.honestCta} <Arrow /></Link>
+          <h3 id="level-h">{t.levelH}</h3>
+          <p>{t.levelP}</p>
+          <ul className={s.levels} aria-labelledby="level-h">
+            {journey.map((stop) => (
+              <li key={stop.level}>
+                <Link href={`/register?level=${stop.level}`} className="btn btnGhost">{t.levelPick(levelLabel(stop.level))}</Link>
+              </li>
+            ))}
+          </ul>
         </section>
       </main>
 

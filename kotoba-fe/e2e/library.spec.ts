@@ -32,6 +32,7 @@ test("the library switches kind, level and filter, and links to each item's own 
   await expect(main.getByRole("link", { name: "あ", exact: true })).toHaveAttribute("href", "/kana?script=hiragana");
 
   await kinds.getByRole("link", { name: "Từ vựng" }).click();
+  await expect(page).toHaveURL(/kind=vocab/);
   await main.getByRole("link", { name: "Tất cả", exact: true }).click();
   await expect(main.getByRole("listitem").first().getByRole("link")).toHaveAttribute("href", /^\/vocab\//);
   const n5 = await main.getByRole("listitem").first().getByRole("link").textContent();

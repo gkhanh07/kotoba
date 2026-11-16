@@ -379,8 +379,11 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
     var(--night);
 }
 
+.trialSec,
 .scripts,
+.hvSec,
 .route,
+.session,
 .honest,
 .preview,
 .closing {
@@ -398,7 +401,9 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   color: var(--silver);
   margin-bottom: 1rem;
 }
-.preview h3 {
+.preview h3,
+.steps h3,
+.closing h3 {
   margin-bottom: 0.75rem;
   font-family: var(--font-title), sans-serif;
   font-size: var(--fs-card);
@@ -683,6 +688,23 @@ a.station:hover .stationKana {
 .previewPattern { font-size: 1.4rem; font-weight: 700; color: var(--chalk); overflow-wrap: anywhere; }
 .previewLink { margin-top: 1.5rem; }
 
+/* Phase 41i (AC-18): the guest trial, the four session steps and the Hán Việt examples. */
+.trialSec { display: grid; gap: 2rem; grid-template-columns: minmax(0, 1fr) minmax(0, 28rem); align-items: start; }
+.trial { display: grid; gap: 1rem; }
+.trial > :global(.btn) { justify-self: start; }
+.trialStep { font-size: var(--fs-caption); color: var(--silver); }
+.trialAsk { color: var(--chalk); }
+.trialFront { font-size: 3rem; font-weight: 700; line-height: 1.2; color: var(--chalk); }
+.trialResult { min-height: 1.5em; color: var(--silver); }
+.steps,
+.hvGrid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.steps li { counter-increment: step; }
+.steps h3::before { content: counter(step) ". "; color: var(--silver); }
+.steps p { color: var(--silver); }
+.hvGrid li { display: grid; gap: 0.25rem; }
+.levels { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; list-style: none; margin: 0; padding: 0; }
+.closing h3 { margin-top: 3rem; }
+
 /* Closing: the page's one amber action. */
 .closing {
   display: grid;
@@ -691,6 +713,7 @@ a.station:hover .stationKana {
 }
 .closing p { max-width: 60ch; color: var(--silver); }
 .closing :global(.btn) { margin-top: 1.75rem; }
+.closing .levels :global(.btn) { margin-top: 0; }
 
 .footer {
   margin-top: clamp(4rem, 8vw, 7rem);
@@ -720,6 +743,7 @@ a.station:hover .stationKana {
 
 /* ───────── Phones: skyline, street and reflection unroll into bands ───────── */
 @media (max-width: 900px) {
+  .trialSec { grid-template-columns: minmax(0, 1fr); }
   .hero { --signsH: 11.5rem; --groundH: 9rem; min-height: auto; }
   .stage {
     grid-template-columns: 1fr;

@@ -35,7 +35,7 @@ export default async function LibraryPage(props: PageProps<"/library">) {
   const keep = { kind, filter: filter === "all" ? undefined : filter };
   return (
     <>
-      <SiteBar />
+      <SiteBar current="library" />
       <main className={s.app}>
         <h1>{t.title}</h1>
         <p className={s.lede}>{t.lede}</p>

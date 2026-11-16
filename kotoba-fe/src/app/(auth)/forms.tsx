@@ -91,9 +91,10 @@ export function LoginForm({ lang, next }: { lang: Lang; next?: string }) {
   );
 }
 
-export function RegisterForm({ lang }: { lang: Lang }) {
+export function RegisterForm({ lang, goal }: { lang: Lang; goal?: string }) {
   const t = accountText[lang];
-  const [state, action, pending] = useActionState(register, empty);
+  // Phase 41i (AC-18): a level picked on the guest page arrives preselected.
+  const [state, action, pending] = useActionState(register, { values: { goal } });
   const problem = useId();
   return (
     <>

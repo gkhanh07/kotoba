@@ -20,7 +20,7 @@ export default async function ProgressPage() {
   const all = [...kana.map((k) => ({ id: k.id, level: 5 })), ...kanji, ...vocab, ...grammar];
   return (
     <>
-      <SiteBar />
+      <SiteBar current="progress" />
       <Progress
         lang={lang}
         profile={user?.profile ?? null}

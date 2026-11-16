@@ -80,9 +80,10 @@ test("an N5 dashboard shows the N5 totals", async ({ page, axe }, info) => {
 
   const vocab = n5(load("vocab")), kanji = n5(load("kanji"));
   expect([vocab, kanji]).toEqual([702, 103]);
-  await expect(page.getByRole("row", { name: /^Từ vựng/ }).getByRole("cell", { name: `0 / ${vocab}` })).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByRole("row", { name: /^Kanji/ }).getByRole("cell", { name: `0 / ${kanji}` })).toBeVisible();
-  await expect(page.getByRole("row", { name: /^Kana/ }).getByRole("cell", { name: "0 / 224" })).toBeVisible();
+  // Phase 41e/g: Today names the goal; the N5 total (kana + words + kanji + grammar) lives on /progress.
+  await expect(page.getByRole("main").getByRole("definition").filter({ hasText: /^N5$/ })).toBeVisible({ timeout: 15_000 });
   await page.screenshot({ path: info.outputPath(`dashboard-${info.project.name}.png`), fullPage: true });
   await axe();
+  await page.goto("/progress");
+  await expect(page.getByRole("progressbar", { name: `N5: 0 / ${224 + vocab + kanji + n5(load("grammar"))}` })).toBeVisible();
 });

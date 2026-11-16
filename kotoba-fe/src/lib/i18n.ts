@@ -23,7 +23,7 @@ type Split3 = { a: string; b: string; c: string };
 type Split4 = { a: string; b: string; c: string; d: string };
 
 type Dict = {
-  nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string; menu: string; library: string; kana: string; kanji: string; vocab: string; grammar: string; lessons: string; review: string; reviewDue: string; test: string; search: string; settings: string; sync: { saved: string; saving: string; pending: (n: number) => string; failed: string; retry: string } };
+  nav: { home: string; main: string; chart: string; quiz: string; lang: string; login: string; logout: string; more: string; today: string; path: string; practice: string; library: string; progress: string; reviewDue: string; search: string; stats: (streak: number, level: number, xp: number) => string; settings: string; sync: { saved: string; saving: string; pending: (n: number) => string; failed: string; retry: string } };
   footer: { kanji: string; dict: string; hv: string; legal: string };
   notFound: { title: string; body: string; home: string };
   down: { title: string; body: string; retry: string };
@@ -58,6 +58,22 @@ type Dict = {
     previewCard: string;
     previewOpen: (lesson: number) => string;
     closingH: string;
+    trialH: string;
+    trialP: string;
+    trialAsk: { reading: string; hv: string };
+    trialAgain: string;
+    trialStep: (i: number, n: number) => string;
+    trialNext: string;
+    trialDone: (right: number, n: number) => string;
+    trialRetry: string;
+    sessionH: string;
+    sessionP: string;
+    sessionSteps: { name: string; text: string }[];
+    hvH: string;
+    hvP: string;
+    levelH: string;
+    levelP: string;
+    levelPick: (level: string) => string;
     closingP: string;
     honestH: string;
     honestP1: (known: number, intervals: string) => string;
@@ -134,17 +150,15 @@ const DICT: Record<Lang, Dict> = {
       lang: "Ngôn ngữ",
       login: "Đăng nhập",
       logout: "Đăng xuất",
-      menu: "Danh mục",
+      more: "Thêm",
+      today: "Hôm nay",
+      path: "Lộ trình",
+      practice: "Luyện tập",
       library: "Thư viện",
-      kana: "Bảng chữ cái",
-      kanji: "Kanji",
-      vocab: "Từ vựng",
-      grammar: "Ngữ pháp",
-      lessons: "Bài học",
-      review: "Ôn tập",
+      progress: "Tiến độ",
       reviewDue: "mục đến hạn",
-      test: "Thi thử",
       search: "Tra cứu",
+      stats: (streak, level, xp) => `Chuỗi ${streak} ngày · Cấp ${level} · ${xp} XP`,
       settings: "Cài đặt tài khoản",
       sync: { saved: "Đã lưu", saving: "Đang lưu…", pending: (n) => `Chờ lưu ${n} thay đổi`, failed: "Lỗi đồng bộ", retry: "Thử lại" },
     },
@@ -197,6 +211,27 @@ const DICT: Record<Lang, Dict> = {
       previewCard: "Mặt sau thẻ ôn tập",
       previewOpen: (lesson) => `Mở bài ${lesson}`,
       closingH: "Bắt đầu từ chữ đầu tiên.",
+      trialH: "Thử ba câu, không cần tài khoản.",
+      trialP: "Nội dung N5 thật: đọc một từ, nhận âm Hán Việt của một chữ kanji, rồi gặp lại câu đầu.",
+      trialAsk: { reading: "Từ này đọc là gì?", hv: "Âm Hán Việt của chữ này?" },
+      trialAgain: "Gặp lại câu 1: còn nhớ không?",
+      trialStep: (i, n) => `Câu ${i} / ${n}`,
+      trialNext: "Câu tiếp",
+      trialDone: (right, n) => `Bạn đúng ${right} / ${n} câu. Một phiên học thật cũng đi theo nhịp này: học, kiểm tra, rồi gặp lại khi sắp quên.`,
+      trialRetry: "Làm lại",
+      sessionH: "Một phiên học có bốn bước.",
+      sessionP: "Mỗi ngày bấm một nút, phiên học tự xếp các bước theo thứ tự.",
+      sessionSteps: [
+        { name: "Ôn thẻ đến hạn", text: "Những chữ sắp quên được hỏi lại trước." },
+        { name: "Học mục mới", text: "Vài từ và kanji mới, mỗi mục có một câu kiểm tra nhanh ngay sau." },
+        { name: "Ngữ pháp", text: "Một mẫu câu của bài, với ví dụ thật." },
+        { name: "Ghép câu và luyện tập", text: "Xếp lại câu, điền chỗ trống bằng những gì vừa học." },
+      ],
+      hvH: "Kanji qua âm Hán Việt.",
+      hvP: "Nhiều từ tiếng Nhật đọc gần như từ Hán Việt. Biết âm Hán Việt của từng chữ, bạn đoán được nghĩa của cả từ.",
+      levelH: "Chọn trình độ để bắt đầu.",
+      levelP: "Tạo tài khoản để lưu tiến độ trên mọi thiết bị. Trình độ bạn chọn được điền sẵn.",
+      levelPick: (level) => `Bắt đầu ${level}`,
       closingP: "Không cần tài khoản. Chọn đáp án bằng bàn phím hoặc màn hình cảm ứng. Tiến độ được lưu ngay trên thiết bị này.",
       honestH: "Chỉ tính là thuộc khi bạn nhớ thật.",
       honestP1: (known, intervals) => `Một chữ được tính là đã thuộc sau ${known} lần ôn đúng liên tiếp, với các khoảng cách ôn là ${intervals} ngày. Nếu trả lời sai, số lần đúng liên tiếp được tính lại từ đầu. Không có điểm thưởng hay huy hiệu, tiến độ phản ánh những chữ bạn đọc được.`,
@@ -291,17 +326,15 @@ const DICT: Record<Lang, Dict> = {
       lang: "Language",
       login: "Log in",
       logout: "Log out",
-      menu: "Menu",
+      more: "More",
+      today: "Today",
+      path: "Path",
+      practice: "Practice",
       library: "Library",
-      kana: "Kana chart",
-      kanji: "Kanji",
-      vocab: "Vocabulary",
-      grammar: "Grammar",
-      lessons: "Lessons",
-      review: "Review",
+      progress: "Progress",
       reviewDue: "due",
-      test: "Mock test",
       search: "Search",
+      stats: (streak, level, xp) => `${streak}-day streak · Level ${level} · ${xp} XP`,
       settings: "Account settings",
       sync: { saved: "Saved", saving: "Saving…", pending: (n) => `${n} ${n === 1 ? "change" : "changes"} waiting to save`, failed: "Sync failed", retry: "Retry" },
     },
@@ -354,6 +387,27 @@ const DICT: Record<Lang, Dict> = {
       previewCard: "Review card, back",
       previewOpen: (lesson) => `Open lesson ${lesson}`,
       closingH: "Start with the first letter.",
+      trialH: "Try three questions, no account needed.",
+      trialP: "Real N5 content: read a word, name a kanji by its Hán Việt reading, then meet the first question again.",
+      trialAsk: { reading: "How is this word read?", hv: "What is this kanji's Hán Việt reading?" },
+      trialAgain: "Question 1 again: do you still remember?",
+      trialStep: (i, n) => `Question ${i} / ${n}`,
+      trialNext: "Next question",
+      trialDone: (right, n) => `You got ${right} / ${n}. A real session runs at the same beat: learn, check, then meet it again just before you forget.`,
+      trialRetry: "Try again",
+      sessionH: "A session has four steps.",
+      sessionP: "One button a day; the session puts the steps in order for you.",
+      sessionSteps: [
+        { name: "Due reviews", text: "Items you are about to forget come back first." },
+        { name: "New items", text: "A few new words and kanji, each followed by a quick check." },
+        { name: "Grammar", text: "One pattern from the lesson, with real examples." },
+        { name: "Sentences and practice", text: "Put a sentence back in order and fill the gaps with what you just learned." },
+      ],
+      hvH: "Kanji through Hán Việt.",
+      hvP: "Many Japanese words sound close to their Sino-Vietnamese (Hán Việt) form. Know each kanji's Hán Việt reading and you can guess the whole word.",
+      levelH: "Pick a level to start.",
+      levelP: "Create an account to keep your progress on every device. The level you pick is filled in for you.",
+      levelPick: (level) => `Start ${level}`,
       closingP: "No account needed. Answer by keyboard or by tap; your progress saves on this device at once.",
       honestH: "It only counts as known when you really remember it.",
       honestP1: (known, intervals) => `An item counts as known after ${known} correct reviews in a row, spaced ${intervals} days apart. One miss and the streak starts over. No points, no badges: just the letters you can actually read.`,
