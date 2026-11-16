@@ -52,7 +52,7 @@ export type Grammar = {
   title: Translation;
   structure: string;
   explain: Translation;
-  examples: ({ ja: string } & Translation)[];
+  examples: ({ ja: string; parts?: string[] } & Translation)[]; // parts: the sentence cut for ordering (phase 41)
   note?: Translation;
   level: Level;
 };
@@ -210,10 +210,9 @@ const en = {
     title: "Lessons",
     lede: (n: number, last: string) => `${n} lessons, from the kana chart to ${last} review. Go in order or jump to the one you need.`,
     learned: "learned",
-    state: { done: "Done", started: "In progress", fresh: "Not started" },
+    state: { done: "Done ✓", started: "In progress", fresh: "Not started" },
     doneOf: (x: number, y: number) => `${x}/${y} lessons done`,
     levelProgress: (level: string) => `${level} lessons done`,
-    current: "Current lesson",
     preview: "Selected",
     openKanji: "Open the kanji page",
     progress: "Lesson progress",
@@ -416,10 +415,9 @@ const vi: typeof en = {
     title: "Bài học",
     lede: (n, last) => `${n} bài, từ bảng chữ đến ôn tập ${last}. Học theo thứ tự hoặc chọn bài bạn cần.`,
     learned: "đã học",
-    state: { done: "Hoàn thành", started: "Đang học", fresh: "Chưa học" },
+    state: { done: "Đã xong ✓", started: "Đang học", fresh: "Chưa học" },
     doneOf: (x, y) => `${x}/${y} bài đã hoàn thành`,
     levelProgress: (level) => `Số bài ${level} đã hoàn thành`,
-    current: "Bài hiện tại",
     preview: "Đang chọn",
     openKanji: "Mở trang kanji",
     progress: "Tiến độ bài học",

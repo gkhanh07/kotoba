@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import broken from "../../tests/fixtures/storage.broken.json";
-import { KEEP_DAYS, continueHref, dayKey, heat, parseActivity, record, summarize } from "./activity";
+import { KEEP_DAYS, dayKey, heat, parseActivity, record, summarize } from "./activity";
 import { addDays } from "./srs";
 
 // Instants are written in UTC so the tests mean the same in any process TZ; Vietnam is UTC+7.
@@ -122,20 +122,6 @@ describe("parseActivity", () => {
   });
 });
 
-describe("continueHref", () => {
-  it("defaults to hiragana quiz", () => {
-    expect(continueHref(undefined)).toBe("/kana?script=hiragana&mode=quiz");
-  });
-  it("continues katakana", () => {
-    expect(continueHref({ area: "kana", ref: "katakana:ka" })).toBe("/kana?script=katakana&mode=quiz");
-  });
-  it("continues vocab", () => {
-    expect(continueHref({ area: "vocab", ref: "water" })).toBe("/flashcards");
-  });
-  it("continues kanji", () => {
-    expect(continueHref({ area: "kanji", ref: "kanji:日" })).toBe("/review?kind=kanji");
-  });
-});
 
 describe("logActivity", () => {
   const KEY = "kotoba.activity.v1";

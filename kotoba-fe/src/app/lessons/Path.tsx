@@ -31,17 +31,6 @@ export function Path({ stops, lang }: { stops: Stop[]; lang: Lang }) {
   const openLevel = current?.level ?? levels[0];
   return (
     <div className={s.layout}>
-      {current && (
-        <aside className={`panel ${s.now}`} data-raised="" aria-labelledby="lesson-now">
-          <h2 id="lesson-now">{t.current}</h2>
-          <p className={s.nowTitle}><span className={s.num}>{current.lesson}</span> {current.title}</p>
-          <div className={s.nowMeter}>
-            <progress className="meter" aria-label={t.progress} value={current.learned} max={current.ids.length} />
-            <span>{current.learned}/{current.ids.length} {t.learned}</span>
-          </div>
-          <Link href={`/lessons/${current.lesson}`} className="btn">{anyLearned ? t.continue : t.start} <Arrow /></Link>
-        </aside>
-      )}
       <div className={s.levels}>
         {levels.map((level) => {
           const counted = rows.filter((r) => r.level === level && r.ids.length > 0);
@@ -72,12 +61,12 @@ export function Path({ stops, lang }: { stops: Stop[]; lang: Lang }) {
                           </svg>
                         </span>
                         <span className={s.num}>{r.lesson}</span>
-                        <span className={s.title}>
-                          {r.title}
-                          {target === r.lesson && <span className={s.here}>{t.current}</span>}
-                        </span>
+                        <span className={s.title}>{r.title}</span>
                         <span className={s.state}>
-                          {srs && r.ids.length > 0 && <span className="tag" data-state={TAG_STATE[r.state]}>{t.state[r.state]}</span>}
+                          {/* AC-13: the one lesson to go on with reads as the page's one button; the row is its link. */}
+                          {target === r.lesson
+                            ? <span className="btn">{anyLearned ? t.continue : t.start} <Arrow /></span>
+                            : srs && r.ids.length > 0 && <span className="tag" data-state={TAG_STATE[r.state]}>{t.state[r.state]}</span>}
                         </span>
                         <span className={s.count}>
                           {r.ids.length > 0 && (srs ? <>{r.learned}/{r.ids.length}<span className={i === first ? undefined : "sr-only"}> {t.learned}</span></> : "—")}

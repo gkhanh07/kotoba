@@ -1,8 +1,7 @@
 // Phase 18 daily session: how many new items were learned today, which new items come next,
-// the end-of-session numbers, and where the dashboard's "continue" goes. Pure functions (ADR 004).
-import { continueHref, type Activity } from "./activity";
+// and the end-of-session numbers. Pure functions (ADR 004).
 import { currentLesson, type Stop } from "./library";
-import { isLearned, type Srs } from "./srs";
+import type { Srs } from "./srs";
 
 export const DAILY_KEY = "kotoba.daily.v1";
 // ids: items that got their first grade on `day` (a study day key).
@@ -41,20 +40,7 @@ export function sessionStats(first: Record<string, boolean>, minutes: number[]):
   return { items: grades.length, pct: grades.length ? Math.round((100 * right) / grades.length) : 0, minutes: new Set(minutes).size };
 }
 
-// Dashboard "Tiếp tục học": today's session when it has work, else back to the last area studied.
-export function continueTarget(due: number, fresh: number, last: Activity["last"]): { href: string; daily: boolean } {
-  return due + fresh > 0 ? { href: "/review?start=1", daily: true } : { href: continueHref(last), daily: false };
-}
-
 // Phase 40i (AC-16) daily plan: new items a day so the items not yet learned are all met by exam day.
 // Exam day itself is not counted; null when the exam is today, past or not set.
 export const perDayFor = (left: number, days: number | null): number | null => (days !== null && days > 0 ? Math.ceil(left / days) : null);
 
-// Dashboard stage bar: the first area, kana → kanji → vocab, with something left to learn; vocab once all are done.
-export type Area = "kana" | "kanji" | "vocab";
-export function stageOf(scope: Record<Area, string[]>, srs: Srs): { area: Area; learned: number; total: number } {
-  const areas = (["kana", "kanji", "vocab"] as const).map((area) => ({
-    area, learned: scope[area].filter((id) => isLearned(srs, id)).length, total: scope[area].length,
-  }));
-  return areas.find((a) => a.learned < a.total) ?? areas[2];
-}

@@ -17,6 +17,7 @@ test("turning romaji off hides it on the word page and stays off on the flashcar
   await romaji(page).click();
   await expect(romaji(page)).toHaveAttribute("aria-pressed", "false");
   await expect(fact(page)).toHaveCount(0);
+  await expect(page).toHaveTitle(/Kotoba/); // the toggle refreshes the page; Next streams the title back in
   await axe();
 
   await page.reload();

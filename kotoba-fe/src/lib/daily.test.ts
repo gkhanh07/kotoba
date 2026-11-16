@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { continueTarget, freshFor, perDayFor, newToday, noteNew, parseDaily, sessionStats, stageOf } from "./daily";
+import { freshFor, perDayFor, newToday, noteNew, parseDaily, sessionStats } from "./daily";
 
 const DAY = "2026-11-02";
 const card = (box: number) => ({ box, due: DAY, at: 1 });
@@ -81,35 +81,4 @@ describe("perDayFor (AC-16)", () => {
   });
 });
 
-describe("continueTarget", () => {
-  it("goes to today's session when something is due or new", () => {
-    expect(continueTarget(3, 0, undefined)).toEqual({ href: "/review?start=1", daily: true });
-    expect(continueTarget(0, 10, { area: "vocab", ref: "vocab:水" })).toEqual({ href: "/review?start=1", daily: true });
-  });
-  it("falls back to the last area when there is no work", () => {
-    expect(continueTarget(0, 0, { area: "vocab", ref: "vocab:水" })).toEqual({ href: "/flashcards", daily: false });
-    expect(continueTarget(0, 0, undefined)).toEqual({ href: "/kana?script=hiragana&mode=quiz", daily: false });
-  });
-});
 
-// Phase 37 AC-4: the stage is the first area, in order kana → kanji → vocab, with something left to learn.
-describe("stageOf", () => {
-  const SCOPE = { kana: ["hiragana:a", "hiragana:i"], kanji: ["kanji:日"], vocab: ["vocab:水", "vocab:火"] };
-  const srsOf = (ids: string[]) => Object.fromEntries(ids.map((id) => [id, card(1)]));
-  it("is kana while a kana is left", () => {
-    expect(stageOf(SCOPE, srsOf(["hiragana:a", "kanji:日"]))).toEqual({ area: "kana", learned: 1, total: 2 });
-  });
-  it("moves to kanji once every kana is learned", () => {
-    expect(stageOf(SCOPE, srsOf(["hiragana:a", "hiragana:i"]))).toEqual({ area: "kanji", learned: 0, total: 1 });
-  });
-  it("moves to vocab once kanji is done too", () => {
-    expect(stageOf(SCOPE, srsOf(["hiragana:a", "hiragana:i", "kanji:日", "vocab:水"]))).toEqual({ area: "vocab", learned: 1, total: 2 });
-  });
-  it("skips an empty area and stays on vocab, full, when everything is learned", () => {
-    expect(stageOf({ ...SCOPE, kanji: [] }, srsOf(["hiragana:a", "hiragana:i"]))).toEqual({ area: "vocab", learned: 0, total: 2 });
-    expect(stageOf(SCOPE, srsOf([...SCOPE.kana, ...SCOPE.kanji, ...SCOPE.vocab]))).toEqual({ area: "vocab", learned: 2, total: 2 });
-  });
-  it("counts a card back at box 0 as not learned", () => {
-    expect(stageOf(SCOPE, { "hiragana:a": card(0), "hiragana:i": card(1) })).toEqual({ area: "kana", learned: 1, total: 2 });
-  });
-});

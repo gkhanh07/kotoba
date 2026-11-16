@@ -3,34 +3,40 @@
 .app a:not(:global(.btn)) { color: var(--amber); text-decoration: underline; text-underline-offset: .25em; }
 .app a:not(:global(.btn)):hover { color: var(--amber-core); }
 
+/* Today (phase 41d, AC-12): greeting, then the session's parts and its one button beside the week ring, then a strip. */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
+  grid-template-areas: "title title" "session side" "strip strip";
+  align-items: start;
   gap: 1.5rem clamp(1.5rem, 4vw, 4rem);
 }
-.heading h1 { font-size: var(--fs-page); color: var(--chalk); overflow-wrap: anywhere; }
-.heading h1 span { color: var(--amber-core); text-shadow: var(--glow-amber); }
-.heading p { margin-top: .5rem; color: var(--silver); }
-.next { display: grid; justify-items: end; gap: .6rem; text-align: end; }
-.nextWhat { color: var(--chalk); font-weight: 600; font-variant-numeric: tabular-nums; }
+.title { grid-area: title; font-size: var(--fs-page); color: var(--chalk); overflow-wrap: anywhere; }
+.title span { color: var(--amber-core); text-shadow: var(--glow-amber); }
+.session { grid-area: session; display: grid; justify-items: start; gap: 1rem; min-width: 0; }
+.session h2 { font-family: var(--font-title), sans-serif; font-size: var(--fs-card); font-weight: 700; color: var(--chalk); }
+.parts { width: 100%; list-style: none; padding: 0; display: grid; font-variant-numeric: tabular-nums; }
+.parts li { display: grid; grid-template-columns: minmax(0, 1fr) auto 1.5rem; align-items: center; gap: 1rem; min-height: 44px; border-bottom: 1px solid var(--rule-dim); color: var(--chalk); }
+.parts li span:nth-child(2) { color: var(--silver); }
+.parts li[data-done] span:first-child { color: var(--silver); }
+.tick { color: var(--amber); text-align: end; }
 .resume a { display: inline-flex; align-items: center; min-height: 44px; }
-.stage {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 1rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--rule-dim);
-  font-size: var(--fs-caption);
-  color: var(--silver);
-  font-variant-numeric: tabular-nums;
-}
 
-.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-.stats dt { font-size: var(--fs-meta); color: var(--silver-dim); }
-.stats dd { margin: .35rem 0 .6rem; font-family: var(--font-title), sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--chalk); font-variant-numeric: tabular-nums; }
+.side { grid-area: side; display: grid; justify-items: center; gap: .75rem; }
+.ring { width: 8.5rem; height: 8.5rem; }
+.ringTrack { fill: none; stroke: var(--rule-dim); stroke-width: 8; }
+.ringFill { fill: none; stroke: var(--amber); stroke-width: 8; stroke-linecap: round; }
+.ringNum { fill: var(--chalk); font-family: var(--font-title), sans-serif; font-size: 26px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; }
+.ringOf { fill: var(--silver); font-size: 12px; text-anchor: middle; }
+.week { display: flex; gap: .4rem; list-style: none; padding: 0; }
+.week li { width: .75rem; height: .75rem; border-radius: 50%; border: 1px solid var(--rule-dim); }
+.week li[data-on] { background: var(--amber); border-color: var(--amber); }
+.week li[data-today] { outline: 1px solid var(--chalk); outline-offset: 2px; }
+.streak { color: var(--silver); font-size: var(--fs-caption); font-variant-numeric: tabular-nums; }
+
+.strip { grid-area: strip; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; padding-top: 1.25rem; border-top: 1px solid var(--rule-dim); }
+.strip dt { font-size: var(--fs-meta); color: var(--silver-dim); }
+.strip dd { margin-top: .35rem; color: var(--chalk); font-variant-numeric: tabular-nums; }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; align-items: start; }
 .column { display: grid; gap: 1rem; min-width: 0; }
@@ -54,11 +60,8 @@
   .layout { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
 }
 @media (max-width: 720px) {
-  .hero { grid-template-columns: minmax(0, 1fr); }
-  .next { justify-items: start; text-align: start; }
-  .stats { grid-template-columns: minmax(0, 1fr); }
-  .stage { grid-template-columns: minmax(0, 1fr) auto; }
-  .stage progress { grid-column: 1 / -1; grid-row: 2; }
+  .hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "session" "side" "strip"; }
+  .strip { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 480px) {
   .table { font-size: var(--fs-caption); }

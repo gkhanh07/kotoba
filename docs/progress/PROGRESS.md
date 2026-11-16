@@ -63,7 +63,9 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 40g Test history on the server | DONE | `feat(progress): phase 40g test history on the server`; Codex review found 4 bugs (one let a push write to another account), all fixed |
 | 40h Placement test | DONE | `feat(onboarding): phase 40h placement test`; Codex review found no bugs |
 | 40i Studied items, daily plan | DONE | `feat(progress): phase 40i studied items and daily plan`; Codex review: 3 bugs fixed |
-| 41–42 | TODO | see PLAN and the phase 40 spec |
+| 41 content: grammar sentence parts, KanjiVG paths | DONE | `feat(content): phase 41 grammar sentence parts and KanjiVG stroke paths` (ADR 015) |
+| 41a–e Study session, results + XP, Today, path | DONE | `feat(session): phase 41a-e study session, results, XP, today page and path` (ADR 013, 014); Codex review: 3 P2 on 41d fixed (stale saved session, `graded` ignored, "Ôn lại" link), 1 P3 on 41e recorded as a deviation |
+| 41f–k, 42 | TODO | spec `docs/phases/41-ux-restructure.md` |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 

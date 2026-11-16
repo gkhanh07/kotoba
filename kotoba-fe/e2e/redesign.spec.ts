@@ -73,7 +73,7 @@ test("the dashboard has one amber next action and a side column on desktop", asy
   await expect(progress).toBeVisible({ timeout: 15_000 });
   const amber = page.locator("main a.btn:not(.btnGhost), main button.btn:not(.btnGhost)");
   await expect(amber).toHaveCount(1);
-  await expect(amber).toHaveText(/Tiếp tục học/);
+  await expect(amber).toHaveText(/Học bài mới/);
 
   const upcoming = page.getByRole("region", { name: "Sắp tới" });
   const [main, side] = [await progress.boundingBox(), await upcoming.boundingBox()];
@@ -104,18 +104,17 @@ test("/lessons opens the current level, counts finished lessons exactly and mark
   await expect(n5.locator("details")).toHaveAttribute("open", "");
   for (const level of [4, 3]) await expect(page.getByRole("region", { name: `N${level}` }).locator("details")).not.toHaveAttribute("open", "");
 
-  // AC-3.2: state as text, and the current lesson marked.
+  // AC-3.2 / 41e AC-13: state as text; the current lesson's row carries the page's one button.
   const rows = n5.getByRole("listitem");
-  await expect(rows.nth(0).getByText("Hoàn thành", { exact: true })).toBeVisible();
+  await expect(rows.nth(0).getByText("Đã xong ✓", { exact: true })).toBeVisible();
   await expect(rows.nth(0)).toContainText(`${idsOf(1).length}/${idsOf(1).length}`);
-  await expect(rows.nth(1).getByText("Đang học", { exact: true })).toBeVisible();
   await expect(rows.nth(1)).toContainText(`1/${idsOf(2).length}`);
   await expect(rows.nth(2).getByText("Chưa học", { exact: true })).toBeVisible();
   await expect(page.locator('a[aria-current="step"]')).toHaveAttribute("href", "/lessons/2");
-  const amber = page.locator("main a.btn:not(.btnGhost), main button.btn:not(.btnGhost)");
+  const amber = page.locator("main .btn:not(.btnGhost)");
   await expect(amber).toHaveCount(1);
   await expect(amber).toHaveText(/Học tiếp/);
-  await expect(amber).toHaveAttribute("href", "/lessons/2");
+  await expect(page.locator('a[aria-current="step"] .btn')).toHaveCount(1);
   await axe();
 });
 

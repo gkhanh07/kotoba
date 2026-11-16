@@ -2,15 +2,9 @@
 .heading h1 { font-size: var(--fs-page); color: var(--chalk); }
 .heading p { margin-top: .75rem; color: var(--silver); max-width: 65ch; }
 
-/* ── path: one panel per level, a train line inside, the current lesson beside it from 1100px ── */
-.layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin-top: 2rem; align-items: start; }
+/* ── path: one panel per level, a train line inside; the current lesson carries the one button ── */
+.layout { margin-top: 2rem; }
 .levels { display: grid; gap: 1rem; min-width: 0; }
-.now { display: grid; gap: .9rem; }
-.now h2 { font-size: var(--fs-meta); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--silver); }
-.nowTitle { font-family: var(--font-title), sans-serif; font-size: var(--fs-section); font-weight: 700; color: var(--chalk); overflow-wrap: anywhere; }
-.nowTitle .num { margin-right: .4rem; font-size: inherit; color: var(--amber-core); }
-.nowMeter { display: grid; gap: .4rem; color: var(--silver); font-size: var(--fs-caption); font-variant-numeric: tabular-nums; }
-.now :global(.btn) { justify-self: start; }
 
 .level :global(details.panel) { padding: 0; }
 .summary { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .6rem 1.25rem; min-height: 64px; padding: .9rem var(--space-panel); cursor: pointer; list-style: none; border-radius: var(--radius); transition: background-color var(--dur-fast) var(--ease-out); }
@@ -25,11 +19,10 @@ details[open] > .summary::after { transform: rotate(45deg); }
 details[open] > .summary { border-bottom: 1px solid var(--rule-dim); border-radius: var(--radius) var(--radius) 0 0; }
 
 .path { margin: 0; padding: .5rem 0; list-style: none; }
-.row { display: grid; grid-template-columns: 2rem 2.5rem minmax(0, 1fr) 7.5rem 6rem; align-items: center; gap: 0 1rem; min-height: 56px; padding: 0 var(--space-panel) 0 .75rem; color: var(--silver); text-decoration: none; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.row { display: grid; grid-template-columns: 2rem 2.5rem minmax(0, 1fr) 9rem 6rem; align-items: center; gap: 0 1rem; min-height: 56px; padding: 0 var(--space-panel) 0 .75rem; color: var(--silver); text-decoration: none; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
 .row:hover { background: var(--surface-2); color: var(--chalk); }
 .row[aria-current] { background: var(--surface-3); color: var(--chalk); }
 .title { min-width: 0; overflow-wrap: anywhere; }
-.here { display: block; margin-top: .15rem; color: var(--amber-core); font-size: var(--fs-meta); font-weight: 600; }
 .state { justify-self: start; }
 /* --y is where the mark sits: the row's middle on desktop, the title line on mobile. */
 .station { --y: 50%; position: relative; align-self: stretch; }
@@ -48,11 +41,6 @@ details[open] > .summary { border-bottom: 1px solid var(--rule-dim); border-radi
 .num { color: var(--silver); font-size: var(--fs-caption); font-variant-numeric: tabular-nums; text-align: right; }
 .count { color: var(--silver); font-size: var(--fs-caption); font-variant-numeric: tabular-nums; text-align: right; }
 
-@media (min-width: 1100px) {
-  .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); }
-  .now { grid-column: 2; grid-row: 1; position: sticky; top: 5rem; }
-  .levels { grid-column: 1; grid-row: 1; }
-}
 @media (max-width: 700px) {
   .row { grid-template-columns: 2rem 2rem minmax(0, 1fr) auto; padding: .6rem 1rem .6rem .25rem; min-height: 64px; }
   .station { --y: calc(.6rem + .5lh); grid-row: 1 / span 2; margin: -.6rem 0; }

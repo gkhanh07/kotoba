@@ -6,7 +6,7 @@ import { BE_PORT } from "./backend";
 import { expect, test } from "./fixtures";
 
 // Phase 18: bare /review is today's session (due items + up to 10 new items of the current lesson),
-// and the dashboard's "Tiếp tục học" leads there when it has work.
+// and the home page counts the new items it brings in.
 type Kana = { id: string; char: string; lesson: number };
 const KANA = JSON.parse(readFileSync(resolve(process.cwd(), "../kotoba-be/content/kana.json"), "utf8")) as Kana[];
 const LESSON_1 = KANA.filter((k) => k.lesson === 1);
@@ -60,7 +60,7 @@ test("a new guest gets 10 new kana of lesson 1, and after one pass only the miss
   expect(be).toEqual([]);
 });
 
-test("the dashboard's Tiếp tục học opens today's session with its counts", async ({ page, axe }, info) => {
+test("the home page lists today's new items and counts down as they are learned", async ({ page, axe }, info) => {
   const be = watchBackend(page);
   // kotoba-be allows 10 sign-ups per IP per hour and the other specs already use them; this test is
   // its own client (src/lib/auth.ts reads the IP from x-forwarded-for).
@@ -75,17 +75,18 @@ test("the dashboard's Tiếp tục học opens today's session with its counts",
   await page.getByRole("link", { name: "Để sau" }).click();
   await expect(page).toHaveURL(/\/$/);
 
-  await expect(page.getByText(`Phiên hôm nay: 0 đến hạn · ${NEW_PER_DAY} mới`)).toBeVisible();
-  const go = page.getByRole("link", { name: "Tiếp tục học" });
-  await expect(go).toHaveAttribute("href", "/review?start=1");
+  // Phase 41d: the home page lists today's session part by part behind one button to /session.
+  const fresh = page.getByRole("region", { name: "Phiên học hôm nay" }).getByRole("listitem").filter({ hasText: "Từ mới" });
+  await expect(fresh).toContainText(`${NEW_PER_DAY} mục`);
+  const go = page.getByRole("link", { name: /Học bài mới · \d+ phút/ });
+  await expect(go).toHaveAttribute("href", "/session");
   await axe();
-  await go.click();
-  await expect(page).toHaveURL(/\/review\?start=1$/);
+  await page.goto("/review?start=1");
   await expect(page.getByText(`Còn ${NEW_PER_DAY} mục · Kana ${NEW_PER_DAY}`)).toBeVisible();
 
-  // One new item learned: the dashboard offers the 9 left.
+  // One new item learned: the home page offers the 9 left.
   await grade(page, true);
   await page.goto("/");
-  await expect(page.getByText(`Phiên hôm nay: 0 đến hạn · ${NEW_PER_DAY - 1} mới`)).toBeVisible();
+  await expect(fresh).toContainText(`${NEW_PER_DAY - 1} mục`);
   expect(be).toEqual([]);
 });

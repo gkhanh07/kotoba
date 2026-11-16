@@ -25,17 +25,18 @@ function studyClock(d: Date): { day: string; minute: number } {
 export const dayKey = (d: Date): string => studyClock(d).day;
 
 // ponytail: minutes = distinct minutes with an answer or flip, a lower bound. Real session timing when the API exists.
-export function record(a: Activity, area: Area, ref: string, now: Date): Activity {
+// No area (a grammar step): the minute counts, no item list or "last" changes — the server merges kana/vocab/kanji only.
+export function record(a: Activity, area: Area | undefined, ref: string, now: Date): Activity {
   const { day: key, minute } = studyClock(now);
   const prev = a.days[key] ?? { minutes: [], kana: [], vocab: [] };
   const day: Day = {
     ...prev,
     minutes: prev.minutes.includes(minute) ? prev.minutes : [...prev.minutes, minute],
-    [area]: prev[area]?.includes(ref) ? prev[area] : [...(prev[area] ?? []), ref],
+    ...(area && { [area]: prev[area]?.includes(ref) ? prev[area] : [...(prev[area] ?? []), ref] }),
   };
   const oldest = addDays(key, -KEEP_DAYS);
   const days = Object.fromEntries(Object.entries({ ...a.days, [key]: day }).filter(([k]) => k >= oldest));
-  return { days, last: { area, ref } };
+  return { days, last: area ? { area, ref } : a.last };
 }
 
 const strings = (v: unknown) => Array.isArray(v) && v.every((x) => typeof x === "string");
@@ -60,7 +61,7 @@ export function parseActivity(raw: string | null): Activity | null {
 }
 
 // Corrupt log → keep a copy, then start fresh (ADR 008).
-export function logActivity(area: Area, ref: string): void {
+export function logActivity(area?: Area, ref = ""): void {
   try {
     const raw = localStorage.getItem(ACTIVITY_KEY);
     const a = parseActivity(raw);
@@ -101,12 +102,6 @@ export function summarize(a: Activity, now: Date): Summary {
     recent,
     last: a.last,
   };
-}
-
-export function continueHref(last: Activity["last"]): string {
-  if (last?.area === "vocab") return "/flashcards";
-  if (last?.area === "kanji") return "/review?kind=kanji";
-  return `/kana?script=${last?.ref.startsWith("katakana:") ? "katakana" : "hiragana"}&mode=quiz`;
 }
 
 // Heatmap (phase 20): HEAT_WEEKS Monday-first columns, the last one holding today; days after today are null.

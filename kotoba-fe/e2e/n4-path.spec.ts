@@ -46,6 +46,6 @@ test("after all of N5, the dashboard offers today's session with 10 new N4 items
   await expect(page).toHaveURL(/\/onboarding/);
   await page.getByRole("link", { name: "Để sau" }).click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.getByText("Phiên hôm nay: 0 đến hạn · 10 mới")).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByRole("link", { name: "Tiếp tục học" })).toHaveAttribute("href", "/review?start=1");
+  await expect(page.getByRole("region", { name: "Phiên học hôm nay" }).getByRole("listitem").filter({ hasText: "Ôn tập" })).toContainText("—", { timeout: 15_000 });
+  await expect(page.getByRole("link", { name: /Học bài mới · \d+ phút/ })).toHaveAttribute("href", "/session");
 });

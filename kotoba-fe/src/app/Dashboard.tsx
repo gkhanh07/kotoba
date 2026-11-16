@@ -5,11 +5,13 @@ import { useMemo, useSyncExternalStore } from "react";
 import { examDate, examDay, type Profile } from "@/lib/account";
 import { ACTIVITY_KEY, heat, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
+import { DEFAULT_MINUTES } from "@/config/session";
 import { NEW_PER_DAY, WEAK_LIST_SIZE } from "@/config/srs";
 import { STUDY_TIME_ZONE } from "@/config/time";
-import { continueTarget, freshFor, perDayFor, stageOf, type Area } from "@/lib/daily";
-import type { Stop } from "@/lib/library";
-import { INTERVALS, daysUntil, dueCount, isLearned } from "@/lib/srs";
+import { perDayFor } from "@/lib/daily";
+import { currentLesson, stopsOf, type Grammar, type Kind } from "@/lib/library";
+import { buildSession, minutesFor, parseSession, partsOf, resumable, runsIn, SESSION_KEY, todayOf, type Part } from "@/lib/session";
+import { INTERVALS, addDays, daysUntil, dueCount, isLearned } from "@/lib/srs";
 import { weakItems, type ItemLink } from "@/lib/weak";
 import { learnedToday, today, useDeck } from "@/lib/store";
 import { headline, remaining, type TestScore } from "@/lib/test";
@@ -28,6 +30,19 @@ function Arrow() {
   );
 }
 
+// Today's minutes against the goal: an arc that fills, the numbers inside. One label for screen readers.
+const R = 42, C = 2 * Math.PI * R;
+function Ring({ minutes, goal, label }: { minutes: number; goal: number; label: (m: number, g: number) => string }) {
+  return (
+    <svg className={s.ring} viewBox="0 0 100 100" role="img" aria-label={label(minutes, goal)}>
+      <circle cx="50" cy="50" r={R} className={s.ringTrack} />
+      <circle cx="50" cy="50" r={R} className={s.ringFill} strokeDasharray={`${C * Math.min(1, minutes / goal)} ${C}`} transform="rotate(-90 50 50)" />
+      <text x="50" y="50" className={s.ringNum}>{minutes}</text>
+      <text x="50" y="68" className={s.ringOf}>/ {goal}</text>
+    </svg>
+  );
+}
+
 const subscribe = (notify: () => void) => {
   window.addEventListener("storage", notify);
   return () => window.removeEventListener("storage", notify);
@@ -42,8 +57,10 @@ function useStored(key: string) {
 }
 
 
-export function Dashboard({ lang, name, profile, scope, tests, scores = [], fronts, stops }: {
-  fronts: Record<string, ItemLink>; stops: Stop[];
+export function Dashboard({ lang, name, profile, scope, tests, scores = [], fronts, items, grammar }: {
+  fronts: Record<string, ItemLink>;
+  /** What /session builds from (phase 41d): the goal's items with their lesson, and its grammar. */
+  items: { id: string; kind: Kind; lesson: number }[]; grammar: Grammar[];
   lang: Lang; name: string; profile: Profile | null; scope: { kana: string[]; kanji: string[]; vocab: string[] };
   tests: { id: string; title: string; minutes: number }[];
   /** The account's mock test scores, newest first (phase 40g); papers no longer listed are left out. */
@@ -54,6 +71,7 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
   const taken = scores.filter((r) => titles.has(r.testId));
   const deck = useDeck();
   const activityRaw = useStored(ACTIVITY_KEY);
+  const sessionRaw = useStored(SESSION_KEY);
 
   const data = useMemo(() => {
     if (!deck || activityRaw === undefined) return null;
@@ -67,8 +85,17 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
     // Only cards of items in scope: one whose item left the content (or the goal) is never offered for review.
     const kanaDue = dueCount(srs, day, scope.kana), kanjiDue = dueCount(srs, day, scope.kanji), vocabDue = dueCount(srs, day, scope.vocab);
     const dueTotal = kanaDue + kanjiDue + vocabDue;
-    const fresh = freshFor(stops, srs, learnedToday(), NEW_PER_DAY).ids.length;
     const summary = summarize(activity, now);
+    const kinds = new Map(items.map((i) => [i.id, i.kind]));
+    // The same session /session would resume or build, so the parts and minutes here are what the button opens.
+    const session = todayOf(
+      resumable(parseSession(sessionRaw === "!unavailable" ? null : (sessionRaw ?? null), day, "full"), runsIn(items, grammar)),
+      buildSession({ items, grammar, srs, today: day, learnedToday: learnedToday(), perDay: NEW_PER_DAY, mode: "full" }),
+    );
+    const stops = stopsOf(items);
+    const lesson = currentLesson(stops, srs);
+    const stop = stops.find((p) => p.lesson === lesson);
+    const log = activity.days;
     return {
       bad,
       now,
@@ -82,16 +109,19 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
       dueTotal,
       // Everything in the goal's scope not yet learned: what the daily plan has to cover by exam day.
       left: [...scope.kana, ...scope.kanji, ...scope.vocab].filter((id) => !learned(id)).length,
-      stage: stageOf(scope, srs),
       weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
-      fresh,
       summary,
       heat: heat(activity, day),
-      next: continueTarget(dueTotal, fresh, summary.last),
+      session,
+      parts: partsOf(session.steps, session.state === "done" ? session.steps.length : session.index, (id) => kinds.get(id)),
+      minutesLeft: minutesFor(session.steps.slice(session.index)),
+      week: [6, 5, 4, 3, 2, 1, 0].map((n) => addDays(day, -n)).map((d) => ({ day: d, minutes: log[d]?.minutes.length ?? 0 })),
+      lesson: lesson === undefined || !stop ? null : { lesson, pct: Math.round((100 * stop.ids.filter(learned).length) / stop.ids.length) },
+      tomorrow: dueCount(srs, addDays(day, 1), [...scope.kana, ...scope.kanji, ...scope.vocab]),
       at: now.getTime(),
       attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
     };
-  }, [deck, activityRaw, fronts, stops, scope]);
+  }, [deck, activityRaw, sessionRaw, fronts, items, grammar, scope]);
   const paper = data?.attempt && tests.find((p) => p.id === data.attempt?.id);
   // Past the deadline the attempt is submitted on open, so "continue" would be a false promise.
   const resume = paper && data.attempt && remaining(data.attempt.session.startedAt, paper.minutes, data.at) > 0 ? paper : undefined;
@@ -105,48 +135,62 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
   return (
     <main className={s.app}>
       <section className={`panel ${s.hero}`} data-raised="" aria-labelledby="dash-title">
-        <header className={s.heading}>
-          <h1 id="dash-title">{data && <><span lang="ja">{greet(data.now.getHours())}</span>, </>}{name}</h1>
-          <p>
-            {!goal ? <Link href="/onboarding">{t.setGoal}</Link>
-              : days !== null && days > 0 ? t.goal(goal, days)
-              : days === 0 ? t.goalToday(goal)
-              : t.goalOnly(goal)}
-          </p>
-        </header>
+        <h1 id="dash-title" className={s.title}>{data && <><span lang="ja">{greet(data.now.getHours())}</span>, </>}{name}</h1>
 
         {!data ? <p role="status" className={s.note}>{t.loading}</p> : (
-          <div className={s.next}>
-            <p className={s.nextWhat}>{data.next.daily ? t.continueDaily(data.dueTotal, data.fresh) : t.continueWhat(data.summary.last)}</p>
-            <Link className="btn" href={data.next.href}>{t.continue} <Arrow /></Link>
-            {resume && data.attempt && (
-              <p className={s.resume}>
-                <Link href={`/test/${resume.id}`}>{testText[lang].resume(resume.title, data.attempt.session.current + 1, data.attempt.session.answers.length)}</Link>
-              </p>
-            )}
-          </div>
-        )}
+          <>
+            <section className={s.session} aria-labelledby="dash-session">
+              <h2 id="dash-session">{t.session}</h2>
+              <ol className={s.parts}>
+                {data.parts.map((p) => (
+                  <li key={p.part} data-done={p.done || undefined}>
+                    <span>{t.part[p.part]}</span>
+                    <span>{p.count ? t.partLine(p.count, p.minutes) : "—"}</span>
+                    <span className={s.tick}>{p.done && <>✓<span className="sr-only">{t.partDone}</span></>}</span>
+                  </li>
+                ))}
+              </ol>
+              <Link className="btn" href={data.session.state === "done" && data.session.steps.length === 0 ? "/learned" : "/session"}>
+                {data.session.state === "resume" ? t.resume
+                  : data.session.state === "done" ? t.again
+                  : data.parts[0].count === 0 ? t.learnNew(data.minutesLeft)
+                  : t.start(data.minutesLeft)} <Arrow />
+              </Link>
+              {resume && data.attempt && (
+                <p className={s.resume}>
+                  <Link href={`/test/${resume.id}`}>{testText[lang].resume(resume.title, data.attempt.session.current + 1, data.attempt.session.answers.length)}</Link>
+                </p>
+              )}
+            </section>
 
-        {data && (
-          <div className={s.stage}>
-            <span>{t.stage(data.stage.area)}</span>
-            <progress className="meter" aria-label={t.stage(data.stage.area)} value={data.stage.learned} max={data.stage.total} />
-            <span>{data.stage.learned} / {data.stage.total}</span>
-          </div>
+            <aside className={s.side} aria-label={t.week}>
+              <Ring minutes={data.summary.minutesToday} goal={profile?.minutes ?? DEFAULT_MINUTES} label={t.ring} />
+              <ol className={s.week}>
+                {data.week.map((d) => (
+                  <li key={d.day} data-on={d.minutes > 0 || undefined} data-today={d.day === data.day || undefined}>
+                    <span className="sr-only">{t.dot(`${d.day.slice(8)}/${d.day.slice(5, 7)}`, d.minutes)}</span>
+                  </li>
+                ))}
+              </ol>
+              <p className={s.streak}>{t.streak(data.summary.streak)}</p>
+            </aside>
+
+            <dl className={s.strip}>
+              <div><dt>{t.lessonLabel}</dt><dd>{data.lesson ? t.lesson(data.lesson.lesson, data.lesson.pct) : t.allDone}</dd></div>
+              <div><dt>{t.tomorrowLabel}</dt><dd>{t.tomorrow(data.tomorrow)}</dd></div>
+              <div>
+                <dt>{t.goalLabel}</dt>
+                <dd>{!goal ? <Link href="/onboarding">{t.setGoal}</Link>
+                  : exam && days !== null && days >= 0 ? `${goal} · ${dateOf(exam, lang)} · ${days > 0 ? t.daysLeft(days) : t.examToday}`
+                  : goal}</dd>
+              </div>
+            </dl>
+          </>
         )}
       </section>
 
       {data && (
         <>
-          <dl className={s.stats}>
-            <div className="panel"><dt>{t.streakLabel}</dt><dd>{t.streak(data.summary.streak)}</dd></div>
-            <div className="panel">
-              <dt>{t.minutesLabel}</dt>
-              <dd>{t.minutes(data.summary.minutesToday, profile?.minutes)}</dd>
-              {profile?.minutes && <progress className="meter" aria-label={t.minutesLabel} value={Math.min(data.summary.minutesToday, profile.minutes)} max={profile.minutes} />}
-            </div>
-            <div className="panel"><dt>{t.review}</dt><dd>{data.dueTotal}</dd></div>
-          </dl>
 
           <div className={s.layout}>
             <div className={s.column}>
@@ -184,7 +228,7 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
               <section className={`panel ${s.section}`} aria-labelledby="dash-upcoming">
                 <h2 id="dash-upcoming">{t.upcoming}</h2>
                 {exam && days !== null && days >= 0 ? (
-                  <p>{t.exam(goal)} · {new Intl.DateTimeFormat(lang === "vi" ? "vi-VN" : "en-GB", { weekday: "long", day: "numeric", month: "numeric", year: "numeric" }).format(exam)}</p>
+                  <p>{t.exam(goal)} · {dateOf(exam, lang)}</p>
                 ) : (
                   <p className={s.list}><span>{exam ? t.examPast : t.examNone}</span> <Link href="/onboarding">{t.pick}</Link></p>
                 )}
@@ -231,22 +275,32 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
 // dd/mm in the study time zone, so the server render and the browser agree.
 const dayOf = (at: number) => new Date(at).toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", timeZone: STUDY_TIME_ZONE });
 
+const dateOf = (d: Date, lang: Lang) => new Intl.DateTimeFormat(lang === "vi" ? "vi-VN" : "en-GB", { weekday: "long", day: "numeric", month: "numeric", year: "numeric" }).format(d);
+
 const greet = (hour: number) => (hour >= 5 && hour < 10 ? "おはよう" : hour >= 10 && hour < 18 ? "こんにちは" : "こんばんは");
 
 const vi = {
-  goal: (g: string, n: number) => `Mục tiêu ${g} · còn ${n} ngày tới kỳ thi`,
-  goalToday: (g: string) => `Mục tiêu ${g} · thi hôm nay`,
-  goalOnly: (g: string) => `Mục tiêu ${g}`,
-  setGoal: "Đặt mục tiêu",
-  stage: (a: Area) => `Chặng hiện tại: ${({ kana: "Kana", kanji: "Kanji", vocab: "Từ vựng" })[a]}`,
-  streakLabel: "Chuỗi ngày học",
+  session: "Phiên học hôm nay",
+  part: { review: "Ôn tập", new: "Từ mới", kanji: "Kanji", grammar: "Ngữ pháp", practice: "Luyện tập" } as Record<Part, string>,
+  partLine: (n: number, min: number) => `${n} mục · ~${min} phút`,
+  partDone: "đã xong",
+  start: (min: number) => `Bắt đầu · ${min} phút`,
+  learnNew: (min: number) => `Học bài mới · ${min} phút`,
+  resume: "Tiếp tục phiên dở",
+  again: "Ôn lại từ hôm nay",
+  week: "Tuần này",
+  ring: (m: number, g: number) => `${m} trên ${g} phút mục tiêu hôm nay`,
+  dot: (d: string, m: number) => (m ? `${d}: ${m} phút` : `${d}: chưa học`),
   streak: (n: number) => `${n} ngày liên tục`,
-  minutesLabel: "Thời gian học",
-  minutes: (m: number, goal?: number) => (goal ? `${m} / ${goal} phút hôm nay` : `${m} phút hôm nay`),
-  continue: "Tiếp tục học",
-  continueDaily: (due: number, fresh: number) => `Phiên hôm nay: ${due} đến hạn · ${fresh} mới`,
-  continueWhat: (last: Activity["last"]): string =>
-    !last ? "Bắt đầu với Hiragana" : last.area === "vocab" ? "Thẻ từ vựng" : last.area === "kanji" ? "Ôn kanji" : last.ref.startsWith("katakana:") ? "Trắc nghiệm Katakana" : "Trắc nghiệm Hiragana",
+  lessonLabel: "Đang học",
+  lesson: (n: number, pct: number) => `Bài ${n} · ${pct}%`,
+  allDone: "Đã học hết",
+  tomorrowLabel: "Ôn ngày mai",
+  tomorrow: (n: number) => `${n} thẻ`,
+  goalLabel: "Mục tiêu",
+  setGoal: "Đặt mục tiêu",
+  daysLeft: (n: number) => `còn ${n} ngày`,
+  examToday: "thi hôm nay",
   progress: "Tiến độ",
   area: "Phần",
   vocab: "Từ vựng",
@@ -280,19 +334,27 @@ const vi = {
 };
 
 const en: typeof vi = {
-  goal: (g, n) => `Goal ${g} · ${n} days to the exam`,
-  goalToday: (g) => `Goal ${g} · exam today`,
-  goalOnly: (g) => `Goal ${g}`,
-  setGoal: "Set a goal",
-  stage: (a) => `Current stage: ${({ kana: "Kana", kanji: "Kanji", vocab: "Vocabulary" })[a]}`,
-  streakLabel: "Streak",
+  session: "Today’s session",
+  part: { review: "Review", new: "New words", kanji: "Kanji", grammar: "Grammar", practice: "Practice" },
+  partLine: (n, min) => `${n} ${n === 1 ? "item" : "items"} · ~${min} min`,
+  partDone: "done",
+  start: (min) => `Start · ${min} min`,
+  learnNew: (min) => `Learn new · ${min} min`,
+  resume: "Resume session",
+  again: "Go over today’s items",
+  week: "This week",
+  ring: (m, g) => `${m} of ${g} goal minutes today`,
+  dot: (d, m) => (m ? `${d}: ${m} min` : `${d}: no study`),
   streak: (n) => `${n}-day streak`,
-  minutesLabel: "Study time",
-  minutes: (m, goal) => (goal ? `${m} / ${goal} min today` : `${m} min today`),
-  continue: "Continue learning",
-  continueDaily: (due, fresh) => `Today’s session: ${due} due · ${fresh} new`,
-  continueWhat: (last) =>
-    !last ? "Start with Hiragana" : last.area === "vocab" ? "Flashcards" : last.area === "kanji" ? "Kanji review" : last.ref.startsWith("katakana:") ? "Katakana quiz" : "Hiragana quiz",
+  lessonLabel: "Studying",
+  lesson: (n, pct) => `Lesson ${n} · ${pct}%`,
+  allDone: "All learned",
+  tomorrowLabel: "Due tomorrow",
+  tomorrow: (n) => `${n} ${n === 1 ? "card" : "cards"}`,
+  goalLabel: "Goal",
+  setGoal: "Set a goal",
+  daysLeft: (n) => `${n} days left`,
+  examToday: "exam today",
   progress: "Progress",
   area: "Area",
   vocab: "Vocabulary",

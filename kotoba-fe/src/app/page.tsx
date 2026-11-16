@@ -6,7 +6,7 @@ import { dict } from "@/lib/i18n";
 import { currentUser, testHistory } from "@/lib/auth";
 import type { CSSProperties } from "react";
 import { getGrammar, getKana, getKanji, getLessons, getTests, getVocab } from "@/lib/content";
-import { goalScope, LEVELS, levelLabel, stopsOf } from "@/lib/library";
+import { goalScope, LEVELS, levelLabel } from "@/lib/library";
 import { INTERVALS, KNOWN_AT } from "@/lib/srs";
 import { itemLinks } from "@/lib/weak";
 import { Dashboard } from "./Dashboard";
@@ -111,19 +111,24 @@ export default async function Home() {
   const lang = await getLang();
   const user = await currentUser();
   if (user) {
-    const [kana, kanji, vocab, tests, scores] = await Promise.all([getKana(), getKanji(), getVocab(), getTests(), testHistory()]);
+    const [kana, kanji, vocab, grammar, tests, scores] = await Promise.all([getKana(), getKanji(), getVocab(), getGrammar(), getTests(), testHistory()]);
     // Fronts and detail links for the "Hay sai" block; the weak ids are only known in the browser.
     const fronts = itemLinks(kana, kanji, vocab);
     const goal = user.profile?.goal;
     const idsOf = (items: { id: string }[]) => items.map((item) => item.id);
-    // Same scope as /review's daily session, so "N new" here is what that session brings in.
+    // Same scope and order as /session, so the parts shown here are what its button opens.
     const inGoal = { kanji: goalScope(kanji, goal), vocab: goalScope(vocab, goal) };
     return (
       <>
         <SiteBar />
         <Dashboard
           fronts={fronts}
-          stops={stopsOf([...kana, ...inGoal.kanji, ...inGoal.vocab])}
+          items={[
+            ...goalScope(kana.map((k) => ({ ...k, level: 5 })), goal).map((k) => ({ id: k.id, kind: "kana" as const, lesson: k.lesson })),
+            ...inGoal.vocab.map((w) => ({ id: w.id, kind: "vocab" as const, lesson: w.lesson })),
+            ...inGoal.kanji.map((k) => ({ id: k.id, kind: "kanji" as const, lesson: k.lesson })),
+          ]}
+          grammar={goalScope(grammar, goal)}
           lang={lang}
           name={user.profile?.name ?? user.email.split("@")[0]}
           profile={user.profile}
