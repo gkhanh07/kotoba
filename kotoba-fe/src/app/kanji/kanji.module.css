@@ -31,7 +31,7 @@
 .tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3rem; min-height: 5.5rem; padding: .5rem .25rem; border: 1px solid var(--rule-dim); color: var(--silver); text-decoration: none; transition: background-color 160ms, color 160ms; }
 .tile:hover { border-color: var(--rule); background: var(--wet); color: var(--amber-core); }
 .char { font-family: var(--font-kana); font-size: 2rem; line-height: 1.1; }
-.hv { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--silver-dim); border-bottom: 1px solid transparent; }
+.hv { font-size: var(--fs-meta); letter-spacing: .06em; text-transform: uppercase; color: var(--silver-dim); border-bottom: 1px solid transparent; }
 .wait, .none { margin-top: 2.5rem; color: var(--silver-dim); }
 
 /* ── detail ───────────────────────────────────── */

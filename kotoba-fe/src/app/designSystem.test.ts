@@ -68,6 +68,17 @@ describe("design system tokens (AC-1.1)", () => {
     }
   });
 
+  it("mixes translucent colours from tokens, never a raw rgba() (phase 42)", () => {
+    // The hero's scanline mask is an alpha stencil, like its #000: not a colour.
+    const srcDir = dirname(dirname(fileURLToPath(import.meta.url)));
+    const sheets = readdirSync(srcDir, { recursive: true, encoding: "utf8" }).filter((f) => f.endsWith(".css"));
+    for (const file of sheets) {
+      const text = readFileSync(join(srcDir, file), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+      const raw = [...text.matchAll(/rgba?\([^)]*\)/gi)].map(([m]) => m);
+      expect(raw, file).toEqual(file.replaceAll("\\", "/") === "app/page.module.css" ? ["rgba(0, 0, 0, 0.3)", "rgba(0, 0, 0, 0.3)"] : []);
+    }
+  });
+
   it.each(ADR_010_TOKENS)("defines --%s from existing tokens, not a new colour", (token) => {
     const match = globals.match(new RegExp(`--${token}:([^;]+);`));
     expect(match, `--${token} is missing`).not.toBeNull();
@@ -83,6 +94,22 @@ describe("design system tokens (AC-1.1)", () => {
 
   it("keeps the readable floor: the smallest type token is 13px", () => {
     expect(globals).toContain("--fs-meta: 0.8125rem;");
+  });
+
+  it("keeps every stylesheet at or above the floor (phase 42)", () => {
+    // Sizes whose rendered px the file alone can't tell, each checked by hand:
+    // SVG viewBox units (ring 12/100 at 8.5rem ≈ 16.3px; stroke number 8/109 at 11.25rem ≈ 13.2px),
+    // and em, which follows its parent (the home kbd's 0.88em sits in ≥16px body text ≈ 14px).
+    const CHECKED = ["app/dashboard.module.css 12px", "app/strokes.module.css 8px", "app/page.module.css 0.88em"];
+    const srcDir = dirname(dirname(fileURLToPath(import.meta.url)));
+    for (const file of readdirSync(srcDir, { recursive: true, encoding: "utf8" }).filter((f) => f.endsWith(".css"))) {
+      const text = readFileSync(join(srcDir, file), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+      for (const [, n, unit] of text.matchAll(/font-size\s*:\s*([\d.]+)(rem|em|px)/gi)) {
+        const u = unit.toLowerCase();
+        const px = Number(n) * (u === "px" ? 1 : 16);
+        if (px < 13 || (u === "em" && Number(n) < 1)) expect(CHECKED, `${file}: ${n}${unit}`).toContain(`${file.replaceAll("\\", "/")} ${n}${unit}`);
+      }
+    }
   });
 
   it("uses --shadow-float only on the floating layer class", () => {

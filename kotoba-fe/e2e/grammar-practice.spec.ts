@@ -3,7 +3,7 @@ import { expect, test } from "./fixtures";
 // Phase 40e (AC-10/11): fill-in-the-blank from a point's examples; the answer goes into SRS as grammar:<slug>.
 test("grammar practice: reached from the grammar list, an answer is scheduled and explained", async ({ page, axe }) => {
   await page.goto("/grammar?level=5");
-  await page.getByRole("link", { name: "Luyện tập" }).click();
+  await page.getByRole("main").getByRole("link", { name: "Luyện tập" }).click();
   await expect(page).toHaveURL(/\/grammar\/practice\?level=5$/);
   await expect(page.getByRole("heading", { level: 1, name: "Luyện ngữ pháp N5" })).toBeVisible();
   const choices = page.getByRole("group", { name: "Phần nào điền vào chỗ trống?" }).getByRole("button");

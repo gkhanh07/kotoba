@@ -19,6 +19,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 - `npm run check`: lint, typecheck, Vitest with coverage, build.
 - `npm run test:e2e`: Playwright on mobile and desktop. It starts kotoba-be (throwaway `e2e.db`) and this app itself. `e2e/sync-status.spec.ts` stops and restarts kotoba-be to test the sync status during an outage, so it needs `lsof` and a built `kotoba-be/dist` (the first webServer start builds it).
+- `SCREENS=1 npx playwright test e2e/screens.spec.ts --project=desktop`: full-page shots of every route at 360, 768 and 1440 wide into `docs/screenshots/` (gitignored). Without `SCREENS` the spec still checks axe and no sideways scroll at each width.
 
 ## Learn More
 

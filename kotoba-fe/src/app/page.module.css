@@ -103,7 +103,7 @@
   position: absolute;
   inset: -4rem -6rem -2rem -30vw;
   z-index: -1;
-  background: radial-gradient(closest-side, rgba(7, 11, 28, 0.82), rgba(7, 11, 28, 0.55) 60%, transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--sky-3) 82%, transparent), color-mix(in srgb, var(--sky-3) 55%, transparent) 60%, transparent);
   pointer-events: none;
 }
 .copy h1 {
@@ -116,11 +116,11 @@
 }
 .lineCool {
   color: var(--cool-core);
-  text-shadow: 0 0 2px rgba(210, 235, 255, 0.9), 0 0 24px rgba(110, 170, 255, 0.55), 0 0 60px rgba(60, 110, 255, 0.35);
+  text-shadow: 0 0 2px color-mix(in srgb, var(--cool-core) 90%, transparent), 0 0 24px color-mix(in srgb, var(--cool) 55%, transparent), 0 0 60px color-mix(in srgb, var(--cool) 35%, transparent);
 }
 .lineAmber {
   color: var(--amber-core);
-  text-shadow: 0 0 2px rgba(255, 220, 160, 0.95), 0 0 22px rgba(255, 177, 59, 0.65), 0 0 60px rgba(255, 140, 20, 0.35);
+  text-shadow: 0 0 2px color-mix(in srgb, color-mix(in srgb, var(--amber) 40%, var(--amber-core)) 95%, transparent), 0 0 22px color-mix(in srgb, var(--amber) 65%, transparent), 0 0 60px color-mix(in srgb, var(--amber) 35%, transparent);
 }
 .lede {
   max-width: 34rem;
@@ -142,20 +142,20 @@
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
-  border-top: 1px solid rgba(120, 140, 190, 0.35);
+  border-top: 1px solid color-mix(in srgb, var(--silver-dim) 35%, transparent);
 }
 
 .sign {
   --tube: var(--neon);
   --core: var(--neon-core);
-  --halo: rgba(255, 61, 110, 0.55);
+  --halo: color-mix(in srgb, var(--neon) 55%, transparent);
   position: relative;
   margin-top: var(--drop);
   padding: 0.85rem 0.5rem 0.95rem;
   border: 2px solid var(--tube);
   border-radius: 7px;
-  background: linear-gradient(180deg, rgba(10, 12, 22, 0.92), rgba(6, 8, 14, 0.96));
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7), 0 0 26px -4px var(--halo), inset 0 0 20px -6px var(--halo), 0 18px 30px -12px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--asphalt) 92%, transparent), color-mix(in srgb, var(--night) 96%, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--night) 70%, transparent), 0 0 26px -4px var(--halo), inset 0 0 20px -6px var(--halo), 0 18px 30px -12px color-mix(in srgb, var(--night) 80%, transparent);
   color: var(--core);
   filter: brightness(0.62) saturate(0.75);
   transition: filter 0.35s var(--ease-out), transform 0.35s var(--ease-out);
@@ -168,10 +168,10 @@
   right: 22%;
   bottom: 100%;
   height: calc(var(--drop) + 2px);
-  border-inline: 1px solid rgba(120, 140, 190, 0.35);
+  border-inline: 1px solid color-mix(in srgb, var(--silver-dim) 35%, transparent);
 }
-.sign[data-tone="cool"] { --tube: var(--cool); --core: var(--cool-core); --halo: rgba(92, 184, 255, 0.5); }
-.sign[data-tone="silver"] { --tube: var(--chalk); --core: #fff; --halo: rgba(200, 220, 255, 0.4); }
+.sign[data-tone="cool"] { --tube: var(--cool); --core: var(--cool-core); --halo: color-mix(in srgb, var(--cool) 50%, transparent); }
+.sign[data-tone="silver"] { --tube: var(--chalk); --core: #fff; --halo: color-mix(in srgb, var(--silver) 40%, transparent); }
 
 /* An unlit sign has to look like something you can switch on: it lifts on the
    cable and warms toward full brightness before you have committed to a click. */
@@ -260,7 +260,7 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
     radial-gradient(8rem 1.9rem at 88% calc(64% - var(--pud)), var(--spill-amber), transparent 72%),
     repeating-linear-gradient(180deg, transparent 0 9px, var(--drizzle) 9px 10px),
     linear-gradient(180deg, var(--wet) 0%, var(--asphalt) 30%, var(--night) 100%);
-  box-shadow: inset 0 1px 0 rgba(150, 175, 230, 0.28);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--silver-dim) 28%, transparent);
 }
 
 .reflection {
@@ -301,8 +301,8 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   padding: 1.1rem 1.25rem 1rem;
   border: 1px solid var(--rule);
   border-radius: 4px;
-  background: linear-gradient(180deg, rgba(20, 26, 37, 0.92), rgba(11, 15, 22, 0.94));
-  box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.9);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--wet) 92%, transparent), color-mix(in srgb, var(--asphalt) 94%, transparent));
+  box-shadow: 0 20px 40px -18px color-mix(in srgb, var(--night) 90%, transparent);
 }
 .ticketHead {
   display: flex;
@@ -351,7 +351,7 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   padding: 0.35rem 0.5rem 0.3rem;
   border: 1px solid var(--rule);
   border-radius: 3px;
-  background: rgba(5, 6, 8, 0.6);
+  background: color-mix(in srgb, var(--night) 60%, transparent);
 }
 .parts li span:first-child {
   font-size: 1.45rem;

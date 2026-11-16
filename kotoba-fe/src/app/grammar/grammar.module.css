@@ -63,7 +63,7 @@
 .ask { font-size: var(--fs-card); color: var(--chalk); }
 .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 10px; }
 .choice { display: flex; align-items: center; gap: 1rem; min-height: 3.5rem; padding: 0 1rem; background: var(--asphalt); border: 1px solid var(--rule); color: var(--silver); font-family: var(--font-kana); font-size: 1.3rem; text-align: left; cursor: pointer; transition: border-color var(--dur-fast), background-color var(--dur-fast); }
-.choice kbd { display: inline-grid; place-items: center; min-width: 1.75rem; height: 1.75rem; border: 1px solid var(--rule); font-family: var(--font-body); font-size: .8rem; color: var(--silver-dim); }
+.choice kbd { display: inline-grid; place-items: center; min-width: 1.75rem; height: 1.75rem; border: 1px solid var(--rule); font-family: var(--font-body); font-size: var(--fs-meta); color: var(--silver-dim); }
 .choice:hover:not([aria-disabled="true"]) { border-color: var(--amber); background: var(--wet); }
 .choice[aria-disabled="true"] { cursor: default; }
 .choice[data-mark="answer"] { border-color: var(--amber); background: var(--amber); color: var(--night); }
@@ -74,6 +74,6 @@
 .feedback[data-state="wrong"] { color: var(--neon-soft); }
 .feedback a { color: inherit; }
 .quizFoot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; color: var(--silver-dim); }
-.quizFoot kbd { margin-left: .5rem; font-size: .8rem; }
+.quizFoot kbd { margin-left: .5rem; font-size: var(--fs-meta); }
 
 .warning { margin-bottom: 1rem; color: var(--amber); }

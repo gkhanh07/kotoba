@@ -5,7 +5,6 @@ import { expect, test } from "./fixtures";
 
 // Phase 21: a signed-in learner downloads the account's study data as JSON; guests are sent to sign in.
 const PASSWORD = "correct-horse-battery";
-const KANA_TOTAL = (JSON.parse(readFileSync("../kotoba-be/content/kana.json", "utf8")) as unknown[]).length;
 
 function watchBackend(page: Page) {
   const calls: string[] = [];
@@ -59,9 +58,9 @@ test("the export file holds the profile and exactly the cards this browser has",
   // Each card as this browser has it; a card never missed reads lapses 0 from the account.
   for (const [id, c] of Object.entries(local)) expect(file.cards[id]).toEqual({ ...c, lapses: c.lapses ?? 0 });
   expect(Object.values(file.cards).filter((c) => c.lapses === 1)).toHaveLength(1);
-  // Same figure as the dashboard: 3 kana touched, 2 of them learned (§7.3 cross-check).
-  await page.goto("/");
-  await expect(page.getByRole("row", { name: /^Kana/ })).toContainText(`2 / ${KANA_TOTAL}`);
+  // Same figure as /progress (phase 41g moved it off Today): 3 kana touched, 2 learned, kana counts as N5 (§7.3 cross-check).
+  await page.goto("/progress");
+  await expect(page.getByRole("progressbar", { name: /^N5: 2 \// })).toBeVisible();
   expect(Object.values(file.cards).filter((c) => c.box >= 1)).toHaveLength(2);
   expect(JSON.stringify(file)).not.toMatch(/hash|password|token/i);
   expect(be).toEqual([]);

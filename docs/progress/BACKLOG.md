@@ -15,7 +15,8 @@ Out-of-scope findings (AGENTS.md §2, §13). Not fixed in the task that found th
 - Level tabs still show N2 although the roadmap stops at N3: remove `2` from `LEVELS` in `kotoba-fe/src/lib/library.ts`, update `LevelTabs.test.tsx`, and move the empty-state loop of `e2e/levels.spec.ts` off N2. Do not touch `GOALS` in `lib/account.ts` (stored user data); decide what the Dashboard shows for a goal of N2/N1.
 - `/legal` (vi, en) should list only Waller's N3 source.
 - `PRODUCT.md` should state the deliberate non-goals: listening, AI, CMS, PWA, XP, N2/N1 content.
-- Unfinished design work: rest of the `/` critique (`kotoba-fe/.impeccable/critique/2026-11-04T13-37-44Z__src-app-page-tsx.md`), site-wide finish review, Lighthouse a11y ≥ 95, final `DESIGN.md` (duplicate `## Glossary` headings).
+- Design: phase 42 closed the `/` critique, Lighthouse a11y (100 on all 32 routes) and the final `DESIGN.md`. Left from the critique: the guest hero `h1` sits outside `<main>` because `section.hero` holds the site bar; wrapping it would put the nav inside `main`, moving the bar out breaks the sky overlay. axe and Lighthouse pass; fix if a skip link is ever added.
+- `PRODUCT.md` non-goals: XP is no longer one (phase 41, ADR 014); drop it from the list above when PRODUCT.md is rewritten.
 
 ### BE coverage below 90%
 - See PROGRESS.md "Baseline" for the measured BE unit coverage. Controllers, `validate.ts`, `db.ts`, `mailer.ts` and `main.ts` are only exercised by the supertest e2e suite, which is not counted. Raising unit coverage of `src/` to 90% is backlog; the threshold in `kotoba-be/vitest.config.ts` may only be raised.

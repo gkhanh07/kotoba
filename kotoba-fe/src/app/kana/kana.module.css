@@ -554,7 +554,7 @@
   padding: 0 0.35rem;
   border: 1px solid var(--rule);
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: var(--fs-meta);
   font-weight: 600;
   color: var(--silver-dim);
 }

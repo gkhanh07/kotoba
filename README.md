@@ -49,6 +49,8 @@ Repo không có `package.json` ở gốc. Chạy lệnh trong từng ứng dụn
 
 Quality Gate đầy đủ: chạy `npm run check` ở cả hai ứng dụng, rồi `npm run test:e2e` trong frontend. Playwright tự khởi động hai ứng dụng, dùng `e2e.db` riêng cho backend; cần cổng 3000 và 4000 trống. Cấu hình Playwright hiện dùng lệnh shell `rm`, nên môi trường chạy E2E cần hỗ trợ lệnh này.
 
+Ảnh chụp mọi trang ở 360/768/1440 (phase 42, không commit): trong `kotoba-fe/` chạy `SCREENS=1 npx playwright test e2e/screens.spec.ts --project=desktop`, ảnh nằm ở `docs/screenshots/<rộng>/`. Không có `SCREENS` thì spec này vẫn chạy trong bộ E2E: mọi trang qua axe và không cuộn ngang ở cả ba bề rộng.
+
 Trên Windows, chạy Vitest từ cwd có chữ cái ổ đĩa viết hoa, ví dụ `C:\Users\Administrator\Desktop\kotoba\kotoba-fe`. Theo [PROGRESS](docs/progress/PROGRESS.md), cwd bắt đầu bằng `c:\` có thể tải Vitest hai lần và gây lỗi “Vitest failed to find the current suite”.
 
 Các công cụ nội dung chạy trong `kotoba-be/`:

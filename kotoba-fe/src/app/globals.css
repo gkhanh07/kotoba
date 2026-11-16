@@ -47,13 +47,13 @@
   --cool: #5cb8ff;
   --cool-core: #eaf7ff;
 
-  --glow-amber: 0 0 1px var(--amber-core), 0 0 8px rgba(255, 177, 59, 0.8), 0 0 28px rgba(255, 177, 59, 0.45);
-  --glow-neon: 0 0 1px var(--neon-core), 0 0 8px rgba(255, 61, 110, 0.85), 0 0 30px rgba(255, 61, 110, 0.45);
-  --glow-cool: 0 0 1px var(--cool-core), 0 0 8px rgba(159, 216, 255, 0.7), 0 0 28px rgba(120, 180, 255, 0.35);
+  --glow-amber: 0 0 1px var(--amber-core), 0 0 8px color-mix(in srgb, var(--amber) 80%, transparent), 0 0 28px color-mix(in srgb, var(--amber) 45%, transparent);
+  --glow-neon: 0 0 1px var(--neon-core), 0 0 8px color-mix(in srgb, var(--neon) 85%, transparent), 0 0 30px color-mix(in srgb, var(--neon) 45%, transparent);
+  --glow-cool: 0 0 1px var(--cool-core), 0 0 8px color-mix(in srgb, color-mix(in srgb, var(--cool) 50%, var(--cool-core)) 70%, transparent), 0 0 28px color-mix(in srgb, var(--cool) 35%, transparent);
 
   /* Atmosphere: the night haze behind the skyline and the drizzle on the street. */
-  --sky-glow: rgba(46, 78, 170, 0.35);
-  --drizzle: rgba(120, 150, 220, 0.035);
+  --sky-glow: color-mix(in srgb, color-mix(in srgb, var(--cool) 40%, var(--sky-1)) 35%, transparent);
+  --drizzle: color-mix(in srgb, var(--silver-dim) 3.5%, transparent);
 
   /* Design system (ADR 010). Everything below is derived from the primitives above:
      no new hex. */
@@ -530,8 +530,8 @@ body > .bar { background: var(--surface-1); border-bottom: 1px solid var(--rule-
 @media (max-width: 899.98px) {
   .menuBtn { min-height: 44px; font-size: 1rem; order: 2; }
   /* Shrinks and wraps so brand, stats and More fit a 360px bar. */
-  .barStats { order: 1; margin-left: auto; min-width: 0; white-space: normal; text-align: right; font-size: 0.8rem; line-height: 1.3; }
-  .bar .syncStatus { order: 1; min-width: 0; font-size: 0.8rem; white-space: normal; text-align: right; }
+  .barStats { order: 1; margin-left: auto; min-width: 0; white-space: normal; text-align: right; font-size: var(--fs-meta); line-height: 1.3; }
+  .bar .syncStatus { order: 1; min-width: 0; font-size: var(--fs-meta); white-space: normal; text-align: right; }
   .tabs {
     position: fixed;
     inset: auto 0 0 0;
