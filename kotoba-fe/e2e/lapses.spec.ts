@@ -64,6 +64,7 @@ test("a guest who misses a word twice sees it under Hay sai after sign-up and ca
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("kotoba.sync.v1") ?? "{}").owner)).toBeTruthy();
   expect(await lapsesOf(page, TARGET.id)).toBe(2);
 
+  await page.goto("/progress"); // phase 41g: the weak list moved off Today
   const block = page.getByRole("region", { name: "Hay sai" });
   await expect(block).toBeVisible();
   const rows = block.getByRole("listitem");
@@ -73,7 +74,7 @@ test("a guest who misses a word twice sees it under Hay sai after sign-up and ca
   await expect(rows.first().getByRole("link").first()).toHaveAttribute("href", `/vocab/${encodeURIComponent(TARGET.word)}`);
   expect(await hasHorizontalScroll(page)).toBe(false);
   await axe();
-  await page.screenshot({ path: info.outputPath(`lapses-dashboard-${info.project.name}.png`), fullPage: true });
+  await page.screenshot({ path: info.outputPath(`lapses-progress-${info.project.name}.png`), fullPage: true });
 
   // A reload keeps it.
   await page.reload();
@@ -96,7 +97,8 @@ test("a signed-in learner with no weak items has no Hay sai block", async ({ pag
   const be = watchBackend(page);
   await register(page, `lapses-none-${info.project.name}-${Date.now()}@example.com`);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Đến hạn ôn" })).toBeVisible();
+  await page.goto("/progress");
+  await expect(page.getByRole("heading", { name: "Tuần này" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Hay sai" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Ôn các mục này" })).toHaveCount(0);
   await axe();

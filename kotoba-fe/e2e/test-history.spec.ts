@@ -1,8 +1,8 @@
 import { expect, test } from "./fixtures";
 
-// Phase 40g (AC-13): a finished mock test reaches the account and comes back on the dashboard, even on a browser
+// Phase 40g (AC-13): a finished mock test reaches the account and comes back on /progress (the dashboard until phase 41g), even on a browser
 // whose local store no longer has it.
-test("a signed-in learner's mock test score is kept on the server and shown on the dashboard", async ({ page, axe }) => {
+test("a signed-in learner's mock test score is kept on the server and shown on /progress", async ({ page, axe }) => {
   await page.goto("/register");
   await page.getByLabel("Email").fill(`history-${Date.now()}@example.com`);
   await page.getByLabel("Mật khẩu").fill("correct-horse-battery");
@@ -11,6 +11,8 @@ test("a signed-in learner's mock test score is kept on the server and shown on t
   await expect(page).toHaveURL(/\/onboarding/);
   await page.getByRole("link", { name: "Để sau" }).click();
   await expect(page).toHaveURL(/\/$/);
+  await page.goto("/progress");
+  await expect(page.getByRole("heading", { name: "Tuần này" })).toBeVisible();
   await expect(page.getByRole("region", { name: "Kết quả thi thử" })).toHaveCount(0);
 
   await page.goto("/test/n5-1");
@@ -22,7 +24,7 @@ test("a signed-in learner's mock test score is kept on the server and shown on t
   await page.evaluate(() => localStorage.removeItem("kotoba.tests.v1"));
   const results = page.getByRole("region", { name: "Kết quả thi thử" });
   await expect(async () => {
-    await page.goto("/");
+    await page.goto("/progress");
     await expect(results).toBeVisible({ timeout: 1000 });
   }).toPass({ timeout: 15000 });
   await expect(results.getByRole("link", { name: "Đề 1" })).toHaveAttribute("href", "/test/n5-1");

@@ -1,34 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useSyncExternalStore } from "react";
+import { useMemo } from "react";
 import { examDate, examDay, type Profile } from "@/lib/account";
-import { ACTIVITY_KEY, heat, parseActivity, summarize, type Activity } from "@/lib/activity";
+import { ACTIVITY_KEY, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
 import { DEFAULT_MINUTES } from "@/config/session";
-import { NEW_PER_DAY, WEAK_LIST_SIZE } from "@/config/srs";
-import { STUDY_TIME_ZONE } from "@/config/time";
-import { perDayFor } from "@/lib/daily";
+import { NEW_PER_DAY } from "@/config/srs";
 import { currentLesson, stopsOf, type Grammar, type Kind } from "@/lib/library";
 import { buildSession, minutesFor, parseSession, partsOf, resumable, runsIn, SESSION_KEY, todayOf, type Part } from "@/lib/session";
-import { INTERVALS, addDays, daysUntil, dueCount, isLearned } from "@/lib/srs";
-import { weakItems, type ItemLink } from "@/lib/weak";
-import { learnedToday, today, useDeck } from "@/lib/store";
-import { headline, remaining, type TestScore } from "@/lib/test";
+import { addDays, daysUntil, dueCount, isLearned } from "@/lib/srs";
+import { learnedToday, today, useDeck, useStored } from "@/lib/store";
+import { remaining } from "@/lib/test";
 import { findSession } from "@/lib/testStore";
 import { testText } from "@/lib/testText";
+import { Arrow } from "./Arrow";
 import s from "./dashboard.module.css";
-import { Heatmap } from "./Heatmap";
-import { WeakList } from "./WeakList";
-
-// Copied from SiteBar: that file pulls server-only code, so a client component can't import it.
-function Arrow() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-      <path d="M3 9h11M9.5 4.5 14 9l-4.5 4.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" />
-    </svg>
-  );
-}
 
 // Today's minutes against the goal: an arc that fills, the numbers inside. One label for screen readers.
 const R = 42, C = 2 * Math.PI * R;
@@ -43,48 +30,27 @@ function Ring({ minutes, goal, label }: { minutes: number; goal: number; label: 
   );
 }
 
-const subscribe = (notify: () => void) => {
-  window.addEventListener("storage", notify);
-  return () => window.removeEventListener("storage", notify);
-};
-// undefined = server render / hydration; "!unavailable" = storage blocked.
-function useStored(key: string) {
-  return useSyncExternalStore(
-    subscribe,
-    () => { try { return localStorage.getItem(key); } catch { return "!unavailable"; } },
-    () => undefined,
-  );
-}
-
-
-export function Dashboard({ lang, name, profile, scope, tests, scores = [], fronts, items, grammar }: {
-  fronts: Record<string, ItemLink>;
+// Phase 41g: the totals, plan, heatmap, weak items and test scores moved to /progress.
+export function Dashboard({ lang, name, profile, scope, tests, items, grammar }: {
   /** What /session builds from (phase 41d): the goal's items with their lesson, and its grammar. */
   items: { id: string; kind: Kind; lesson: number }[]; grammar: Grammar[];
   lang: Lang; name: string; profile: Profile | null; scope: { kana: string[]; kanji: string[]; vocab: string[] };
   tests: { id: string; title: string; minutes: number }[];
-  /** The account's mock test scores, newest first (phase 40g); papers no longer listed are left out. */
-  scores?: TestScore[];
 }) {
   const t = text[lang];
-  const titles = new Map(tests.map((p) => [p.id, p.title]));
-  const taken = scores.filter((r) => titles.has(r.testId));
   const deck = useDeck();
   const activityRaw = useStored(ACTIVITY_KEY);
   const sessionRaw = useStored(SESSION_KEY);
 
   const data = useMemo(() => {
     if (!deck || activityRaw === undefined) return null;
-    let activity: Activity | null = parseActivity(activityRaw);
+    let activity: Activity | null = parseActivity(activityRaw === "!unavailable" ? null : activityRaw);
     const bad = !deck.ok || !activity;
     activity ??= { days: {} };
     const now = new Date();
     const day = today();
     const { srs } = deck;
     const learned = (id: string) => isLearned(srs, id);
-    // Only cards of items in scope: one whose item left the content (or the goal) is never offered for review.
-    const kanaDue = dueCount(srs, day, scope.kana), kanjiDue = dueCount(srs, day, scope.kanji), vocabDue = dueCount(srs, day, scope.vocab);
-    const dueTotal = kanaDue + kanjiDue + vocabDue;
     const summary = summarize(activity, now);
     const kinds = new Map(items.map((i) => [i.id, i.kind]));
     // The same session /session would resume or build, so the parts and minutes here are what the button opens.
@@ -100,18 +66,7 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
       bad,
       now,
       day,
-      kanaLearned: scope.kana.filter(learned).length,
-      kanaDue,
-      kanjiLearned: scope.kanji.filter(learned).length,
-      kanjiDue,
-      vocabLearned: scope.vocab.filter(learned).length,
-      vocabDue,
-      dueTotal,
-      // Everything in the goal's scope not yet learned: what the daily plan has to cover by exam day.
-      left: [...scope.kana, ...scope.kanji, ...scope.vocab].filter((id) => !learned(id)).length,
-      weak: weakItems(srs, fronts, WEAK_LIST_SIZE),
       summary,
-      heat: heat(activity, day),
       session,
       parts: partsOf(session.steps, session.state === "done" ? session.steps.length : session.index, (id) => kinds.get(id)),
       minutesLeft: minutesFor(session.steps.slice(session.index)),
@@ -121,7 +76,7 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
       at: now.getTime(),
       attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
     };
-  }, [deck, activityRaw, sessionRaw, fronts, items, grammar, scope]);
+  }, [deck, activityRaw, sessionRaw, items, grammar, scope]);
   const paper = data?.attempt && tests.find((p) => p.id === data.attempt?.id);
   // Past the deadline the attempt is submitted on open, so "continue" would be a false promise.
   const resume = paper && data.attempt && remaining(data.attempt.session.startedAt, paper.minutes, data.at) > 0 ? paper : undefined;
@@ -130,7 +85,6 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
   const exam = profile?.exam ? examDate(profile.exam) : null;
   const examKey = profile?.exam ? examDay(profile.exam) : null;
   const days = examKey && data ? daysUntil(examKey, data.day) : null;
-  const perDay = data ? perDayFor(data.left, days) : null;
 
   return (
     <main className={s.app}>
@@ -189,91 +143,10 @@ export function Dashboard({ lang, name, profile, scope, tests, scores = [], fron
         )}
       </section>
 
-      {data && (
-        <>
-
-          <div className={s.layout}>
-            <div className={s.column}>
-              <section className={`panel ${s.section}`} aria-labelledby="dash-progress">
-                <h2 id="dash-progress">{t.progress}</h2>
-                <table className={s.table}>
-                  <caption className="sr-only">{t.progress}</caption>
-                  <thead><tr><th scope="col">{t.area}</th><th scope="col">{t.today}</th><th scope="col">{t.memorized}</th></tr></thead>
-                  <tbody>
-                    <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.kanaLearned} / {scope.kana.length}</td></tr>
-                    <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.vocabLearned} / {scope.vocab.length}</td></tr>
-                    <tr><th scope="row">Kanji</th><td>{data.summary.today.kanji}</td><td>{data.kanjiLearned} / {scope.kanji.length}</td></tr>
-                    <tr><th scope="row">{t.grammar}</th><td colSpan={2}><Link href="/grammar">{t.grammarLink}</Link></td></tr>
-                  </tbody>
-                </table>
-              </section>
-
-              <section className={`panel ${s.section}`} aria-labelledby="dash-review">
-                <h2 id="dash-review">{t.review}</h2>
-                {data.dueTotal === 0 ? <p>{t.reviewNone}</p> : (
-                  <ul className={s.list}>
-                    {data.kanaDue > 0 && <li><span>{t.reviewKana(data.kanaDue)}</span><Link href="/review?kind=kana">{t.practise}</Link></li>}
-                    {data.kanjiDue > 0 && <li><span>{t.reviewKanji(data.kanjiDue)}</span><Link href="/review?kind=kanji">{t.practise}</Link></li>}
-                    {data.vocabDue > 0 && <li><span>{t.reviewVocab(data.vocabDue)}</span><Link href="/review?kind=vocab">{t.practise}</Link></li>}
-                  </ul>
-                )}
-                <p className={s.note}>{t.reviewNote(INTERVALS)}</p>
-                <p className={s.note}><Link href="/learned">{t.learned}</Link></p>
-              </section>
-
-              <WeakList items={data.weak} lang={lang} />
-            </div>
-
-            <div className={s.column}>
-              <section className={`panel ${s.section}`} aria-labelledby="dash-upcoming">
-                <h2 id="dash-upcoming">{t.upcoming}</h2>
-                {exam && days !== null && days >= 0 ? (
-                  <p>{t.exam(goal)} · {dateOf(exam, lang)}</p>
-                ) : (
-                  <p className={s.list}><span>{exam ? t.examPast : t.examNone}</span> <Link href="/onboarding">{t.pick}</Link></p>
-                )}
-                {perDay !== null && <p>{t.plan(data.left, perDay)}</p>}
-              </section>
-
-              <Heatmap heat={data.heat} lang={lang} />
-
-              <section className={`panel ${s.section}`} aria-labelledby="dash-history">
-                <h2 id="dash-history">{t.history}</h2>
-                {data.summary.recent.length === 0 ? <p>{t.empty}</p> : (
-                  <ol className={s.list}>
-                    {data.summary.recent.map((r) => {
-                      const ago = daysUntil(data.day, r.day);
-                      const label = ago === 0 ? t.todayLabel : ago === 1 ? t.yesterday : `${r.day.slice(8)}/${r.day.slice(5, 7)}`;
-                      return <li key={r.day}><span>{label}</span><span>{t.dayLine(r.minutes, r.kana, r.kanji, r.vocab)}</span></li>;
-                    })}
-                  </ol>
-                )}
-              </section>
-              {taken.length > 0 && (
-                <section className={`panel ${s.section}`} aria-labelledby="dash-tests">
-                  <h2 id="dash-tests">{t.tests}</h2>
-                  <ol className={s.list}>
-                    {taken.map((r) => (
-                      <li key={`${r.testId}@${r.at}`}>
-                        <Link href={`/test/${r.testId}`}>{titles.get(r.testId)}</Link>
-                        <span>{dayOf(r.at)} · {headline(r.score, r.total)}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </section>
-              )}
-            </div>
-          </div>
-
-          {data.bad && <p role="alert" className={`notice ${s.warning}`} data-tone="warn">{t.warning}</p>}
-        </>
-      )}
+      {data?.bad && <p role="alert" className={`notice ${s.warning}`} data-tone="warn">{t.warning}</p>}
     </main>
   );
 }
-
-// dd/mm in the study time zone, so the server render and the browser agree.
-const dayOf = (at: number) => new Date(at).toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", timeZone: STUDY_TIME_ZONE });
 
 const dateOf = (d: Date, lang: Lang) => new Intl.DateTimeFormat(lang === "vi" ? "vi-VN" : "en-GB", { weekday: "long", day: "numeric", month: "numeric", year: "numeric" }).format(d);
 
@@ -301,34 +174,6 @@ const vi = {
   setGoal: "Đặt mục tiêu",
   daysLeft: (n: number) => `còn ${n} ngày`,
   examToday: "thi hôm nay",
-  progress: "Tiến độ",
-  area: "Phần",
-  vocab: "Từ vựng",
-  grammar: "Ngữ pháp",
-  grammarLink: "Xem ngữ pháp",
-  today: "Hôm nay",
-  memorized: "Đã học",
-  review: "Đến hạn ôn",
-  reviewKana: (n: number) => `${n} chữ kana đến hạn ôn`,
-  reviewKanji: (n: number) => `${n} chữ kanji đến hạn ôn`,
-  reviewVocab: (n: number) => `${n} từ đến hạn ôn`,
-  reviewNone: "Hôm nay không có gì đến hạn ôn.",
-  reviewNote: (gaps: number[]) => `Sau mỗi lần trả lời đúng, thời gian đến lần ôn tiếp theo lần lượt là ${gaps.join(", ")} ngày. Trả lời sai thì mục đó sẽ được ôn lại ngay trong ngày.`,
-  practise: "Ôn tập",
-  upcoming: "Sắp tới",
-  exam: (g?: string) => (g ? `Kỳ thi JLPT ${g}` : "Kỳ thi JLPT"),
-  examNone: "Chưa chọn kỳ thi",
-  examPast: "Kỳ thi đã qua",
-  pick: "Chọn kỳ thi",
-  plan: (left: number, n: number) => (left === 0 ? "Bạn đã học hết các mục của mục tiêu."
-    : `Còn ${left} mục chưa học: cần ${n} mục mới mỗi ngày để kịp ngày thi${n > NEW_PER_DAY ? ` (buổi học mỗi ngày đưa vào ${NEW_PER_DAY})` : ""}.`),
-  learned: "Xem và đặt lại mục đã học",
-  history: "Gần đây",
-  tests: "Kết quả thi thử",
-  todayLabel: "Hôm nay",
-  yesterday: "Hôm qua",
-  dayLine: (min: number, kana: number, kanji: number, vocab: number) => `${min} phút · ${kana} kana · ${kanji} kanji · ${vocab} từ`,
-  empty: "Chưa có buổi học nào. Bạn có thể bắt đầu từ bảng chữ cái.",
   loading: "Đang tải tiến độ…",
   warning: "Không đọc được tiến độ lưu trong trình duyệt. Số liệu có thể thiếu.",
 };
@@ -355,34 +200,6 @@ const en: typeof vi = {
   setGoal: "Set a goal",
   daysLeft: (n) => `${n} days left`,
   examToday: "exam today",
-  progress: "Progress",
-  area: "Area",
-  vocab: "Vocabulary",
-  grammar: "Grammar",
-  grammarLink: "Open grammar",
-  today: "Today",
-  memorized: "Learnt",
-  review: "Due for review",
-  reviewKana: (n) => `${n} kana due`,
-  reviewKanji: (n) => `${n} kanji due`,
-  reviewVocab: (n) => `${n} ${n === 1 ? "word" : "words"} due`,
-  reviewNone: "Nothing is due today.",
-  reviewNote: (gaps) => `Each right answer pushes the next review out: ${gaps.join(", ")} days. A miss brings the item back the same day.`,
-  practise: "Practise",
-  upcoming: "Upcoming",
-  exam: (g) => (g ? `JLPT ${g} exam` : "JLPT exam"),
-  examNone: "No exam date set",
-  examPast: "This exam has passed",
-  pick: "Pick an exam",
-  plan: (left, n) => (left === 0 ? "You have learned every item of your goal."
-    : `${left} items left: ${n} new a day to finish by the exam${n > NEW_PER_DAY ? ` (the daily session brings in ${NEW_PER_DAY})` : ""}.`),
-  learned: "See and reset studied items",
-  history: "Recent",
-  tests: "Mock test results",
-  todayLabel: "Today",
-  yesterday: "Yesterday",
-  dayLine: (min, kana, kanji, vocab) => `${min} min · ${kana} kana · ${kanji} kanji · ${vocab} ${vocab === 1 ? "word" : "words"}`,
-  empty: "No study sessions yet. The alphabet is the quickest start.",
   loading: "Loading progress…",
   warning: "Couldn't read progress saved in this browser. Numbers may be incomplete.",
 };

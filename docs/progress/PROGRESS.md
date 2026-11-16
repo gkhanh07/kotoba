@@ -66,7 +66,8 @@ Source of truth for resuming a session (AGENTS.md §13). Roadmap: `docs/plan/PLA
 | 41 content: grammar sentence parts, KanjiVG paths | DONE | `feat(content): phase 41 grammar sentence parts and KanjiVG stroke paths` (ADR 015) |
 | 41a–e Study session, results + XP, Today, path | DONE | `feat(session): phase 41a-e study session, results, XP, today page and path` (ADR 013, 014); Codex review: 3 P2 on 41d fixed (stale saved session, `graded` ignored, "Ôn lại" link), 1 P3 on 41e recorded as a deviation |
 | 41f Practice hub | DONE | `feat(review): phase 41f practice hub with due chart, memory levels and session link`; Codex review: 2 P2 fixed (due grammar left out of the count; grammar-only learner saw the empty state) |
-| 41g–k, 42 | TODO | spec `docs/phases/41-ux-restructure.md` |
+| 41g Progress page | DONE | `feat(progress): phase 41g progress page`; Codex review: 2 P2 fixed (goal line measured against the whole chart, not the bar track; test did not check the line) |
+| 41h–k, 42 | TODO | spec `docs/phases/41-ux-restructure.md` |
 
 Phase hashes (0–13): 0 `976dd4c`, 1 `30808b6`, 2 `fdfc1e2`, 3 `55b04a0`, 4 `ad94fb9`, 5 `382a4af`, 6 `08cf14f`, 7 `9d1d363`, 8 `ba4f55b`, 9 `7e91635`, 10 `86f589a`, 11 `33dcf6c`, 12 `141141d`, 13 `389557c`.
 

@@ -69,14 +69,15 @@ test("the dashboard has one amber next action and a side column on desktop", asy
   await page.getByRole("link", { name: "Để sau" }).click();
   await expect(page).toHaveURL(/\/$/);
 
-  const progress = page.getByRole("region", { name: "Tiến độ" });
-  await expect(progress).toBeVisible({ timeout: 15_000 });
+  // Phase 41g: Today is the session beside the week ring; the progress blocks moved to /progress.
+  const session = page.getByRole("region", { name: "Phiên học hôm nay" });
+  await expect(session).toBeVisible({ timeout: 15_000 });
   const amber = page.locator("main a.btn:not(.btnGhost), main button.btn:not(.btnGhost)");
   await expect(amber).toHaveCount(1);
   await expect(amber).toHaveText(/Học bài mới/);
 
-  const upcoming = page.getByRole("region", { name: "Sắp tới" });
-  const [main, side] = [await progress.boundingBox(), await upcoming.boundingBox()];
+  const week = page.getByRole("main").getByRole("complementary", { name: "Tuần này" });
+  const [main, side] = [await session.boundingBox(), await week.boundingBox()];
   if (page.viewportSize()!.width >= DESKTOP_SIDE_BY_SIDE) {
     expect(side!.x).toBeGreaterThan(main!.x + main!.width); // beside, not below
   } else {

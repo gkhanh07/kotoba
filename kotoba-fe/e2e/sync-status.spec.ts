@@ -47,13 +47,13 @@ test("sync status: saved, failed while kotoba-be is down, saved again after Th�
   await expect(status(page)).toHaveText("Đã lưu", { timeout: 10_000 });
   await axe();
 
-  // The dashboard heatmap counts today's minutes (one study minute per minute with a flip or grade).
+  // The /progress heatmap (phase 41g) counts today's minutes (one study minute per minute with a flip or grade).
   const minutes = await page.evaluate(() => {
     const days = JSON.parse(localStorage.getItem("kotoba.activity.v1") ?? "{}").days ?? {};
     return Object.values(days as Record<string, { minutes: number[] }>).reduce((n, d) => n + d.minutes.length, 0);
   });
   const [d, m] = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Ho_Chi_Minh", day: "numeric", month: "numeric" }).format(new Date()).split("/");
-  await page.goto("/");
+  await page.goto("/progress");
   await expect(page.getByRole("img", { name: `${Number(d)}/${Number(m)}: ${minutes} phút` })).toBeVisible();
   await expect(page.getByText(`1 ngày có học · ${minutes} phút trong 13 tuần`)).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);

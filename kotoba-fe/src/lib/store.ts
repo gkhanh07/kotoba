@@ -65,6 +65,19 @@ function subscribe(cb: () => void) {
 // null until hydrated: the server has no deck.
 export const useDeck = () => useSyncExternalStore(subscribe, read, () => null);
 
+const onStorage = (notify: () => void) => {
+  window.addEventListener("storage", notify);
+  return () => window.removeEventListener("storage", notify);
+};
+/** A raw localStorage value: undefined on the server and during hydration, "!unavailable" when storage is blocked. */
+export function useStored(key: string) {
+  return useSyncExternalStore(
+    onStorage,
+    () => { try { return localStorage.getItem(key); } catch { return "!unavailable"; } },
+    () => undefined,
+  );
+}
+
 // How many items got their first grade today (ADR 004). Unreadable or blocked storage counts 0.
 export function learnedToday(): number {
   try {
