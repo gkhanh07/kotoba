@@ -37,3 +37,17 @@
   .grid { grid-template-columns: minmax(0, 1fr); }
   .stats dd { font-size: 1.5rem; }
 }
+
+/* Phase 41f: the 7-day due chart and the four memory levels, side by side from 640px. */
+.pair { display: grid; gap: 1rem; }
+@media (min-width: 640px) { .pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .35rem; margin: 0; padding: 0; list-style: none; text-align: center; }
+.week li { display: grid; gap: .25rem; justify-items: center; }
+.count { font-size: var(--fs-meta); color: var(--chalk); font-variant-numeric: tabular-nums; }
+.track { display: flex; align-items: flex-end; width: 100%; max-width: 1.75rem; height: 5rem; border-radius: 4px; background: var(--surface-2); }
+.bar { display: block; width: 100%; border-radius: 4px; background: var(--amber); }
+.day { font-size: var(--fs-meta); color: var(--silver-dim); }
+.levels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; margin: 0; padding: 0; list-style: none; text-align: center; }
+.levels li { display: flex; flex-direction: column-reverse; gap: .15rem; }
+.levels span { font-size: var(--fs-meta); color: var(--silver-dim); }
+.levels strong { font-family: var(--font-title), sans-serif; font-size: 1.5rem; color: var(--chalk); font-variant-numeric: tabular-nums; }

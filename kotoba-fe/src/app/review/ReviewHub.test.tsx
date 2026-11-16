@@ -41,7 +41,23 @@ describe("ReviewHub", () => {
     expect(stat("Cần ôn")).toBe("2");
     expect(stat("Quá hạn")).toBe("1");
     expect(stat("Ghi nhớ")).toBe("60%");
-    expect(screen.getByRole("link", { name: /Bắt đầu ôn tập/ })).toHaveAttribute("href", "/review?start=1");
+    // Phase 41f AC-14: 2 due × 10 s → about 1 minute, in the focused session.
+    const now = screen.getByRole("link", { name: "Ôn ngay · khoảng 1 phút" });
+    expect(now).toHaveAttribute("href", "/session?mode=review");
+    expect(now).toHaveClass("btn");
+  });
+
+  it("counts due grammar too, even with no card yet, since the review session practises it (15 s a step)", async () => {
+    const grammar = ["g:1", "g:2", "g:3", "g:4", "g:5", "g:6"];
+    seed({
+      ...Object.fromEntries(grammar.slice(0, 5).map((id) => [id, { box: 1, due: "2026-11-02", at: 1, lapses: 0 }])),
+      "g:6": { box: 1, due: "2026-11-03", at: 1, lapses: 0 },
+    });
+    render(<ReviewHub cards={CARDS} grammar={grammar} lang="vi" />);
+    expect(await screen.findByRole("heading", { name: "Đến giờ ôn tập!" })).toBeInTheDocument();
+    expect(stat("Cần ôn")).toBe("5");
+    // 5 × 15 s = 75 s → about 2 minutes.
+    expect(screen.getByRole("link", { name: "Ôn ngay · khoảng 2 phút" })).toHaveAttribute("href", "/session?mode=review");
   });
 
   it("links each kind to its queue with its own due count", async () => {
@@ -83,7 +99,7 @@ describe("ReviewHub", () => {
     render(<ReviewHub cards={CARDS} lang="vi" />);
     expect(await screen.findByRole("heading", { name: "Chưa có lịch ôn tập" })).toBeInTheDocument();
     expect(screen.queryByText("Cần ôn")).not.toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /Bắt đầu ôn tập/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Ôn ngay/ })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Mở lộ trình bài học" })).toHaveAttribute("href", "/lessons");
   });
 
@@ -91,5 +107,23 @@ describe("ReviewHub", () => {
     localStorage.setItem(SRS, "{broken");
     render(<ReviewHub cards={CARDS} lang="vi" />);
     expect(await screen.findByRole("alert")).toHaveTextContent("Không thể đọc hoặc lưu tiến độ");
+  });
+
+  it("charts the next 7 days, splits cards into the four levels and offers the other practice pages", async () => {
+    seed(DECK);
+    const { container } = render(<ReviewHub cards={CARDS} lang="vi" />);
+    await screen.findByRole("heading", { name: "Đến giờ ôn tập!" });
+    // 2026-11-02 is a Monday. Today 2 (日, 本 overdue); 11-05 (T5) あ; 11-09 is 7 days out (not charted); 11-10 い too.
+    const week = within(screen.getByRole("list", { name: "Đến hạn 7 ngày tới" })).getAllByRole("listitem");
+    expect(week.map((li) => li.getAttribute("aria-label"))).toEqual([
+      "Hôm nay: 2 thẻ", "T3: 0 thẻ", "T4: 0 thẻ", "T5: 1 thẻ", "T6: 0 thẻ", "T7: 0 thẻ", "CN: 0 thẻ",
+    ]);
+    // Boxes 1, 0, 2, 3, 0 → Mới 2, Đang học 2, Thuộc 1, Vững 0.
+    const level = (name: string) => within(screen.getByText(name).parentElement!).getByText(/^\d+$/).textContent;
+    expect([level("Mới"), level("Đang học"), level("Thuộc"), level("Vững")]).toEqual(["2", "2", "1", "0"]);
+    for (const [name, href] of [["Ngữ pháp", "/grammar/practice"], ["Đọc hiểu", "/reading"], ["Thẻ ghi nhớ", "/flashcards"], ["Thi thử", "/test"]]) {
+      expect(screen.getByRole("link", { name: new RegExp(`^${name}`) })).toHaveAttribute("href", href);
+    }
+    expect(container.querySelectorAll(".btn")).toHaveLength(1);
   });
 });

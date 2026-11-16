@@ -10,3 +10,7 @@ export const NEW_PER_DAY = 10;
 export const INTERVALS = [1, 3, 7, 14, 30];
 // Box = correct reviews in a row. Known = passed the review that came after the 30-day gap.
 export const KNOWN_AT = INTERVALS.length + 1;
+// /review levels (phase 41f): Mới box 0 → Đang học → Thuộc from this box (passed the 3-day gap) → Vững from KNOWN_AT.
+export const HELD_AT = 3;
+// Days in the /review due chart, today first.
+export const WEEK_DAYS = 7;

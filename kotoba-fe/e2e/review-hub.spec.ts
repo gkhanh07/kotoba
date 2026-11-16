@@ -1,7 +1,7 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "./fixtures";
 
-// Phase 31: bare /review is the hub; the session lives at /review?start=1.
+// Phase 31: bare /review is the hub. Phase 41f: its button opens the focused session in review mode.
 const SRS = "kotoba.srs.v1";
 // 09:00 in Vietnam: a fixed clock keeps the study day exact.
 const NOW = new Date("2026-11-02T02:00:00Z");
@@ -35,7 +35,12 @@ test("the hub shows today's numbers and the start link opens the session", async
   expect(await hasHorizontalScroll(page)).toBe(false);
   await axe();
 
-  await page.getByRole("link", { name: /Bắt đầu ôn tập/ }).click();
-  await expect(page).toHaveURL(/\/review\?start=1$/);
-  await expect(page.getByRole("button", { name: "Xem đáp án" })).toBeVisible();
+  await expect(page.getByRole("list", { name: "Đến hạn 7 ngày tới" }).getByRole("listitem")).toHaveCount(7);
+  await expect(page.getByRole("list", { name: "Đến hạn 7 ngày tới" }).getByRole("listitem").first()).toHaveAttribute("aria-label", "Hôm nay: 1 thẻ");
+  await expect(page.getByRole("main").getByRole("link", { name: /^Thi thử/ })).toHaveAttribute("href", "/test");
+  await expect(page.locator("main .btn")).toHaveCount(1);
+
+  await page.getByRole("link", { name: "Ôn ngay · khoảng 1 phút" }).click();
+  await expect(page).toHaveURL(/\/session\?mode=review$/);
+  await expect(page.getByText(/^Bước 1 \/ 1 · Ôn thẻ$/)).toBeVisible();
 });

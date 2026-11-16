@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getKana, getKanji, getLessons, getVocab } from "@/lib/content";
+import { getGrammar, getKana, getKanji, getLessons, getVocab } from "@/lib/content";
+import { questionFor } from "@/lib/grammarQuiz";
 import { currentUser } from "@/lib/auth";
-import { hvRows, KINDS, LEVELS, libraryText, reviewScope, type Kind, type Level, type ReviewItem } from "@/lib/library";
+import { goalScope, hvRows, KINDS, LEVELS, libraryText, reviewScope, type Kind, type Level, type ReviewItem } from "@/lib/library";
 import { getLang, getRomaji } from "../LangSwitch";
 import { SiteBar, SiteFooter } from "../SiteBar";
 import { ReviewApp } from "./ReviewApp";
@@ -40,10 +41,12 @@ export default async function ReviewPage(props: PageProps<"/review">) {
       ...kanji.map((k) => ({ id: k.id, kind: "kanji" as const })),
       ...vocab.map((w) => ({ id: w.id, kind: "vocab" as const })),
     ];
+    // Due grammar joins /session?mode=review too (session.ts buildSession), so the hub's count and minutes include it.
+    const grammar = goalScope(await getGrammar(), goal).filter((g) => questionFor(g) !== null).map((g) => g.id);
     return (
       <>
         <SiteBar current="review" />
-        <ReviewHub cards={cards} lang={lang} />
+        <ReviewHub cards={cards} grammar={grammar} lang={lang} />
         <SiteFooter />
       </>
     );

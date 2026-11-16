@@ -15,7 +15,7 @@ const CARDS = cards(
 describe("hubSummary", () => {
   it("is all zeros, with no retention figure, for a deck that has not started", () => {
     expect(hubSummary(CARDS, {}, TODAY)).toEqual({
-      due: 0, overdue: 0, started: 0, retention: null, weakTotal: 0,
+      due: 0, overdue: 0, started: 0, retention: null, weakTotal: 0, levels: [0, 0, 0, 0], week: [0, 0, 0, 0, 0, 0, 0],
       kinds: { kana: { due: 0, total: 2, weak: 0 }, kanji: { due: 0, total: 2, weak: 0 }, vocab: { due: 0, total: 3, weak: 0 } },
     });
   });
@@ -56,5 +56,22 @@ describe("hubSummary", () => {
     expect(s.kinds.kana.weak).toBe(0);
     expect(s.due).toBe(3);
     expect(s.started).toBe(3);
+  });
+
+  // Phase 41f AC-14: Mới (box 0) → Đang học (1–2) → Thuộc (3 to KNOWN_AT − 1) → Vững (KNOWN_AT and up).
+  it("splits started cards into the four levels by box", () => {
+    const srs: Srs = {
+      "hiragana:a": card(0, TODAY), "hiragana:i": card(2, "2026-11-05"), "kanji:日": card(3, "2026-11-09"),
+      "kanji:月": card(5, "2026-12-01"), "vocab:水": card(6, "2027-01-01"), "vocab:retired": card(6, TODAY),
+    };
+    expect(hubSummary(CARDS, srs, TODAY).levels).toEqual([1, 1, 2, 1]);
+  });
+
+  it("counts cards due over the next 7 days, with today's bar holding the overdue ones", () => {
+    const srs: Srs = {
+      "hiragana:a": card(1, "2026-10-30"), "hiragana:i": card(1, TODAY), "kanji:日": card(2, "2026-11-03"),
+      "kanji:月": card(2, "2026-11-08"), "vocab:水": card(3, "2026-11-09"), "vocab:本": card(3, "2026-11-03"),
+    };
+    expect(hubSummary(CARDS, srs, TODAY).week).toEqual([2, 2, 0, 0, 0, 0, 1]);
   });
 });
