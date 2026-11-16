@@ -70,4 +70,6 @@ Kotoba sử dụng **JMdict** và **KANJIDIC2** của **Electronic Dictionary Re
 
 Âm Hán Việt được đối chiếu với [hanviet-pinyin-wordlist](https://github.com/ph0ngp/hanviet-pinyin-wordlist), **Copyright (c) 2024 Phong Phan**, giấy phép **MIT**. Một số âm giữ theo KANJIDIC2 được ghi rõ trong [ADR 009](docs/decisions/009-han-viet-source.md).
 
+Thứ tự và hình nét kanji lấy từ [KanjiVG](https://kanjivg.tagaini.net), **Copyright (C) 2009–2025 Ulrich Apel**, giấy phép [Creative Commons BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+
 Danh sách kanji N3 dựa trên danh sách JLPT của **Jonathan Waller / tanos.co.uk**, giấy phép **Creative Commons BY (CC BY)**: [danh sách N3 lưu trữ](https://web.archive.org/web/2023id_/https://www.tanos.co.uk/jlpt/jlpt3/kanji/) và [trang cấp phép “Use my data!”](https://web.archive.org/web/20231128200421/https://www.tanos.co.uk/jlpt/sharing/). Đây là danh sách không chính thức; kanji đã dạy ở N5/N4 giữ nguyên cấp. Xem [ADR 006](docs/decisions/006-n3-n2-kanji-levels.md) và trang `/legal` trong ứng dụng.

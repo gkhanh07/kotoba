@@ -62,7 +62,7 @@ export async function SiteFooter() {
   return (
     <footer className="siteFooter">
       <p>
-        {t.kanji}: KANJIDIC2 · {t.dict}: JMdict · CC BY-SA 4.0 · {t.hv}: hanviet-pinyin-wordlist · <Link href="/legal">{t.legal}</Link>
+        {t.kanji}: KANJIDIC2 · {t.dict}: JMdict · CC BY-SA 4.0 · {t.hv}: hanviet-pinyin-wordlist · {t.strokes}: KanjiVG (CC BY-SA 3.0) · <Link href="/legal">{t.legal}</Link>
       </p>
     </footer>
   );

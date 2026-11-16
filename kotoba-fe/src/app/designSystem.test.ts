@@ -145,7 +145,8 @@ describe("motion (Phase 41j AC-19)", () => {
     .filter((f) => f.endsWith(".css"))
     .map((file) => ({ file, text: readFileSync(join(srcDir, file), "utf8").replace(/\/\*[\s\S]*?\*\//g, "") }));
   // The hero's rain moves its background: measured cheaper than transform on two layers (page.module.css).
-  const EXCEPTIONS = ["rain"];
+  // A kanji stroke draws by its dash offset: the drawing is the lesson (strokes.module.css, phase 41k).
+  const EXCEPTIONS = ["rain", "draw"];
 
   it("animates only transform and opacity", () => {
     const frames = sheets.flatMap(({ file, text }) =>

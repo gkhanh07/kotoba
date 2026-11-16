@@ -14,6 +14,7 @@ import { learnedToday, review, today, useDeck } from "@/lib/store";
 import { typedMatch } from "@/lib/typed";
 import { xpOf } from "@/lib/xp";
 import { SaveButton } from "../SaveButton";
+import { StrokesOf } from "../Strokes";
 import { Choices, dialogOpen, useKeys } from "./Choices";
 import { sessionText, type SessionItem, type SessionText } from "./text";
 import s from "./session.module.css";
@@ -136,6 +137,7 @@ function LearnStep({ item, t, lang, srs, onDone }: Ctx & { item: SessionItem }) 
         <p className={s.big} lang="ja">{item.front}</p>
         <Facts item={item} t={t} />
         {item.strokes !== undefined && <p className={s.sub}>{t.strokes(item.strokes)}</p>}
+        {item.kind === "kanji" && <StrokesOf char={item.front} lang={lang} />}
         {item.example && (
           <div className={s.example}>
             <p className={s.label}>{t.example}</p>

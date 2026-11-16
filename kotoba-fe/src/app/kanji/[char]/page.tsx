@@ -7,6 +7,7 @@ import { getLang } from "../../LangSwitch";
 import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
 import { SaveButton } from "../../SaveButton";
 import { Speak } from "../../Speak";
+import { Strokes } from "../../Strokes";
 import { KanjiMemory } from "./KanjiMemory";
 import s from "../kanji.module.css";
 
@@ -64,6 +65,7 @@ export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">)
                 </div>
               ))}
             </dl>
+            <Strokes paths={k.paths} lang={lang} />
           </div>
         </article>
         <KanjiMemory id={k.id} lesson={k.lesson} lang={lang} />

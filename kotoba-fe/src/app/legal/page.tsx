@@ -8,6 +8,8 @@ import s from "./legal.module.css";
 const EDRDG = "https://www.edrdg.org/edrdg/licence.html";
 const CC = "https://creativecommons.org/licenses/by-sa/4.0/";
 const HANVIET = "https://github.com/ph0ngp/hanviet-pinyin-wordlist";
+const KANJIVG = "https://kanjivg.tagaini.net";
+const CC3 = "https://creativecommons.org/licenses/by-sa/3.0/";
 // tanos.co.uk no longer resolves; the archived "Use my data!" page holds the CC BY grant (ADR 006).
 const TANOS = "https://web.archive.org/web/20231128200421/https://www.tanos.co.uk/jlpt/sharing/";
 const ext = (href: string, label: string) => <a href={href} rel="noopener">{label}</a>;
@@ -55,6 +57,7 @@ const TEXT: Record<Lang, { title: string; updated: string; sections: { id: strin
           <>
             <p>Dữ liệu kanji (âm on, âm kun, số nét) lấy từ KANJIDIC2. Âm đọc từ vựng được đối chiếu với JMdict. Cả hai thuộc Electronic Dictionary Research and Development Group (EDRDG), dùng theo {ext(EDRDG, "giấy phép của EDRDG")}.</p>
             <p>Âm Hán Việt được đối chiếu với {ext(HANVIET, "hanviet-pinyin-wordlist")}, Copyright (c) 2024 Phong Phan, giấy phép MIT.</p>
+            <p>Thứ tự và hình nét kanji lấy từ {ext(KANJIVG, "KanjiVG")}, Copyright (C) 2009–2025 Ulrich Apel, dùng và chia sẻ lại theo giấy phép {ext(CC3, "Creative Commons BY-SA 3.0")}.</p>
             <p>Danh sách kanji theo cấp N5 và N4 lấy từ trường JLPT của KANJIDIC2 (cùng giấy phép EDRDG ở trên). Danh sách kanji N3 lấy từ danh sách của Jonathan Waller ({ext(TANOS, "tanos.co.uk")}), dùng theo giấy phép Creative Commons BY. Từ năm 2010 JLPT không công bố danh sách kanji, nên đây là danh sách không chính thức. Kanji nào Kotoba đã dạy ở N5 hoặc N4 thì giữ cấp đó.</p>
             <p>Phần dữ liệu dẫn xuất từ KANJIDIC2 và JMdict được chia sẻ lại theo cùng giấy phép {ext(CC, "Creative Commons BY-SA 4.0")}.</p>
           </>
@@ -103,6 +106,7 @@ const TEXT: Record<Lang, { title: string; updated: string; sections: { id: strin
           <>
             <p>Kanji data (on and kun readings, stroke counts) comes from KANJIDIC2. Vocabulary readings are checked against JMdict. Both belong to the Electronic Dictionary Research and Development Group (EDRDG) and are used under {ext(EDRDG, "the EDRDG licence")}.</p>
             <p>Sino-Vietnamese readings are checked against {ext(HANVIET, "hanviet-pinyin-wordlist")}, Copyright (c) 2024 Phong Phan, MIT licence.</p>
+            <p>Kanji stroke order and shapes come from {ext(KANJIVG, "KanjiVG")}, Copyright (C) 2009–2025 Ulrich Apel, used and shared under the {ext(CC3, "Creative Commons BY-SA 3.0")} licence.</p>
             <p>The N5 and N4 kanji lists come from the JLPT field of KANJIDIC2 (same EDRDG licence as above). The N3 kanji list comes from Jonathan Waller’s list ({ext(TANOS, "tanos.co.uk")}), used under a Creative Commons BY licence. The JLPT has published no kanji list since 2010, so this list is unofficial. A kanji Kotoba already teaches at N5 or N4 keeps that level.</p>
             <p>Data derived from KANJIDIC2 and JMdict is shared under the same {ext(CC, "Creative Commons BY-SA 4.0")} licence.</p>
           </>

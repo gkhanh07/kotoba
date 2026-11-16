@@ -43,7 +43,7 @@ export type Kanji = {
   similar?: string[]; // look-alike kanji (phase 19)
   level: Level;
 };
-export type KanjiDetail = Kanji & { words: Vocab[] };
+export type KanjiDetail = Kanji & { words: Vocab[]; paths?: string[] }; // paths: KanjiVG strokes, when it has them (phase 41k)
 export type Grammar = {
   id: string; // "grammar:ga-suki"
   slug: string;

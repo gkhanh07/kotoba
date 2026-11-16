@@ -61,7 +61,7 @@ test("the landing page opens every line and says an account is optional", async 
   await expect(page.getByText("Không cần tài khoản để luyện tập. Đăng nhập để đồng bộ tiến độ giữa các thiết bị.")).toBeVisible();
   // BUG-022: the guest landing credits the data sources and links the legal page like every other page.
   const footer = page.getByRole("contentinfo");
-  await expect(footer).toContainText("Dữ liệu kanji: KANJIDIC2 · Từ điển: JMdict · CC BY-SA 4.0 · Hán Việt: hanviet-pinyin-wordlist · Điều khoản và quyền riêng tư");
+  await expect(footer).toContainText("Dữ liệu kanji: KANJIDIC2 · Từ điển: JMdict · CC BY-SA 4.0 · Hán Việt: hanviet-pinyin-wordlist · Nét chữ: KanjiVG (CC BY-SA 3.0) · Điều khoản và quyền riêng tư");
   await expect(footer.getByRole("link", { name: "Điều khoản và quyền riêng tư" })).toHaveAttribute("href", "/legal");
 });
 

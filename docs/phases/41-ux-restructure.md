@@ -17,6 +17,8 @@ Thứ tự bước, mỗi bước một commit xanh: (a+b) lõi phiên học `li
 | Lộ trình: 3 trạng thái Đã xong ✓ / Học tiếp / Chưa học | Bài đã học dở mà không phải bài hiện tại vẫn ghi "Đang học"; bài ôn tập (25, 45, 81, không có mục) không ghi trạng thái | Ghi "Chưa học" cho bài đã học một phần là sai; bài ôn tập không có gì để xong (ADR 010) |
 | AC-19: hiệu ứng chỉ transform/opacity | Mưa ở hero vẫn chạy `background-position` (ngoại lệ ghi trong test) | Bản transform đo được chậm hơn: lớp phủ lớn hơn khung nhìn phải dời cả lớp; dưới reduced motion mưa vẫn tắt |
 | AC-19: hiệu ứng chỉ transform/opacity | Transition khi hover/đổi trạng thái vẫn đổi màu, viền, bóng | Đó là phản hồi trạng thái, chỉ tốn paint, không dịch chuyển gì; test cấm mọi thuộc tính layout trong `transition`, và reduced motion vẫn tắt hết |
+| AC-19: hiệu ứng chỉ transform/opacity | Nét kanji vẽ bằng `stroke-dashoffset` (ngoại lệ `draw` ghi trong test) | Vẽ nét chính là bài học; SVG 109 đơn vị, repaint rẻ. Reduced motion tắt hẳn, hiện số nét tĩnh |
+| AC-20: kanji không có `paths` chỉ hiện số nét | Chỉ có unit test, không có e2e | Cả 625 kanji đều có nét KanjiVG, không có dữ liệu thật để e2e |
 
 ## AC
 ### 41a+b Phiên học

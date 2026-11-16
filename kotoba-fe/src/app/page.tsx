@@ -398,7 +398,7 @@ export default async function Home() {
         </p>
         <p>{t.footerB}</p>
         <p>
-          {credit.kanji}: KANJIDIC2 · {credit.dict}: JMdict · CC BY-SA 4.0 · {credit.hv}: hanviet-pinyin-wordlist · <Link href="/legal">{credit.legal}</Link>
+          {credit.kanji}: KANJIDIC2 · {credit.dict}: JMdict · CC BY-SA 4.0 · {credit.hv}: hanviet-pinyin-wordlist · {credit.strokes}: KanjiVG (CC BY-SA 3.0) · <Link href="/legal">{credit.legal}</Link>
         </p>
       </footer>
     </>
