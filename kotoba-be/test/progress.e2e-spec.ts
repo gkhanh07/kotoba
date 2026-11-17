@@ -1,0 +1,253 @@
+import { Test } from '@nestjs/testing';
+import type { NestExpressApplication } from '@nestjs/platform-express';
+import request from 'supertest';
+import { AppModule } from '../src/app.module.js';
+import { Db } from '../src/db.js';
+
+describe('progress (e2e)', () => {
+  let app: NestExpressApplication;
+  let http: ReturnType<typeof request>;
+  let token: string;
+  const put = (body: unknown, t = token) => http.put('/progress').set('Authorization', `Bearer ${t}`).send(body as object);
+  const card = (box: number, at: number) => ({ box, due: '2026-11-02', at });
+  // Every card the API returns carries lapses; a card pushed without it reads 0 (phase 16, AC-2).
+  const read = (box: number, at: number, lapses = 0) => ({ ...card(box, at), lapses });
+
+  beforeAll(async () => {
+    const mod = await Test.createTestingModule({ imports: [AppModule] }).compile();
+    app = mod.createNestApplication<NestExpressApplication>({ bodyParser: false });
+    app.useBodyParser('json', { limit: '1mb' });
+    await app.init();
+    http = request(app.getHttpServer());
+    await app.get(Db).user.deleteMany({ where: { email: 'sync@example.com' } });
+    const res = await http.post('/auth/register').send({ email: 'sync@example.com', password: 'password-1', goal: 'N5' }).expect(201);
+    token = res.body.token;
+  });
+
+  afterAll(() => app.close());
+
+  it('needs a session and a valid body', async () => {
+    await put({}, 'nope').expect(401);
+    await put({ cards: { 'hiragana:a': { box: 1 } } }).expect(400);
+    await put({ forget: [{ prefix: '', at: 1 }] }).expect(400);
+  });
+
+  it('merges pushes: newer wins, unknown ids dropped, activity unioned', async () => {
+    const first = await put({
+      cards: { 'hiragana:a': card(1, 100), 'hiragana:i': card(2, 100), 'vocab:水': card(1, 100), 'nope:x': card(1, 100) },
+      activity: { days: { '2026-11-01': { minutes: [1], kana: ['hiragana:a'], vocab: [] } } },
+    }).expect(200);
+    expect(Object.keys(first.body.cards).sort()).toEqual(['hiragana:a', 'hiragana:i', 'vocab:水']);
+
+    const second = await put({
+      cards: { 'hiragana:a': card(3, 200), 'hiragana:i': card(0, 50) },
+      activity: { days: { '2026-11-01': { minutes: [2], kana: [], vocab: ['vocab:水'] } }, last: { area: 'vocab', ref: 'vocab:水' } },
+    }).expect(200);
+    expect(second.body.cards['hiragana:a']).toEqual(read(3, 200));
+    expect(second.body.cards['hiragana:i']).toEqual(read(2, 100));
+    expect(second.body.activity).toEqual({
+      days: { '2026-11-01': { minutes: [1, 2], kana: ['hiragana:a'], kanji: [], vocab: ['vocab:水'] } },
+      last: { area: 'vocab', ref: 'vocab:水' },
+    });
+  });
+
+  it('treats an empty push as a pull', async () => {
+    const res = await put({}).expect(200);
+    expect(Object.keys(res.body.cards)).toHaveLength(3);
+    expect(res.body.activity.last.ref).toBe('vocab:水');
+  });
+
+  it('applies a reset to cards older than it, keeping later reviews', async () => {
+    const res = await put({ forget: [{ prefix: 'hiragana:', at: 150 }], cards: { 'hiragana:u': card(1, 160) } }).expect(200);
+    expect(Object.keys(res.body.cards).sort()).toEqual(['hiragana:a', 'hiragana:u', 'vocab:水']);
+  });
+
+  it('accepts 10000 cards and rejects 10001 without changing cards or activity', async () => {
+    const cards = Object.fromEntries(Array.from({ length: 9999 }, (_, i) => [`unknown:${i}`, card(1, 300)]));
+    cards['hiragana:a'] = card(3, 200);
+    await put({ cards }).expect(200);
+    const before = await put({}).expect(200);
+    cards['hiragana:i'] = card(4, 400);
+    const res = await put({
+      cards,
+      forget: [{ prefix: 'hiragana:', at: 500 }],
+      activity: { days: { '2026-11-02': { minutes: [9], kana: ['hiragana:i'], vocab: [] } } },
+    }).expect(400);
+    expect(res.body.message).toBe('cards');
+    const after = await put({}).expect(200);
+    expect(after.body).toEqual(before.body);
+  });
+
+  describe('export (phase 21)', () => {
+    const exp = (t = token) => http.get('/me/export').set('Authorization', `Bearer ${t}`);
+
+    it('needs a session', async () => {
+      await http.get('/me/export').expect(401);
+      await exp('nope').expect(401);
+    });
+
+    it('returns the profile, every card and the activity log, and nothing secret', async () => {
+      await put({
+        cards: { 'kanji:日': { ...card(3, 900), lapses: 2 } },
+        activity: { days: { '2026-11-03': { minutes: [7], kana: [], vocab: [], kanji: ['kanji:日'] } } },
+      }).expect(200);
+      const pulled = await put({}).expect(200);
+      const res = await exp().expect(200);
+      expect(Object.keys(res.body).sort()).toEqual(['activity', 'cards', 'exportedAt', 'format', 'profile', 'tests', 'version']);
+      expect(res.body.format).toBe('kotoba-export');
+      expect(res.body.version).toBe(1);
+      expect(Number.isNaN(Date.parse(res.body.exportedAt))).toBe(false);
+      expect(res.body.profile).toEqual({ email: 'sync@example.com', goal: 'N5' });
+      expect(res.body.cards).toEqual(pulled.body.cards);
+      expect(res.body.cards['kanji:日']).toEqual(read(3, 900, 2));
+      expect(res.body.activity).toEqual(pulled.body.activity);
+      const json = JSON.stringify(res.body);
+      for (const secret of ['hash', 'password', 'token', '"id"', 'userId', 'expiresAt']) expect(json).not.toContain(secret);
+    });
+
+    it('exports an empty deck and log for a new account', async () => {
+      await app.get(Db).user.deleteMany({ where: { email: 'empty-export@example.com' } });
+      const reg = await http.post('/auth/register').send({ email: 'empty-export@example.com', password: 'password-1', goal: 'N4' }).expect(201);
+      const res = await exp(reg.body.token).expect(200);
+      expect(res.body.cards).toEqual({});
+      expect(res.body.tests).toEqual([]);
+      expect(res.body.activity).toEqual({ days: {} });
+      expect(res.body.profile).toEqual({ email: 'empty-export@example.com', goal: 'N4' });
+    });
+  });
+
+  describe('lapses (phase 16)', () => {
+    const EMAIL = 'lapses@example.com';
+    let lt: string;
+    const lput = (body: unknown) => put(body, lt);
+    const clean = () => app.get(Db).user.deleteMany({ where: { email: EMAIL } });
+
+    beforeAll(async () => {
+      await clean();
+      const res = await http.post('/auth/register').send({ email: EMAIL, password: 'password-1', goal: 'N5' }).expect(201);
+      lt = res.body.token;
+    });
+    afterAll(clean);
+
+    it('stores lapses with the card and returns it from the push and the next pull', async () => {
+      const pushed = await lput({ cards: { 'hiragana:a': { ...card(0, 100), lapses: 3 } } }).expect(200);
+      expect(pushed.body.cards['hiragana:a']).toEqual(read(0, 100, 3));
+      const pulled = await lput({}).expect(200);
+      expect(pulled.body.cards['hiragana:a']).toEqual(read(0, 100, 3));
+    });
+
+    it('accepts a card without lapses and returns lapses: 0', async () => {
+      const res = await lput({ cards: { 'hiragana:i': card(1, 100) } }).expect(200);
+      expect(res.body.cards['hiragana:i']).toEqual(read(1, 100, 0));
+    });
+
+    it('lets lapses travel with the newer card and keeps the stored count when the push is older', async () => {
+      await lput({ cards: { 'hiragana:u': { ...card(0, 100), lapses: 2 } } }).expect(200);
+      const newerPush = await lput({ cards: { 'hiragana:u': { ...card(0, 200), lapses: 4 } } }).expect(200);
+      expect(newerPush.body.cards['hiragana:u']).toEqual(read(0, 200, 4));
+      const olderPush = await lput({ cards: { 'hiragana:u': { ...card(0, 150), lapses: 9 } } }).expect(200);
+      expect(olderPush.body.cards['hiragana:u']).toEqual(read(0, 200, 4));
+    });
+
+    it('reads a row created before the migration (no lapses written) as 0', async () => {
+      const db = app.get(Db);
+      const user = await db.user.findUniqueOrThrow({ where: { email: EMAIL }, select: { id: true } });
+      await db.$executeRawUnsafe(
+        'INSERT INTO "Card" ("userId", "itemId", "box", "due", "at") VALUES (?, ?, ?, ?, ?)',
+        user.id, 'hiragana:e', 2, '2026-11-02', 50,
+      );
+      const res = await lput({}).expect(200);
+      expect(res.body.cards['hiragana:e']).toEqual(read(2, 50, 0));
+    });
+
+    it('accepts lapses 0 and the maximum 10000', async () => {
+      const res = await lput({ cards: { 'hiragana:o': { ...card(0, 100), lapses: 0 }, 'hiragana:ka': { ...card(0, 100), lapses: 10000 } } }).expect(200);
+      expect(res.body.cards['hiragana:o'].lapses).toBe(0);
+      expect(res.body.cards['hiragana:ka'].lapses).toBe(10000);
+    });
+
+    it.each([
+      ['negative', -1],
+      ['a fraction', 1.5],
+      ['a string', '2'],
+      ['above the maximum', 10001],
+      ['null', null],
+    ])('rejects lapses that is %s with 400 "cards"', async (_name, lapses) => {
+      const res = await lput({ cards: { 'hiragana:ki': { ...card(0, 100), lapses } } }).expect(400);
+      expect(res.body.message).toBe('cards');
+      const after = await lput({}).expect(200);
+      expect(after.body.cards['hiragana:ki']).toBeUndefined();
+    });
+  });
+
+  // Phase 40a (AC-2): the star travels with the card; old rows and old clients read as not saved.
+  describe('saved (phase 40a)', () => {
+    const EMAIL = 'saved@example.com';
+    let st: string;
+    const sput = (body: unknown) => put(body, st);
+    const clean = () => app.get(Db).user.deleteMany({ where: { email: EMAIL } });
+
+    beforeAll(async () => {
+      await clean();
+      const res = await http.post('/auth/register').send({ email: EMAIL, password: 'password-1', goal: 'N5' }).expect(201);
+      st = res.body.token;
+    });
+    afterAll(clean);
+
+    it('stores saved, returns it from push, pull and export, and a newer unsaved push clears it', async () => {
+      const pushed = await sput({ cards: { 'hiragana:a': { ...card(0, 100), saved: true }, 'hiragana:i': card(0, 100) } }).expect(200);
+      expect(pushed.body.cards['hiragana:a']).toEqual({ ...read(0, 100), saved: true });
+      expect(pushed.body.cards['hiragana:i']).toEqual(read(0, 100));
+      const exported = await http.get('/me/export').set('Authorization', `Bearer ${st}`).expect(200);
+      expect(exported.body.cards['hiragana:a'].saved).toBe(true);
+      expect(exported.body.cards['hiragana:i']).not.toHaveProperty('saved');
+      const cleared = await sput({ cards: { 'hiragana:a': { ...card(0, 200), saved: false } } }).expect(200);
+      expect(cleared.body.cards['hiragana:a']).toEqual(read(0, 200));
+    });
+
+    it('rejects a saved that is not a boolean', async () => {
+      const res = await sput({ cards: { 'hiragana:u': { ...card(0, 100), saved: 'yes' } } }).expect(400);
+      expect(res.body.message).toBe('cards');
+    });
+  });
+
+  describe('test scores (phase 40g)', () => {
+    const EMAIL = 'tests@example.com';
+    let tt: string;
+    const tput = (body: unknown) => put(body, tt);
+    const list = (t = tt) => http.get('/progress/tests').set('Authorization', `Bearer ${t}`);
+    const score = (testId: string, at: number, sc = 30) => ({ testId, score: sc, total: 41, at });
+    const clean = () => app.get(Db).user.deleteMany({ where: { email: EMAIL } });
+
+    beforeAll(async () => {
+      await clean();
+      const res = await http.post('/auth/register').send({ email: EMAIL, password: 'password-1', goal: 'N5' }).expect(201);
+      tt = res.body.token;
+    });
+    afterAll(clean);
+
+    it('stores each attempt once, lists them newest first and exports them', async () => {
+      await list('nope').expect(401);
+      expect((await list().expect(200)).body).toEqual([]);
+      await tput({ tests: [score('n5-1', 100), score('n5-2', 200, 12)] }).expect(200);
+      // The browser resends what it has; a pushed duplicate inside one push is written once too.
+      await tput({ tests: [score('n5-1', 100), score('n5-1', 300, 35), score('n5-1', 300, 35)] }).expect(200);
+      const expected = [score('n5-1', 300, 35), score('n5-2', 200, 12), score('n5-1', 100)];
+      expect((await list().expect(200)).body).toEqual(expected);
+      const exported = await http.get('/me/export').set('Authorization', `Bearer ${tt}`).expect(200);
+      expect(exported.body.tests).toEqual(expected);
+    });
+
+    it('writes to the signed-in account only, whatever userId the payload carries (40g review)', async () => {
+      await tput({ tests: [{ ...score('n5-9', 900), userId: 999999 }] }).expect(200);
+      expect((await list().expect(200)).body[0]).toEqual(score('n5-9', 900));
+    });
+
+    it('rejects a bad score without writing anything, and a push without tests still works (old clients)', async () => {
+      const res = await tput({ tests: [score('n5-3', 400), { ...score('n5-3', 500), score: 99 }] }).expect(400);
+      expect(res.body.message).toBe('tests');
+      await tput({ cards: {} }).expect(200);
+      expect((await list().expect(200)).body).toHaveLength(4);
+    });
+  });
+});

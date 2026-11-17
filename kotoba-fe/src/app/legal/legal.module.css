@@ -1,0 +1,12 @@
+.legal { max-width: calc(68ch + 2 * var(--gutter)); margin: 0 auto; padding: clamp(1.5rem, 4vw, 3.5rem) var(--gutter) 2rem; color: var(--silver); line-height: 1.7; }
+.legal h1 { font-size: clamp(2rem, 5vw, 3rem); color: var(--chalk); }
+.toc { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
+.toc a, .legal section a { color: var(--silver); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 3px; }
+.toc a { display: inline-flex; align-items: center; min-height: 44px; }
+.toc a:hover, .legal section a:hover { color: var(--chalk); text-decoration-color: currentColor; }
+.legal section { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 1px solid var(--rule-dim); scroll-margin-top: 88px; }
+.legal h2 { font-size: 1.35rem; color: var(--chalk); }
+.legal section p, .legal section ul { margin-top: .9rem; }
+.legal section ul { padding-left: 1.25rem; }
+.legal section li + li { margin-top: .4rem; }
+.updated { margin-top: .75rem; color: var(--silver-dim); font-size: .9rem; }

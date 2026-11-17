@@ -103,7 +103,7 @@
   position: absolute;
   inset: -4rem -6rem -2rem -30vw;
   z-index: -1;
-  background: radial-gradient(closest-side, rgba(7, 11, 28, 0.82), rgba(7, 11, 28, 0.55) 60%, transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--sky-3) 82%, transparent), color-mix(in srgb, var(--sky-3) 55%, transparent) 60%, transparent);
   pointer-events: none;
 }
 .copy h1 {
@@ -116,11 +116,11 @@
 }
 .lineCool {
   color: var(--cool-core);
-  text-shadow: 0 0 2px rgba(210, 235, 255, 0.9), 0 0 24px rgba(110, 170, 255, 0.55), 0 0 60px rgba(60, 110, 255, 0.35);
+  text-shadow: 0 0 2px color-mix(in srgb, var(--cool-core) 90%, transparent), 0 0 24px color-mix(in srgb, var(--cool) 55%, transparent), 0 0 60px color-mix(in srgb, var(--cool) 35%, transparent);
 }
 .lineAmber {
   color: var(--amber-core);
-  text-shadow: 0 0 2px rgba(255, 220, 160, 0.95), 0 0 22px rgba(255, 177, 59, 0.65), 0 0 60px rgba(255, 140, 20, 0.35);
+  text-shadow: 0 0 2px color-mix(in srgb, color-mix(in srgb, var(--amber) 40%, var(--amber-core)) 95%, transparent), 0 0 22px color-mix(in srgb, var(--amber) 65%, transparent), 0 0 60px color-mix(in srgb, var(--amber) 35%, transparent);
 }
 .lede {
   max-width: 34rem;
@@ -142,20 +142,20 @@
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
-  border-top: 1px solid rgba(120, 140, 190, 0.35);
+  border-top: 1px solid color-mix(in srgb, var(--silver-dim) 35%, transparent);
 }
 
 .sign {
   --tube: var(--neon);
   --core: var(--neon-core);
-  --halo: rgba(255, 61, 110, 0.55);
+  --halo: color-mix(in srgb, var(--neon) 55%, transparent);
   position: relative;
   margin-top: var(--drop);
   padding: 0.85rem 0.5rem 0.95rem;
   border: 2px solid var(--tube);
   border-radius: 7px;
-  background: linear-gradient(180deg, rgba(10, 12, 22, 0.92), rgba(6, 8, 14, 0.96));
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7), 0 0 26px -4px var(--halo), inset 0 0 20px -6px var(--halo), 0 18px 30px -12px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--asphalt) 92%, transparent), color-mix(in srgb, var(--night) 96%, transparent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--night) 70%, transparent), 0 0 26px -4px var(--halo), inset 0 0 20px -6px var(--halo), 0 18px 30px -12px color-mix(in srgb, var(--night) 80%, transparent);
   color: var(--core);
   filter: brightness(0.62) saturate(0.75);
   transition: filter 0.35s var(--ease-out), transform 0.35s var(--ease-out);
@@ -168,10 +168,10 @@
   right: 22%;
   bottom: 100%;
   height: calc(var(--drop) + 2px);
-  border-inline: 1px solid rgba(120, 140, 190, 0.35);
+  border-inline: 1px solid color-mix(in srgb, var(--silver-dim) 35%, transparent);
 }
-.sign[data-tone="cool"] { --tube: var(--cool); --core: var(--cool-core); --halo: rgba(92, 184, 255, 0.5); }
-.sign[data-tone="silver"] { --tube: var(--chalk); --core: #fff; --halo: rgba(200, 220, 255, 0.4); }
+.sign[data-tone="cool"] { --tube: var(--cool); --core: var(--cool-core); --halo: color-mix(in srgb, var(--cool) 50%, transparent); }
+.sign[data-tone="silver"] { --tube: var(--chalk); --core: #fff; --halo: color-mix(in srgb, var(--silver) 40%, transparent); }
 
 /* An unlit sign has to look like something you can switch on: it lifts on the
    cable and warms toward full brightness before you have committed to a click. */
@@ -260,7 +260,7 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
     radial-gradient(8rem 1.9rem at 88% calc(64% - var(--pud)), var(--spill-amber), transparent 72%),
     repeating-linear-gradient(180deg, transparent 0 9px, var(--drizzle) 9px 10px),
     linear-gradient(180deg, var(--wet) 0%, var(--asphalt) 30%, var(--night) 100%);
-  box-shadow: inset 0 1px 0 rgba(150, 175, 230, 0.28);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--silver-dim) 28%, transparent);
 }
 
 .reflection {
@@ -301,8 +301,8 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   padding: 1.1rem 1.25rem 1rem;
   border: 1px solid var(--rule);
   border-radius: 4px;
-  background: linear-gradient(180deg, rgba(20, 26, 37, 0.92), rgba(11, 15, 22, 0.94));
-  box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.9);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--wet) 92%, transparent), color-mix(in srgb, var(--asphalt) 94%, transparent));
+  box-shadow: 0 20px 40px -18px color-mix(in srgb, var(--night) 90%, transparent);
 }
 .ticketHead {
   display: flex;
@@ -351,7 +351,7 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   padding: 0.35rem 0.5rem 0.3rem;
   border: 1px solid var(--rule);
   border-radius: 3px;
-  background: rgba(5, 6, 8, 0.6);
+  background: color-mix(in srgb, var(--night) 60%, transparent);
 }
 .parts li span:first-child {
   font-size: 1.45rem;
@@ -379,11 +379,18 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
     var(--night);
 }
 
+.trialSec,
+.scripts,
+.hvSec,
 .route,
-.honest {
+.session,
+.honest,
+.preview,
+.closing {
   padding: clamp(4.5rem, 9vw, 7.5rem) var(--pad-x) 0;
 }
-.sectionHead h2 {
+.sectionHead h2,
+.closing h2 {
   font-size: clamp(2.3rem, 4.6vw, 3.9rem);
   margin-bottom: 1.1rem;
   color: var(--chalk);
@@ -394,13 +401,69 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   color: var(--silver);
   margin-bottom: 1rem;
 }
+.preview h3,
+.steps h3,
+.closing h3 {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-title), sans-serif;
+  font-size: var(--fs-card);
+  font-weight: 700;
+  color: var(--chalk);
+}
 
-/* Train line: stations on a lit rail. */
+/* Three scripts: three tiles, each led by its own script as the specimen. */
+.scriptGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+.scriptGrid li { display: flex; }
+.script {
+  flex: 1;
+  gap: 0.6rem;
+  padding: clamp(1.25rem, 2.4vw, 1.75rem);
+}
+.scriptSpecimen {
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--chalk);
+  transition: color var(--dur) var(--ease-out), text-shadow var(--dur) var(--ease-out);
+}
+a.script:hover .scriptSpecimen { color: var(--amber-core); text-shadow: var(--glow-amber); }
+.scriptName,
+.stationName {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-title), sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--chalk);
+}
+.scriptName svg,
+.stationName svg { color: var(--amber); transition: transform var(--dur) var(--ease-out); }
+a.script:hover .scriptName svg,
+a.station:hover .stationName svg { transform: translateX(4px); }
+.scriptText { max-width: 40ch; color: var(--silver); }
+.scriptMeta {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--rule-dim);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--silver);
+}
+
+/* Train line: one station per level, on a lit rail. */
 .line {
   --rail: 3px;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--stops, 3), minmax(0, 1fr));
   margin-top: 3.5rem;
   position: relative;
 }
@@ -416,7 +479,7 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   right: 0;
   height: var(--rail);
   background: var(--amber);
-  box-shadow: 0 0 14px rgba(255, 177, 59, 0.55);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--amber) 55%, transparent);
 }
 .line li::after {
   content: "";
@@ -428,17 +491,7 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   border-radius: 50%;
   border: 3px solid var(--amber);
   background: var(--night);
-  box-shadow: 0 0 12px rgba(255, 177, 59, 0.6);
-}
-.line li[data-open="true"]:nth-child(2)::before { right: 0; }
-.line li[data-open="false"]::before {
-  background: repeating-linear-gradient(90deg, var(--rule-strong) 0 10px, transparent 10px 18px);
-  box-shadow: none;
-  right: 30%;
-}
-.line li[data-open="false"]::after {
-  border-color: var(--rule-strong);
-  box-shadow: none;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--amber) 60%, transparent);
 }
 .station {
   display: grid;
@@ -447,58 +500,47 @@ button.sign[aria-pressed="true"] { transform: translateY(-2px); }
   text-decoration: none;
 }
 .stationKana {
-  font-size: clamp(2.2rem, 3.6vw, 3.1rem);
+  font-family: var(--font-title), sans-serif;
+  font-size: clamp(2.6rem, 4.2vw, 3.6rem);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   color: var(--chalk);
-  transition: text-shadow 0.3s var(--ease-out), color 0.3s;
+  transition: text-shadow var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
 a.station:hover .stationKana {
   color: var(--amber-core);
   text-shadow: var(--glow-amber);
 }
-.stationName {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+.stationStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: 0.75rem;
+}
+.stationStats div { display: grid; }
+.stationStats dt { font-size: var(--fs-meta); color: var(--silver-dim); }
+.stationStats dd {
   font-family: var(--font-title), sans-serif;
+  font-size: 1.6rem;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
   color: var(--chalk);
 }
-a.station .stationName svg { color: var(--amber); transition: transform 0.3s var(--ease-out); }
-a.station:hover .stationName svg { transform: translateX(4px); }
-.stationText {
-  max-width: 34ch;
-  color: var(--silver);
-}
-.stationMeta {
-  margin-top: 0.4rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--amber);
-}
-[data-open="false"] .stationKana,
-[data-open="false"] .stationName { color: var(--silver-dim); }
-[data-open="false"] .stationMeta { color: var(--silver-dim); }
 
-/* Honest progress */
+/* Honest progress: the rule in words, the review ladder, then the lamps as an example. */
 .honest {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: center;
+  align-items: start;
 }
-.honest .sectionHead .btn,
-.honest :global(.btn) { margin-top: 1rem; }
 .honest kbd {
   display: inline-block;
   min-width: 1.7em;
   padding: 0 0.4em;
   border: 1px solid var(--rule-strong);
   border-bottom-width: 2px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   background: var(--wet);
   font-family: var(--font-body), sans-serif;
   font-size: 0.88em;
@@ -506,12 +548,39 @@ a.station:hover .stationName svg { transform: translateX(4px); }
   text-align: center;
   color: var(--chalk);
 }
+/* One step per row: a wrapping row of seven broke 5 + 2 on desktop and read as two groups (BUG-026). */
+.ladder {
+  list-style: none;
+  display: grid;
+  /* Rows as wide as the widest step, not the whole column. */
+  grid-template-columns: minmax(0, max-content);
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+}
+.ladder li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--rule-dim);
+  border-radius: var(--radius-sm);
+  background: var(--surface-1);
+}
+.ladderHit {
+  font-family: var(--font-title), sans-serif;
+  font-weight: 700;
+  color: var(--chalk);
+}
+.ladderWait { font-size: var(--fs-meta); color: var(--silver); font-variant-numeric: tabular-nums; }
+.ladderMiss { margin-top: 1rem; color: var(--silver); }
 
 .lamps {
   padding: 1.5rem;
   border: 1px solid var(--rule-dim);
-  border-radius: 4px;
-  background: linear-gradient(180deg, var(--asphalt), var(--night));
+  border-radius: var(--radius);
+  background: var(--surface-1);
+  box-shadow: var(--edge-hi);
 }
 .lamps ul {
   list-style: none;
@@ -532,7 +601,7 @@ a.station:hover .stationName svg { transform: translateX(4px); }
   line-height: 1;
   color: var(--chalk);
 }
-[data-lit="3"] .lampChar { text-shadow: var(--glow-cool); }
+[data-known="true"] .lampChar { text-shadow: var(--glow-cool); }
 .lampRomaji { color: var(--silver-dim); }
 .lampRow {
   display: flex;
@@ -547,7 +616,7 @@ a.station:hover .stationName svg { transform: translateX(4px); }
 .lampRow i[data-on="true"] {
   border-color: var(--amber);
   background: var(--amber);
-  box-shadow: 0 0 10px rgba(255, 177, 59, 0.75);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--amber) 75%, transparent);
 }
 .lampLabel {
   font-family: var(--font-title), sans-serif;
@@ -557,9 +626,94 @@ a.station:hover .stationName svg { transform: translateX(4px); }
 }
 .lamps figcaption {
   margin-top: 1rem;
-  font-size: 0.92rem;
+  font-size: var(--fs-caption);
   color: var(--silver-dim);
 }
+
+/* Preview: one real lesson, laid out like the app's own panels. */
+.previewGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+.previewWords ul { list-style: none; }
+.previewWords li {
+  display: grid;
+  grid-template-columns: minmax(6rem, 9rem) minmax(6rem, 10rem) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--rule-dim);
+}
+.previewWord { font-size: 1.6rem; font-weight: 700; color: var(--chalk); }
+.previewReading,
+.previewMeaning { color: var(--silver); }
+.previewMeaning::first-letter { text-transform: uppercase; } /* content keeps meanings lowercase */
+.previewSide {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.previewCard {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
+}
+.previewCard figcaption {
+  align-self: stretch;
+  margin-bottom: 0.5rem;
+  font-size: var(--fs-meta);
+  color: var(--silver-dim);
+  text-align: left;
+}
+.previewFront {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--cool-core);
+  text-shadow: var(--glow-cool);
+}
+.previewKanji,
+.previewGrammar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.previewKanjiChar { font-size: 3rem; font-weight: 700; line-height: 1.2; color: var(--chalk); }
+.previewHv { font-family: var(--font-title), sans-serif; font-weight: 700; color: var(--chalk); }
+.previewPattern { font-size: 1.4rem; font-weight: 700; color: var(--chalk); overflow-wrap: anywhere; }
+.previewLink { margin-top: 1.5rem; }
+
+/* Phase 41i (AC-18): the guest trial, the four session steps and the Hán Việt examples. */
+.trialSec { display: grid; gap: 2rem; grid-template-columns: minmax(0, 1fr) minmax(0, 28rem); align-items: start; }
+.trial { display: grid; gap: 1rem; }
+.trial > :global(.btn) { justify-self: start; }
+.trialStep { font-size: var(--fs-caption); color: var(--silver); }
+.trialAsk { color: var(--chalk); }
+.trialFront { font-size: 3rem; font-weight: 700; line-height: 1.2; color: var(--chalk); }
+.trialResult { min-height: 1.5em; color: var(--silver); }
+.steps,
+.hvGrid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.steps li { counter-increment: step; }
+.steps h3::before { content: counter(step) ". "; color: var(--silver); }
+.steps p { color: var(--silver); }
+.hvGrid li { display: grid; gap: 0.25rem; }
+.levels { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; list-style: none; margin: 0; padding: 0; }
+.closing h3 { margin-top: 3rem; }
+
+/* Closing: the page's one amber action. */
+.closing {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+.closing p { max-width: 60ch; color: var(--silver); }
+.closing :global(.btn) { margin-top: 1.75rem; }
+.closing .levels :global(.btn) { margin-top: 0; }
 
 .footer {
   margin-top: clamp(4rem, 8vw, 7rem);
@@ -574,8 +728,22 @@ a.station:hover .stationName svg { transform: translateX(4px); }
 }
 .footer :global(.brandMark) { font-size: 1.1rem; margin-right: 0.35rem; }
 
+/* A row of six lamps needs about 440px at full size, which the 5fr column only reaches above this width. */
+@media (max-width: 1280px) {
+  .honest { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lamps li { grid-template-columns: 3rem 2rem 1fr auto; gap: 0.5rem; }
+  .lampRow { gap: 5px; }
+  .lampRow i { width: 10px; height: 10px; }
+  .lampLabel { white-space: nowrap; font-size: 1rem; }
+}
+
+@media (max-width: 1100px) {
+  .previewGrid { grid-template-columns: minmax(0, 1fr); }
+}
+
 /* ───────── Phones: skyline, street and reflection unroll into bands ───────── */
 @media (max-width: 900px) {
+  .trialSec { grid-template-columns: minmax(0, 1fr); }
   .hero { --signsH: 11.5rem; --groundH: 9rem; min-height: auto; }
   .stage {
     grid-template-columns: 1fr;
@@ -598,16 +766,18 @@ a.station:hover .stationName svg { transform: translateX(4px); }
   .reflection { grid-column: 1; }
   .ticket { grid-column: 1; grid-row: 2; margin-top: 0; max-width: none; }
 
+  .scriptGrid { grid-template-columns: minmax(0, 1fr); }
   .line { grid-template-columns: 1fr; gap: 2.5rem; padding-left: 2.2rem; }
   .line li { padding-top: 0; }
   .line li::before { top: 0.55rem; bottom: -2.5rem; left: -1.7rem; right: auto; width: var(--rail); height: auto; }
   .line li:last-child::before { bottom: 0; }
-  .line li[data-open="false"]::before { right: auto; background: repeating-linear-gradient(180deg, var(--rule-strong) 0 10px, transparent 10px 18px); }
   .line li::after { left: -2.1rem; top: 0.9rem; }
   .station { padding-right: 0; }
 
-  .honest { grid-template-columns: 1fr; }
-  .lamps li { grid-template-columns: 3.2rem 2.4rem 1fr auto; gap: 0.6rem; }
+  .honest { grid-template-columns: minmax(0, 1fr); }
+  .previewSide { grid-template-columns: minmax(0, 1fr); }
+  .previewWords li { grid-template-columns: minmax(0, auto) minmax(0, 1fr); gap: 0.25rem 1rem; }
+  .previewWords .previewMeaning { grid-column: 1 / -1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

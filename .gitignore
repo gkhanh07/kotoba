@@ -1,0 +1,6 @@
+# Local tool state, never committed (AGENTS.md §4, clean tree)
+.codegraph/
+kotoba-fe/.impeccable/hook.cache.json
+
+# Phase 42 shots: SCREENS=1 npx playwright test e2e/screens.spec.ts --project=desktop (from kotoba-fe)
+docs/screenshots/

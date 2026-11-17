@@ -1,0 +1,39 @@
+/* /progress (phase 41g, AC-15): level and totals on top, then the week, coverage, the plan and tests. Tokens only. */
+.app { max-width: calc(64rem + 2 * var(--gutter)); margin-inline: auto; padding: clamp(1.5rem, 4vw, 3rem) var(--gutter) 4rem; display: grid; gap: 1rem; }
+.app a:not(:global(.btn)) { color: var(--amber); text-decoration: underline; text-underline-offset: .25em; }
+.app a:not(:global(.btn)):hover { color: var(--amber-core); }
+.app h2 { font-family: var(--font-title), sans-serif; font-size: var(--fs-card); font-weight: 700; color: var(--chalk); }
+.title { font-size: var(--fs-page); color: var(--chalk); }
+.note { color: var(--silver-dim); font-size: var(--fs-caption); }
+
+.level { display: grid; gap: .75rem; }
+.xp { color: var(--silver); font-variant-numeric: tabular-nums; }
+.totals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: .5rem 0 0; padding-top: 1rem; border-top: 1px solid var(--rule-dim); }
+.totals div { display: flex; flex-direction: column-reverse; gap: .25rem; }
+.totals dt { font-size: var(--fs-meta); color: var(--silver-dim); }
+.totals dd { margin: 0; font-family: var(--font-title), sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--chalk); font-variant-numeric: tabular-nums; }
+
+.grid { display: grid; gap: 1rem; }
+@media (min-width: 760px) { .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.section { display: grid; gap: 1rem; align-content: start; }
+
+.days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .35rem; margin: 0; padding: 0; list-style: none; text-align: center; }
+.days li { display: grid; gap: .25rem; justify-items: center; }
+.track { display: flex; align-items: flex-end; width: 100%; max-width: 1.75rem; height: 6rem; border-radius: 4px; background: var(--surface-2); position: relative; }
+.track::after { content: ""; position: absolute; inset-inline: 0; bottom: var(--goal); border-top: 1px dashed var(--silver-dim); pointer-events: none; }
+.fill { display: block; width: 100%; border-radius: 4px; background: var(--silver-dim); }
+.days li[data-met] .fill { background: var(--amber); }
+.dm { font-size: var(--fs-meta); color: var(--silver-dim); font-variant-numeric: tabular-nums; }
+
+.cover { display: grid; gap: .75rem; margin: 0; padding: 0; list-style: none; }
+.cover li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr) 3rem; align-items: center; gap: .75rem; color: var(--chalk); font-variant-numeric: tabular-nums; }
+.cover li span:last-child { text-align: end; color: var(--silver); }
+
+.row { display: flex; flex-wrap: wrap; gap: .25rem 1rem; align-items: baseline; }
+.list { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.list li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; min-height: 44px; align-items: center; border-bottom: 1px solid var(--rule-dim); }
+.list li span { color: var(--silver); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 520px) {
+  .totals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

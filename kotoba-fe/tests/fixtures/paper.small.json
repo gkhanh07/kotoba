@@ -1,0 +1,36 @@
+{
+  "id": "fx-1",
+  "title": { "vi": "Đề mẫu", "en": "Sample paper" },
+  "minutes": 60,
+  "reviewed": false,
+  "parts": [
+    {
+      "part": "kanji",
+      "questions": [
+        { "q": "{今日}は 天気が いいです。", "choices": ["きょう", "きょお", "ぎょう", "こんび"], "answer": 0, "explain": "今日 đọc là きょう, trường âm viết bằng う." },
+        { "q": "あの {山}は たかいです。", "choices": ["かわ", "やま", "さん", "やさ"], "answer": 1, "explain": "山 đứng một mình đọc âm kun là やま." }
+      ]
+    },
+    {
+      "part": "order",
+      "questions": [
+        { "q": "えきの ＿＿ ＿＿ ★ ＿＿ あります。", "choices": ["に", "ぎんこう", "が", "まえ"], "answer": 1, "explain": "Câu đúng: えきの まえに ぎんこうが あります。" }
+      ]
+    },
+    {
+      "part": "reading",
+      "passage": "わたしの へやは 2かいです。テレビは ありません。",
+      "questions": [
+        { "q": "へやは なんかいですか。", "choices": ["1かい", "2かい", "3かい", "4かい"], "answer": 1, "explain": "Đoạn văn nói へやは 2かいです。" }
+      ]
+    },
+    {
+      "part": "reading",
+      "passage": "あさ 7時に おきます。",
+      "questions": [
+        { "q": "なんじに おきますか。", "choices": ["6時", "7時", "8時", "9時"], "answer": 1, "explain": "Đoạn văn nói 7時に おきます。" },
+        { "q": "いつ おきますか。", "choices": ["あさ", "ひる", "よる", "ばん"], "answer": 0, "explain": "あさ nghĩa là buổi sáng." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,329 @@
+/* Phase 41 /session: focus mode, one step at a time. Tokens only. */
+.app {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem 1rem 7rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.title {
+  flex: 1;
+  margin: 0;
+  font-size: var(--fs-card);
+}
+.exit {
+  min-height: 44px;
+  padding: 0 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  color: var(--silver);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+.clock {
+  color: var(--silver-dim);
+  font-size: var(--fs-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+.confirm {
+  display: grid;
+  gap: 0.75rem;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.progress p {
+  margin: 0;
+}
+.segments {
+  display: flex;
+  gap: 3px;
+  margin: 0.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+.segments li {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--rule);
+}
+.segments li[data-state="done"] {
+  background: var(--amber);
+}
+.segments li[data-state="now"] {
+  background: var(--cool);
+}
+
+.stage {
+  display: grid;
+  gap: 1rem;
+}
+.card {
+  /* AC-19: each step rises in; keyed by step, so it runs once per step. Reduced motion: globals.css. */
+  animation: rise var(--dur) var(--ease-out) both;
+  display: grid;
+  gap: 0.75rem;
+  padding: var(--space-panel);
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.big {
+  margin: 0;
+  font-size: var(--fs-specimen);
+  color: var(--chalk);
+  text-align: center;
+}
+.hv {
+  margin: 0;
+  text-align: center;
+  color: var(--amber);
+  font-size: var(--fs-section);
+  letter-spacing: 0.08em;
+}
+.pattern {
+  margin: 0;
+  font-size: var(--fs-section);
+  color: var(--amber);
+}
+.lead {
+  margin: 0;
+  font-size: var(--fs-card);
+  color: var(--chalk);
+}
+.ask {
+  margin: 0;
+  color: var(--silver);
+}
+.sub {
+  color: var(--silver-dim);
+  font-size: var(--fs-caption);
+}
+.label {
+  margin: 0;
+  color: var(--silver-dim);
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.ok {
+  margin: 0;
+  color: var(--ok);
+}
+.err {
+  margin: 0;
+  color: var(--err);
+}
+
+.facts {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+}
+.facts div {
+  display: flex;
+  gap: 0.75rem;
+}
+.facts dt {
+  min-width: 7rem;
+  color: var(--silver-dim);
+}
+.facts dd {
+  margin: 0;
+}
+
+.example {
+  border-top: 1px solid var(--rule);
+  padding-top: 0.75rem;
+}
+.example p {
+  margin: 0.25rem 0;
+}
+.example u {
+  text-decoration-color: var(--amber);
+  text-underline-offset: 0.2em;
+}
+.words {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+.words li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.typed {
+  display: grid;
+  gap: 0.5rem;
+}
+.typed input {
+  min-height: 48px;
+  padding: 0 0.75rem;
+  font: inherit;
+  font-size: var(--fs-card);
+  color: var(--chalk);
+  background: var(--surface-1);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+}
+
+.choices {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.choice,
+.tile {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  color: var(--chalk);
+  background: var(--surface-1);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: left;
+}
+.choice:disabled,
+.tile:disabled {
+  cursor: default;
+}
+.tile:disabled {
+  opacity: 0.45;
+}
+.choice[data-state="right"] {
+  border-color: var(--ok);
+}
+.choice[data-state="wrong"] {
+  border-color: var(--err);
+}
+.mark {
+  margin-left: auto;
+  font-size: var(--fs-caption);
+}
+.choice[data-state="right"] .mark {
+  color: var(--ok);
+}
+.choice[data-state="wrong"] .mark {
+  color: var(--err);
+}
+.app kbd {
+  min-width: 1.5em;
+  padding: 0 0.3em;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  color: var(--silver-dim);
+  font-size: var(--fs-meta);
+  text-align: center;
+}
+
+.sentence {
+  margin: 0;
+  font-size: var(--fs-card);
+}
+.blank {
+  color: var(--amber);
+  padding: 0 0.2em;
+}
+.placed,
+.pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-height: 48px;
+}
+.placed .tile,
+.pool .tile {
+  width: auto;
+}
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+  background: var(--surface-1);
+  border-top: 1px solid var(--rule);
+  z-index: 10;
+}
+.primary {
+  min-width: 10rem;
+}
+.gap {
+  font-size: var(--fs-meta);
+  color: var(--silver-dim);
+  margin: 0 0.4em;
+}
+.keys {
+  color: var(--silver-dim);
+  font-size: var(--fs-meta);
+  text-align: center;
+}
+
+/* 41c results: the XP change and the 7-day minutes strip (a day that met the goal is amber). */
+.xp {
+  margin: 0;
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+}
+.week {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.week li {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  background: var(--surface-1);
+  border-radius: 3px;
+}
+.week span {
+  width: 100%;
+  min-height: 2px;
+  border-radius: 3px;
+  background: var(--silver-dim);
+}
+.week li[data-goal] span {
+  background: var(--amber);
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } }

@@ -1,0 +1,94 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getGrammar, getKana, getKanji, getLessons, getVocab } from "@/lib/content";
+import { questionFor } from "@/lib/grammarQuiz";
+import { currentUser } from "@/lib/auth";
+import { goalScope, hvRows, KINDS, LEVELS, libraryText, reviewScope, type Kind, type Level, type ReviewItem } from "@/lib/library";
+import { getLang, getRomaji } from "../LangSwitch";
+import { SiteBar, SiteFooter } from "../SiteBar";
+import { ReviewApp } from "./ReviewApp";
+import { ReviewHub } from "./ReviewHub";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = libraryText[await getLang()].review;
+  return { title: `${t.title} · Kotoba`, description: t.lede };
+}
+
+const cap = (x: string) => x.charAt(0).toUpperCase() + x.slice(1);
+
+// Bare /review is the hub. ?start=1, ?kind=, ?lesson=, ?weak=1 and ?saved=1 (starred items) open a session;
+// ?kind= narrows the queue to one kind (unknown values are ignored), ?lesson=n to one lesson.
+export default async function ReviewPage(props: PageProps<"/review">) {
+  const q = await props.searchParams;
+  const [lang, romaji] = await Promise.all([getLang(), getRomaji()]);
+  const t = libraryText[lang];
+  const isSession = ["start", "kind", "lesson", "weak", "saved"].some((key) => q[key] !== undefined);
+  const [all, user] = await Promise.all([Promise.all([getKana(), getKanji(), getVocab(), getLessons()]), currentUser()]);
+  const lessons = all[3];
+  // A lesson pins its own level, so a lesson past the goal still opens; ?level= comes from /vocab's tab.
+  const l = q.lesson === undefined ? undefined : lessons.find((x) => String(x.lesson) === q.lesson);
+  if (q.lesson !== undefined && !l) notFound();
+  const level: Level | undefined = l?.level ?? LEVELS.find((x) => String(x) === q.level);
+  const goal = user?.profile.goal;
+  // Kana is all N5: every goal keeps it (JLPT is cumulative); only an N4 or N3 link leaves it out.
+  const kana = reviewScope(all[0].map((k) => ({ ...k, level: 5 })), goal, level);
+  const kanji = reviewScope(all[1], goal, level);
+  const vocab = reviewScope(all[2], goal, level);
+
+  if (!isSession) {
+    const cards = [
+      ...kana.map((k) => ({ id: k.id, kind: "kana" as const })),
+      ...kanji.map((k) => ({ id: k.id, kind: "kanji" as const })),
+      ...vocab.map((w) => ({ id: w.id, kind: "vocab" as const })),
+    ];
+    // Due grammar joins /session?mode=review too (session.ts buildSession), so the hub's count and minutes include it.
+    const grammar = goalScope(await getGrammar(), goal).filter((g) => questionFor(g) !== null).map((g) => g.id);
+    return (
+      <>
+        <SiteBar current="review" />
+        <ReviewHub cards={cards} grammar={grammar} lang={lang} />
+        <SiteFooter />
+      </>
+    );
+  }
+
+  // ponytail: every item in scope ships to the client so the queue and "next lesson" need no fetch; page it if a scope outgrows that.
+  const items: ReviewItem[] = [
+    ...kana.map((k) => ({
+      id: k.id, kind: "kana" as const, lesson: k.lesson, tag: k.script === "katakana" ? "Katakana" : "Hiragana", front: k.char,
+      back: [{ label: t.review.romaji, text: k.romaji, strong: true }, ...(lang === "vi" && k.hint && k.hint !== k.romaji ?[{ label: t.review.note, text: k.hint }] : [])],
+    })),
+    ...kanji.map((k) => ({
+      id: k.id, kind: "kanji" as const, lesson: k.lesson, tag: "Kanji", front: k.char,
+      meaning: cap(lang === "vi" ? (k.vi ?? k.en.join(", ")) : k.en.join(", ")),
+      back: [
+        ...hvRows(k.hv, t.kanji.hv),
+        ...(k.on.length ? [{ label: t.kanji.on, text: k.on.join("、"), ja: true }] : []),
+        ...(k.kun.length ? [{ label: t.kanji.kun, text: k.kun.join("、"), ja: true }] : []),
+        { label: t.kanji.meaning, text: cap(lang === "vi" ? (k.vi ?? k.en.join(", ")) : k.en.join(", ")) },
+      ],
+    })),
+    ...vocab.map((w) => ({
+      id: w.id, kind: "vocab" as const, lesson: w.lesson, tag: t.review.kinds.vocab, front: w.word,
+      meaning: cap(w[lang]), reading: w.reading,
+      back: [
+        { label: t.review.reading, text: w.reading, ja: true, ...(romaji && { sub: w.romaji }) },
+        { label: t.kanji.meaning, text: cap(w[lang]), strong: true },
+        { label: t.review.example, text: w.example.ja, ja: true, sub: w.example[lang] },
+      ],
+    })),
+  ];
+
+  const kind = KINDS.find((k) => k === q.kind) as Kind | undefined;
+  if (l && !items.some((i) => i.lesson === l.lesson)) notFound();
+  const lesson = l && { n: l.lesson, title: l.title[lang] };
+
+  return (
+    <>
+      <SiteBar current="review" />
+      {/* Keyed by scope: following "Review everything" from a scoped queue must rebuild the queue, not keep the old one. */}
+      <ReviewApp key={[kind, lesson?.n, level, q.weak, q.saved].join("|")} items={items} lang={lang} kind={kind} lesson={lesson} weak={q.weak === "1"} saved={q.saved === "1"} />
+      <SiteFooter />
+    </>
+  );
+}

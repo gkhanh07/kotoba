@@ -1,241 +1,205 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useSyncExternalStore } from "react";
-import { examDate, type Profile } from "@/lib/account";
-import { ACTIVITY_KEY, continueHref, daysBetween, parseActivity, summarize, type Activity } from "@/lib/activity";
-import { FLASHCARDS_KEY, parseStatuses } from "@/lib/flashcards";
+import { useMemo } from "react";
+import { examDate, examDay, type Profile } from "@/lib/account";
+import { ACTIVITY_KEY, parseActivity, summarize, type Activity } from "@/lib/activity";
 import type { Lang } from "@/lib/i18n";
-import { MASTERED_AT, PROGRESS_KEY, isMastered, type Progress } from "@/lib/progress";
+import { DEFAULT_MINUTES } from "@/config/session";
+import { NEW_PER_DAY } from "@/config/srs";
+import { currentLesson, stopsOf, type Grammar, type Kind } from "@/lib/library";
+import { buildSession, minutesFor, parseSession, partsOf, resumable, runsIn, SESSION_KEY, todayOf, type Part } from "@/lib/session";
+import { addDays, daysUntil, dueCount, isLearned } from "@/lib/srs";
+import { learnedToday, today, useDeck, useStored } from "@/lib/store";
+import { remaining } from "@/lib/test";
+import { findSession } from "@/lib/testStore";
+import { testText } from "@/lib/testText";
+import { Arrow } from "./Arrow";
 import s from "./dashboard.module.css";
 
-// Copied from SiteBar: that file pulls server-only code, so a client component can't import it.
-function Arrow() {
+// Today's minutes against the goal: an arc that fills, the numbers inside. One label for screen readers.
+const R = 42, C = 2 * Math.PI * R;
+function Ring({ minutes, goal, label }: { minutes: number; goal: number; label: (m: number, g: number) => string }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-      <path d="M3 9h11M9.5 4.5 14 9l-4.5 4.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" />
+    <svg className={s.ring} viewBox="0 0 100 100" role="img" aria-label={label(minutes, goal)}>
+      <circle cx="50" cy="50" r={R} className={s.ringTrack} />
+      <circle cx="50" cy="50" r={R} className={s.ringFill} strokeDasharray={`${C * Math.min(1, minutes / goal)} ${C}`} transform="rotate(-90 50 50)" />
+      <text x="50" y="50" className={s.ringNum}>{minutes}</text>
+      <text x="50" y="68" className={s.ringOf}>/ {goal}</text>
     </svg>
   );
 }
 
-const subscribe = (notify: () => void) => {
-  window.addEventListener("storage", notify);
-  return () => window.removeEventListener("storage", notify);
-};
-// undefined = server render / hydration; "!unavailable" = storage blocked.
-function useStored(key: string) {
-  return useSyncExternalStore(
-    subscribe,
-    () => { try { return localStorage.getItem(key); } catch { return "!unavailable"; } },
-    () => undefined,
-  );
-}
-
-const count = <T,>(values: T[], ok: (v: T) => boolean) => values.filter(ok).length;
-const fromKey = (day: string) => { const [y, m, d] = day.split("-").map(Number); return new Date(y, m - 1, d); };
-
-export function Dashboard({ lang, name, profile, kanaTotal, vocabTotal }: {
-  lang: Lang; name: string; profile: Profile | null; kanaTotal: number; vocabTotal: number;
+// Phase 41g: the totals, plan, heatmap, weak items and test scores moved to /progress.
+export function Dashboard({ lang, name, profile, scope, tests, items, grammar }: {
+  /** What /session builds from (phase 41d): the goal's items with their lesson, and its grammar. */
+  items: { id: string; kind: Kind; lesson: number }[]; grammar: Grammar[];
+  lang: Lang; name: string; profile: Profile | null; scope: { kana: string[]; kanji: string[]; vocab: string[] };
+  tests: { id: string; title: string; minutes: number }[];
 }) {
   const t = text[lang];
-  const kanaRaw = useStored(PROGRESS_KEY);
-  const vocabRaw = useStored(FLASHCARDS_KEY);
+  const deck = useDeck();
   const activityRaw = useStored(ACTIVITY_KEY);
-  const ready = kanaRaw !== undefined && vocabRaw !== undefined && activityRaw !== undefined;
+  const sessionRaw = useStored(SESSION_KEY);
 
   const data = useMemo(() => {
-    if (!ready) return null;
-    let bad = false;
-    let kana: Progress = {};
-    try { kana = JSON.parse(kanaRaw ?? "{}") as Progress; } catch { bad = true; }
-    let vocab: Record<string, string> = {};
-    try { vocab = parseStatuses(vocabRaw); } catch { bad = true; }
-    let activity: Activity | null = parseActivity(activityRaw);
-    if (!activity) { bad = true; activity = { days: {} }; }
+    if (!deck || activityRaw === undefined) return null;
+    let activity: Activity | null = parseActivity(activityRaw === "!unavailable" ? null : activityRaw);
+    const bad = !deck.ok || !activity;
+    activity ??= { days: {} };
     const now = new Date();
+    const day = today();
+    const { srs } = deck;
+    const learned = (id: string) => isLearned(srs, id);
+    const summary = summarize(activity, now);
+    const kinds = new Map(items.map((i) => [i.id, i.kind]));
+    // The same session /session would resume or build, so the parts and minutes here are what the button opens.
+    const session = todayOf(
+      resumable(parseSession(sessionRaw === "!unavailable" ? null : (sessionRaw ?? null), day, "full"), runsIn(items, grammar)),
+      buildSession({ items, grammar, srs, today: day, learnedToday: learnedToday(), perDay: NEW_PER_DAY, mode: "full" }),
+    );
+    const stops = stopsOf(items);
+    const lesson = currentLesson(stops, srs);
+    const stop = stops.find((p) => p.lesson === lesson);
+    const log = activity.days;
     return {
       bad,
       now,
-      mastered: count(Object.keys(kana), (id) => isMastered(kana, id)),
-      kanaReview: count(Object.values(kana), (v) => v.seen > 0 && v.streak < MASTERED_AT),
-      learned: count(Object.values(vocab), (v) => v === "learned"),
-      vocabReview: count(Object.values(vocab), (v) => v === "learning"),
-      summary: summarize(activity, now),
+      day,
+      summary,
+      session,
+      parts: partsOf(session.steps, session.state === "done" ? session.steps.length : session.index, (id) => kinds.get(id)),
+      minutesLeft: minutesFor(session.steps.slice(session.index)),
+      week: [6, 5, 4, 3, 2, 1, 0].map((n) => addDays(day, -n)).map((d) => ({ day: d, minutes: log[d]?.minutes.length ?? 0 })),
+      lesson: lesson === undefined || !stop ? null : { lesson, pct: Math.round((100 * stop.ids.filter(learned).length) / stop.ids.length) },
+      tomorrow: dueCount(srs, addDays(day, 1), [...scope.kana, ...scope.kanji, ...scope.vocab]),
+      at: now.getTime(),
+      attempt: findSession(), // read here, after hydration: sessionStorage does not exist on the server
     };
-  }, [ready, kanaRaw, vocabRaw, activityRaw]);
+  }, [deck, activityRaw, sessionRaw, items, grammar, scope]);
+  const paper = data?.attempt && tests.find((p) => p.id === data.attempt?.id);
+  // Past the deadline the attempt is submitted on open, so "continue" would be a false promise.
+  const resume = paper && data.attempt && remaining(data.attempt.session.startedAt, paper.minutes, data.at) > 0 ? paper : undefined;
 
   const goal = profile?.goal;
   const exam = profile?.exam ? examDate(profile.exam) : null;
-  const days = exam && data ? daysBetween(data.now, exam) : null;
+  const examKey = profile?.exam ? examDay(profile.exam) : null;
+  const days = examKey && data ? daysUntil(examKey, data.day) : null;
 
   return (
     <main className={s.app}>
-      <header className={s.heading}>
-        <h1>{data && <><span lang="ja">{greet(data.now.getHours())}</span>, </>}{name}</h1>
-        <p>
-          {!goal ? <Link href="/onboarding">{t.setGoal}</Link>
-            : days !== null && days > 0 ? t.goal(goal, days)
-            : days === 0 ? t.goalToday(goal)
-            : t.goalOnly(goal)}
-        </p>
-      </header>
+      <section className={`panel ${s.hero}`} data-raised="" aria-labelledby="dash-title">
+        <h1 id="dash-title" className={s.title}>{data && <><span lang="ja">{greet(data.now.getHours())}</span>, </>}{name}</h1>
 
-      {!data ? <p role="status" className={s.note}>{t.loading}</p> : (
-        <>
-          <div className={s.stage}>
-            <span>{t.stage}</span>
-            <progress aria-label={t.stage} value={data.mastered} max={kanaTotal} />
-            <span>{data.mastered} / {kanaTotal}</span>
-          </div>
-
-          <dl className={s.stats}>
-            <div><dt>{t.streakLabel}</dt><dd>{t.streak(data.summary.streak)}</dd></div>
-            <div>
-              <dt>{t.minutesLabel}</dt>
-              <dd>{t.minutes(data.summary.minutesToday, profile?.minutes)}</dd>
-              {profile?.minutes && <progress aria-label={t.minutesLabel} value={Math.min(data.summary.minutesToday, profile.minutes)} max={profile.minutes} />}
-            </div>
-            <div><dt>{t.review}</dt><dd>{data.kanaReview + data.vocabReview}</dd></div>
-          </dl>
-
-          <div className={s.continue}>
-            <Link className="btn" href={continueHref(data.summary.last)}>{t.continue} <Arrow /></Link>
-            <p>{t.continueWhat(data.summary.last)}</p>
-          </div>
-
-          <section className={s.section} aria-labelledby="dash-progress">
-            <h2 id="dash-progress">{t.progress}</h2>
-            <table className={s.table}>
-              <caption className="sr-only">{t.progress}</caption>
-              <thead><tr><th scope="col">{t.area}</th><th scope="col">{t.today}</th><th scope="col">{t.memorized}</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Kana</th><td>{data.summary.today.kana}</td><td>{data.mastered} / {kanaTotal}</td></tr>
-                <tr><th scope="row">{t.vocab}</th><td>{data.summary.today.vocab}</td><td>{data.learned} / {vocabTotal}</td></tr>
-                {t.soonAreas.map((area) => (
-                  <tr key={area}><th scope="row">{area}</th><td colSpan={2} className={s.soon}>{t.soon}</td></tr>
+        {!data ? <p role="status" className={s.note}>{t.loading}</p> : (
+          <>
+            <section className={s.session} aria-labelledby="dash-session">
+              <h2 id="dash-session">{t.session}</h2>
+              <ol className={s.parts}>
+                {data.parts.map((p) => (
+                  <li key={p.part} data-done={p.done || undefined}>
+                    <span>{t.part[p.part]}</span>
+                    <span>{p.count ? t.partLine(p.count, p.minutes) : "—"}</span>
+                    <span className={s.tick}>{p.done && <>✓<span className="sr-only">{t.partDone}</span></>}</span>
+                  </li>
                 ))}
-              </tbody>
-            </table>
-          </section>
-
-          <section className={s.section} aria-labelledby="dash-review">
-            <h2 id="dash-review">{t.review}</h2>
-            {data.kanaReview + data.vocabReview === 0 ? <p>{t.reviewNone}</p> : (
-              <ul className={s.list}>
-                {data.kanaReview > 0 && <li><span>{t.reviewKana(data.kanaReview)}</span><Link href="/kana?mode=quiz">{t.practise}</Link></li>}
-                {data.vocabReview > 0 && <li><span>{t.reviewVocab(data.vocabReview)}</span><Link href="/flashcards">{t.practise}</Link></li>}
-              </ul>
-            )}
-            <p className={s.note}>{t.reviewNote}</p>
-          </section>
-
-          <section className={s.section} aria-labelledby="dash-upcoming">
-            <h2 id="dash-upcoming">{t.upcoming}</h2>
-            {exam && days !== null && days >= 0 ? (
-              <p>{t.exam(goal)} · {new Intl.DateTimeFormat(lang === "vi" ? "vi-VN" : "en-GB", { weekday: "long", day: "numeric", month: "numeric", year: "numeric" }).format(exam)}</p>
-            ) : (
-              <p className={s.list}><span>{exam ? t.examPast : t.examNone}</span> <Link href="/onboarding">{t.pick}</Link></p>
-            )}
-          </section>
-
-          <section className={s.section} aria-labelledby="dash-history">
-            <h2 id="dash-history">{t.history}</h2>
-            {data.summary.recent.length === 0 ? <p>{t.empty}</p> : (
-              <ol className={s.list}>
-                {data.summary.recent.map((r) => {
-                  const ago = daysBetween(fromKey(r.day), data.now);
-                  const label = ago === 0 ? t.todayLabel : ago === 1 ? t.yesterday : `${r.day.slice(8)}/${r.day.slice(5, 7)}`;
-                  return <li key={r.day}><span>{label}</span><span>{t.dayLine(r.minutes, r.kana, r.vocab)}</span></li>;
-                })}
               </ol>
-            )}
-          </section>
+              <Link className="btn" href={data.session.state === "done" && data.session.steps.length === 0 ? "/learned" : "/session"}>
+                {data.session.state === "resume" ? t.resume
+                  : data.session.state === "done" ? t.again
+                  : data.parts[0].count === 0 ? t.learnNew(data.minutesLeft)
+                  : t.start(data.minutesLeft)} <Arrow />
+              </Link>
+              {resume && data.attempt && (
+                <p className={s.resume}>
+                  <Link href={`/test/${resume.id}`}>{testText[lang].resume(resume.title, data.attempt.session.current + 1, data.attempt.session.answers.length)}</Link>
+                </p>
+              )}
+            </section>
 
-          {data.bad && <p role="alert" className={s.warning}>{t.warning}</p>}
-        </>
-      )}
+            <aside className={s.side} aria-label={t.week}>
+              <Ring minutes={data.summary.minutesToday} goal={profile?.minutes ?? DEFAULT_MINUTES} label={t.ring} />
+              <ol className={s.week}>
+                {data.week.map((d) => (
+                  <li key={d.day} data-on={d.minutes > 0 || undefined} data-today={d.day === data.day || undefined}>
+                    <span className="sr-only">{t.dot(`${d.day.slice(8)}/${d.day.slice(5, 7)}`, d.minutes)}</span>
+                  </li>
+                ))}
+              </ol>
+              <p className={s.streak}>{t.streak(data.summary.streak)}</p>
+            </aside>
+
+            <dl className={s.strip}>
+              <div><dt>{t.lessonLabel}</dt><dd>{data.lesson ? t.lesson(data.lesson.lesson, data.lesson.pct) : t.allDone}</dd></div>
+              <div><dt>{t.tomorrowLabel}</dt><dd>{t.tomorrow(data.tomorrow)}</dd></div>
+              <div>
+                <dt>{t.goalLabel}</dt>
+                <dd>{!goal ? <Link href="/onboarding">{t.setGoal}</Link>
+                  : exam && days !== null && days >= 0 ? `${goal} · ${dateOf(exam, lang)} · ${days > 0 ? t.daysLeft(days) : t.examToday}`
+                  : goal}</dd>
+              </div>
+            </dl>
+          </>
+        )}
+      </section>
+
+      {data?.bad && <p role="alert" className={`notice ${s.warning}`} data-tone="warn">{t.warning}</p>}
     </main>
   );
 }
 
+const dateOf = (d: Date, lang: Lang) => new Intl.DateTimeFormat(lang === "vi" ? "vi-VN" : "en-GB", { weekday: "long", day: "numeric", month: "numeric", year: "numeric" }).format(d);
+
 const greet = (hour: number) => (hour >= 5 && hour < 10 ? "おはよう" : hour >= 10 && hour < 18 ? "こんにちは" : "こんばんは");
 
 const vi = {
-  goal: (g: string, n: number) => `Mục tiêu ${g} · còn ${n} ngày tới kỳ thi`,
-  goalToday: (g: string) => `Mục tiêu ${g} · thi hôm nay`,
-  goalOnly: (g: string) => `Mục tiêu ${g}`,
-  setGoal: "Đặt mục tiêu",
-  stage: "Chặng hiện tại: Kana",
-  streakLabel: "Chuỗi ngày học",
+  session: "Phiên học hôm nay",
+  part: { review: "Ôn tập", new: "Từ mới", kanji: "Kanji", grammar: "Ngữ pháp", practice: "Luyện tập" } as Record<Part, string>,
+  partLine: (n: number, min: number) => `${n} mục · ~${min} phút`,
+  partDone: "đã xong",
+  start: (min: number) => `Bắt đầu · ${min} phút`,
+  learnNew: (min: number) => `Học bài mới · ${min} phút`,
+  resume: "Tiếp tục phiên dở",
+  again: "Ôn lại từ hôm nay",
+  week: "Tuần này",
+  ring: (m: number, g: number) => `${m} trên ${g} phút mục tiêu hôm nay`,
+  dot: (d: string, m: number) => (m ? `${d}: ${m} phút` : `${d}: chưa học`),
   streak: (n: number) => `${n} ngày liên tục`,
-  minutesLabel: "Thời gian học",
-  minutes: (m: number, goal?: number) => (goal ? `${m} / ${goal} phút hôm nay` : `${m} phút hôm nay`),
-  continue: "Tiếp tục học",
-  continueWhat: (last: Activity["last"]): string =>
-    !last ? "Bắt đầu với Hiragana" : last.area === "vocab" ? "Thẻ từ vựng" : last.ref.startsWith("katakana:") ? "Trắc nghiệm Katakana" : "Trắc nghiệm Hiragana",
-  progress: "Tiến độ",
-  area: "Phần",
-  vocab: "Từ vựng",
-  soonAreas: ["Kanji", "Ngữ pháp", "Đọc hiểu"],
-  today: "Hôm nay",
-  memorized: "Đã thuộc",
-  soon: "Sắp có",
-  review: "Cần ôn",
-  reviewKana: (n: number) => `${n} chữ kana chưa thuộc chắc`,
-  reviewVocab: (n: number) => `${n} từ đang học`,
-  reviewNone: "Chưa có gì cần ôn.",
-  reviewNote: "Kotoba chưa có lịch ôn ngắt quãng; đây là những mục bạn đã gặp nhưng chưa thuộc.",
-  practise: "Luyện",
-  upcoming: "Sắp tới",
-  exam: (g?: string) => (g ? `Kỳ thi JLPT ${g}` : "Kỳ thi JLPT"),
-  examNone: "Chưa chọn kỳ thi",
-  examPast: "Kỳ thi đã qua",
-  pick: "Chọn kỳ thi",
-  history: "Gần đây",
-  todayLabel: "Hôm nay",
-  yesterday: "Hôm qua",
-  dayLine: (min: number, kana: number, vocab: number) => `${min} phút · ${kana} kana · ${vocab} từ`,
-  empty: "Chưa có buổi học nào. Bắt đầu từ bảng chữ cái là nhanh nhất.",
+  lessonLabel: "Đang học",
+  lesson: (n: number, pct: number) => `Bài ${n} · ${pct}%`,
+  allDone: "Đã học hết",
+  tomorrowLabel: "Ôn ngày mai",
+  tomorrow: (n: number) => `${n} thẻ`,
+  goalLabel: "Mục tiêu",
+  setGoal: "Đặt mục tiêu",
+  daysLeft: (n: number) => `còn ${n} ngày`,
+  examToday: "thi hôm nay",
   loading: "Đang tải tiến độ…",
   warning: "Không đọc được tiến độ lưu trong trình duyệt. Số liệu có thể thiếu.",
 };
 
 const en: typeof vi = {
-  goal: (g, n) => `Goal ${g} · ${n} days to the exam`,
-  goalToday: (g) => `Goal ${g} · exam today`,
-  goalOnly: (g) => `Goal ${g}`,
-  setGoal: "Set a goal",
-  stage: "Current stage: Kana",
-  streakLabel: "Streak",
+  session: "Today’s session",
+  part: { review: "Review", new: "New words", kanji: "Kanji", grammar: "Grammar", practice: "Practice" },
+  partLine: (n, min) => `${n} ${n === 1 ? "item" : "items"} · ~${min} min`,
+  partDone: "done",
+  start: (min) => `Start · ${min} min`,
+  learnNew: (min) => `Learn new · ${min} min`,
+  resume: "Resume session",
+  again: "Go over today’s items",
+  week: "This week",
+  ring: (m, g) => `${m} of ${g} goal minutes today`,
+  dot: (d, m) => (m ? `${d}: ${m} min` : `${d}: no study`),
   streak: (n) => `${n}-day streak`,
-  minutesLabel: "Study time",
-  minutes: (m, goal) => (goal ? `${m} / ${goal} min today` : `${m} min today`),
-  continue: "Continue learning",
-  continueWhat: (last) =>
-    !last ? "Start with Hiragana" : last.area === "vocab" ? "Flashcards" : last.ref.startsWith("katakana:") ? "Katakana quiz" : "Hiragana quiz",
-  progress: "Progress",
-  area: "Area",
-  vocab: "Vocabulary",
-  soonAreas: ["Kanji", "Grammar", "Reading"],
-  today: "Today",
-  memorized: "Memorized",
-  soon: "Coming soon",
-  review: "To review",
-  reviewKana: (n) => `${n} kana not solid yet`,
-  reviewVocab: (n) => `${n} ${n === 1 ? "word" : "words"} in progress`,
-  reviewNone: "Nothing to review.",
-  reviewNote: "No spaced-repetition schedule yet; these are items you've met but not memorized.",
-  practise: "Practise",
-  upcoming: "Upcoming",
-  exam: (g) => (g ? `JLPT ${g} exam` : "JLPT exam"),
-  examNone: "No exam date set",
-  examPast: "This exam has passed",
-  pick: "Pick an exam",
-  history: "Recent",
-  todayLabel: "Today",
-  yesterday: "Yesterday",
-  dayLine: (min, kana, vocab) => `${min} min · ${kana} kana · ${vocab} ${vocab === 1 ? "word" : "words"}`,
-  empty: "No study sessions yet. The alphabet is the quickest start.",
+  lessonLabel: "Studying",
+  lesson: (n, pct) => `Lesson ${n} · ${pct}%`,
+  allDone: "All learned",
+  tomorrowLabel: "Due tomorrow",
+  tomorrow: (n) => `${n} ${n === 1 ? "card" : "cards"}`,
+  goalLabel: "Goal",
+  setGoal: "Set a goal",
+  daysLeft: (n) => `${n} days left`,
+  examToday: "exam today",
   loading: "Loading progress…",
   warning: "Couldn't read progress saved in this browser. Numbers may be incomplete.",
 };

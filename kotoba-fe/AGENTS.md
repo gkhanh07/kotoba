@@ -8,6 +8,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+Repo-wide rules: follow [`../AGENTS.md`](../AGENTS.md). It wins over this file when they conflict.
+
 # Màu: không bao giờ viết hex thẳng vào component
 
 Mọi màu của Kotoba nằm trong `:root` ở `src/app/globals.css`. Component chỉ

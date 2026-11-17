@@ -25,6 +25,14 @@ Short self-study sessions on phone or laptop. Learners go back and forth between
 - Interface language: Vietnamese or English, switched from the header and remembered in the `kotoba.lang` cookie. The pronunciation hints are Vietnamese phonetics by construction, so they ship only in the Vietnamese interface.
 - Undecided: accounts, pricing, JLPT content, kanji/grammar lessons, audio.
 
+## Non-goals
+
+- Listening practice or audio.
+- AI features.
+- A content management system (CMS).
+- A progressive web app (PWA).
+- JLPT N2 or N1 content; the content scope stops at N3.
+
 ## Evidence on Hand
 None. No users, testimonials, learner counts, or partnerships exist, so none may be invented.
 

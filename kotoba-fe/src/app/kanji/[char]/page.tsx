@@ -1,0 +1,106 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { getKanji, getKanjiDetail } from "@/lib/content";
+import { kanjiTitle, libraryText, splitReadings, vocabHref } from "@/lib/library";
+import { getLang } from "../../LangSwitch";
+import { Arrow, SiteBar, SiteFooter } from "../../SiteBar";
+import { SaveButton } from "../../SaveButton";
+import { Speak } from "../../Speak";
+import { Strokes } from "../../Strokes";
+import { KanjiMemory } from "./KanjiMemory";
+import s from "../kanji.module.css";
+
+export async function generateMetadata(props: PageProps<"/kanji/[char]">): Promise<Metadata> {
+  const [lang, k] = await Promise.all([getLang(), props.params.then((p) => getKanjiDetail(decodeURIComponent(p.char)))]);
+  if (!k) notFound();
+  return { title: kanjiTitle(k), description: lang === "vi" ? k.vi : k.en.join(", ") };
+}
+
+export default async function KanjiDetailPage(props: PageProps<"/kanji/[char]">) {
+  const { char } = await props.params;
+  const [lang, k, all] = await Promise.all([getLang(), getKanjiDetail(decodeURIComponent(char)), getKanji()]);
+  if (!k) notFound();
+  const similar = (k.similar ?? []).flatMap((c) => all.filter((x) => x.char === c));
+  const t = libraryText[lang].kanji;
+  const meaning = lang === "en" ? k.en.join(", ") : k.vi;
+  // An empty reading list gets no row, and readings past the first few fold away (phase 37).
+  const readings = (key: string, r: string[]) => {
+    const [shown, rest] = splitReadings(r);
+    return (
+      <div lang="ja" key={key}>
+        {shown.join(" · ")}
+        {rest.length > 0 && <details className={s.more}><summary lang={lang}>{t.more(rest.length)}</summary>{rest.join(" · ")}</details>}
+      </div>
+    );
+  };
+  const rows: [string, React.ReactNode][] = [
+    ...(k.on.length ? [[t.on, readings("on", k.on)] as [string, React.ReactNode]] : []),
+    ...(k.kun.length ? [[t.kun, readings("kun", k.kun)] as [string, React.ReactNode]] : []),
+    [t.meaning, meaning || <em className={s.missing}>{t.noVi}</em>],
+    [t.strokes, k.strokes],
+    [t.lessonLabel, k.lesson],
+  ];
+  return (
+    <>
+      <SiteBar current="kanji" />
+      <main className={s.app}>
+        <div className={s.detailBar}>
+          <Link href="/kanji" className={s.back}>
+            <Arrow back />
+            {t.back}
+          </Link>
+          <div className={s.barTools}><SaveButton id={k.id} lang={lang} /><Speak text={k.char} label={t.speak} /></div>
+        </div>
+        <div className={s.top}>
+        <article className={s.detail}>
+          <h1 lang="ja" className={s.specimen}>{k.char}</h1>
+          <div>
+            <p className={s.hvBig}>{k.hv.length > 0 ? <>{k.hv.join(" · ")}<span className="sr-only"> ({t.hv})</span></> : <em className={s.missing}>{t.noHv}</em>}</p>
+            <dl className={s.facts}>
+              {rows.map(([label, value]) => (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+            <Strokes paths={k.paths} lang={lang} />
+          </div>
+        </article>
+        <KanjiMemory id={k.id} lesson={k.lesson} lang={lang} />
+        </div>
+        {similar.length > 0 && (
+          <section className={s.words} aria-labelledby="kanji-similar">
+            <h2 id="kanji-similar">{t.similar}</h2>
+            <ul className={s.similar}>
+              {similar.map((x) => (
+                <li key={x.id}>
+                  <Link href={`/kanji/${encodeURIComponent(x.char)}`} className={s.tile}>
+                    <span lang="ja" className={s.char}>{x.char}</span>
+                    {x.hv.length > 0 && <span className={s.hv}>{x.hv.join(" · ")}</span>}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {k.words.length > 0 && (
+          <section className={s.words} aria-labelledby="kanji-words">
+            <h2 id="kanji-words">{t.words} <span lang="ja" className={s.inlineJa}>{k.char}</span></h2>
+            <ul>
+              {k.words.map((w) => (
+                <li key={w.id}>
+                  <Link href={vocabHref(w.id)} lang="ja" className={s.word}>{w.kanji ?? w.word}</Link>
+                  <span lang="ja">{w.reading}</span>
+                  <span>{w[lang]}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </main>
+      <SiteFooter />
+    </>
+  );
+}
